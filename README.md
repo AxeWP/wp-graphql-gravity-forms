@@ -16,7 +16,7 @@ WPGraphQL for Gravity Forms will extend the WPGraphQL plugin, allowing frontend 
 - retrieve, create, and update entries
 - Retrieve fields from within a form & their attributes 
 
-This plugin will couples the great forms functionality of Gravity Forms with the powerful WordPress-specific GraphQL implementation that WPGraphQL provides.
+This plugin will couple the great forms functionality of Gravity Forms with the powerful WordPress-specific GraphQL implementation that WPGraphQL provides.
 
 Our hope for this open source project is that it will enable more teams to leverage GraphQL for building fast, interactive frontend apps that source their data from WordPress and Gravity Forms. 🙌🏼
 
