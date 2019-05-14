@@ -235,13 +235,13 @@ class GravityForm implements Hookable {
             'description' => __( 'Get a Gravity Forms form.', 'wp-graphql-gravityforms' ),
             'type' => self::TYPE,
             'args' => [
-				'id' => [
-					'type' => [
-						'non_null' => 'ID',
+                'id' => [
+                    'type' => [
+                        'non_null' => 'ID',
                     ],
                     'description' => __( 'The globally unique ID for the object', 'wp-graphql' ),
-				],
-			],
+                ],
+            ],
             'resolve' => function( $root, array $args ) {
                 $id_parts = Relay::fromGlobalId( $args['id'] );
 

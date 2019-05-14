@@ -23,19 +23,19 @@ final class WPGraphQLGravityForms {
     }
 
 	private function create_instances() {
-        $this->instances['gravity_form']        = new Types\GravityForm;
-        $this->instances['gravity_forms_entry'] = new Types\GravityFormsEntry;
-    }
+		$this->instances['gravity_form']        = new Types\GravityForm;
+		$this->instances['gravity_forms_entry'] = new Types\GravityFormsEntry;
+	}
 
 	private function register_hooks() {
 		foreach ( $this->get_hookable_instances() as $instance ) {
-            $instance->register_hooks();
-        }
+			$instance->register_hooks();
+		}
 	}
 
 	private function get_hookable_instances() {
-        return array_filter( $this->instances, function( $instance ) {
-            return $instance instanceof Hookable;
-        } );
-    }
+		return array_filter( $this->instances, function( $instance ) {
+			return $instance instanceof Hookable;
+		} );
+	}
 }
