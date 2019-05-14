@@ -47,7 +47,7 @@ Phase 3:
 
 Phase 4:
 - Ability to delete an individual Gravity Forms entry by its ID.
-- Ability to delete multiple Gravity Forms by their IDs.
+- Ability to delete multiple Gravity Forms entries by their IDs.
 - Write tests for phase 4 features.
 
 Future enhancements:
