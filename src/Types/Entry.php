@@ -6,8 +6,17 @@ use GFAPI;
 use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Type;
 
-class GravityFormsEntry implements Hookable {
+/**
+ * Gravity Forms form entry.
+ *
+ * @see https://docs.gravityforms.com/entry-object/
+ */
+class Entry implements Hookable, Type {
+    /**
+     * Type registered in WPGraphQL.
+     */
     const TYPE = 'GravityFormsEntry';
 
     public function register_hooks() {
@@ -107,17 +116,42 @@ class GravityFormsEntry implements Hookable {
                 $id_parts = Relay::fromGlobalId( $args['id'] );
 
                 if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-                    throw new UserError( __( 'A valid global ID must be provided.' . $info, 'wp-graphql-gravityforms' ) );
+                    throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravityforms' ) );
                 }
 
-                $form = GFAPI::get_entry( $id_parts['id'] );
+                $entry = GFAPI::get_entry( $id_parts['id'] );
 
-                if ( ! $form ) {
-                    throw new UserError( __( 'A valid entry ID must be provided.' . $info, 'wp-graphql-gravityforms' ) );
+                if ( ! $entry ) {
+                    throw new UserError( __( 'A valid entry ID must be provided.', 'wp-graphql-gravityforms' ) );
                 }
 
-                return $form;
+                // Set 'entryId' to be the entry ID and 'id' to be the global Relay ID.
+                $form['entryId'] = $entry['id'];
+                $form['id']      = $args['id'];
+
+                return $this->convert_form_keys_to_camelcase( $entry );
             }
         ] );
+    }
+
+    /**
+     * @param  GF_Entry $entry Form object.
+     *
+     * @return GF_Entry $entry Form object with keys converted to camelCase.
+     */
+    private function convert_form_keys_to_camelcase( GF_Entry $entry ) : GF_Entry {
+        // @TODO
+
+        // $form['']    = $form[''];
+        // $form[''] = $form[''];
+        // $form['']     = $form[''];
+
+        // unset(
+        //     $form[''],
+        //     $form[''],
+        //     $form['']
+        // );
+
+        return $form;
     }
 }

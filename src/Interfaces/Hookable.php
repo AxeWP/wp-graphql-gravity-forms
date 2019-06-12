@@ -3,13 +3,11 @@
 namespace WPGraphQLGravityForms\Interfaces;
 
 /**
- * Interface Hookable.
+ * Interface for classes containing WordPress action/filter hooks.
  */
 interface Hookable {
 	/**
 	 * Register hooks with WordPress.
-	 *
-	 * @return void
 	 */
 	public function register_hooks();
 }

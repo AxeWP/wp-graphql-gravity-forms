@@ -1,14 +1,15 @@
 <?php
 
-namespace WPGraphQLGravityForms\Types;
+namespace WPGraphQLGravityForms\Types\Form;
 
 use GFAPI;
 use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Types\Union\FormFieldUnion;
 
-class GravityForm implements Hookable {
-    const TYPE = 'GravityForm';
+class Form implements Hookable {
+    const TYPE = 'GravityFormsForm';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -19,17 +20,17 @@ class GravityForm implements Hookable {
         register_graphql_object_type( self::TYPE, [
             'description' => __( 'Gravity Forms form.', 'wp-graphql-gravityforms' ),
             'fields'      => [
-                'id'                => [
-                    'type'        => [
+                'id' => [
+                    'type'         => [
                         'non_null' => 'ID',
                     ],
-                    'description' => __( 'The globally unique ID for the object', 'wp-graphql-gravityforms' ),
+                    'description' => __( 'The globally unique ID for the object.', 'wp-graphql-gravityforms' ),
                 ],
-                'formId'   => [
+                'formId' => [
                     'type'        => 'Integer',
                     'description' => __( 'Form ID.', 'wp-graphql-gravityforms' ),
                 ],
-                'title'  => [
+                'title' => [
                     'type'        => 'String',
                     'description' => __( 'Form title.', 'wp-graphql-gravityforms' ),
                 ],
@@ -37,20 +38,20 @@ class GravityForm implements Hookable {
                     'type'        => 'String',
                     'description' => __( 'Form description.', 'wp-graphql-gravityforms' ),
                 ],
-                'labelPlacement'   => [
+                'labelPlacement' => [
                     'type'        => 'String',
                     'description' => __( 'Determines if the field labels are displayed on top of the fields (top_label), besides the fields and aligned to the left (left_label) or besides the fields and aligned to the right (right_label).', 'wp-graphql-gravityforms' ),
                 ],
-                'descriptionPlacement'   => [
+                'descriptionPlacement' => [
                     'type'        => 'String',
                     'description' => __( 'Determines if the field description is displayed above the field input (i.e. immediately after the field label) or below the field input.', 'wp-graphql-gravityforms' ),
                 ],
-                'button'   => [
-                    'type'        => '', // @TODO. Should resolve to JSON object.
+                'button' => [
+                    'type'        => FormButton::TYPE,
                     'description' => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravityforms' ),
                 ],
                 'fields'   => [
-                    'type'        => '', // @TODO. Should resolve to JSON array.
+                    'type'        => [ 'list_of' => FormFieldUnion::TYPE ],
                     'description' => __( 'List of all fields that belong to the form.', 'wp-graphql-gravityforms' ),
                 ],
                 'version'   => [
@@ -78,7 +79,7 @@ class GravityForm implements Hookable {
                     'description' => __( 'Template to be used when creating the post content. Field variables (i.e. {Name:3} ) can be added to the template to insert user submitted values into the post content. Only applicable when postContentTemplateEnabled is true.', 'wp-graphql-gravityforms' ),
                 ],
                 'lastPageButton'   => [
-                    'type'        => '', // @TODO. Should resolve to JSON object.
+                    'type'        => FormButton::TYPE,
                     'description' => __( 'Last page button data.', 'wp-graphql-gravityforms' ),
                 ],
                 'pagination'   => [
@@ -122,7 +123,7 @@ class GravityForm implements Hookable {
                     'description' => __( 'When enabled, conditional logic hide/show operation will be performed with a jQuery slide animation. Only applicable to forms with conditional logic.', 'wp-graphql-gravityforms' ),
                 ],
                 'save'   => [
-                    'type'        => '', // @TODO. Should resolve to JSON object.
+                    'type'        => SaveAndContinue::TYPE,
                     'description' => __( '"Save and Continue" data.', 'wp-graphql-gravityforms' ),
                 ],
                 'limitEntries'   => [
@@ -193,28 +194,19 @@ class GravityForm implements Hookable {
                     'type'        => 'String',
                     'description' => __( 'When requireLogin is set to true, this controls the message displayed when non-logged in user tries to access the form.', 'wp-graphql-gravityforms' ),
                 ],
-                // @TODO: Determine what these are. No documentation found.
-                // 'gwreloadform_enable' => [
-                //     'type'        => '',
-                //     'description' => __( '', 'wp-graphql-gravityforms' ),
-                // ],
-                // 'gwreloadform_refresh_time' => [
-                //     'type'        => '',
-                //     'description' => __( '', 'wp-graphql-gravityforms' ),
-                // ],
                 'notifications' => [
-                    'type'        => '', // @TODO. Should resolve to JSON object.
+                    'type'        => [ 'list_of' => FormNotification::TYPE ],
                     'description' => __( 'The properties for all the email notifications which exist for a form.', 'wp-graphql-gravityforms' ),
                 ],
                 'confirmations' => [
-                    'type'        => 'Object',
+                    'type'        => [ 'list_of' => FormConfirmation::TYPE ],
                     'description' => __( 'Contains the form confirmation settings such as confirmation text or redirect URL', 'wp-graphql-gravityforms' ),
                 ],
                 'nextFieldId' => [
                     'type'        => 'Integer',
                     'description' => __( 'The ID to assign to the next field that is added to the form.', 'wp-graphql-gravityforms' ),
                 ],
-                'is_active' => [
+                'isActive' => [
                     'type'        => 'Boolean',
                     'description' => __( 'Determines whether the form is active.', 'wp-graphql-gravityforms' ),
                 ],
@@ -222,7 +214,7 @@ class GravityForm implements Hookable {
                     'type'        => 'String',
                     'description' => __( 'The date the form was created in this format: "YYYY-MM-DD HH:mm:ss".', 'wp-graphql-gravityforms' ),
                 ],
-                'is_trash' => [
+                'isTrash' => [
                     'type'        => 'Boolean',
                     'description' => __( 'Determines whether the form is in the trash.', 'wp-graphql-gravityforms' ),
                 ],
@@ -231,7 +223,7 @@ class GravityForm implements Hookable {
     }
 
     public function register_field() {
-        register_graphql_field( 'RootQuery', 'gravityForm', [
+        register_graphql_field( 'RootQuery', 'gravityFormsForm', [
             'description' => __( 'Get a Gravity Forms form.', 'wp-graphql-gravityforms' ),
             'type' => self::TYPE,
             'args' => [
@@ -246,17 +238,40 @@ class GravityForm implements Hookable {
                 $id_parts = Relay::fromGlobalId( $args['id'] );
 
                 if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-                    throw new UserError( __( 'A valid global ID must be provided.' . $info, 'wp-graphql-gravityforms' ) );
+                    throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravityforms' ) );
                 }
 
                 $form = GFAPI::get_form( $id_parts['id'] );
 
                 if ( ! $form ) {
-                    throw new UserError( __( 'A valid form ID must be provided.' . $info, 'wp-graphql-gravityforms' ) );
+                    throw new UserError( __( 'A valid form ID must be provided.', 'wp-graphql-gravityforms' ) );
                 }
 
-                return $form;
+                // Set 'formId' to be the form ID and 'id' to be the global Relay ID.
+                $form['formId'] = $form['id'];
+                $form['id']     = $args['id'];
+
+                return $this->convert_form_keys_to_camelcase( $form );
             }
         ] );
+    }
+
+    /**
+     * @param GF_Field $form Form object.
+     *
+     * @return GF_Field $form Form object with keys converted to camelCase.
+     */
+    private function convert_form_keys_to_camelcase( GF_Field $form ) : GF_Field {
+        $form['isActive']    = $form['is_active'];
+        $form['dateCreated'] = $form['date_created'];
+        $form['isTrash']     = $form['is_trash'];
+
+        unset(
+            $form['is_active'],
+            $form['date_created'],
+            $form['is_trash']
+        );
+
+        return $form;
     }
 }
