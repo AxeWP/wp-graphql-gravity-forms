@@ -257,11 +257,11 @@ class Form implements Hookable {
     }
 
     /**
-     * @param GF_Field $form Form object.
+     * @param array $form Form meta array
      *
-     * @return GF_Field $form Form object with keys converted to camelCase.
+     * @return array $form Form meta array with keys converted to camelCase.
      */
-    private function convert_form_keys_to_camelcase( GF_Field $form ) : GF_Field {
+    private function convert_form_keys_to_camelcase( array $form ) : array {
         $form['isActive']    = $form['is_active'];
         $form['dateCreated'] = $form['date_created'];
         $form['isTrash']     = $form['is_trash'];

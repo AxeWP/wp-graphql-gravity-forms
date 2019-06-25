@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Types;
 
 use GFAPI;
+use GF_Entry;
 use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;

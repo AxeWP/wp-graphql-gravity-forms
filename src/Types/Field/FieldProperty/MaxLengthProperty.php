@@ -2,7 +2,7 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use GP_Field;
+use GF_Field;
 use WPGraphQLGravityForms\Interfaces\FieldProperty;
 
 abstract class MaxLengthProperty implements FieldProperty {
