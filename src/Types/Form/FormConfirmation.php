@@ -29,7 +29,7 @@ class FormConfirmation implements Hookable {
                     'description' => __( 'Contains the confirmation message that will be displayed. Only applicable when type is set to message.', 'wp-graphql-gravityforms' ),
                 ],
                 'pageId' => [
-                    'type'        => 'String',
+                    'type'        => 'Integer',
                     'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to page.', 'wp-graphql-gravityforms' ),
                 ],
                 'url' => [

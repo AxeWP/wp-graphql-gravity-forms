@@ -1,16 +1,16 @@
 <?php
 
-namespace WPGraphQLGravityForms\Types\Form;
+namespace WPGraphQLGravityForms\Types\Button;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
 
 /**
- * Form button.
+ *  Button.
  *
  * @see https://docs.gravityforms.com/button/
  */
-class FormButton implements Hookable {
-    const TYPE = 'FormButton';
+class Button implements Hookable {
+    const TYPE = 'Button';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -18,7 +18,7 @@ class FormButton implements Hookable {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __( 'Gravity Forms form button.', 'wp-graphql-gravityforms' ),
+            'description' => __( 'Gravity Forms button.', 'wp-graphql-gravityforms' ),
             'fields'      => [
                 'type'   => [
                     'type'        => 'String',

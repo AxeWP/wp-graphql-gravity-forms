@@ -54,6 +54,10 @@ abstract class Field implements Hookable, Type {
                 'type'        => 'String',
                 'description' => __('The type of field to be displayed.', 'wp-graphql-gravity-forms'),
             ],
+            'formId' => [
+                'type'        => 'Integer',
+                'description' => __('The ID of the form this field belongs to.', 'wp-graphql-gravity-forms'),
+            ],
         ];
     }
 }

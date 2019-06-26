@@ -62,7 +62,7 @@ class FormFieldUnion implements Hookable, Type {
      *
      * @return array Field type mappings.
      */
-    private function get_field_type_mappings() {
+    private function get_field_type_mappings() : array {
         $fields = array_filter( $this->instances, function( $instance ) {
 			return $instance instanceof Field;
         } );

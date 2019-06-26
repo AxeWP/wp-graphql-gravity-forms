@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Types\Form;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Types\Button\Button;
 
 /**
  * Form "Save and Continue" data.
@@ -23,7 +24,7 @@ class SaveAndContinue implements Hookable {
                     'description' => __( 'Whether the Save And Continue feature is enabled.', 'wp-graphql-gravityforms' ),
                 ],
                 'button'   => [
-                    'type'        => FormButton::TYPE,
+                    'type'        => Button::TYPE,
                     'description' => __( 'Contains the button text. Only applicable when type is set to text.', 'wp-graphql-gravityforms' ),
                 ],
             ],

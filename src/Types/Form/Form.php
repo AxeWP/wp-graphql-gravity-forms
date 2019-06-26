@@ -7,6 +7,7 @@ use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Types\Union\FormFieldUnion;
+use WPGraphQLGravityForms\Types\Button\Button;
 
 class Form implements Hookable {
     const TYPE = 'GravityFormsForm';
@@ -47,7 +48,7 @@ class Form implements Hookable {
                     'description' => __( 'Determines if the field description is displayed above the field input (i.e. immediately after the field label) or below the field input.', 'wp-graphql-gravityforms' ),
                 ],
                 'button' => [
-                    'type'        => FormButton::TYPE,
+                    'type'        => Button::TYPE,
                     'description' => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravityforms' ),
                 ],
                 'fields'   => [
@@ -79,13 +80,14 @@ class Form implements Hookable {
                     'description' => __( 'Template to be used when creating the post content. Field variables (i.e. {Name:3} ) can be added to the template to insert user submitted values into the post content. Only applicable when postContentTemplateEnabled is true.', 'wp-graphql-gravityforms' ),
                 ],
                 'lastPageButton'   => [
-                    'type'        => FormButton::TYPE,
+                    'type'        => Button::TYPE,
                     'description' => __( 'Last page button data.', 'wp-graphql-gravityforms' ),
                 ],
-                'pagination'   => [
-                    'type'        => 'String',
-                    'description' => __( 'Pagination data.', 'wp-graphql-gravityforms' ),
-                ],
+                // @TODO
+                // 'pagination'   => [
+                //     'type'        => 'String',
+                //     'description' => __( 'Pagination data.', 'wp-graphql-gravityforms' ),
+                // ],
                 'firstPageCssClass'   => [
                     'type'        => 'String',
                     'description' => __( 'CSS class for the first page.', 'wp-graphql-gravityforms' ),
