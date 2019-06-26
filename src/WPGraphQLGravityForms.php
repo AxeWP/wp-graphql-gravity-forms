@@ -7,6 +7,7 @@ use WPGraphQLGravityForms\Types\Form;
 use WPGraphQLGravityForms\Types\Field;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 use WPGraphQLGravityForms\Types\Union;
+use WPGraphQLGravityForms\Types\Entry;
 
 /**
  * Main plugin class.
@@ -68,7 +69,8 @@ final class WPGraphQLGravityForms {
 		$this->instances['form_field_union'] = new Union\FormFieldUnion( $this->instances );
 
 		// Entries
-		// $this->instances['entry'] = new Types\Entry;
+		$this->instances['field_value'] = new Entry\FieldValue;
+		$this->instances['entry']       = new Entry\Entry;
 	}
 
 	private function register_hooks() {

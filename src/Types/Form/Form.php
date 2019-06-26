@@ -24,7 +24,7 @@ class Form implements Hookable {
                     'type'         => [
                         'non_null' => 'ID',
                     ],
-                    'description' => __( 'The globally unique ID for the object.', 'wp-graphql-gravityforms' ),
+                    'description' => __( 'Globally unique ID for the object.', 'wp-graphql-gravityforms' ),
                 ],
                 'formId' => [
                     'type'        => 'Integer',
@@ -231,7 +231,7 @@ class Form implements Hookable {
                     'type' => [
                         'non_null' => 'ID',
                     ],
-                    'description' => __( 'The globally unique ID for the object', 'wp-graphql' ),
+                    'description' => __( 'The globally unique ID for the object. Base-64 encode a string like this, where "123" is the form ID: "gravityformsform:123".', 'wp-graphql-gravityforms' ),
                 ],
             ],
             'resolve' => function( $root, array $args ) {
