@@ -1,10 +1,10 @@
 <?php
 
 class TestFormQuery extends WP_UnitTestCase {
-	/**
+    /**
 	 * Test Gravity Forms form query.
 	 */
-	public function test_form_query() {
+    public function test_form_query() {
         $form = [
             'title' => 'Test form title',
             'description' => 'Test form description.',
@@ -104,7 +104,6 @@ class TestFormQuery extends WP_UnitTestCase {
             ],
             'version' => '2.4.9',
             'id' => 2,
-            'nextFieldId' => 6,
             'useCurrentUserAsAuthor' => true,
             'postContentTemplateEnabled' => false,
             'postTitleTemplateEnabled' => false,
@@ -115,39 +114,86 @@ class TestFormQuery extends WP_UnitTestCase {
                 'text' => 'Previous',
                 'imageUrl' => 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
             ],
-            'pagination' => null,
+            'pagination' => null, // @TODO - test this.
             'firstPageCssClass' => 'first-page-css-class',
+            'postAuthor' => 1,
+            'postCategory' => 1,
+            'postFormat' => '0',
+            'postStatus' => 'publish',
+            'subLabelPlacement' => 'prefix',
+            'cssClass' => 'css-class-1 css-class-2',
+            'enableHoneypot' => false,
+            'enableAnimation' => false,
+            'save' => [
+                'enabled' => true,
+                'button' => [
+                    'type'     => 'link',
+                    'text'     => 'Save and Continue Later',
+                    'imageUrl' => 'https://example.com/',
+                ],
+            ],
+            'limitEntries' => true,
+            'limitEntriesCount' => 100,
+            'limitEntriesPeriod' => 'year',
+            'limitEntriesMessage' => 'Only 100 entries are permitted.',
+            'scheduleForm' => true,
+            'scheduleStart' => '01/01/2020',
+            'scheduleStartHour' => 9,
+            'scheduleStartMinute' => 30,
+            'scheduleStartAmpm' => 'am',
+            'scheduleEnd' => '01/01/2030',
+            'scheduleEndHour' => 10,
+            'scheduleEndMinute' => 45,
+            'scheduleEndAmpm' => 'pm',
+            'schedulePendingMessage' => 'Schedule pending message.',
+            'scheduleMessage' => 'Schedule message.',
+            'requireLogin' => true,
+            'requireLoginMessage' => 'You must be logged in to submit this form.',
             'notifications' => [
                 '5cfec9464e529' => [
-                    'id' => '5cfec9464e529',
-                    'isActive' => true,
-                    'to' => '{admin_email}',
-                    'name' => 'Admin Notification',
-                    'event' => 'form_submission',
-                    'toType' => 'email',
-                    'subject' => 'New submission from {form_title}',
-                    'message' => '{all_fields}'
-                ]
+                    'id'                => '5cfec9464e529',
+                    'isActive'          => true,
+                    'to'                => '{admin_email}',
+                    'name'              => 'Admin Notification',
+                    'event'             => 'form_submission',
+                    'toType'            => 'email',
+                    'subject'           => 'New submission from {form_title}',
+                    'message'           => '{all_fields}',
+                    'service'           => 'wordpress',
+                    'bcc'               => 'example@harnessup.com',
+                    'from'              => 'example@harnessup.com',
+                    'fromName'          => 'Harness',
+                    'replyTo'           => 'example@harnessup.com',
+                    'disableAutoformat' => false,
+                    'enableAttachments' => false,
+                ],
             ],
             'confirmations' => [
-                '5cfec9464e7d7' => [
-                    'id' => '5cfec9464e7d7',
-                    'name' => 'Default Confirmation',
-                    'isDefault' => true,
-                    'type' => 'message',
-                    'message' => 'Thanks for contacting us! We will get in touch with you shortly.',
-                    'url' => 'https://example.com/',
-                    'pageId' => 1,
+                '5cfec9464e7d7'   => [
+                    'id'          => '5cfec9464e7d7',
+                    'name'        => 'Default Confirmation',
+                    'isDefault'   => true,
+                    'type'        => 'message',
+                    'message'     => 'Thanks for contacting us! We will get in touch with you shortly.',
+                    'url'         => 'https://example.com/',
+                    'pageId'      => 1,
                     'queryString' => 'text={Single Line Text:1}&textarea={Text Area:2}'
                 ]
             ],
-            'is_active' => '1',
-            'date_created' => '2019-06-10 21:19:02',
-            'is_trash' => '0'
+            'nextFieldId' => 3,
+            'is_active' => true,
+            'date_created' => '2019-06-10 21:19:02', // This is disregarded by GFAPI::add_form().
+            'is_trash' => false,
         ];
 
+        // Insert form into the DB using the mock date above.
         $form_id   = \GFAPI::add_form( $form );
         $global_id = \GraphQLRelay\Relay::toGlobalId( 'gravityformsform', $form_id );
+
+        // A new date_created is generated when a form is imported using GFAPI::add_form(), so
+        // we need to get that value from the DB rather than from the mock data above.
+        $imported_form = \GFAPI::get_form( $form_id );
+        $date_created  = $imported_form['date_created'] ?? '';
 
         $query = "
         query {
@@ -155,6 +201,7 @@ class TestFormQuery extends WP_UnitTestCase {
                 id
                 formId
                 title
+                description
                 labelPlacement
                 descriptionPlacement
                 button {
@@ -215,28 +262,147 @@ class TestFormQuery extends WP_UnitTestCase {
                 scheduleMessage
                 requireLogin
                 requireLoginMessage
+                notifications {
+                    id
+                    isActive
+                    to
+                    name
+                    event
+                    toType
+                    subject
+                    message
+                    service
+                    bcc
+                    from
+                    fromName
+                    replyTo
+                    disableAutoformat
+                    enableAttachments
+                }
                 confirmations {
+                    id
+                    name
+                    isDefault
                     type
                     message
-                    pageId
                     url
+                    pageId
                     queryString
                 }
                 nextFieldId
                 isActive
-                date_created
+                dateCreated
                 isTrash
             }
-          }          
+        }          
         ";
-
-        // @TODO: add notifications and pagination to test query.
+    
+        // @TODO: add pagination to test query.
 
         $actual = graphql( [ 'query' => $query ] );
 
-        // TODO
-        $expected = [];
+        $expected = [
+            'data' => [
+                'gravityFormsForm' => [
+                    'id' => $global_id,
+                    'formId' => $form_id,
+                    'title' => $form['title'],
+                    'description' => $form['description'],
+                    'labelPlacement' => $form['labelPlacement'],
+                    'descriptionPlacement' => $form['descriptionPlacement'],
+                    'button' => [
+                        'type'     => $form['button']['type'],
+                        'text'     => $form['button']['text'],
+                        'imageUrl' => $form['button']['imageUrl'],
+                    ],
+                    'fields' => [
+                        [ 'type' => $form['fields'][0]['type'] ],
+                        [ 'type' => $form['fields'][1]['type'] ],
+                    ],
+                    'version' => $form['version'],
+                    'useCurrentUserAsAuthor' => $form['useCurrentUserAsAuthor'],
+                    'postContentTemplateEnabled' => $form['postContentTemplateEnabled'],
+                    'postTitleTemplateEnabled' => $form['postTitleTemplateEnabled'],
+                    'postTitleTemplate' => $form['postTitleTemplate'],
+                    'postContentTemplate' => $form['postContentTemplate'],
+                    'lastPageButton' => [
+                        'type'     => $form['lastPageButton']['type'],
+                        'text'     => $form['lastPageButton']['text'],
+                        'imageUrl' => $form['lastPageButton']['imageUrl'],
+                    ],
+                    'firstPageCssClass' => $form['firstPageCssClass'],
+                    'postAuthor' => $form['postAuthor'],
+                    'postCategory' => $form['postCategory'],
+                    'postFormat' => $form['postFormat'],
+                    'postStatus' => $form['postStatus'],
+                    'subLabelPlacement' => $form['subLabelPlacement'],
+                    'cssClass' => $form['cssClass'],
+                    'enableHoneypot' => $form['enableHoneypot'],
+                    'enableAnimation' => $form['enableAnimation'],
+                    'save' => [
+                        'enabled' => $form['save']['enabled'],
+                        'button' => [
+                            'type'     => $form['save']['button']['type'],
+                            'text'     => $form['save']['button']['text'],
+                            'imageUrl' => $form['save']['button']['imageUrl'],
+                        ],
+                    ],
+                    'limitEntries' => $form['limitEntries'],
+                    'limitEntriesCount' => $form['limitEntriesCount'],
+                    'limitEntriesPeriod' => $form['limitEntriesPeriod'],
+                    'limitEntriesMessage' => $form['limitEntriesMessage'],
+                    'scheduleForm' => $form['scheduleForm'],
+                    'scheduleStart' => $form['scheduleStart'],
+                    'scheduleStartHour' => $form['scheduleStartHour'],
+                    'scheduleStartMinute' => $form['scheduleStartMinute'],
+                    'scheduleStartAmpm' => $form['scheduleStartAmpm'],
+                    'scheduleEnd' => $form['scheduleEnd'],
+                    'scheduleEndHour' => $form['scheduleEndHour'],
+                    'scheduleEndMinute' => $form['scheduleEndMinute'],
+                    'scheduleEndAmpm' => $form['scheduleEndAmpm'],
+                    'schedulePendingMessage' => $form['schedulePendingMessage'],
+                    'scheduleMessage' => $form['scheduleMessage'],
+                    'requireLogin' => $form['requireLogin'],
+                    'requireLoginMessage' => $form['requireLoginMessage'],
+                    'notifications' => [
+                        [
+                            'id'                => $form['notifications']['5cfec9464e529']['id'],
+                            'isActive'          => $form['notifications']['5cfec9464e529']['isActive'],
+                            'to'                => $form['notifications']['5cfec9464e529']['to'],
+                            'name'              => $form['notifications']['5cfec9464e529']['name'],
+                            'event'             => $form['notifications']['5cfec9464e529']['event'],
+                            'toType'            => $form['notifications']['5cfec9464e529']['toType'],
+                            'subject'           => $form['notifications']['5cfec9464e529']['subject'],
+                            'message'           => $form['notifications']['5cfec9464e529']['message'],
+                            'service'           => $form['notifications']['5cfec9464e529']['service'],
+                            'bcc'               => $form['notifications']['5cfec9464e529']['bcc'],
+                            'from'              => $form['notifications']['5cfec9464e529']['from'],
+                            'fromName'          => $form['notifications']['5cfec9464e529']['fromName'],
+                            'replyTo'           => $form['notifications']['5cfec9464e529']['replyTo'],
+                            'disableAutoformat' => $form['notifications']['5cfec9464e529']['disableAutoformat'],
+                            'enableAttachments' => $form['notifications']['5cfec9464e529']['enableAttachments'],
+                        ]
+                    ],
+                    'confirmations' => [
+                        [
+                            'id'          => $form['confirmations']['5cfec9464e7d7']['id'],
+                            'name'        => $form['confirmations']['5cfec9464e7d7']['name'],
+                            'isDefault'   => $form['confirmations']['5cfec9464e7d7']['isDefault'],
+                            'type'        => $form['confirmations']['5cfec9464e7d7']['type'],
+                            'message'     => $form['confirmations']['5cfec9464e7d7']['message'],
+                            'url'         => $form['confirmations']['5cfec9464e7d7']['url'],
+                            'pageId'      => $form['confirmations']['5cfec9464e7d7']['pageId'],
+                            'queryString' => $form['confirmations']['5cfec9464e7d7']['queryString'],
+                        ]
+                    ],
+                    'nextFieldId' => $form['nextFieldId'],
+                    'isActive' => $form['is_active'],
+                    'dateCreated' => $date_created,
+                    'isTrash' => $form['is_trash'],
+                ],
+            ],
+        ];
 
-		$this->assertEquals( $expected, $actual );
+        $this->assertEquals( $expected, $actual );
     }
 }

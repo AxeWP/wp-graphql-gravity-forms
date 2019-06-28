@@ -108,6 +108,7 @@ class Form implements Hookable {
                     'type'        => 'String',
                     'description' => __( 'For forms with Post fields, determines the status that the Post should be created with.', 'wp-graphql-gravityforms' ),
                 ],
+                // @TODO This is probably an enum - https://docs.gravityforms.com/gf_field_name/
                 'subLabelPlacement'   => [
                     'type'        => 'String',
                     'description' => __( 'How sub-labels are aligned.', 'wp-graphql-gravityforms' ),
@@ -162,7 +163,7 @@ class Form implements Hookable {
                 ],
                 'scheduleStartAmpm' => [
                     'type'        => 'String',
-                    'description' => __( '"am? or "pm?. Applies to scheduleStartHour', 'wp-graphql-gravityforms' ),
+                    'description' => __( '"am" or "pm". Applies to scheduleStartHour', 'wp-graphql-gravityforms' ),
                 ],
                 'scheduleEnd' => [
                     'type'        => 'String',
@@ -212,7 +213,7 @@ class Form implements Hookable {
                     'type'        => 'Boolean',
                     'description' => __( 'Determines whether the form is active.', 'wp-graphql-gravityforms' ),
                 ],
-                'date_created' => [
+                'dateCreated' => [
                     'type'        => 'String',
                     'description' => __( 'The date the form was created in this format: "YYYY-MM-DD HH:mm:ss".', 'wp-graphql-gravityforms' ),
                 ],

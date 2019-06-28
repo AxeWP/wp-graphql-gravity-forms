@@ -20,6 +20,18 @@ class FormConfirmation implements Hookable {
         register_graphql_object_type( self::TYPE, [
             'description' => __( 'Properties for all the email notifications which exist for a form.', 'wp-graphql-gravityforms' ),
             'fields'      => [
+                'id' => [
+                    'type'        => 'String',
+                    'description' => __( 'ID.', 'wp-graphql-gravityforms' ),
+                ],
+                'name' => [
+                    'type'        => 'String',
+                    'description' => __( 'Name.', 'wp-graphql-gravityforms' ),
+                ],
+                'isDefault' => [
+                    'type'        => 'Boolean',
+                    'description' => __( 'Whether this is the default confirmation.', 'wp-graphql-gravityforms' ),
+                ],
                 'type' => [
                     'type'        => 'String',
                     'description' => __( 'Determines the type of confirmation to be used. Possible values: message, page, redirect.', 'wp-graphql-gravityforms' ),
@@ -28,13 +40,13 @@ class FormConfirmation implements Hookable {
                     'type'        => 'String',
                     'description' => __( 'Contains the confirmation message that will be displayed. Only applicable when type is set to message.', 'wp-graphql-gravityforms' ),
                 ],
-                'pageId' => [
-                    'type'        => 'Integer',
-                    'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to page.', 'wp-graphql-gravityforms' ),
-                ],
                 'url' => [
                     'type'        => 'String',
                     'description' => __( 'Contains the URL that the browser will be redirected to. Only applicable when type is set to redirect.', 'wp-graphql-gravityforms' ),
+                ],
+                'pageId' => [
+                    'type'        => 'Integer',
+                    'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to page.', 'wp-graphql-gravityforms' ),
                 ],
                 'queryString' => [
                     'type'        => 'String',
