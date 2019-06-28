@@ -186,7 +186,7 @@ class TestFormQuery extends WP_UnitTestCase {
             'is_trash' => false,
         ];
 
-        // Insert form into the DB using the mock date above.
+        // Insert form into the DB using the mock data above.
         $form_id   = \GFAPI::add_form( $form );
         $global_id = \GraphQLRelay\Relay::toGlobalId( 'gravityformsform', $form_id );
 
@@ -196,105 +196,105 @@ class TestFormQuery extends WP_UnitTestCase {
         $date_created  = $imported_form['date_created'] ?? '';
 
         $query = "
-        query {
-            gravityFormsForm(id: \"{$global_id}\") {
-                id
-                formId
-                title
-                description
-                labelPlacement
-                descriptionPlacement
-                button {
-                    type
-                    text
-                    imageUrl
-                }
-                fields {
-                    ... on TextField {
-                        type
-                    }
-                    ... on TextAreaField {
-                        type
-                    }
-                }
-                version
-                useCurrentUserAsAuthor
-                postContentTemplateEnabled
-                postTitleTemplateEnabled
-                postTitleTemplate
-                postContentTemplate
-                lastPageButton {
-                    type
-                    text
-                    imageUrl
-                }
-                firstPageCssClass
-                postAuthor
-                postCategory
-                postFormat
-                postStatus
-                subLabelPlacement
-                cssClass
-                enableHoneypot
-                enableAnimation
-                save {
-                    enabled
+            query {
+                gravityFormsForm(id: \"{$global_id}\") {
+                    id
+                    formId
+                    title
+                    description
+                    labelPlacement
+                    descriptionPlacement
                     button {
                         type
                         text
                         imageUrl
                     }
-                }
-                limitEntries
-                limitEntriesCount
-                limitEntriesPeriod
-                limitEntriesMessage
-                scheduleForm
-                scheduleStart
-                scheduleStartHour
-                scheduleStartMinute
-                scheduleStartAmpm
-                scheduleEnd
-                scheduleEndHour
-                scheduleEndMinute
-                scheduleEndAmpm
-                schedulePendingMessage
-                scheduleMessage
-                requireLogin
-                requireLoginMessage
-                notifications {
-                    id
+                    fields {
+                        ... on TextField {
+                            type
+                        }
+                        ... on TextAreaField {
+                            type
+                        }
+                    }
+                    version
+                    useCurrentUserAsAuthor
+                    postContentTemplateEnabled
+                    postTitleTemplateEnabled
+                    postTitleTemplate
+                    postContentTemplate
+                    lastPageButton {
+                        type
+                        text
+                        imageUrl
+                    }
+                    firstPageCssClass
+                    postAuthor
+                    postCategory
+                    postFormat
+                    postStatus
+                    subLabelPlacement
+                    cssClass
+                    enableHoneypot
+                    enableAnimation
+                    save {
+                        enabled
+                        button {
+                            type
+                            text
+                            imageUrl
+                        }
+                    }
+                    limitEntries
+                    limitEntriesCount
+                    limitEntriesPeriod
+                    limitEntriesMessage
+                    scheduleForm
+                    scheduleStart
+                    scheduleStartHour
+                    scheduleStartMinute
+                    scheduleStartAmpm
+                    scheduleEnd
+                    scheduleEndHour
+                    scheduleEndMinute
+                    scheduleEndAmpm
+                    schedulePendingMessage
+                    scheduleMessage
+                    requireLogin
+                    requireLoginMessage
+                    notifications {
+                        id
+                        isActive
+                        to
+                        name
+                        event
+                        toType
+                        subject
+                        message
+                        service
+                        bcc
+                        from
+                        fromName
+                        replyTo
+                        disableAutoformat
+                        enableAttachments
+                    }
+                    confirmations {
+                        id
+                        name
+                        isDefault
+                        type
+                        message
+                        url
+                        pageId
+                        queryString
+                    }
+                    nextFieldId
                     isActive
-                    to
-                    name
-                    event
-                    toType
-                    subject
-                    message
-                    service
-                    bcc
-                    from
-                    fromName
-                    replyTo
-                    disableAutoformat
-                    enableAttachments
+                    dateCreated
+                    isTrash
                 }
-                confirmations {
-                    id
-                    name
-                    isDefault
-                    type
-                    message
-                    url
-                    pageId
-                    queryString
-                }
-                nextFieldId
-                isActive
-                dateCreated
-                isTrash
             }
-        }          
         ";
     
         // @TODO: add pagination to test query.
