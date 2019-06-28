@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Types\Form;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 
 /**
  * Form notification.
@@ -77,11 +78,10 @@ class FormNotification implements Hookable {
                 //     'type'        => '',
                 //     'description' => __( 'An indexed array containing the routing rules.', 'wp-graphql-gravity-forms' ),
                 // ],
-                // @TODO - https://docs.gravityforms.com/conditional-logic/
-                // 'conditionalLogic'   => [
-                //     'type'        => '',
-                //     'description' => __( 'An associative array containing the conditional logic rules. See the Conditional Logic Object for more details.', 'wp-graphql-gravity-forms' ),
-                // ],
+                'conditionalLogic'   => [
+                    'type'        => ConditionalLogic::TYPE,
+                    'description' => __( 'An associative array containing the conditional logic rules. See the Conditional Logic Object for more details.', 'wp-graphql-gravity-forms' ),
+                ],
                 'disableAutoformat'   => [
                     'type'        => 'Boolean',
                     'description' => __( 'Determines if the email message should be formatted so that paragraphs are automatically added for new lines. Default is false (auto-formatting enabled).', 'wp-graphql-gravity-forms' ),

@@ -4,6 +4,7 @@ namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 
 /**
  * Gravity Forms field.
@@ -29,11 +30,10 @@ abstract class Field implements Hookable, Type {
                 'type'        => 'Boolean',
                 'description' => __('Determines if the field’s value can be pre-populated dynamically. 1 to allow field to be pre-populated, 0 otherwise.', 'wp-graphql-gravity-forms'),
             ],
-            // @TODO: - https://docs.gravityforms.com/conditional-logic/
-            // 'conditionalLogic' => [
-            //     'type' => '',
-            //     'description' => __('Controls the visibility of the field based on values selected by the user.', 'wp-graphql-gravity-forms'),
-            // ],
+            'conditionalLogic' => [
+                'type'        => ConditionalLogic::TYPE,
+                'description' => __( 'Controls the visibility of the field based on values selected by the user.', 'wp-graphql-gravity-forms' ),
+            ],
             'cssClass' => [
                 'type'        => 'String',
                 'description' => __('Custom CSS class to be added to the <li> tag that contains the field. Useful to apply custom formatting to specific fields.', 'wp-graphql-gravity-forms'),

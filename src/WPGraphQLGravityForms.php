@@ -4,6 +4,7 @@ namespace WPGraphQLGravityForms;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Types\Button\Button;
+use WPGraphQLGravityForms\Types\ConditionalLogic;
 use WPGraphQLGravityForms\Types\Form;
 use WPGraphQLGravityForms\Types\Field;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
@@ -28,7 +29,12 @@ final class WPGraphQLGravityForms {
     }
 
 	private function create_instances() {
+		// Buttons
 		$this->instances['button'] = new Button();
+
+		// Conditional Logic
+		$this->instances['conditional_logic']      = new ConditionalLogic\ConditionalLogic();
+		$this->instances['conditional_logic_rule'] = new ConditionalLogic\ConditionalLogicRule();
 
 		// Forms
 		$this->instances['save_and_continue'] = new Form\SaveAndContinue();
