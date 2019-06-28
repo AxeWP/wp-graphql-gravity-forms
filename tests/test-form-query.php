@@ -13,7 +13,23 @@ class TestFormQuery extends WP_UnitTestCase {
             'button' => [
                 'type' => 'text',
                 'text' => 'Submit',
-                'imageUrl' => 'https://example.com/'
+                'imageUrl' => 'https://example.com/',
+                'conditionalLogic' => [
+                    'actionType' => 'show',
+                    'logicType' => 'any',
+                    'rules' => [
+                        [
+                            'fieldId'  => 1,
+                            'operator' => 'is',
+                            'value'    => 'value1'
+                        ],
+                        [
+                            'fieldId'  => 1,
+                            'operator' => 'is',
+                            'value'    => 'value2',
+                        ],
+                    ],
+                ],
             ],
             'fields' => [
                 [
@@ -43,7 +59,6 @@ class TestFormQuery extends WP_UnitTestCase {
                     'noDuplicates' => false,
                     'defaultValue' => '',
                     'choices' => '',
-                    'conditionalLogic' => '',
                     'productField' => '',
                     'enablePasswordInput' => '',
                     'multipleFiles' => false,
@@ -160,12 +175,42 @@ class TestFormQuery extends WP_UnitTestCase {
                     'subject'           => 'New submission from {form_title}',
                     'message'           => '{all_fields}',
                     'service'           => 'wordpress',
-                    'bcc'               => 'example@harnessup.com',
-                    'from'              => 'example@harnessup.com',
-                    'fromName'          => 'Harness',
-                    'replyTo'           => 'example@harnessup.com',
+                    'bcc'               => 'bcc-email@example.com',
+                    'from'              => 'from-email@example.com',
+                    'fromName'          => 'WordPress',
+                    'replyTo'           => 'replyto-email@example.com',
                     'disableAutoformat' => false,
                     'enableAttachments' => false,
+                    'routing' => [
+                        [
+                            'fieldId'  => 1,
+                            'operator' => 'is',
+                            'value'    => 'value1',
+                            'email'    => 'email1@example.com',
+                        ],
+                        [
+                            'fieldId'  => 1,
+                            'operator' => 'is',
+                            'value'    => 'value2',
+                            'email'    => 'email2@example.com',
+                        ],
+                    ],
+                    'conditionalLogic' => [
+                        'actionType' => 'show',
+                        'logicType' => 'any',
+                        'rules' => [
+                            [
+                                'fieldId'  => 1,
+                                'operator' => 'is',
+                                'value'    => 'value1'
+                            ],
+                            [
+                                'fieldId'  => 1,
+                                'operator' => 'is',
+                                'value'    => 'value2',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             'confirmations' => [
@@ -208,6 +253,15 @@ class TestFormQuery extends WP_UnitTestCase {
                         type
                         text
                         imageUrl
+                        conditionalLogic {
+                            actionType
+                            logicType
+                            rules {
+                                fieldId
+                                operator
+                                value
+                            }
+                        }
                     }
                     fields {
                         ... on TextField {
@@ -278,6 +332,21 @@ class TestFormQuery extends WP_UnitTestCase {
                         replyTo
                         disableAutoformat
                         enableAttachments
+                        routing {
+                            fieldId
+                            operator
+                            value
+                            email
+                        }
+                        conditionalLogic {
+                            actionType
+                            logicType
+                            rules {
+                                fieldId
+                                operator
+                                value
+                            }
+                        }
                     }
                     confirmations {
                         id
@@ -297,7 +366,7 @@ class TestFormQuery extends WP_UnitTestCase {
             }
         ";
     
-        // @TODO: add pagination to test query.
+        // @TODO: add pagination and to test query.
 
         $actual = graphql( [ 'query' => $query ] );
 
@@ -314,6 +383,22 @@ class TestFormQuery extends WP_UnitTestCase {
                         'type'     => $form['button']['type'],
                         'text'     => $form['button']['text'],
                         'imageUrl' => $form['button']['imageUrl'],
+                        'conditionalLogic' => [
+                            'actionType' => $form['button']['conditionalLogic']['actionType'],
+                            'logicType' => $form['button']['conditionalLogic']['logicType'],
+                            'rules' => [
+                                [
+                                    'fieldId'  => $form['button']['conditionalLogic']['rules'][0]['fieldId'],
+                                    'operator' => $form['button']['conditionalLogic']['rules'][0]['operator'],
+                                    'value'    => $form['button']['conditionalLogic']['rules'][0]['value'],
+                                ],
+                                [
+                                    'fieldId'  => $form['button']['conditionalLogic']['rules'][1]['fieldId'],
+                                    'operator' => $form['button']['conditionalLogic']['rules'][1]['operator'],
+                                    'value'    => $form['button']['conditionalLogic']['rules'][1]['value'],
+                                ],
+                            ],
+                        ],
                     ],
                     'fields' => [
                         [ 'type' => $form['fields'][0]['type'] ],
@@ -381,6 +466,36 @@ class TestFormQuery extends WP_UnitTestCase {
                             'replyTo'           => $form['notifications']['5cfec9464e529']['replyTo'],
                             'disableAutoformat' => $form['notifications']['5cfec9464e529']['disableAutoformat'],
                             'enableAttachments' => $form['notifications']['5cfec9464e529']['enableAttachments'],
+                            'routing' => [
+                                [
+                                    'fieldId'  => $form['notifications']['5cfec9464e529']['routing'][0]['fieldId'],
+                                    'operator' => $form['notifications']['5cfec9464e529']['routing'][0]['operator'],
+                                    'value'    => $form['notifications']['5cfec9464e529']['routing'][0]['value'],
+                                    'email'    => $form['notifications']['5cfec9464e529']['routing'][0]['email'],
+                                ],
+                                [
+                                    'fieldId'  => $form['notifications']['5cfec9464e529']['routing'][1]['fieldId'],
+                                    'operator' => $form['notifications']['5cfec9464e529']['routing'][1]['operator'],
+                                    'value'    => $form['notifications']['5cfec9464e529']['routing'][1]['value'],
+                                    'email'    => $form['notifications']['5cfec9464e529']['routing'][1]['email'],
+                                ],
+                            ],
+                            'conditionalLogic' => [
+                                'actionType' => $form['notifications']['5cfec9464e529']['conditionalLogic']['actionType'],
+                                'logicType' => $form['notifications']['5cfec9464e529']['conditionalLogic']['logicType'],
+                                'rules' => [
+                                    [
+                                        'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['fieldId'],
+                                        'operator' => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['operator'],
+                                        'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['value'],
+                                    ],
+                                    [
+                                        'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['fieldId'],
+                                        'operator' => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['operator'],
+                                        'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['value'],
+                                    ],
+                                ],
+                            ],
                         ]
                     ],
                     'confirmations' => [
