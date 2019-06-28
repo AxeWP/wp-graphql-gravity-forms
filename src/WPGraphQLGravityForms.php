@@ -37,10 +37,11 @@ final class WPGraphQLGravityForms {
 		$this->instances['conditional_logic_rule'] = new ConditionalLogic\ConditionalLogicRule();
 
 		// Forms
-		$this->instances['save_and_continue'] = new Form\SaveAndContinue();
-		$this->instances['form_notification'] = new Form\FormNotification();
-		$this->instances['form_confirmation'] = new Form\FormConfirmation();
-		$this->instances['form']              = new Form\Form();
+		$this->instances['save_and_continue']         = new Form\SaveAndContinue();
+		$this->instances['form_notification_routing'] = new Form\FormNotificationRouting();
+		$this->instances['form_notification']         = new Form\FormNotification();
+		$this->instances['form_confirmation']         = new Form\FormConfirmation();
+		$this->instances['form']                      = new Form\Form();
 
 		// Fields
 		$this->instances['address_field']       = new Field\AddressField();

@@ -73,11 +73,10 @@ class FormNotification implements Hookable {
                     'type'        => 'String',
                     'description' => __( 'The email or merge tags to be used as the email reply to address.', 'wp-graphql-gravity-forms' ),
                 ],
-                // @TODO - https://docs.gravityforms.com/notifications-object/#routing-rule-properties
-                // 'routing'   => [
-                //     'type'        => '',
-                //     'description' => __( 'An indexed array containing the routing rules.', 'wp-graphql-gravity-forms' ),
-                // ],
+                'routing'   => [
+                    'type'        => [ 'list_of' => FormNotificationRouting::TYPE ],
+                    'description' => __( 'Routing rules.', 'wp-graphql-gravity-forms' ),
+                ],
                 'conditionalLogic'   => [
                     'type'        => ConditionalLogic::TYPE,
                     'description' => __( 'An associative array containing the conditional logic rules. See the Conditional Logic Object for more details.', 'wp-graphql-gravity-forms' ),
