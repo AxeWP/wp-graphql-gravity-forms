@@ -26,7 +26,7 @@ class TextField extends Field {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __( 'Gravity Forms Single Line Text field.', 'wp-graphql-gravityforms' ),
+            'description' => __( 'Gravity Forms Single Line Text field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
                 FieldProperty\DefaultValueProperty::get(),
@@ -39,7 +39,7 @@ class TextField extends Field {
                 [
                     'enablePasswordInput' => [
                         'type'        => 'Boolean',
-                        'description' => __('Determines if a text field input tag should be created with a "password" type.', 'wp-graphql-gravityforms'),
+                        'description' => __('Determines if a text field input tag should be created with a "password" type.', 'wp-graphql-gravity-forms'),
                     ]
                 ]
             ),

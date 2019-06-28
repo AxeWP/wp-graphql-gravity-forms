@@ -24,7 +24,7 @@ class SectionField extends Field {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __( 'Gravity Forms Section field.', 'wp-graphql-gravityforms' ),
+            'description' => __( 'Gravity Forms Section field.', 'wp-graphql-gravity-forms' ),
             'fields'      => $this->get_global_properties(),
         ] );
     }

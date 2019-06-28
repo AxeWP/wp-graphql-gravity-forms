@@ -16,15 +16,15 @@ class FieldValue implements Hookable {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __( 'Gravity Forms entry field value.', 'wp-graphql-gravityforms' ),
+            'description' => __( 'Gravity Forms entry field value.', 'wp-graphql-gravity-forms' ),
             'fields'      => [
                 'key'   => [
                     'type'        => 'String',
-                    'description' => __( 'Field key.', 'wp-graphql-gravityforms' ),
+                    'description' => __( 'Field key.', 'wp-graphql-gravity-forms' ),
                 ],
                 'value'   => [
                     'type'        => 'String',
-                    'description' => __( 'Field value.', 'wp-graphql-gravityforms' ),
+                    'description' => __( 'Field value.', 'wp-graphql-gravity-forms' ),
                 ],
             ],
         ] );

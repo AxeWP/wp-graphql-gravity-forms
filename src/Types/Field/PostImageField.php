@@ -26,7 +26,7 @@ class PostImageField extends Field {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __( 'Gravity Forms Post Image field.', 'wp-graphql-gravityforms' ),
+            'description' => __( 'Gravity Forms Post Image field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
                 FieldProperty\ErrorMessageProperty::get(),
@@ -36,15 +36,15 @@ class PostImageField extends Field {
                 [
                     'displayCaption' => [
                         'type'        => 'Boolean',
-                        'description' => __('Controls the visibility of the caption metadata for Post Image fields. 1 will display the caption field, 0 will hide it.', 'wp-graphql-gravityforms'),
+                        'description' => __('Controls the visibility of the caption metadata for Post Image fields. 1 will display the caption field, 0 will hide it.', 'wp-graphql-gravity-forms'),
                     ],
                     'displayDescription' => [
                         'type'        => 'Boolean',
-                        'description' => __('Controls the visibility of the description metadata for Post Image fields. 1 will display the description field, 0 will hide it.', 'wp-graphql-gravityforms'),
+                        'description' => __('Controls the visibility of the description metadata for Post Image fields. 1 will display the description field, 0 will hide it.', 'wp-graphql-gravity-forms'),
                     ],
                     'displayTitle' => [
                         'type'        => 'Boolean',
-                        'description' => __('Controls the visibility of the title metadata for Post Image fields. 1 will display the title field, 0 will hide it.', 'wp-graphql-gravityforms'),
+                        'description' => __('Controls the visibility of the title metadata for Post Image fields. 1 will display the title field, 0 will hide it.', 'wp-graphql-gravity-forms'),
                     ],
                 ]
             ),

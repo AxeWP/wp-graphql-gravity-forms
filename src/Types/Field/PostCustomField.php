@@ -26,7 +26,7 @@ class PostCustomField extends Field {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __( 'Gravity Forms Post Custom Field field.', 'wp-graphql-gravityforms' ),
+            'description' => __( 'Gravity Forms Post Custom Field field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
                 FieldProperty\DefaultValueProperty::get(),
@@ -38,11 +38,11 @@ class PostCustomField extends Field {
                 [
                     'postCustomFieldName' => [
                         'type'        => 'String',
-                        'description' => __('The name of the Post Custom Field that the submitted value should be assigned to.', 'wp-graphql-gravityforms'),
+                        'description' => __('The name of the Post Custom Field that the submitted value should be assigned to.', 'wp-graphql-gravity-forms'),
                     ],
                     'inputType' => [
                         'type'        => 'String',
-                        'description' => __('Contains a field type and allows a field type to be displayed as another field type. A good example is the Post Custom Field, that can be displayed as various different types of fields.', 'wp-graphql-gravityforms'),
+                        'description' => __('Contains a field type and allows a field type to be displayed as another field type. A good example is the Post Custom Field, that can be displayed as various different types of fields.', 'wp-graphql-gravity-forms'),
                     ],
                 ]
             ),

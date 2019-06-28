@@ -26,7 +26,7 @@ class PostCategoryField extends Field {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __( 'Gravity Forms Post Category field.', 'wp-graphql-gravityforms' ),
+            'description' => __( 'Gravity Forms Post Category field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
                 FieldProperty\ChoicesProperty::get(),
@@ -37,7 +37,7 @@ class PostCategoryField extends Field {
                 [
                     'displayAllCategories' => [
                         'type'        => 'Boolean',
-                        'description' => __('Determines if all categories should be displayed on the Post Category drop down. 1 to display all categories, 0 otherwise. If this property is set to 1 (display all categories), the Post Category drop down will display the categories hierarchically.', 'wp-graphql-gravityforms'),
+                        'description' => __('Determines if all categories should be displayed on the Post Category drop down. 1 to display all categories, 0 otherwise. If this property is set to 1 (display all categories), the Post Category drop down will display the categories hierarchically.', 'wp-graphql-gravity-forms'),
                     ],
                 ]
             ),

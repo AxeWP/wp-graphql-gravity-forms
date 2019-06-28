@@ -26,7 +26,7 @@ class FileUploadField extends Field {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __( 'Gravity Forms File Upload field.', 'wp-graphql-gravityforms' ),
+            'description' => __( 'Gravity Forms File Upload field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
                 FieldProperty\ErrorMessageProperty::get(),
