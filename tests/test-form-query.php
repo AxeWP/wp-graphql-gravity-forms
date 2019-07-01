@@ -129,7 +129,15 @@ class TestFormQuery extends WP_UnitTestCase {
                 'text' => 'Previous',
                 'imageUrl' => 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
             ],
-            'pagination' => null, // @TODO - test this.
+            'pagination' => [
+                'type'                                => 'percentage',
+                'pages'                               => [ 'page-1-name', 'page-2-name' ],
+                'style'                               => 'custom',
+                'backgroundColor'                     => '#c6df9c',
+                'color'                               => '#197b30',
+                'display_progressbar_on_confirmation' => true,
+                'progressbar_completion_text'         => 'Completed!',
+            ],
             'firstPageCssClass' => 'first-page-css-class',
             'postAuthor' => 1,
             'postCategory' => 1,
@@ -282,6 +290,15 @@ class TestFormQuery extends WP_UnitTestCase {
                         text
                         imageUrl
                     }
+                    pagination {
+                        type
+                        pages
+                        style
+                        backgroundColor
+                        color
+                        displayProgressbarOnConfirmation
+                        progressbarCompletionText
+                    }
                     firstPageCssClass
                     postAuthor
                     postCategory
@@ -365,8 +382,6 @@ class TestFormQuery extends WP_UnitTestCase {
                 }
             }
         ";
-    
-        // @TODO: add pagination and to test query.
 
         $actual = graphql( [ 'query' => $query ] );
 
@@ -414,6 +429,15 @@ class TestFormQuery extends WP_UnitTestCase {
                         'type'     => $form['lastPageButton']['type'],
                         'text'     => $form['lastPageButton']['text'],
                         'imageUrl' => $form['lastPageButton']['imageUrl'],
+                    ],
+                    'pagination' => [
+                        'type'                             => $form['pagination']['type'],
+                        'pages'                            => $form['pagination']['pages'],
+                        'style'                            => $form['pagination']['style'],
+                        'backgroundColor'                  => $form['pagination']['backgroundColor'],
+                        'color'                            => $form['pagination']['color'],
+                        'displayProgressbarOnConfirmation' => $form['pagination']['display_progressbar_on_confirmation'],
+                        'progressbarCompletionText'        => $form['pagination']['progressbar_completion_text'],
                     ],
                     'firstPageCssClass' => $form['firstPageCssClass'],
                     'postAuthor' => $form['postAuthor'],

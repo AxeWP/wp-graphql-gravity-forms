@@ -89,11 +89,10 @@ class Form implements Hookable, Type {
                     'type'        => Button::TYPE,
                     'description' => __( 'Last page button data.', 'wp-graphql-gravity-forms' ),
                 ],
-                // @TODO
-                // 'pagination'   => [
-                //     'type'        => 'String',
-                //     'description' => __( 'Pagination data.', 'wp-graphql-gravity-forms' ),
-                // ],
+                'pagination'   => [
+                    'type'        => FormPagination::TYPE,
+                    'description' => __( 'Pagination data.', 'wp-graphql-gravity-forms' ),
+                ],
                 'firstPageCssClass'   => [
                     'type'        => 'String',
                     'description' => __( 'CSS class for the first page.', 'wp-graphql-gravity-forms' ),
@@ -275,10 +274,20 @@ class Form implements Hookable, Type {
         $form['dateCreated'] = $form['date_created'];
         $form['isTrash']     = $form['is_trash'];
 
+        if ( isset( $form['pagination']['display_progressbar_on_confirmation'] ) ) {
+            $form['pagination']['displayProgressbarOnConfirmation'] = $form['pagination']['display_progressbar_on_confirmation'];
+        }
+
+        if ( isset( $form['pagination']['progressbar_completion_text'] ) ) {
+            $form['pagination']['progressbarCompletionText'] = $form['pagination']['progressbar_completion_text'];
+        }
+
         unset(
             $form['is_active'],
             $form['date_created'],
-            $form['is_trash']
+            $form['is_trash'],
+            $form['pagination']['display_progressbar_on_confirmation'],
+            $form['pagination']['progressbar_completion_text']
         );
 
         return $form;

@@ -41,6 +41,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['form_notification_routing'] = new Form\FormNotificationRouting();
 		$this->instances['form_notification']         = new Form\FormNotification();
 		$this->instances['form_confirmation']         = new Form\FormConfirmation();
+		$this->instances['form_pagination']           = new Form\FormPagination();
 		$this->instances['form']                      = new Form\Form();
 
 		// Fields
