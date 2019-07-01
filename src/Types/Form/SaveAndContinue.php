@@ -3,12 +3,13 @@
 namespace WPGraphQLGravityForms\Types\Form;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\Button\Button;
 
 /**
  * Form "Save and Continue" data.
  */
-class SaveAndContinue implements Hookable {
+class SaveAndContinue implements Hookable, Type {
     const TYPE = 'SaveAndContinue';
 
     public function register_hooks() {

@@ -3,13 +3,14 @@
 namespace WPGraphQLGravityForms\Types\ConditionalLogic;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
  *  Conditional Logic.
  *
  * @see https://docs.gravityforms.com/conditional-logic/
  */
-class ConditionalLogic implements Hookable {
+class ConditionalLogic implements Hookable, Type {
     const TYPE = 'ConditionalLogic';
 
     public function register_hooks() {

@@ -3,11 +3,12 @@
 namespace WPGraphQLGravityForms\Types\Entry;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
  * Entry field value.
  */
-class FieldValue implements Hookable {
+class FieldValue implements Hookable, Type {
     const TYPE = 'FieldValue';
 
     public function register_hooks() {

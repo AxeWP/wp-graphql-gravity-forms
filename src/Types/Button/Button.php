@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Types\Button;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 
 /**
@@ -10,7 +11,7 @@ use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
  *
  * @see https://docs.gravityforms.com/button/
  */
-class Button implements Hookable {
+class Button implements Hookable, Type {
     const TYPE = 'Button';
 
     public function register_hooks() {

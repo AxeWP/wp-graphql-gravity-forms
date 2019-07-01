@@ -3,13 +3,14 @@
 namespace WPGraphQLGravityForms\Types\Form;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
  * Form confirmation.
  *
  * @see https://docs.gravityforms.com/confirmation/
  */
-class FormConfirmation implements Hookable {
+class FormConfirmation implements Hookable, Type {
     const TYPE = 'FormConfirmation';
 
     public function register_hooks() {

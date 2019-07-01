@@ -6,10 +6,16 @@ use GFAPI;
 use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\Union\FormFieldUnion;
 use WPGraphQLGravityForms\Types\Button\Button;
 
-class Form implements Hookable {
+/**
+ * Gravity Forms form.
+ *
+ * @see https://docs.gravityforms.com/form-object/
+ */
+class Form implements Hookable, Type {
     const TYPE = 'GravityFormsForm';
 
     public function register_hooks() {

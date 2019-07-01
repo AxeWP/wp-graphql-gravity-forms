@@ -3,13 +3,14 @@
 namespace WPGraphQLGravityForms\Types\Form;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
  * Form notification routing.
  *
  * @see https://docs.gravityforms.com/notifications-object/#routing-rule-properties
  */
-class FormNotificationRouting implements Hookable {
+class FormNotificationRouting implements Hookable, Type {
     const TYPE = 'FormNotificationRouting';
 
     public function register_hooks() {

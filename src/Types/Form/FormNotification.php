@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Types\Form;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 
 /**
@@ -10,7 +11,7 @@ use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
  *
  * @see https://docs.gravityforms.com/notifications-object/
  */
-class FormNotification implements Hookable {
+class FormNotification implements Hookable, Type {
     const TYPE = 'FormNotification';
 
     public function register_hooks() {
