@@ -29,7 +29,7 @@ class MultiSelectField extends Field {
             'description' => __( 'Gravity Forms Multi-Select field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
-                FieldProperty\DescriptionPlacement::get(),
+                FieldProperty\DescriptionPlacementProperty::get(),
                 FieldProperty\EnableChoiceValueProperty::get(),
                 FieldProperty\EnableEnhancedUiProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),

@@ -126,22 +126,17 @@ class TestEntryQuery extends WP_UnitTestCase {
                         ... on TextField {
                             type
                             id
-                            label
-                            defaultValue
                             value
                         }
                         ... on TextAreaField {
                             type
                             id
-                            label
-                            defaultValue
                             value
                         }
                         ... on AddressField {
                             type
                             id
                             label
-                            defaultValue
                             values {
                                 inputId
                                 label
@@ -153,8 +148,6 @@ class TestEntryQuery extends WP_UnitTestCase {
                 }
             }          
         ";
-
-        // @TODO Add pricing fields to test query once plugin supports them.
 
         $expected = [
             'data' => [
@@ -175,40 +168,57 @@ class TestEntryQuery extends WP_UnitTestCase {
                     'status'      => $entry['status'],
                     'fields' => [
                         [
-                            'inputId' => $this->form['fields'][2]['inputs'][0]['id'],
-                            'label'   => $this->form['fields'][2]['inputs'][0]['label'],
-                            'key'     => 'street',
-                            'value'   => $entry[ $this->form['fields'][2]['inputs'][0]['id'] ],
+                            'type' => $this->form['fields'][0]['type'],
+                            'id'   => $this->form['fields'][0]['id'],
+                            'value'=> $entry['1'],
                         ],
                         [
-                            'inputId' => $this->form['fields'][2]['inputs'][1]['id'],
-                            'label'   => $this->form['fields'][2]['inputs'][1]['label'],
-                            'key'     => 'street2',
-                            'value'   => $entry[ $this->form['fields'][2]['inputs'][1]['id'] ],
+                            'type' => $this->form['fields'][1]['type'],
+                            'id'   => $this->form['fields'][1]['id'],
+                            'value'=> $entry['2'],
                         ],
                         [
-                            'inputId' => $this->form['fields'][2]['inputs'][2]['id'],
-                            'label'   => $this->form['fields'][2]['inputs'][2]['label'],
-                            'key'     => 'city',
-                            'value'   => $entry[ $this->form['fields'][2]['inputs'][2]['id'] ],
-                        ],
-                        [
-                            'inputId' => $this->form['fields'][2]['inputs'][3]['id'],
-                            'label'   => $this->form['fields'][2]['inputs'][3]['label'],
-                            'key'     => 'state',
-                            'value'   => $entry[ $this->form['fields'][2]['inputs'][3]['id'] ],
-                        ],
-                        [
-                            'inputId' => $this->form['fields'][2]['inputs'][4]['id'],
-                            'label'   => $this->form['fields'][2]['inputs'][4]['label'],
-                            'key'     => 'zip',
-                            'value'   => $entry[ $this->form['fields'][2]['inputs'][4]['id'] ],
-                        ],
-                        [
-                            'inputId' => $this->form['fields'][2]['inputs'][5]['id'],
-                            'label'   => $this->form['fields'][2]['inputs'][5]['label'],
-                            'key'     => 'country',
-                            'value'   => $entry[ $this->form['fields'][2]['inputs'][5]['id'] ],
+                            'type' => $this->form['fields'][2]['type'],
+                            'id'   => $this->form['fields'][2]['id'],
+                            'label' => $this->form['fields'][2]['label'],
+                            'values'=> [
+                                [
+                                    'inputId' => $this->form['fields'][2]['inputs'][0]['id'],
+                                    'label'   => $this->form['fields'][2]['inputs'][0]['label'],
+                                    'key'     => 'street',
+                                    'value'   => $entry[ $this->form['fields'][2]['inputs'][0]['id'] ],
+                                ],
+                                [
+                                    'inputId' => $this->form['fields'][2]['inputs'][1]['id'],
+                                    'label'   => $this->form['fields'][2]['inputs'][1]['label'],
+                                    'key'     => 'street2',
+                                    'value'   => $entry[ $this->form['fields'][2]['inputs'][1]['id'] ],
+                                ],
+                                [
+                                    'inputId' => $this->form['fields'][2]['inputs'][2]['id'],
+                                    'label'   => $this->form['fields'][2]['inputs'][2]['label'],
+                                    'key'     => 'city',
+                                    'value'   => $entry[ $this->form['fields'][2]['inputs'][2]['id'] ],
+                                ],
+                                [
+                                    'inputId' => $this->form['fields'][2]['inputs'][3]['id'],
+                                    'label'   => $this->form['fields'][2]['inputs'][3]['label'],
+                                    'key'     => 'state',
+                                    'value'   => $entry[ $this->form['fields'][2]['inputs'][3]['id'] ],
+                                ],
+                                [
+                                    'inputId' => $this->form['fields'][2]['inputs'][4]['id'],
+                                    'label'   => $this->form['fields'][2]['inputs'][4]['label'],
+                                    'key'     => 'zip',
+                                    'value'   => $entry[ $this->form['fields'][2]['inputs'][4]['id'] ],
+                                ],
+                                [
+                                    'inputId' => $this->form['fields'][2]['inputs'][5]['id'],
+                                    'label'   => $this->form['fields'][2]['inputs'][5]['label'],
+                                    'key'     => 'country',
+                                    'value'   => $entry[ $this->form['fields'][2]['inputs'][5]['id'] ],
+                                ],
+                            ],
                         ],
                     ],
                 ],

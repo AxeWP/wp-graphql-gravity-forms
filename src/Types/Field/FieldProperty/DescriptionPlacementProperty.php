@@ -8,7 +8,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
  * Description placement property. Applies to List and MultiSelect fields.
  * This is different from the 'descriptionPlacement' Form field.
  */
-abstract class DescriptionPlacement implements FieldProperty {
+abstract class DescriptionPlacementProperty implements FieldProperty {
     public static function get() : array {
         return [
             // @TODO - Convert to enum. Possible values: "above" or "below"

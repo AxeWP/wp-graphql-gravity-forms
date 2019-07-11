@@ -32,7 +32,7 @@ class ListField extends Field {
                 FieldProperty\ErrorMessageProperty::get(),
                 FieldProperty\InputNameProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),
-                FieldProperty\DescriptionPlacement::get(),
+                FieldProperty\DescriptionPlacementProperty::get(),
                 FieldProperty\LabelPlacementProperty::get(),
                 [
                     'addIconUrl' => [

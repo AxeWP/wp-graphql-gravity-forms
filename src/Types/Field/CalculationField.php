@@ -30,7 +30,7 @@ class CalculationField extends Field {
             'description' => __( 'Gravity Forms Calculation field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
-                FieldProperty\DescriptionPlacement::get(),
+                FieldProperty\DescriptionPlacementProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),
                 FieldProperty\NoDuplicatesProperty::get(),
                 [
