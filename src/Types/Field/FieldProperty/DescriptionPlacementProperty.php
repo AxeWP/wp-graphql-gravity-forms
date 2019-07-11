@@ -6,7 +6,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 
 /**
  * Description placement property. Applies to List and MultiSelect fields.
- * This is different from the 'desecriptionPlacement' Form field.
+ * This is different from the 'descriptionPlacement' Form field.
  */
 abstract class DescriptionPlacement implements FieldProperty {
     public static function get() : array {

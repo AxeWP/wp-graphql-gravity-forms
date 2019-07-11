@@ -80,8 +80,12 @@ final class WPGraphQLGravityForms {
 		$this->instances['website_field']        = new Field\WebsiteField();
 
 		// Field Properties
-		$this->instances['choice_property'] = new FieldProperty\ChoiceProperty();
-		$this->instances['input_property']  = new FieldProperty\InputProperty();
+		$this->instances['chained_select_choice_property'] = new FieldProperty\ChainedSelectChoiceProperty();
+		$this->instances['choice_property']                = new FieldProperty\ChoiceProperty();
+		$this->instances['input_property']                 = new FieldProperty\InputProperty();
+		$this->instances['list_choice_property']           = new FieldProperty\ListChoiceProperty();
+		$this->instances['multi_select_choice_property']   = new FieldProperty\MultiSelectChoiceProperty();
+		$this->instances['password_input_property']        = new FieldProperty\PasswordInputProperty();
 		
 		// Field Values
 		$this->instances['address_value']  = new FieldValue\AddressFieldValue();
