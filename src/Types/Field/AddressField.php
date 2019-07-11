@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQLGravityForms\Types\Field\FieldValue\AddressFieldValue;
 
 /**
  * Address field.
@@ -34,10 +35,9 @@ class AddressField extends Field {
                 FieldProperty\IsRequiredProperty::get(),
                 FieldProperty\SizeProperty::get(),
                 FieldProperty\InputsProperty::get(),
+                FieldProperty\LabelPlacementProperty::get(),
                 [
-                    /**
-                     * Possible values: international, us, canadian
-                     */
+                    // @TODO - Convert to an enum. Possible values: international, us, canadian
                     'addressType' => [
                         'type'        => 'String',
                         'description' => __('Determines the type of address to be displayed.', 'wp-graphql-gravity-forms'),
@@ -65,6 +65,14 @@ class AddressField extends Field {
                     'hideState' => [
                         'type'        => 'Boolean',
                         'description' => __('Legacy property used to control whether the state input is visible. To hide the state, use the "isHidden" property of the "inputs" array instead.', 'wp-graphql-gravity-forms'),
+                    ],
+                    'subLabelPlacement'   => [
+                        'type'        => 'String',
+                        'description' => __( 'The placement of the labels for the fields (street, city, zip/postal code, etc.) within the address group. This setting controls all of the address pieces, they cannot be set individually. They may be aligned above or below the inputs. If this property is not set, the “Sub-Label Placement” setting on the Form Settings->Form Layout page is used. If no setting is specified, the default is above inputs.', 'wp-graphql-gravity-forms' ),
+                    ],
+                    'values' => [
+                        'type'        => [ 'list_of' => AddressFieldValue::TYPE ],
+                        'description' => __('Field values.', 'wp-graphql-gravity-forms'),
                     ],
                 ]
             ),

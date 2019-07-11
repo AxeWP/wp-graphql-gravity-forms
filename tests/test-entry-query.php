@@ -3,67 +3,67 @@
 class TestEntryQuery extends WP_UnitTestCase {
     private $form_id;
 
-    public function setUp() {
-        $form = [
-            'title'       => 'Blank Form Title',
-            'description' => 'Blank Form Description',
-            'fields'      => [
-                [
-                    'id'   => 1,
-                    'type' => 'text',
-                ],
-                [
-                    'id'   => 2,
-                    'type' => 'textarea',
-                ],
-                [
-                    'id'   => 3,
-                    'type' => 'address',
-                    'label' => 'Address',
-                    'adminLabel' => '',
-                    'isRequired' => 'false',
-                    'size' => 'medium',
-                    'errorMessage' =>' ',
-                    'visibility' => 'visible',
-                    'addressType' => 'international',
-                    'inputs' => [
-                        [
-                            'id'    => '3.1',
-                            'label' => 'Street Address',
-                            'name'  => '',
-                        ],
-                        [
-                            'id'    => '3.2',
-                            'label' => 'Address Line 2',
-                            'name'  => '',
-                        ],
-                        [
-                            'id'    => '3.3',
-                            'label' => 'City',
-                            'name'  => '',
-                        ],
-                        [
-                            'id'    => '3.4',
-                            'label' => 'State / Province',
-                            'name'  => '',
-                        ],
-                        [
-                            'id'    => '3.5',
-                            'label' => 'ZIP / Postal Code',
-                            'name'  => '',
-                        ],
-                        [
-                            'id'    => '3.6',
-                            'label' => 'Country',
-                            'name'  => '',
-                        ],
+    private $form = [
+        'title'       => 'Blank Form Title',
+        'description' => 'Blank Form Description',
+        'fields'      => [
+            [
+                'id'   => 1,
+                'type' => 'text',
+            ],
+            [
+                'id'   => 2,
+                'type' => 'textarea',
+            ],
+            [
+                'id'   => 3,
+                'type' => 'address',
+                'label' => 'Address',
+                'adminLabel' => '',
+                'isRequired' => 'false',
+                'size' => 'medium',
+                'errorMessage' =>' ',
+                'visibility' => 'visible',
+                'addressType' => 'international',
+                'inputs' => [
+                    [
+                        'id'    => '3.1',
+                        'label' => 'Street Address',
+                        'name'  => '',
+                    ],
+                    [
+                        'id'    => '3.2',
+                        'label' => 'Address Line 2',
+                        'name'  => '',
+                    ],
+                    [
+                        'id'    => '3.3',
+                        'label' => 'City',
+                        'name'  => '',
+                    ],
+                    [
+                        'id'    => '3.4',
+                        'label' => 'State / Province',
+                        'name'  => '',
+                    ],
+                    [
+                        'id'    => '3.5',
+                        'label' => 'ZIP / Postal Code',
+                        'name'  => '',
+                    ],
+                    [
+                        'id'    => '3.6',
+                        'label' => 'Country',
+                        'name'  => '',
                     ],
                 ],
             ],
-        ];
+        ],
+    ];
 
+    public function setUp() {
         // Insert form into the DB using the mock data above.
-        $this->form_id = \GFAPI::add_form( $form );
+        $this->form_id = \GFAPI::add_form( $this->form );
     }
 
     /**
@@ -122,9 +122,33 @@ class TestEntryQuery extends WP_UnitTestCase {
                     status
                     createdBy
                     status
-                    fieldValues {
-                        key
-                        value
+                    fields {
+                        ... on TextField {
+                            type
+                            id
+                            label
+                            defaultValue
+                            value
+                        }
+                        ... on TextAreaField {
+                            type
+                            id
+                            label
+                            defaultValue
+                            value
+                        }
+                        ... on AddressField {
+                            type
+                            id
+                            label
+                            defaultValue
+                            values {
+                                inputId
+                                label
+                                key
+                                value
+                            }
+                        }
                     }
                 }
             }          
@@ -149,38 +173,42 @@ class TestEntryQuery extends WP_UnitTestCase {
                     'status'      => $entry['status'],
                     'createdBy'   => $entry['created_by'],
                     'status'      => $entry['status'],
-                    'fieldValues' => [
+                    'fields' => [
                         [
-                            'key'   => '1',
-                            'value' => $entry['1'],
+                            'inputId' => $this->form['fields'][2]['inputs'][0]['id'],
+                            'label'   => $this->form['fields'][2]['inputs'][0]['label'],
+                            'key'     => 'street',
+                            'value'   => $entry[ $this->form['fields'][2]['inputs'][0]['id'] ],
                         ],
                         [
-                            'key'   => '2',
-                            'value' => $entry['2'],
+                            'inputId' => $this->form['fields'][2]['inputs'][1]['id'],
+                            'label'   => $this->form['fields'][2]['inputs'][1]['label'],
+                            'key'     => 'street2',
+                            'value'   => $entry[ $this->form['fields'][2]['inputs'][1]['id'] ],
                         ],
                         [
-                            'key'   => '3.1',
-                            'value' => $entry['3.1'],
+                            'inputId' => $this->form['fields'][2]['inputs'][2]['id'],
+                            'label'   => $this->form['fields'][2]['inputs'][2]['label'],
+                            'key'     => 'city',
+                            'value'   => $entry[ $this->form['fields'][2]['inputs'][2]['id'] ],
                         ],
                         [
-                            'key'   => '3.2',
-                            'value' => $entry['3.2'],
+                            'inputId' => $this->form['fields'][2]['inputs'][3]['id'],
+                            'label'   => $this->form['fields'][2]['inputs'][3]['label'],
+                            'key'     => 'state',
+                            'value'   => $entry[ $this->form['fields'][2]['inputs'][3]['id'] ],
                         ],
                         [
-                            'key'   => '3.3',
-                            'value' => $entry['3.3'],
+                            'inputId' => $this->form['fields'][2]['inputs'][4]['id'],
+                            'label'   => $this->form['fields'][2]['inputs'][4]['label'],
+                            'key'     => 'zip',
+                            'value'   => $entry[ $this->form['fields'][2]['inputs'][4]['id'] ],
                         ],
                         [
-                            'key'   => '3.4',
-                            'value' => $entry['3.4'],
-                        ],
-                        [
-                            'key'   => '3.5',
-                            'value' => $entry['3.5'],
-                        ],
-                        [
-                            'key'   => '3.6',
-                            'value' => $entry['3.6'],
+                            'inputId' => $this->form['fields'][2]['inputs'][5]['id'],
+                            'label'   => $this->form['fields'][2]['inputs'][5]['label'],
+                            'key'     => 'country',
+                            'value'   => $entry[ $this->form['fields'][2]['inputs'][5]['id'] ],
                         ],
                     ],
                 ],

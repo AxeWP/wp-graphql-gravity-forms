@@ -5,19 +5,29 @@ namespace WPGraphQLGravityForms\Types\Entry;
 use GFAPI;
 use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
+use GraphQL\Type\Definition\ResolveInfo;
+use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Interfaces\Field;
+use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
+use WPGraphQLGravityForms\Types\Form\Form;
 
 /**
  * Gravity Forms form entry.
  *
  * @see https://docs.gravityforms.com/entry-object/
  */
-class Entry implements Hookable, Type {
+class Entry implements Hookable, Type, Field {
     /**
      * Type registered in WPGraphQL.
      */
     const TYPE = 'GravityFormsEntry';
+
+    /**
+     * Field registered in WPGraphQL.
+     */
+    const FIELD = 'gravityFormsEntry';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -40,7 +50,11 @@ class Entry implements Hookable, Type {
                 ],
                 'formId' => [
                     'type'        => 'Integer',
-                    'description' => __( 'The ID of the form from which the entry was submitted.', 'wp-graphql-gravity-forms' ),
+                    'description' => __( 'The ID of the form that was submitted to generate this entry.', 'wp-graphql-gravity-forms' ),
+                ],
+                'form' => [
+                    'type'        => EntryForm::TYPE,
+                    'description' => __( 'The form that was submitted to generate this entry.', 'wp-graphql-gravity-forms' ),
                 ],
                 'postId' => [
                     'type'        => 'Integer',
@@ -86,9 +100,10 @@ class Entry implements Hookable, Type {
                     'type'        => 'String',
                     'description' => __( 'The current status of the entry (ie "Active", "Spam", "Trash").', 'wp-graphql-gravity-forms' ),
                 ],
-                'fieldValues' => [
-                    'type'        => [ 'list_of' => FieldValue::TYPE ],
-                    'description' => __( 'The entry field values.', 'wp-graphql-gravity-forms' ),
+                // @TODO: Consider making this a connection rather than a list.
+                'fields' => [
+                    'type'        => [ 'list_of' => ObjectFieldUnion::TYPE ],
+                    'description' => __( 'The entry fields and their values.', 'wp-graphql-gravity-forms' ),
                 ],
                 /**
                  * @TODO: Add support for getting field values by their IDs ( or getting all)
@@ -105,7 +120,7 @@ class Entry implements Hookable, Type {
     }
 
     public function register_field() {
-        register_graphql_field( 'RootQuery', 'gravityFormsEntry', [
+        register_graphql_field( 'RootQuery', self::FIELD, [
             'description' => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
             'type' => self::TYPE,
             'args' => [
@@ -116,7 +131,7 @@ class Entry implements Hookable, Type {
                     'description' => __( 'Globally unique ID for the object. Base-64 encode a string like this, where "123" is the entry ID: "gravityformsentry:123".', 'wp-graphql-gravity-forms' ),
                 ],
             ],
-            'resolve' => function( $root, array $args ) {
+            'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
                 $id_parts = Relay::fromGlobalId( $args['id'] );
 
                 if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
@@ -133,9 +148,49 @@ class Entry implements Hookable, Type {
                 $entry['entryId'] = $entry['id'];
                 $entry['id']      = $args['id'];
 
-                return $this->nest_entry_field_values( $this->convert_entry_keys_to_camelcase( $entry ) );
+                $field_values = $this->extract_field_values_from_entry( $entry );
+
+                if ( $this->were_fields_requested( $info ) ) {
+                    // @TODO: Maybe try to get this from this field value: wp-content/plugins/wp-graphql-gravity-forms/src/Types/Entry/EntryForm.php
+                    // That would avoid querying for the form data twice.
+                    $form = GFAPI::get_form( $entry['form_id'] );
+
+                    if ( ! $form ) {
+                        throw new UserError( __( 'The form used to generate this entry was not found.', 'wp-graphql-gravity-forms' ) );
+                    }
+
+                    $entry = $this->add_fields_data_to_entry( $entry, $field_values, $form );
+                }
+
+                $entry = $this->remove_top_level_field_values_from_entry( $entry, $field_values );
+                $entry = $this->convert_entry_keys_to_camelcase( $entry );
+
+                return $entry;
             }
         ] );
+    }
+
+    /**
+     * @param array $entry Entry data.
+     *
+     * @return array $entry Entry data, with all non-field values removed and field values formatted./
+     */
+    private function extract_field_values_from_entry( array $entry ) : array {
+        $non_field_value_keys = $this->get_non_field_value_keys();
+
+        return array_filter( $entry, function( $key ) use ( $non_field_value_keys ) {
+            return ! in_array( $key, $non_field_value_keys );
+        }, ARRAY_FILTER_USE_KEY );
+    }
+
+    /**
+     * @param array $entry        Entry data.
+     * @param array $field_values Field values from entry.
+     *
+     * @return array The entry, with top-level field values removed.
+     */
+    private function remove_top_level_field_values_from_entry( array $entry, array $field_values ) : array {
+        return array_diff_key( $entry, $field_values );
     }
 
     /**
@@ -144,97 +199,92 @@ class Entry implements Hookable, Type {
      * @return array $entry Entry data with keys converted to camelCase.
      */
     private function convert_entry_keys_to_camelcase( array $entry ) : array {
-        $entry['formId']          = $entry['form_id'];
-        $entry['postId']          = $entry['post_id'];
-        $entry['dateCreated']     = $entry['date_created'];
-        $entry['dateUpdated']     = $entry['date_updated'];
-        $entry['isStarred']       = $entry['is_starred'];
-        $entry['isRead']          = $entry['is_read'];
-        $entry['sourceUrl']       = $entry['source_url'];
-        $entry['userAgent']       = $entry['user_agent'];
-        $entry['paymentStatus']   = $entry['payment_status'];
-        $entry['paymentDate']     = $entry['payment_date'];
-        $entry['paymentAmount']   = $entry['payment_amount'];
-        $entry['paymentMethod']   = $entry['payment_method'];
-        $entry['transactionId']   = $entry['transaction_id'];
-        $entry['isFulfilled']     = $entry['is_fulfilled'];
-        $entry['createdBy']       = $entry['created_by'];
-        $entry['transactionType'] = $entry['transaction_type'];
-
-        unset(
-            $entry['form_id'],
-            $entry['post_id'],
-            $entry['date_created'],
-            $entry['date_updated'],
-            $entry['is_starred'],
-            $entry['is_read'],
-            $entry['source_url'],
-            $entry['user_agent'],
-            $entry['payment_status'],
-            $entry['payment_date'],
-            $entry['payment_amount'],
-            $entry['payment_method'],
-            $entry['transaction_id'],
-            $entry['is_fulfilled'],
-            $entry['created_by'],
-            $entry['transaction_type']
-        );
+        foreach ( $this->get_key_mappings() as $snake_case_key => $camel_case_key ) {
+            $entry[ $camel_case_key ] = $entry[ $snake_case_key ];
+            unset( $entry[ $snake_case_key ] );
+        }
 
         return $entry;
     }
 
     /**
-     * Remove field values from the top level of the entry array and nest them under
-     * a 'fieldValues' array key.
-     *
-     * @param array $entry Entry data.
-     *
-     * @return array $entry Entry data with field values nested under a 'fieldValues' key.
+     * @return array Gravity Forms Entry meta keys and their camelCase equivalents.
      */
-    private function nest_entry_field_values( array $entry ) : array {
-        $field_values     = $this->extract_field_values_from_entry_data( $entry );
-        $non_field_values = array_diff_key( $entry, $field_values );
-
-        return array_merge( $non_field_values, [ 'fieldValues' => $field_values ] );
+    private function get_key_mappings() : array {
+        return [
+            'form_id'          => 'formId',
+            'post_id'          => 'postId',
+            'date_created'     => 'dateCreated',
+            'date_updated'     => 'dateUpdated',
+            'is_starred'       => 'isStarred',
+            'is_read'          => 'isRead',
+            'source_url'       => 'sourceUrl',
+            'user_agent'       => 'userAgent',
+            'payment_status'   => 'paymentStatus',
+            'payment_date'     => 'paymentDate',
+            'payment_amount'   => 'paymentAmount',
+            'payment_method'   => 'paymentMethod',
+            'transaction_id'   => 'transactionId',
+            'is_fulfilled'     => 'isFulfilled',
+            'created_by'       => 'createdBy',
+            'transaction_type' => 'transactionType',
+        ];
     }
 
     /**
-     * Remove all non-fields values from entry array to get an array of just the field values.
-     *
-     * @param array $entry Entry data.
-     *
-     * @return array $entry Entry data, with all non-field values removed and field values formatted./
+     * @return array All non-field value entry keys.
      */
-    private function extract_field_values_from_entry_data( array $entry ) : array {
-        unset(
-            $entry['id'],
-            $entry['entryId'],
-            $entry['formId'],
-            $entry['postId'],
-            $entry['dateCreated'],
-            $entry['dateUpdated'],
-            $entry['isStarred'],
-            $entry['isRead'],
-            $entry['ip'],
-            $entry['sourceUrl'],
-            $entry['userAgent'],
-            $entry['currency'],
-            $entry['paymentStatus'],
-            $entry['paymentDate'],
-            $entry['paymentAmount'],
-            $entry['paymentMethod'],
-            $entry['transactionId'],
-            $entry['isFulfilled'],
-            $entry['createdBy'],
-            $entry['transactionType'],
-            $entry['status']
+    private function get_non_field_value_keys() : array {
+        return array_merge(
+            array_keys( $this->get_key_mappings() ),
+            ['id', 'entryId', 'ip', 'currency', 'status']
         );
+    }
 
-        return array_map( function( $entry_key ) use ( $entry ) {
-            return [
-                'key'   => $entry_key,
-                'value' => $entry[ $entry_key ],
-            ];
-        }, array_keys( $entry ) );
+    /**
+     * @param ResolveInfo $info Request info.
+     *
+     * @return bool Whether fields data was requested.
+     */
+    private function were_fields_requested( ResolveInfo $info ) : bool {
+        return ! empty( $info->getFieldSelection( 1 )['fields'] );
+    }
+
+    /**
+     * @param array $entry        Entry data.
+     * @param array $field_values Field values from entry.
+     * @param array $form         Form meta array.
+     *
+     * @return array Entry with field value data added.
+     */
+    private function add_fields_data_to_entry( array $entry, array $field_values, array $form ) : array {
+        $entry['fields'] = array_reduce( $form['fields'], function( $fields, $field ) use ( $entry, $field_values ) {
+            if ( 'text' === $field['type'] || 'textarea' === $field['type'] ) {
+                $field['value'] = $entry[ $field['id'] ];
+            }
+
+            if ( 'address' === $field['type'] ) {
+                $values = [];
+
+                foreach ( ['street', 'street2', 'city', 'state', 'zip', 'country'] as $index => $key ) {
+                    $values[] = [
+                        'inputId' => $field['inputs'][ $index ]['id'],
+                        'label'   => $field['inputs'][ $index ]['label'],
+                        'key'     => $key,
+                        'value'   => $field_values[ $field['inputs'][ $index ]['id'] ],
+                    ];
+                }
+
+                $field['values'] = $values;
+            }
+
+            // @TODO - Add all other fields.
+
+            $fields[] = $field;
+
+            return $fields;
+        }, [] );
+
+        return $entry;
     }
 }

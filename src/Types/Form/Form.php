@@ -7,7 +7,8 @@ use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
-use WPGraphQLGravityForms\Types\Union\FormFieldUnion;
+use WPGraphQLGravityForms\Interfaces\Field;
+use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\Types\Button\Button;
 
 /**
@@ -15,8 +16,16 @@ use WPGraphQLGravityForms\Types\Button\Button;
  *
  * @see https://docs.gravityforms.com/form-object/
  */
-class Form implements Hookable, Type {
+class Form implements Hookable, Type, Field {
+    /**
+     * Type registered in WPGraphQL.
+     */
     const TYPE = 'GravityFormsForm';
+
+    /**
+     * Field registered in WPGraphQL.
+     */
+    const FIELD = 'gravityFormsForm';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -45,10 +54,12 @@ class Form implements Hookable, Type {
                     'type'        => 'String',
                     'description' => __( 'Form description.', 'wp-graphql-gravity-forms' ),
                 ],
+                // @TODO - Convert to enum. Possible values: top_label, left_label, right_label
                 'labelPlacement' => [
                     'type'        => 'String',
-                    'description' => __( 'Determines if the field labels are displayed on top of the fields (top_label), besides the fields and aligned to the left (left_label) or besides the fields and aligned to the right (right_label).', 'wp-graphql-gravity-forms' ),
+                    'description' => __( 'Determines if the field labels are displayed on top of the fields (top_label), beside the fields and aligned to the left (left_label) or beside the fields and aligned to the right (right_label).', 'wp-graphql-gravity-forms' ),
                 ],
+                // @TODO - Convert to enum. Possible values: above, below
                 'descriptionPlacement' => [
                     'type'        => 'String',
                     'description' => __( 'Determines if the field description is displayed above the field input (i.e. immediately after the field label) or below the field input.', 'wp-graphql-gravity-forms' ),
@@ -58,7 +69,7 @@ class Form implements Hookable, Type {
                     'description' => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
                 ],
                 'fields'   => [
-                    'type'        => [ 'list_of' => FormFieldUnion::TYPE ],
+                    'type'        => [ 'list_of' => ObjectFieldUnion::TYPE ],
                     'description' => __( 'List of all fields that belong to the form.', 'wp-graphql-gravity-forms' ),
                 ],
                 'version'   => [
@@ -113,7 +124,7 @@ class Form implements Hookable, Type {
                     'type'        => 'String',
                     'description' => __( 'For forms with Post fields, determines the status that the Post should be created with.', 'wp-graphql-gravity-forms' ),
                 ],
-                // @TODO This is probably an enum - https://docs.gravityforms.com/gf_field_name/
+                // @TODO: Convert to an enum. https://docs.gravityforms.com/gf_field_name/
                 'subLabelPlacement'   => [
                     'type'        => 'String',
                     'description' => __( 'How sub-labels are aligned.', 'wp-graphql-gravity-forms' ),
@@ -231,7 +242,7 @@ class Form implements Hookable, Type {
     }
 
     public function register_field() {
-        register_graphql_field( 'RootQuery', 'gravityFormsForm', [
+        register_graphql_field( 'RootQuery', self::FIELD, [
             'description' => __( 'Get a Gravity Forms form.', 'wp-graphql-gravity-forms' ),
             'type' => self::TYPE,
             'args' => [
@@ -265,7 +276,7 @@ class Form implements Hookable, Type {
     }
 
     /**
-     * @param array $form Form meta array
+     * @param array $form Form meta array.
      *
      * @return array $form Form meta array with keys converted to camelCase.
      */

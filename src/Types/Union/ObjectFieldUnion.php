@@ -9,13 +9,13 @@ use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\Field\Field;
 
 /**
- * Union between a Gravity Forms form and a Gravity Forms field.
+ * Union between an object and a Gravity Forms field.
  */
-class FormFieldUnion implements Hookable, Type {
+class ObjectFieldUnion implements Hookable, Type {
     /**
      * Type registered in WPGraphQL.
      */
-    const TYPE = 'FormFieldUnion';
+    const TYPE = 'ObjectFieldUnion';
 
     /**
      * WPGraphQL plugin's class instances.

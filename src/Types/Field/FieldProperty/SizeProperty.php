@@ -13,9 +13,10 @@ abstract class SizeProperty implements FieldProperty {
      */
     public static function get() : array {
         return [
+            // @TODO: Convert to enum. Possible values: small, medium, large
             'size' => [
                 'type'        => 'String',
-                'description' => __('Determines the size of the field when displayed on the page.', 'wp-graphql-gravity-forms'),
+                'description' => __('Determines the size of the field when displayed on the page. Possible values are: "small", "medium", "large".', 'wp-graphql-gravity-forms'),
             ],
         ];
     }

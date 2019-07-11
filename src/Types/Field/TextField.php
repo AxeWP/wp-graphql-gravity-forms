@@ -40,7 +40,11 @@ class TextField extends Field {
                     'enablePasswordInput' => [
                         'type'        => 'Boolean',
                         'description' => __('Determines if a text field input tag should be created with a "password" type.', 'wp-graphql-gravity-forms'),
-                    ]
+                    ],
+                    'value' => [
+                        'type'        => 'String',
+                        'description' => __('Field value. Only applies to Entry queries.', 'wp-graphql-gravity-forms'),
+                    ],
                 ]
             ),
         ] );

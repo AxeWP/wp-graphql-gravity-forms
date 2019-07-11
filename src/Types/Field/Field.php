@@ -42,6 +42,7 @@ abstract class Field implements Hookable, Type {
                 'type'        => 'String',
                 'description' => __('Field description.', 'wp-graphql-gravity-forms'),
             ],
+            // @TODO: consider changing this to fieldId so that id can be used for the global Relay ID.
             'id' => [
                 'type'        => 'Integer',
                 'description' => __('Field ID.', 'wp-graphql-gravity-forms'),
@@ -58,6 +59,7 @@ abstract class Field implements Hookable, Type {
                 'type'        => 'Integer',
                 'description' => __('The ID of the form this field belongs to.', 'wp-graphql-gravity-forms'),
             ],
+            // @TODO: add 'visibility' (visible, hidden, possibly other values.)
         ];
     }
 }
