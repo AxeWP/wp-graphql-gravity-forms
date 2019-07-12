@@ -47,11 +47,13 @@ class TestTextFieldValue extends BaseTestClass {
         ],
     ];
 
-    private $field_values = [
-        '1' => 'This is the single line field value.',
-    ];
+    private $field_values = [];
 
     public function setUp() {
+        $this->field_values = [
+            $this->fields[0]['id'] => 'This is the text field value.',
+        ];
+
         $this->create_form( $this->fields );
         $this->create_entry( $this->field_values );
     }
@@ -78,14 +80,14 @@ class TestTextFieldValue extends BaseTestClass {
                         [
                             'type' => $this->fields[0]['type'],
                             'id'   => $this->fields[0]['id'],
-                            'value'=> $this->field_values['1'],
+                            'value'=> $this->field_values[ $this->fields[0]['id'] ],
                         ],
                     ],
                 ],
             ],
         ];
 
-        // @TODO: Expand test to include all the fields that text fields have.
+        // @TODO: Expand test to include all other fields.
 
         $actual = graphql( [ 'query' => $query ] );
 
