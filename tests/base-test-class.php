@@ -1,5 +1,8 @@
 <?php
 
+use WPGraphQLGravityForms\Types\Form\Form;
+use WPGraphQLGravityForms\Types\Entry\Entry;
+
 abstract class BaseTestClass extends WP_UnitTestCase {
     /**
      * Form object for the created form.
@@ -35,7 +38,7 @@ abstract class BaseTestClass extends WP_UnitTestCase {
 
         $form_id              = \GFAPI::add_form( $form );
         $this->form           = \GFAPI::get_form( $form_id );
-        $this->form_global_id = \GraphQLRelay\Relay::toGlobalId( 'gravityformsform', $form_id );
+        $this->form_global_id = \GraphQLRelay\Relay::toGlobalId( Form::TYPE, $form_id );
     }
 
     /**
@@ -69,6 +72,6 @@ abstract class BaseTestClass extends WP_UnitTestCase {
 
         $entry_id              = \GFAPI::add_entry( $entry + $field_values );
         $this->entry           = \GFAPI::get_entry( $entry_id );
-        $this->entry_global_id = \GraphQLRelay\Relay::toGlobalId( 'gravityformsentry', $entry_id );
+        $this->entry_global_id = \GraphQLRelay\Relay::toGlobalId( Entry::TYPE, $entry_id );
     }
 }

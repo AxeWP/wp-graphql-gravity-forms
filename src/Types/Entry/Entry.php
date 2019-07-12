@@ -42,7 +42,7 @@ class Entry implements Hookable, Type, Field {
                     'type'        => [
                         'non_null' => 'ID',
                     ],
-                    'description' => __( 'Globally unique ID for the object.', 'wp-graphql-gravity-forms' ),
+                    'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
                 ],
                 'entryId' => [
                     'type'        => 'Integer',
@@ -51,10 +51,6 @@ class Entry implements Hookable, Type, Field {
                 'formId' => [
                     'type'        => 'Integer',
                     'description' => __( 'The ID of the form that was submitted to generate this entry.', 'wp-graphql-gravity-forms' ),
-                ],
-                'form' => [
-                    'type'        => EntryForm::TYPE,
-                    'description' => __( 'The form that was submitted to generate this entry.', 'wp-graphql-gravity-forms' ),
                 ],
                 'postId' => [
                     'type'        => 'Integer',
@@ -128,7 +124,7 @@ class Entry implements Hookable, Type, Field {
                     'type' => [
                         'non_null' => 'ID',
                     ],
-                    'description' => __( 'Globally unique ID for the object. Base-64 encode a string like this, where "123" is the entry ID: "gravityformsentry:123".', 'wp-graphql-gravity-forms' ),
+                    'description' => __( "Unique global ID for the object. Base-64 encode a string like this, where '123' is the entry ID: '{self::TYPE}:123'.", 'wp-graphql-gravity-forms' ),
                 ],
             ],
             'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
@@ -144,15 +140,14 @@ class Entry implements Hookable, Type, Field {
                     throw new UserError( __( 'An entry with this ID was not found.', 'wp-graphql-gravity-forms' ) );
                 }
 
-                // Create a new 'entryId' key to the entry ID and set 'id' to be the global Relay ID.
-                $entry['entryId'] = $entry['id'];
-                $entry['id']      = $args['id'];
+                $entry = $this->set_global_and_entry_ids( $entry );
 
                 $field_values = $this->extract_field_values_from_entry( $entry );
 
                 if ( $this->were_fields_requested( $info ) ) {
-                    // @TODO: Maybe try to get this from this field value: wp-content/plugins/wp-graphql-gravity-forms/src/Types/Entry/EntryForm.php
-                    // That would avoid querying for the form data twice.
+                    // @TODO: If the client has requested both 'form' and 'fields', we are fetching
+                    // the form data once below, then a second time in /src/Types/Entry/EntryForm.php.
+                    // Determine a way to prevent fetching that same data twice.
                     $form = GFAPI::get_form( $entry['form_id'] );
 
                     if ( ! $form ) {
@@ -168,6 +163,20 @@ class Entry implements Hookable, Type, Field {
                 return $entry;
             }
         ] );
+    }
+
+    /**
+     * Set 'entryId' to be the entry ID and 'id' to be the global Relay ID.
+     *
+     * @param array $entry Entry data.
+     *
+     * @return array $entry Entry data, with the entry ID and global Relay ID set.
+     */
+    private function set_global_and_entry_ids( array $entry ) : array {
+        $entry['entryId'] = $entry['id'];
+        $entry['id']      = $args['id'] ?? Relay::toGlobalId( self::TYPE, $entry['entryId'] );
+
+        return $entry;
     }
 
     /**

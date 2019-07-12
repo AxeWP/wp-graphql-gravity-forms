@@ -3,13 +3,14 @@
 namespace WPGraphQLGravityForms\Types\Entry;
 
 use GFAPI;
+use GraphQLRelay;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\Field;
 use WPGraphQLGravityForms\Types\Form\Form;
 
 /**
- * Form associated with an Entry.
+ * Creates a 1:1 relationship between an Entry and the Form associated with it.
  */
 class EntryForm implements Hookable, Type, Field {
     /**
@@ -20,15 +21,18 @@ class EntryForm implements Hookable, Type, Field {
     /**
      * Field registered in WPGraphQL.
      */
-    const FIELD = 'entryForm';
+    const FIELD = 'form';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
         add_action( 'graphql_register_types', [ $this, 'register_field' ] );
     }
 
+    /**
+     * Register new edge type.
+     */
     public function register_type() {
-        register_graphql_object_type( self::TYPE, [
+        register_graphql_type( self::TYPE, [
             'description' => __('The Gravity Forms form associated with the entry.', 'wp-graphql-gravity-forms'),
             'fields'      => [
                 'node' => [
@@ -43,12 +47,16 @@ class EntryForm implements Hookable, Type, Field {
         register_graphql_field( Entry::TYPE, self::FIELD, [
             'type'        => self::TYPE,
             'description' => __( 'The Gravity Forms form associated with the entry.', 'wp-graphql-gravity-forms' ),
-            'resolve'     => function( $form_id ) {
-                $form = GFAPI::get_form( $entry['form_id'] );
+            'resolve'     => function( array $entry ) : array {
+                $form = GFAPI::get_form( $entry['formId'] );
 
-                // @TODO: resolve this to Form type.
-                // Example: https://gist.github.com/jasonbahl/55a6eff4cd67ce639ecd2d9989fef4cc
-                return [];
+                if ( ! $form ) {
+                    throw new UserError( __( 'The form used to generate this entry was not found.', 'wp-graphql-gravity-forms' ) );
+                }
+
+                return [
+                    'node' => Form::convert_form_keys_to_camelcase( Form::set_global_and_form_ids( $form ) ),
+                ];
             }
         ] );
     }

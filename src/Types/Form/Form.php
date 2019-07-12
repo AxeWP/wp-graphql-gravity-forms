@@ -40,7 +40,7 @@ class Form implements Hookable, Type, Field {
                     'type'         => [
                         'non_null' => 'ID',
                     ],
-                    'description' => __( 'Globally unique ID for the object.', 'wp-graphql-gravity-forms' ),
+                    'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
                 ],
                 'formId' => [
                     'type'        => 'Integer',
@@ -250,7 +250,7 @@ class Form implements Hookable, Type, Field {
                     'type' => [
                         'non_null' => 'ID',
                     ],
-                    'description' => __( 'The globally unique ID for the object. Base-64 encode a string like this, where "123" is the form ID: "gravityformsform:123".', 'wp-graphql-gravity-forms' ),
+                    'description' => __( "Unique global ID for the object. Base-64 encode a string like this, where '123' is the form ID: '{self::TYPE}:123'.", 'wp-graphql-gravity-forms' ),
                 ],
             ],
             'resolve' => function( $root, array $args ) {
@@ -266,13 +266,24 @@ class Form implements Hookable, Type, Field {
                     throw new UserError( __( 'A valid form ID must be provided.', 'wp-graphql-gravity-forms' ) );
                 }
 
-                // Set 'formId' to be the form ID and 'id' to be the global Relay ID.
-                $form['formId'] = $form['id'];
-                $form['id']     = $args['id'];
-
-                return $this->convert_form_keys_to_camelcase( $form );
+                return self::convert_form_keys_to_camelcase( self::set_global_and_form_ids( $form, $args ) );
             }
         ] );
+    }
+
+    /**
+     * Set 'formId' to be the form ID and 'id' to be the global Relay ID.
+     *
+     * @param array $form Form meta array.
+     * @param array $args Query arguments.
+     *
+     * @return array $form Form meta array with the form ID and global Relay ID set.
+     */
+    public static function set_global_and_form_ids( array $form, array $args = [] ) : array {
+        $form['formId'] = $form['id'];
+        $form['id']     = $args['id'] ?? Relay::toGlobalId( self::TYPE, $form['formId'] );
+
+        return $form;
     }
 
     /**
@@ -280,7 +291,7 @@ class Form implements Hookable, Type, Field {
      *
      * @return array $form Form meta array with keys converted to camelCase.
      */
-    private function convert_form_keys_to_camelcase( array $form ) : array {
+    public static function convert_form_keys_to_camelcase( array $form ) : array {
         $form['isActive']    = $form['is_active'];
         $form['dateCreated'] = $form['date_created'];
         $form['isTrash']     = $form['is_trash'];

@@ -241,7 +241,7 @@ class TestFormQuery extends WP_UnitTestCase {
 
         // Insert form into the DB using the mock data above.
         $form_id   = \GFAPI::add_form( $form );
-        $global_id = \GraphQLRelay\Relay::toGlobalId( 'gravityformsform', $form_id );
+        $global_id = \GraphQLRelay\Relay::toGlobalId( 'GravityFormsForm', $form_id );
 
         // A new date_created is generated when a form is imported using GFAPI::add_form(), so
         // we need to get that value from the DB rather than from the mock data above.

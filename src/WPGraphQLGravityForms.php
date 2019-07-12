@@ -91,7 +91,8 @@ final class WPGraphQLGravityForms {
 		$this->instances['address_value']  = new FieldValue\AddressFieldValue();
 
 		// Entries
-		$this->instances['entry'] = new Entry\Entry();
+		$this->instances['entry']      = new Entry\Entry();
+		$this->instances['entry_form'] = new Entry\EntryForm();
 
 		// Unions
 		$this->instances['object_field_union'] = new Union\ObjectFieldUnion( $this->instances );
@@ -109,31 +110,3 @@ final class WPGraphQLGravityForms {
 		} );
 	}
 }
-
-
-add_action('wp', function() {
-return;
-
-	$query = "
-		{
-		gravityFormsEntry(id: \"Z3Jhdml0eWZvcm1zZW50cnk6MQ==\") {
-			id
-			formId
-			createdBy
-			dateCreated
-			isStarred
-			isRead
-			ip
-			sourceUrl
-			postId
-			userAgent
-			status
-			fields {
-
-		}
-	";
-
-	$result = graphql( [ 'query' => $query ] );
-
-	$test = '';
-});
