@@ -18,14 +18,14 @@ class ObjectFieldUnion implements Hookable, Type {
     const TYPE = 'ObjectFieldUnion';
 
     /**
-     * WPGraphQL plugin's class instances.
+     * WPGraphQL for Gravity Forms plugin's class instances.
      *
      * @var array
      */
     private $instances;
 
     /**
-     * @param array WPGraphQL plugin's class instances.
+     * @param array WPGraphQL for Gravity Forms plugin's class instances.
      */
     public function __construct( array $instances ) {
         $this->instances = $instances;
@@ -55,16 +55,11 @@ class ObjectFieldUnion implements Hookable, Type {
      * to the corresponding field types registered in WPGraphQL.
      * Example: [ 'textarea' => 'TextArea' ]
      *
-     * Key values are: html, hidden, section, text, website, phone,
-     * number, date, time, textarea, select, checkbox, radio, name,
-     * address, fileupload, email, post_title, post_content, post_excerpt,
-     * post_tags, post_category, post_image, post_custom_field, captcha
-     *
      * @return array Field type mappings.
      */
     private function get_field_type_mappings() : array {
         $fields = array_filter( $this->instances, function( $instance ) {
-			return $instance instanceof Field;
+            return $instance instanceof Field;
         } );
 
         return array_reduce( $fields, function( $mappings, $field ) {
