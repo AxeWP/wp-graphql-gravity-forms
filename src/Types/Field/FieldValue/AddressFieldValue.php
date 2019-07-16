@@ -2,6 +2,7 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
+use GF_Field;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 
@@ -20,7 +21,7 @@ class AddressFieldValue implements Hookable, Type {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __('Gravity Forms address field value.', 'wp-graphql-gravity-forms'),
+            'description' => __('Individual address field value.', 'wp-graphql-gravity-forms'),
             'fields'      => [
                 'inputId' => [
                     'type'        => 'String',

@@ -52,6 +52,7 @@ class Entry implements Hookable, Type, Field {
                     'type'        => 'Integer',
                     'description' => __( 'The ID of the form that was submitted to generate this entry.', 'wp-graphql-gravity-forms' ),
                 ],
+                // @TODO: Add field to get post data.
                 'postId' => [
                     'type'        => 'Integer',
                     'description' => __( 'For forms with Post fields, this property contains the Id of the Post that was created.', 'wp-graphql-gravity-forms' ),
@@ -88,6 +89,7 @@ class Entry implements Hookable, Type, Field {
                     'type'        => 'String',
                     'description' => __( 'The current status of the entry (ie "Active", "Spam", "Trash").', 'wp-graphql-gravity-forms' ),
                 ],
+                // @TODO: Add field to get user data.
                 'createdBy' => [
                     'type'        => 'Integer',
                     'description' => __( 'ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
@@ -96,16 +98,6 @@ class Entry implements Hookable, Type, Field {
                     'type'        => 'String',
                     'description' => __( 'The current status of the entry (ie "Active", "Spam", "Trash").', 'wp-graphql-gravity-forms' ),
                 ],
-                // @TODO: Consider making this a connection rather than a list.
-                'fields' => [
-                    'type'        => [ 'list_of' => ObjectFieldUnion::TYPE ],
-                    'description' => __( 'The entry fields and their values.', 'wp-graphql-gravity-forms' ),
-                ],
-                /**
-                 * @TODO: Add support for getting field values by their IDs ( or getting all)
-                 * https://docs.gravityforms.com/entry-object/#field-values
-                 */
-
                 /**
                  * @TODO: Add support for these pricing properties that are only relevant
                  * when a Gravity Forms payment gateway add-on is being used:
@@ -140,27 +132,7 @@ class Entry implements Hookable, Type, Field {
                     throw new UserError( __( 'An entry with this ID was not found.', 'wp-graphql-gravity-forms' ) );
                 }
 
-                $entry = $this->set_global_and_entry_ids( $entry );
-
-                $field_values = $this->extract_field_values_from_entry( $entry );
-
-                if ( $this->were_fields_requested( $info ) ) {
-                    // @TODO: If the client has requested both 'form' and 'fields', we are fetching
-                    // the form data once below, then a second time in /src/Types/Entry/EntryForm.php.
-                    // Determine a way to prevent fetching that same data twice.
-                    $form = GFAPI::get_form( $entry['form_id'] );
-
-                    if ( ! $form ) {
-                        throw new UserError( __( 'The form used to generate this entry was not found.', 'wp-graphql-gravity-forms' ) );
-                    }
-
-                    $entry = $this->add_fields_data_to_entry( $entry, $field_values, $form );
-                }
-
-                $entry = $this->remove_top_level_field_values_from_entry( $entry, $field_values );
-                $entry = $this->convert_entry_keys_to_camelcase( $entry );
-
-                return $entry;
+                return $this->convert_entry_keys_to_camelcase( $this->set_global_and_entry_ids( $entry ) );
             }
         ] );
     }
@@ -177,29 +149,6 @@ class Entry implements Hookable, Type, Field {
         $entry['id']      = $args['id'] ?? Relay::toGlobalId( self::TYPE, $entry['entryId'] );
 
         return $entry;
-    }
-
-    /**
-     * @param array $entry Entry data.
-     *
-     * @return array $entry Entry data, with all non-field values removed and field values formatted./
-     */
-    private function extract_field_values_from_entry( array $entry ) : array {
-        $non_field_value_keys = $this->get_non_field_value_keys();
-
-        return array_filter( $entry, function( $key ) use ( $non_field_value_keys ) {
-            return ! in_array( $key, $non_field_value_keys );
-        }, ARRAY_FILTER_USE_KEY );
-    }
-
-    /**
-     * @param array $entry        Entry data.
-     * @param array $field_values Field values from entry.
-     *
-     * @return array The entry, with top-level field values removed.
-     */
-    private function remove_top_level_field_values_from_entry( array $entry, array $field_values ) : array {
-        return array_diff_key( $entry, $field_values );
     }
 
     /**
@@ -238,62 +187,5 @@ class Entry implements Hookable, Type, Field {
             'created_by'       => 'createdBy',
             'transaction_type' => 'transactionType',
         ];
-    }
-
-    /**
-     * @return array All non-field value entry keys.
-     */
-    private function get_non_field_value_keys() : array {
-        return array_merge(
-            array_keys( $this->get_key_mappings() ),
-            ['id', 'entryId', 'ip', 'currency', 'status']
-        );
-    }
-
-    /**
-     * @param ResolveInfo $info Request info.
-     *
-     * @return bool Whether fields data was requested.
-     */
-    private function were_fields_requested( ResolveInfo $info ) : bool {
-        return ! empty( $info->getFieldSelection( 1 )['fields'] );
-    }
-
-    /**
-     * @param array $entry        Entry data.
-     * @param array $field_values Field values from entry.
-     * @param array $form         Form meta array.
-     *
-     * @return array Entry with field value data added.
-     */
-    private function add_fields_data_to_entry( array $entry, array $field_values, array $form ) : array {
-        $entry['fields'] = array_reduce( $form['fields'], function( $fields, $field ) use ( $entry, $field_values ) {
-            if ( 'text' === $field['type'] || 'textarea' === $field['type'] ) {
-                $field['value'] = $entry[ $field['id'] ];
-            }
-
-            if ( 'address' === $field['type'] ) {
-                $values = [];
-
-                foreach ( ['street', 'street2', 'city', 'state', 'zip', 'country'] as $index => $key ) {
-                    $values[] = [
-                        'inputId' => $field['inputs'][ $index ]['id'],
-                        'label'   => $field['inputs'][ $index ]['label'],
-                        'key'     => $key,
-                        'value'   => $field_values[ $field['inputs'][ $index ]['id'] ],
-                    ];
-                }
-
-                $field['values'] = $values;
-            }
-
-            // @TODO - Add all other fields.
-
-            $fields[] = $field;
-
-            return $fields;
-        }, [] );
-
-        return $entry;
     }
 }

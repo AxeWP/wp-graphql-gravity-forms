@@ -4,6 +4,7 @@ namespace WPGraphQLGravityForms\Types\Entry;
 
 use GFAPI;
 use GraphQLRelay;
+use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\Field;

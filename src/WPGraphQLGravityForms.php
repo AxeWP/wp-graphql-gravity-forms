@@ -10,6 +10,7 @@ use WPGraphQLGravityForms\Types\Field;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 use WPGraphQLGravityForms\Types\Field\FieldValue;
 use WPGraphQLGravityForms\Types\Union;
+use WPGraphQLGravityForms\Types\Connection;
 use WPGraphQLGravityForms\Types\Entry;
 
 /**
@@ -86,16 +87,23 @@ final class WPGraphQLGravityForms {
 		$this->instances['list_choice_property']           = new FieldProperty\ListChoiceProperty();
 		$this->instances['multi_select_choice_property']   = new FieldProperty\MultiSelectChoiceProperty();
 		$this->instances['password_input_property']        = new FieldProperty\PasswordInputProperty();
-		
+
 		// Field Values
-		$this->instances['address_value']  = new FieldValue\AddressFieldValue();
+		$this->instances['string_field_value']   = new FieldValue\StringFieldValue();
+		$this->instances['address_field_values'] = new FieldValue\AddressFieldValues();
+		$this->instances['address_field_value']  = new FieldValue\AddressFieldValue();
 
 		// Entries
 		$this->instances['entry']      = new Entry\Entry();
 		$this->instances['entry_form'] = new Entry\EntryForm();
 
 		// Unions
-		$this->instances['object_field_union'] = new Union\ObjectFieldUnion( $this->instances );
+		$this->instances['object_field_union']       = new Union\ObjectFieldUnion( $this->instances );
+		$this->instances['object_field_value_union'] = new Union\ObjectFieldValueUnion( $this->instances );
+
+		// Connections
+		$this->instances['form_field_connection']  = new Connections\FormFieldConnection( $this->instances );
+		$this->instances['entry_field_connection'] = new Connections\EntryFieldConnection( $this->instances );
 	}
 
 	private function register_hooks() {

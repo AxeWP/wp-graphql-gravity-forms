@@ -3,7 +3,7 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\Field\FieldValue\AddressFieldValue;
+use WPGraphQLGravityForms\Types\Field\FieldValue\AddressFieldValues;
 
 /**
  * Address field.
@@ -20,6 +20,11 @@ class AddressField extends Field {
      * Type registered in Gravity Forms.
      */
     const GF_TYPE = 'address';
+
+    /**
+     * Field value type.
+     */
+    const VALUE_TYPE = AddressFieldValues::TYPE;
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -69,10 +74,6 @@ class AddressField extends Field {
                     'subLabelPlacement'   => [
                         'type'        => 'String',
                         'description' => __( 'The placement of the labels for the fields (street, city, zip/postal code, etc.) within the address group. This setting controls all of the address pieces, they cannot be set individually. They may be aligned above or below the inputs. If this property is not set, the “Sub-Label Placement” setting on the Form Settings->Form Layout page is used. If no setting is specified, the default is above inputs.', 'wp-graphql-gravity-forms' ),
-                    ],
-                    'values' => [
-                        'type'        => [ 'list_of' => AddressFieldValue::TYPE ],
-                        'description' => __('Field values.', 'wp-graphql-gravity-forms'),
                     ],
                 ]
             ),

@@ -53,7 +53,7 @@ class ObjectFieldUnion implements Hookable, Type {
     /**
      * Get mappings from the field types registered in Gravity Forms
      * to the corresponding field types registered in WPGraphQL.
-     * Example: [ 'textarea' => 'TextArea' ]
+     * Example: [ 'textarea' => 'TextAreaField' ]
      *
      * @return array Field type mappings.
      */

@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQLGravityForms\Types\Field\FieldValue\StringFieldValue;
 
 /**
  * Text Area (Paragraph Text) field.
@@ -20,6 +21,11 @@ class TextAreaField extends Field {
      */
     const GF_TYPE = 'textarea';
 
+    /**
+     * Field value type.
+     */
+    const VALUE_TYPE = StringFieldValue::TYPE;
+
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
     }
@@ -35,13 +41,7 @@ class TextAreaField extends Field {
                 FieldProperty\IsRequiredProperty::get(),
                 FieldProperty\NoDuplicatesProperty::get(),
                 FieldProperty\SizeProperty::get(),
-                FieldProperty\MaxLengthProperty::get(),
-                [
-                    'value' => [
-                        'type'        => 'String',
-                        'description' => __('Field value. Only applies to Entry queries.', 'wp-graphql-gravity-forms'),
-                    ],
-                ]
+                FieldProperty\MaxLengthProperty::get()
             ),
         ] );
     }

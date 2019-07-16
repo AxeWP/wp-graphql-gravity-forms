@@ -68,10 +68,6 @@ class Form implements Hookable, Type, Field {
                     'type'        => Button::TYPE,
                     'description' => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
                 ],
-                'fields'   => [
-                    'type'        => [ 'list_of' => ObjectFieldUnion::TYPE ],
-                    'description' => __( 'List of all fields that belong to the form.', 'wp-graphql-gravity-forms' ),
-                ],
                 'version'   => [
                     'type'        => 'String',
                     'description' => __( 'Gravity Forms plugin version.', 'wp-graphql-gravity-forms' ),
