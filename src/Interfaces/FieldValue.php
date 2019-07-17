@@ -14,7 +14,7 @@ interface FieldValue {
      * @param array    $entry Gravity Forms entry.
      * @param GF_Field $field Gravity Forms field.
      *
-     * @return mixed Entry field value.
+     * @return array Entry field value.
      */
-    public static function get( array $entry, GF_Field $field );
+    public static function get( array $entry, GF_Field $field ) : array;
 }

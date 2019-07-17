@@ -52,6 +52,6 @@ class AddressFieldValues implements Hookable, Type, FieldValue {
             ];
         }
 
-        return $values;
+        return compact( 'values' );
     }
 }

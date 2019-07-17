@@ -38,9 +38,11 @@ class StringFieldValue implements Hookable, Type, FieldValue {
      * @param array    $entry Gravity Forms entry.
      * @param GF_Field $field Gravity Forms field.
      *
-     * @return string Entry field value.
+     * @return array Entry field value.
      */
-    public static function get( array $entry, GF_Field $field ) : string {
-        return (string) $entry[ $field['id'] ];
+    public static function get( array $entry, GF_Field $field ) : array {
+        return [
+            'value' => (string) $entry[ $field['id'] ],
+        ];
     }
 }

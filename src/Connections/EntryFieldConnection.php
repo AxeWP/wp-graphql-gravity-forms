@@ -36,7 +36,7 @@ class EntryFieldConnection implements Hookable, Connection {
             'toType'        => ObjectFieldUnion::TYPE,
             'fromFieldName' => 'fields',
             'edgeFields' => [
-                'value' => [
+                'fieldValue' => [
                     'type'        => ObjectFieldValueUnion::TYPE,
                     'description' => __('Field value.', 'wp-graphql-gravity-forms'),
                     'resolve' => function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
@@ -53,12 +53,12 @@ class EntryFieldConnection implements Hookable, Connection {
 
                         $value_type_class = 'WPGraphQLGravityForms\Types\Field\FieldValue\\' . get_class( $field )::VALUE_TYPE;
 
-                        return [
-                            // Type is added here in order to pass it through to the 'resolveType'
+                        return array_merge(
+                            // 'type' is added here in order to pass it through to the 'resolveType'
                             // callback function in ObjectFieldValueUnion.
-                            'type'  => $field::TYPE,
-                            'value' => $value_type_class::get( $root['source'], $root['node'] ),
-                        ];
+                            [ 'type'  => $field::TYPE ],
+                            $value_type_class::get( $root['source'], $root['node'] )
+                        );
                     }
                 ],
             ],
