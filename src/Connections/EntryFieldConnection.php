@@ -37,9 +37,9 @@ class EntryFieldConnection implements Hookable, Connection {
             'fromFieldName' => 'fields',
             'edgeFields' => [
                 'value' => [
-                    'type'        => ObjectFieldValueUnion::TYPE, // may need to be union.
+                    'type'        => ObjectFieldValueUnion::TYPE,
                     'description' => __('Field value.', 'wp-graphql-gravity-forms'),
-                    'resolve' => function( array $root, $args, $context, $resolve ) {
+                    'resolve' => function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
                         $field = $this->get_field_from_gf_field_type( $root['node']['type'] );
 
                         if ( ! $field ) {
@@ -62,7 +62,7 @@ class EntryFieldConnection implements Hookable, Connection {
                     }
                 ],
             ],
-            'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+            'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
                 return ( new EntryFieldConnectionResolver( $root, $args, $context, $info ) )->get_connection();
             },
         ] );

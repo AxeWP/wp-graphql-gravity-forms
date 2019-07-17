@@ -29,7 +29,7 @@ class EntryFieldConnectionResolver extends AbstractConnectionResolver {
 	}
 
     /**
-     * Get the fields for this Gravity Forms entry.
+     * @return array The fields for this Gravity Forms entry.
      */
     public function get_query() : array {
         $entry = $this->source;
@@ -42,6 +42,9 @@ class EntryFieldConnectionResolver extends AbstractConnectionResolver {
         return $form['fields'];
     }
 
+    /**
+     * @return array The fields for this Gravity Forms entry.
+     */
     public function get_items() : array {
         return $this->get_query();
     }
