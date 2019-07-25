@@ -34,10 +34,8 @@ class FormFieldConnection implements Hookable, Connection {
             'fromType'      => Form::TYPE,
             'toType'        => ObjectFieldUnion::TYPE,
             'fromFieldName' => 'fields',
-            'resolve'       => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-                // @TODO
-                // return ( new FormFieldConnectionResolver( $root, $args, $context, $info ) )->get_connection();
-                return null;
+            'resolve'       => function( array $root, array $args, AppContext $context, ResolveInfo $info ) : array {
+                return ( new FormFieldConnectionResolver( $root, $args, $context, $info ) )->get_connection();
             },
         ] );
     }

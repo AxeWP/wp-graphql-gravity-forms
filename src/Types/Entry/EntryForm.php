@@ -8,6 +8,7 @@ use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\Field;
+use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
 use WPGraphQLGravityForms\Types\Form\Form;
 
 /**
@@ -23,6 +24,15 @@ class EntryForm implements Hookable, Type, Field {
      * Field registered in WPGraphQL.
      */
     const FIELD = 'form';
+
+    /**
+     * FormDataManipulator instance.
+     */
+    private $form_data_manipulator;
+
+    public function __construct( FormDataManipulator $form_data_manipulator ) {
+        $this->form_data_manipulator = $form_data_manipulator;
+    }
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -56,7 +66,7 @@ class EntryForm implements Hookable, Type, Field {
                 }
 
                 return [
-                    'node' => Form::convert_form_keys_to_camelcase( Form::set_global_and_form_ids( $form ) ),
+                    'node' => $this->form_data_manipulator->manipulate( $form ),
                 ];
             }
         ] );

@@ -26,6 +26,7 @@ class ConditionalLogic implements Hookable, Type {
                     'type'        => 'String',
                     'description' => __( 'The type of action the conditional logic will perform. Possible values: show, hide.', 'wp-graphql-gravity-forms' ),
                 ],
+                 // TODO: convert type to enum
                 'logicType'   => [
                     'type'        => 'String',
                     'description' => __( 'Determines how to the rules should be evaluated. Possible values: any, all.', 'wp-graphql-gravity-forms' ),

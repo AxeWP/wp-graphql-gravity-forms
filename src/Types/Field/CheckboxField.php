@@ -35,7 +35,12 @@ class CheckboxField extends Field {
                 FieldProperty\InputNameProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),
                 FieldProperty\SizeProperty::get(),
-                FieldProperty\InputsProperty::get()
+                [
+                    'inputs' => [
+                        'type'        => [ 'list_of' => FieldProperty\CheckboxInputProperty::TYPE ],
+                        'description' => __('List of inputs. Checkboxes are treated as multi-input fields, since each checkbox item is stored separately.', 'wp-graphql-gravity-forms'),
+                    ],
+                ]
             ),
         ] );
     }

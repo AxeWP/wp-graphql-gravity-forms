@@ -22,6 +22,7 @@ class Button implements Hookable, Type {
         register_graphql_object_type( self::TYPE, [
             'description' => __( 'Gravity Forms button.', 'wp-graphql-gravity-forms' ),
             'fields' => [
+                // @TODO: Convert to an enum.
                 'type'   => [
                     'type'        => 'String',
                     'description' => __( 'Specifies the type of button to be displayed. Possible values: text, image.', 'wp-graphql-gravity-forms' ),

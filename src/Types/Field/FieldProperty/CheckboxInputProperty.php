@@ -6,13 +6,13 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
- * An individual input for the 'inputs' field property.
+ * An individual property for the 'inputs' Checkbox field property.
  */
-class InputProperty implements Hookable, Type {
+class CheckboxInputProperty implements Hookable, Type {
     /**
      * Type registered in WPGraphQL.
      */
-    const TYPE = 'InputProperty';
+    const TYPE = 'CheckboxInputProperty';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -20,7 +20,7 @@ class InputProperty implements Hookable, Type {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __('Gravity Forms input property.', 'wp-graphql-gravity-forms'),
+            'description' => __('Gravity Forms Chained Select field choice property.', 'wp-graphql-gravity-forms'),
             'fields'      => [
                 'id' => [
                     'type'        => 'Float',
@@ -33,14 +33,6 @@ class InputProperty implements Hookable, Type {
                 'name' => [
                     'type'        => 'String',
                     'description' => __('When the field is configured with allowsPrepopulate set to 1, this property contains the parameter name to be used to populate this field (equivalent to the inputName property of single-input fields).', 'wp-graphql-gravity-forms'),
-                ],
-                'key' => [
-                    'type'        => 'String',
-                    'description' => __('Key used to identify this input.', 'wp-graphql-gravity-forms'),
-                ],
-                'isHidden' => [
-                    'type'        => 'Boolean',
-                    'description' => __('Whether or not this field should be hidden.', 'wp-graphql-gravity-forms'),
                 ],
             ],
         ] );

@@ -2,11 +2,9 @@
 
 namespace WPGraphQLGravityForms\Connections;
 
-use GFAPI;
-use GraphQL\Error\UserError;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 
-class EntryFieldConnectionResolver extends AbstractConnectionResolver {
+class FormFieldConnectionResolver extends AbstractConnectionResolver {
     /**
      * @return bool Whether query should execute.
      */
@@ -39,13 +37,6 @@ class EntryFieldConnectionResolver extends AbstractConnectionResolver {
      * @return array The fields for this Gravity Forms entry.
      */
     public function get_items() : array {
-        $entry = $this->source;
-        $form  = GFAPI::get_form( $entry['formId'] );
-
-        if ( ! $form ) {
-            throw new UserError( __( 'The form used to generate this entry was not found.', 'wp-graphql-gravity-forms' ) );
-        }
-
-        return $form['fields'];
+        return $this->source['fields'];
     }
 }

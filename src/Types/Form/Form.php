@@ -8,6 +8,7 @@ use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\Field;
+use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\Types\Button\Button;
 
@@ -27,6 +28,15 @@ class Form implements Hookable, Type, Field {
      */
     const FIELD = 'gravityFormsForm';
 
+    /**
+     * FormDataManipulator instance.
+     */
+    private $form_data_manipulator;
+
+    public function __construct( FormDataManipulator $form_data_manipulator ) {
+        $this->form_data_manipulator = $form_data_manipulator;
+    }
+
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
         add_action( 'graphql_register_types', [ $this, 'register_field' ] );
@@ -37,9 +47,7 @@ class Form implements Hookable, Type, Field {
             'description' => __( 'Gravity Forms form.', 'wp-graphql-gravity-forms' ),
             'fields'      => [
                 'id' => [
-                    'type'         => [
-                        'non_null' => 'ID',
-                    ],
+                    'type'        => [ 'non_null' => 'ID' ],
                     'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
                 ],
                 'formId' => [
@@ -67,10 +75,6 @@ class Form implements Hookable, Type, Field {
                 'button' => [
                     'type'        => Button::TYPE,
                     'description' => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
-                ],
-                'version'   => [
-                    'type'        => 'String',
-                    'description' => __( 'Gravity Forms plugin version.', 'wp-graphql-gravity-forms' ),
                 ],
                 'useCurrentUserAsAuthor'   => [
                     'type'        => 'Boolean',
@@ -149,6 +153,7 @@ class Form implements Hookable, Type, Field {
                     'type'        => 'Integer',
                     'description' => __( 'When limitEntries is set to 1, this property specifies the number of submissions allowed.', 'wp-graphql-gravity-forms' ),
                 ],
+                // @TODO: Convert to an enum.
                 'limitEntriesPeriod' => [
                     'type'        => 'String',
                     'description' => __( 'When limitEntries is set to 1, this property specifies the time period during which submissions are allowed. Options are "day", "week", "month" and "year".', 'wp-graphql-gravity-forms' ),
@@ -227,7 +232,7 @@ class Form implements Hookable, Type, Field {
                 ],
                 'dateCreated' => [
                     'type'        => 'String',
-                    'description' => __( 'The date the form was created in this format: "YYYY-MM-DD HH:mm:ss".', 'wp-graphql-gravity-forms' ),
+                    'description' => __( 'The date the form was created in this format: YYYY-MM-DD HH:mm:ss.', 'wp-graphql-gravity-forms' ),
                 ],
                 'isTrash' => [
                     'type'        => 'Boolean',
@@ -243,9 +248,7 @@ class Form implements Hookable, Type, Field {
             'type' => self::TYPE,
             'args' => [
                 'id' => [
-                    'type' => [
-                        'non_null' => 'ID',
-                    ],
+                    'type'        => [ 'non_null' => 'ID' ],
                     'description' => __( "Unique global ID for the object. Base-64 encode a string like this, where '123' is the form ID: '{self::TYPE}:123'.", 'wp-graphql-gravity-forms' ),
                 ],
             ],
@@ -262,52 +265,8 @@ class Form implements Hookable, Type, Field {
                     throw new UserError( __( 'A valid form ID must be provided.', 'wp-graphql-gravity-forms' ) );
                 }
 
-                return self::convert_form_keys_to_camelcase( self::set_global_and_form_ids( $form, $args ) );
+                return $this->form_data_manipulator->manipulate( $form, $args );
             }
         ] );
-    }
-
-    /**
-     * Set 'formId' to be the form ID and 'id' to be the global Relay ID.
-     *
-     * @param array $form Form meta array.
-     * @param array $args Query arguments.
-     *
-     * @return array $form Form meta array with the form ID and global Relay ID set.
-     */
-    public static function set_global_and_form_ids( array $form, array $args = [] ) : array {
-        $form['formId'] = $form['id'];
-        $form['id']     = $args['id'] ?? Relay::toGlobalId( self::TYPE, $form['formId'] );
-
-        return $form;
-    }
-
-    /**
-     * @param array $form Form meta array.
-     *
-     * @return array $form Form meta array with keys converted to camelCase.
-     */
-    public static function convert_form_keys_to_camelcase( array $form ) : array {
-        $form['isActive']    = $form['is_active'];
-        $form['dateCreated'] = $form['date_created'];
-        $form['isTrash']     = $form['is_trash'];
-
-        if ( isset( $form['pagination']['display_progressbar_on_confirmation'] ) ) {
-            $form['pagination']['displayProgressbarOnConfirmation'] = $form['pagination']['display_progressbar_on_confirmation'];
-        }
-
-        if ( isset( $form['pagination']['progressbar_completion_text'] ) ) {
-            $form['pagination']['progressbarCompletionText'] = $form['pagination']['progressbar_completion_text'];
-        }
-
-        unset(
-            $form['is_active'],
-            $form['date_created'],
-            $form['is_trash'],
-            $form['pagination']['display_progressbar_on_confirmation'],
-            $form['pagination']['progressbar_completion_text']
-        );
-
-        return $form;
     }
 }

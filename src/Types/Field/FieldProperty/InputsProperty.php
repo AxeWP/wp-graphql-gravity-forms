@@ -8,7 +8,7 @@ abstract class InputsProperty implements FieldProperty {
     /**
      * Get 'inputs' property.
      *
-     * Applies to: name, address, checkbox
+     * Applies to: name, address
      */
     public static function get() : array {
         return [

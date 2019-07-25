@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\DataManipulators;
 use WPGraphQLGravityForms\Types\Button\Button;
 use WPGraphQLGravityForms\Types\ConditionalLogic;
 use WPGraphQLGravityForms\Types\Form;
@@ -12,6 +13,7 @@ use WPGraphQLGravityForms\Types\Field\FieldValue;
 use WPGraphQLGravityForms\Types\Union;
 use WPGraphQLGravityForms\Types\Connection;
 use WPGraphQLGravityForms\Types\Entry;
+use WPGraphQLGravityForms\Mutations;
 
 /**
  * Main plugin class.
@@ -31,6 +33,11 @@ final class WPGraphQLGravityForms {
     }
 
 	private function create_instances() {
+		// Data Manipulators
+		$this->instances['fields_data_manipulator'] = new DataManipulators\FieldsDataManipulator();
+		$this->instances['form_data_manipulator']   = new DataManipulators\FormDataManipulator( $this->instances['fields_data_manipulator'] );
+		$this->instances['entry_data_manipulator']  = new DataManipulators\EntryDataManipulator();
+
 		// Buttons
 		$this->instances['button'] = new Button();
 
@@ -44,7 +51,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['form_notification']         = new Form\FormNotification();
 		$this->instances['form_confirmation']         = new Form\FormConfirmation();
 		$this->instances['form_pagination']           = new Form\FormPagination();
-		$this->instances['form']                      = new Form\Form();
+		$this->instances['form']                      = new Form\Form( $this->instances['form_data_manipulator'] );
 
 		// Fields
 		$this->instances['address_field']        = new Field\AddressField();
@@ -82,6 +89,7 @@ final class WPGraphQLGravityForms {
 
 		// Field Properties
 		$this->instances['chained_select_choice_property'] = new FieldProperty\ChainedSelectChoiceProperty();
+		$this->instances['checkbox_input_property']        = new FieldProperty\CheckboxInputProperty();
 		$this->instances['choice_property']                = new FieldProperty\ChoiceProperty();
 		$this->instances['input_property']                 = new FieldProperty\InputProperty();
 		$this->instances['list_choice_property']           = new FieldProperty\ListChoiceProperty();
@@ -91,11 +99,10 @@ final class WPGraphQLGravityForms {
 		// Field Values
 		$this->instances['string_field_value']   = new FieldValue\StringFieldValue();
 		$this->instances['address_field_values'] = new FieldValue\AddressFieldValues();
-		$this->instances['address_field_value']  = new FieldValue\AddressFieldValue();
 
 		// Entries
-		$this->instances['entry']      = new Entry\Entry();
-		$this->instances['entry_form'] = new Entry\EntryForm();
+		$this->instances['entry']      = new Entry\Entry( $this->instances['entry_data_manipulator'] );
+		$this->instances['entry_form'] = new Entry\EntryForm( $this->instances['form_data_manipulator'] );
 
 		// Unions
 		$this->instances['object_field_union']       = new Union\ObjectFieldUnion( $this->instances );
@@ -104,6 +111,9 @@ final class WPGraphQLGravityForms {
 		// Connections
 		$this->instances['form_field_connection']  = new Connections\FormFieldConnection( $this->instances );
 		$this->instances['entry_field_connection'] = new Connections\EntryFieldConnection( $this->instances );
+
+		// Mutations
+		$this->instances['create_entry_mutation'] = new Mutations\CreateEntryMutation( $this->instances['entry_data_manipulator'] );
 	}
 
 	private function register_hooks() {

@@ -10,6 +10,7 @@ use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\Field;
+use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\Types\Form\Form;
 
@@ -29,6 +30,15 @@ class Entry implements Hookable, Type, Field {
      */
     const FIELD = 'gravityFormsEntry';
 
+    /**
+     * EntryDataManipulator instance.
+     */
+    private $entry_data_manipulator;
+
+    public function __construct( EntryDataManipulator $entry_data_manipulator ) {
+        $this->entry_data_manipulator = $entry_data_manipulator;
+    }
+
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
         add_action( 'graphql_register_types', [ $this, 'register_field' ] );
@@ -39,9 +49,7 @@ class Entry implements Hookable, Type, Field {
             'description' => __( 'Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
             'fields'      => [
                 'id' => [
-                    'type'        => [
-                        'non_null' => 'ID',
-                    ],
+                    'type'        => [ 'non_null' => 'ID' ],
                     'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
                 ],
                 'entryId' => [
@@ -113,9 +121,7 @@ class Entry implements Hookable, Type, Field {
             'type' => self::TYPE,
             'args' => [
                 'id' => [
-                    'type' => [
-                        'non_null' => 'ID',
-                    ],
+                    'type'        => [ 'non_null' => 'ID' ],
                     'description' => __( "Unique global ID for the object. Base-64 encode a string like this, where '123' is the entry ID: '{self::TYPE}:123'.", 'wp-graphql-gravity-forms' ),
                 ],
             ],
@@ -132,60 +138,8 @@ class Entry implements Hookable, Type, Field {
                     throw new UserError( __( 'An entry with this ID was not found.', 'wp-graphql-gravity-forms' ) );
                 }
 
-                return $this->convert_entry_keys_to_camelcase( $this->set_global_and_entry_ids( $entry ) );
+                return $this->entry_data_manipulator->manipulate( $entry, $args );
             }
         ] );
-    }
-
-    /**
-     * Set 'entryId' to be the entry ID and 'id' to be the global Relay ID.
-     *
-     * @param array $entry Entry data.
-     *
-     * @return array $entry Entry data, with the entry ID and global Relay ID set.
-     */
-    private function set_global_and_entry_ids( array $entry ) : array {
-        $entry['entryId'] = $entry['id'];
-        $entry['id']      = $args['id'] ?? Relay::toGlobalId( self::TYPE, $entry['entryId'] );
-
-        return $entry;
-    }
-
-    /**
-     * @param array $entry Entry data.
-     *
-     * @return array $entry Entry data with keys converted to camelCase.
-     */
-    private function convert_entry_keys_to_camelcase( array $entry ) : array {
-        foreach ( $this->get_key_mappings() as $snake_case_key => $camel_case_key ) {
-            $entry[ $camel_case_key ] = $entry[ $snake_case_key ];
-            unset( $entry[ $snake_case_key ] );
-        }
-
-        return $entry;
-    }
-
-    /**
-     * @return array Gravity Forms Entry meta keys and their camelCase equivalents.
-     */
-    private function get_key_mappings() : array {
-        return [
-            'form_id'          => 'formId',
-            'post_id'          => 'postId',
-            'date_created'     => 'dateCreated',
-            'date_updated'     => 'dateUpdated',
-            'is_starred'       => 'isStarred',
-            'is_read'          => 'isRead',
-            'source_url'       => 'sourceUrl',
-            'user_agent'       => 'userAgent',
-            'payment_status'   => 'paymentStatus',
-            'payment_date'     => 'paymentDate',
-            'payment_amount'   => 'paymentAmount',
-            'payment_method'   => 'paymentMethod',
-            'transaction_id'   => 'transactionId',
-            'is_fulfilled'     => 'isFulfilled',
-            'created_by'       => 'createdBy',
-            'transaction_type' => 'transactionType',
-        ];
     }
 }

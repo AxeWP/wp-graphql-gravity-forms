@@ -24,9 +24,29 @@ class AddressFieldValues implements Hookable, Type, FieldValue {
         register_graphql_object_type( self::TYPE, [
             'description' => __('Gravity Forms address field values.', 'wp-graphql-gravity-forms'),
             'fields'      => [
-                'values' => [
-                    'type'        => [ 'list_of' => AddressFieldValue::TYPE ],
-                    'description' => __('Individual address field values.', 'wp-graphql-gravity-forms'),
+                'street' => [
+                    'type'        => 'String',
+                    'description' => __('Street address.', 'wp-graphql-gravity-forms'),
+                ],
+                'lineTwo' => [
+                    'type'        => 'String',
+                    'description' => __('Address line two.', 'wp-graphql-gravity-forms'),
+                ],
+                'city' => [
+                    'type'        => 'String',
+                    'description' => __('City.', 'wp-graphql-gravity-forms'),
+                ],
+                'state' => [
+                    'type'        => 'String',
+                    'description' => __('State / province.', 'wp-graphql-gravity-forms'),
+                ],
+                'zip' => [
+                    'type'        => 'String',
+                    'description' => __('ZIP / postal code.', 'wp-graphql-gravity-forms'),
+                ],
+                'country' => [
+                    'type'        => 'String',
+                    'description' => __('Country.', 'wp-graphql-gravity-forms'),
                 ],
             ],
         ] );
@@ -41,17 +61,13 @@ class AddressFieldValues implements Hookable, Type, FieldValue {
      * @return array Entry field value.
      */
     public static function get( array $entry, GF_Field $field ) : array {
-        $values = [];
-
-        foreach ( ['street', 'street2', 'city', 'state', 'zip', 'country'] as $index => $key ) {
-            $values[] = [
-                'inputId' => $field['inputs'][ $index ]['id'],
-                'label'   => $field['inputs'][ $index ]['label'],
-                'key'     => $key,
-                'value'   => $entry[ $field['inputs'][ $index ]['id'] ],
-            ];
-        }
-
-        return compact( 'values' );
+        return [
+            'street'  => $entry[ $field['inputs'][0]['id'] ],
+            'lineTwo' => $entry[ $field['inputs'][1]['id'] ],
+            'city'    => $entry[ $field['inputs'][2]['id'] ],
+            'state'   => $entry[ $field['inputs'][3]['id'] ],
+            'zip'     => $entry[ $field['inputs'][4]['id'] ],
+            'country' => $entry[ $field['inputs'][5]['id'] ],
+        ];
     }
 }

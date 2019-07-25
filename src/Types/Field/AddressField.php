@@ -59,18 +59,6 @@ class AddressField extends Field {
                         'type'        => 'String',
                         'description' => __('Contains the state that will be selected by default. Only applicable when "addressType" is set to "us".', 'wp-graphql-gravity-forms'),
                     ],
-                    'hideAddress2' => [
-                        'type'        => 'Boolean',
-                        'description' => __('Legacy property used to control whether the address2 input is visible. To hide the state, use the "isHidden" property of the "inputs" array instead.', 'wp-graphql-gravity-forms'),
-                    ],
-                    'hideCountry' => [
-                        'type'        => 'Boolean',
-                        'description' => __('Legacy property used to control whether the country input is visible. To hide the state, use the "isHidden" property of the "inputs" array instead.', 'wp-graphql-gravity-forms'),
-                    ],
-                    'hideState' => [
-                        'type'        => 'Boolean',
-                        'description' => __('Legacy property used to control whether the state input is visible. To hide the state, use the "isHidden" property of the "inputs" array instead.', 'wp-graphql-gravity-forms'),
-                    ],
                     'subLabelPlacement'   => [
                         'type'        => 'String',
                         'description' => __( 'The placement of the labels for the fields (street, city, zip/postal code, etc.) within the address group. This setting controls all of the address pieces, they cannot be set individually. They may be aligned above or below the inputs. If this property is not set, the “Sub-Label Placement” setting on the Form Settings->Form Layout page is used. If no setting is specified, the default is above inputs.', 'wp-graphql-gravity-forms' ),
