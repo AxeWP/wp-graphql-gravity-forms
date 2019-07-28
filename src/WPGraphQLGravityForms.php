@@ -113,7 +113,8 @@ final class WPGraphQLGravityForms {
 		$this->instances['entry_field_connection'] = new Connections\EntryFieldConnection( $this->instances );
 
 		// Mutations
-		$this->instances['create_entry_mutation'] = new Mutations\CreateEntryMutation( $this->instances['entry_data_manipulator'] );
+		$this->instances['entry_text_value_input'] = new Mutations\EntryTextValueInput();
+		$this->instances['create_entry_mutation']  = new Mutations\CreateEntryMutation( $this->instances['entry_data_manipulator'] );
 	}
 
 	private function register_hooks() {
@@ -128,3 +129,8 @@ final class WPGraphQLGravityForms {
 		} );
 	}
 }
+
+// @TODO: Handle this more gracefully to bump up the number of form fields returned.
+add_filter( 'graphql_connection_max_query_amount', function() {
+	return 500;
+}, 11 );

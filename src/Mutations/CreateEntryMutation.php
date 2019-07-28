@@ -10,6 +10,8 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Types\Entry\Entry;
 use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 
+use WPGraphQLGravityForms\Types\Field\FieldProperty\ChoiceProperty;
+
 /**
  * Create a Gravity Forms entry.
  */
@@ -51,54 +53,10 @@ class CreateEntryMutation implements Hookable {
 				'type'        => 'Integer',
 				'description' => __( 'The form ID.', 'wp-graphql-gravity-forms' ),
 			],
-			'projectId'      => [
-				'type'        => 'Integer',
-				'description' => __( 'Project ID.', 'wp-graphql-gravity-forms' ),
-			],
-			'inspectionType'      => [
-				'type'        => 'String',
-				'description' => __( 'Type of inspection: weekly or monthly.', 'wp-graphql-gravity-forms' ),
-			],
-			'inspectionDate'      => [
-				'type'        => 'String',
-				'description' => __( 'The date of the inspection in mm/dd/yyyy format.', 'wp-graphql-gravity-forms' ),
-			],
-			'inspectors'      => [
-				'type'        => 'String',
-				'description' => __( 'Comma-separated list of user IDs.', 'wp-graphql-gravity-forms' ),
-			],
-			'policiesPosted'      => [
-				'type'        => 'String',
-				'description' => __( 'Whether policies are posted.', 'wp-graphql-gravity-forms' ),
-			],
-			'oshaBookPosted'      => [
-				'type'        => 'String',
-				'description' => __( 'Whether OSHA book is posted.', 'wp-graphql-gravity-forms' ),
-			],
-			'emergencyProceduresPosted'      => [
-				'type'        => 'String',
-				'description' => __( 'Whether emergency procedures are posted.', 'wp-graphql-gravity-forms' ),
-			],
-			'startUpPackagePosted'      => [
-				'type'        => 'String',
-				'description' => __( 'If posted.', 'wp-graphql-gravity-forms' ),
-			],
-			'workerRepsPosted'      => [
-				'type'        => 'String',
-				'description' => __( 'If posted.', 'wp-graphql-gravity-forms' ),
-			],
-			'firstAidCertificatesPosted'      => [
-				'type'        => 'String',
-				'description' => __( 'If posted.', 'wp-graphql-gravity-forms' ),
-			],
-			'noticeOfProjectPosted'      => [
-				'type'        => 'String',
-				'description' => __( 'If posted.', 'wp-graphql-gravity-forms' ),
-			],
-			'fieldReportsPosted'      => [
-				'type'        => 'String',
-				'description' => __( 'If posted.', 'wp-graphql-gravity-forms' ),
-			],
+            'allTextValues' => [
+                'type'        => [ 'list_of' => EntryTextValueInput::TYPE ],
+                'description' => __( 'Text values.', 'wp-graphql-gravity-forms' ),
+            ],
 		];
     }
 
@@ -146,37 +104,11 @@ class CreateEntryMutation implements Hookable {
                 throw new UserError( __( 'The ID for a valid, active form must be provided.', 'wp-graphql-gravity-forms' ) );
             }
 
-            $fields_to_include = array_filter( $form['fields'], function( $field ) {
-                $types_to_exclude = ['page', 'section', 'html', 'honeypot', 'signature'];
-                return ! in_array( $field['type'], $types_to_exclude, true );
-            } );
-
-            // TODO: SUPPORT SIGNATURE ^
-
-            $field_ids  = wp_list_pluck( $fields_to_include, 'id' );
-
-            $field_values = [
-                $input['projectId'] ?? 0, // Project
-                $input['projectId'] ?? 0, // Project Number
-                $input['projectId'] ?? 0, // Project Location
-                $input['projectId'] ?? 0, // Project Manager
-                $input['inspectionType'] ?? '',
-                $input['inspectionDate'] ?? '',
-                isset( $input['inspectors'] ) ? '[' . $input['inspectors'] . ']' : '', // Comma-separated list of user IDs
-                $input['policiesPosted'] ?? '',
-                $input['oshaBookPosted'] ?? '',
-                $input['emergencyProceduresPosted'] ?? '',
-                $input['startUpPackagePosted'] ?? '',
-                $input['workerRepsPosted'] ?? '',
-                $input['firstAidCertificatesPosted'] ?? '',
-                $input['noticeOfProjectPosted'] ?? '',
-                $input['fieldReportsPosted'] ?? '',
-            ];
-
-            $entry_data            = array_combine( $field_ids, $field_values );
+            $keys                  = wp_list_pluck( $input['allTextValues'], 'key' );
+            $values                = wp_list_pluck( $input['allTextValues'], 'value' );
+            $entry_data            = array_combine( $keys, $values );
             $entry_data['form_id'] = $form['id'];
-
-            $entry_id = GFAPI::add_entry( $entry_data );
+            $entry_id              = GFAPI::add_entry( $entry_data );
 
             if ( is_wp_error( $entry_id ) ) {
                 throw new UserError( __( 'An error occurred while trying to create the entry.', 'wp-graphql-gravity-forms' ) );
@@ -185,6 +117,51 @@ class CreateEntryMutation implements Hookable {
 			return [
 				'id' => $entry_id,
 			];
+
+
+
+
+            /////////////////////////////////////////
+
+            // $fields_to_include = array_filter( $form['fields'], function( $field ) {
+            //     $types_to_exclude = ['page', 'section', 'html', 'honeypot', 'signature'];
+            //     return ! in_array( $field['type'], $types_to_exclude, true );
+            // } );
+
+            // // TODO: SUPPORT SIGNATURE ^
+
+            // $field_ids  = wp_list_pluck( $fields_to_include, 'id' );
+
+            // $field_values = [
+            //     $input['projectId'] ?? 0, // Project
+            //     $input['projectId'] ?? 0, // Project Number
+            //     $input['projectId'] ?? 0, // Project Location
+            //     $input['projectId'] ?? 0, // Project Manager
+            //     $input['inspectionType'] ?? '',
+            //     $input['inspectionDate'] ?? '',
+            //     isset( $input['inspectors'] ) ? '[' . $input['inspectors'] . ']' : '', // Comma-separated list of user IDs
+            //     $input['policiesPosted'] ?? '',
+            //     $input['oshaBookPosted'] ?? '',
+            //     $input['emergencyProceduresPosted'] ?? '',
+            //     $input['startUpPackagePosted'] ?? '',
+            //     $input['workerRepsPosted'] ?? '',
+            //     $input['firstAidCertificatesPosted'] ?? '',
+            //     $input['noticeOfProjectPosted'] ?? '',
+            //     $input['fieldReportsPosted'] ?? '',
+            // ];
+
+            // $entry_data            = array_combine( $field_ids, $field_values );
+            // $entry_data['form_id'] = $form['id'];
+
+            // $entry_id = GFAPI::add_entry( $entry_data );
+
+            // if ( is_wp_error( $entry_id ) ) {
+            //     throw new UserError( __( 'An error occurred while trying to create the entry.', 'wp-graphql-gravity-forms' ) );
+            // }
+ 
+			// return [
+			// 	'id' => $entry_id,
+			// ];
 		};
 	}
 }
