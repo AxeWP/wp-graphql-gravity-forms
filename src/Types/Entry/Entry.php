@@ -65,6 +65,9 @@ class Entry implements Hookable, Type, Field {
                     'type'        => 'Integer',
                     'description' => __( 'For forms with Post fields, this property contains the Id of the Post that was created.', 'wp-graphql-gravity-forms' ),
                 ],
+                // @TODO: Gravity Forms stores and returns the dateCreated and dateUpdated in UTC time.
+                // Change the fields below to be in the blog's local time, and add new ones for
+                // dateCreatedUTC and dateUpdatedUTC.
                 'dateCreated' => [
                     'type'        => 'String',
                     'description' => __( 'The date and time that the entry was created, in the format "yyyy-mm-dd hh:mi:ss" (i.e. 2010-07-15 17:26:58).', 'wp-graphql-gravity-forms' ),
