@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQLGravityForms\Types\Field\FieldValue\TimeFieldValues;
 
 /**
  * Time field.
@@ -19,6 +20,11 @@ class TimeField extends Field {
      * Type registered in Gravity Forms.
      */
     const GF_TYPE = 'time';
+
+    /**
+     * Field value type.
+     */
+    const VALUE_TYPE = TimeFieldValues::TYPE;
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );

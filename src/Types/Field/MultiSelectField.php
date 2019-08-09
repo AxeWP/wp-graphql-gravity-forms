@@ -3,7 +3,7 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\Field\FieldValue\StringFieldValue;
+use WPGraphQLGravityForms\Types\Field\FieldValue\MultiSelectFieldValues;
 
 /**
  * MultiSelect field.
@@ -24,7 +24,7 @@ class MultiSelectField extends Field {
     /**
      * Field value type.
      */
-    const VALUE_TYPE = StringFieldValue::TYPE;
+    const VALUE_TYPE = MultiSelectFieldValues::TYPE;
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -47,7 +47,6 @@ class MultiSelectField extends Field {
                         'type'        => [ 'list_of' => FieldProperty\MultiSelectChoiceProperty::TYPE ],
                         'description' => __('The individual properties for each item in the multi-select.', 'wp-graphql-gravity-forms'),
                     ],
-                    // @TODO - Add entry value.
                 ]
             ),
         ] );

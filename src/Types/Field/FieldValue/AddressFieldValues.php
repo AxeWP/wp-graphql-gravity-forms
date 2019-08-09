@@ -8,7 +8,7 @@ use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
 
 /**
- * An individual value for the Address field.
+ * Values for an individual Address field.
  */
 class AddressFieldValues implements Hookable, Type, FieldValue {
     /**

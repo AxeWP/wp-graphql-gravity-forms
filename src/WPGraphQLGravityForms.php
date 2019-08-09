@@ -97,8 +97,14 @@ final class WPGraphQLGravityForms {
 		$this->instances['password_input_property']        = new FieldProperty\PasswordInputProperty();
 
 		// Field Values
-		$this->instances['string_field_value']   = new FieldValue\StringFieldValue();
-		$this->instances['address_field_values'] = new FieldValue\AddressFieldValues();
+		$this->instances['address_field_values']        = new FieldValue\AddressFieldValues();
+		$this->instances['chained_select_field_values'] = new FieldValue\ChainedSelectFieldValues();
+		$this->instances['file_upload_field_value']     = new FieldValue\FileUploadFieldValue();
+		$this->instances['multi_select_field_values']   = new FieldValue\MultiSelectFieldValues();
+		$this->instances['name_field_values']           = new FieldValue\NameFieldValues();
+		$this->instances['signature_field_value']       = new FieldValue\SignatureFieldValue();
+		$this->instances['string_field_value']          = new FieldValue\StringFieldValue();
+		$this->instances['time_field_values']           = new FieldValue\TimeFieldValues();
 
 		// Entries
 		$this->instances['entry']      = new Entry\Entry( $this->instances['entry_data_manipulator'] );

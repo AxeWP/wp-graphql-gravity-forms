@@ -58,13 +58,8 @@ class ObjectFieldValueUnion implements Hookable, Type {
      * @return array Field value types.
      */
     private function get_field_value_types() : array {
-        $fields = array_filter( $this->instances, function( $instance ) {
-            return $instance instanceof Field;
-        } );
-
-        // @TODO: Remove this once all fields have value types.
-        $fields_with_value_types = array_filter( $fields, function( $field ) {
-            return defined( get_class( $field ) . '::VALUE_TYPE' );
+        $fields_with_value_types = array_filter( $this->instances, function( $instance ) {
+            return $instance instanceof Field && defined( get_class( $instance ) . '::VALUE_TYPE' );
         } );
 
         return array_reduce( $fields_with_value_types, function( $value_types, $field ) {

@@ -46,7 +46,7 @@ class EntryFieldConnection implements Hookable, Connection {
                             return null;
                         }
 
-                        // @TODO: Remove this once all fields have value types.
+                        // Account for fields that do not have a value type.
                         if ( ! defined( get_class( $field ) . '::VALUE_TYPE' ) ) {
                             return null;
                         }
