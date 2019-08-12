@@ -59,7 +59,6 @@ class ListField extends Field {
                         'type'        => 'Integer',
                         'description' => __( 'The form page this field is located on. Default is 1.', 'wp-graphql-gravity-forms' ),
                     ],
-                    // @TODO - Add entry value. https://docs.gravityforms.com/gf_field_list/#-entry-value
                 ]
             ),
         ] );

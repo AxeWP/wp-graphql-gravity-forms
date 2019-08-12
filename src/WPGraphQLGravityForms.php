@@ -107,8 +107,11 @@ final class WPGraphQLGravityForms {
 		$this->instances['time_field_values']           = new FieldValue\TimeFieldValues();
 
 		// Entries
-		$this->instances['entry']      = new Entry\Entry( $this->instances['entry_data_manipulator'] );
-		$this->instances['entry_form'] = new Entry\EntryForm( $this->instances['form_data_manipulator'] );
+		$this->instances['entries_date_fiters_input']  = new Entry\EntriesDateFiltersInput();
+		$this->instances['entries_field_fiters_input'] = new Entry\EntriesFieldFiltersInput();
+		$this->instances['entries']                    = new Entry\Entries();
+		$this->instances['entry']                      = new Entry\Entry( $this->instances['entry_data_manipulator'] );
+		$this->instances['entry_form']                 = new Entry\EntryForm( $this->instances['form_data_manipulator'] );
 
 		// Unions
 		$this->instances['object_field_union']       = new Union\ObjectFieldUnion( $this->instances );
