@@ -11,6 +11,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\Field;
 use WPGraphQLGravityForms\Types\Entry\Entry;
+use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 
 /**
  * List of Gravity Forms entries.
@@ -27,6 +28,15 @@ class Entries implements Hookable, Field {
      * Field registered in WPGraphQL.
      */
     const FIELD = 'gravityFormsEntries';
+
+    /**
+     * EntryDataManipulator instance.
+     */
+    private $entry_data_manipulator;
+
+    public function __construct( EntryDataManipulator $entry_data_manipulator ) {
+        $this->entry_data_manipulator = $entry_data_manipulator;
+    }
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -88,24 +98,23 @@ class Entries implements Hookable, Field {
                     throw new UserError( __( 'An array of form IDs must be provided.', 'wp-graphql-gravity-forms' ) );
                 }
 
-                $form_ids = $this->get_form_ids_from_global_ids( $args['formIds'] );
-
-                if ( ! $form_ids || count( $args['formIds'] ) !== count( $form_ids ) ) {
-                    throw new UserError( __( 'The global form ID(s) provided were not formatted correctly.', 'wp-graphql-gravity-forms' ) );
-                }
-                
-                $entries = GFAPI::get_entries(
-                    $form_ids,
+                $entries_raw = GFAPI::get_entries(
+                    $args['formIds'],
                     $this->get_search_criteria( $args ),
                     $this->get_sort( $args ),
                     [],
-                    true
-                );                
+                    $total_overall
+                );
 
-                return [];
+                $entries = array_map( function( $entry ) {
+                    return $this->entry_data_manipulator->manipulate( $entry );
+                }, $entries_raw );
+
+                return compact( 'entries' );
 
                 // TODO: Add support for pagination, then pass these args to GF:
                 // $paging = [ 'offset' => 0, 'page_size' => 30 ];
+                // Use $total_overall to determine if there are before/after.
             }
         ] );
     }

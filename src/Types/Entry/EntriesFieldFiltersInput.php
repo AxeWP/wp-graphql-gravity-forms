@@ -31,7 +31,7 @@ class EntriesFieldFiltersInput implements Hookable, InputType {
                     'type'        => 'String',
                     'description' => __( 'The operator to use for filtering. Possible values: "in" (find field values that match those in the values array), "notIn" (find field values that do NOT match those in the values array), or "contains" (find field values that contain the value in the values array). When "contains" is used, only the first value in the values array will be used; any others will be disregarded.', 'wp-graphql-gravity-forms' ),
                 ],
-                // @Jason - Is there a cleaner way to do this? Values can be any of these types.
+                // @TODO - Is there a cleaner way to do this? Values can be any of these types.
                 'stringValues' => [
                     'type'        => [ 'list_of' => 'String' ],
                     'description' => __( 'The field value(s) to filter by. Must be string values. If using this field, do not also use intValues, floatValues or boolValues.', 'wp-graphql-gravity-forms' ),

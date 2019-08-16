@@ -20,12 +20,11 @@ class FormDataManipulator implements DataManipulator {
      * Manipulate form data.
      *
      * @param array $data The form data to be manipulated.
-     * @param array $args Query arguments needed for form data manipulation (optional).
      *
      * @return array Manipulated form data.
      */
-    public function manipulate( array $data, array $args = [] ) : array {
-        $data = $this->set_global_and_form_ids( $data, $args );
+    public function manipulate( array $data ) : array {
+        $data = $this->set_global_and_form_ids( $data );
         $data = $this->convert_form_keys_to_camelcase( $data );
         $data = $this->prevent_missing_values( $data );
 
@@ -38,13 +37,12 @@ class FormDataManipulator implements DataManipulator {
      * Set 'formId' to be the form ID and 'id' to be the global Relay ID.
      *
      * @param array $form Form meta array.
-     * @param array $args Query arguments.
      *
      * @return array $form Form meta array with the form ID and global Relay ID set.
      */
-    private function set_global_and_form_ids( array $form, array $args ) : array {
+    private function set_global_and_form_ids( array $form ) : array {
         $form['formId'] = $form['id'];
-        $form['id']     = $args['id'] ?? Relay::toGlobalId( Form::TYPE, $form['formId'] );
+        $form['id']     = Relay::toGlobalId( Form::TYPE, $form['formId'] );
 
         return $form;
     }

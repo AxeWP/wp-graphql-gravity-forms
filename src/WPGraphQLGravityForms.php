@@ -33,7 +33,6 @@ final class WPGraphQLGravityForms {
     }
 
 	private function create_instances() {
-		// Data Manipulators
 		$this->instances['fields_data_manipulator'] = new DataManipulators\FieldsDataManipulator();
 		$this->instances['form_data_manipulator']   = new DataManipulators\FormDataManipulator( $this->instances['fields_data_manipulator'] );
 		$this->instances['entry_data_manipulator']  = new DataManipulators\EntryDataManipulator();
@@ -109,7 +108,7 @@ final class WPGraphQLGravityForms {
 		// Entries
 		$this->instances['entries_date_fiters_input']  = new Entry\EntriesDateFiltersInput();
 		$this->instances['entries_field_fiters_input'] = new Entry\EntriesFieldFiltersInput();
-		$this->instances['entries']                    = new Entry\Entries();
+		$this->instances['entries']                    = new Entry\Entries( $this->instances['entry_data_manipulator'] );
 		$this->instances['entry']                      = new Entry\Entry( $this->instances['entry_data_manipulator'] );
 		$this->instances['entry_form']                 = new Entry\EntryForm( $this->instances['form_data_manipulator'] );
 

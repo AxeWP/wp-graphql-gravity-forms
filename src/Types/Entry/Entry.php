@@ -138,7 +138,7 @@ class Entry implements Hookable, Type, Field {
                     throw new UserError( __( 'An entry with this ID was not found.', 'wp-graphql-gravity-forms' ) );
                 }
 
-                return $this->entry_data_manipulator->manipulate( $entry, $args );
+                return $this->entry_data_manipulator->manipulate( $entry );
             }
         ] );
     }

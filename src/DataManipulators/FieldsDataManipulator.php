@@ -11,11 +11,10 @@ class FieldsDataManipulator implements DataManipulator {
      * Manipulate form fields data.
      *
      * @param array $data The form fields data to be manipulated.
-     * @param array $args Query arguments needed for form fields data manipulation (optional).
      *
      * @return array Manipulated form fields data.
      */
-    public function manipulate( array $data, array $args = [] ) : array {
+    public function manipulate( array $data ) : array {
         $data = $this->set_is_hidden_values( $data );
         $data = $this->add_keys_to_inputs( $data, 'address' );
         $data = $this->add_keys_to_inputs( $data, 'name' );

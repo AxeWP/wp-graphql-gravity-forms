@@ -11,12 +11,11 @@ class EntryDataManipulator implements DataManipulator {
      * Manipulate entry data.
      *
      * @param array $data The entry data to be manipulated.
-     * @param array $args Query arguments needed for entry data manipulation (optional).
      *
      * @return array Manipulated entry data.
      */
-    public function manipulate( array $data, array $args = [] ) : array {
-        $data = $this->set_global_and_entry_ids( $data, $args );
+    public function manipulate( array $data ) : array {
+        $data = $this->set_global_and_entry_ids( $data );
         $data = $this->convert_entry_keys_to_camelcase( $data );
 
         return $data;
@@ -26,13 +25,12 @@ class EntryDataManipulator implements DataManipulator {
      * Set 'entryId' to be the entry ID and 'id' to be the global Relay ID.
      *
      * @param array $entry Entry data.
-     * @param array $args  Query arguments needed for entry data manipulation.
      *
      * @return array $entry Entry data, with the entry ID and global Relay ID set.
      */
-    private function set_global_and_entry_ids( array $entry, array $args ) : array {
+    private function set_global_and_entry_ids( array $entry ) : array {
         $entry['entryId'] = $entry['id'];
-        $entry['id']      = $args['id'] ?? Relay::toGlobalId( Entry::TYPE, $entry['entryId'] );
+        $entry['id']      = Relay::toGlobalId( Entry::TYPE, $entry['entryId'] );
 
         return $entry;
     }
