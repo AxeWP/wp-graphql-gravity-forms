@@ -97,7 +97,7 @@ class Entry implements Hookable, Type, Field {
                     'description' => __( 'Provides the name and version of both the browser and operating system from which the entry was submitted.', 'wp-graphql-gravity-forms' ),
                 ],
                 // @TODO: Add field to get user data.
-                'createdBy' => [
+                'createdById' => [
                     'type'        => 'Integer',
                     'description' => __( 'ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
                 ],

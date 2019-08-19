@@ -68,7 +68,7 @@ class EntryDataManipulator implements DataManipulator {
             'payment_method'   => 'paymentMethod',
             'transaction_id'   => 'transactionId',
             'is_fulfilled'     => 'isFulfilled',
-            'created_by'       => 'createdBy',
+            'created_by'       => 'createdById',
             'transaction_type' => 'transactionType',
         ];
     }

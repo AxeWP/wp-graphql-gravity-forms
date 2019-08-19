@@ -53,7 +53,6 @@ class RootQueryEntriesConnection implements Hookable, Connection {
                     'type'        => EntriesSortingInput::TYPE,
                     'description' => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
                 ],
-                // @TODO: pagination.
             ],
             'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
                 return ( new RootQueryEntriesConnectionResolver( $root, $args, $context, $info ) )->get_connection();

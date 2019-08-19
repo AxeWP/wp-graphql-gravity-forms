@@ -16,20 +16,6 @@ class FormFieldConnection implements Hookable, Connection {
      */
     const FROM_FIELD = 'fields';
 
-    /**
-     * WPGraphQL for Gravity Forms plugin's class instances.
-     *
-     * @var array
-     */
-    private $instances;
-
-    /**
-     * @param array WPGraphQL for Gravity Forms plugin's class instances.
-     */
-    public function __construct( array $instances ) {
-        $this->instances = $instances;
-    }
-
     public function register_hooks() {
         add_action('init', [ $this, 'register_connection' ] );
     }

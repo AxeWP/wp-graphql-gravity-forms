@@ -111,13 +111,14 @@ final class WPGraphQLGravityForms {
 		$this->instances['entries_field_fiters_input'] = new Entry\EntriesFieldFiltersInput();
 		$this->instances['entry']                      = new Entry\Entry( $this->instances['entry_data_manipulator'] );
 		$this->instances['entry_form']                 = new Entry\EntryForm( $this->instances['form_data_manipulator'] );
+		$this->instances['entry_user']                 = new Entry\EntryUser();
 
 		// Unions
 		$this->instances['object_field_union']       = new Union\ObjectFieldUnion( $this->instances );
 		$this->instances['object_field_value_union'] = new Union\ObjectFieldValueUnion( $this->instances );
 
 		// Connections
-		$this->instances['form_field_connection']         = new Connections\FormFieldConnection( $this->instances );
+		$this->instances['form_field_connection']         = new Connections\FormFieldConnection();
 		$this->instances['entry_field_connection']        = new Connections\EntryFieldConnection( $this->instances );
 		$this->instances['root_query_entries_connection'] = new Connections\RootQueryEntriesConnection();
 
