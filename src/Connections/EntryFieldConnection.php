@@ -13,6 +13,11 @@ use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
 
 class EntryFieldConnection implements Hookable, Connection {
     /**
+     * The from field name.
+     */
+    const FROM_FIELD = 'fields';
+
+    /**
      * WPGraphQL for Gravity Forms plugin's class instances.
      *
      * @var array
@@ -34,7 +39,7 @@ class EntryFieldConnection implements Hookable, Connection {
         register_graphql_connection( [
             'fromType'      => Entry::TYPE,
             'toType'        => ObjectFieldUnion::TYPE,
-            'fromFieldName' => 'fields',
+            'fromFieldName' => self::FROM_FIELD,
             'edgeFields' => [
                 'fieldValue' => [
                     'type'        => ObjectFieldValueUnion::TYPE,

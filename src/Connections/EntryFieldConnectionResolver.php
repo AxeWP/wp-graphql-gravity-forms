@@ -4,6 +4,7 @@ namespace WPGraphQLGravityForms\Connections;
 
 use GFAPI;
 use GraphQL\Error\UserError;
+use GraphQLRelay\Connection\ArrayConnection;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 
 class EntryFieldConnectionResolver extends AbstractConnectionResolver {
@@ -25,7 +26,7 @@ class EntryFieldConnectionResolver extends AbstractConnectionResolver {
      * @return string Base-64 encoded cursor value.
      */
 	protected function get_cursor_for_node( $node, $key = null ) : string {
-		return base64_encode( 'arrayconnection:' . $node['id'] );
+		return base64_encode( ArrayConnection::PREFIX . $node['id'] );
 	}
 
     /**
