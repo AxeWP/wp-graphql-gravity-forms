@@ -1,5 +1,5 @@
 {
-    "name": "wp-graphql-gravityforms/wp-graphql-gravityforms",
+    "name": "harness-software/wp-graphql-gravity-forms",
     "description": "WPGraphQL for Gravity Forms",
     "type": "wordpress-plugin",
     "license": "GPL-2.0",
