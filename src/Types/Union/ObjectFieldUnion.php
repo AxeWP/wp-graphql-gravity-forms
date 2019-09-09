@@ -62,6 +62,13 @@ class ObjectFieldUnion implements Hookable, Type {
             return $instance instanceof Field;
         } );
 
+        /**
+         * Filter for adding custom field class instances to be used by this union's resolver.
+         *
+         * @param array $fields Gravity Forms field class instances.
+         */
+        $fields = apply_filters('graphql_gf_form_field_instances', $fields );
+
         return array_reduce( $fields, function( $mappings, $field ) {
             $mappings[ $field::GF_TYPE ] = $field::TYPE;
 
