@@ -6,6 +6,7 @@ use GFAPI;
 use GraphQL\Error\UserError;
 use GraphQLRelay\Connection\ArrayConnection;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
+use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
 
 class EntryFieldConnectionResolver extends AbstractConnectionResolver {
     /**
@@ -47,6 +48,6 @@ class EntryFieldConnectionResolver extends AbstractConnectionResolver {
             throw new UserError( __( 'The form used to generate this entry was not found.', 'wp-graphql-gravity-forms' ) );
         }
 
-        return $form['fields'];
+        return ( new FieldsDataManipulator() )->manipulate( $form['fields'] );
     }
 }

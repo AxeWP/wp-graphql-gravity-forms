@@ -4,6 +4,7 @@ namespace WPGraphQLGravityForms\Connections;
 
 use GraphQLRelay\Connection\ArrayConnection;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
+use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
 
 class FormFieldConnectionResolver extends AbstractConnectionResolver {
     /**
@@ -38,6 +39,6 @@ class FormFieldConnectionResolver extends AbstractConnectionResolver {
      * @return array The fields for this Gravity Forms entry.
      */
     public function get_items() : array {
-        return $this->source['fields'];
+        return ( new FieldsDataManipulator() )->manipulate( $this->source['fields'] );
     }
 }

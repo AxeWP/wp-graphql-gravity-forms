@@ -123,8 +123,9 @@ final class WPGraphQLGravityForms {
 		$this->instances['root_query_entries_connection'] = new Connections\RootQueryEntriesConnection();
 
 		// Mutations
-		$this->instances['entry_text_value_input'] = new Mutations\EntryTextValueInput();
-		$this->instances['create_entry_mutation']  = new Mutations\CreateEntryMutation( $this->instances['entry_data_manipulator'] );
+		$this->instances['create_draft_entry'] = new Mutations\CreateDraftEntry();
+		// $this->instances['entry_text_value_input'] = new Mutations\EntryTextValueInput();
+		// $this->instances['create_entry_mutation']  = new Mutations\CreateEntryMutation( $this->instances['entry_data_manipulator'] );
 	}
 
 	private function register_hooks() {
