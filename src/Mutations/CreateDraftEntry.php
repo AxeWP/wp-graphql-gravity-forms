@@ -65,11 +65,11 @@ class CreateDraftEntry implements Hookable, Mutation {
 	public function get_output_fields() : array {
 		return [
 			'resumeToken' => [
-				'type'        => 'string',
+				'type'        => 'String',
 				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
 			],
 			'resumeUrl' => [
-				'type'        => 'string',
+				'type'        => 'String',
 				'description' => __( 'Draft resume URL. If the "Referer" header is not included in the request, this will be an empty string.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -109,6 +109,8 @@ class CreateDraftEntry implements Hookable, Mutation {
 	}
 
 	/**
+	 * Mimics Gravity Forms' GFFormsModel::save_draft_submission() method.
+	 *
 	 * @param array  $input      Request input.
 	 * @param array  $form       Form object.
 	 * @param string $source_url Source URL.
@@ -146,7 +148,6 @@ class CreateDraftEntry implements Hookable, Mutation {
 	 * @param string $source_url Source URL.
 	 *
 	 * @return array Draft entry data.
-	 * 
 	 */
 	private function get_draft_entry_data( array $form, string $ip, string $source_url ) : array {
 		return [
