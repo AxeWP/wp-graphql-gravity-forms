@@ -3,7 +3,6 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\Field\FieldValue\StringFieldValue;
 
 /**
  * Select field.
@@ -20,11 +19,6 @@ class SelectField extends Field {
      * Type registered in Gravity Forms.
      */
     const GF_TYPE = 'select';
-
-    /**
-     * Field value type.
-     */
-    const VALUE_TYPE = StringFieldValue::TYPE;
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );

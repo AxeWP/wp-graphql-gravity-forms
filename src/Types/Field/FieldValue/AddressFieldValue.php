@@ -6,15 +6,16 @@ use GF_Field;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\Types\Field\AddressField;
 
 /**
  * Values for an individual Address field.
  */
-class AddressFieldValues implements Hookable, Type, FieldValue {
+class AddressFieldValue implements Hookable, Type, FieldValue {
     /**
      * Type registered in WPGraphQL.
      */
-    const TYPE = 'AddressFieldValues';
+    const TYPE = AddressField::TYPE . 'Value';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -22,31 +23,31 @@ class AddressFieldValues implements Hookable, Type, FieldValue {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __('Gravity Forms address field values.', 'wp-graphql-gravity-forms'),
+            'description' => __( 'Gravity Forms address field values.', 'wp-graphql-gravity-forms' ),
             'fields'      => [
                 'street' => [
                     'type'        => 'String',
-                    'description' => __('Street address.', 'wp-graphql-gravity-forms'),
+                    'description' => __( 'Street address.', 'wp-graphql-gravity-forms' ),
                 ],
                 'lineTwo' => [
                     'type'        => 'String',
-                    'description' => __('Address line two.', 'wp-graphql-gravity-forms'),
+                    'description' => __( 'Address line two.', 'wp-graphql-gravity-forms' ),
                 ],
                 'city' => [
                     'type'        => 'String',
-                    'description' => __('City.', 'wp-graphql-gravity-forms'),
+                    'description' => __( 'City.', 'wp-graphql-gravity-forms' ),
                 ],
                 'state' => [
                     'type'        => 'String',
-                    'description' => __('State / province.', 'wp-graphql-gravity-forms'),
+                    'description' => __( 'State / province.', 'wp-graphql-gravity-forms' ),
                 ],
                 'zip' => [
                     'type'        => 'String',
-                    'description' => __('ZIP / postal code.', 'wp-graphql-gravity-forms'),
+                    'description' => __( 'ZIP / postal code.', 'wp-graphql-gravity-forms' ),
                 ],
                 'country' => [
                     'type'        => 'String',
-                    'description' => __('Country.', 'wp-graphql-gravity-forms'),
+                    'description' => __( 'Country.', 'wp-graphql-gravity-forms' ),
                 ],
             ],
         ] );

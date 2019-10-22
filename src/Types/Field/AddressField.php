@@ -3,7 +3,6 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\Field\FieldValue\AddressFieldValues;
 
 /**
  * Address field.
@@ -20,11 +19,6 @@ class AddressField extends Field {
      * Type registered in Gravity Forms.
      */
     const GF_TYPE = 'address';
-
-    /**
-     * Field value type.
-     */
-    const VALUE_TYPE = AddressFieldValues::TYPE;
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );

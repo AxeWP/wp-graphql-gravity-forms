@@ -6,15 +6,16 @@ use GF_Field;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\Types\Field\WebsiteField;
 
 /**
- * Value for a field that gets stored as a string.
+ * Value for a website field.
  */
-class StringFieldValue implements Hookable, Type, FieldValue {
+class WebsiteFieldValue implements Hookable, Type, FieldValue {
     /**
      * Type registered in WPGraphQL.
      */
-    const TYPE = 'StringFieldValue';
+    const TYPE = WebsiteField::TYPE . 'Value';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -22,11 +23,11 @@ class StringFieldValue implements Hookable, Type, FieldValue {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __('Gravity Forms string field value.', 'wp-graphql-gravity-forms'),
+            'description' => __( 'Website field value.', 'wp-graphql-gravity-forms' ),
             'fields'      => [
                 'value' => [
                     'type'        => 'String',
-                    'description' => __('The value.', 'wp-graphql-gravity-forms'),
+                    'description' => __( 'The value.', 'wp-graphql-gravity-forms' ),
                 ],
             ],
         ] );

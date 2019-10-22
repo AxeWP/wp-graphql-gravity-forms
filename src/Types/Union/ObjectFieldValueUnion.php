@@ -59,13 +59,22 @@ class ObjectFieldValueUnion implements Hookable, Type {
      */
     private function get_field_value_types() : array {
         $fields_with_value_types = array_filter( $this->instances, function( $instance ) {
-            return $instance instanceof Field && defined( get_class( $instance ) . '::VALUE_TYPE' );
+            return $instance instanceof Field && $this->does_field_have_value_type( $instance );
         } );
 
         return array_reduce( $fields_with_value_types, function( $value_types, $field ) {
-            $value_types[ $field::TYPE ] = $field::VALUE_TYPE;
+            $value_types[ $field::TYPE ] = $field::TYPE . 'Value';
 
             return $value_types;
         }, [] );
+    }
+
+    /**
+     * @param Field $field Gravity Forms field.
+     *
+     * @return bool Whether $field has a corresponding field value type.
+     */
+    private function does_field_have_value_type( Field $field ) : bool {
+        return class_exists( 'WPGraphQLGravityForms\Types\Field\FieldValue\\' . $field::TYPE . 'Value' );
     }
 }

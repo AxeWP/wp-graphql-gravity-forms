@@ -8,6 +8,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Connection;
 use WPGraphQLGravityForms\Types\Entry\Entry;
 use WPGraphQLGravityForms\Types\Field\Field;
+use WPGraphQLGravityForms\Types\Field\FieldValue;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
 
@@ -45,24 +46,24 @@ class EntryFieldConnection implements Hookable, Connection {
                     'type'        => ObjectFieldValueUnion::TYPE,
                     'description' => __('Field value.', 'wp-graphql-gravity-forms'),
                     'resolve' => function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
-                        $field = $this->get_field_from_gf_field_type( $root['node']['type'] );
+                        $field = $this->get_field_by_gf_field_type( $root['node']['type'] );
 
                         if ( ! $field ) {
                             return null;
                         }
 
-                        // Account for fields that do not have a value type.
-                        if ( ! defined( get_class( $field ) . '::VALUE_TYPE' ) ) {
+                        $value_class = 'WPGraphQLGravityForms\Types\Field\FieldValue\\' . $field::TYPE . 'Value';
+
+                        // Account for fields that do not have a value class.
+                        if ( ! class_exists( $value_class ) ) {
                             return null;
                         }
-
-                        $value_type_class = 'WPGraphQLGravityForms\Types\Field\FieldValue\\' . get_class( $field )::VALUE_TYPE;
 
                         return array_merge(
                             // 'type' is added here in order to pass it through to the 'resolveType'
                             // callback function in ObjectFieldValueUnion.
                             [ 'type'  => $field::TYPE ],
-                            $value_type_class::get( $root['source'], $root['node'] )
+                            $value_class::get( $root['source'], $root['node'] )
                         );
                     }
                 ],
@@ -78,7 +79,7 @@ class EntryFieldConnection implements Hookable, Connection {
      *
      * @return Field|null The corresponding WPGraphQL field, or null if not found.
      */
-    private function get_field_from_gf_field_type( string $gf_field_type ) {
+    private function get_field_by_gf_field_type( string $gf_field_type ) {
         $fields = array_filter( $this->instances, function( $instance ) use ( $gf_field_type ) {
             return $instance instanceof Field && $instance::GF_TYPE === $gf_field_type;
         } );

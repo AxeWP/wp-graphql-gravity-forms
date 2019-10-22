@@ -6,6 +6,7 @@ use GF_Field;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\Types\Field\SignatureField;
 
 /**
  * Value for an individual Signature field.
@@ -14,7 +15,7 @@ class SignatureFieldValue implements Hookable, Type, FieldValue {
     /**
      * Type registered in WPGraphQL.
      */
-    const TYPE = 'SignatureFieldValue';
+    const TYPE = SignatureField::TYPE . 'Value';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -22,11 +23,11 @@ class SignatureFieldValue implements Hookable, Type, FieldValue {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __('Gravity Forms signature field value.', 'wp-graphql-gravity-forms'),
+            'description' => __( 'Signature field value.', 'wp-graphql-gravity-forms' ),
             'fields'      => [
                 'url' => [
                     'type'        => 'String',
-                    'description' => __('The URL to the signature image.', 'wp-graphql-gravity-forms'),
+                    'description' => __( 'The URL to the signature image.', 'wp-graphql-gravity-forms' ),
                 ],
             ],
         ] );

@@ -6,16 +6,16 @@ use GF_Field;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\Types\Field\FileUploadField;
+use WPGraphQLGravityForms\Types\Field\MultiSelectField;
 
 /**
- * Value for an individual File Upload field.
+ * Values for an individual MultiSelect field.
  */
-class FileUploadFieldValue implements Hookable, Type, FieldValue {
+class MultiSelectFieldValue implements Hookable, Type, FieldValue {
     /**
      * Type registered in WPGraphQL.
      */
-    const TYPE = FileUploadField::TYPE . 'Value';
+    const TYPE = MultiSelectField::TYPE . 'Value';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );
@@ -23,27 +23,27 @@ class FileUploadFieldValue implements Hookable, Type, FieldValue {
 
     public function register_type() {
         register_graphql_object_type( self::TYPE, [
-            'description' => __( 'File upload field value.', 'wp-graphql-gravity-forms' ),
+            'description' => __( 'Multiselect field values.', 'wp-graphql-gravity-forms' ),
             'fields'      => [
-                'url' => [
-                    'type'        => 'String',
-                    'description' => __( 'URL to the uploaded file.', 'wp-graphql-gravity-forms' ),
+                'values' => [
+                    'type'        => ['list_of' => 'String' ],
+                    'description' => __( 'Field values.', 'wp-graphql-gravity-forms' ),
                 ],
             ],
         ] );
     }
 
     /**
-     * Get the field value.
+     * Get the field values.
      *
      * @param array    $entry Gravity Forms entry.
      * @param GF_Field $field Gravity Forms field.
      *
-     * @return array Entry field value.
+     * @return array Entry field values.
      */
     public static function get( array $entry, GF_Field $field ) : array {
         return [
-            'url' => (string) $entry[ $field['id'] ],
+            'values' => json_decode( $entry[ $field['id'] ], true ),
         ];
     }
 }

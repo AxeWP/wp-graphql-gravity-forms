@@ -3,7 +3,6 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\Field\FieldValue\NameFieldValues;
 
 /**
  * Name field.
@@ -20,11 +19,6 @@ class NameField extends Field {
      * Type registered in Gravity Forms.
      */
     const GF_TYPE = 'name';
-
-    /**
-     * Field value type.
-     */
-    const VALUE_TYPE = NameFieldValues::TYPE;
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_type' ] );

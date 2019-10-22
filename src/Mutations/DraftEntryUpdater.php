@@ -127,15 +127,15 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 
             if ( ! $new_resume_token ) {
                 throw new UserError( __( 'An error occurred while trying to update the draft entry.', 'wp-graphql-gravity-forms' ) );
-			}
+            }
 
-			// $new_draft_entry = GFFormsModel::get_draft_submission_values( $new_resume_token );
+            // $new_draft_entry = GFFormsModel::get_draft_submission_values( $new_resume_token );
 
-			return [
-				'resumeToken' => $new_resume_token,
-				// 'fieldValues' => $new_draft_entry['submitted_values'],
-			];
-		};
+            return [
+                'resumeToken' => $new_resume_token,
+                // 'fieldValues' => $new_draft_entry['submitted_values'],
+            ];
+        };
     }
 
     /**
