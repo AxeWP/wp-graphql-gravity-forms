@@ -5,11 +5,11 @@ namespace WPGraphQLGravityForms\Mutations;
 /**
  * Update a Gravity Forms draft entry with a multi-select value.
  */
-class UpdateDraftEntryWithMultiSelect extends DraftEntryUpdater {
+class UpdateDraftEntryMultiSelectFieldValue extends DraftEntryUpdater {
     /**
      * Mutation name.
      */
-	const NAME = 'updateDraftEntryWithMultiSelect';
+	const NAME = 'updateDraftEntryMultiSelectFieldValue';
 
 	/**
      * @return array The input field value.

@@ -3,13 +3,13 @@
 namespace WPGraphQLGravityForms\Mutations;
 
 /**
- * Update a Gravity Forms draft entry with a string value.
+ * Update a Gravity Forms draft entry radio field value.
  */
-class UpdateDraftEntryWithString extends DraftEntryUpdater {
+class UpdateDraftEntryRadioFieldValue extends DraftEntryUpdater {
     /**
      * Mutation name.
      */
-	const NAME = 'updateGravityFormsDraftEntryWithString';
+	const NAME = 'updateDraftEntryRadioFieldValue';
 
 	/**
      * @return array The input field value.
@@ -26,7 +26,7 @@ class UpdateDraftEntryWithString extends DraftEntryUpdater {
      *
      * @return string The sanitized field value.
      */
-	protected function sanitize_field_value( $value ) {
+	protected function sanitize_field_value( string $value ) : string {
 		return sanitize_text_field( $value );
 	}
 }

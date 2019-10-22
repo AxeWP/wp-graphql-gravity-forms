@@ -131,12 +131,22 @@ final class WPGraphQLGravityForms {
 		$this->instances['entry_field_connection']        = new Connections\EntryFieldConnection( $this->instances );
 		$this->instances['root_query_entries_connection'] = new Connections\RootQueryEntriesConnection();
 
-		// Mutations
-		$this->instances['create_draft_entry']             = new Mutations\CreateDraftEntry();
-		$this->instances['update_draft_entry_with_string'] = new Mutations\UpdateDraftEntryWithString();
-		$this->instances['update_draft_entry_with_int']    = new Mutations\UpdateDraftEntryWithInt();
-		$this->instances['submit_draft_entry']             = new Mutations\SubmitDraftEntry( $this->instances['entry_data_manipulator'] );
-		$this->instances['delete_draft_entry']             = new Mutations\DeleteDraftEntry();
+		// Draft entry mutations
+		$this->instances['create_draft_entry']                          = new Mutations\CreateDraftEntry();
+		$this->instances['delete_draft_entry']                          = new Mutations\DeleteDraftEntry();
+		$this->instances['submit_draft_entry']                          = new Mutations\SubmitDraftEntry( $this->instances['entry_data_manipulator'] );
+		$this->instances['update_draft_entry_checkbox_field_value']     = new Mutations\UpdateDraftEntryCheckboxFieldValue();
+		$this->instances['update_draft_entry_date_field_value']         = new Mutations\UpdateDraftEntryDateFieldValue();
+		$this->instances['update_draft_entry_email_field_value']        = new Mutations\UpdateDraftEntryEmailFieldValue();
+		$this->instances['update_draft_entry_multi_select_field_value'] = new Mutations\UpdateDraftEntryMultiSelectFieldValue();
+		$this->instances['update_draft_entry_number_field_value']       = new Mutations\UpdateDraftEntryNumberFieldValue();
+		$this->instances['update_draft_entry_phone_field_value']        = new Mutations\UpdateDraftEntryPhoneFieldValue();
+		$this->instances['update_draft_entry_radio_field_value']        = new Mutations\UpdateDraftEntryRadioFieldValue();
+		$this->instances['update_draft_entry_select_field_value']       = new Mutations\UpdateDraftEntrySelectFieldValue();
+		$this->instances['update_draft_entry_text_area_field_value']    = new Mutations\UpdateDraftEntryTextAreaFieldValue();
+		$this->instances['update_draft_entry_text_field_value']         = new Mutations\UpdateDraftEntryTextFieldValue();
+		$this->instances['update_draft_entry_website_field_value']      = new Mutations\UpdateDraftEntryWebsiteFieldValue();
+
 	}
 
 	private function register_hooks() {

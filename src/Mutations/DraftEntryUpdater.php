@@ -139,11 +139,13 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
     }
 
     /**
+	 * Implement this method in child classes.
+	 *
      * @param mixed The field value.
      *
      * @return mixed The sanitized field value.
      */
-    abstract protected function sanitize_field_value( $value );
+    // abstract protected function sanitize_field_value( $value );
 
 	/**
 	 * @param array $form The form.
