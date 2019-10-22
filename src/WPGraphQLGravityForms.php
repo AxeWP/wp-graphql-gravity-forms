@@ -125,6 +125,8 @@ final class WPGraphQLGravityForms {
 		// Mutations
 		$this->instances['create_draft_entry']             = new Mutations\CreateDraftEntry();
 		$this->instances['update_draft_entry_with_string'] = new Mutations\UpdateDraftEntryWithString();
+		$this->instances['update_draft_entry_with_int']    = new Mutations\UpdateDraftEntryWithInt();
+		$this->instances['submit_draft_entry']             = new Mutations\SubmitDraftEntry( $this->instances['entry_data_manipulator'] );
 		$this->instances['delete_draft_entry']             = new Mutations\DeleteDraftEntry();
 	}
 

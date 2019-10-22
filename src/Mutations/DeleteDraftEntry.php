@@ -12,16 +12,16 @@ use WPGraphQLGravityForms\Interfaces\Mutation;
  */
 class DeleteDraftEntry implements Hookable, Mutation {
     /**
-     * Type registered in WPGraphQL.
+     * Mutation name.
      */
-    const TYPE = 'deleteGravityFormsDraftEntry';
+    const NAME = 'deleteGravityFormsDraftEntry';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
 	}
 
 	public function register_mutation() {
-		register_graphql_mutation( self::TYPE, [
+		register_graphql_mutation( self::NAME, [
             'inputFields'         => $this->get_input_fields(),
 			'outputFields'        => $this->get_output_fields(),
 			'mutateAndGetPayload' => $this->mutate_and_get_payload(),
@@ -36,7 +36,7 @@ class DeleteDraftEntry implements Hookable, Mutation {
 	public static function get_input_fields() : array {
 		return [
 			'resumeToken' => [
-				'type'        => 'string',
+				'type'        => 'String',
 				'description' => __( 'Resume token of the draft to delete.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -50,7 +50,7 @@ class DeleteDraftEntry implements Hookable, Mutation {
 	public function get_output_fields() : array {
 		return [
 			'resumeToken' => [
-				'type'        => 'string',
+				'type'        => 'String',
 				'description' => __( 'Resume token of the draft that was deleted.', 'wp-graphql-gravity-forms' ),
 			],
 		];

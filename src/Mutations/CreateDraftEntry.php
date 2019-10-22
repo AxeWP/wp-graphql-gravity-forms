@@ -11,20 +11,20 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Mutation;
 
 /**
- * Create a draft Gravity Forms entry.
+ * Create a Gravity Forms draft entry.
  */
 class CreateDraftEntry implements Hookable, Mutation {
     /**
-     * Type registered in WPGraphQL.
+     * Mutation name.
      */
-    const TYPE = 'createGravityFormsDraftEntry';
+    const NAME = 'createGravityFormsDraftEntry';
 
     public function register_hooks() {
         add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
 	}
 
 	public function register_mutation() {
-		register_graphql_mutation( self::TYPE, [
+		register_graphql_mutation( self::NAME, [
             'inputFields'         => $this->get_input_fields(),
 			'outputFields'        => $this->get_output_fields(),
 			'mutateAndGetPayload' => $this->mutate_and_get_payload(),
@@ -44,11 +44,11 @@ class CreateDraftEntry implements Hookable, Mutation {
 			],
 			'pageNumber' => [
 				'type'        => 'Integer',
-				'description' => __( 'The page number where the user left off. Default is 1.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Optional. The page number where the user left off. Default is 1.', 'wp-graphql-gravity-forms' ),
 			],
 			'ip' => [
 				'type'        => 'String',
-				'description' => __( 'The IP address of the user who submitted the draft entry. Default is an empty string.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Optional. The IP address of the user who submitted the draft entry. Default is an empty string.', 'wp-graphql-gravity-forms' ),
 			],
 			// 'files' => [
 			// 	'type'        => '',
@@ -58,7 +58,7 @@ class CreateDraftEntry implements Hookable, Mutation {
     }
 
 	/**
-	 * Defines the mutation output field configuration.
+	 * Defines the output field configuration.
 	 *
 	 * @return array
 	 */
@@ -76,7 +76,7 @@ class CreateDraftEntry implements Hookable, Mutation {
     }
 
 	/**
-	 * Defines the mutation data modification closure.
+	 * Defines the data modification closure.
 	 *
 	 * @return callable
 	 */
