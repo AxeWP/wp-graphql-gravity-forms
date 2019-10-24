@@ -11,6 +11,7 @@ use WPGraphQLGravityForms\Types\Field\Field;
 use WPGraphQLGravityForms\Types\Field\FieldValue;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
+use WPGraphQLGravityForms\Types\FieldError\FieldError;
 
 class EntryFieldConnection implements Hookable, Connection {
     /**
@@ -44,7 +45,7 @@ class EntryFieldConnection implements Hookable, Connection {
             'edgeFields' => [
                 'fieldValue' => [
                     'type'        => ObjectFieldValueUnion::TYPE,
-                    'description' => __('Field value.', 'wp-graphql-gravity-forms'),
+                    'description' => __( 'Field value.', 'wp-graphql-gravity-forms' ),
                     'resolve' => function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
                         $field = $this->get_field_by_gf_field_type( $root['node']['type'] );
 

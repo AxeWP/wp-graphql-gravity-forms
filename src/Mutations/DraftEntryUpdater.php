@@ -9,6 +9,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Mutation;
+use WPGraphQLGravityForms\Types\FieldError\FieldError;
 
 /**
  * Update a draft Gravity Forms entry with a new value.
@@ -76,6 +77,10 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 				'type'        => 'String',
 				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
 			],
+			'errors' => [
+				'type'        => [ 'list_of' => FieldError::TYPE ],
+				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
+			],
 		];
     }
 
@@ -114,7 +119,15 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 			$field->validate( $this->value, $form );
 
 			if ( $field->failed_validation ) {
-				throw new UserError( __( 'An invalid value was provided.', 'wp-graphql-gravity-forms' ) . ' ' . $field->validation_message );
+				return [
+					'resumeToken' => $resume_token,
+					'errors' => [
+						[
+							'type'    => 'validation',
+							'message' => $field->validation_message,
+						],
+					],
+				];
             }
 
             $submission = json_decode( $draft_entry['submission'], true );

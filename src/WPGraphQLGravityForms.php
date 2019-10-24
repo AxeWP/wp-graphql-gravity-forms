@@ -10,6 +10,7 @@ use WPGraphQLGravityForms\Types\Form;
 use WPGraphQLGravityForms\Types\Field;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 use WPGraphQLGravityForms\Types\Field\FieldValue;
+use WPGraphQLGravityForms\Types\FieldError\FieldError;
 use WPGraphQLGravityForms\Types\Union;
 use WPGraphQLGravityForms\Types\Connection;
 use WPGraphQLGravityForms\Types\Entry;
@@ -131,6 +132,9 @@ final class WPGraphQLGravityForms {
 		$this->instances['entry_field_connection']        = new Connections\EntryFieldConnection( $this->instances );
 		$this->instances['root_query_entries_connection'] = new Connections\RootQueryEntriesConnection();
 
+		// Field errors
+		$this->instances['field_error'] = new FieldError();
+
 		// Draft entry mutations
 		$this->instances['create_draft_entry']                          = new Mutations\CreateDraftEntry();
 		$this->instances['delete_draft_entry']                          = new Mutations\DeleteDraftEntry();
@@ -146,7 +150,6 @@ final class WPGraphQLGravityForms {
 		$this->instances['update_draft_entry_text_area_field_value']    = new Mutations\UpdateDraftEntryTextAreaFieldValue();
 		$this->instances['update_draft_entry_text_field_value']         = new Mutations\UpdateDraftEntryTextFieldValue();
 		$this->instances['update_draft_entry_website_field_value']      = new Mutations\UpdateDraftEntryWebsiteFieldValue();
-
 	}
 
 	private function register_hooks() {
