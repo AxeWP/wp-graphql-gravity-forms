@@ -9,12 +9,11 @@ use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 
 class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
-
     /**
      * @return bool Whether query should execute.
      */
     public function should_execute() : bool {
-        return true;
+        return current_user_can( 'gravityforms_view_entries' );
     }
 
     /**

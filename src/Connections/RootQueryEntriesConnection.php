@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Connections;
 
 use GraphQL\Type\Definition\ResolveInfo;
+use GraphQL\Error\UserError;
 use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Connection;
@@ -55,6 +56,10 @@ class RootQueryEntriesConnection implements Hookable, Connection {
                 ],
             ],
             'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
+                if ( ! current_user_can( 'gravityforms_view_entries' ) ) {
+                    throw new UserError( __( 'Sorry, you are not allowed to view Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );
+                }
+
                 return ( new RootQueryEntriesConnectionResolver( $root, $args, $context, $info ) )->get_connection();
             },
         ] );

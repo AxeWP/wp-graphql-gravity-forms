@@ -145,6 +145,10 @@ class Entry implements Hookable, Type, Field {
                 ],
             ],
             'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+                if ( ! current_user_can( 'gravityforms_view_entries' ) ) {
+                    throw new UserError( __( 'Sorry, you are not allowed to view Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );
+                }
+
                 $id_parts = Relay::fromGlobalId( $args['id'] );
 
                 if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
