@@ -15,10 +15,21 @@ class EntryDataManipulator implements DataManipulator {
      * @return array Manipulated entry data.
      */
     public function manipulate( array $data ) : array {
+        $data = $this->set_is_draft_value( $data );
         $data = $this->set_global_and_entry_ids( $data );
-        $data = $this->convert_entry_keys_to_camelcase( $data );
+        $data = $this->convert_keys_to_camelcase( $data );
 
         return $data;
+    }
+
+    /**
+     * @param array $entry Entry data.
+     *
+     * @return array $entry Entry data, with the isDraft value set.
+     */
+    private function set_is_draft_value( array $entry ) : array {
+        $entry['isDraft'] = ! empty( $entry['resumeToken'] );
+        return $entry;
     }
 
     /**
@@ -30,7 +41,7 @@ class EntryDataManipulator implements DataManipulator {
      */
     private function set_global_and_entry_ids( array $entry ) : array {
         $entry['entryId'] = $entry['id'];
-        $entry['id']      = Relay::toGlobalId( Entry::TYPE, $entry['entryId'] );
+        $entry['id']      = Relay::toGlobalId( Entry::TYPE, $this->get_id_for_global_id_generation( $entry ) );
 
         return $entry;
     }
@@ -38,10 +49,23 @@ class EntryDataManipulator implements DataManipulator {
     /**
      * @param array $entry Entry data.
      *
+     * @return string The ID to be used to generate the Relay global ID.
+     */
+    private function get_id_for_global_id_generation( array $entry ) : string {
+        return $entry['isDraft'] ? $entry['resumeToken'] : $entry['entryId'];
+    }
+
+    /**
+     * @param array $entry Entry data.
+     *
      * @return array $entry Entry data with keys converted to camelCase.
      */
-    private function convert_entry_keys_to_camelcase( array $entry ) : array {
+    private function convert_keys_to_camelcase( array $entry ) : array {
         foreach ( $this->get_key_mappings() as $snake_case_key => $camel_case_key ) {
+            if ( ! isset( $entry[ $snake_case_key ] ) ) {
+                continue;
+            }
+
             $entry[ $camel_case_key ] = $entry[ $snake_case_key ];
             unset( $entry[ $snake_case_key ] );
         }

@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Types\Entry;
 
 use GFAPI;
+use GFFormsModel;
 use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -11,6 +12,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\Field;
 use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
+use WPGraphQLGravityForms\DataManipulators\DraftEntryDataManipulator;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\Types\Form\Form;
 
@@ -35,8 +37,17 @@ class Entry implements Hookable, Type, Field {
      */
     private $entry_data_manipulator;
 
-    public function __construct( EntryDataManipulator $entry_data_manipulator ) {
-        $this->entry_data_manipulator = $entry_data_manipulator;
+    /**
+     * DraftEntryDataManipulator instance.
+     */
+    private $draft_entry_data_manipulator;
+
+    public function __construct(
+        EntryDataManipulator $entry_data_manipulator,
+        DraftEntryDataManipulator $draft_entry_data_manipulator
+    ) {
+        $this->entry_data_manipulator       = $entry_data_manipulator;
+        $this->draft_entry_data_manipulator = $draft_entry_data_manipulator;
     }
 
     public function register_hooks() {
@@ -54,7 +65,7 @@ class Entry implements Hookable, Type, Field {
                 ],
                 'entryId' => [
                     'type'        => 'Integer',
-                    'description' => __( 'The entry ID.', 'wp-graphql-gravity-forms' ),
+                    'description' => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
                 ],
                 'formId' => [
                     'type'        => 'Integer',
@@ -106,6 +117,14 @@ class Entry implements Hookable, Type, Field {
                     'type'        => 'String',
                     'description' => __( 'The current status of the entry; "active", "spam", or "trash".', 'wp-graphql-gravity-forms' ),
                 ],
+                'isDraft' => [
+                    'type'        => 'Boolean',
+                    'description' => __( 'Whether the entry is a draft.', 'wp-graphql-gravity-forms' ),
+                ],
+                'resumeToken' => [
+                    'type'        => 'String',
+                    'description' => __( 'The resume token. Only applies to draft entries.', 'wp-graphql-gravity-forms' ),
+                ],
                 /**
                  * @TODO: Add support for these pricing properties that are only relevant
                  * when a Gravity Forms payment gateway add-on is being used:
@@ -122,7 +141,7 @@ class Entry implements Hookable, Type, Field {
             'args' => [
                 'id' => [
                     'type'        => [ 'non_null' => 'ID' ],
-                    'description' => __( "Unique global ID for the object. Base-64 encode a string like this, where '123' is the entry ID: '{self::TYPE}:123'.", 'wp-graphql-gravity-forms' ),
+                    'description' => __( "Unique global ID for the object. Base-64 encode a string like this, where '123' is the entry ID (or the resume token for a draft entry): '{self::TYPE}:123'.", 'wp-graphql-gravity-forms' ),
                 ],
             ],
             'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
@@ -132,13 +151,26 @@ class Entry implements Hookable, Type, Field {
                     throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
                 }
 
-                $entry = GFAPI::get_entry( $id_parts['id'] );
+                $id    = sanitize_text_field( $id_parts['id'] );
+                $entry = GFAPI::get_entry( $id );
 
-                if ( ! $entry ) {
+                if ( ! is_wp_error( $entry ) ) {
+                    return $this->entry_data_manipulator->manipulate( $entry );
+                }
+
+                $draft_entry = GFFormsModel::get_draft_submission_values( $id );
+
+                if ( ! $draft_entry || ! is_array( $draft_entry ) ) {
                     throw new UserError( __( 'An entry with this ID was not found.', 'wp-graphql-gravity-forms' ) );
                 }
 
-                return $this->entry_data_manipulator->manipulate( $entry );
+                $submission = json_decode( $draft_entry['submission'], true );
+
+                if ( ! $submission ) {
+                    throw new UserError( __( 'The submission data for this draft entry could not be read.', 'wp-graphql-gravity-forms' ) );
+                }
+
+                return $this->draft_entry_data_manipulator->manipulate( $submission['partial_entry'], $id );                
             }
         ] );
     }
