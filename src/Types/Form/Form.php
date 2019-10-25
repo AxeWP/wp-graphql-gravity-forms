@@ -129,10 +129,13 @@ class Form implements Hookable, Type, Field {
                     'type'        => 'String',
                     'description' => __( 'How sub-labels are aligned.', 'wp-graphql-gravity-forms' ),
                 ],
-                // @TODO: Add a field to get the CSS classes as an array of strings
                 'cssClass'   => [
                     'type'        => 'String',
-                    'description' => __( 'Custom CSS class. This class will be added to the <form> tag.', 'wp-graphql-gravity-forms' ),
+                    'description' => __( 'String containing the custom CSS classes to be added to the <form> tag.', 'wp-graphql-gravity-forms' ),
+                ],
+                'cssClassList'   => [
+                    'type'        => [ 'list_of' => 'String' ],
+                    'description' => __( 'Array of the custom CSS classes to be added to the <form> tag.', 'wp-graphql-gravity-forms' ),
                 ],
                 'enableHoneypot'   => [
                     'type'        => 'Boolean',

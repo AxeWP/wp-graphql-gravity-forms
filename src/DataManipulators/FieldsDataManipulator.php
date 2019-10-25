@@ -2,6 +2,7 @@
 
 namespace WPGraphQLGravityForms\DataManipulators;
 
+use GF_Field;
 use GraphQLRelay\Relay;
 use WPGraphQLGravityForms\Interfaces\DataManipulator;
 use WPGraphQLGravityForms\Types\Form\Form;
@@ -15,11 +16,30 @@ class FieldsDataManipulator implements DataManipulator {
      * @return array Manipulated form fields data.
      */
     public function manipulate( array $data ) : array {
+        $data = array_map( [ $this, 'set_css_class_list_for_field' ], $data );
         $data = $this->set_is_hidden_values( $data );
         $data = $this->add_keys_to_inputs( $data, 'address' );
         $data = $this->add_keys_to_inputs( $data, 'name' );
 
         return $data;
+    }
+
+    /**
+     * @param GF_Field $field Form field.
+     *
+     * @return GF_Field $field Form field with its cssClassList value set.
+     */
+    private function set_css_class_list_for_field( GF_Field $field ) : GF_Field {
+        if ( empty( $field->cssClass ) ) {
+            $field->cssClassList = null;
+            return $field;
+        }
+
+        $field->cssClassList = array_filter( explode( ' ', $field->cssClass ), function( $css_class ) {
+            return '' !== $css_class;
+        } );
+
+        return $field;
     }
 
     /**
@@ -106,91 +126,4 @@ class FieldsDataManipulator implements DataManipulator {
             'suffix',
         ];
     }
-
-    // /**
-    //  * @param array $fields Form fields.
-    //  *
-    //  * @return array $fields Form fields with keys added to address field inputs.
-    //  */
-    // private function add_keys_to_address_inputs( array $fields ) : array {
-    //     /**
-    //      * For Gravity Forms address fields, the first input is always street,
-    //      * the second is always lineTwo, and so on. These keys are added to make
-    //      * it easy to match up address inputs with user-submitted values.
-    //      */
-    //     $input_keys = [
-    //         'street',
-    //         'lineTwo',
-    //         'city',
-    //         'state',
-    //         'zip',
-    //         'country',
-    //     ];
-
-    //     $name_fields = array_filter( $fields, function( $field ) {
-    //         return 'address' === $field['type'];
-    //     });
-
-    //     foreach ( $name_fields as $field_index => $field ) {
-    //         /**
-    //          * The inputs are copied, modified, then re-saved to $field['inputs'] to avoid
-    //          * this error that occurs when trying to modify input keys directly:
-    //          * "indirect modification of overloaded element of GF_Field_"
-    //          */
-    //         $inputs = $field['inputs'];
-
-    //         foreach ( $inputs as $input_index => $input ) {
-    //             $key = $input_keys[ $input_index ];
-
-    //             $inputs[ $input_index ]['key'] = $key;
-    //         }
-
-    //         $fields[ $field_index ]['inputs'] = $inputs;
-    //     }
-
-    //     return $fields;
-    // }
-
-    // /**
-    //  * @param array $fields Form fields.
-    //  *
-    //  * @return array $fields Form fields with keys added to name field inputs.
-    //  */
-    // private function add_keys_to_address_inputs( array $fields ) : array {
-    //     /**
-    //      * For Gravity Forms name fields, the first input is always prefix,
-    //      * the second is always first, and so on. These keys are added to make
-    //      * it easy to match up name inputs with user-submitted values.
-    //      */
-    //     $input_keys = [
-    //         'prefix',
-    //         'first',
-    //         'middle',
-    //         'last',
-    //         'suffix',
-    //     ];
-
-    //     $address_fields = array_filter( $fields, function( $field ) {
-    //         return 'name' === $field['type'];
-    //     });
-
-    //     foreach ( $address_fields as $field_index => $field ) {
-    //         /**
-    //          * The inputs are copied, modified, then re-saved to $field['inputs'] to avoid
-    //          * this error that occurs when trying to modify input keys directly:
-    //          * "indirect modification of overloaded element of GF_Field_Address"
-    //          */
-    //         $inputs = $field['inputs'];
-
-    //         foreach ( $inputs as $input_index => $input ) {
-    //             $key = $input_keys[ $input_index ];
-
-    //             $inputs[ $input_index ]['key'] = $key;
-    //         }
-
-    //         $fields[ $field_index ]['inputs'] = $inputs;
-    //     }
-
-    //     return $fields;
-    // }
 }

@@ -25,6 +25,7 @@ class FormDataManipulator implements DataManipulator {
      */
     public function manipulate( array $data ) : array {
         $data = $this->set_global_and_form_ids( $data );
+        $data = $this->set_css_class_list( $data );
         $data = $this->convert_form_keys_to_camelcase( $data );
         $data = $this->prevent_missing_values( $data );
 
@@ -43,6 +44,24 @@ class FormDataManipulator implements DataManipulator {
     private function set_global_and_form_ids( array $form ) : array {
         $form['formId'] = $form['id'];
         $form['id']     = Relay::toGlobalId( Form::TYPE, $form['formId'] );
+
+        return $form;
+    }
+
+    /**
+     * @param array $form Form meta array.
+     *
+     * @return array $form Form meta array with the cssClassList value set.
+     */
+    private function set_css_class_list( array $form ) : array {
+        if ( empty( $form['cssClass'] ) ) {
+            $form['cssClassList'] = null;
+            return $form;
+        }
+
+        $form['cssClassList'] = array_filter( explode( ' ', $form['cssClass'] ), function( $css_class ) {
+            return '' !== $css_class;
+        } );
 
         return $form;
     }
