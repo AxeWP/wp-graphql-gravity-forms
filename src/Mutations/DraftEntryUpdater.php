@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Mutations;
 
 use GFAPI;
+use GF_Field;
 use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -10,11 +11,22 @@ use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Mutation;
 use WPGraphQLGravityForms\Types\FieldError\FieldError;
+use WPGraphQLGravityForms\Types\Entry\Entry;
+use WPGraphQLGravityForms\DataManipulators\DraftEntryDataManipulator;
 
 /**
  * Update a draft Gravity Forms entry with a new value.
  */
 abstract class DraftEntryUpdater implements Hookable, Mutation {
+    /**
+     * DraftEntryDataManipulator instance.
+     */
+    private $draft_entry_data_manipulator;
+
+    public function __construct( DraftEntryDataManipulator $draft_entry_data_manipulator ) {
+        $this->draft_entry_data_manipulator = $draft_entry_data_manipulator;
+	}
+
 	/**
 	 * The ID of the field to be updated.
 	 *
@@ -75,7 +87,15 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 		return [
 			'resumeToken' => [
 				'type'        => 'String',
-				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Draft entry resume token.', 'wp-graphql-gravity-forms' ),
+			],
+			'entry' => [
+				'type'        => Entry::TYPE,
+				'description' => __( 'The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided.', 'wp-graphql-gravity-forms' ),
+				'resolve' => function( array $payload ) : array {
+					$submission = $this->get_draft_submission( $payload['resumeToken'] );
+					return $this->draft_entry_data_manipulator->manipulate( $submission['partial_entry'], $payload['resumeToken'] );
+				}
 			],
 			'errors' => [
 				'type'        => [ 'list_of' => FieldError::TYPE ],
@@ -98,58 +118,65 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
             $this->field_id = absint( $input['fieldId'] );
 			$this->value    = $this->sanitize_field_value( $input['value'] );
 			$resume_token   = sanitize_text_field( $input['resumeToken'] );
-			$draft_entry    = GFFormsModel::get_draft_submission_values( $resume_token );
-
-			if ( ! is_array( $draft_entry ) || empty( $draft_entry['form_id'] ) ) {
-				throw new UserError( __( 'A draft with this resume token could not be found.', 'wp-graphql-gravity-forms' ) );
-			}
-
-			$form = GFAPI::get_form( $draft_entry['form_id'] );
-
-            if ( ! $form || ! $form['is_active'] || $form['is_trash'] ) {
-                throw new UserError( __( 'The form associated with this entry is nonexistent or inactive.', 'wp-graphql-gravity-forms' ) );
-            }
-
-			$field = $this->get_field_by_id( $form );
-
-			if ( ! $field ) {
-                throw new UserError( __( 'The form associated with this entry does not contain a field with the field ID provided.', 'wp-graphql-gravity-forms' ) );
-			}
+			$submission     = $this->get_draft_submission( $resume_token );
+			$form           = $this->get_draft_form( $submission );
+			$field          = $this->get_field_by_id( $form );
 
 			$field->validate( $this->value, $form );
 
 			if ( $field->failed_validation ) {
 				return [
 					'resumeToken' => $resume_token,
-					'errors' => [
+					'errors'      => [
 						[
 							'type'    => 'validation',
 							'message' => $field->validation_message,
 						],
 					],
 				];
-            }
-
-            $submission = json_decode( $draft_entry['submission'], true );
-
-            if ( ! $submission ) {
-                throw new UserError( __( 'The submission data for this draft entry could not be read.', 'wp-graphql-gravity-forms' ) );
-            }
-
-			$new_resume_token = $this->save_draft_submission( $form['id'], $submission, $resume_token );
-
-            if ( ! $new_resume_token ) {
-                throw new UserError( __( 'An error occurred while trying to update the draft entry.', 'wp-graphql-gravity-forms' ) );
-            }
-
-            // $new_draft_entry = GFFormsModel::get_draft_submission_values( $new_resume_token );
+			}
 
             return [
-                'resumeToken' => $new_resume_token,
-                // 'fieldValues' => $new_draft_entry['submitted_values'],
-            ];
+				'resumeToken' => $this->save_draft_submission( $form['id'], $submission, $resume_token ),
+			];
         };
-    }
+	}
+
+	/**
+	 * @param string $resume_token Draft entry resume token.
+	 *
+	 * @return array $submission Draft entry submission data.
+	 */
+	private function get_draft_submission( string $resume_token ) : array {
+		$draft_entry = GFFormsModel::get_draft_submission_values( $resume_token );
+
+		if ( ! is_array( $draft_entry ) || empty( $draft_entry ) ) {
+			throw new UserError( __( 'A draft with this resume token could not be found.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		$submission = json_decode( $draft_entry['submission'], true );
+
+		if ( ! $submission ) {
+			throw new UserError( __( 'The submission data for this draft entry could not be read.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		return $submission;
+	}
+
+	/**
+	 * @param array $submission Draft entry submission data.
+	 *
+	 * @return array Gravity Form associated with the draft entry.
+	 */
+	private function get_draft_form( array $submission ) : array {
+		$form = GFAPI::get_form( $submission['partial_entry']['form_id'] );
+
+		if ( ! $form || ! $form['is_active'] || $form['is_trash'] ) {
+			throw new UserError( __( 'The form associated with this entry is nonexistent or inactive.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		return $form;
+	}
 
     /**
 	 * Implement this method in child classes.
@@ -163,14 +190,18 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	/**
 	 * @param array $form The form.
 	 *
-	 * @return GF_Field|null The field object or null if not found.
+	 * @return GF_Field The field object or null if not found.
 	 */
-	private function get_field_by_id( array $form ) {
+	private function get_field_by_id( array $form ) : GF_Field {
 		$matching_fields = array_values( array_filter( $form['fields'], function( $field ) {
 			return $field['id'] === $this->field_id;
 		} ) );
 
-		return $matching_fields[0] ?? null;
+		if ( ! $matching_fields ) {
+			throw new UserError( __( 'The form associated with this entry does not contain a field with the field ID provided.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		return $matching_fields[0];
 	}
 
 	/**
@@ -195,7 +226,11 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
             $resume_token
 		);
 
-		return $new_resume_token ?: '';
+		if ( ! $new_resume_token ) {
+			throw new UserError( __( 'An error occurred while trying to update the draft entry.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		return $new_resume_token;
     }
 
 	/**
