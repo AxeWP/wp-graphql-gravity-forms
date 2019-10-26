@@ -100,17 +100,21 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 
     private function format_field_filters( array $field_filters ) : array {
         return array_reduce( $field_filters, function( $field_filters, $field_filter ) {
-            $key      = $field_filter['key'];
-            $operator = $field_filter['operator'];
-            $value    = $this->get_field_filter_value( $field_filter );
-
-            // Convert from camelCase.
-            if ( 'notIn' === $operator ) {
-                $operator = 'not in';
+            if ( empty( $field_filter['key'] ) ) {
+                throw new UserError( __( 'Every field filter must have a key.', 'wp-graphql-gravity-forms' ) );
             }
 
+            $key      = sanitize_text_field( $field_filter['key'] );
+            $operator = $this->get_field_filter_operator( $field_filter );
+
+            if ( ! $this->is_field_filter_operator_valid( $operator ) ) {
+                throw new UserError( __( 'Every field filter must have a valid operator.', 'wp-graphql-gravity-forms' ) );
+            }
+
+            $value = $this->get_field_filter_value( $field_filter, $operator );
+
             // If 'contains' is being used, convert to a scalar value.
-            if ( 'contains' === $operator && $value ) {
+            if ( 'contains' === $operator ) {
                 $value = $value[0];
             }
 
@@ -120,14 +124,35 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
         }, [] );
     }
 
-    private function get_field_filter_value( array $field_filter ) : array {
-        return array_reduce( ['stringValues', 'intValues', 'floatValues', 'boolValues'], function( $value, $key ) use ( $field_filter ) {
-            if ( isset( $field_filter[ $key ] ) ) {
-                $value = array_merge( $value, array_map( 'sanitize_text_fields', $field_filter[ $key ] ) );
-            }
+    private function get_field_filter_operator( array $field_filter ) : string {
+        $operator = $field_filter['operator'] ?? 'in';
 
-            return $value;
-        }, [] );
+        // Convert from camelCase.
+        if ( 'notIn' === $operator ) {
+            $operator = 'not in';
+        }
+
+        return $operator;
+    }
+
+    private function is_field_filter_operator_valid( string $operator ) : bool {
+        return in_array( $operator, ['in', 'not in', 'contains'], true );
+    }
+
+    private function get_field_filter_value( array $field_filter, string $operator ) : array {
+        $value_fields = $this->get_field_filter_value_fields( $field_filter );
+
+        if ( 1 !== count( $value_fields ) ) {
+            throw new UserError( __( 'Every field filter must have one value field.', 'wp-graphql-gravity-forms' ) );
+        }
+
+        return array_map( 'sanitize_text_field', $field_filter[ $value_fields[0] ] );
+    }
+
+    private function get_field_filter_value_fields( array $field_filter ) : array {
+        return array_values( array_filter( ['stringValues', 'intValues', 'floatValues', 'boolValues'], function( $value_field ) use ( $field_filter ) {
+            return ! empty( $field_filter[ $value_field ] );
+        } ) );
     }
 
     private function get_sort() : array {
@@ -142,7 +167,7 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
         return [];
     }
 
-    private function get_paging() {
+    private function get_paging() : array {
         $first = absint( $this->args['first'] ?? 0 );
         $last  = absint( $this->args['last'] ?? 0 );
 

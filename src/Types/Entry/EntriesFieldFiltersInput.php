@@ -24,12 +24,12 @@ class EntriesFieldFiltersInput implements Hookable, InputType {
             'fields'      => [
                 'key' => [
                     'type'        => 'String',
-                    'description' => __( 'The ID of the field to filter by. Use "0" to search all keys.', 'wp-graphql-gravity-forms' ),
+                    'description' => __( 'The ID of the field to filter by. Use "0" to search all keys. You can also use the names of the columns in Gravity Forms\' database table for entries, such as "date_created", "is_read, "created_by", etc.', 'wp-graphql-gravity-forms' ),
                 ],
                 // @TODO: Convert to enum.
                 'operator' => [
                     'type'        => 'String',
-                    'description' => __( 'The operator to use for filtering. Possible values: "in" (find field values that match those in the values array), "notIn" (find field values that do NOT match those in the values array), or "contains" (find field values that contain the value in the values array). When "contains" is used, only the first value in the values array will be used; any others will be disregarded.', 'wp-graphql-gravity-forms' ),
+                    'description' => __( 'The operator to use for filtering. Possible values: "in" (find field values that match those in the values array), "notIn" (find field values that do NOT match those in the values array), or "contains" (find field values that contain the value in the values array). When "contains" is used, only the first value in the values array will be used; any others will be disregarded. Default is "in".', 'wp-graphql-gravity-forms' ),
                 ],
                 // @TODO - Is there a cleaner way to do this? Values can be any of these types.
                 'stringValues' => [

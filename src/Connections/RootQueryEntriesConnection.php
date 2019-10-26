@@ -48,7 +48,7 @@ class RootQueryEntriesConnection implements Hookable, Connection {
                 // @TODO: Convert to an enum.
                 'fieldFiltersMode' => [
                     'type'        => 'String',
-                    'description' => __( 'Whether to filter by ALL or ANY of the field filters. Possible values: all (default), any.', 'wp-graphql-gravity-forms' ),
+                    'description' => __( 'Whether to filter by ALL or ANY of the field filters. Possible values: "all" (default) or "any".', 'wp-graphql-gravity-forms' ),
                 ],
                 'sort' => [
                     'type'        => EntriesSortingInput::TYPE,
