@@ -1,4 +1,4 @@
-# ???? WPGraphQL for Gravity Forms
+# 🚀📄 WPGraphQL for Gravity Forms
 
 A WordPress plugin that provides a GraphQL API for interacting with Gravity Forms. This is currently an unfinished work in progress that is being actively developed.
 
@@ -6,7 +6,7 @@ A WordPress plugin that provides a GraphQL API for interacting with Gravity Form
 
 Using WordPress as a headless CMS with a separate JavaScript-powered frontend single-page app is an increasingly popular tech stack. Traditionally, REST APIs have been used for the purpose of sending data back & forth between the frontend and backend in setups like this but the REST architecture has its limitations
 
-Using GraphQL means that if your frontend app needs to fetch data for a number of different resources, all of that data can be fetched from the server with a single request ??. Your frontend app can even define which fields it requires for each of the resources, giving it full control over which pieces of data are fetched and included in the response.
+Using GraphQL means that if your frontend app needs to fetch data for a number of different resources, all of that data can be fetched from the server with a single request. Your frontend app can even define which fields it requires for each of the resources, giving it full control over which pieces of data are fetched and included in the response.
 
 A GraphQL implementation exists for WordPress ? the [WPGraphQL](https://github.com/wp-graphql/wp-graphql) plugin! The project was started by [Jason Bahl](https://twitter.com/jasonbahl) and is being actively being developed by him and a number of other [contributors](https://github.com/wp-graphql/wp-graphql/graphs/contributors).
 
