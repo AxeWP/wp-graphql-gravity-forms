@@ -90,14 +90,16 @@ As of Oct. 28, 2019, updating draft entries with file upload field data is not y
 
 #### Create a New Draft Entry
 
-```
+```graphql
 mutation {
-  createGravityFormsDraftEntry(input: {
-    clientMutationId: "123abc",
-    formId: 2,
-    pageNumber: 3, # Optional
-    ip: "192.168.50.5" # Optional
-  }) {
+  createGravityFormsDraftEntry(
+    input: {
+      clientMutationId: "123abc"
+      formId: 2
+      pageNumber: 3 # Optional
+      ip: "192.168.50.5" # Optional
+    }
+  ) {
     clientMutationId
     resumeToken
     resumeUrl
@@ -109,14 +111,16 @@ mutation {
 
 Use the `resumeToken` from the `createGravityFormsDraftEntry` mutation's response. It is this draft entry's unique identifier.
 
-```
+```graphql
 mutation {
-  updateDraftEntryTextFieldValue(input: {
-    clientMutationId: "123abc",
-    resumeToken: "524d5f3a30c845b29a8db35c9f2aaf29",
-    fieldId: 5,
-    value: "new text field value"
-  }) {
+  updateDraftEntryTextFieldValue(
+    input: {
+      clientMutationId: "123abc"
+      resumeToken: "524d5f3a30c845b29a8db35c9f2aaf29"
+      fieldId: 5
+      value: "new text field value"
+    }
+  ) {
     resumeToken
     entry {
       entryId # This will be null, since draft entries don't have an ID yet.
@@ -150,7 +154,7 @@ If the field is updated successfully, the `errors` field will be `null`, and the
 
 If the field is NOT updated successfully, such as when a field validation error occurs, the `entry` object in the response will be unchanged (the new field value will NOT have been applied), and the `errors` field will provide data about the error. Example:
 
-```
+```json
 "errors": [
   {
     "type": "validation",
@@ -165,12 +169,14 @@ Once all updates have been performed, the `submitGravityFormsDraftEntry` mutatio
 
 The `entry` field in the response contains data for the newly created entry.
 
-```
+```graphql
 mutation {
-  submitGravityFormsDraftEntry(input: {
-    clientMutationId: "123abc",
-    resumeToken: "5df948218f40484d81e808d0ebc8651b"
-  }) {
+  submitGravityFormsDraftEntry(
+    input: {
+      clientMutationId: "123abc"
+      resumeToken: "5df948218f40484d81e808d0ebc8651b"
+    }
+  ) {
     entryId # This will be the ID of the newly created entry.
     resumeToken # This will be null, since the entry is no longer a draft.
     isDraft # This will be set to false.
@@ -202,12 +208,14 @@ mutation {
 
 The mutation below shows how to delete a draft entry. The `resumeToken` of the deleted draft entry will be in the response.
 
-```
+```graphql
 mutation {
-  deleteGravityFormsDraftEntry(input: {
-    clientMutationId: "123abc",
-    resumeToken: "524d5f3a30c845b29a8db35c9f2aaf29"
-  }) {
+  deleteGravityFormsDraftEntry(
+    input: {
+      clientMutationId: "123abc"
+      resumeToken: "524d5f3a30c845b29a8db35c9f2aaf29"
+    }
+  ) {
     resumeToken
   }
 }
@@ -227,31 +235,26 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 
 ### Example Query
 
-```
-query getEntries {
-  gravityFormsEntries(where: {
-    # List of all the form IDs to include.
-    formIds: [1],
-    # Find entries between this start & end date.
-    dateFilters: {
-      startDate: "2019-09-22 02:26:23",
-      endDate: "2019-10-25 02:26:23"
-    }, fieldFiltersMode: "all",
-    fieldFilters: [
-      # Find entries created by user ID 1.
-      {
-        key: "created_by",
-        intValues: [1],
-        operator: "in"
-      },
-      # Find entries where field 5 has a value of "somevalue"
-      {
-        key: "5",
-        stringValues: ["somevalue"],
-        operator: "in"
+```graphql
+{
+  gravityFormsEntries(
+    where: {
+      # List of all the form IDs to include.
+      formIds: [1]
+      # Find entries between this start & end date.
+      dateFilters: {
+        startDate: "2019-09-22 02:26:23"
+        endDate: "2019-10-25 02:26:23"
       }
-    ]
-  }) {
+      fieldFiltersMode: "all"
+      fieldFilters: [
+        # Find entries created by user ID 1.
+        { key: "created_by", intValues: [1], operator: "in" }
+        # Find entries where field 5 has a value of "somevalue"
+        { key: "5", stringValues: ["somevalue"], operator: "in" }
+      ]
+    }
+  ) {
     nodes {
       entryId
       formId
@@ -321,7 +324,7 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 
 ### Example Query
 
-```
+```graphql
 {
   gravityFormsEntry(id: "R3Jhdml0eUZvcm1zRW50cnk6MQ==") {
     id
@@ -347,8 +350,8 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
         }
         fieldValue {
           ... on TextFieldValue {
-          	value
-        	}
+            value
+          }
           ... on SelectFieldValue {
             value
           }
