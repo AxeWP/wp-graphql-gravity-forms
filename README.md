@@ -1,24 +1,18 @@
-# 🚀📄 WPGraphQL for Gravity Forms
+# ???? WPGraphQL for Gravity Forms
 
-A WordPress plugin that provides a GraphQL API for interacting with Gravity Forms. It is currently an unfinished work in progress that is being actively developed.
+A WordPress plugin that provides a GraphQL API for interacting with Gravity Forms. This is currently an unfinished work in progress that is being actively developed.
 
 ## What can it do?
 
 Using WordPress as a headless CMS with a separate JavaScript-powered frontend single-page app is an increasingly popular tech stack. Traditionally, REST APIs have been used for the purpose of sending data back & forth between the frontend and backend in setups like this but the REST architecture has its limitations
 
-Using GraphQL means that if your frontend app needs to fetch data for a number of different resources, all of that data can be fetched from the server with a single request 😲. Your frontend app can even define which fields it requires for each of the resources, giving it full control over which pieces of data are fetched and included in the response.
+Using GraphQL means that if your frontend app needs to fetch data for a number of different resources, all of that data can be fetched from the server with a single request ??. Your frontend app can even define which fields it requires for each of the resources, giving it full control over which pieces of data are fetched and included in the response.
 
-A GraphQL implementation exists for WordPress – the [WPGraphQL](https://github.com/wp-graphql/wp-graphql) plugin! The project was started by [Jason Bahl](https://twitter.com/jasonbahl) and is being actively being developed by him and a number of other [contributors](https://github.com/wp-graphql/wp-graphql/graphs/contributors). 
+A GraphQL implementation exists for WordPress ? the [WPGraphQL](https://github.com/wp-graphql/wp-graphql) plugin! The project was started by [Jason Bahl](https://twitter.com/jasonbahl) and is being actively being developed by him and a number of other [contributors](https://github.com/wp-graphql/wp-graphql/graphs/contributors).
 
-WPGraphQL for Gravity Forms will extend the WPGraphQL plugin, allowing frontend apps to also interact with the Gravity Forms data stored in a headless WordPress backend. Using the plugin, your frontend app can send requests to the `/graphql` endpoint to:
-- get a list of forms
-- create, update and delete forms
-- retrieve, create, and update entries
-- Retrieve fields from within a form & their attributes 
+WPGraphQL for Gravity Forms extends the WPGraphQL plugin, allowing frontend apps to also interact with the Gravity Forms data stored in a headless WordPress backend. This plugin couples the great forms functionality of Gravity Forms with the powerful WordPress-specific GraphQL implementation that WPGraphQL provides.
 
-This plugin will couple the great forms functionality of Gravity Forms with the powerful WordPress-specific GraphQL implementation that WPGraphQL provides.
-
-Our hope for this open source project is that it will enable more teams to leverage GraphQL for building fast, interactive frontend apps that source their data from WordPress and Gravity Forms. 🙌🏼
+Our hope for this open source project is that it will enable more teams to leverage GraphQL for building fast, interactive frontend apps that source their data from WordPress and Gravity Forms.
 
 ## Getting Started
 
@@ -26,37 +20,370 @@ Our hope for this open source project is that it will enable more teams to lever
 1. Activate the plugin, along with the [WPGraphQL](https://www.wpgraphql.com/) and [Gravity Forms](https://www.gravityforms.com/) plugins that it depends on.
 1. Use a tool like [GraphiQL](https://electronjs.org/apps/graphiql) to view the schema and send a few test requests to your `/graphql` endpoint to interact with Gravity Forms data, and start sending requests from your frontend app.
 
-## Project Roadmap
+---
 
-Phase 1:
-- Ability to fetch an individual Gravity Form by its ID, including all of its fields.
-- Ability to fetch an individual Gravity Form entry by its ID, including all of its field values.
-- Ability to fetch a list of entries for a particular form. Limiting results to a date range, and using the other filtering options that Gravity Forms provides will be supported.
+# Documentation
+
+## Get a Form and its Fields
+
+The example query below shows how you can get a form and its fields.
+If you want to get the form with an ID of `1`, you need to generate a global ID for that object and pass the global ID in as the `id` input. This can be done in JavaScript using the `btoa()` function like this, where `GravityFormsForm` is the GraphQL type and `1` is the form ID:
+
+```
+const global Id = btoa(`GravityFormsForm:1`); // Results in "R3Jhdml0eUZvcm1zRm9ybTox"
+```
+
+For `fields`, pass in `first:300`, where `300` is the maximum number of fields you want to query for.
+
+Inside of `fields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragment for every type of field that your form has.
+
+### Example Query
+
+```
+{
+  gravityFormsForm(id: "R3Jhdml0eUZvcm1zRm9ybTox") {
+    formId
+    cssClass
+    cssClassList
+    fields(first: 300) {
+      nodes {
+        ... on TextField {
+          type
+          id
+          label
+          cssClass
+          cssClassList
+        }
+        ... on TextAreaField {
+          type
+          id
+          label
+          cssClass
+          cssClassList
+        }
+        ... on SelectField {
+          type
+          id
+          label
+          cssClass
+          cssClassList
+        }
+      }
+    }
+  }
+}
+```
+
+## Submit a Form Entry
+
+The form entry submission process works like this:
+
+1. Send a `createGravityFormsDraftEntry` mutation to create a new draft form entry. This gives you back the `resumeToken`, which is the unique identifier for the draft entry that you need to pass in to all the mutations below.
+2. Send as many "update" mutations (such as `updateDraftEntryTextFieldValue`, `updateDraftEntrySelectFieldValue`, etc.) as you need to update the values of the draft entry.
+3. When ready, send a `submitGravityFormsDraftEntry` that turns the draft entry into a permanent entry.
+
+For large forms, #2 on the list above could potentially result in the need to send a large number of "update" mutations to the backend to update form entry field values. Using something like Apollo Client's [apollo-link-batch-http](https://www.apollographql.com/docs/link/links/batch-http/) is recommended so that your app will be able to send a large number of mutations to the backend all within a single HTTP request to update the draft entry.
+
+As of Oct. 28, 2019, updating draft entries with file upload field data is not yet supported, along with a few other field types.
+
+### Example Mutations
+
+#### Create a New Draft Entry
+
+```
+mutation {
+  createGravityFormsDraftEntry(input: {
+    clientMutationId: "123abc",
+    formId: 2,
+    pageNumber: 3, # Optional
+    ip: "192.168.50.5" # Optional
+  }) {
+    clientMutationId
+    resumeToken
+    resumeUrl
+  }
+}
+```
+
+#### Update a Draft Entry
+
+Use the `resumeToken` from the `createGravityFormsDraftEntry` mutation's response. It is this draft entry's unique identifier.
+
+```
+mutation {
+  updateDraftEntryTextFieldValue(input: {
+    clientMutationId: "123abc",
+    resumeToken: "524d5f3a30c845b29a8db35c9f2aaf29",
+    fieldId: 5,
+    value: "new text field value"
+  }) {
+    resumeToken
+    entry {
+      entryId # This will be null, since draft entries don't have an ID yet.
+      resumeToken # This is the same resumeToken that was passed in.
+      isDraft # This will be set to true.
+      fields(first: 300) {
+        edges {
+          node {
+            ... on TextField {
+              id
+              type
+            }
+          }
+          fieldValue {
+            ... on TextFieldValue {
+              value
+            }
+          }
+        }
+      }
+    }
+    errors {
+      type
+      message
+    }
+  }
+}
+```
+
+If the field is updated successfully, the `errors` field will be `null`, and the `entry` in the response will be the newly updated entry, with the new field value.
+
+If the field is NOT updated successfully, such as when a field validation error occurs, the `entry` object in the response will be unchanged (the new field value will NOT have been applied), and the `errors` field will provide data about the error. Example:
+
+```
+"errors": [
+  {
+    "type": "validation",
+    "message": "The text entered exceeds the maximum number of characters."
+  }
+]
+```
+
+#### Submit a Draft Entry
+
+Once all updates have been performed, the `submitGravityFormsDraftEntry` mutation shown below can be run to submit the draft entry so that it becomes a permanent entry.
+
+The `entry` field in the response contains data for the newly created entry.
+
+```
+mutation {
+  submitGravityFormsDraftEntry(input: {
+    clientMutationId: "123abc",
+    resumeToken: "5df948218f40484d81e808d0ebc8651b"
+  }) {
+    entryId # This will be the ID of the newly created entry.
+    resumeToken # This will be null, since the entry is no longer a draft.
+    isDraft # This will be set to false.
+    entry {
+      entryId
+      fields {
+        edges {
+          node {
+            __typename
+            ... on TextField {
+              type
+              id
+            }
+          }
+          fieldValue {
+            __typename
+            ... on TextFieldValue {
+              value
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+#### Delete a Draft Entry
+
+The mutation below shows how to delete a draft entry. The `resumeToken` of the deleted draft entry will be in the response.
+
+```
+mutation {
+  deleteGravityFormsDraftEntry(input: {
+    clientMutationId: "123abc",
+    resumeToken: "524d5f3a30c845b29a8db35c9f2aaf29"
+  }) {
+    resumeToken
+  }
+}
+```
+
+#### Get a Single Draft Entry
+
+The `gravityFormsEntry` query supports both entries and draft entries. See the "Get a Single Entry" section below.
+
+## Get a List of Entries
+
+The code comments in the example below explain how you can get a filtered list of entries.
+
+As of Oct. 28, 2019, entries pagination is not supported. Support will be added soon.
+
+Inside of `fields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragments inside of `node { ... }` and inside of `fieldValue { ... }` for every type of field that your form has.
+
+### Example Query
+
+```
+query getEntries {
+  gravityFormsEntries(where: {
+    # List of all the form IDs to include.
+    formIds: [1],
+    # Find entries between this start & end date.
+    dateFilters: {
+      startDate: "2019-09-22 02:26:23",
+      endDate: "2019-10-25 02:26:23"
+    }
+    fieldFiltersMode: "all",
+    fieldFilters: [
+      # Find entries created by user ID 1.
+      {
+        key: "created_by",
+        intValues: [1],
+        operator: "in"
+      }
+      # Find entries with "somevalue" as the value
+      # for the field with an ID 5.
+			{
+				key: "5",
+				stringValues: ["somevalue"],
+				operator: "in"
+			}
+    ]
+  }) {
+    nodes {
+      entryId
+      formId
+      isDraft
+      status
+      dateCreated
+      createdBy {
+        node {
+          userId
+          name
+        }
+      }
+      fields(first: 300) {
+        edges {
+          node {
+            ... on TextField {
+              type
+              label
+            }
+            ... on SelectField {
+              type
+              label
+            }
+            ... on AddressField {
+              type
+              label
+            }
+          }
+          fieldValue {
+          	... on TextFieldValue {
+              value
+            }
+            ... on SelectFieldValue {
+              value
+            }
+            ... on AddressFieldValue {
+              street
+              lineTwo
+              city
+              state
+              zip
+              country
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Get a Single Entry
+
+The example query below shows how you can get a single entry by ID, and data about the fields and their values.
+
+If you want to get the form with an ID of `1`, you need to generate a global ID for that object and pass the global ID in as the `id` input. This can be done in JavaScript using the `btoa()` function like this, where `GravityFormsEntry` is the GraphQL type and `1` is the form ID:
+
+```
+const global Id = btoa(`GravityFormsEntry:1`); // Results in "R3Jhdml0eUZvcm1zRW50cnk6MQ=="
+```
+
+The `id` input field can be the entry's ID, or the `resumeToken` if it is a draft entry.
+
+For `fields`, pass in `first: 300`, where `300` is the maximum number of fields you want to query for.
+
+Inside of `fields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragments inside of `node { ... }` and inside of `fieldValue { ... }` for every type of field that your form has.
+
+### Example Query
+
+```
+{
+  gravityFormsEntry(id: "R3Jhdml0eUZvcm1zRW50cnk6MQ==") {
+    id
+    entryId
+    formId
+    isDraft
+    resumeToken
+    fields(first: 300) {
+      edges {
+        node {
+          ... on TextField {
+            type
+            label
+          }
+          ... on SelectField {
+            type
+            label
+          }
+          ... on AddressField {
+            type
+            label
+          }
+        }
+        fieldValue {
+          ... on TextFieldValue {
+          	value
+        	}
+          ... on SelectFieldValue {
+            value
+          }
+          ... on AddressFieldValue {
+            street
+            lineTwo
+            city
+            state
+            zip
+            country
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Feature Roadmap
+
+### Coming soon
+
 - Add support for pagination of lists of entries.
+- Add support for updating draft entries with file upload data.
 - Ability to get the total count for a list of entries.
-- Write tests for phase 1 features.
-
-Phase 2:
-- Ability to create an individual Gravity Forms entry.
-- Support GF's "Save and Continue Later" feature for partially completed form entries.
-- Write tests for phase 2 features.
-
-Phase 3:
+- Ability to delete an individual Gravity Forms entry.
 - Ability to update an individual Gravity Forms entry.
-- Write tests for phase 3 features.
+- Create & update integration tests.
 
-Phase 4:
-- Ability to delete an individual Gravity Forms entry by its ID.
-- Ability to delete multiple Gravity Forms entries by their IDs.
-- Write tests for phase 4 features.
+### Future enhancements
 
-Future enhancements:
 - Ability to fetch a list of Gravity Forms by their IDs.
-- Ability to fetch an individual field
-- Ability to fetch a list of fields
 - Ability to create an individual Gravity Form.
-- Ability to create multiple Gravity Forms.
-- Ability to create multiple Gravity Forms entries all at once.
 - Ability to update an individual Gravity Form.
-- Ability to update multiple Gravity Forms by their IDs.
-- Ability to delete an individual Gravity Form by its ID.
+- Ability to delete an individual Gravity Form.
+- Ability to fetch an individual field
