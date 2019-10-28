@@ -236,22 +236,20 @@ query getEntries {
     dateFilters: {
       startDate: "2019-09-22 02:26:23",
       endDate: "2019-10-25 02:26:23"
-    }
-    fieldFiltersMode: "all",
+    }, fieldFiltersMode: "all",
     fieldFilters: [
       # Find entries created by user ID 1.
       {
         key: "created_by",
         intValues: [1],
         operator: "in"
+      },
+      # Find entries where field 5 has a value of "somevalue"
+      {
+        key: "5",
+        stringValues: ["somevalue"],
+        operator: "in"
       }
-      # Find entries with "somevalue" as the value
-      # for the field with an ID 5.
-			{
-				key: "5",
-				stringValues: ["somevalue"],
-				operator: "in"
-			}
     ]
   }) {
     nodes {
@@ -283,7 +281,7 @@ query getEntries {
             }
           }
           fieldValue {
-          	... on TextFieldValue {
+            ... on TextFieldValue {
               value
             }
             ... on SelectFieldValue {
