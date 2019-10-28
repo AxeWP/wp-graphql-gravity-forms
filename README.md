@@ -249,9 +249,17 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
       fieldFiltersMode: "all"
       fieldFilters: [
         # Find entries created by user ID 1.
-        { key: "created_by", intValues: [1], operator: "in" }
+        {
+          key: "created_by",
+          intValues: [1],
+          operator: "in"
+        },
         # Find entries where field 5 has a value of "somevalue"
-        { key: "5", stringValues: ["somevalue"], operator: "in" }
+        {
+          key: "5",
+          stringValues: ["somevalue"],
+          operator: "in"
+        }
       ]
     }
   ) {
