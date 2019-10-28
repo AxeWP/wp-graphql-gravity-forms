@@ -254,7 +254,7 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
           intValues: [1],
           operator: "in"
         },
-        # Find entries where field 5 has a value of "somevalue"
+        # Find entries where field 5 has a value of "somevalue".
         {
           key: "5",
           stringValues: ["somevalue"],
