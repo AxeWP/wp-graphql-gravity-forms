@@ -30,7 +30,7 @@ The example query below shows how you can get a form and its fields.
 If you want to get the form with an ID of `1`, you need to generate a global ID for that object and pass the global ID in as the `id` input. This can be done in JavaScript using the `btoa()` function like this, where `GravityFormsForm` is the GraphQL type and `1` is the form ID:
 
 ```
-const global Id = btoa(`GravityFormsForm:1`); // Results in "R3Jhdml0eUZvcm1zRm9ybTox"
+const globalId = btoa(`GravityFormsForm:1`); // Results in "R3Jhdml0eUZvcm1zRm9ybTox"
 ```
 
 For `fields`, pass in `first:300`, where `300` is the maximum number of fields you want to query for.
@@ -310,7 +310,7 @@ The example query below shows how you can get a single entry by ID, and data abo
 If you want to get the form with an ID of `1`, you need to generate a global ID for that object and pass the global ID in as the `id` input. This can be done in JavaScript using the `btoa()` function like this, where `GravityFormsEntry` is the GraphQL type and `1` is the form ID:
 
 ```
-const global Id = btoa(`GravityFormsEntry:1`); // Results in "R3Jhdml0eUZvcm1zRW50cnk6MQ=="
+const globalId = btoa(`GravityFormsEntry:1`); // Results in "R3Jhdml0eUZvcm1zRW50cnk6MQ=="
 ```
 
 The `id` input field can be the entry's ID, or the `resumeToken` if it is a draft entry.
