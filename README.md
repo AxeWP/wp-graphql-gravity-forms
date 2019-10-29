@@ -109,6 +109,8 @@ mutation {
 
 #### Update a Draft Entry
 
+The example below shows `updateDraftEntryTextFieldValue`, which can be used for updating the value of a text field. Similar mutations exist for other field types, such as `updateDraftEntrySelectFieldValue`, `updateDraftEntryAddressFieldValue`, etc.
+
 Use the `resumeToken` from the `createGravityFormsDraftEntry` mutation's response. It is this draft entry's unique identifier.
 
 ```graphql
@@ -249,17 +251,9 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
       fieldFiltersMode: "all"
       fieldFilters: [
         # Find entries created by user ID 1.
-        {
-          key: "created_by",
-          intValues: [1],
-          operator: "in"
-        },
+        { key: "created_by", intValues: [1], operator: "in" }
         # Find entries where field 5 has a value of "somevalue".
-        {
-          key: "5",
-          stringValues: ["somevalue"],
-          operator: "in"
-        }
+        { key: "5", stringValues: ["somevalue"], operator: "in" }
       ]
     }
   ) {
