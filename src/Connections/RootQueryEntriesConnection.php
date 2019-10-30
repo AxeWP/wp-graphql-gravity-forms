@@ -8,9 +8,9 @@ use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Connection;
 use WPGraphQLGravityForms\Types\Entry\Entry;
-use WPGraphQLGravityForms\Types\Entry\EntriesDateFiltersInput;
-use WPGraphQLGravityForms\Types\Entry\EntriesFieldFiltersInput;
-use WPGraphQLGravityForms\Types\Entry\EntriesSortingInput;
+use WPGraphQLGravityForms\Types\Input\EntriesDateFiltersInput;
+use WPGraphQLGravityForms\Types\Input\EntriesFieldFiltersInput;
+use WPGraphQLGravityForms\Types\Input\EntriesSortingInput;
 
 class RootQueryEntriesConnection implements Hookable, Connection {
     /**

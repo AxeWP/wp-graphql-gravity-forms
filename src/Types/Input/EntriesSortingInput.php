@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGraphQLGravityForms\Types\Entry;
+namespace WPGraphQLGravityForms\Types\Input;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\InputType;
