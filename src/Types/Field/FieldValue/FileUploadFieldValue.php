@@ -43,7 +43,7 @@ class FileUploadFieldValue implements Hookable, Type, FieldValue {
      */
     public static function get( array $entry, GF_Field $field ) : array {
         return [
-            'url' => (string) $entry[ $field['id'] ],
+            'url' => isset( $entry[ $field['id'] ] ) ? (string) $entry[ $field['id'] ] : null,
         ];
     }
 }
