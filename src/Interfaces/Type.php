@@ -9,5 +9,8 @@ interface Type {
     /**
      * Register type in GraphQL schema.
      */
-    public function register_type();
+    // TODO: Determine best way to re-implement this
+    // now that Types\Union\ObjectFieldUnion::register_type()
+    // requires an argument.
+    // public function register_type();
 }
