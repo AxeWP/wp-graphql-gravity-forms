@@ -3,7 +3,7 @@
 namespace WPGraphQLGravityForms\Types\Union;
 
 use GF_Field;
-use WPGraphQL\TypeRegistry;
+use WPGraphQL\Registry\TypeRegistry;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\Field\Field;
