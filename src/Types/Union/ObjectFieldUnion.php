@@ -40,7 +40,7 @@ class ObjectFieldUnion implements Hookable, Type {
 
         register_graphql_union_type( self::TYPE, [
             'typeNames'   => array_values( $field_mappings ),
-            'resolveType' => function( GF_Field $field ) use ( $field_mappings ) {
+            'resolveType' => function( GF_Field $field ) use ( $field_mappings, $type_registry ) {
                 if ( isset( $field_mappings[ $field['type'] ] ) ) {
                     return $type_registry->get_type( $field_mappings[ $field['type'] ] );
                 }
