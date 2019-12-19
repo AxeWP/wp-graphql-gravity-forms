@@ -27,6 +27,12 @@ class UpdateDraftEntryMultiSelectFieldValue extends DraftEntryUpdater {
      * @return array The sanitized field values.
      */
 	protected function sanitize_field_value( $value ) {
-		return array_map( 'sanitize_text_field', $value );
+		$sanitized_value = json_encode( array_map( 'sanitize_text_field', $value ) );
+
+		if ( false === $sanitized_value ) {
+			return '';
+		}
+
+		return $sanitized_value;
 	}
 }
