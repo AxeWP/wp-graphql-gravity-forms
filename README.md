@@ -95,16 +95,9 @@ As of Dec. 23, 2019, updating draft entries with file upload field data is not y
 ```graphql
 mutation {
   createGravityFormsDraftEntry(
-    input: {
-      clientMutationId: "123abc"
-      formId: 2
-      pageNumber: 3 # Optional
-      ip: "192.168.50.5" # Optional
-    }
+    input: { clientMutationId: "123abc", formId: 2 }
   ) {
-    clientMutationId
     resumeToken
-    resumeUrl
   }
 }
 ```
@@ -128,7 +121,7 @@ mutation {
     resumeToken
     entry {
       entryId # This will be null, since draft entries don't have an ID yet.
-      resumeToken # This is the same resumeToken that was passed in.
+      resumeToken # This will be the same resumeToken that was passed in.
       isDraft # This will be set to true.
       fields(first: 300) {
         edges {
@@ -161,7 +154,6 @@ If the field is NOT updated successfully, such as when a field validation error 
 ```json
 "errors": [
   {
-    "type": "validation",
     "message": "The text entered exceeds the maximum number of characters."
   }
 ]
@@ -208,7 +200,7 @@ mutation {
 }
 ```
 
-#### Delete a Draft Entry
+## Delete a Draft Entry
 
 The mutation below shows how to delete a draft entry. The `resumeToken` of the deleted draft entry will be in the response.
 
@@ -225,7 +217,7 @@ mutation {
 }
 ```
 
-#### Get a Single Draft Entry
+## Get a Single Draft Entry
 
 The `gravityFormsEntry` query supports both entries and draft entries. See the "Get a Single Entry" section below.
 
