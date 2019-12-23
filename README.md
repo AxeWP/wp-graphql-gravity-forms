@@ -82,9 +82,11 @@ The form entry submission process works like this:
 2. Send as many "update" mutations (such as `updateDraftEntryTextFieldValue`, `updateDraftEntrySelectFieldValue`, etc.) as you need to update the values of the draft entry.
 3. When ready, send a `submitGravityFormsDraftEntry` that turns the draft entry into a permanent entry.
 
+If you're wondering why several mutations are required to submit a form entry rather than just a single mutation, please read the comments in [this issue](https://github.com/harness-software/wp-graphql-gravity-forms/issues/4#issuecomment-563305561).
+
 For large forms, #2 on the list above could potentially result in the need to send a large number of "update" mutations to the backend to update form entry field values. Using something like Apollo Client's [apollo-link-batch-http](https://www.apollographql.com/docs/link/links/batch-http/) is recommended so that your app will be able to send a large number of mutations to the backend all within a single HTTP request to update the draft entry.
 
-As of Oct. 28, 2019, updating draft entries with file upload field data is not yet supported, along with a few other field types.
+As of Dec. 23, 2019, updating draft entries with file upload field data is not yet supported, along with a few other field types.
 
 ### Example Mutations
 
