@@ -28,11 +28,18 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	}
 
 	/**
+	 * The draft submission.
+	 *
+	 * @var array
+	 */
+	protected $submission = [];
+
+	/**
 	 * The ID of the field to be updated.
 	 *
 	 * @var int
 	 */
-	private $field_id = null;
+	protected $field_id = null;
 
 	/**
 	 * The value to update the field with.
@@ -40,13 +47,6 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
      * @var mixed
 	 */
 	private $value = null;
-
-	/**
-	 * The draft submission.
-     *
-     * @var mixed
-	 */
-	private $submission = [];
 
     public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
@@ -121,10 +121,10 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 				throw new UserError( __( 'Mutation not processed. The input data was missing or invalid.', 'wp-graphql-gravity-forms' ) );
 			}
 
-            $this->field_id   = absint( $input['fieldId'] );
-			$this->value      = $this->sanitize_field_value( $input['value'] );
 			$resume_token     = sanitize_text_field( $input['resumeToken'] );
 			$this->submission = $this->get_draft_submission( $resume_token );
+			$this->field_id   = absint( $input['fieldId'] );
+			$this->value      = $this->prepare_field_value( $input['value'] );
 			$form             = $this->get_draft_form();
 			$field            = $this->get_field_by_id( $form );
 
@@ -134,10 +134,7 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 				return [
 					'resumeToken' => $resume_token,
 					'errors'      => [
-						[
-							'type'    => 'validation',
-							'message' => $field->validation_message,
-						],
+						[ 'message' => $field->validation_message ],
 					],
 				];
 			}
@@ -189,11 +186,11 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
     /**
 	 * Implement this method in child classes.
 	 *
-     * @param mixed The field value.
+     * @param mixed $value The field value.
      *
-     * @return mixed The sanitized field value.
+     * @return mixed The prepared and sanitized field value.
      */
-    // abstract protected function sanitize_field_value( $value );
+    // abstract protected function prepare_field_value( $value );
 
 	/**
 	 * @param array $form The form.
