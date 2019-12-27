@@ -35,7 +35,13 @@ class RadioField extends Field {
                 FieldProperty\InputNameProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),
                 FieldProperty\NoDuplicatesProperty::get(),
-                FieldProperty\SizeProperty::get()
+                FieldProperty\SizeProperty::get(),
+                [
+                    'enableOtherChoice' => [
+                        'type'        => 'Boolean',
+                        'description' => __( 'Indicates whether the \'Enable "other" choice\' option is checked in the editor.', 'wp-graphql-gravity-forms' ),
+                    ],
+                ],
             ),
         ] );
     }

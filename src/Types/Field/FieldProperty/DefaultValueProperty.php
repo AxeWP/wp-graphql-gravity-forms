@@ -15,7 +15,7 @@ abstract class DefaultValueProperty implements FieldProperty {
         return [
             'defaultValue' => [
                 'type'        => 'String',
-                'description' => __('Contains the default value for the field. When specified, the field’s value will be populated with the contents of this property when the form is displayed.', 'wp-graphql-gravity-forms'),
+                'description' => __( 'Contains the default value for the field. When specified, the field\'s value will be populated with the contents of this property when the form is displayed.', 'wp-graphql-gravity-forms' ),
             ]
         ];
     }
