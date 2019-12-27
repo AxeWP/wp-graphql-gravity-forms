@@ -30,11 +30,6 @@ class FieldsDataManipulator implements DataManipulator {
      * @return GF_Field $field Form field with its cssClassList value set.
      */
     private function set_css_class_list_for_field( GF_Field $field ) : GF_Field {
-        if ( empty( $field->cssClass ) ) {
-            $field->cssClassList = null;
-            return $field;
-        }
-
         $field->cssClassList = array_filter( explode( ' ', $field->cssClass ), function( $css_class ) {
             return '' !== $css_class;
         } );

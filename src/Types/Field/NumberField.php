@@ -37,19 +37,19 @@ class NumberField extends Field {
                 FieldProperty\SizeProperty::get(),
                 [
                     /**
-                     * Possible values: decimal_dot (9,999.99), decimal_comma (9.999,99)
+                     * Possible values: decimal_dot (9,999.99), decimal_comma (9.999,99), currency.
                      */
                     'numberFormat' => [
                         'type'        => 'String',
-                        'description' => __('Specifies the format allowed for the number field.', 'wp-graphql-gravity-forms'),
+                        'description' => __( 'Specifies the format allowed for the number field.', 'wp-graphql-gravity-forms' ),
                     ],
                     'rangeMin' => [
                         'type'        => 'Float',
-                        'description' => __('Minimum allowed value for a number field. Values lower than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms'),
+                        'description' => __( 'Minimum allowed value for a number field. Values lower than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms' ),
                     ],
                     'rangeMax' => [
                         'type'        => 'Float',
-                        'description' => __('Maximum allowed value for a number field. Values higher than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms'),
+                        'description' => __( 'Maximum allowed value for a number field. Values higher than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms' ),
                     ],
                 ]
             ),
