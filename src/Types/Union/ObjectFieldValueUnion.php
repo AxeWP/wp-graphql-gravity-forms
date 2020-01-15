@@ -36,20 +36,20 @@ class ObjectFieldValueUnion implements Hookable, Type {
         add_action( 'graphql_register_types', [ $this, 'register_type' ], 11 );
     }
 
-    public function register_type() {
+    public function register_type( $type_registry ) {
         $field_value_types = $this->get_field_value_types();
-
         register_graphql_union_type( self::TYPE, [
             'typeNames'   => array_unique( array_values( $field_value_types ) ),
-            'resolveType' => function( $object, AppContext $context, ResolveInfo $info ) use ( $field_value_types ) {
+            'resolveType' => function( $object ) use ( $field_value_types, $type_registry ) {
                 if ( isset( $field_value_types[ $object['type'] ] ) ) {
-                    return TypeRegistry::get_type( $field_value_types[ $object['type'] ] );
+                    return $type_registry->get_type( $field_value_types[ $object['type'] ] );
                 }
 
                 return null;
             },
         ] );
     }
+
 
     /**
      * Get field types and their related field value types.
