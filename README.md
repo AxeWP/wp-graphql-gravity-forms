@@ -140,7 +140,6 @@ mutation {
       }
     }
     errors {
-      type
       message
     }
   }

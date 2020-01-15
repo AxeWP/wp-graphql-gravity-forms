@@ -67,7 +67,7 @@ class ObjectFieldUnion implements Hookable, Type {
          *
          * @param array $fields Gravity Forms field class instances.
          */
-        $fields = apply_filters('graphql_gf_form_field_instances', $fields );
+        $fields = apply_filters( 'wp_graphql_gf_form_field_instances', $fields );
 
         return array_reduce( $fields, function( $mappings, $field ) {
             $mappings[ $field::GF_TYPE ] = $field::TYPE;

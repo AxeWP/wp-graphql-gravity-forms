@@ -256,20 +256,29 @@ class Form implements Hookable, Type, Field {
                     'description' => __( "Unique global ID for the object. Base-64 encode a string like this, where '123' is the form ID: '{self::TYPE}:123'.", 'wp-graphql-gravity-forms' ),
                 ],
             ],
-            'resolve' => function( $root, array $args ) {
+            'resolve' => function( $root, array $args ) : array {
                 $id_parts = Relay::fromGlobalId( $args['id'] );
 
                 if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
                     throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
                 }
 
-                $form = GFAPI::get_form( $id_parts['id'] );
+                $form_raw = GFAPI::get_form( $id_parts['id'] );
 
-                if ( ! $form ) {
+                if ( ! $form_raw ) {
                     throw new UserError( __( 'A valid form ID must be provided.', 'wp-graphql-gravity-forms' ) );
                 }
 
-                return $this->form_data_manipulator->manipulate( $form, $args );
+                $form = $this->form_data_manipulator->manipulate( $form_raw, $args );
+
+                /**
+                 * Provides the ability to manipulate the form data before it is sent to the
+                 * client. This hook is somewhat similar to Gravity Forms' gform_pre_render hook
+                 * and can be used for dynamic field input population, among other things.
+                 *
+                 * @param array $form Form meta array.
+                 */
+                return apply_filters( 'wp_graphql_gf_form_object', $form );
             }
         ] );
     }

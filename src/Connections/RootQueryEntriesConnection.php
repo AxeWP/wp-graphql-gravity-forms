@@ -57,10 +57,12 @@ class RootQueryEntriesConnection implements Hookable, Connection {
             ],
             'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
                 /**
+                 * Filter to control whether the user should be allowed to view entries.
+                 *
                  * @param bool  Whether the current user should be allowed to view form entries.
                  * @param array The form IDs to get entries by.
                  */
-                $can_user_view_entries = apply_filters( 'graphql_gf_can_view_entries', current_user_can( 'gravityforms_view_entries' ), $this->get_form_ids( $args ) );
+                $can_user_view_entries = apply_filters( 'wp_graphql_gf_can_view_entries', current_user_can( 'gravityforms_view_entries' ), $this->get_form_ids( $args ) );
 
                 if ( ! $can_user_view_entries ) {
                     throw new UserError( __( 'Sorry, you are not allowed to view Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );

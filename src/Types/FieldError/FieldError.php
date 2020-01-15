@@ -19,10 +19,6 @@ class FieldError implements Hookable, Type {
         register_graphql_object_type( self::TYPE, [
             'description' => __( 'Field error.', 'wp-graphql-gravity-forms' ),
             'fields' => [
-                'type'   => [
-                    'type'        => 'String',
-                    'description' => __( 'Type of error.', 'wp-graphql-gravity-forms' ),
-                ],
                 'message' => [
                     'type'        => 'String',
                     'description' => __( 'Error message.', 'wp-graphql-gravity-forms' ),
