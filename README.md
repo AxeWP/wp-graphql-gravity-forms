@@ -1,4 +1,4 @@
-# ???? WPGraphQL for Gravity Forms
+# 🚀📄 WPGraphQL for Gravity Forms
 
 A WordPress plugin that provides a GraphQL API for interacting with Gravity Forms. This is currently an unfinished work in progress that is being actively developed.
 
