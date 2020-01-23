@@ -30,6 +30,7 @@ class PostCategoryField extends Field {
             'fields'      => array_merge(
                 $this->get_global_properties(),
                 FieldProperty\ChoicesProperty::get(),
+                FieldProperty\DescriptionProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),
                 FieldProperty\InputNameProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),

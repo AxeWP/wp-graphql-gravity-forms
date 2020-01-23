@@ -30,12 +30,14 @@ class TextField extends Field {
             'fields'      => array_merge(
                 $this->get_global_properties(),
                 FieldProperty\DefaultValueProperty::get(),
+                FieldProperty\DescriptionProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),
                 FieldProperty\InputNameProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),
-                FieldProperty\NoDuplicatesProperty::get(),
-                FieldProperty\SizeProperty::get(),
                 FieldProperty\MaxLengthProperty::get(),
+                FieldProperty\NoDuplicatesProperty::get(),
+                FieldProperty\PlaceholderProperty::get(),
+                FieldProperty\SizeProperty::get(),
                 [
                     'enablePasswordInput' => [
                         'type'        => 'Boolean',

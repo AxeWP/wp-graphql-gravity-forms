@@ -29,11 +29,12 @@ class NameField extends Field {
             'description' => __( 'Gravity Forms Name field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
+                FieldProperty\DescriptionProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),
                 FieldProperty\InputNameProperty::get(),
+                FieldProperty\InputsProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),
                 FieldProperty\SizeProperty::get(),
-                FieldProperty\InputsProperty::get(),
                 [
                     /**
                      * Possible values: normal, extended, simple
@@ -42,6 +43,7 @@ class NameField extends Field {
                         'type'        => 'String',
                         'description' => __('Determines the format of the name field.', 'wp-graphql-gravity-forms'),
                     ],
+                    // @TODO: Add placeholders.
                 ]
             ),
         ] );

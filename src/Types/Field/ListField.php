@@ -29,10 +29,11 @@ class ListField extends Field {
             'description' => __( 'Gravity Forms List field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
+                FieldProperty\DescriptionPlacementProperty::get(),
+                FieldProperty\DescriptionProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),
                 FieldProperty\InputNameProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),
-                FieldProperty\DescriptionPlacementProperty::get(),
                 FieldProperty\LabelPlacementProperty::get(),
                 [
                     'addIconUrl' => [

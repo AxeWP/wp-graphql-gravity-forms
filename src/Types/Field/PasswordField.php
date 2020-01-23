@@ -30,8 +30,10 @@ class PasswordField extends Field {
             'fields'      => array_merge(
                 $this->get_global_properties(),
                 FieldProperty\DescriptionPlacementProperty::get(),
+                FieldProperty\DescriptionProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),
+                FieldProperty\PlaceholderProperty::get(),
                 [
                     'inputs' => [
                         'type'        => [ 'list_of' => FieldProperty\PasswordInputProperty::TYPE ],

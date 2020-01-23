@@ -42,10 +42,6 @@ abstract class Field implements Hookable, Type {
                 'type'        => [ 'list_of' => 'String' ],
                 'description' => __( 'Array of the custom CSS classes to be added to the <li> tag that contains the field. Useful for applying custom formatting to specific fields.', 'wp-graphql-gravity-forms' ),
             ],
-            'description' => [
-                'type'        => 'String',
-                'description' => __( 'Field description.', 'wp-graphql-gravity-forms' ),
-            ],
             // @TODO: consider changing this to fieldId so that id can be used for the global Relay ID.
             'id' => [
                 'type'        => 'Integer',

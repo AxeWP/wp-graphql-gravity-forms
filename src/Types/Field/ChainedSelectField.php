@@ -30,10 +30,11 @@ class ChainedSelectField extends Field {
             'description' => __( 'Gravity Forms Chained Select field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
-                FieldProperty\IsRequiredProperty::get(),
-                FieldProperty\SizeProperty::get(),
+                FieldProperty\DescriptionProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),
                 FieldProperty\InputsProperty::get(),
+                FieldProperty\IsRequiredProperty::get(),
+                FieldProperty\SizeProperty::get(),
                 [
                     'choices' => [
                         'type'        => [ 'list_of' => FieldProperty\ChainedSelectChoiceProperty::TYPE ],

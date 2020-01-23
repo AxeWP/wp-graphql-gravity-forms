@@ -30,6 +30,7 @@ class MultiSelectField extends Field {
             'fields'      => array_merge(
                 $this->get_global_properties(),
                 FieldProperty\DescriptionPlacementProperty::get(),
+                FieldProperty\DescriptionProperty::get(),
                 FieldProperty\EnableChoiceValueProperty::get(),
                 FieldProperty\EnableEnhancedUiProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),

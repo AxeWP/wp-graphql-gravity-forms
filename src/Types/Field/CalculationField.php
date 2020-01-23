@@ -31,21 +31,23 @@ class CalculationField extends Field {
             'fields'      => array_merge(
                 $this->get_global_properties(),
                 FieldProperty\DescriptionPlacementProperty::get(),
+                FieldProperty\DescriptionProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),
                 FieldProperty\NoDuplicatesProperty::get(),
+                FieldProperty\PlaceholderProperty::get(),
                 [
                     'calculationFormula' => [
                         'type'        => 'String',
-                        'description' => __('The formula to be used.', 'wp-graphql-gravity-forms'),
+                        'description' => __( 'The formula to be used.', 'wp-graphql-gravity-forms' ),
                     ],
                     'enableCalculation' => [
                         'type'        => 'Boolean',
-                        'description' => __('Indicates whether the calculation use is active.', 'wp-graphql-gravity-forms'),
+                        'description' => __( 'Indicates whether the calculation use is active.', 'wp-graphql-gravity-forms '),
                     ],
                     // @TODO: Convert to an enum.
                     'calculationRounding' => [
                         'type'        => 'String',
-                        'description' => __('The number of decimal places the number should be rounded to. Possible values: norounding, 0, 1, 2, 3, 4.', 'wp-graphql-gravity-forms'),
+                        'description' => __( 'The number of decimal places the number should be rounded to. Possible values: norounding, 0, 1, 2, 3, 4.', 'wp-graphql-gravity-forms '),
                     ],
                 ]
             ),
