@@ -20,7 +20,7 @@ class EntriesFieldFiltersInput implements Hookable, InputType {
 
     public function register_input_type() {
         register_graphql_input_type( self::TYPE, [
-            'description' => __('Field Filters input fields for Entries queries.', 'wp-graphql-gravity-forms'),
+            'description' => __( 'Field Filters input fields for Entries queries.', 'wp-graphql-gravity-forms' ),
             'fields'      => [
                 'key' => [
                     'type'        => 'String',
@@ -37,7 +37,7 @@ class EntriesFieldFiltersInput implements Hookable, InputType {
                     'description' => __( 'The field value(s) to filter by. Must be string values. If using this field, do not also use intValues, floatValues or boolValues.', 'wp-graphql-gravity-forms' ),
                 ],
                 'intValues' => [
-                    'type'        => [ 'list_of' => 'Integer' ],
+                    'type'        => [ 'list_of' => 'Int' ],
                     'description' => __( 'The field value(s) to filter by. Must be integer values. If using this field, do not also use stringValues, floatValues or boolValues.', 'wp-graphql-gravity-forms' ),
                 ],
                 'floatValues' => [
