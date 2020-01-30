@@ -35,11 +35,11 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	protected $submission = [];
 
 	/**
-	 * The ID of the field to be updated.
+	 * The field whose value is being updated.
 	 *
 	 * @var int
 	 */
-	protected $field_id = null;
+	protected $field = null;
 
 	/**
 	 * The value to update the field with.
@@ -123,18 +123,18 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 
 			$resume_token     = sanitize_text_field( $input['resumeToken'] );
 			$this->submission = $this->get_draft_submission( $resume_token );
-			$this->field_id   = absint( $input['fieldId'] );
-			$this->value      = $this->prepare_field_value( $input['value'] );
 			$form             = $this->get_draft_form();
-			$field            = $this->get_field_by_id( $form );
+			$field_id         = absint( $input['fieldId'] );
+			$this->field      = $this->get_field_by_id( $form, $field_id );
+			$this->value      = $this->prepare_field_value( $input['value'] );
 
-			$field->validate( $this->value, $form );
+			$this->field->validate( $this->value, $form );
 
-			if ( $field->failed_validation ) {
+			if ( $this->field->failed_validation ) {
 				return [
 					'resumeToken' => $resume_token,
 					'errors'      => [
-						[ 'message' => $field->validation_message ],
+						[ 'message' => $this->field->validation_message ],
 					],
 				];
 			}
@@ -193,13 +193,14 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
     // abstract protected function prepare_field_value( $value );
 
 	/**
-	 * @param array $form The form.
+	 * @param array $form     The form.
+	 * @param int   $field_id Field ID.
 	 *
-	 * @return GF_Field The field object or null if not found.
+	 * @return GF_Field The field object.
 	 */
-	private function get_field_by_id( array $form ) : GF_Field {
-		$matching_fields = array_values( array_filter( $form['fields'], function( $field ) {
-			return $field['id'] === $this->field_id;
+	private function get_field_by_id( array $form, int $field_id ) : GF_Field {
+		$matching_fields = array_values( array_filter( $form['fields'], function( GF_Field $field ) use ( $field_id ) : bool {
+			return $field['id'] === $field_id;
 		} ) );
 
 		if ( ! $matching_fields ) {
@@ -258,8 +259,8 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	 * @return array Partial entry, with new value added.
 	 */
 	public function add_field_value_to_partial_entry( array $partial_entry ) : array {
-        if ( isset( $this->field_id, $this->value ) ) {
-            $partial_entry[ $this->field_id ] = $this->value;
+        if ( isset( $this->field, $this->value ) ) {
+            $partial_entry[ $this->field->id ] = $this->value;
         }
 
 		return $partial_entry;
@@ -271,8 +272,8 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	 * @return array Submitted values, with new value added.
 	 */
 	public function add_field_value_to_submitted_values() : array {
-        if ( isset( $this->field_id, $this->value ) ) {
-			$this->submission['submitted_values'][ $this->field_id ] = $this->value;
+        if ( isset( $this->field, $this->value ) ) {
+			$this->submission['submitted_values'][ $this->field->id ] = $this->value;
         }
 
 		return $this->submission['submitted_values'];
