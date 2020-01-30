@@ -259,9 +259,21 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	 * @return array Partial entry, with new value added.
 	 */
 	public function add_field_value_to_partial_entry( array $partial_entry ) : array {
-        if ( isset( $this->field, $this->value ) ) {
-            $partial_entry[ $this->field->id ] = $this->value;
-        }
+		if ( ! isset( $this->field, $this->value ) ) {
+            return $partial_entry;
+		}
+
+		// For an array of sub-values, add each to the partial entry individually.
+		if ( is_array( $this->value ) ) {
+			foreach ( $this->value as $key => $single_value ) {
+				$partial_entry[ $key ] = $single_value;
+			}
+
+			return $partial_entry;
+		}
+
+		// Else, add the single value to the partial entry.
+		$partial_entry[ $this->field->id ] = $this->value;
 
 		return $partial_entry;
 	}
