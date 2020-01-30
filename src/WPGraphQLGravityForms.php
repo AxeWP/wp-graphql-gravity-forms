@@ -124,6 +124,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['entry_user']                 = new Entry\EntryUser();
 
 		// Input
+		$this->instances['checkbox_input']             = new Input\CheckboxInput();
 		$this->instances['entries_date_fiters_input']  = new Input\EntriesDateFiltersInput();
 		$this->instances['entries_field_fiters_input'] = new Input\EntriesFieldFiltersInput();
 		$this->instances['entries_sorting_input']      = new Input\EntriesSortingInput();
