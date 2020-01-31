@@ -74,11 +74,7 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
     }
 
     private function get_search_criteria() : array {
-        $search_criteria = [];
-
-        if ( ! empty( $this->args['where']['status'] ) ) {
-            $search_criteria['status'] = sanitize_text_field( $this->args['where']['status'] );
-        }
+        $search_criteria = $this->apply_status_to_search_criteria( [] );
 
         if ( ! empty( $this->args['where']['dateFilters']['startDate'] ) ) {
             $search_criteria['start_date'] = sanitize_text_field( $this->args['where']['dateFilters']['startDate'] );
@@ -94,6 +90,19 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
                 $this->format_field_filters( $this->args['where']['fieldFilters'] )
             );
         }
+
+        return $search_criteria;
+    }
+
+    private function apply_status_to_search_criteria( array $search_criteria ) : array {
+        $status = $this->args['where']['status'] ?? 'active'; // Default to active entries.
+
+        // For all entries, don't add a 'status' value to search criteria.
+        if ( 'all' === $status ) {
+            return $search_criteria;
+        }
+
+        $search_criteria['status'] = sanitize_text_field( $status );
 
         return $search_criteria;
     }

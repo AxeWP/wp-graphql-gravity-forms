@@ -35,7 +35,7 @@ class RootQueryEntriesConnection implements Hookable, Connection {
                 // @TODO: Convert to an enum.
                 'status' => [
                     'type'        => 'String',
-                    'description' => __( 'Entry status. Possible values: "active" (default), "spam", or "trash".', 'wp-graphql-gravity-forms' ),
+                    'description' => __( 'Entry status. Possible values: "active" (default), "spam", "trash" or "all".', 'wp-graphql-gravity-forms' ),
                 ],
                 'dateFilters' => [
                     'type'        => EntriesDateFiltersInput::TYPE,
