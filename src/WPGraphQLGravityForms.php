@@ -6,6 +6,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\DataManipulators;
 use WPGraphQLGravityForms\Types\Button\Button;
 use WPGraphQLGravityForms\Types\ConditionalLogic;
+use WPGraphQLGravityForms\Types\Enum;
 use WPGraphQLGravityForms\Types\Form;
 use WPGraphQLGravityForms\Types\Field;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
@@ -134,9 +135,13 @@ final class WPGraphQLGravityForms {
 		$this->instances['object_field_value_union'] = new Union\ObjectFieldValueUnion( $this->instances );
 
 		// Connections
-		$this->instances['form_field_connection']         = new Connections\FormFieldConnection();
 		$this->instances['entry_field_connection']        = new Connections\EntryFieldConnection( $this->instances );
+		$this->instances['form_field_connection']         = new Connections\FormFieldConnection();
 		$this->instances['root_query_entries_connection'] = new Connections\RootQueryEntriesConnection();
+		$this->instances['root_query_forms_connection']   = new Connections\RootQueryFormsConnection();
+
+		// Enums
+		$this->instances['form_status_enum'] = new Enum\FormStatusEnum();
 
 		// Field errors
 		$this->instances['field_error'] = new FieldError();

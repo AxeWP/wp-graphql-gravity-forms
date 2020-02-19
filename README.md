@@ -224,7 +224,7 @@ The `gravityFormsEntry` query supports both entries and draft entries. See the "
 
 The code comments in the example below explain how you can get a filtered list of entries.
 
-As of Oct. 28, 2019, entries pagination is not supported. Support will be added soon.
+As of Feb. 13th, 2020, entries pagination is not supported. Support will be added soon.
 
 Inside of `fields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragments inside of `node { ... }` and inside of `fieldValue { ... }` for every type of field that your form has.
 
@@ -365,6 +365,61 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 }
 ```
 
+## Get a List of Forms
+
+For `fields`, pass in `first: 300`, where `300` is the maximum number of fields you want to query for.
+
+Inside of `fields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragment for every type of field that your forms have.
+
+Cursor-based pagination is supported. You can use the `first`, `last`, `before` and `after` fields, along with the data inside of `pageInfo` and the cursors returned by the API to get each page of forms data.
+
+### Example Query
+
+```graphql
+{
+  gravityFormsForms(first: 10, after: null, where: { status: ACTIVE }) {
+    pageInfo {
+      startCursor
+      endCursor
+      hasPreviousPage
+      hasNextPage
+    }
+    edges {
+      cursor
+      node {
+        formId
+        title
+        fields(first: 300) {
+          nodes {
+            ... on TextField {
+              type
+              id
+              label
+              cssClass
+              cssClassList
+            }
+            ... on TextAreaField {
+              type
+              id
+              label
+              cssClass
+              cssClassList
+            }
+            ... on SelectField {
+              type
+              id
+              label
+              cssClass
+              cssClassList
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
 ## Feature Roadmap
 
 ### Coming soon
@@ -379,8 +434,6 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 
 ### Future enhancements
 
-- Ability to fetch a list of Gravity Forms by their IDs.
 - Ability to create an individual Gravity Form.
 - Ability to update an individual Gravity Form.
 - Ability to delete an individual Gravity Form.
-- Ability to fetch an individual field

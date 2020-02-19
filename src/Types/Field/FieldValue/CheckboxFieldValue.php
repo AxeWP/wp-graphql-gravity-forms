@@ -42,8 +42,18 @@ class CheckboxFieldValue implements Hookable, Type, FieldValue {
      * @return array Entry field value.
      */
     public static function get( array $entry, GF_Field $field ) : array {
-        return [
-            'value' => (string) $entry[ $field['id'] ],
-        ];
+        $field_input_ids = wp_list_pluck( $field->inputs, 'id' );
+        $values          = [];
+
+        foreach( $entry as $input_id => $value ) {
+            if ( in_array( $input_id, $field_input_ids, true ) && '' !== $value ) {
+                $values[] = [
+                    'inputId' => $input_id,
+                    'value'   => $value,
+                ];
+            }
+        }
+
+        return compact( 'values' );
     }
 }

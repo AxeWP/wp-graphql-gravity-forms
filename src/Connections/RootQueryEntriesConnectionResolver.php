@@ -186,3 +186,9 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
         ];
     }
 }
+
+/*
+    page 5
+    item 2
+    page_size 20
+*/

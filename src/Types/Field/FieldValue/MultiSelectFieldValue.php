@@ -26,7 +26,7 @@ class MultiSelectFieldValue implements Hookable, Type, FieldValue {
             'description' => __( 'Multiselect field values.', 'wp-graphql-gravity-forms' ),
             'fields'      => [
                 'values' => [
-                    'type'        => ['list_of' => 'String' ],
+                    'type'        => [ 'list_of' => 'String' ],
                     'description' => __( 'Field values.', 'wp-graphql-gravity-forms' ),
                 ],
             ],

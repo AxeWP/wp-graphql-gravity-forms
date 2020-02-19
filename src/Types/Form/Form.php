@@ -51,7 +51,7 @@ class Form implements Hookable, Type, Field {
                     'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
                 ],
                 'formId' => [
-                    'type'        => 'Integer',
+                    'type'        => 'Int',
                     'description' => __( 'Form ID.', 'wp-graphql-gravity-forms' ),
                 ],
                 'title' => [
@@ -109,11 +109,11 @@ class Form implements Hookable, Type, Field {
                     'description' => __( 'CSS class for the first page.', 'wp-graphql-gravity-forms' ),
                 ],
                 'postAuthor'   => [
-                    'type'        => 'Integer',
+                    'type'        => 'Int',
                     'description' => __( 'When useCurrentUserAsAuthor is set to 0, this property contains the user Id that will be used as the Post author.', 'wp-graphql-gravity-forms' ),
                 ],
                 'postCategory'   => [
-                    'type'        => 'Integer',
+                    'type'        => 'Int',
                     'description' => __( 'Form forms with Post fields, but without a Post Category field, this property determines the default category that the post will be associated with when created.', 'wp-graphql-gravity-forms' ),
                 ],
                 'postFormat'   => [
@@ -154,7 +154,7 @@ class Form implements Hookable, Type, Field {
                     'description' => __( 'Specifies if this form has a limit on the number of submissions. 1 if the form limits submissions, 0 otherwise.', 'wp-graphql-gravity-forms' ),
                 ],
                 'limitEntriesCount'   => [
-                    'type'        => 'Integer',
+                    'type'        => 'Int',
                     'description' => __( 'When limitEntries is set to 1, this property specifies the number of submissions allowed.', 'wp-graphql-gravity-forms' ),
                 ],
                 // @TODO: Convert to an enum.
@@ -175,11 +175,11 @@ class Form implements Hookable, Type, Field {
                     'description' => __( 'Date in the format (mm/dd/yyyy) that the form will become active/visible.', 'wp-graphql-gravity-forms' ),
                 ],
                 'scheduleStartHour' => [
-                    'type'        => 'Integer',
+                    'type'        => 'Int',
                     'description' => __( 'Hour (1 to 12) that the form will become active/visible.', 'wp-graphql-gravity-forms' ),
                 ],
                 'scheduleStartMinute' => [
-                    'type'        => 'Integer',
+                    'type'        => 'Int',
                     'description' => __( 'Minute that the form will become active/visible.', 'wp-graphql-gravity-forms' ),
                 ],
                 'scheduleStartAmpm' => [
@@ -191,11 +191,11 @@ class Form implements Hookable, Type, Field {
                     'description' => __( 'Date in the format (mm/dd/yyyy) that the form will become inactive/hidden.', 'wp-graphql-gravity-forms' ),
                 ],
                 'scheduleEndHour' => [
-                    'type'        => 'Integer',
+                    'type'        => 'Int',
                     'description' => __( 'Hour (1 to 12) that the form will become inactive/hidden.', 'wp-graphql-gravity-forms' ),
                 ],
                 'scheduleEndMinute' => [
-                    'type'        => 'Integer',
+                    'type'        => 'Int',
                     'description' => __( 'Minute that the form will become inactive/hidden.', 'wp-graphql-gravity-forms' ),
                 ],
                 'scheduleEndAmpm' => [
@@ -227,7 +227,7 @@ class Form implements Hookable, Type, Field {
                     'description' => __( 'Contains the form confirmation settings such as confirmation text or redirect URL', 'wp-graphql-gravity-forms' ),
                 ],
                 'nextFieldId' => [
-                    'type'        => 'Integer',
+                    'type'        => 'Int',
                     'description' => __( 'The ID to assign to the next field that is added to the form.', 'wp-graphql-gravity-forms' ),
                 ],
                 'isActive' => [
