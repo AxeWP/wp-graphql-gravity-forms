@@ -367,11 +367,15 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 
 ## Get a List of Forms
 
+The example query below shows how you can fetch data for multiple forms at once.
+
+Cursor-based pagination is supported. You can use the `first`, `last`, `before` and `after` fields, along with the data inside of `pageInfo` and the cursors returned by the API to get each page of forms data.
+
+Filtering is also supported. For the `where` field, you can specify a `status` to get forms that are active, inactive, in the trash, etc.
+
 For `fields`, pass in `first: 300`, where `300` is the maximum number of fields you want to query for.
 
 Inside of `fields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragment for every type of field that your forms have.
-
-Cursor-based pagination is supported. You can use the `first`, `last`, `before` and `after` fields, along with the data inside of `pageInfo` and the cursors returned by the API to get each page of forms data.
 
 ### Example Query
 
