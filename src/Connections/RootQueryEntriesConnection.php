@@ -74,7 +74,7 @@ class RootQueryEntriesConnection implements Hookable, Connection {
     }
 
     private function get_form_ids( array $args ) : array {
-        if ( isset( $args['where']['formIds'] ) && is_array( $args['where']['formIds'] ) ) {
+        if ( ! empty( $args['where']['formIds'] ) && is_array( $args['where']['formIds'] ) ) {
             return array_map( 'absint', $args['where']['formIds'] );
         }
 

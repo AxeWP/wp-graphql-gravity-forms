@@ -30,7 +30,19 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
      * @return string Base-64 encoded cursor value.
      */
 	protected function get_cursor_for_node( $node, $key = null ) : string {
-		return base64_encode( ArrayConnection::PREFIX . $node['entryId'] );
+        $first = $this->args['first'] ?? 20;
+        $after_cursor  = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null;
+
+        // TODO
+        // $last  = $this->args['last'] ?? 20;
+        // $before_cursor = ! empty( $this->args['before'] ) ? json_decode( base64_decode( $this->args['before'] ), true ) : null;
+
+        $cursor = [
+            'offset' => $after_cursor ? $after_cursor['offset'] + $after_cursor['index'] + 1 : 0,
+            'index'  => $key,
+        ];
+
+        return base64_encode( json_encode( $cursor ) );
 	}
 
     /**
@@ -44,6 +56,10 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
      * @return array The fields for this Gravity Forms entry.
      */
     public function get_items() : array {
+        if ( isset( $this->args['last'] ) || isset( $this->args['before'] ) ) {
+            throw new UserError( __( 'Sorry, last/before pagination is currently not supported.', 'wp-graphql-gravity-forms' ) );
+        }
+
         $entries = GFAPI::get_entries(
             $this->get_form_ids(),
             $this->get_search_criteria(),
@@ -52,7 +68,7 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
             $total_overall
         );
 
-        // @TODO: is $total_overall needed here?
+        // TODO: is $total_overall needed here?
 
         if ( is_wp_error( $entries ) ) {
             throw new UserError( __( 'An error occurred while trying to get Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );
@@ -65,12 +81,12 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
         }, $entries );
     }
 
-    private function get_form_ids() : array {
-        if ( isset( $this->args['where']['formIds'] ) && is_array( $this->args['where']['formIds'] ) ) {
+    private function get_form_ids() {
+        if ( ! empty( $this->args['where']['formIds'] ) && is_array( $this->args['where']['formIds'] ) ) {
             return array_map( 'absint', $this->args['where']['formIds'] );
         }
 
-        return [];
+        return null;
     }
 
     private function get_search_criteria() : array {
@@ -165,11 +181,11 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
     }
 
     private function get_sort() : array {
-        if ( ! empty( $this->args['where']['sorting'] ) && is_array( $this->args['where']['sorting'] ) ) {
+        if ( ! empty( $this->args['where']['sort'] ) && is_array( $this->args['where']['sort'] ) ) {
             return [
-                'key'        => $this->args['where']['sorting']['key'] ?? '',
-                'direction'  => $this->args['where']['sorting']['direction'] ?? 'ASC',
-                'is_numeric' => $this->args['where']['sorting']['isNumeric'] ?? false,
+                'key'        => $this->args['where']['sort']['key'] ?? '',
+                'direction'  => $this->args['where']['sort']['direction'] ?? 'ASC',
+                'is_numeric' => $this->args['where']['sort']['isNumeric'] ?? false,
             ];
         }
 
@@ -177,18 +193,16 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
     }
 
     private function get_paging() : array {
-        $first = absint( $this->args['first'] ?? 0 );
-        $last  = absint( $this->args['last'] ?? 0 );
+        $first = absint( $this->args['first'] ?? 20 );
+        $after_cursor  = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null;
+
+        // TODO
+        // $last  = absint( $this->args['last'] ?? 20 );
+        // $before_cursor = ! empty( $this->args['before'] ) ? json_decode( base64_decode( $this->args['before'] ), true ) : null;
 
         return [
-            'offset'    => $this->get_offset(),
-            'page_size' => min( max( $first, $last, 10 ), $this->query_amount ) + 1,
+            'offset'    => $after_cursor ? $after_cursor['offset'] + $after_cursor['index'] + 1 : 0,
+            'page_size' => $first + 1, // Fetch one more to determine if there is a next page.
         ];
     }
 }
-
-/*
-    page 5
-    item 2
-    page_size 20
-*/

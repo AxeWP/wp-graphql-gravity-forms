@@ -224,7 +224,7 @@ The `gravityFormsEntry` query supports both entries and draft entries. See the "
 
 The code comments in the example below explain how you can get a filtered list of entries.
 
-As of Feb. 13th, 2020, entries pagination is not supported. Support will be added soon.
+The plugin supports first/after cursor-based pagination, but does not yet support before/last pagination.
 
 Inside of `fields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragments inside of `node { ... }` and inside of `fieldValue { ... }` for every type of field that your form has.
 
@@ -233,6 +233,8 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 ```graphql
 {
   gravityFormsEntries(
+    first: 20
+    after: "eyJvZmZzZXQiOjAsImluZGV4Ijo0fQ==" # Or pass null to start from the beginning.
     where: {
       # List of all the form IDs to include.
       formIds: [1]
