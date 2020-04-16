@@ -173,10 +173,10 @@ mutation {
     }
   ) {
     entryId # This will be the ID of the newly created entry.
-    resumeToken # This will be null, since the entry is no longer a draft.
-    isDraft # This will be set to false.
     entry {
-      entryId
+      entryId # This will be the ID of the newly created entry.
+      resumeToken # This will be null, since the entry is no longer a draft.
+      isDraft # This will be set to false.
       fields {
         edges {
           node {
