@@ -7,6 +7,7 @@ use GraphQL\Error\UserError;
 use GraphQLRelay\Connection\ArrayConnection;
 use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
+use WPGraphQLGravityForms\Types\Enum\FieldFiltersOperatorInputEnum;
 
 class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
     /**
@@ -142,49 +143,45 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
                 throw new UserError( __( 'Every field filter must have a key.', 'wp-graphql-gravity-forms' ) );
             }
 
-            $key      = sanitize_text_field( $field_filter['key'] );
-            $operator = $this->get_field_filter_operator( $field_filter );
-
-            if ( ! $this->is_field_filter_operator_valid( $operator ) ) {
-                throw new UserError( __( 'Every field filter must have a valid operator.', 'wp-graphql-gravity-forms' ) );
-            }
-
-            $value = $this->get_field_filter_value( $field_filter, $operator );
-
-            // If 'contains' is being used, convert to a scalar value.
-            if ( 'contains' === $operator ) {
-                $value = $value[0];
-            }
-
+            $key             = sanitize_text_field( $field_filter['key'] );
+            $operator        = $field_filter['operator'] ?? FieldFiltersOperatorInputEnum::IN; // Default to "in".
+            $value           = $this->get_field_filter_value( $field_filter, $operator );
             $field_filters[] = compact( 'key', 'operator', 'value' );
 
             return $field_filters;
         }, [] );
     }
 
-    private function get_field_filter_operator( array $field_filter ) : string {
-        $operator = $field_filter['operator'] ?? 'in';
-
-        // Convert from camelCase.
-        if ( 'notIn' === $operator ) {
-            $operator = 'not in';
-        }
-
-        return $operator;
-    }
-
-    private function is_field_filter_operator_valid( string $operator ) : bool {
-        return in_array( $operator, ['in', 'not in', 'contains'], true );
-    }
-
-    private function get_field_filter_value( array $field_filter, string $operator ) : array {
+    /**
+     * @param array  $field_filter Field filter.
+     * @param string $operator     Operator.
+     *
+     * @return mixed Filter value.
+     */
+    private function get_field_filter_value( array $field_filter, string $operator ) {
         $value_fields = $this->get_field_filter_value_fields( $field_filter );
 
         if ( 1 !== count( $value_fields ) ) {
             throw new UserError( __( 'Every field filter must have one value field.', 'wp-graphql-gravity-forms' ) );
         }
 
-        return array_map( 'sanitize_text_field', $field_filter[ $value_fields[0] ] );
+        $field_filter_values = array_map( 'sanitize_text_field', $field_filter[ $value_fields[0] ] );
+
+        if ( $this->should_field_filter_be_limited_to_single_value( $operator ) ) {
+            return $field_filter_values[0] ?? '';
+        }
+
+        return $field_filter_values;
+    }
+
+    private function should_field_filter_be_limited_to_single_value( string $operator ) : bool {
+        $operators_to_limit = [
+            FieldFiltersOperatorInputEnum::CONTAINS,
+            FieldFiltersOperatorInputEnum::GREATER_THAN,
+            FieldFiltersOperatorInputEnum::LESS_THAN,
+        ];
+
+        return in_array( $operator, $operators_to_limit, true );
     }
 
     private function get_field_filter_value_fields( array $field_filter ) : array {

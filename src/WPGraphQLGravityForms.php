@@ -141,7 +141,8 @@ final class WPGraphQLGravityForms {
 		$this->instances['root_query_forms_connection']   = new Connections\RootQueryFormsConnection();
 
 		// Enums
-		$this->instances['form_status_enum'] = new Enum\FormStatusEnum();
+		$this->instances['form_status_enum']                  = new Enum\FormStatusEnum();
+		$this->instances['field_filters_operator_input_enum'] = new Enum\FieldFiltersOperatorInputEnum();
 
 		// Field errors
 		$this->instances['field_error'] = new FieldError();
