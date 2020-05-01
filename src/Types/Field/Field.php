@@ -5,6 +5,7 @@ namespace WPGraphQLGravityForms\Types\Field;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
+use WPGraphQLGravityForms\Types\Enum\FieldVisibilityEnum;
 
 /**
  * Gravity Forms field.
@@ -59,7 +60,10 @@ abstract class Field implements Hookable, Type {
                 'type'        => 'Integer',
                 'description' => __( 'The ID of the form this field belongs to.', 'wp-graphql-gravity-forms' ),
             ],
-            // @TODO: add 'visibility' (visible, hidden, possibly other values.)
+            'visibility' => [
+                'type'        => 'String',
+                'description' => __( 'Field visibility. Possible values: visible, hidden, or administrative.', 'wp-graphql-gravity-forms' ),
+            ],
         ];
     }
 }

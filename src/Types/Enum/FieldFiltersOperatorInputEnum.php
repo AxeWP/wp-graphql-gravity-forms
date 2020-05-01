@@ -26,7 +26,7 @@ class FieldFiltersOperatorInputEnum implements Hookable, Enum {
                 'description' => __( 'The operator to use for filtering.', 'harness' ),
                 'values'      => [
                     'IN' => [
-                        'description' => __( 'Find field values that match those in the values array.', 'harness' ),
+                        'description' => __( 'Find field values that match those in the values array (default).', 'harness' ),
                         'value'       => self::IN,
                     ],
                     'NOT_IN' => [
