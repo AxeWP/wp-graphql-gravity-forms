@@ -58,12 +58,12 @@ class ObjectFieldUnion implements Hookable, Type {
      * @return array Field type mappings.
      */
     private function get_field_type_mappings() : array {
-        $fields = array_filter( $this->instances, function( $instance ) {
-            return $instance instanceof Field;
-        } );
+        $fields = array_filter( $this->instances, fn( $instance ) => $instance instanceof Field );
 
         /**
-         * Filter for adding custom field class instances to be used by this union's resolver.
+         * Filter for adding custom field class instances.
+         * Classes must extend the WPGraphQLGravityForms\Types\Field\Field class and
+         * contain a "GF_TYPE" class constant specifying the Gravity Forms field type.
          *
          * @param array $fields Gravity Forms field class instances.
          */

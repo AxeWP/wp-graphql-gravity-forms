@@ -2,7 +2,7 @@
 
 A WordPress plugin that provides a GraphQL API for interacting with Gravity Forms. This is currently an unfinished work in progress that is being actively developed.
 
-## What can it do?
+## Overview
 
 Using WordPress as a headless CMS with a separate JavaScript-powered frontend single-page app is an increasingly popular tech stack. Traditionally, REST APIs have been used for the purpose of sending data back & forth between the frontend and backend in setups like this but the REST architecture has its limitations.
 
@@ -13,6 +13,13 @@ Fortunately, a GraphQL implementation exists for WordPress - [WPGraphQL](https:/
 WPGraphQL for Gravity Forms extends the WPGraphQL plugin, allowing frontend apps to interact with the Gravity Forms data stored in a headless WordPress backend. This plugin couples the great forms functionality of Gravity Forms with the powerful WordPress-specific GraphQL implementation that WPGraphQL provides.
 
 Our hope for this open source project is that it will enable more teams to leverage GraphQL for building fast, interactive frontend apps that source their data from WordPress and Gravity Forms.
+
+## System Requirements
+
+- PHP 7.4+
+- WPGraphQL 0.7.1 (support for the latest version is coming soon)
+- Gravity Forms 2.4+
+- Tested with WordPress 5.4.1
 
 ## Getting Started
 
@@ -426,20 +433,15 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 }
 ```
 
-## Feature Roadmap
+## Future Feature Enhancements
 
-### Coming soon
-
-- Add support for pagination of lists of entries.
+- Add support for backwards pagination of lists of entries.
 - Ability to query for lists of draft entries, or both entries and draft entries
 - Add support for updating draft entries with file upload data.
 - Ability to get the total count for a list of entries.
 - Ability to delete an individual Gravity Forms entry.
 - Ability to update an individual Gravity Forms entry.
 - Create & update integration tests.
-
-### Future enhancements
-
 - Ability to create an individual Gravity Form.
 - Ability to update an individual Gravity Form.
 - Ability to delete an individual Gravity Form.
