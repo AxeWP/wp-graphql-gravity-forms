@@ -25,9 +25,9 @@ class CheckboxFieldValue implements Hookable, Type, FieldValue {
         register_graphql_object_type( self::TYPE, [
             'description' => __( 'Checkbox field value.', 'wp-graphql-gravity-forms' ),
             'fields'      => [
-                'value' => [
-                    'type'        => 'String',
-                    'description' => __( 'The value.', 'wp-graphql-gravity-forms' ),
+                'values' => [
+                    'type'        => [ 'list_of' => CheckboxInputValue::TYPE ],
+                    'description' => __( 'Values.', 'wp-graphql-gravity-forms' ),
                 ],
             ],
         ] );
@@ -46,7 +46,9 @@ class CheckboxFieldValue implements Hookable, Type, FieldValue {
         $values          = [];
 
         foreach( $entry as $input_id => $value ) {
-            if ( in_array( $input_id, $field_input_ids, true ) && '' !== $value ) {
+            $is_field_input_value = in_array( $input_id, $field_input_ids, true ) && '' !== $value;
+
+            if ( $is_field_input_value ) {
                 $values[] = [
                     'inputId' => $input_id,
                     'value'   => $value,

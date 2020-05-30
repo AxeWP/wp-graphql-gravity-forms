@@ -103,6 +103,7 @@ final class WPGraphQLGravityForms {
 		// Field Values
 		$this->instances['address_field_value']        = new FieldValue\AddressFieldValue();
 		$this->instances['chained_select_field_value'] = new FieldValue\ChainedSelectFieldValue();
+		$this->instances['checkbox_input_value']       = new FieldValue\CheckboxInputValue();
 		$this->instances['checkbox_field_values']      = new FieldValue\CheckboxFieldValue();
 		$this->instances['date_field_values']          = new FieldValue\DateFieldValue();
 		$this->instances['email_field_value']          = new FieldValue\EmailFieldValue();

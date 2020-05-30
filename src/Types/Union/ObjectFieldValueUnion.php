@@ -41,11 +41,6 @@ class ObjectFieldValueUnion implements Hookable, Type {
         register_graphql_union_type( self::TYPE, [
             'typeNames'   => $this->get_field_value_type_names(),
             'resolveType' => function( $object ) use ( $type_registry ) {
-
-                if ( $object['value_class']::TYPE === 'PhotoFieldValue' ) {
-                    $test = '';
-                }
-
                 return $type_registry->get_type( $object['value_class']::TYPE );
             },
         ] );
