@@ -59,7 +59,6 @@ final class WPGraphQLGravityForms {
 
 		// Fields
 		$this->instances['address_field']        = new Field\AddressField();
-		$this->instances['calculation_field']    = new Field\CalculationField();
 		$this->instances['captcha_field']        = new Field\CaptchaField();
 		$this->instances['chained_select_field'] = new Field\ChainedSelectField();
 		$this->instances['checkbox_field']       = new Field\CheckboxField();
