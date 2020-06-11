@@ -24,7 +24,7 @@ class InputProperty implements Hookable, Type {
             'fields'      => [
                 'id' => [
                     'type'        => 'Float',
-                    'description' => __('The input id. Input Ids follow the following naming convention: “FIELDID.INPUTID” (i.e. 5.1), where FIELDID is the id of the containing field and INPUTID specifies the input field.', 'wp-graphql-gravity-forms'),
+                    'description' => __('The input ID. Input IDs follow the following naming convention: FIELDID.INPUTID (i.e. 5.1), where FIELDID is the id of the containing field and INPUTID specifies the input field.', 'wp-graphql-gravity-forms'),
                 ],
                 'label' => [
                     'type'        => 'String',

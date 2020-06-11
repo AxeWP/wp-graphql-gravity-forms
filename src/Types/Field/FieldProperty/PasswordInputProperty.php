@@ -25,7 +25,7 @@ class PasswordInputProperty implements Hookable, Type {
             'description' => __('Gravity Forms input property.', 'wp-graphql-gravity-forms'),
             'fields'      => [
                 'id' => [
-                    'type'        => 'Integer',
+                    'type'        => 'Float',
                     'description' => __('The id of the input field.', 'wp-graphql-gravity-forms'),
                 ],
                 'label' => [
