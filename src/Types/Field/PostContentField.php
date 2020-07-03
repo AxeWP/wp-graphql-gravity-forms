@@ -29,6 +29,7 @@ class PostContentField extends Field {
             'description' => __( 'Gravity Forms Post Content field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
+                $this->get_custom_properties(),
                 FieldProperty\DefaultValueProperty::get(),
                 FieldProperty\DescriptionProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),

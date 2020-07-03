@@ -17,7 +17,7 @@ abstract class Field implements Hookable, Type {
     /**
      * Get the global properties that apply to all GF field types.
      */
-    protected function get_global_properties() {
+    protected function get_global_properties() : array {
         return [
             'adminLabel' => [
                 'type'        => 'String',
@@ -64,5 +64,15 @@ abstract class Field implements Hookable, Type {
                 'description' => __( 'Field visibility. Possible values: visible, hidden, or administrative.', 'wp-graphql-gravity-forms' ),
             ],
         ];
+    }
+
+    protected function get_custom_properties() : array {
+        /**
+         * Add GraphQL fields for custom field properties.
+         *
+         * @param array Additional GraphQL field definitions.
+         * @param array The type of Gravity Forms field.
+         */
+        return apply_filters( 'wp_graphql_gf_custom_properties', [], static::GF_TYPE );
     }
 }

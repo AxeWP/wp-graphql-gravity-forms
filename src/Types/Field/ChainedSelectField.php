@@ -30,6 +30,7 @@ class ChainedSelectField extends Field {
             'description' => __( 'Gravity Forms Chained Select field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
+                $this->get_custom_properties(),
                 FieldProperty\DescriptionProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),
                 FieldProperty\InputsProperty::get(),
@@ -49,7 +50,7 @@ class ChainedSelectField extends Field {
                         'type'        => 'Boolean',
                         'description' => __('Whether inactive dropdowns should be hidden.', 'wp-graphql-gravity-forms'),
                     ],
-                ]
+                ],
             ),
         ] );
     }

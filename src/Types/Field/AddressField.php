@@ -29,6 +29,7 @@ class AddressField extends Field {
             'description' => __( 'Gravity Forms Address field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
+                $this->get_custom_properties(),
                 FieldProperty\DescriptionProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),
                 FieldProperty\InputNameProperty::get(),
@@ -59,7 +60,7 @@ class AddressField extends Field {
                         'description' => __( 'The placement of the labels for the fields (street, city, zip/postal code, etc.) within the address group. This setting controls all of the address pieces, they cannot be set individually. They may be aligned above or below the inputs. If this property is not set, the “Sub-Label Placement” setting on the Form Settings->Form Layout page is used. If no setting is specified, the default is above inputs.', 'wp-graphql-gravity-forms' ),
                     ],
                     // @TODO - add placeholders.
-                ]
+                ],
             ),
         ] );
     }

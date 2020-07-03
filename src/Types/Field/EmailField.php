@@ -29,6 +29,7 @@ class EmailField extends Field {
             'description' => __( 'Gravity Forms Email field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
+                $this->get_custom_properties(),
                 FieldProperty\DefaultValueProperty::get(),
                 FieldProperty\DescriptionProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),
@@ -36,7 +37,7 @@ class EmailField extends Field {
                 FieldProperty\IsRequiredProperty::get(),
                 FieldProperty\NoDuplicatesProperty::get(),
                 FieldProperty\PlaceholderProperty::get(),
-                FieldProperty\SizeProperty::get()
+                FieldProperty\SizeProperty::get(),
             ),
         ] );
     }

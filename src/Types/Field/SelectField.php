@@ -29,6 +29,7 @@ class SelectField extends Field {
             'description' => __( 'Gravity Forms Select field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
+                $this->get_custom_properties(),
                 FieldProperty\ChoicesProperty::get(),
                 FieldProperty\DescriptionProperty::get(),
                 FieldProperty\EnableChoiceValueProperty::get(),

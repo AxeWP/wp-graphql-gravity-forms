@@ -30,6 +30,7 @@ class SignatureField extends Field {
             'description' => __( 'Gravity Forms Signature field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
+                $this->get_custom_properties(),
                 FieldProperty\DescriptionProperty::get(),
                 FieldProperty\ErrorMessageProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),

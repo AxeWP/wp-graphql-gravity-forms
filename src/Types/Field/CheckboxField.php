@@ -29,6 +29,7 @@ class CheckboxField extends Field {
             'description' => __( 'Gravity Forms Checkbox field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
+                $this->get_custom_properties(),
                 FieldProperty\ChoicesProperty::get(),
                 FieldProperty\DescriptionProperty::get(),
                 FieldProperty\EnableChoiceValueProperty::get(),
@@ -45,7 +46,7 @@ class CheckboxField extends Field {
                         'type'        => 'Boolean',
                         'description' => __( 'Whether the "select all" choice should be displayed.', 'wp-graphql-gravity-forms' ),
                     ]
-                ]
+                ],
             ),
         ] );
     }

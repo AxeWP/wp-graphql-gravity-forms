@@ -29,6 +29,7 @@ class PageField extends Field {
             'description' => __( 'Gravity Forms Page field.', 'wp-graphql-gravity-forms' ),
             'fields'      => array_merge(
                 $this->get_global_properties(),
+                $this->get_custom_properties(),
                 [
                     'displayOnly' => [
                         'type'        => 'Boolean',
