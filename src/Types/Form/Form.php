@@ -272,6 +272,8 @@ class Form implements Hookable, Type, Field {
                 $form = $this->form_data_manipulator->manipulate( $form_raw, $args );
 
                 /**
+                 * "wp_graphql_gf_form_object" filter
+                 *
                  * Provides the ability to manipulate the form data before it is sent to the
                  * client. This hook is somewhat similar to Gravity Forms' gform_pre_render hook
                  * and can be used for dynamic field input population, among other things.

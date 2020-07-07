@@ -35,10 +35,18 @@ class RootQueryFormsConnectionResolver {
         }
 
         $form_data_manipulator = new FormDataManipulator( new FieldsDataManipulator() );
+        $forms = array_map( fn( $form ) => $form_data_manipulator->manipulate( $form ), $forms );
 
-        $forms = array_map( function( $form ) use ( $form_data_manipulator ) {
-            return $form_data_manipulator->manipulate( $form );
-        }, $forms );
+        /**
+         * "wp_graphql_gf_form_object" filter
+         *
+         * Provides the ability to manipulate the form data before it is sent to the
+         * client. This hook is somewhat similar to Gravity Forms' gform_pre_render hook
+         * and can be used for dynamic field input population, among other things.
+         *
+         * @param array $form Form meta array.
+         */
+        $forms = array_map( fn( $form ) => apply_filters( 'wp_graphql_gf_form_object', $form ), $forms );
 
         $connection = Relay::connectionFromArray( $forms, $args );
 
