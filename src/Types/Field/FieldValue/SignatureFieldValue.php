@@ -42,8 +42,8 @@ class SignatureFieldValue implements Hookable, Type, FieldValue {
      * @return array Entry field value.
      */
     public static function get( array $entry, GF_Field $field ) : array {
-        if ( ! function_exists( 'gf_signature' ) || !$entry[ $field['id'] ] ) {
-            return [];
+        if ( ! function_exists( 'gf_signature' ) || ! $entry[ $field['id'] ] ) {
+            return [ 'url' => null ];
         }
 
         return [
