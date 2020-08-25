@@ -38,7 +38,7 @@ class DeleteEntry implements Hookable, Mutation {
 	public static function get_input_fields() : array {
 		return [
             'entryId' => [
-				'type'        => 'Int',
+				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'ID of the entry to delete', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -65,10 +65,6 @@ class DeleteEntry implements Hookable, Mutation {
 	 */
 	public function mutate_and_get_payload() : callable {
 		return function( $input, AppContext $context, ResolveInfo $info ) : array {
-			if ( empty( $input['entryId'] ) ) {
-				throw new UserError( __( 'Mutation not processed. An entry ID must be provided.', 'wp-graphql-gravity-forms' ) );
-            }
-
 			$entry_id         = (int) $input['entryId'];
 			$does_entry_exist = GFAPI::entry_exists( $entry_id );
 
