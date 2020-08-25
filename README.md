@@ -210,6 +210,8 @@ mutation {
 
 The mutation below shows how to delete a draft entry. The `resumeToken` of the deleted draft entry will be in the response.
 
+### Example Mutation
+
 ```graphql
 mutation {
   deleteGravityFormsDraftEntry(
@@ -376,7 +378,9 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 
 ## Delete an Entry
 
-This example below shows how to delete a Gravity Forms entry by its ID.
+The mutation below shows how to delete an entry. The `entryId` of the deleted entry will be in the response.
+
+### Example Mutation
 
 ```graphql
 mutation {
