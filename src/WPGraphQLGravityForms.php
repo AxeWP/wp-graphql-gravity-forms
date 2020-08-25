@@ -3,7 +3,6 @@
 namespace WPGraphQLGravityForms;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\DataManipulators;
 use WPGraphQLGravityForms\Types\Button\Button;
 use WPGraphQLGravityForms\Types\ConditionalLogic;
 use WPGraphQLGravityForms\Types\Enum;
@@ -16,7 +15,6 @@ use WPGraphQLGravityForms\Types\Union;
 use WPGraphQLGravityForms\Types\Connection;
 use WPGraphQLGravityForms\Types\Entry;
 use WPGraphQLGravityForms\Types\Input;
-use WPGraphQLGravityForms\Mutations;
 
 /**
  * Main plugin class.
