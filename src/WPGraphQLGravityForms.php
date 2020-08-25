@@ -36,6 +36,9 @@ final class WPGraphQLGravityForms {
     }
 
 	private function create_instances() {
+		// Settings
+		$this->instances['wpgraphql_settings'] = new Settings\WPGraphQLSettings();
+
 		// Data manipulators
 		$this->instances['fields_data_manipulator']       = new DataManipulators\FieldsDataManipulator();
 		$this->instances['form_data_manipulator']         = new DataManipulators\FormDataManipulator( $this->instances['fields_data_manipulator'] );
@@ -176,8 +179,3 @@ final class WPGraphQLGravityForms {
 		return array_filter( $this->instances, fn( $instance ) => $instance instanceof Hookable );
 	}
 }
-
-// @TODO: Handle this more gracefully to bump up the number of form fields returned.
-add_filter( 'graphql_connection_max_query_amount', function() {
-	return 500;
-}, 11 );
