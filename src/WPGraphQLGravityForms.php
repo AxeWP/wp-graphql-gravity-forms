@@ -147,7 +147,8 @@ final class WPGraphQLGravityForms {
 		// Field errors
 		$this->instances['field_error'] = new FieldError();
 
-		// Draft entry mutations
+		// Mutations
+		$this->instances['delete_entry']                                = new Mutations\DeleteEntry();
 		$this->instances['create_draft_entry']                          = new Mutations\CreateDraftEntry();
 		$this->instances['delete_draft_entry']                          = new Mutations\DeleteDraftEntry();
 		$this->instances['submit_draft_entry']                          = new Mutations\SubmitDraftEntry( $this->instances['entry_data_manipulator'] );
@@ -172,9 +173,7 @@ final class WPGraphQLGravityForms {
 	}
 
 	private function get_hookable_instances() {
-		return array_filter( $this->instances, function( $instance ) {
-			return $instance instanceof Hookable;
-		} );
+		return array_filter( $this->instances, fn( $instance ) => $instance instanceof Hookable );
 	}
 }
 
