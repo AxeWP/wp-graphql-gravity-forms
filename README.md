@@ -374,6 +374,18 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 }
 ```
 
+## Delete an Entry
+
+This example below shows how to delete a Gravity Forms entry by its ID.
+
+```graphql
+mutation {
+  deleteGravityFormsEntry(input: { clientMutationId: "123abc", entryId: 5 }) {
+    entryId
+  }
+}
+```
+
 ## Get a List of Forms
 
 The example query below shows how you can fetch data for multiple forms at once.
@@ -439,7 +451,6 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 - Ability to query for lists of draft entries, or both entries and draft entries
 - Add support for updating draft entries with file upload data.
 - Ability to get the total count for a list of entries.
-- Ability to delete an individual Gravity Forms entry.
 - Ability to update an individual Gravity Forms entry.
 - Create & update integration tests.
 - Ability to create an individual Gravity Form.
