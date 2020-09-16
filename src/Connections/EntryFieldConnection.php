@@ -2,7 +2,10 @@
 
 namespace WPGraphQLGravityForms\Connections;
 
+use GFAPI;
+use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
+use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Connection;
@@ -13,6 +16,7 @@ use WPGraphQLGravityForms\Types\Field\FieldValue;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
 use WPGraphQLGravityForms\Types\FieldError\FieldError;
+use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
 
 class EntryFieldConnection implements Hookable, Connection {
     /**
@@ -71,7 +75,25 @@ class EntryFieldConnection implements Hookable, Connection {
                 ],
             ],
             'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
-                return ( new EntryFieldConnectionResolver( $root, $args, $context, $info ) )->get_connection();
+                $form  = GFAPI::get_form( $root['formId'] );
+
+                if ( ! $form ) {
+                    throw new UserError( __( 'The form used to generate this entry was not found.', 'wp-graphql-gravity-forms' ) );
+                }
+
+                $fields     = ( new FieldsDataManipulator() )->manipulate( $form['fields'] );
+                $connection = Relay::connectionFromArray( $fields, $args );
+
+                // Add the entry to each edge with a key of 'source'. This is needed so that
+                // the fieldValue edge field resolver has has access to the form entry.
+                $connection['edges'] = array_map( function( $edge ) use ( $root ) {
+                    $edge['source'] = $root;
+                    return $edge;
+                }, $connection['edges'] );
+
+                $nodes               = array_map( fn( $edge ) => $edge['node'] ?? null, $connection['edges'] );
+                $connection['nodes'] = $nodes ?: null;
+                return $connection;
             },
         ] );
     }

@@ -2,6 +2,7 @@
 
 namespace WPGraphQLGravityForms\Types\Field;
 
+use GF_Field_Number;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
@@ -49,10 +50,24 @@ class NumberField extends Field {
                     'rangeMin' => [
                         'type'        => 'Float',
                         'description' => __( 'Minimum allowed value for a number field. Values lower than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms' ),
+                        'resolve' => function( GF_Field_Number $root ) {
+                            if ( '' === $root['rangeMin'] ) {
+                                return null;
+                            }
+
+                            return (float) $root['rangeMin'];
+                        }
                     ],
                     'rangeMax' => [
                         'type'        => 'Float',
                         'description' => __( 'Maximum allowed value for a number field. Values higher than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms' ),
+                        'resolve' => function( GF_Field_Number $root ) {
+                            if ( '' === $root['rangeMax'] ) {
+                                return null;
+                            }
+
+                            return (float) $root['rangeMax'];
+                        }
                     ],
                 ]
             ),

@@ -4,6 +4,7 @@ namespace WPGraphQLGravityForms\Connections;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Error\UserError;
+use GraphQL\Deferred;
 use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Connection;
@@ -55,7 +56,7 @@ class RootQueryEntriesConnection implements Hookable, Connection {
                     'description' => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
                 ],
             ],
-            'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
+            'resolve' => function( $root, array $args, AppContext $context, ResolveInfo $info ) : Deferred {
                 /**
                  * Filter to control whether the user should be allowed to view entries.
                  *

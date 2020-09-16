@@ -7,6 +7,7 @@ use GraphQL\Error\UserError;
 use GraphQLRelay\Connection\ArrayConnection;
 use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
+use WPGraphQLGravityForms\Data\Loader\EntriesLoader;
 use WPGraphQLGravityForms\Types\Enum\FieldFiltersOperatorInputEnum;
 
 class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
@@ -18,6 +19,15 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
     }
 
     /**
+	 * Return the name of the loader to be used with the connection resolver
+	 *
+	 * @return string
+	 */
+    public function get_loader_name() : string {
+        return EntriesLoader::NAME;
+    }
+
+    /**
      * Determine whether or not the the offset is valid, i.e the item corresponding to the offset exists.
 	 * Offset is equivalent to WordPress ID (e.g post_id, term_id). So this function is equivalent
 	 * to checking if the WordPress object exists for the given ID.
@@ -26,14 +36,35 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
      *
      * @return bool Whether the offset is valid.
      */
-    public function is_valid_offset( $offset ) : bool {
+    public function is_valid_offset( $offset ) {
         return true;
+    }
+
+    /**
+	 * Validates Model.
+	 *
+	 * If model isn't a class with a `fields` member, this function with have be overridden in
+	 * the Connection class.
+	 *
+	 * @param array $model model.
+	 *
+	 * @return bool
+	 */
+	protected function is_valid_model( $model ) {
+		return true;
     }
 
     /**
      * @return array Query arguments.
      */
     public function get_query_args() : array {
+        return [];
+    }
+
+    /**
+     * @return array Query to use for data fetching.
+     */
+    public function get_query() : array {
         return [];
     }
 
@@ -60,39 +91,32 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
     /**
-     * @return array Query to use for data fetching.
-     */
-    public function get_query() : array {
-        return [];
-    }
-
-    /**
-     * @return array The fields for this Gravity Forms entry.
-     */
-    public function get_items() : array {
+	 * get_ids
+	 *
+	 * Return an array of ids from the query
+	 *
+	 * Each Query class in WP and potential datasource handles this differently, so each connection
+	 * resolver should handle getting the items into a uniform array of items.
+	 *
+	 * @return array
+	 */
+	public function get_ids() : array {
         if ( isset( $this->args['last'] ) || isset( $this->args['before'] ) ) {
             throw new UserError( __( 'Sorry, last/before pagination is currently not supported.', 'wp-graphql-gravity-forms' ) );
         }
 
-        $entries = GFAPI::get_entries(
+        $entry_ids = GFAPI::get_entry_ids(
             $this->get_form_ids(),
             $this->get_search_criteria(),
             $this->get_sort(),
             $this->get_paging(),
-            $total_overall
         );
 
-        // TODO: is $total_overall needed here?
-
-        if ( is_wp_error( $entries ) ) {
+        if ( is_wp_error( $entry_ids ) ) {
             throw new UserError( __( 'An error occurred while trying to get Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );
         }
 
-        $entry_data_manipulator = new EntryDataManipulator();
-
-        return array_map( function( $entry ) use ( $entry_data_manipulator ) {
-            return $entry_data_manipulator->manipulate( $entry );
-        }, $entries );
+        return array_map( 'absint', $entry_ids );
     }
 
     private function get_form_ids() {

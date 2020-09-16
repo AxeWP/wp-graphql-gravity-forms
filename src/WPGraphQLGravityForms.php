@@ -43,6 +43,9 @@ final class WPGraphQLGravityForms {
 		$this->instances['entry_data_manipulator']        = new DataManipulators\EntryDataManipulator();
 		$this->instances['draft_entry_data_manipulator']  = new DataManipulators\DraftEntryDataManipulator( $this->instances['entry_data_manipulator'] );
 
+		// Data loaders
+		$this->instances['loader_registrar'] = new Data\Loader\LoadersRegistrar();
+
 		// Buttons
 		$this->instances['button'] = new Button();
 
