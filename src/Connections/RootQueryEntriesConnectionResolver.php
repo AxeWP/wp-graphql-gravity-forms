@@ -74,7 +74,7 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
      *
      * @return string Base-64 encoded cursor value.
      */
-	protected function get_cursor_for_node( $node, $key = null ) : string {
+	protected function get_cursor_for_node( $id ) : string {
         $first = $this->args['first'] ?? 20;
         $after_cursor  = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null;
 
@@ -83,8 +83,8 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
         // $before_cursor = ! empty( $this->args['before'] ) ? json_decode( base64_decode( $this->args['before'] ), true ) : null;
 
         $cursor = [
-            'offset' => $after_cursor ? $after_cursor['offset'] + $after_cursor['index'] + 1 : 0,
-            'index'  => $key,
+            'offset' => $after_cursor ? $after_cursor['offset'] + $first : --$first,
+            'id' => $id,
         ];
 
         return base64_encode( json_encode( $cursor ) );
