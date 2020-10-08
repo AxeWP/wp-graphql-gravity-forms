@@ -79,6 +79,8 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 	 * @return string $filename The filename of the saved signature image file.
 	 */
 	private function save_signature( string $signature ) : string {
+		if($signature === "") return "";
+
 		$signature_decoded = $this->get_decoded_image_data( $signature );
 
 		if ( $this->does_image_exceed_max_upload_size( $signature_decoded ) ) {
