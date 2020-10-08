@@ -161,22 +161,22 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		if ( 'RootMutation' !== $type_name || self::NAME !== $field_key ) {
 			return;
 		}
-		$draft_entry  = $this->get_draft_entry( $args['input']['resumeToken'] );
-		$submission = $this->get_draft_submission( $draft_entry );
-		$submitted_values = $submission['submitted_values'];
-		$form = GFAPI::get_form( $submission['partial_entry']['form_id'] );
-		$fields = $form['fields'];
+		$draft_entry		= $this->get_draft_entry( $args['input']['resumeToken'] );
+		$submission			= $this->get_draft_submission( $draft_entry );
+		$submitted_values 	= $submission['submitted_values'];
+		$form 				= GFAPI::get_form( $submission['partial_entry']['form_id'] );
+		$fields 			= $form['fields'];
 		
 
 		foreach($fields as $field){
-			$field_id          = absint( $field['id'] );
-			$field_to_validate = $this->get_field_by_id($form, $field_id);
-			$field_value       = $submitted_values[$field_id];
+			$field_id			= absint( $field['id'] );
+			$field_to_validate  = $this->get_field_by_id( $form, $field_id );
+			$field_value       	= $submitted_values[$field_id];
 
 			$field_to_validate->validate( $field_value, $form );
 
-			if($field->isRequired && empty($submitted_values[$field_id]) ){
-				$field->failed_validation  = true;
+			if( $field->isRequired && empty( $submitted_values[$field_id] ) ){
+				$field->failed_validation = true;
 			}
 
 			if ( $field_to_validate->failed_validation ) {
