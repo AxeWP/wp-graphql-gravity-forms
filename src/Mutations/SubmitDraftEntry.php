@@ -167,7 +167,6 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		$form             = GFAPI::get_form( $submission['partial_entry']['form_id'] );
 		$fields           = $form['fields'];
 		
-
 		foreach( $fields as $field ) {
 			$field_id          = absint( $field['id'] );
 			$field_to_validate = $this->get_field_by_id( $form, $field_id );
