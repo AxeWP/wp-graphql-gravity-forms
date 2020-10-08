@@ -33,7 +33,7 @@ class SubmitDraftEntry implements Hookable, Mutation {
     }
 
     public function register_hooks() {
-		add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
+		add_action( 'graphql_register_types',       [ $this, 'register_mutation' ] );
 		add_action( 'graphql_before_resolve_field', [ $this, 'ensure_required_fields_are_set' ], 10, 7 );
 	}
 
