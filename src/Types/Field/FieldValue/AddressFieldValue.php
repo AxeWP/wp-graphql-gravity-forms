@@ -63,12 +63,12 @@ class AddressFieldValue implements Hookable, Type, FieldValue {
      */
     public static function get( array $entry, GF_Field $field ) : array {
         return [
-            'street'  => $entry[ $field['inputs'][0]['id'] ],
-            'lineTwo' => $entry[ $field['inputs'][1]['id'] ],
-            'city'    => $entry[ $field['inputs'][2]['id'] ],
-            'state'   => $entry[ $field['inputs'][3]['id'] ],
-            'zip'     => $entry[ $field['inputs'][4]['id'] ],
-            'country' => $entry[ $field['inputs'][5]['id'] ],
+            'street'  => array_key_exists( $field['inputs'][0]['id'], $entry ) ? $entry[ $field['inputs'][0]['id'] ] : null,
+            'lineTwo'  => array_key_exists( $field['inputs'][1]['id'], $entry ) ? $entry[ $field['inputs'][1]['id'] ] : null,
+            'city'  => array_key_exists( $field['inputs'][2]['id'], $entry ) ? $entry[ $field['inputs'][2]['id'] ] : null,
+            'state'  => array_key_exists( $field['inputs'][3]['id'], $entry ) ? $entry[ $field['inputs'][3]['id'] ] : null,
+            'zip'  => array_key_exists( $field['inputs'][4]['id'], $entry ) ? $entry[ $field['inputs'][4]['id'] ] : null,
+            'country'  => array_key_exists( $field['inputs'][5]['id'], $entry ) ? $entry[ $field['inputs'][5]['id'] ] : null,
         ];
     }
 }
