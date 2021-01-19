@@ -3,6 +3,7 @@
 namespace WPGraphQLGravityForms\Mutations;
 
 use GFAPI;
+use GF_Field;
 use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -11,6 +12,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Mutation;
 use WPGraphQLGravityForms\Types\Entry\Entry;
 use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
+use WPGraphQLGravityForms\Types\FieldError\FieldError;
 
 /**
  * Submit a Gravity Forms draft entry so that it becomes a permanent entry.
@@ -31,7 +33,8 @@ class SubmitDraftEntry implements Hookable, Mutation {
     }
 
     public function register_hooks() {
-        add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
+		add_action( 'graphql_register_types',       [ $this, 'register_mutation' ] );
+		add_action( 'graphql_before_resolve_field', [ $this, 'ensure_required_fields_are_set' ], 10, 7 );
 	}
 
 	public function register_mutation() {
@@ -139,5 +142,63 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		}
 
 		return $submission;
+	}
+
+	/**
+     * Fire an action BEFORE the field resolves
+     *
+     * @param mixed           $source         Source passed down the Resolve Tree.
+     * @param array           $args           Args for the field.
+     * @param AppContext      $context        AppContext passed down the ResolveTree.
+     * @param ResolveInfo     $info           ResolveInfo passed down the ResolveTree.
+     * @param mixed           $field_resolver Field resolver.
+     * @param string          $type_name      Name of the type the fields belong to.
+     * @param string          $field_key      Name of the field.
+     * @param FieldDefinition $field          Field Definition for the resolving field.
+     */
+	public function ensure_required_fields_are_set( $source, array $args, AppContext $context, ResolveInfo $info, $field_resolver, string $type_name, string $field_key ) : void {
+		//Make sure this is the submitGravityFormsDraftEntry field on the RootMutation.
+		if ( 'RootMutation' !== $type_name || self::NAME !== $field_key ) {
+			return;
+		}
+		$draft_entry      = $this->get_draft_entry( $args['input']['resumeToken'] );
+		$submission       = $this->get_draft_submission( $draft_entry );
+		$submitted_values = $submission['submitted_values'];
+		$form             = GFAPI::get_form( $submission['partial_entry']['form_id'] );
+		$fields           = $form['fields'];
+		
+		foreach( $fields as $field ) {
+			$field_id          = absint( $field['id'] );
+			$field_to_validate = $this->get_field_by_id( $form, $field_id );
+			$field_value       = $submitted_values[$field_id];
+
+			$field_to_validate->validate( $field_value, $form );
+
+			if( $field->isRequired && empty( $submitted_values[$field_id] ) ){
+				$field->failed_validation = true;
+			}
+
+			if ( $field_to_validate->failed_validation ) {
+				throw new UserError( __( 'Mutation not processed. The input data was missing or invalid.', 'wp-graphql-gravity-forms' ) );
+			}
+		}
+	}	
+
+	/**
+	 * @param array $form     The form.
+	 * @param int   $field_id Field ID.
+	 *
+	 * @return GF_Field The field object.
+	 */
+	private function get_field_by_id( array $form, int $field_id ) : GF_Field {
+		$matching_fields = array_values( array_filter( $form['fields'], function( GF_Field $field ) use ( $field_id ) : bool {
+			return $field['id'] === $field_id;
+		} ) );
+
+		if ( ! $matching_fields ) {
+			throw new UserError( __( 'The form associated with this entry does not contain a field with the field ID provided.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		return $matching_fields[0];
 	}
 }

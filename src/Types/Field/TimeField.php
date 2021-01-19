@@ -35,7 +35,16 @@ class TimeField extends Field {
                 FieldProperty\InputNameProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),
                 FieldProperty\NoDuplicatesProperty::get(),
-                FieldProperty\SizeProperty::get()
+                FieldProperty\SizeProperty::get(),
+								[
+									/**
+									 * Possible values: 12, 24
+									 */
+									'timeFormat' => [
+										'type'        => 'String',
+										'description' => __('Determines how the time is displayed.', 'wp-graphql-gravity-forms'),
+                    ],
+								]
                 // @TODO: Add placeholders.
             ),
         ] );

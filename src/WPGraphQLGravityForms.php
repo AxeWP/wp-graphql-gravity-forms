@@ -129,7 +129,9 @@ final class WPGraphQLGravityForms {
 		$this->instances['entry_user']                 = new Entry\EntryUser();
 
 		// Input
+		$this->instances['address_input']             = new Input\AddressInput();
 		$this->instances['checkbox_input']             = new Input\CheckboxInput();
+		$this->instances['name_input']                 = new Input\NameInput();
 		$this->instances['entries_date_fiters_input']  = new Input\EntriesDateFiltersInput();
 		$this->instances['entries_field_fiters_input'] = new Input\EntriesFieldFiltersInput();
 		$this->instances['entries_sorting_input']      = new Input\EntriesSortingInput();
@@ -156,10 +158,12 @@ final class WPGraphQLGravityForms {
 		$this->instances['create_draft_entry']                          = new Mutations\CreateDraftEntry();
 		$this->instances['delete_draft_entry']                          = new Mutations\DeleteDraftEntry();
 		$this->instances['submit_draft_entry']                          = new Mutations\SubmitDraftEntry( $this->instances['entry_data_manipulator'] );
+		$this->instances['update_draft_entry_address_field_value']      = new Mutations\UpdateDraftEntryAddressFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_checkbox_field_value']     = new Mutations\UpdateDraftEntryCheckboxFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_date_field_value']         = new Mutations\UpdateDraftEntryDateFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_email_field_value']        = new Mutations\UpdateDraftEntryEmailFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_multi_select_field_value'] = new Mutations\UpdateDraftEntryMultiSelectFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_name_field_value']       = new Mutations\UpdateDraftEntryNameFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_number_field_value']       = new Mutations\UpdateDraftEntryNumberFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_phone_field_value']        = new Mutations\UpdateDraftEntryPhoneFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_radio_field_value']        = new Mutations\UpdateDraftEntryRadioFieldValue( $this->instances['draft_entry_data_manipulator'] );
@@ -167,6 +171,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['update_draft_entry_signature_field_value']    = new Mutations\UpdateDraftEntrySignatureFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_text_area_field_value']    = new Mutations\UpdateDraftEntryTextAreaFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_text_field_value']         = new Mutations\UpdateDraftEntryTextFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_time_field_value']         = new Mutations\UpdateDraftEntryTimeFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_website_field_value']      = new Mutations\UpdateDraftEntryWebsiteFieldValue( $this->instances['draft_entry_data_manipulator'] );
 	}
 
