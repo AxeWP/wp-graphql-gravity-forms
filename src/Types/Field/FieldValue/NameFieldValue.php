@@ -58,12 +58,12 @@ class NameFieldValue implements Hookable, Type, FieldValue {
      * @return array Entry field value.
      */
     public static function get( array $entry, GF_Field $field ) : array {
-        return [
-            'prefix' => $entry[ $field['inputs'][0]['id'] ],
-            'first'  => $entry[ $field['inputs'][1]['id'] ],
-            'middle' => $entry[ $field['inputs'][2]['id'] ],
-            'last'   => $entry[ $field['inputs'][3]['id'] ],
-            'suffix' => $entry[ $field['inputs'][4]['id'] ],
-        ];
+			return [
+					'prefix' => isset( $entry[ $field['id'] ] ) ? $entry[ $field['id'] ]['prefix'] : null,
+					'first' => isset( $entry[ $field['id'] ] ) ? $entry[ $field['id'] ]['first'] : null,
+					'middle' => isset( $entry[ $field['id'] ] ) ? $entry[ $field['id'] ]['middle'] : null,
+					'last' => isset( $entry[ $field['id'] ] ) ? $entry[ $field['id'] ]['last'] : null,
+					'suffix' => isset( $entry[ $field['id'] ] ) ? $entry[ $field['id'] ]['suffix'] : null,
+			];
     }
 }
