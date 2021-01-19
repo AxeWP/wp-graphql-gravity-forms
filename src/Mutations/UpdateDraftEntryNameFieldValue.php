@@ -35,7 +35,7 @@ class UpdateDraftEntryNameFieldValue extends DraftEntryUpdater {
 				$this->field['inputs'][1]['id']  => array_key_exists( 'first', $value ) ? sanitize_text_field( $value['first'] ) : null,
 				$this->field['inputs'][2]['id'] => array_key_exists( 'middle', $value ) ? sanitize_text_field( $value['middle'] ) : null,
 				$this->field['inputs'][3]['id']  => array_key_exists( 'last', $value ) ? sanitize_text_field( $value['last'] ) : null,
-				$this->field['inputs'][0]['id']  => array_key_exists( 'suffix', $value ) ? sanitize_text_field( $value['suffix'] ) : null,
+				$this->field['inputs'][4]['id']  => array_key_exists( 'suffix', $value ) ? sanitize_text_field( $value['suffix'] ) : null,
 			];
 	}
 }
