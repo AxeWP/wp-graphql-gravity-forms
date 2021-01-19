@@ -59,11 +59,11 @@ class NameFieldValue implements Hookable, Type, FieldValue {
      */
     public static function get( array $entry, GF_Field $field ) : array {
 			return [
-					'prefix' => isset( $entry[ $field['id'] ] ) ? $entry[ $field['id'] ]['prefix'] : null,
-					'first' => isset( $entry[ $field['id'] ] ) ? $entry[ $field['id'] ]['first'] : null,
-					'middle' => isset( $entry[ $field['id'] ] ) ? $entry[ $field['id'] ]['middle'] : null,
-					'last' => isset( $entry[ $field['id'] ] ) ? $entry[ $field['id'] ]['last'] : null,
-					'suffix' => isset( $entry[ $field['id'] ] ) ? $entry[ $field['id'] ]['suffix'] : null,
+					'prefix' => isset( $entry[ $field['inputs'][0]['id'] ] ) ? $entry[ $field['inputs'][0]['id'] ] : null,
+					'first'  => isset( $entry[ $field['inputs'][1]['id'] ] ) ? $entry[ $field['inputs'][1]['id'] ]: null,
+					'middle' => isset( $entry[ $field['inputs'][2]['id'] ] ) ? $entry[ $field['inputs'][2]['id'] ] : null,
+					'last'   => isset( $entry[ $field['inputs'][3]['id'] ]) ? $entry[ $field['inputs'][3]['id'] ] : null,
+					'suffix' => isset( $entry[ $field['inputs'][4]['id'] ] ) ? $entry[ $field['inputs'][4]['id'] ] : null,
 			];
     }
 }
