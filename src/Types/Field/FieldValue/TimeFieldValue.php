@@ -54,7 +54,7 @@ class TimeFieldValue implements Hookable, Type, FieldValue {
      * @return array Entry field value.
      */
     public static function get( array $entry, GF_Field $field ) : array {
-			if( ! array_key_exists( $field['id'], $entry )){
+			if ( ! isset( $entry [ $field['id'] ] ) ) {
 				return [ 
 					'displayValue' => null,
 					'hours' => null,

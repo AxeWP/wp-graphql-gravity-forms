@@ -43,7 +43,7 @@ class DateFieldValue implements Hookable, Type, FieldValue {
      */
     public static function get( array $entry, GF_Field $field ) : array {
         return [
-            'value' => array_key_exists( $field['id'], $entry ) ? (string) $entry[ $field['id'] ] : null,
+            'value' => isset( $entry[ $field['id'] ] ) ? (string) $entry[ $field['id'] ] : null,
         ];
     }
 }
