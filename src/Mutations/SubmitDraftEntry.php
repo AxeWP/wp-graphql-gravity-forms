@@ -168,18 +168,20 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		$fields           = $form['fields'];
 		
 		foreach( $fields as $field ) {
-			$field_id          = absint( $field['id'] );
-			$field_to_validate = $this->get_field_by_id( $form, $field_id );
-			$field_value       = $submitted_values[$field_id];
+			if ($field['type'] !== 'captcha') {
+				$field_id          = absint( $field['id'] );
+				$field_to_validate = $this->get_field_by_id( $form, $field_id );
+				$field_value       = $submitted_values[$field_id];
 
-			$field_to_validate->validate( $field_value, $form );
+				$field_to_validate->validate( $field_value, $form );
 
-			if( $field->isRequired && empty( $submitted_values[$field_id] ) ){
-				$field->failed_validation = true;
-			}
+				if( $field->isRequired && empty( $submitted_values[$field_id] ) ){
+					$field->failed_validation = true;
+				}
 
-			if ( $field_to_validate->failed_validation ) {
-				throw new UserError( __( 'Mutation not processed. The input data was missing or invalid.', 'wp-graphql-gravity-forms' ) );
+				if ( $field_to_validate->failed_validation ) {
+					throw new UserError( __( 'Mutation not processed. The input data was missing or invalid.', 'wp-graphql-gravity-forms' ) );
+				}
 			}
 		}
 	}	
