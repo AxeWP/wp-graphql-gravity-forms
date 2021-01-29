@@ -93,10 +93,13 @@ class SubmitDraftEntry implements Hookable, Mutation {
 
 			$resume_token = sanitize_text_field( $input['resumeToken'] );
 			$draft_entry  = $this->get_draft_entry( $resume_token );
+			$form_id = $draft_entry['form_id'];
 
-			$this->validate_form_id( $draft_entry['form_id'] );
+			$this->validate_form_id( $form_id );
 
 			$entry_id = $this->create_entry( $draft_entry );
+
+			$this->send_notifications( $form_id, $entry_id );
 
             GFFormsModel::delete_draft_submission( $resume_token );
             GFFormsModel::purge_expired_draft_submissions();
@@ -132,6 +135,17 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		}
 
 		return $entry_id;
+	}
+
+	private function send_notifications( int $form_id, int $entry_id ) {
+		$form = GFAPI::get_form( $form_id );
+		$entry = GFAPI::get_entry( $entry_id );
+
+		if ( ! $form || ! $entry ) {
+			throw new UserError( __( 'An error occurred while trying to send notifications, form or entry not found.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		GFAPI::send_notifications( $form, $entry );
 	}
 
 	private function get_draft_submission( array $draft_entry ) : array {
