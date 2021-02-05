@@ -34,7 +34,25 @@ class FileUploadField extends Field {
                 FieldProperty\ErrorMessageProperty::get(),
                 FieldProperty\InputNameProperty::get(),
                 FieldProperty\IsRequiredProperty::get(),
-                FieldProperty\SizeProperty::get()
+                FieldProperty\SizeProperty::get(),
+								[
+									'allowedExtensions' => [
+										'type' => 'String',
+										'description' => __( 'A comma-delimited list of the file extensions which may be uploaded.', 'wp-graphql-gravity-forms' )
+									],
+									'maxFiles' => [
+										'type' => 'String',
+										'description' => __('When the field is set to allow multiple files to be uploaded, this property is available to set a limit on how many may be uploaded.', 'wp-graphql-gravity-forms'),
+									],
+									'maxFileSize' => [
+										'type' => 'Integer',
+										'description' => __('The maximum size (in MB) an uploaded file may be .', 'wp-graphql-gravity-forms' ),
+									],
+									'multipleFiles' => [
+										'type' => 'Boolean',
+										'description' => __('Indicates whether multiple files may be uploaded.', 'wp-graphql-gravity-forms')
+									],
+								],
             ),
         ] );
     }
