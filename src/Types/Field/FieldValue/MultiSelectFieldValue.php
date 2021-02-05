@@ -42,8 +42,9 @@ class MultiSelectFieldValue implements Hookable, Type, FieldValue {
      * @return array Entry field values.
      */
     public static function get( array $entry, GF_Field $field ) : array {
+			error_log(print_r($entry, true));
         return [
-            'values' => json_decode( $entry[ $field['id'] ], true ),
+            'values' => isset( $entry[ $field['id'] ] ) ? json_decode( $entry[ $field['id'] ], true ) : null,
         ];
     }
 }

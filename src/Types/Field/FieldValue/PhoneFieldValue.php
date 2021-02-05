@@ -43,7 +43,7 @@ class PhoneFieldValue implements Hookable, Type, FieldValue {
      */
     public static function get( array $entry, GF_Field $field ) : array {
         return [
-            'value' => (string) $entry[ $field['id'] ],
+            'value' => isset( $entry[ $field['id'] ] ) ? (string) $entry[ $field['id'] ] : null,
         ];
     }
 }

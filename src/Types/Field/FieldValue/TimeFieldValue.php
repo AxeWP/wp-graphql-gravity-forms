@@ -54,18 +54,27 @@ class TimeFieldValue implements Hookable, Type, FieldValue {
      * @return array Entry field value.
      */
     public static function get( array $entry, GF_Field $field ) : array {
-        $display_value  = $entry[ $field['id'] ];
-        $parts_by_colon = explode( ':', $display_value );
-        $hours          = $parts_by_colon[0] ?? '';
-        $parts_by_space = explode( ' ', $display_value );
-        $am_pm          = $parts_by_space[1] ?? '';
-        $minutes        = rtrim( ltrim( $display_value, "{$hours}:" ), " {$am_pm}" );
+			if ( ! isset( $entry [ $field['id'] ] ) ) {
+				return [ 
+					'displayValue' => null,
+					'hours' => null,
+					'minutes' => null,
+					'amPm'=> null,
+				];
+			}
 
-        return [
-            'displayValue' => $display_value,
-            'hours'        => $hours,
-            'minutes'      => $minutes,
-            'amPm'         => $am_pm,
-        ];
+			$display_value  = $entry[ $field['id'] ];
+			$parts_by_colon = explode( ':', $display_value );
+			$hours          = $parts_by_colon[0] ?? '';
+			$parts_by_space = explode( ' ', $display_value );
+			$am_pm          = $parts_by_space[1] ?? '';
+			$minutes        = rtrim( ltrim( $display_value, "{$hours}:" ), " {$am_pm}" );
+
+			return [
+					'displayValue' => $display_value,
+					'hours'        => $hours,
+					'minutes'      => $minutes,
+					'amPm'         => $am_pm,
+			];
     }
 }

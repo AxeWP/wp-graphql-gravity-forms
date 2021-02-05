@@ -42,8 +42,8 @@ class WebsiteFieldValue implements Hookable, Type, FieldValue {
      * @return array Entry field value.
      */
     public static function get( array $entry, GF_Field $field ) : array {
-        return [
-            'value' => (string) $entry[ $field['id'] ],
-        ];
+			return [
+				'value' => isset( $entry[ $field['id'] ] ) ? (string) $entry[ $field['id'] ] : null,
+			];
     }
 }
