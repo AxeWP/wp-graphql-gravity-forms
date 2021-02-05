@@ -22,7 +22,7 @@ class ConditionalLogicRule implements Hookable, Type {
             'description' => __( 'Gravity Forms conditional logic rule.', 'wp-graphql-gravity-forms' ),
             'fields'      => [
                 'fieldId'   => [
-                    'type'        => 'Integer',
+                    'type'        => 'Float',
                     'description' => __( 'Target field Id. Field that will have it’s value compared with the value property to determine if this rule is a match.', 'wp-graphql-gravity-forms' ),
                 ],
                 // TODO: convert to enum.
