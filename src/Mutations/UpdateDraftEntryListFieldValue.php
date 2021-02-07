@@ -1,4 +1,12 @@
 <?php
+/**
+ * Mutation - updateDraftEntryListFieldValue
+ *
+ * Registers mutation to update a Gravity Forms draft entry list field value.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
@@ -6,7 +14,7 @@ use WPGraphQLGravityForms\Types\Input\ListInput;
 
 
 /**
- * Update a Gravity Forms draft entry with a List value.
+ * Class - UpdateDraftEntryListFieldValue
  */
 class UpdateDraftEntryListFieldValue extends DraftEntryUpdater {
 	/**
@@ -15,7 +23,9 @@ class UpdateDraftEntryListFieldValue extends DraftEntryUpdater {
 	const NAME = 'updateDraftEntryListFieldValue';
 
 	/**
-	 * @return array The input field value.
+	 * Defines the input field value configuration.
+	 *
+	 * @return array
 	 */
 	protected function get_value_input_field() : array {
 		return [
@@ -25,9 +35,11 @@ class UpdateDraftEntryListFieldValue extends DraftEntryUpdater {
 	}
 
 	/**
-	 * @param array The field values.
+	 * Sanitizes and serialize the field values.
 	 *
-	 * @return string Sanitized and JSON encoded field values.
+	 * @param array $value The field values.
+	 *
+	 * @return string
 	 */
 	protected function prepare_field_value( array $value ) : string {
 		$values_to_save = array_map(

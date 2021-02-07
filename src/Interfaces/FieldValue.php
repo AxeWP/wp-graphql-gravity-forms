@@ -1,11 +1,17 @@
 <?php
+/**
+ * Interface for Gravity Forms field values.
+ *
+ * @package WPGraphQLGravityForms\Interfaces
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Interfaces;
 
 use GF_Field;
 
 /**
- * Interface for Gravity Forms field values.
+ * Interface - FieldValue
  */
 interface FieldValue {
 	/**

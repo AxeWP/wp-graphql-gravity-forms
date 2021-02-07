@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Object Type - ListFieldValue
+ * Values for an individual List field.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldValue
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
@@ -10,7 +17,7 @@ use WPGraphQLGravityForms\Interfaces\FieldValue;
 use WPGraphQLGravityForms\Types\Field\ListField;
 
 /**
- * Values for an individual List field.
+ * Class - ListFieldValue
  */
 class ListFieldValue implements Hookable, Type, FieldValue {
 	/**
@@ -18,10 +25,16 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 	 */
 	const TYPE = ListField::TYPE . 'Value';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 			add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 			register_graphql_object_type(
 				self::TYPE,
@@ -44,6 +57,8 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 	 * @param GF_Field $field Gravity Forms field.
 	 *
 	 * @return array Entry field values.
+	 *
+	 * @throws UserError .
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
 		$entry_values = isset( $entry[ $field['id'] ] ) ? unserialize( $entry[ $field['id'] ] ) : [];
@@ -65,7 +80,7 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 					$row_values = [];
 
 					foreach ( $row as $key => $single_value ) {
-						  $row_values[] = $single_value[ $field_keys[ $key ] ];
+						$row_values[] = $single_value[ $field_keys[ $key ] ];
 					}
 
 					return [ 'value' => $row_values ];

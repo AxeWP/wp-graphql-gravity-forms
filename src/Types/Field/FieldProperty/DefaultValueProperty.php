@@ -1,15 +1,26 @@
 <?php
+/**
+ * Default value field property.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 use WPGraphQLGravityForms\Interfaces\FieldProperty;
 
+/**
+ * Class - DefaultValueProperty
+ */
 abstract class DefaultValueProperty implements FieldProperty {
 	/**
 	 * Get 'defaultValue' property.
 	 *
 	 * Applies to: hidden, text, website, phone, number, date, textarea, email,
 	 * post_title, post_content, post_excerpt, post_tags, post_custom_field
+	 *
+	 * @return array
 	 */
 	public static function get() : array {
 		return [

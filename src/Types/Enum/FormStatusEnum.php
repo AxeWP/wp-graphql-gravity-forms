@@ -1,10 +1,19 @@
 <?php
+/**
+ * Enum Type - FormStatusEnum
+ *
+ * @package WPGraphQLGravityForms\Types\Enum,
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Enum;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Enum;
 
+/**
+ * Class - FormStatusEnum
+ */
 class FormStatusEnum implements Hookable, Enum {
 	const TYPE = 'FormStatusEnum';
 
@@ -14,10 +23,16 @@ class FormStatusEnum implements Hookable, Enum {
 	const TRASHED          = 'TRASHED';
 	const INACTIVE_TRASHED = 'INACTIVE_TRASHED';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register' ] );
 	}
 
+	/**
+	 * Registers Enum type.
+	 */
 	public function register() {
 		register_graphql_enum_type(
 			self::TYPE,

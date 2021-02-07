@@ -1,14 +1,25 @@
 <?php
+/**
+ * Error message field property.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 use WPGraphQLGravityForms\Interfaces\FieldProperty;
 
+/**
+ * Class - ErrorMessageProperty
+ */
 abstract class ErrorMessageProperty implements FieldProperty {
 	/**
 	 * Get 'errorMessage' property.
 	 *
 	 * Applies to: All fields except html, section and hidden
+	 *
+	 * @return array
 	 */
 	public static function get() : array {
 		return [

@@ -1,14 +1,20 @@
 <?php
+/**
+ * GraphQL Object Type - ChainedSelectField
+ *
+ * @see https://www.gravityforms.com/add-ons/chained-selects/
+ * @see https://docs.gravityforms.com/category/add-ons-gravity-forms/chained-selects/
+ *
+ * @package WPGraphQLGravityForms\Types\Field
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
- * Chained Select field.
- *
- * @see https://www.gravityforms.com/add-ons/chained-selects/
- * @see https://docs.gravityforms.com/category/add-ons-gravity-forms/chained-selects/
+ * Class - ChainedSelectField
  */
 class ChainedSelectField extends Field {
 	/**
@@ -21,10 +27,16 @@ class ChainedSelectField extends Field {
 	 */
 	const GF_TYPE = 'chainedselect';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

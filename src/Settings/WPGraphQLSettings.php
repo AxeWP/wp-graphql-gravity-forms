@@ -1,4 +1,10 @@
 <?php
+/**
+ * Settings - WPGraphQL Settings
+ *
+ * @package WPGraphQLGravityForms\Settings
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Settings;
 
@@ -8,6 +14,13 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
  * WPGraphQL Settings.
  */
 class WPGraphQLSettings implements Hookable {
+	/**
+	 * Register hooks to WordPress.
+	 *
+	 * @TODO: This should be a filter.
+	 *
+	 * @see: https://www.wpgraphql.com/filters/graphql_connection_max_query_amount/
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_connection_max_query_amount', [ $this, 'set_max_query_amount' ], 11 );
 	}

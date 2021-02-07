@@ -1,11 +1,19 @@
 <?php
+/**
+ * Mutation - updateDraftEntryAddressFieldValue
+ *
+ * Registers mutation to update a Gravity Forms draft entry address field value.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
 use WPGraphQLGravityForms\Types\Input\AddressInput;
 
 /**
- * Update a Gravity Forms draft entry address field value.
+ * Class - UpdateDraftEntryAddressFieldValue
  */
 class UpdateDraftEntryAddressFieldValue extends DraftEntryUpdater {
 	/**
@@ -14,7 +22,9 @@ class UpdateDraftEntryAddressFieldValue extends DraftEntryUpdater {
 	const NAME = 'updateDraftEntryAddressFieldValue';
 
 	/**
-	 * @return array The input field value.
+	 * Defines the input field value configuration.
+	 *
+	 * @return array
 	 */
 	protected function get_value_input_field() : array {
 		return [
@@ -24,9 +34,11 @@ class UpdateDraftEntryAddressFieldValue extends DraftEntryUpdater {
 	}
 
 	/**
-	 * @param string The field value.
+	 * Sanitizes the address field values.
 	 *
-	 * @return array The sanitized field value.
+	 * @param array $value The field value.
+	 *
+	 * @return array
 	 */
 	protected function prepare_field_value( array $value ) : array {
 		return [

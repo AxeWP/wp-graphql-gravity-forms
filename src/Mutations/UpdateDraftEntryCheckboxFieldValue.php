@@ -1,11 +1,19 @@
 <?php
+/**
+ * Mutation - updateDraftEntryCheckboxFieldValue
+ *
+ * Registers mutation to update a Gravity Forms draft entry checkbox field value.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
 use WPGraphQLGravityForms\Types\Input\CheckboxInput;
 
 /**
- * Update a Gravity Forms draft entry checkbox field value.
+ * Class - UpdateDraftEntryCheckboxFieldValue
  */
 class UpdateDraftEntryCheckboxFieldValue extends DraftEntryUpdater {
 	/**
@@ -14,7 +22,9 @@ class UpdateDraftEntryCheckboxFieldValue extends DraftEntryUpdater {
 	const NAME = 'updateDraftEntryCheckboxFieldValue';
 
 	/**
-	 * @return array The input field value.
+	 * Defines the input field value configuration.
+	 *
+	 * @return array
 	 */
 	protected function get_value_input_field() : array {
 		return [
@@ -24,9 +34,11 @@ class UpdateDraftEntryCheckboxFieldValue extends DraftEntryUpdater {
 	}
 
 	/**
+	 * Sanitizes the checkbox field values.
+	 *
 	 * @param array $value The field value.
 	 *
-	 * @return array Field value to save.
+	 * @return array
 	 */
 	protected function prepare_field_value( array $value ) : array {
 		$values_to_save = array_reduce(

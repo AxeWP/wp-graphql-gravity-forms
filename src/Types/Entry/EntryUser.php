@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Edge Type - EntryUser
+ * Creates a 1:1 relationship between an Entry and the User who created it.
+ *
+ * @package WPGraphQLGravityForms\Types\Entry
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Entry;
 
@@ -24,6 +31,9 @@ class EntryUser implements Hookable, Type, Field {
 	 */
 	const FIELD = 'createdBy';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 		add_action( 'graphql_register_types', [ $this, 'register_field' ] );
@@ -47,6 +57,9 @@ class EntryUser implements Hookable, Type, Field {
 		);
 	}
 
+	/**
+	 * Register EntryUser query.
+	 */
 	public function register_field() {
 		register_graphql_field(
 			Entry::TYPE,

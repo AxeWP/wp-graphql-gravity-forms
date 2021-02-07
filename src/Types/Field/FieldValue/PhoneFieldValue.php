@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Object Type - PhoneFieldValue
+ * Values for an individual Phone field.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldValue
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
@@ -9,7 +16,7 @@ use WPGraphQLGravityForms\Interfaces\FieldValue;
 use WPGraphQLGravityForms\Types\Field\PhoneField;
 
 /**
- * Value for a phone field.
+ * Class - PhoneFieldValue
  */
 class PhoneFieldValue implements Hookable, Type, FieldValue {
 	/**
@@ -17,10 +24,16 @@ class PhoneFieldValue implements Hookable, Type, FieldValue {
 	 */
 	const TYPE = PhoneField::TYPE . 'Value';
 
+	/**
+	 * Type registered in WPGraphQL.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

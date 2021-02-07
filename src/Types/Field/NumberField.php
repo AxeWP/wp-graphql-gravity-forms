@@ -1,4 +1,12 @@
 <?php
+/**
+ * GraphQL Object Type - NumberField
+ *
+ * @see https://docs.gravityforms.com/gf_field_number/
+ *
+ * @package WPGraphQLGravityForms\Types\Field
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field;
 
@@ -6,9 +14,7 @@ use GF_Field_Number;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
- * Number field.
- *
- * @see https://docs.gravityforms.com/gf_field_number/
+ * Class - NumberField
  */
 class NumberField extends Field {
 	/**
@@ -21,10 +27,16 @@ class NumberField extends Field {
 	 */
 	const GF_TYPE = 'number';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

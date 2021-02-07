@@ -1,4 +1,12 @@
 <?php
+/**
+ * Mutation - createGravityFormsDraftEntry
+ *
+ * Registers mutation to create a Gravity Forms draft entry.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
@@ -11,7 +19,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Mutation;
 
 /**
- * Create a Gravity Forms draft entry.
+ * Class - CreateDraftEntry
  */
 class CreateDraftEntry implements Hookable, Mutation {
 	/**
@@ -19,10 +27,16 @@ class CreateDraftEntry implements Hookable, Mutation {
 	 */
 	const NAME = 'createGravityFormsDraftEntry';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
 	}
 
+	/**
+	 * Registers mutation.
+	 */
 	public function register_mutation() {
 		register_graphql_mutation(
 			self::NAME,

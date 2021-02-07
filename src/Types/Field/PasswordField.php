@@ -1,13 +1,19 @@
 <?php
+/**
+ * GraphQL Object Type - PasswordField
+ *
+ * @see https://docs.gravityforms.com/gf_field_password/
+ *
+ * @package WPGraphQLGravityForms\Types\Field
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
- * Password field.
- *
- * @see https://docs.gravityforms.com/gf_field_password/
+ * Class - PasswordField
  */
 class PasswordField extends Field {
 	/**
@@ -20,10 +26,16 @@ class PasswordField extends Field {
 	 */
 	const GF_TYPE = 'password';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

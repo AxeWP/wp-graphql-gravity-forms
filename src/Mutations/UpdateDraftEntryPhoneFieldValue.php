@@ -1,9 +1,17 @@
 <?php
+/**
+ * Mutation - updateDraftEntryPhoneFieldValue
+ *
+ * Registers mutation to update a Gravity Forms draft entry phone field value.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
 /**
- * Update a Gravity Forms draft entry phone field value.
+ * Class - UpdateDraftEntryPhoneFieldValue
  */
 class UpdateDraftEntryPhoneFieldValue extends DraftEntryUpdater {
 	/**
@@ -12,7 +20,9 @@ class UpdateDraftEntryPhoneFieldValue extends DraftEntryUpdater {
 	const NAME = 'updateDraftEntryPhoneFieldValue';
 
 	/**
-	 * @return array The input field value.
+	 * Defines the input field value configuration.
+	 *
+	 * @return array
 	 */
 	protected function get_value_input_field() : array {
 		return [
@@ -22,9 +32,11 @@ class UpdateDraftEntryPhoneFieldValue extends DraftEntryUpdater {
 	}
 
 	/**
-	 * @param string The field value.
+	 * Sanitizes the field values.
 	 *
-	 * @return string The sanitized field value.
+	 * @param string $value The field value.
+	 *
+	 * @return string
 	 */
 	protected function prepare_field_value( string $value ) : string {
 		return sanitize_text_field( $value );

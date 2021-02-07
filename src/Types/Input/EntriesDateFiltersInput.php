@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Input Type - EntriesDateFiltersInput
+ * Date Filters input type for Entries queries.
+ *
+ * @package WPGraphQLGravityForms\Types\Input
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Input;
 
@@ -6,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\InputType;
 
 /**
- * Date Filters input type for Entries queries.
+ * Class - EntriesDateFiltersInput
  */
 class EntriesDateFiltersInput implements Hookable, InputType {
 	/**
@@ -14,10 +21,16 @@ class EntriesDateFiltersInput implements Hookable, InputType {
 	 */
 	const TYPE = 'EntriesDateFiltersInput';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_input_type' ] );
 	}
 
+	/**
+	 * Register input type to GraphQL schema.
+	 */
 	public function register_input_type() {
 		register_graphql_input_type(
 			self::TYPE,

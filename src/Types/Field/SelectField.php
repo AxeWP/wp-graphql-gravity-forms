@@ -1,13 +1,19 @@
 <?php
+/**
+ * GraphQL Object Type - SelectField
+ *
+ * @see https://docs.gravityforms.com/gf_field_select/
+ *
+ * @package WPGraphQLGravityForms\Types\Field
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
- * Select field.
- *
- * @see https://docs.gravityforms.com/gf_field_select/
+ * Class - SelectField
  */
 class SelectField extends Field {
 	/**
@@ -20,10 +26,16 @@ class SelectField extends Field {
 	 */
 	const GF_TYPE = 'select';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

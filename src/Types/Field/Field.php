@@ -1,4 +1,13 @@
 <?php
+/**
+ * Gravity Forms field.
+ *
+ * @see https://docs.gravityforms.com/field-object/
+ * @see https://docs.gravityforms.com/gf_field/
+ *
+ * @package WPGraphQLGravityForms\Types\Field
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field;
 
@@ -8,14 +17,13 @@ use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 use WPGraphQLGravityForms\Types\Enum\FieldVisibilityEnum;
 
 /**
- * Gravity Forms field.
- *
- * @see https://docs.gravityforms.com/field-object/
- * @see https://docs.gravityforms.com/gf_field/
+ * Class - Field
  */
 abstract class Field implements Hookable, Type {
 	/**
 	 * Get the global properties that apply to all GF field types.
+	 *
+	 * @return array
 	 */
 	protected function get_global_properties() : array {
 		return [
@@ -66,6 +74,11 @@ abstract class Field implements Hookable, Type {
 		];
 	}
 
+	/**
+	 * Get the custom properties.
+	 *
+	 * @return array
+	 */
 	protected function get_custom_properties() : array {
 		/**
 		 * Add GraphQL fields for custom field properties.

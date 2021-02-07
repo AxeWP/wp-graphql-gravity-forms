@@ -1,4 +1,12 @@
 <?php
+/**
+ * DataManipulators - EntryData
+ *
+ * Manipulates entry data.
+ *
+ * @package WPGraphQLGravityForms\DataManipulators
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\DataManipulators;
 
@@ -6,6 +14,9 @@ use GraphQLRelay\Relay;
 use WPGraphQLGravityForms\Interfaces\DataManipulator;
 use WPGraphQLGravityForms\Types\Entry\Entry;
 
+/**
+ * Class - EntryDataManipulator
+ */
 class EntryDataManipulator implements DataManipulator {
 	/**
 	 * Manipulate entry data.
@@ -23,6 +34,8 @@ class EntryDataManipulator implements DataManipulator {
 	}
 
 	/**
+	 * Returns Entry data, with the isDraft value set.
+	 *
 	 * @param array $entry Entry data.
 	 *
 	 * @return array $entry Entry data, with the isDraft value set.
@@ -37,7 +50,7 @@ class EntryDataManipulator implements DataManipulator {
 	 *
 	 * @param array $entry Entry data.
 	 *
-	 * @return array $entry Entry data, with the entry ID and global Relay ID set.
+	 * @return array
 	 */
 	private function set_global_and_entry_ids( array $entry ) : array {
 		$entry['entryId'] = $entry['id'];
@@ -47,18 +60,22 @@ class EntryDataManipulator implements DataManipulator {
 	}
 
 	/**
+	 * Returns the ID to be used to generate the Relay global ID.
+	 *
 	 * @param array $entry Entry data.
 	 *
-	 * @return string The ID to be used to generate the Relay global ID.
+	 * @return string
 	 */
 	private function get_id_for_global_id_generation( array $entry ) : string {
 		return $entry['isDraft'] ? $entry['resumeToken'] : $entry['entryId'];
 	}
 
 	/**
+	 * Returns Entry data with keys converted to camelCase.
+	 *
 	 * @param array $entry Entry data.
 	 *
-	 * @return array $entry Entry data with keys converted to camelCase.
+	 * @return array
 	 */
 	private function convert_keys_to_camelcase( array $entry ) : array {
 		foreach ( $this->get_key_mappings() as $snake_case_key => $camel_case_key ) {
@@ -74,7 +91,9 @@ class EntryDataManipulator implements DataManipulator {
 	}
 
 	/**
-	 * @return array Gravity Forms Entry meta keys and their camelCase equivalents.
+	 * Returns an array of Gravity Forms Entry meta keys and their camelCase equivalents.
+	 *
+	 * @return array
 	 */
 	private function get_key_mappings() : array {
 		return [

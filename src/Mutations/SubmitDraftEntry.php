@@ -1,4 +1,12 @@
 <?php
+/**
+ * Mutation - submitGravityFormsDraftEntry
+ *
+ * Registers mutation to submit a Gravity Forms draft entry so that it becomes a permanent entry.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
@@ -15,7 +23,7 @@ use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 use WPGraphQLGravityForms\Types\FieldError\FieldError;
 
 /**
- * Submit a Gravity Forms draft entry so that it becomes a permanent entry.
+ * Class - SubmitDraftEntry
  */
 class SubmitDraftEntry implements Hookable, Mutation {
 	/**
@@ -25,18 +33,31 @@ class SubmitDraftEntry implements Hookable, Mutation {
 
 	/**
 	 * EntryDataManipulator instance.
+	 *
+	 * @var EntryDataManipulator
 	 */
 	private $entry_data_manipulator;
 
+	/**
+	 * Constructor
+	 *
+	 * @param EntryDataManipulator $entry_data_manipulator .
+	 */
 	public function __construct( EntryDataManipulator $entry_data_manipulator ) {
 		$this->entry_data_manipulator = $entry_data_manipulator;
 	}
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
 		add_action( 'graphql_before_resolve_field', [ $this, 'ensure_required_fields_are_set' ], 10, 7 );
 	}
 
+	/**
+	 * Registers mutation.
+	 */
 	public function register_mutation() {
 		register_graphql_mutation(
 			self::NAME,
@@ -111,6 +132,14 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		};
 	}
 
+	/**
+	 * Returns draft entry from a given resume token.
+	 *
+	 * @param string $resume_token .
+	 * @return array
+	 *
+	 * @throws UserError .
+	 */
 	private function get_draft_entry( string $resume_token ) : array {
 		$draft_entry = GFFormsModel::get_draft_submission_values( $resume_token );
 
@@ -121,6 +150,12 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		return $draft_entry;
 	}
 
+	/**
+	 * Checks if form id exists.
+	 *
+	 * @param integer $form_id .
+	 * @throws UserError .
+	 */
 	private function validate_form_id( int $form_id ) {
 		$form_info = GFFormsModel::get_form( $form_id, true );
 
@@ -129,6 +164,13 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		}
 	}
 
+	/**
+	 * Creates Gravity Forms entry from draft entry.
+	 *
+	 * @param array $draft_entry .
+	 * @return integer
+	 * @throws UserError .
+	 */
 	private function create_entry( array $draft_entry ) : int {
 		$submission = $this->get_draft_submission( $draft_entry );
 		$entry_id   = GFAPI::add_entry( $submission['partial_entry'] );
@@ -140,6 +182,13 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		return $entry_id;
 	}
 
+	/**
+	 * Triggers Gravity Forms Notificiations associated with the entry.
+	 *
+	 * @param integer $form_id .
+	 * @param integer $entry_id .
+	 * @throws UserError .
+	 */
 	private function send_notifications( int $form_id, int $entry_id ) {
 		$form  = GFAPI::get_form( $form_id );
 		$entry = GFAPI::get_entry( $entry_id );
@@ -151,6 +200,13 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		GFAPI::send_notifications( $form, $entry );
 	}
 
+	/**
+	 * Gets draft submission data.
+	 *
+	 * @param array $draft_entry .
+	 * @return array
+	 * @throws UserError .
+	 */
 	private function get_draft_submission( array $draft_entry ) : array {
 		$submission = json_decode( $draft_entry['submission'], true );
 
@@ -164,14 +220,15 @@ class SubmitDraftEntry implements Hookable, Mutation {
 	/**
 	 * Fire an action BEFORE the field resolves
 	 *
-	 * @param mixed           $source         Source passed down the Resolve Tree.
-	 * @param array           $args           Args for the field.
-	 * @param AppContext      $context        AppContext passed down the ResolveTree.
-	 * @param ResolveInfo     $info           ResolveInfo passed down the ResolveTree.
-	 * @param mixed           $field_resolver Field resolver.
-	 * @param string          $type_name      Name of the type the fields belong to.
-	 * @param string          $field_key      Name of the field.
-	 * @param FieldDefinition $field          Field Definition for the resolving field.
+	 * @param mixed       $source         Source passed down the Resolve Tree.
+	 * @param array       $args           Args for the field.
+	 * @param AppContext  $context        AppContext passed down the ResolveTree.
+	 * @param ResolveInfo $info           ResolveInfo passed down the ResolveTree.
+	 * @param mixed       $field_resolver Field resolver.
+	 * @param string      $type_name      Name of the type the fields belong to.
+	 * @param string      $field_key      Name of the field.
+	 *
+	 * @throws UserError .
 	 */
 	public function ensure_required_fields_are_set( $source, array $args, AppContext $context, ResolveInfo $info, $field_resolver, string $type_name, string $field_key ) : void {
 		// Make sure this is the submitGravityFormsDraftEntry field on the RootMutation.
@@ -204,10 +261,13 @@ class SubmitDraftEntry implements Hookable, Mutation {
 	}
 
 	/**
+	 * Returns the Gravity Forms field object for a given field id.
+	 *
 	 * @param array $form     The form.
 	 * @param int   $field_id Field ID.
 	 *
-	 * @return GF_Field The field object.
+	 * @return GF_Field
+	 * @throws UserError .
 	 */
 	private function get_field_by_id( array $form, int $field_id ) : GF_Field {
 		$matching_fields = array_values(

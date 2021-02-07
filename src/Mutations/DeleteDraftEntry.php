@@ -1,4 +1,12 @@
 <?php
+/**
+ * Mutation - deleteGravityFormsDraftEntry
+ *
+ * Registers mutation to delete a Gravity Forms draft entry.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
@@ -8,7 +16,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Mutation;
 
 /**
- * Delete a draft Gravity Forms entry.
+ * Class - DeleteDraftEntry
  */
 class DeleteDraftEntry implements Hookable, Mutation {
 	/**
@@ -16,10 +24,16 @@ class DeleteDraftEntry implements Hookable, Mutation {
 	 */
 	const NAME = 'deleteGravityFormsDraftEntry';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
 	}
 
+	/**
+	 * Registers mutation.
+	 */
 	public function register_mutation() {
 		register_graphql_mutation(
 			self::NAME,

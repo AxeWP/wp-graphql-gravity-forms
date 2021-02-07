@@ -1,13 +1,26 @@
 <?php
+/**
+ * Label Placement field property.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 use WPGraphQLGravityForms\Interfaces\FieldProperty;
 
 /**
- * Label Placement field property.
+ * Class - LabelPlacementProperty
  */
 abstract class LabelPlacementProperty implements FieldProperty {
+	/**
+	 * Get 'labelPlacement' property.
+	 *
+	 * Applies to: address, list
+	 *
+	 * @return array
+	 */
 	public static function get() : array {
 		return [
 			// @TODO - Convert to enum. See corresponding Form 'labelPlacement' field.

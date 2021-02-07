@@ -1,4 +1,12 @@
 <?php
+/**
+ * Mutation - updateDraftEntrySignatureFieldValue
+ *
+ * Registers mutation to update a Gravity Forms draft entry signature field value.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
@@ -7,7 +15,7 @@ use GFSignature;
 use GraphQL\Error\UserError;
 
 /**
- * Update a Gravity Forms draft entry with a signature value.
+ * Class - UpdateDraftEntrySignatureFieldValue
  */
 class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 	/**
@@ -16,7 +24,9 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 	const NAME = 'updateDraftEntrySignatureFieldValue';
 
 	/**
-	 * @return array The input field value.
+	 * Defines the input field value configuration.
+	 *
+	 * @return array
 	 */
 	protected function get_value_input_field() : array {
 		return [
@@ -26,6 +36,8 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 	}
 
 	/**
+	 * Saves field value.
+	 *
 	 * @param string $value Base-64 encoded png signature image value.
 	 *
 	 * @return string The filename of the saved signature image file.
@@ -38,12 +50,22 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 		return $this->save_signature( $value );
 	}
 
+	/**
+	 * Checks if the Gravity Forms Signature Add-On plugin is active.
+	 *
+	 * @throws UserError .
+	 */
 	private function ensure_signature_plugin_is_active() {
 		if ( ! class_exists( 'GFSignature' ) ) {
 			throw new UserError( __( 'The Gravity Forms Signature Add-On plugin must be active for signature field values to be saved.', 'wp-graphql-gravity-forms' ) );
 		}
 	}
 
+	/**
+	 * Ensures the folder for storing signatures exists.
+	 *
+	 * @throws UserError .
+	 */
 	private function ensure_signatures_folder_exists() {
 		$folder = GFSignature::get_signatures_folder();
 		$exists = wp_mkdir_p( $folder );
@@ -56,6 +78,9 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 		GFCommon::recursive_add_index_file( $folder );
 	}
 
+	/**
+	 * Deletes previous signature image.
+	 */
 	private function delete_previous_signature_image() {
 		$prev_filename = $this->submission['partial_entry'][ $this->field_id ] ?? '';
 
@@ -77,6 +102,8 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 	 * @param string $signature Base-64 encoded png signature image data.
 	 *
 	 * @return string $filename The filename of the saved signature image file.
+	 *
+	 * @throws UserError .
 	 */
 	private function save_signature( string $signature ) : string {
 		if ( '' === $signature ) {
@@ -102,9 +129,12 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 	}
 
 	/**
+	 * Decodes base-64 encoded png signature image data.
+	 *
 	 * @param string $signature Base-64 encoded png signature image data.
 	 *
-	 * @return string $image_data_decoded Base-64 decoded png signature image data.
+	 * @return string
+	 * @throws UserError .
 	 */
 	private function get_decoded_image_data( string $signature ) : string {
 		$string_parts = explode( ';', $signature );
@@ -119,7 +149,7 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 			throw new UserError( __( 'An invalid signature image was provided. Image must be a base-64 encoded png.', 'wp-graphql-gravity-forms' ) );
 		}
 
-		$image_data_decoded = base64_decode( $data_parts[1] );
+		$image_data_decoded = base64_decode( $data_parts[1] ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 
 		if ( ! $image_data_decoded ) {
 			throw new UserError( __( 'An invalid signature image was provided. Image must be a base-64 encoded png.', 'wp-graphql-gravity-forms' ) );
@@ -129,9 +159,11 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 	}
 
 	/**
+	 * Checks whether the png signature image exceeds the server's max upload size.
+	 *
 	 * @param string $signature_decoded Decoded png signature image data.
 	 *
-	 * @return bool Whether the png signature image exceeds the server's max upload size.
+	 * @return bool
 	 */
 	private function does_image_exceed_max_upload_size( string $signature_decoded ) : bool {
 		return strlen( $signature_decoded ) > wp_max_upload_size();

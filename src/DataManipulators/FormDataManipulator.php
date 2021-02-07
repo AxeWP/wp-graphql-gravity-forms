@@ -1,4 +1,12 @@
 <?php
+/**
+ * DataManipulators - FormData
+ *
+ * Manipulates Form data.
+ *
+ * @package WPGraphQLGravityForms\DataManipulators
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\DataManipulators;
 
@@ -6,12 +14,22 @@ use GraphQLRelay\Relay;
 use WPGraphQLGravityForms\Interfaces\DataManipulator;
 use WPGraphQLGravityForms\Types\Form\Form;
 
+/**
+ * Class - FormDataManipulator
+ */
 class FormDataManipulator implements DataManipulator {
 	/**
 	 * FieldsDataManipulator instance.
+	 *
+	 * @var FieldsDataManipulator
 	 */
 	private $fields_data_manipulator;
 
+	/**
+	 * Constructor
+	 *
+	 * @param FieldsDataManipulator $fields_data_manipulator .
+	 */
 	public function __construct( FieldsDataManipulator $fields_data_manipulator ) {
 		$this->fields_data_manipulator = $fields_data_manipulator;
 	}
@@ -49,9 +67,11 @@ class FormDataManipulator implements DataManipulator {
 	}
 
 	/**
+	 * Returns form meta array with the cssClassList value set.
+	 *
 	 * @param array $form Form meta array.
 	 *
-	 * @return array $form Form meta array with the cssClassList value set.
+	 * @return array
 	 */
 	private function set_css_class_list( array $form ) : array {
 		if ( empty( $form['cssClass'] ) ) {
@@ -108,9 +128,11 @@ class FormDataManipulator implements DataManipulator {
 	}
 
 	/**
+	 * Returns Form meta array with keys converted to camelCase.
+	 *
 	 * @param array $form Form meta array.
 	 *
-	 * @return array $form Form meta array with keys converted to camelCase.
+	 * @return array
 	 */
 	private function convert_form_keys_to_camelcase( array $form ) : array {
 		$form['isActive']    = $form['is_active'];

@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Input Type - CheckboxInput
+ * Input fields for a single checkbox.
+ *
+ * @package WPGraphQLGravityForms\Types\Input
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Input;
 
@@ -6,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\InputType;
 
 /**
- * Input fields for a single checkbox.
+ * Class - CheckboxInput
  */
 class CheckboxInput implements Hookable, InputType {
 	/**
@@ -14,10 +21,16 @@ class CheckboxInput implements Hookable, InputType {
 	 */
 	const TYPE = 'CheckboxInput';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_input_type' ] );
 	}
 
+	/**
+	 * Register input type to GraphQL schema.
+	 */
 	public function register_input_type() {
 		register_graphql_input_type(
 			self::TYPE,

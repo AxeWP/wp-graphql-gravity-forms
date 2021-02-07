@@ -1,4 +1,12 @@
 <?php
+/**
+ * Connection - RootQueryEntries
+ *
+ * Registers connections from RootQuery.
+ *
+ * @package WPGraphQLGravityForms\Connections
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Connections;
 
@@ -13,16 +21,25 @@ use WPGraphQLGravityForms\Types\Input\EntriesDateFiltersInput;
 use WPGraphQLGravityForms\Types\Input\EntriesFieldFiltersInput;
 use WPGraphQLGravityForms\Types\Input\EntriesSortingInput;
 
+/**
+ * Class - RootQueryEntriesConnection
+ */
 class RootQueryEntriesConnection implements Hookable, Connection {
 	/**
 	 * The from field name.
 	 */
 	const FROM_FIELD = 'gravityFormsEntries';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'init', [ $this, 'register_connection' ] );
 	}
 
+	/**
+	 * Register connection from RootQuery type to GravityFormsEntry type.
+	 */
 	public function register_connection() {
 		register_graphql_connection(
 			[
@@ -76,6 +93,12 @@ class RootQueryEntriesConnection implements Hookable, Connection {
 		);
 	}
 
+	/**
+	 * Gets array of form ids.
+	 *
+	 * @param array $args The input arguments for the query.
+	 * @return array
+	 */
 	private function get_form_ids( array $args ) : array {
 		if ( ! empty( $args['where']['formIds'] ) && is_array( $args['where']['formIds'] ) ) {
 			return array_map( 'absint', $args['where']['formIds'] );

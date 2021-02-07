@@ -1,4 +1,12 @@
 <?php
+/**
+ * GraphQL Object Type - Gravity Forms form notification
+ *
+ * @see https://docs.gravityforms.com/notifications-object/
+ *
+ * @package WPGraphQLGravityForms\Types\Form
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Form;
 
@@ -7,17 +15,21 @@ use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 
 /**
- * Form notification.
- *
- * @see https://docs.gravityforms.com/notifications-object/
+ * Class - FormNotification
  */
 class FormNotification implements Hookable, Type {
 	const TYPE = 'FormNotification';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

@@ -1,4 +1,12 @@
 <?php
+/**
+ * GraphQL Object Type - Gravity Forms form notification routing
+ *
+ * @see https://docs.gravityforms.com/notifications-object/#routing-rule-properties
+ *
+ * @package WPGraphQLGravityForms\Types\Form
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Form;
 
@@ -6,17 +14,21 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
- * Form notification routing.
- *
- * @see https://docs.gravityforms.com/notifications-object/#routing-rule-properties
+ * Class - FormNotificationRouting
  */
 class FormNotificationRouting implements Hookable, Type {
 	const TYPE = 'FormNotificationRouting';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

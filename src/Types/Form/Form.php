@@ -1,4 +1,12 @@
 <?php
+/**
+ * GraphQL Object Type - Gravity Forms Form
+ *
+ * @see https://docs.gravityforms.com/form-object/
+ *
+ * @package WPGraphQLGravityForms\Types\Form
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Form;
 
@@ -13,9 +21,7 @@ use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\Types\Button\Button;
 
 /**
- * Gravity Forms form.
- *
- * @see https://docs.gravityforms.com/form-object/
+ * Class - Form
  */
 class Form implements Hookable, Type, Field {
 	/**
@@ -30,18 +36,31 @@ class Form implements Hookable, Type, Field {
 
 	/**
 	 * FormDataManipulator instance.
+	 *
+	 * @var FormDataManipulator
 	 */
 	private $form_data_manipulator;
 
+	/**
+	 * Constructor
+	 *
+	 * @param FormDataManipulator $form_data_manipulator .
+	 */
 	public function __construct( FormDataManipulator $form_data_manipulator ) {
 		$this->form_data_manipulator = $form_data_manipulator;
 	}
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 		add_action( 'graphql_register_types', [ $this, 'register_field' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,
@@ -249,6 +268,9 @@ class Form implements Hookable, Type, Field {
 		);
 	}
 
+	/**
+	 * Register form query.
+	 */
 	public function register_field() {
 		register_graphql_field(
 			'RootQuery',

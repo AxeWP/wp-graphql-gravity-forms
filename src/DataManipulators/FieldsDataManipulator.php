@@ -1,4 +1,12 @@
 <?php
+/**
+ * DataManipulators - FieldsData
+ *
+ * Manipulates Fields data.
+ *
+ * @package WPGraphQLGravityForms\DataManipulators
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\DataManipulators;
 
@@ -7,6 +15,9 @@ use GraphQLRelay\Relay;
 use WPGraphQLGravityForms\Interfaces\DataManipulator;
 use WPGraphQLGravityForms\Types\Form\Form;
 
+/**
+ * Class - FieldsDataManipulator
+ */
 class FieldsDataManipulator implements DataManipulator {
 	/**
 	 * Manipulate form fields data.
@@ -25,9 +36,11 @@ class FieldsDataManipulator implements DataManipulator {
 	}
 
 	/**
+	 * Returns Form field with its cssClassList value set.
+	 *
 	 * @param GF_Field $field Form field.
 	 *
-	 * @return GF_Field $field Form field with its cssClassList value set.
+	 * @return GF_Field
 	 */
 	private function set_css_class_list_for_field( GF_Field $field ) : GF_Field {
 		$field->cssClassList = array_filter(
@@ -110,6 +123,11 @@ class FieldsDataManipulator implements DataManipulator {
 		return $this->get_name_input_keys();
 	}
 
+	/**
+	 * Returns input keys for Address field.
+	 *
+	 * @return array
+	 */
 	private function get_address_input_keys() {
 		return [
 			'street',
@@ -121,6 +139,11 @@ class FieldsDataManipulator implements DataManipulator {
 		];
 	}
 
+	/**
+	 * Returns input keys for Name field.
+	 *
+	 * @return array
+	 */
 	private function get_name_input_keys() {
 		return [
 			'prefix',

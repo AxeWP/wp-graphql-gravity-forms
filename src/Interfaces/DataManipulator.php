@@ -1,9 +1,15 @@
 <?php
+/**
+ * Interface for classes that perform data manipulation.
+ *
+ * @package WPGraphQLGravityForms\Interfaces
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Interfaces;
 
 /**
- * Interface for classes that perform data manipulation.
+ * Interface - DataManipulator
  */
 interface DataManipulator {
 	/**

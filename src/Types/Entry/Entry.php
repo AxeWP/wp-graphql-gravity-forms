@@ -1,4 +1,12 @@
 <?php
+/**
+ * GraphQL Object Type - Gravity Forms Form Entry
+ *
+ * @see https://docs.gravityforms.com/entry-object/
+ *
+ * @package WPGraphQLGravityForms\Types\Entry
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Entry;
 
@@ -17,9 +25,7 @@ use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\Types\Form\Form;
 
 /**
- * Gravity Forms form entry.
- *
- * @see https://docs.gravityforms.com/entry-object/
+ * Class - Entry
  */
 class Entry implements Hookable, Type, Field {
 	/**
@@ -34,14 +40,24 @@ class Entry implements Hookable, Type, Field {
 
 	/**
 	 * EntryDataManipulator instance.
+	 *
+	 * @var EntryDataManipulator
 	 */
 	private $entry_data_manipulator;
 
 	/**
 	 * DraftEntryDataManipulator instance.
+	 *
+	 * @var DraftEntryDataManipulator
 	 */
 	private $draft_entry_data_manipulator;
 
+	/**
+	 * Constructor
+	 *
+	 * @param EntryDataManipulator      $entry_data_manipulator .
+	 * @param DraftEntryDataManipulator $draft_entry_data_manipulator .
+	 */
 	public function __construct(
 		EntryDataManipulator $entry_data_manipulator,
 		DraftEntryDataManipulator $draft_entry_data_manipulator
@@ -50,11 +66,17 @@ class Entry implements Hookable, Type, Field {
 		$this->draft_entry_data_manipulator = $draft_entry_data_manipulator;
 	}
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 		add_action( 'graphql_register_types', [ $this, 'register_field' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,
@@ -128,7 +150,7 @@ class Entry implements Hookable, Type, Field {
 						'description' => __( 'The resume token. Only applies to draft entries.', 'wp-graphql-gravity-forms' ),
 					],
 					/**
-					 * @TODO: Add support for these pricing properties that are only relevant
+					 * TODO: Add support for these pricing properties that are only relevant
 					 * when a Gravity Forms payment gateway add-on is being used:
 					 * https://docs.gravityforms.com/entry-object/#pricing-properties
 					 */
@@ -137,6 +159,9 @@ class Entry implements Hookable, Type, Field {
 		);
 	}
 
+	/**
+	 * Register entry query.
+	 */
 	public function register_field() {
 		register_graphql_field(
 			'RootQuery',

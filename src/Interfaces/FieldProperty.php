@@ -1,9 +1,15 @@
 <?php
+/**
+ * Interface for Gravity Forms field properties.
+ *
+ * @package WPGraphQLGravityForms\Interfaces
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Interfaces;
 
 /**
- * Interface for Gravity Forms field properties.
+ * Interface - FieldProperty
  */
 interface FieldProperty {
 	/**

@@ -1,13 +1,24 @@
 <?php
+/**
+ * Max length field property.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 use GF_Field;
 use WPGraphQLGravityForms\Interfaces\FieldProperty;
 
+/**
+ * Class - MaxLengthProperty
+ */
 abstract class MaxLengthProperty implements FieldProperty {
 	/**
 	 * Get 'maxLength' property.
+	 *
+	 * @return array
 	 */
 	public static function get() : array {
 		return [

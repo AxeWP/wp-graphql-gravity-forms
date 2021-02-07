@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPGraphQL for Gravity Forms
  * Description: Provides a GraphQL API for interacting with Gravity Forms.
- * Version:     0.1.0
+ * Version:     0.0.1
  * Author:      Harness Software, Kellen Mace
  * Author URI:  https://harnessup.com/
  * License:     GPLv2 or later

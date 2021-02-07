@@ -1,13 +1,19 @@
 <?php
+/**
+ * GraphQL Object Type - PostCustomField
+ *
+ * @see https://docs.gravityforms.com/post-custom/
+ *
+ * @package WPGraphQLGravityForms\Types\Field
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
- * Post Custom Field.
- *
- * @see https://docs.gravityforms.com/post-custom/
+ * Class - PostCustomField
  */
 class PostCustomField extends Field {
 	/**
@@ -20,10 +26,16 @@ class PostCustomField extends Field {
 	 */
 	const GF_TYPE = 'post_custom_field';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

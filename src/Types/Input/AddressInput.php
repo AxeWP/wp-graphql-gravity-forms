@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Input Type - AddressInput
+ * Input fields for address field.
+ *
+ * @package WPGraphQLGravityForms\Types\Input
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Input;
 
@@ -6,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\InputType;
 
 /**
- * Input fields for address field.
+ * Class - AddressInput
  */
 class AddressInput implements Hookable, InputType {
 	/**
@@ -14,10 +21,16 @@ class AddressInput implements Hookable, InputType {
 	 */
 	const TYPE = 'AddressInput';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_input_type' ] );
 	}
 
+	/**
+	 * Register input type to GraphQL schema.
+	 */
 	public function register_input_type() {
 		register_graphql_input_type(
 			self::TYPE,

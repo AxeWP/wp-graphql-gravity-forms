@@ -1,4 +1,12 @@
 <?php
+/**
+ * DataLoader - Entries
+ *
+ * Loads Models for Gravity Forms Entries.
+ *
+ * @package WPGraphQLGravityForms\Data\Loader
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Data\Loader;
 
@@ -7,6 +15,9 @@ use GraphQL\Deferred;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
 use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 
+/**
+ * Class - EntriesLoader
+ */
 class EntriesLoader extends AbstractDataLoader {
 	/**
 	 * Loader name.
@@ -23,10 +34,10 @@ class EntriesLoader extends AbstractDataLoader {
 	 * For example:
 	 * loadKeys(['a', 'b', 'c']) -> ['a' => 'value1, 'b' => null, 'c' => 'value3']
 	 *
-	 * @param array $keys
+	 * @param array $keys .
 	 *
 	 * @return array
-	 * @throws \Exception
+	 * @throws \Exception .
 	 */
 	public function loadKeys( array $keys ) {
 		if ( empty( $keys ) ) {

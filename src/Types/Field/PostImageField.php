@@ -1,13 +1,19 @@
 <?php
+/**
+ * GraphQL Object Type - PostImageField
+ *
+ * @see https://docs.gravityforms.com/post-image/
+ *
+ * @package WPGraphQLGravityForms\Types\Field
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
- * Post Image field.
- *
- * @see https://docs.gravityforms.com/post-image/
+ * Class - PostImageField
  */
 class PostImageField extends Field {
 	/**
@@ -20,10 +26,16 @@ class PostImageField extends Field {
 	 */
 	const GF_TYPE = 'post_image';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

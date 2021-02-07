@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Union Type - ObjectFieldValueUnion
+ * Union between an object and a Gravity Forms field value.
+ *
+ * @package WPGraphQLGravityForms\Types\Union
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Union;
 
@@ -11,7 +18,7 @@ use WPGraphQLGravityForms\Interfaces\FieldValue;
 use WPGraphQLGravityForms\Types\Field\Field;
 
 /**
- * Union between an object and a Gravity Forms field value.
+ * Class - ObjectFieldValueUnion
  */
 class ObjectFieldValueUnion implements Hookable, Type {
 	/**
@@ -27,16 +34,26 @@ class ObjectFieldValueUnion implements Hookable, Type {
 	private $instances;
 
 	/**
-	 * @param array WPGraphQL for Gravity Forms plugin's class instances.
+	 * Constructor
+	 *
+	 * @param array $instances WPGraphQL for Gravity Forms plugin's class instances.
 	 */
 	public function __construct( array $instances ) {
 		$this->instances = $instances;
 	}
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ], 11 );
 	}
 
+	/**
+	 * Registers union type to GraphQL schema.
+	 *
+	 * @param TypeRegistry $type_registry .
+	 */
 	public function register_type( TypeRegistry $type_registry ) {
 		register_graphql_union_type(
 			self::TYPE,

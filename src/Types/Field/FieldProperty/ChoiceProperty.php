@@ -1,4 +1,12 @@
 <?php
+/**
+ * GraphQL Object Type - ChoiceProperty
+ * An individual property for the 'choices' field property.
+ *
+ * @see https://docs.gravityforms.com/field-object/#basic-properties
+ * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
@@ -6,9 +14,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
- * An individual property for the 'choices' field property.
- *
- * @see https://docs.gravityforms.com/field-object/#basic-properties
+ * Class - ChoiceProperty
  */
 class ChoiceProperty implements Hookable, Type {
 	/**
@@ -16,10 +22,16 @@ class ChoiceProperty implements Hookable, Type {
 	 */
 	const TYPE = 'ChoiceProperty';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

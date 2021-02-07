@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Object Type - NameFieldValue
+ * Values for an individual Name field.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldValue
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
@@ -9,7 +16,7 @@ use WPGraphQLGravityForms\Interfaces\FieldValue;
 use WPGraphQLGravityForms\Types\Field\NameField;
 
 /**
- * Values for an individual Name field.
+ * Class - NameFieldValue
  */
 class NameFieldValue implements Hookable, Type, FieldValue {
 	/**
@@ -17,10 +24,16 @@ class NameFieldValue implements Hookable, Type, FieldValue {
 	 */
 	const TYPE = NameField::TYPE . 'Value';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

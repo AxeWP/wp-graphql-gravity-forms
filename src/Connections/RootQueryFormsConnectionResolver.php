@@ -1,4 +1,12 @@
 <?php
+/**
+ * ConnectionResolver - RootQueryEntry
+ *
+ * Resolves connections to Entries.
+ *
+ * @package WPGraphQLGravityForms\Connections
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Connections;
 
@@ -11,6 +19,9 @@ use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
 use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
 use WPGraphQLGravityForms\Types\Enum\FormStatusEnum;
 
+/**
+ * Class - RootQueryEntriesConnectionResolver
+ */
 class RootQueryFormsConnectionResolver {
 	/**
 	 * Resolves queries for forms.
@@ -21,6 +32,8 @@ class RootQueryFormsConnectionResolver {
 	 * @param ResolveInfo $info    The ResolveInfo object.
 	 *
 	 * @return array|null The connection or null if no forms.
+	 *
+	 * @throws UserError .
 	 */
 	public function resolve( $source, array $args, AppContext $context, ResolveInfo $info ) {
 		$status = $this->get_form_status( $args );
@@ -62,6 +75,12 @@ class RootQueryFormsConnectionResolver {
 		return $connection;
 	}
 
+	/**
+	 * Gets form status from query.
+	 *
+	 * @param array $args the query arguments.
+	 * @return array
+	 */
 	private function get_form_status( array $args ) : array {
 		$status = $args['where']['status'] ?? '';
 

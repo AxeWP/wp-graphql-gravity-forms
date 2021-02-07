@@ -1,4 +1,26 @@
 <?php
+/**
+ * Plugin Name: WP GraphQL
+ * Plugin URI: https://github.com/wp-graphql/wp-graphql
+ * GitHub Plugin URI: https://github.com/wp-graphql/wp-graphql
+ * Description: GraphQL API for WordPress
+ * Author: Harness Software
+ * Author URI: https://www.harnessup.com
+ * Version: 0.0.1
+ * Text Domain: wp-graphql-gravity-forms
+ * Domain Path: /languages
+ * Requires at least: 5.0
+ * WPGraphQL requires at least: 1.0.0+
+ * GravityForms requires at least: 2.4.0+
+ * Tested up to: 5.6.1
+ * Requires PHP: 7.4
+ * License: GPL-3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * @package WPGraphQLGravityForms
+ * @author harnessup
+ * @license GPL-3
+ */
 
 namespace WPGraphQLGravityForms;
 
@@ -22,6 +44,8 @@ use WPGraphQLGravityForms\Types\Input;
 final class WPGraphQLGravityForms {
 	/**
 	 * Class instances.
+	 *
+	 * @var array $instances
 	 */
 	private $instances = [];
 
@@ -33,27 +57,30 @@ final class WPGraphQLGravityForms {
 		$this->register_hooks();
 	}
 
+	/**
+	 * Create instances.
+	 */
 	private function create_instances() {
-		// Settings
+		// Settings.
 		$this->instances['wpgraphql_settings'] = new Settings\WPGraphQLSettings();
 
-		// Data manipulators
+		// Data manipulators.
 		$this->instances['fields_data_manipulator']      = new DataManipulators\FieldsDataManipulator();
 		$this->instances['form_data_manipulator']        = new DataManipulators\FormDataManipulator( $this->instances['fields_data_manipulator'] );
 		$this->instances['entry_data_manipulator']       = new DataManipulators\EntryDataManipulator();
 		$this->instances['draft_entry_data_manipulator'] = new DataManipulators\DraftEntryDataManipulator( $this->instances['entry_data_manipulator'] );
 
-		// Data loaders
+		// Data loaders.
 		$this->instances['loader_registrar'] = new Data\Loader\LoadersRegistrar();
 
-		// Buttons
+		// Buttons.
 		$this->instances['button'] = new Button();
 
-		// Conditional Logic
+		// Conditional Logic.
 		$this->instances['conditional_logic']      = new ConditionalLogic\ConditionalLogic();
 		$this->instances['conditional_logic_rule'] = new ConditionalLogic\ConditionalLogicRule();
 
-		// Forms
+		// Forms.
 		$this->instances['save_and_continue']         = new Form\SaveAndContinue();
 		$this->instances['form_notification_routing'] = new Form\FormNotificationRouting();
 		$this->instances['form_notification']         = new Form\FormNotification();
@@ -61,7 +88,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['form_pagination']           = new Form\FormPagination();
 		$this->instances['form']                      = new Form\Form( $this->instances['form_data_manipulator'] );
 
-		// Fields
+		// Fields.
 		$this->instances['address_field']        = new Field\AddressField();
 		$this->instances['captcha_field']        = new Field\CaptchaField();
 		$this->instances['chained_select_field'] = new Field\ChainedSelectField();
@@ -94,7 +121,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['time_field']           = new Field\TimeField();
 		$this->instances['website_field']        = new Field\WebsiteField();
 
-		// Field Properties
+		// Field Properties.
 		$this->instances['chained_select_choice_property'] = new FieldProperty\ChainedSelectChoiceProperty();
 		$this->instances['checkbox_input_property']        = new FieldProperty\CheckboxInputProperty();
 		$this->instances['choice_property']                = new FieldProperty\ChoiceProperty();
@@ -103,7 +130,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['multi_select_choice_property']   = new FieldProperty\MultiSelectChoiceProperty();
 		$this->instances['password_input_property']        = new FieldProperty\PasswordInputProperty();
 
-		// Field Values
+		// Field Values.
 		$this->instances['address_field_value']        = new FieldValue\AddressFieldValue();
 		$this->instances['chained_select_field_value'] = new FieldValue\ChainedSelectFieldValue();
 		$this->instances['checkbox_input_value']       = new FieldValue\CheckboxInputValue();
@@ -125,12 +152,12 @@ final class WPGraphQLGravityForms {
 		$this->instances['time_field_value']           = new FieldValue\TimeFieldValue();
 		$this->instances['website_field_value']        = new FieldValue\WebsiteFieldValue();
 
-		// Entries
+		// Entries.
 		$this->instances['entry']      = new Entry\Entry( $this->instances['entry_data_manipulator'], $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['entry_form'] = new Entry\EntryForm( $this->instances['form_data_manipulator'] );
 		$this->instances['entry_user'] = new Entry\EntryUser();
 
-		// Input
+		// Input.
 		$this->instances['address_input']              = new Input\AddressInput();
 		$this->instances['checkbox_input']             = new Input\CheckboxInput();
 		$this->instances['list_input']                 = new Input\ListInput();
@@ -139,24 +166,24 @@ final class WPGraphQLGravityForms {
 		$this->instances['entries_field_fiters_input'] = new Input\EntriesFieldFiltersInput();
 		$this->instances['entries_sorting_input']      = new Input\EntriesSortingInput();
 
-		// Unions
+		// Unions.
 		$this->instances['object_field_union']       = new Union\ObjectFieldUnion( $this->instances );
 		$this->instances['object_field_value_union'] = new Union\ObjectFieldValueUnion( $this->instances );
 
-		// Connections
+		// Connections.
 		$this->instances['entry_field_connection']        = new Connections\EntryFieldConnection( $this->instances );
 		$this->instances['form_field_connection']         = new Connections\FormFieldConnection();
 		$this->instances['root_query_entries_connection'] = new Connections\RootQueryEntriesConnection();
 		$this->instances['root_query_forms_connection']   = new Connections\RootQueryFormsConnection();
 
-		// Enums
+		// Enums.
 		$this->instances['form_status_enum']                  = new Enum\FormStatusEnum();
 		$this->instances['field_filters_operator_input_enum'] = new Enum\FieldFiltersOperatorInputEnum();
 
-		// Field errors
+		// Field errors.
 		$this->instances['field_error'] = new FieldError();
 
-		// Mutations
+		// Mutations.
 		$this->instances['delete_entry']                                = new Mutations\DeleteEntry();
 		$this->instances['create_draft_entry']                          = new Mutations\CreateDraftEntry();
 		$this->instances['delete_draft_entry']                          = new Mutations\DeleteDraftEntry();
@@ -179,12 +206,20 @@ final class WPGraphQLGravityForms {
 		$this->instances['update_draft_entry_website_field_value']      = new Mutations\UpdateDraftEntryWebsiteFieldValue( $this->instances['draft_entry_data_manipulator'] );
 	}
 
+	/**
+	 * Register all hooks to WordPress.
+	 */
 	private function register_hooks() {
 		foreach ( $this->get_hookable_instances() as $instance ) {
 			$instance->register_hooks();
 		}
 	}
 
+	/**
+	 * Get array of all hookable instances.
+	 *
+	 * @return array
+	 */
 	private function get_hookable_instances() {
 		return array_filter( $this->instances, fn( $instance ) => $instance instanceof Hookable );
 	}

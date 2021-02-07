@@ -1,14 +1,25 @@
 <?php
+/**
+ * Inputs field property.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 use WPGraphQLGravityForms\Interfaces\FieldProperty;
 
+/**
+ * Class - InputsProperty
+ */
 abstract class InputsProperty implements FieldProperty {
 	/**
 	 * Get 'inputs' property.
 	 *
 	 * Applies to: name, address
+	 *
+	 * @return array
 	 */
 	public static function get() : array {
 		return [

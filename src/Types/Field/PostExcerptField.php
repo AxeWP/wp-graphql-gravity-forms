@@ -1,13 +1,19 @@
 <?php
+/**
+ * GraphQL Object Type - PostExcerptField
+ *
+ * @see https://docs.gravityforms.com/post-excerpt/
+ *
+ * @package WPGraphQLGravityForms\Types\Field
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
- * Post Excerpt field.
- *
- * @see https://docs.gravityforms.com/post-excerpt/
+ * Class - PostExcerptField
  */
 class PostExcerptField extends Field {
 	/**
@@ -20,10 +26,16 @@ class PostExcerptField extends Field {
 	 */
 	const GF_TYPE = 'post_excerpt';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

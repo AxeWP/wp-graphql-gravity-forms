@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Input Type - EntriesFieldFiltersInput
+ * Field Filters input type for Entries queries.
+ *
+ * @package WPGraphQLGravityForms\Types\Input
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Input;
 
@@ -7,7 +14,7 @@ use WPGraphQLGravityForms\Interfaces\InputType;
 use WPGraphQLGravityForms\Types\Enum\FieldFiltersOperatorInputEnum;
 
 /**
- * Field Filters input type for Entries queries.
+ * Class - EntriesFieldFiltersInput
  */
 class EntriesFieldFiltersInput implements Hookable, InputType {
 	/**
@@ -15,10 +22,16 @@ class EntriesFieldFiltersInput implements Hookable, InputType {
 	 */
 	const TYPE = 'EntriesFieldFiltersInput';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_input_type' ] );
 	}
 
+	/**
+	 * Register input type to GraphQL schema.
+	 */
 	public function register_input_type() {
 		register_graphql_input_type(
 			self::TYPE,

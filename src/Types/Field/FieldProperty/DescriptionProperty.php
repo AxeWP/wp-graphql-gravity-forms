@@ -1,9 +1,18 @@
 <?php
+/**
+ * Description field property.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 use WPGraphQLGravityForms\Interfaces\FieldProperty;
 
+/**
+ * Class - DescriptionProperty
+ */
 abstract class DescriptionProperty implements FieldProperty {
 	/**
 	 * Get 'description' property.

@@ -1,4 +1,12 @@
 <?php
+/**
+ * GraphQL Object Type - Button
+ *
+ * @see https://docs.gravityforms.com/button/
+ *
+ * @package WPGraphQLGravityForms\Types\Button
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Button;
 
@@ -7,17 +15,21 @@ use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 
 /**
- *  Button.
- *
- * @see https://docs.gravityforms.com/button/
+ * Class - Button
  */
 class Button implements Hookable, Type {
 	const TYPE = 'Button';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

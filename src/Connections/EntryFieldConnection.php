@@ -1,4 +1,12 @@
 <?php
+/**
+ * Connection - EntryField
+ *
+ * Registers connections from GravityFormsEntry.
+ *
+ * @package WPGraphQLGravityForms\Connections
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Connections;
 
@@ -18,6 +26,9 @@ use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
 use WPGraphQLGravityForms\Types\FieldError\FieldError;
 use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
 
+/**
+ * Class - EntryFieldConnection.
+ */
 class EntryFieldConnection implements Hookable, Connection {
 	/**
 	 * The from field name.
@@ -32,16 +43,24 @@ class EntryFieldConnection implements Hookable, Connection {
 	private $instances;
 
 	/**
-	 * @param array WPGraphQL for Gravity Forms plugin's class instances.
+	 * Constructor.
+	 *
+	 * @param array $instances WPGraphQL for Gravity Forms plugin's class instances.
 	 */
 	public function __construct( array $instances ) {
 		$this->instances = $instances;
 	}
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'init', [ $this, 'register_connection' ] );
 	}
 
+	/**
+	 * Register connection from GravityFormsEntry type to other types.
+	 */
 	public function register_connection() {
 		register_graphql_connection(
 			[
@@ -104,6 +123,8 @@ class EntryFieldConnection implements Hookable, Connection {
 	}
 
 	/**
+	 * Get the WPGraphQL field for a Gravity Forms field type.
+	 *
 	 * @param string $gf_field_type The Gravity Forms field type.
 	 *
 	 * @return Field|null The corresponding WPGraphQL field, or null if not found.

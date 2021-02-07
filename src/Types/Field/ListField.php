@@ -1,13 +1,19 @@
 <?php
+/**
+ * GraphQL Object Type - ListField
+ *
+ * @see https://docs.gravityforms.com/gf_field_list/
+ *
+ * @package WPGraphQLGravityForms\Types\Field
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
- * List field.
- *
- * @see https://docs.gravityforms.com/gf_field_list/
+ * Class - ListField
  */
 class ListField extends Field {
 	/**
@@ -20,10 +26,16 @@ class ListField extends Field {
 	 */
 	const GF_TYPE = 'list';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

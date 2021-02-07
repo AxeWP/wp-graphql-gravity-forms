@@ -1,4 +1,12 @@
 <?php
+/**
+ * GraphQL Object Type - Gravity Forms form pagination
+ *
+ * @see https://docs.gravityforms.com/page-break/
+ *
+ * @package WPGraphQLGravityForms\Types\Form
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Form;
 
@@ -6,17 +14,21 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
- * Form pagination.
- *
- * @see https://docs.gravityforms.com/page-break/
+ * Class - FormPagination
  */
 class FormPagination implements Hookable, Type {
 	const TYPE = 'FormPagination';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Abstract class for updating a draft Gravity Forms entry with a new value
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
@@ -15,14 +21,21 @@ use WPGraphQLGravityForms\Types\Entry\Entry;
 use WPGraphQLGravityForms\DataManipulators\DraftEntryDataManipulator;
 
 /**
- * Update a draft Gravity Forms entry with a new value.
+ * Class - DraftEntryUpdator
  */
 abstract class DraftEntryUpdater implements Hookable, Mutation {
 	/**
 	 * DraftEntryDataManipulator instance.
+	 *
+	 * @var DraftEntryDataManipulator
 	 */
 	private $draft_entry_data_manipulator;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param DraftEntryDataManipulator $draft_entry_data_manipulator .
+	 */
 	public function __construct( DraftEntryDataManipulator $draft_entry_data_manipulator ) {
 		$this->draft_entry_data_manipulator = $draft_entry_data_manipulator;
 	}
@@ -48,10 +61,17 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	 */
 	private $value = null;
 
+
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
 	}
 
+	/**
+	 * Registers mutation.
+	 */
 	public function register_mutation() {
 		register_graphql_mutation(
 			static::NAME,
@@ -83,7 +103,9 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	}
 
 	/**
-	 * @return array The input field value.
+	 * Returns the input field value.
+	 *
+	 * @return array
 	 */
 	abstract protected function get_value_input_field() : array;
 
@@ -153,9 +175,13 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	}
 
 	/**
+	 * Returns draft entry submittion data.
+	 *
 	 * @param string $resume_token Draft entry resume token.
 	 *
-	 * @return array $submission Draft entry submission data.
+	 * @return array
+	 *
+	 * @throws UserError .
 	 */
 	private function get_draft_submission( string $resume_token ) : array {
 		$draft_entry = GFFormsModel::get_draft_submission_values( $resume_token );
@@ -174,7 +200,10 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	}
 
 	/**
-	 * @return array Gravity Form associated with the draft entry.
+	 * Returns Gravity Form associated with the draft entry.
+	 *
+	 * @return array Form Object array.
+	 * @throws UserError .
 	 */
 	private function get_draft_form() : array {
 		$form = GFAPI::get_form( $this->submission['partial_entry']['form_id'] );
@@ -196,10 +225,14 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	// abstract protected function prepare_field_value( $value );
 
 	/**
+	 * Returns Gravity Forms Field object for given field id.
+	 *
 	 * @param array $form     The form.
 	 * @param int   $field_id Field ID.
 	 *
-	 * @return GF_Field The field object.
+	 * @return GF_Field
+	 *
+	 * @throws UserError .
 	 */
 	private function get_field_by_id( array $form, int $field_id ) : GF_Field {
 		$matching_fields = array_values(
@@ -225,14 +258,16 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	 * @param string $resume_token Resume token.
 	 *
 	 * @return string The resume token, or empty string on failure.
+	 *
+	 * @throws UserError .
 	 */
 	private function save_draft_submission( int $form_id, string $resume_token ) : string {
 		$new_resume_token = GFFormsModel::save_draft_submission(
 			GFFormsModel::get_form_meta( $form_id ),
 			$this->add_field_value_to_partial_entry( $this->submission['partial_entry'] ),
 			$this->submission['field_values'] ?? '',
-			$this->submission['page_number'] ?? 1, // TODO: Maybe get from request
-			$this->submission['files'] ?? [], // TODO: Maybe get from request
+			$this->submission['page_number'] ?? 1, // TODO: Maybe get from request.
+			$this->submission['files'] ?? [], // TODO: Maybe get from request.
 			$this->submission['gform_unique_id'] ?? $this->get_form_unique_id( $draft_entry['form_id'] ),
 			$this->submission['partial_entry']['ip'] ?? '',
 			$this->submission['partial_entry']['source_url'] ?? '',
@@ -262,9 +297,11 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	}
 
 	/**
+	 * Returns partial entry, with new value added.
+	 *
 	 * @param array $partial_entry Partial form entry.
 	 *
-	 * @return array Partial entry, with new value added.
+	 * @return array
 	 */
 	public function add_field_value_to_partial_entry( array $partial_entry ) : array {
 		if ( ! isset( $this->field, $this->value ) ) {
@@ -287,9 +324,9 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	}
 
 	/**
-	 * @param array $submitted_values Submitted form values.
+	 * Returns submitted values, with new value added.
 	 *
-	 * @return array Submitted values, with new value added.
+	 * @return array
 	 */
 	public function add_field_value_to_submitted_values() : array {
 		if ( isset( $this->field, $this->value ) ) {

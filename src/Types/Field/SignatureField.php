@@ -1,14 +1,20 @@
 <?php
+/**
+ * GraphQL Object Type - SignatureField
+ *
+ * @see https://www.gravityforms.com/add-ons/signature/
+ * @see https://docs.gravityforms.com/category/add-ons-gravity-forms/signature-add-on/
+ *
+ * @package WPGraphQLGravityForms\Types\Field
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
- * Signature field.
- *
- * @see https://www.gravityforms.com/add-ons/signature/
- * @see https://docs.gravityforms.com/category/add-ons-gravity-forms/signature-add-on/
+ * Class - SignatureField
  */
 class SignatureField extends Field {
 	/**
@@ -21,10 +27,17 @@ class SignatureField extends Field {
 	 */
 	const GF_TYPE = 'signature';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

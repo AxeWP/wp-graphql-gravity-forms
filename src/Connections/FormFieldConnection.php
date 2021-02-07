@@ -1,4 +1,12 @@
 <?php
+/**
+ * Connection - FormField
+ *
+ * Registers connections from GravityFormsForm.
+ *
+ * @package WPGraphQLGravityForms\Connections
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Connections;
 
@@ -15,16 +23,25 @@ use WPGraphQLGravityForms\Types\Field\Field;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
 
+/**
+ * Class - FormFieldConnection
+ */
 class FormFieldConnection implements Hookable, Connection {
 	/**
 	 * The from field name.
 	 */
 	const FROM_FIELD = 'fields';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 			add_action( 'init', [ $this, 'register_connection' ] );
 	}
 
+	/**
+	 * Register connection from GravityFormsForm type to other types.
+	 */
 	public function register_connection() {
 		register_graphql_connection(
 			[

@@ -1,4 +1,12 @@
 <?php
+/**
+ * GraphQL Object Type - Conditional Logic rule property
+ *
+ * @see https://docs.gravityforms.com/conditional-logic/#rule-properties
+ *
+ * @package WPGraphQLGravityForms\Types\ConditionalLogic
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\ConditionalLogic;
 
@@ -6,17 +14,21 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
- *  Conditional Logic rule property.
- *
- * @see https://docs.gravityforms.com/conditional-logic/#rule-properties
+ * Class - ConditionalLogicRule
  */
 class ConditionalLogicRule implements Hookable, Type {
 	const TYPE = 'ConditionalLogicRule';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

@@ -1,14 +1,25 @@
 <?php
+/**
+ * Is required field property.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 use WPGraphQLGravityForms\Interfaces\FieldProperty;
 
+/**
+ * Class - IsRequiredProperty
+ */
 abstract class IsRequiredProperty implements FieldProperty {
 	/**
 	 * Get 'isRequired' property.
 	 *
 	 * Applies to: All fields except section, html and captcha
+	 *
+	 * @return array
 	 */
 	public static function get() : array {
 		return [

@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Object Type - ChainedSelectChoiceProperty
+ * An individual property for the 'choices' Chained Select field property.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
@@ -6,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
- * An individual property for the 'choices' Chained Select field property.
+ * Class - ChainedSelectChoiceProperty
  */
 class ChainedSelectChoiceProperty implements Hookable, Type {
 	/**
@@ -14,10 +21,16 @@ class ChainedSelectChoiceProperty implements Hookable, Type {
 	 */
 	const TYPE = 'ChainedSelectChoiceProperty';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

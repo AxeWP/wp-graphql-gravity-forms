@@ -1,4 +1,11 @@
 <?php
+/**
+ * Connection - RootQueryForms
+ * Registers connections from RootQuery.
+ *
+ * @package WPGraphQLGravityForms\Connections
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Connections;
 
@@ -9,16 +16,26 @@ use WPGraphQLGravityForms\Interfaces\Connection;
 use WPGraphQLGravityForms\Types\Form\Form;
 use WPGraphQLGravityForms\Types\Enum\FormStatusEnum;
 
+/**
+ * Class - RootQueryFormsConnection
+ */
 class RootQueryFormsConnection implements Hookable, Connection {
 	/**
 	 * The from field name.
 	 */
 	const FROM_FIELD = 'gravityFormsForms';
 
+
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'init', [ $this, 'register_connection' ] );
 	}
 
+	/**
+	 * Register connection from RootQuery type to GravityFormsForm type.
+	 */
 	public function register_connection() {
 		register_graphql_connection(
 			[

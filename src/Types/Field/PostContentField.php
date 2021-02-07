@@ -1,13 +1,19 @@
 <?php
+/**
+ * GraphQL Object Type - PostContentField
+ *
+ * @see https://docs.gravityforms.com/post-body/
+ *
+ * @package WPGraphQLGravityForms\Types\Field
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
- * Post Content (Post Body) field.
- *
- * @see https://docs.gravityforms.com/post-body/
+ * Class - PostContentField
  */
 class PostContentField extends Field {
 	/**
@@ -20,10 +26,17 @@ class PostContentField extends Field {
 	 */
 	const GF_TYPE = 'post_content';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

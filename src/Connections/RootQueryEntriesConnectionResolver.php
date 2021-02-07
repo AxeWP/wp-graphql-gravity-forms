@@ -1,4 +1,12 @@
 <?php
+/**
+ * ConnectionResolver - RootQueryEntry
+ *
+ * Resolves connections to Entries.
+ *
+ * @package WPGraphQLGravityForms\Connections
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Connections;
 
@@ -10,9 +18,14 @@ use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQLGravityForms\Data\Loader\EntriesLoader;
 use WPGraphQLGravityForms\Types\Enum\FieldFiltersOperatorInputEnum;
 
+/**
+ * Class - RootQueryEntriesConnectionResolver
+ */
 class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
-	 * @return bool Whether query should execute.
+	 * Returns whether query should execute.
+	 *
+	 * @return bool
 	 */
 	public function should_execute() : bool {
 		return current_user_can( 'gravityforms_view_entries' );
@@ -55,30 +68,36 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * @return array Query arguments.
+	 * Returns query arguments.
+	 *
+	 * @return array
 	 */
 	public function get_query_args() : array {
 		return [];
 	}
 
 	/**
-	 * @return array Query to use for data fetching.
+	 * Returns query to use for data fetching.
+	 *
+	 * @return array
 	 */
 	public function get_query() : array {
 		return [];
 	}
 
 	/**
+	 * Returns base-64 encoded cursor value.
+	 *
 	 * @param int $id Node ID.
 	 *
-	 * @return string Base-64 encoded cursor value.
+	 * @return string
 	 */
 	protected function get_cursor_for_node( $id ) : string {
 		$first        = $this->args['first'] ?? 20;
-		$after_cursor = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null;
+		$after_cursor = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 		$index        = array_search( $id, array_keys( $this->nodes ) );
 
-		// TODO
+		// @TODO: .
 		// $last  = $this->args['last'] ?? 20;
 		// $before_cursor = ! empty( $this->args['before'] ) ? json_decode( base64_decode( $this->args['before'] ), true ) : null;
 
@@ -87,18 +106,18 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 			'index'  => $index,
 		];
 
-		return base64_encode( json_encode( $cursor ) );
+		return base64_encode( json_encode( $cursor ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 	}
 
 	/**
-	 * get_ids
-	 *
 	 * Return an array of ids from the query
 	 *
 	 * Each Query class in WP and potential datasource handles this differently, so each connection
 	 * resolver should handle getting the items into a uniform array of items.
 	 *
 	 * @return array
+	 *
+	 * @throws UserError Pagination is not currently supported.
 	 */
 	public function get_ids() : array {
 		if ( isset( $this->args['last'] ) || isset( $this->args['before'] ) ) {
@@ -119,6 +138,11 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 		return array_map( 'absint', $entry_ids );
 	}
 
+	/**
+	 * Returns form ids.
+	 *
+	 * @return array|null
+	 */
 	private function get_form_ids() {
 		if ( ! empty( $this->args['where']['formIds'] ) && is_array( $this->args['where']['formIds'] ) ) {
 			return array_map( 'absint', $this->args['where']['formIds'] );
@@ -185,6 +209,8 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @param string $operator     Operator.
 	 *
 	 * @return mixed Filter value.
+	 *
+	 * @throws UserError Field filters must have one value field.
 	 */
 	private function get_field_filter_value( array $field_filter, string $operator ) {
 		$value_fields = $this->get_field_filter_value_fields( $field_filter );
@@ -237,9 +263,9 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 
 	private function get_paging() : array {
 		$first        = absint( $this->args['first'] ?? 20 );
-		$after_cursor = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null;
+		$after_cursor = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 
-		// TODO
+		// @TODO: .
 		// $last  = absint( $this->args['last'] ?? 20 );
 		// $before_cursor = ! empty( $this->args['before'] ) ? json_decode( base64_decode( $this->args['before'] ), true ) : null;
 

@@ -1,4 +1,13 @@
 <?php
+/**
+ * GraphQL Object Type - MultiSelectChoiceProperty
+ * An individual property for the 'choices' MultiSelect field property.
+ *
+ * @see https://docs.gravityforms.com/gf_field_multiselect/
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
@@ -6,9 +15,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
- * An individual property for the 'choices' MultiSelect field property.
- *
- * @see https://docs.gravityforms.com/gf_field_multiselect/
+ * Class - MultiSelectChoiceProperty
  */
 class MultiSelectChoiceProperty implements Hookable, Type {
 	/**
@@ -16,10 +23,16 @@ class MultiSelectChoiceProperty implements Hookable, Type {
 	 */
 	const TYPE = 'MultiSelectChoiceProperty';
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
 	public function register_type() {
 		register_graphql_object_type(
 			self::TYPE,

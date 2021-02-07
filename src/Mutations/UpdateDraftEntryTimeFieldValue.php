@@ -1,9 +1,17 @@
 <?php
+/**
+ * Mutation - updateDraftEntryTimeFieldValue
+ *
+ * Registers mutation to update a Gravity Forms draft entry time field value.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
 /**
- * Update a Gravity Forms draft entry time field value.
+ * Class - UpdateDraftEntryTimeFieldValue
  */
 class UpdateDraftEntryTimeFieldValue extends DraftEntryUpdater {
 	/**
@@ -12,7 +20,9 @@ class UpdateDraftEntryTimeFieldValue extends DraftEntryUpdater {
 	const NAME = 'updateDraftEntryTimeFieldValue';
 
 	/**
-	 * @return array The input field value.
+	 * Defines the input field value configuration.
+	 *
+	 * @return array
 	 */
 	protected function get_value_input_field() : array {
 		return [
@@ -22,9 +32,11 @@ class UpdateDraftEntryTimeFieldValue extends DraftEntryUpdater {
 	}
 
 	/**
-	 * @param string The field value.
+	 * Sanitizes the field value.
 	 *
-	 * @return string The sanitized field value.
+	 * @param string $value The field value.
+	 *
+	 * @return string
 	 */
 	protected function prepare_field_value( string $value ) : string {
 		return sanitize_text_field( $value );

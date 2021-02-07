@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Edge Type - EntryForm
+ * Creates a 1:1 relationship between an Entry and the Form associated with it.
+ *
+ * @package WPGraphQLGravityForms\Types\Entry
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Entry;
 
@@ -27,13 +34,23 @@ class EntryForm implements Hookable, Type, Field {
 
 	/**
 	 * FormDataManipulator instance.
+	 *
+	 * @var FormDataManipulator
 	 */
 	private $form_data_manipulator;
 
+	/**
+	 * Constructor
+	 *
+	 * @param FormDataManipulator $form_data_manipulator .
+	 */
 	public function __construct( FormDataManipulator $form_data_manipulator ) {
 		$this->form_data_manipulator = $form_data_manipulator;
 	}
 
+	/**
+	 * Register hooks to WordPress.
+	 */
 	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 		add_action( 'graphql_register_types', [ $this, 'register_field' ] );
@@ -57,6 +74,9 @@ class EntryForm implements Hookable, Type, Field {
 		);
 	}
 
+	/**
+	 * Register form query.
+	 */
 	public function register_field() {
 		register_graphql_field(
 			Entry::TYPE,
