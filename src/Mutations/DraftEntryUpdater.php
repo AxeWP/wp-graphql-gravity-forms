@@ -37,7 +37,7 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	/**
 	 * The field whose value is being updated.
 	 *
-	 * @var int
+	 * @var GF_Field
 	 */
 	protected $field = null;
 
