@@ -38,7 +38,7 @@ add_action(
 		$display_admin_notice = function() use ( $missing_dependencies ) {
 			?>
 		<div class="notice notice-error">
-			<p><?php esc_html_e( 'The WPGraphQL for Gravity Forms plugin can\'t be loaded because these dependencies are missing:', 'wp-graphql-gravityforms' ); ?></p>
+			<p><?php esc_html_e( 'The WPGraphQL for Gravity Forms plugin can\'t be loaded because these dependencies are missing:', 'wp-graphql-gravity-forms' ); ?></p>
 			<ul>
 				<?php foreach ( $missing_dependencies as $missing_dependency ) : ?>
 					<li><?php echo esc_html( $missing_dependency ); ?></li>

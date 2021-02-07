@@ -37,22 +37,22 @@ class FormStatusEnum implements Hookable, Enum {
 		register_graphql_enum_type(
 			self::TYPE,
 			[
-				'description' => __( 'Status of forms to get. Default is ACTIVE.', 'harness' ),
+				'description' => __( 'Status of forms to get. Default is ACTIVE.', 'wp-graphql-gravity-forms' ),
 				'values'      => [
 					self::ACTIVE           => [
-						'description' => __( 'Active forms (default).', 'harness' ),
+						'description' => __( 'Active forms (default).', 'wp-graphql-gravity-forms' ),
 						'value'       => self::ACTIVE,
 					],
 					self::INACTIVE         => [
-						'description' => __( 'Inactive forms', 'harness' ),
+						'description' => __( 'Inactive forms', 'wp-graphql-gravity-forms' ),
 						'value'       => self::INACTIVE,
 					],
 					self::TRASHED          => [
-						'description' => __( 'Active forms in the trash.', 'harness' ),
+						'description' => __( 'Active forms in the trash.', 'wp-graphql-gravity-forms' ),
 						'value'       => self::TRASHED,
 					],
 					self::INACTIVE_TRASHED => [
-						'description' => __( 'Inactive forms in the trash.', 'harness' ),
+						'description' => __( 'Inactive forms in the trash.', 'wp-graphql-gravity-forms' ),
 						'value'       => self::INACTIVE_TRASHED,
 					],
 				],
