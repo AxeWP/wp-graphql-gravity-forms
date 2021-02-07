@@ -242,7 +242,7 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		$fields           = $form['fields'];
 
 		foreach ( $fields as $field ) {
-			if ( $field['type'] !== 'captcha' ) {
+			if ( 'captcha' === $field['type'] ) {
 				$field_id          = absint( $field['id'] );
 				$field_to_validate = $this->get_field_by_id( $form, $field_id );
 				$field_value       = $submitted_values[ $field_id ];
