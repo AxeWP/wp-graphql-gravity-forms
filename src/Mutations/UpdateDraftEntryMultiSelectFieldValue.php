@@ -39,6 +39,6 @@ class UpdateDraftEntryMultiSelectFieldValue extends DraftEntryUpdater {
 	 * @return string
 	 */
 	protected function prepare_field_value( array $value ) : string {
-		return (string) json_encode( array_map( 'sanitize_text_field', $value ) );
+		return (string) wp_json_encode( array_map( 'sanitize_text_field', $value ) );
 	}
 }
