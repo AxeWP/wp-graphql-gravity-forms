@@ -1,25 +1,9 @@
 <?php
 /**
- * Plugin Name: WP GraphQL
- * Plugin URI: https://github.com/wp-graphql/wp-graphql
- * GitHub Plugin URI: https://github.com/wp-graphql/wp-graphql
- * Description: GraphQL API for WordPress
- * Author: Harness Software
- * Author URI: https://www.harnessup.com
- * Version: 0.0.1
- * Text Domain: wp-graphql-gravity-forms
- * Domain Path: /languages
- * Requires at least: 5.0
- * WPGraphQL requires at least: 1.0.0+
- * GravityForms requires at least: 2.4.0+
- * Tested up to: 5.6.1
- * Requires PHP: 7.4
- * License: GPL-3
- * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ * Initializes a singleton instance of WPGraphQLGravityForms.
  *
  * @package WPGraphQLGravityForms
- * @author harnessup
- * @license GPL-3
+ * @since 0.0.1
  */
 
 namespace WPGraphQLGravityForms;
