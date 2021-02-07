@@ -65,6 +65,7 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 
 		// Check if there are too many rows.
 		if ( $field['maxRows'] < count( $entry_values ) ) {
+			// translators: maximum number of rows.
 			throw new UserError( sprintf( __( 'You may only submit %d rows.', 'wp-graphql-gravity-forms' ), $field['maxRows'] ) );
 		}
 
