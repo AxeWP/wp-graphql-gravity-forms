@@ -6,8 +6,8 @@ namespace WPGraphQLGravityForms\Interfaces;
  * Interface for a GraphQL Input Type.
  */
 interface InputType {
-    /**
-     * Register input type in GraphQL schema.
-     */
-    public function register_input_type();
+	/**
+	 * Register input type in GraphQL schema.
+	 */
+	public function register_input_type();
 }

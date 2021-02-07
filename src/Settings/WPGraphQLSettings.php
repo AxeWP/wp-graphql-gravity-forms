@@ -8,7 +8,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
  * WPGraphQL Settings.
  */
 class WPGraphQLSettings implements Hookable {
-    public function register_hooks() {
+	public function register_hooks() {
 		add_action( 'graphql_connection_max_query_amount', [ $this, 'set_max_query_amount' ], 11 );
 	}
 

@@ -9,39 +9,42 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-add_action( 'plugins_loaded', function() {
-    $autoload = plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+add_action(
+	'plugins_loaded',
+	function() {
+		$autoload = plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
-    $dependencies = [
-        'Composer autoload files' => is_readable( $autoload ),
-        'WPGraphQL plugin'        => class_exists('WPGraphQL'),
-        'Gravity Forms plugin'    => class_exists('GFAPI'),
-    ];
+		$dependencies = [
+			'Composer autoload files' => is_readable( $autoload ),
+			'WPGraphQL plugin'        => class_exists( 'WPGraphQL' ),
+			'Gravity Forms plugin'    => class_exists( 'GFAPI' ),
+		];
 
-    $missing_dependencies = array_keys( array_diff( $dependencies, array_filter( $dependencies ) ) );
+		$missing_dependencies = array_keys( array_diff( $dependencies, array_filter( $dependencies ) ) );
 
-    $display_admin_notice = function() use ( $missing_dependencies ) {
-        ?>
-        <div class="notice notice-error">
-            <p><?php esc_html_e( 'The WPGraphQL for Gravity Forms plugin can\'t be loaded because these dependencies are missing:', 'wp-graphql-gravityforms' ); ?></p>
-            <ul>
-                <?php foreach ( $missing_dependencies as $missing_dependency ) : ?>
-                    <li><?php echo esc_html( $missing_dependency ); ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-        <?php
-    };
+		$display_admin_notice = function() use ( $missing_dependencies ) {
+			?>
+		<div class="notice notice-error">
+			<p><?php esc_html_e( 'The WPGraphQL for Gravity Forms plugin can\'t be loaded because these dependencies are missing:', 'wp-graphql-gravityforms' ); ?></p>
+			<ul>
+				<?php foreach ( $missing_dependencies as $missing_dependency ) : ?>
+					<li><?php echo esc_html( $missing_dependency ); ?></li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+			<?php
+		};
 
-    // If dependencies are missing, display admin notice and return early.
-    if ( $missing_dependencies ) {
-        add_action( 'network_admin_notices', $display_admin_notice );
-        add_action( 'admin_notices', $display_admin_notice );
+		// If dependencies are missing, display admin notice and return early.
+		if ( $missing_dependencies ) {
+			add_action( 'network_admin_notices', $display_admin_notice );
+			add_action( 'admin_notices', $display_admin_notice );
 
-        return;
-    }
+			return;
+		}
 
-    require_once $autoload;
+		require_once $autoload;
 
-    ( new WPGraphQLGravityForms\WPGraphQLGravityForms() )->run();
-} );
+		( new WPGraphQLGravityForms\WPGraphQLGravityForms() )->run();
+	}
+);

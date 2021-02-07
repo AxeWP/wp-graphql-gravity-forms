@@ -8,14 +8,14 @@ use WPGraphQLGravityForms\Types\Input\CheckboxInput;
  * Update a Gravity Forms draft entry checkbox field value.
  */
 class UpdateDraftEntryCheckboxFieldValue extends DraftEntryUpdater {
-    /**
-     * Mutation name.
-     */
+	/**
+	 * Mutation name.
+	 */
 	const NAME = 'updateDraftEntryCheckboxFieldValue';
 
 	/**
-     * @return array The input field value.
-     */
+	 * @return array The input field value.
+	 */
 	protected function get_value_input_field() : array {
 		return [
 			'type'        => [ 'list_of' => CheckboxInput::TYPE ],
@@ -23,16 +23,20 @@ class UpdateDraftEntryCheckboxFieldValue extends DraftEntryUpdater {
 		];
 	}
 
-    /**
-     * @param array $value The field value.
-     *
-     * @return array Field value to save.
-     */
+	/**
+	 * @param array $value The field value.
+	 *
+	 * @return array Field value to save.
+	 */
 	protected function prepare_field_value( array $value ) : array {
-		$values_to_save = array_reduce( $this->field->inputs, function( array $values_to_save, array $input ) : array {
-			$values_to_save[ $input['id'] ] = ''; // Initialize all inputs to an empty string.
-			return $values_to_save;
-		}, [] );
+		$values_to_save = array_reduce(
+			$this->field->inputs,
+			function( array $values_to_save, array $input ) : array {
+				$values_to_save[ $input['id'] ] = ''; // Initialize all inputs to an empty string.
+				return $values_to_save;
+			},
+			[]
+		);
 
 		foreach ( $value as $single_value ) {
 			$input_id    = sanitize_text_field( $single_value['inputId'] );

@@ -23,7 +23,7 @@ final class WPGraphQLGravityForms {
 	/**
 	 * Class instances.
 	 */
-    private $instances = [];
+	private $instances = [];
 
 	/**
 	 * Main method for running the plugin.
@@ -31,17 +31,17 @@ final class WPGraphQLGravityForms {
 	public function run() {
 		$this->create_instances();
 		$this->register_hooks();
-    }
+	}
 
 	private function create_instances() {
 		// Settings
 		$this->instances['wpgraphql_settings'] = new Settings\WPGraphQLSettings();
 
 		// Data manipulators
-		$this->instances['fields_data_manipulator']       = new DataManipulators\FieldsDataManipulator();
-		$this->instances['form_data_manipulator']         = new DataManipulators\FormDataManipulator( $this->instances['fields_data_manipulator'] );
-		$this->instances['entry_data_manipulator']        = new DataManipulators\EntryDataManipulator();
-		$this->instances['draft_entry_data_manipulator']  = new DataManipulators\DraftEntryDataManipulator( $this->instances['entry_data_manipulator'] );
+		$this->instances['fields_data_manipulator']      = new DataManipulators\FieldsDataManipulator();
+		$this->instances['form_data_manipulator']        = new DataManipulators\FormDataManipulator( $this->instances['fields_data_manipulator'] );
+		$this->instances['entry_data_manipulator']       = new DataManipulators\EntryDataManipulator();
+		$this->instances['draft_entry_data_manipulator'] = new DataManipulators\DraftEntryDataManipulator( $this->instances['entry_data_manipulator'] );
 
 		// Data loaders
 		$this->instances['loader_registrar'] = new Data\Loader\LoadersRegistrar();
@@ -126,9 +126,9 @@ final class WPGraphQLGravityForms {
 		$this->instances['website_field_value']        = new FieldValue\WebsiteFieldValue();
 
 		// Entries
-		$this->instances['entry']                      = new Entry\Entry( $this->instances['entry_data_manipulator'], $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['entry_form']                 = new Entry\EntryForm( $this->instances['form_data_manipulator'] );
-		$this->instances['entry_user']                 = new Entry\EntryUser();
+		$this->instances['entry']      = new Entry\Entry( $this->instances['entry_data_manipulator'], $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['entry_form'] = new Entry\EntryForm( $this->instances['form_data_manipulator'] );
+		$this->instances['entry_user'] = new Entry\EntryUser();
 
 		// Input
 		$this->instances['address_input']              = new Input\AddressInput();

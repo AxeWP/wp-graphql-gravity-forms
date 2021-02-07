@@ -18,13 +18,13 @@ use WPGraphQLGravityForms\DataManipulators\DraftEntryDataManipulator;
  * Update a draft Gravity Forms entry with a new value.
  */
 abstract class DraftEntryUpdater implements Hookable, Mutation {
-    /**
-     * DraftEntryDataManipulator instance.
-     */
-    private $draft_entry_data_manipulator;
+	/**
+	 * DraftEntryDataManipulator instance.
+	 */
+	private $draft_entry_data_manipulator;
 
-    public function __construct( DraftEntryDataManipulator $draft_entry_data_manipulator ) {
-        $this->draft_entry_data_manipulator = $draft_entry_data_manipulator;
+	public function __construct( DraftEntryDataManipulator $draft_entry_data_manipulator ) {
+		$this->draft_entry_data_manipulator = $draft_entry_data_manipulator;
 	}
 
 	/**
@@ -43,21 +43,24 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 
 	/**
 	 * The value to update the field with.
-     *
-     * @var mixed
+	 *
+	 * @var mixed
 	 */
 	private $value = null;
 
-    public function register_hooks() {
+	public function register_hooks() {
 		add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
 	}
 
 	public function register_mutation() {
-		register_graphql_mutation( static::NAME, [
-            'inputFields'         => $this->get_input_fields(),
-			'outputFields'        => $this->get_output_fields(),
-			'mutateAndGetPayload' => $this->mutate_and_get_payload(),
-        ] );
+		register_graphql_mutation(
+			static::NAME,
+			[
+				'inputFields'         => $this->get_input_fields(),
+				'outputFields'        => $this->get_output_fields(),
+				'mutateAndGetPayload' => $this->mutate_and_get_payload(),
+			]
+		);
 	}
 
 	/**
@@ -71,18 +74,18 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 				'type'        => 'String',
 				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
 			],
-			'fieldId' => [
+			'fieldId'     => [
 				'type'        => 'Integer',
 				'description' => __( 'Field ID.', 'wp-graphql-gravity-forms' ),
-            ],
-            'value' => $this->get_value_input_field(),
+			],
+			'value'       => $this->get_value_input_field(),
 		];
-    }
+	}
 
-    /**
-     * @return array The input field value.
-     */
-    abstract protected function get_value_input_field() : array;
+	/**
+	 * @return array The input field value.
+	 */
+	abstract protected function get_value_input_field() : array;
 
 	/**
 	 * Defines the output field configuration.
@@ -95,20 +98,20 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 				'type'        => 'String',
 				'description' => __( 'Draft entry resume token.', 'wp-graphql-gravity-forms' ),
 			],
-			'entry' => [
+			'entry'       => [
 				'type'        => Entry::TYPE,
 				'description' => __( 'The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided.', 'wp-graphql-gravity-forms' ),
-				'resolve' => function( array $payload ) : array {
+				'resolve'     => function( array $payload ) : array {
 					$submission = $this->get_draft_submission( $payload['resumeToken'] );
 					return $this->draft_entry_data_manipulator->manipulate( $submission['partial_entry'], $payload['resumeToken'] );
-				}
+				},
 			],
-			'errors' => [
+			'errors'      => [
 				'type'        => [ 'list_of' => FieldError::TYPE ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
 		];
-    }
+	}
 
 	/**
 	 * Defines the data modification closure.
@@ -145,8 +148,8 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 
 			remove_filter( 'gform_submission_values_pre_save', [ $this, 'add_field_value_to_submitted_values' ] );
 
-            return [ 'resumeToken' => $resume_token ];
-        };
+			return [ 'resumeToken' => $resume_token ];
+		};
 	}
 
 	/**
@@ -183,14 +186,14 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 		return $form;
 	}
 
-    /**
+	/**
 	 * Implement this method in child classes.
 	 *
-     * @param mixed $value The field value.
-     *
-     * @return mixed The prepared and sanitized field value.
-     */
-    // abstract protected function prepare_field_value( $value );
+	 * @param mixed $value The field value.
+	 *
+	 * @return mixed The prepared and sanitized field value.
+	 */
+	// abstract protected function prepare_field_value( $value );
 
 	/**
 	 * @param array $form     The form.
@@ -199,9 +202,14 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	 * @return GF_Field The field object.
 	 */
 	private function get_field_by_id( array $form, int $field_id ) : GF_Field {
-		$matching_fields = array_values( array_filter( $form['fields'], function( GF_Field $field ) use ( $field_id ) : bool {
-			return $field['id'] === $field_id;
-		} ) );
+		$matching_fields = array_values(
+			array_filter(
+				$form['fields'],
+				function( GF_Field $field ) use ( $field_id ) : bool {
+					return $field['id'] === $field_id;
+				}
+			)
+		);
 
 		if ( ! $matching_fields ) {
 			throw new UserError( __( 'The form associated with this entry does not contain a field with the field ID provided.', 'wp-graphql-gravity-forms' ) );
@@ -213,22 +221,22 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	/**
 	 * Mimics Gravity Forms' GFFormsModel::save_draft_submission() method.
 	 *
-     * @param int    $form_id      Form ID.
+	 * @param int    $form_id      Form ID.
 	 * @param string $resume_token Resume token.
 	 *
 	 * @return string The resume token, or empty string on failure.
 	 */
 	private function save_draft_submission( int $form_id, string $resume_token ) : string {
-        $new_resume_token = GFFormsModel::save_draft_submission(
+		$new_resume_token = GFFormsModel::save_draft_submission(
 			GFFormsModel::get_form_meta( $form_id ),
-            $this->add_field_value_to_partial_entry( $this->submission['partial_entry'] ),
-            $this->submission['field_values'] ?? '',
-            $this->submission['page_number'] ?? 1, // TODO: Maybe get from request
-            $this->submission['files'] ?? [], // TODO: Maybe get from request
-            $this->submission['gform_unique_id'] ?? $this->get_form_unique_id( $draft_entry['form_id'] ),
-            $this->submission['partial_entry']['ip'] ?? '',
-            $this->submission['partial_entry']['source_url'] ?? '',
-            $resume_token
+			$this->add_field_value_to_partial_entry( $this->submission['partial_entry'] ),
+			$this->submission['field_values'] ?? '',
+			$this->submission['page_number'] ?? 1, // TODO: Maybe get from request
+			$this->submission['files'] ?? [], // TODO: Maybe get from request
+			$this->submission['gform_unique_id'] ?? $this->get_form_unique_id( $draft_entry['form_id'] ),
+			$this->submission['partial_entry']['ip'] ?? '',
+			$this->submission['partial_entry']['source_url'] ?? '',
+			$resume_token
 		);
 
 		if ( ! $new_resume_token ) {
@@ -236,7 +244,7 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 		}
 
 		return $new_resume_token;
-    }
+	}
 
 	/**
 	 * Mimics Gravity Forms' GFFormsModel::get_form_unique_id() method.
@@ -245,13 +253,13 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	 *
 	 * @return string Unique ID.
 	 */
-	private function get_form_unique_id( int $form_id ) : string {		
+	private function get_form_unique_id( int $form_id ) : string {
 		if ( ! isset( GFFormsModel::$unique_ids[ $form_id ] ) ) {
 			GFFormsModel::$unique_ids[ $form_id ] = uniqid();
 		}
 
 		return GFFormsModel::$unique_ids[ $form_id ];
-    }
+	}
 
 	/**
 	 * @param array $partial_entry Partial form entry.
@@ -260,7 +268,7 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	 */
 	public function add_field_value_to_partial_entry( array $partial_entry ) : array {
 		if ( ! isset( $this->field, $this->value ) ) {
-            return $partial_entry;
+			return $partial_entry;
 		}
 
 		// For an array of sub-values, add each to the partial entry individually.
@@ -284,9 +292,9 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 	 * @return array Submitted values, with new value added.
 	 */
 	public function add_field_value_to_submitted_values() : array {
-        if ( isset( $this->field, $this->value ) ) {
+		if ( isset( $this->field, $this->value ) ) {
 			$this->submission['submitted_values'][ $this->field->id ] = $this->value;
-        }
+		}
 
 		return $this->submission['submitted_values'];
 	}

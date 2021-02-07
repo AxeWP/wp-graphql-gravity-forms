@@ -30,24 +30,26 @@ class UpdateDraftEntryListFieldValue extends DraftEntryUpdater {
 	 * @return string Sanitized and JSON encoded field values.
 	 */
 	protected function prepare_field_value( array $value ) : string {
-		$values_to_save = array_map( function( $row ) {
-			$row_values = []; // Initializes array.
+		$values_to_save = array_map(
+			function( $row ) {
+				$row_values = []; // Initializes array.
 
-			// If columns are enabled, save each choice => value pair.
-			if( $this->field->enableColumns){
+				// If columns are enabled, save each choice => value pair.
+				if ( $this->field->enableColumns ) {
+					foreach ( $this->field->choices as $choice_key => $choice ) {
+						$row_values[] = [
+							$choice['value'] => isset( $row['values'][ $choice_key ] ) ? sanitize_text_field( $row['values'][ $choice_key ] ) : null,
+						];
+					}
 
-				foreach( $this->field->choices as $choice_key => $choice ){
-					$row_values[] = [
-						$choice['value'] => isset($row['values'][$choice_key]) ? sanitize_text_field($row['values'][$choice_key]) : null,
-					];
+					return $row_values;
 				}
 
-				return $row_values;
-			}
-
-			// If no columns, values can be saved directly to the array.
-			return isset( $row['values'][0]) ? sanitize_text_field($row['values'][0]) : null;
-		}, $value);
+				// If no columns, values can be saved directly to the array.
+				return isset( $row['values'][0] ) ? sanitize_text_field( $row['values'][0] ) : null;
+			},
+			$value
+		);
 
 		return (string) serialize( $values_to_save );
 	}

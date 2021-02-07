@@ -23,15 +23,18 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 	}
 
 	public function register_type() {
-			register_graphql_object_type( self::TYPE, [
+			register_graphql_object_type(
+				self::TYPE,
+				[
 					'description' => __( 'List field values.', 'wp-graphql-gravity-forms' ),
 					'fields'      => [
-							'listValues' => [
-									'type'        => [ 'list_of' => ListInputValue::TYPE ],
-									'description' => __( 'Field values.', 'wp-graphql-gravity-forms' ),
-							],
+						'listValues' => [
+							'type'        => [ 'list_of' => ListInputValue::TYPE ],
+							'description' => __( 'Field values.', 'wp-graphql-gravity-forms' ),
+						],
 					],
-			] );
+				]
+			);
 	}
 
 	/**
@@ -57,23 +60,29 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 			$field_keys = wp_list_pluck( $field->choices, 'text' );
 
 			// Save each row-value pair.
-			$listValues = array_map( function( $row ) use ( $field_keys ) {
-				$row_values = [];
+			$listValues = array_map(
+				function( $row ) use ( $field_keys ) {
+					$row_values = [];
 
-				foreach( $row as $key=>$single_value){
-					$row_values[] = $single_value[ $field_keys[ $key ] ];
-				}
+					foreach ( $row as $key => $single_value ) {
+						  $row_values[] = $single_value[ $field_keys[ $key ] ];
+					}
 
-				return ['value' => $row_values];
-			}, $entry_values );
+					return [ 'value' => $row_values ];
+				},
+				$entry_values
+			);
 
 			return compact( 'listValues' );
 		}
 
 		// If no columns, entry values can be mapped directly to 'value'.
-		$listValues = array_map( function( $single_value ) {
-			return [ 'value' => [ $single_value ] ]; // $single_value must be Iteratable.
-		}, $entry_values );
+		$listValues = array_map(
+			function( $single_value ) {
+				return [ 'value' => [ $single_value ] ]; // $single_value must be Iteratable.
+			},
+			$entry_values
+		);
 
 		return compact( 'listValues' );
 	}

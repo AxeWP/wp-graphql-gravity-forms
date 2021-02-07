@@ -12,67 +12,74 @@ use WPGraphQLGravityForms\Types\Field\Field;
  * Union between an object and a Gravity Forms field.
  */
 class ObjectFieldUnion implements Hookable, Type {
-    /**
-     * Type registered in WPGraphQL.
-     */
-    const TYPE = 'ObjectFieldUnion';
+	/**
+	 * Type registered in WPGraphQL.
+	 */
+	const TYPE = 'ObjectFieldUnion';
 
-    /**
-     * WPGraphQL for Gravity Forms plugin's class instances.
-     *
-     * @var array
-     */
-    private $instances;
+	/**
+	 * WPGraphQL for Gravity Forms plugin's class instances.
+	 *
+	 * @var array
+	 */
+	private $instances;
 
-    /**
-     * @param array WPGraphQL for Gravity Forms plugin's class instances.
-     */
-    public function __construct( array $instances ) {
-        $this->instances = $instances;
-    }
+	/**
+	 * @param array WPGraphQL for Gravity Forms plugin's class instances.
+	 */
+	public function __construct( array $instances ) {
+		$this->instances = $instances;
+	}
 
-    public function register_hooks() {
-        add_action( 'graphql_register_types', [ $this, 'register_type' ], 11 );
-    }
+	public function register_hooks() {
+		add_action( 'graphql_register_types', [ $this, 'register_type' ], 11 );
+	}
 
-    public function register_type( TypeRegistry $type_registry ) {
-        $field_mappings = $this->get_field_type_mappings();
+	public function register_type( TypeRegistry $type_registry ) {
+		$field_mappings = $this->get_field_type_mappings();
 
-        register_graphql_union_type( self::TYPE, [
-            'typeNames'   => array_values( $field_mappings ),
-            'resolveType' => function( GF_Field $field ) use ( $field_mappings, $type_registry ) {
-                if ( isset( $field_mappings[ $field['type'] ] ) ) {
-                    return $type_registry->get_type( $field_mappings[ $field['type'] ] );
-                }
+		register_graphql_union_type(
+			self::TYPE,
+			[
+				'typeNames'   => array_values( $field_mappings ),
+				'resolveType' => function( GF_Field $field ) use ( $field_mappings, $type_registry ) {
+					if ( isset( $field_mappings[ $field['type'] ] ) ) {
+						return $type_registry->get_type( $field_mappings[ $field['type'] ] );
+					}
 
-                return null;
-            },
-        ] );
-    }
+					return null;
+				},
+			]
+		);
+	}
 
-    /**
-     * Get mappings from the field types registered in Gravity Forms
-     * to the corresponding field types registered in WPGraphQL.
-     * Example: [ 'textarea' => 'TextAreaField' ]
-     *
-     * @return array Field type mappings.
-     */
-    private function get_field_type_mappings() : array {
-        $fields = array_filter( $this->instances, fn( $instance ) => $instance instanceof Field );
+	/**
+	 * Get mappings from the field types registered in Gravity Forms
+	 * to the corresponding field types registered in WPGraphQL.
+	 * Example: [ 'textarea' => 'TextAreaField' ]
+	 *
+	 * @return array Field type mappings.
+	 */
+	private function get_field_type_mappings() : array {
+		$fields = array_filter( $this->instances, fn( $instance ) => $instance instanceof Field );
 
-        /**
-         * Filter for adding custom field class instances.
-         * Classes must extend the WPGraphQLGravityForms\Types\Field\Field class and
-         * contain a "GF_TYPE" class constant specifying the Gravity Forms field type.
-         *
-         * @param array $fields Gravity Forms field class instances.
-         */
-        $fields = apply_filters( 'wp_graphql_gf_form_field_instances', $fields );
+		/**
+		 * Filter for adding custom field class instances.
+		 * Classes must extend the WPGraphQLGravityForms\Types\Field\Field class and
+		 * contain a "GF_TYPE" class constant specifying the Gravity Forms field type.
+		 *
+		 * @param array $fields Gravity Forms field class instances.
+		 */
+		$fields = apply_filters( 'wp_graphql_gf_form_field_instances', $fields );
 
-        return array_reduce( $fields, function( $mappings, $field ) {
-            $mappings[ $field::GF_TYPE ] = $field::TYPE;
+		return array_reduce(
+			$fields,
+			function( $mappings, $field ) {
+				$mappings[ $field::GF_TYPE ] = $field::TYPE;
 
-            return $mappings;
-        }, [] );
-    }
+				return $mappings;
+			},
+			[]
+		);
+	}
 }

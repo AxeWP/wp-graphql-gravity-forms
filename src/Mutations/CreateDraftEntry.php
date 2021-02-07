@@ -14,21 +14,24 @@ use WPGraphQLGravityForms\Interfaces\Mutation;
  * Create a Gravity Forms draft entry.
  */
 class CreateDraftEntry implements Hookable, Mutation {
-    /**
-     * Mutation name.
-     */
-    const NAME = 'createGravityFormsDraftEntry';
+	/**
+	 * Mutation name.
+	 */
+	const NAME = 'createGravityFormsDraftEntry';
 
-    public function register_hooks() {
-        add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
+	public function register_hooks() {
+		add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
 	}
 
 	public function register_mutation() {
-		register_graphql_mutation( self::NAME, [
-            'inputFields'         => $this->get_input_fields(),
-			'outputFields'        => $this->get_output_fields(),
-			'mutateAndGetPayload' => $this->mutate_and_get_payload(),
-        ] );
+		register_graphql_mutation(
+			self::NAME,
+			[
+				'inputFields'         => $this->get_input_fields(),
+				'outputFields'        => $this->get_output_fields(),
+				'mutateAndGetPayload' => $this->mutate_and_get_payload(),
+			]
+		);
 	}
 
 	/**
@@ -38,7 +41,7 @@ class CreateDraftEntry implements Hookable, Mutation {
 	 */
 	public static function get_input_fields() : array {
 		return [
-			'formId' => [
+			'formId'     => [
 				'type'        => 'Integer',
 				'description' => __( 'The form ID.', 'wp-graphql-gravity-forms' ),
 			],
@@ -46,16 +49,16 @@ class CreateDraftEntry implements Hookable, Mutation {
 				'type'        => 'Integer',
 				'description' => __( 'Optional. The page number where the user left off. Default is 1.', 'wp-graphql-gravity-forms' ),
 			],
-			'ip' => [
+			'ip'         => [
 				'type'        => 'String',
 				'description' => __( 'Optional. The IP address of the user who submitted the draft entry. Default is an empty string.', 'wp-graphql-gravity-forms' ),
 			],
 			// 'files' => [
-			// 	'type'        => '',
-			// 	'description' => __( '', 'wp-graphql-gravity-forms' ),
+			// 'type'        => '',
+			// 'description' => __( '', 'wp-graphql-gravity-forms' ),
 			// ],
 		];
-    }
+	}
 
 	/**
 	 * Defines the output field configuration.
@@ -68,12 +71,12 @@ class CreateDraftEntry implements Hookable, Mutation {
 				'type'        => 'String',
 				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
 			],
-			'resumeUrl' => [
+			'resumeUrl'   => [
 				'type'        => 'String',
 				'description' => __( 'Draft resume URL. If the "Referer" header is not included in the request, this will be an empty string.', 'wp-graphql-gravity-forms' ),
 			],
 		];
-    }
+	}
 
 	/**
 	 * Defines the data modification closure.
@@ -84,21 +87,21 @@ class CreateDraftEntry implements Hookable, Mutation {
 		return function( $input, AppContext $context, ResolveInfo $info ) : array {
 			if ( empty( $input ) || ! is_array( $input ) || ! isset( $input['formId'] ) ) {
 				throw new UserError( __( 'Mutation not processed. The input data was missing or invalid.', 'wp-graphql-gravity-forms' ) );
-            }
+			}
 
 			$form_id   = absint( $input['formId'] );
 			$form_info = GFFormsModel::get_form( $form_id, true );
 
-            if ( ! $form_info || ! $form_info->is_active || $form_info->is_trash ) {
-                throw new UserError( __( 'The ID for a valid, active form must be provided.', 'wp-graphql-gravity-forms' ) );
+			if ( ! $form_info || ! $form_info->is_active || $form_info->is_trash ) {
+				throw new UserError( __( 'The ID for a valid, active form must be provided.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			$form         = GFFormsModel::get_form_meta( $form_id );
 			$source_url   = esc_url_raw( $this->truncate( $_SERVER['HTTP_REFERER'] ?? '', 250 ) );
 			$resume_token = $this->save_draft_submission( $input, $form, $source_url );
 
-            if ( ! $resume_token ) {
-                throw new UserError( __( 'An error occurred while trying to create the draft entry.', 'wp-graphql-gravity-forms' ) );
+			if ( ! $resume_token ) {
+				throw new UserError( __( 'An error occurred while trying to create the draft entry.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			return [
@@ -157,7 +160,7 @@ class CreateDraftEntry implements Hookable, Mutation {
 			'date_updated' => null,
 			'form_id'      => $form['id'],
 			'ip'           => $ip,
-			'source_url'   => $source_url ,
+			'source_url'   => $source_url,
 			'user_agent'   => sanitize_text_field( $this->truncate( $_SERVER['HTTP_USER_AGENT'] ?? '', 250 ) ),
 			'created_by'   => get_current_user_id() ?: 'NULL',
 			'currency'     => gf_apply_filters( [ 'gform_currency_pre_save_entry', $form['id'] ], GFCommon::get_currency(), $form ),
@@ -176,7 +179,7 @@ class CreateDraftEntry implements Hookable, Mutation {
 		if ( strlen( $str ) > $length ) {
 			$str = substr( $str, 0, $length );
 		}
-	
+
 		return $str;
 	}
 
@@ -187,7 +190,7 @@ class CreateDraftEntry implements Hookable, Mutation {
 	 *
 	 * @return string Unique ID.
 	 */
-	private function get_form_unique_id( int $form_id ) : string {		
+	private function get_form_unique_id( int $form_id ) : string {
 		if ( ! isset( GFFormsModel::$unique_ids[ $form_id ] ) ) {
 			GFFormsModel::$unique_ids[ $form_id ] = uniqid();
 		}
@@ -218,12 +221,14 @@ class CreateDraftEntry implements Hookable, Mutation {
 		 * @param string $unused       Unused parameter. Included for consistency with the native
 		 *                             Gravity Forms gform_save_and_continue_resume_url hook.
 		 */
-		return esc_url( apply_filters(
-			'gform_save_and_continue_resume_url',
-			add_query_arg( [ 'gf_token' => $resume_token ], $source_url ),
-			$form,
-			$resume_token,
-			''
-		) );
+		return esc_url(
+			apply_filters(
+				'gform_save_and_continue_resume_url',
+				add_query_arg( [ 'gf_token' => $resume_token ], $source_url ),
+				$form,
+				$resume_token,
+				''
+			)
+		);
 	}
 }

@@ -10,14 +10,14 @@ use GraphQL\Error\UserError;
  * Update a Gravity Forms draft entry with a signature value.
  */
 class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
-    /**
-     * Mutation name.
-     */
+	/**
+	 * Mutation name.
+	 */
 	const NAME = 'updateDraftEntrySignatureFieldValue';
 
 	/**
-     * @return array The input field value.
-     */
+	 * @return array The input field value.
+	 */
 	protected function get_value_input_field() : array {
 		return [
 			'type'        => 'String',
@@ -25,11 +25,11 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 		];
 	}
 
-    /**
-     * @param string $value Base-64 encoded png signature image value.
-     *
-     * @return string The filename of the saved signature image file.
-     */
+	/**
+	 * @param string $value Base-64 encoded png signature image value.
+	 *
+	 * @return string The filename of the saved signature image file.
+	 */
 	protected function prepare_field_value( string $value ) : string {
 		$this->ensure_signature_plugin_is_active();
 		$this->ensure_signatures_folder_exists();
@@ -79,7 +79,9 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 	 * @return string $filename The filename of the saved signature image file.
 	 */
 	private function save_signature( string $signature ) : string {
-		if ( '' === $signature ) return '';
+		if ( '' === $signature ) {
+			return '';
+		}
 
 		$signature_decoded = $this->get_decoded_image_data( $signature );
 
@@ -92,8 +94,8 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 		$path            = $folder . $filename;
 		$number_of_bytes = file_put_contents( $path, $signature_decoded );
 
-        if ( false === $number_of_bytes ) {
-            throw new UserError( __( 'An error occurred while saving the signature image.', 'wp-graphql-gravity-forms' ) );
+		if ( false === $number_of_bytes ) {
+			throw new UserError( __( 'An error occurred while saving the signature image.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		return $filename;

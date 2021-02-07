@@ -19,14 +19,17 @@ class ListInputValue implements Hookable, Type {
 	}
 
 	public function register_type() {
-		register_graphql_object_type( self::TYPE, [
-			'description' => __( 'Value for a single input within a list field.', 'wp-graphql-gravity-forms' ),
-			'fields'      => [
-				'value' => [
-					'type'        => ['list_of' => 'String'],
-					'description' => __( 'Input value', 'wp-graphql-gravity-forms' ),
+		register_graphql_object_type(
+			self::TYPE,
+			[
+				'description' => __( 'Value for a single input within a list field.', 'wp-graphql-gravity-forms' ),
+				'fields'      => [
+					'value' => [
+						'type'        => [ 'list_of' => 'String' ],
+						'description' => __( 'Input value', 'wp-graphql-gravity-forms' ),
+					],
 				],
-			],
-		] );
+			]
+		);
 	}
 }

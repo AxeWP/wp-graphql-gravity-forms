@@ -22,36 +22,40 @@ class FormFieldConnection implements Hookable, Connection {
 	const FROM_FIELD = 'fields';
 
 	public function register_hooks() {
-			add_action('init', [ $this, 'register_connection' ] );
+			add_action( 'init', [ $this, 'register_connection' ] );
 	}
 
 	public function register_connection() {
-		register_graphql_connection( [
-			'fromType'      => Form::TYPE,
-			'toType'        => ObjectFieldUnion::TYPE,
-			'fromFieldName' => self::FROM_FIELD,
-			'resolve'       => function( array $root, array $args, AppContext $context, ResolveInfo $info ) : array {
-				$fields              = ( new FieldsDataManipulator() )->manipulate( $root['fields'] );
-				$connection          = Relay::connectionFromArray( $fields, $args );
-				$nodes               = array_map( fn( $edge ) => $edge['node'] ?? null, $connection['edges'] );
-				$connection['nodes'] = $nodes ?: null;
+		register_graphql_connection(
+			[
+				'fromType'      => Form::TYPE,
+				'toType'        => ObjectFieldUnion::TYPE,
+				'fromFieldName' => self::FROM_FIELD,
+				'resolve'       => function( array $root, array $args, AppContext $context, ResolveInfo $info ) : array {
+					$fields              = ( new FieldsDataManipulator() )->manipulate( $root['fields'] );
+					$connection          = Relay::connectionFromArray( $fields, $args );
+					$nodes               = array_map( fn( $edge ) => $edge['node'] ?? null, $connection['edges'] );
+					$connection['nodes'] = $nodes ?: null;
 
-				return $connection;
-			},
-		] );
-	
-		register_graphql_connection( [
-			'fromType'      => Form::TYPE,
-			'toType'        => Entry::TYPE,
-			'fromFieldName' => 'entries',
-			'resolve'       => function( array $root, array $args, AppContext $context, ResolveInfo $info) : array {
-				$form_entries           = GFAPI::get_entries( $root['formId'] );
-				$entry_data_manipulator = new EntryDataManipulator();
-				$entries                = array_map( fn( array $entry ) => $entry_data_manipulator->manipulate( $entry ), $form_entries );
-				$connection             = Relay::connectionFromArray( $entries, $args);
+					return $connection;
+				},
+			]
+		);
 
-				return $connection;
-			},
-		]);
+		register_graphql_connection(
+			[
+				'fromType'      => Form::TYPE,
+				'toType'        => Entry::TYPE,
+				'fromFieldName' => 'entries',
+				'resolve'       => function( array $root, array $args, AppContext $context, ResolveInfo $info ) : array {
+					$form_entries           = GFAPI::get_entries( $root['formId'] );
+					$entry_data_manipulator = new EntryDataManipulator();
+					$entries                = array_map( fn( array $entry ) => $entry_data_manipulator->manipulate( $entry ), $form_entries );
+					$connection             = Relay::connectionFromArray( $entries, $args );
+
+					return $connection;
+				},
+			]
+		);
 	}
 }
