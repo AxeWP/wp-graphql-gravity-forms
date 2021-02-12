@@ -1,6 +1,7 @@
 # 🚀📄 WPGraphQL for Gravity Forms
 
 [![Project Status: Active.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) ![GitHub](https://img.shields.io/github/license/harness-software/wp-graphql-gravity-forms) ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/harness-software/wp-graphql-gravity-forms?include_prereleases) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/harness-software/wp-graphql-gravity-forms/0.1.0) ![GitHub forks](https://img.shields.io/github/forks/harness-software/wp-graphql-gravity-forms?style=social) ![GitHub Repo stars](https://img.shields.io/github/stars/harness-software/wp-graphql-gravity-forms?style=social)
+
 A WordPress plugin that provides a GraphQL API for interacting with Gravity Forms.
 
 - [Join the WPGraphQL community on Slack.](https://join.slack.com/t/wp-graphql/shared_invite/zt-3vloo60z-PpJV2PFIwEathWDOxCTTLA)
@@ -72,10 +73,10 @@ Our hope for this open source project is that it will enable more teams to lever
 | Time              | :heavy_check_mark:                     | :heavy_check_mark:                        |
 | Website           | :heavy_check_mark:                     | :heavy_check_mark:                        |
 
-<sub><a name="supportsQuery">1</a>: Supports [querying the field and its properties](#documentation-get-form).</sub>
-<sub><a name="supportsMutation">2</a>: Supports updating the field.</sub>
-<sub><a name="supportsNA">3</a>: This field is for display purposes only, so there is no need for updating.</sub>
-<sub><a name="supportsCaptcha">4</a>: Captcha fields should be validated before the form is submitted, so it doesn't make sense to handle a server-side update. If you have a use case for when a captcha field should be validated server-side, please submit a Feature Request.
+<a name="supportsQuery">1</a>: Supports [querying the field and its properties](#documentation-get-form).
+<a name="supportsMutation">2</a>: Supports updating the field.
+<a name="supportsNA">3</a>: This field is for display purposes only, so there is no need for updating.
+<a name="supportsCaptcha">4</a>: Captcha fields should be validated before the form is submitted, so it doesn't make sense to handle a server-side update. If you have a use case for when a captcha field should be validated server-side, please submit a Feature Request.
 
 ## Future Feature Enhancements <a name="future-enhancements" />
 
