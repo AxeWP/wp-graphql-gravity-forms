@@ -1,21 +1,31 @@
 <?php
+/**
+ * Mutation - updateDraftEntryCheckboxFieldValue
+ *
+ * Registers mutation to update a Gravity Forms draft entry checkbox field value.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
 use WPGraphQLGravityForms\Types\Input\CheckboxInput;
 
 /**
- * Update a Gravity Forms draft entry checkbox field value.
+ * Class - UpdateDraftEntryCheckboxFieldValue
  */
 class UpdateDraftEntryCheckboxFieldValue extends DraftEntryUpdater {
-    /**
-     * Mutation name.
-     */
+	/**
+	 * Mutation name.
+	 */
 	const NAME = 'updateDraftEntryCheckboxFieldValue';
 
 	/**
-     * @return array The input field value.
-     */
+	 * Defines the input field value configuration.
+	 *
+	 * @return array
+	 */
 	protected function get_value_input_field() : array {
 		return [
 			'type'        => [ 'list_of' => CheckboxInput::TYPE ],
@@ -23,16 +33,22 @@ class UpdateDraftEntryCheckboxFieldValue extends DraftEntryUpdater {
 		];
 	}
 
-    /**
-     * @param array $value The field value.
-     *
-     * @return array Field value to save.
-     */
+	/**
+	 * Sanitizes the checkbox field values.
+	 *
+	 * @param array $value The field value.
+	 *
+	 * @return array
+	 */
 	protected function prepare_field_value( array $value ) : array {
-		$values_to_save = array_reduce( $this->field->inputs, function( array $values_to_save, array $input ) : array {
-			$values_to_save[ $input['id'] ] = ''; // Initialize all inputs to an empty string.
-			return $values_to_save;
-		}, [] );
+		$values_to_save = array_reduce(
+			$this->field->inputs,
+			function( array $values_to_save, array $input ) : array {
+				$values_to_save[ $input['id'] ] = ''; // Initialize all inputs to an empty string.
+				return $values_to_save;
+			},
+			[]
+		);
 
 		foreach ( $value as $single_value ) {
 			$input_id    = sanitize_text_field( $single_value['inputId'] );

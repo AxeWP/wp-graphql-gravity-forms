@@ -1,4 +1,12 @@
 <?php
+/**
+ * Mutation - deleteGravityFormsEntry
+ *
+ * Registers mutation to delete a Gravity Forms entry.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
@@ -10,24 +18,33 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Mutation;
 
 /**
- * Delete a Gravity Forms entry.
+ * Class - DeleteEntry
  */
 class DeleteEntry implements Hookable, Mutation {
-    /**
-     * Mutation name.
-     */
-    const NAME = 'deleteGravityFormsEntry';
+	/**
+	 * Mutation name.
+	 */
+	const NAME = 'deleteGravityFormsEntry';
 
-    public function register_hooks() {
-        add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
+	/**
+	 * Mutation name.
+	 */
+	public function register_hooks() {
+		add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
 	}
 
+	/**
+	 * Registers mutation.
+	 */
 	public function register_mutation() {
-		register_graphql_mutation( self::NAME, [
-            'inputFields'         => $this->get_input_fields(),
-			'outputFields'        => $this->get_output_fields(),
-			'mutateAndGetPayload' => $this->mutate_and_get_payload(),
-        ] );
+		register_graphql_mutation(
+			self::NAME,
+			[
+				'inputFields'         => $this->get_input_fields(),
+				'outputFields'        => $this->get_output_fields(),
+				'mutateAndGetPayload' => $this->mutate_and_get_payload(),
+			]
+		);
 	}
 
 	/**
@@ -37,12 +54,12 @@ class DeleteEntry implements Hookable, Mutation {
 	 */
 	public static function get_input_fields() : array {
 		return [
-            'entryId' => [
+			'entryId' => [
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'ID of the entry to delete', 'wp-graphql-gravity-forms' ),
 			],
 		];
-    }
+	}
 
 	/**
 	 * Defines the output field configuration.
@@ -54,9 +71,9 @@ class DeleteEntry implements Hookable, Mutation {
 			'entryId' => [
 				'type'        => 'Integer',
 				'description' => __( 'The ID of the entry that was deleted.', 'wp-graphql-gravity-forms' ),
-            ],
+			],
 		];
-    }
+	}
 
 	/**
 	 * Defines the data modification closure.
@@ -72,7 +89,7 @@ class DeleteEntry implements Hookable, Mutation {
 				throw new UserError( __( 'An invalid entry ID was provided.', 'wp-graphql-gravity-forms' ) );
 			}
 
-            $result = GFAPI::delete_entry( $entry_id );
+			$result = GFAPI::delete_entry( $entry_id );
 
 			if ( is_wp_error( $result ) ) {
 				throw new UserError( __( 'An error occurred while deleting the entry', 'wp-graphql-gravity-forms' ) );

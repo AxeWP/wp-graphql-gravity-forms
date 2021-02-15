@@ -1,4 +1,11 @@
 <?php
+/**
+ * GraphQL Object Type - TimeFieldValue
+ * Values for an individual Time field.
+ *
+ * @package WPGraphQLGravityForms\Types\Field\FieldValue
+ * @since   0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
@@ -9,59 +16,68 @@ use WPGraphQLGravityForms\Interfaces\FieldValue;
 use WPGraphQLGravityForms\Types\Field\TimeField;
 
 /**
- * Values for an individual Time field.
+ * Class - TimeFieldValue
  */
 class TimeFieldValue implements Hookable, Type, FieldValue {
-    /**
-     * Type registered in WPGraphQL.
-     */
-    const TYPE = TimeField::TYPE . 'Value';
+	/**
+	 * Type registered in WPGraphQL.
+	 */
+	const TYPE = TimeField::TYPE . 'Value';
 
-    public function register_hooks() {
-        add_action( 'graphql_register_types', [ $this, 'register_type' ] );
-    }
+	/**
+	 * Register hooks to WordPress.
+	 */
+	public function register_hooks() {
+		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	}
 
-    public function register_type() {
-        register_graphql_object_type( self::TYPE, [
-            'description' => __( 'Time field values.', 'wp-graphql-gravity-forms' ),
-            'fields'      => [
-                'displayValue' => [
-                    'type'        => 'String',
-                    'description' => __( 'The full display value. Example: "08:25 am".', 'wp-graphql-gravity-forms' ),
-                ],
-                'hours' => [
-                    'type'        => 'String',
-                    'description' => __( 'The hours, in this format: hh.', 'wp-graphql-gravity-forms' ),
-                ],
-                'minutes' => [
-                    'type'        => 'String',
-                    'description' => __( 'The minutes, in this format: mm.', 'wp-graphql-gravity-forms' ),
-                ],
-                'amPm' => [
-                    'type'        => 'String',
-                    'description' => __( 'AM or PM.', 'wp-graphql-gravity-forms' ),
-                ],
-            ],
-        ] );
-    }
+	/**
+	 * Register Object type to GraphQL schema.
+	 */
+	public function register_type() {
+		register_graphql_object_type(
+			self::TYPE,
+			[
+				'description' => __( 'Time field values.', 'wp-graphql-gravity-forms' ),
+				'fields'      => [
+					'displayValue' => [
+						'type'        => 'String',
+						'description' => __( 'The full display value. Example: "08:25 am".', 'wp-graphql-gravity-forms' ),
+					],
+					'hours'        => [
+						'type'        => 'String',
+						'description' => __( 'The hours, in this format: hh.', 'wp-graphql-gravity-forms' ),
+					],
+					'minutes'      => [
+						'type'        => 'String',
+						'description' => __( 'The minutes, in this format: mm.', 'wp-graphql-gravity-forms' ),
+					],
+					'amPm'         => [
+						'type'        => 'String',
+						'description' => __( 'AM or PM.', 'wp-graphql-gravity-forms' ),
+					],
+				],
+			]
+		);
+	}
 
-    /**
-     * Get the field value.
-     *
-     * @param array    $entry Gravity Forms entry.
-     * @param GF_Field $field Gravity Forms field.
-     *
-     * @return array Entry field value.
-     */
-    public static function get( array $entry, GF_Field $field ) : array {
-			if ( ! isset( $entry [ $field['id'] ] ) ) {
-				return [ 
-					'displayValue' => null,
-					'hours' => null,
-					'minutes' => null,
-					'amPm'=> null,
-				];
-			}
+	/**
+	 * Get the field value.
+	 *
+	 * @param array    $entry Gravity Forms entry.
+	 * @param GF_Field $field Gravity Forms field.
+	 *
+	 * @return array Entry field value.
+	 */
+	public static function get( array $entry, GF_Field $field ) : array {
+		if ( ! isset( $entry [ $field['id'] ] ) ) {
+			return [
+				'displayValue' => null,
+				'hours'        => null,
+				'minutes'      => null,
+				'amPm'         => null,
+			];
+		}
 
 			$display_value  = $entry[ $field['id'] ];
 			$parts_by_colon = explode( ':', $display_value );
@@ -71,10 +87,10 @@ class TimeFieldValue implements Hookable, Type, FieldValue {
 			$minutes        = rtrim( ltrim( $display_value, "{$hours}:" ), " {$am_pm}" );
 
 			return [
-					'displayValue' => $display_value,
-					'hours'        => $hours,
-					'minutes'      => $minutes,
-					'amPm'         => $am_pm,
+				'displayValue' => $display_value,
+				'hours'        => $hours,
+				'minutes'      => $minutes,
+				'amPm'         => $am_pm,
 			];
-    }
+	}
 }

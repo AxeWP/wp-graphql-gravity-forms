@@ -1,9 +1,15 @@
 <?php
+/**
+ * Interface for classes containing WordPress action/filter hooks.
+ *
+ * @package WPGraphQLGravityForms\Interfaces
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Interfaces;
 
 /**
- * Interface for classes containing WordPress action/filter hooks.
+ * Interface - Hookable
  */
 interface Hookable {
 	/**

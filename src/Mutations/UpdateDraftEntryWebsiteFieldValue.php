@@ -1,4 +1,12 @@
 <?php
+/**
+ * Mutation - updateDraftEntryWebsiteFieldValue
+ *
+ * Registers mutation to update a Gravity Forms draft entry website field value.
+ *
+ * @package WPGraphQLGravityForms\Mutation
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Mutations;
 
@@ -6,14 +14,16 @@ namespace WPGraphQLGravityForms\Mutations;
  * Update a Gravity Forms draft entry Website field value.
  */
 class UpdateDraftEntryWebsiteFieldValue extends DraftEntryUpdater {
-    /**
-     * Mutation name.
-     */
+	/**
+	 * Mutation name.
+	 */
 	const NAME = 'updateDraftEntryWebsiteFieldValue';
 
 	/**
-     * @return array The input field value.
-     */
+	 * Defines the input field value configuration.
+	 *
+	 * @return array
+	 */
 	protected function get_value_input_field() : array {
 		return [
 			'type'        => 'String',
@@ -21,11 +31,13 @@ class UpdateDraftEntryWebsiteFieldValue extends DraftEntryUpdater {
 		];
 	}
 
-    /**
-     * @param string The field value.
-     *
-     * @return string The sanitized field value.
-     */
+	/**
+	 * Sanitizes the field value.
+	 *
+	 * @param string $value The field value.
+	 *
+	 * @return string
+	 */
 	protected function prepare_field_value( string $value ) : string {
 		return esc_url_raw( $value );
 	}

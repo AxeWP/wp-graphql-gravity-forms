@@ -1,9 +1,15 @@
 <?php
+/**
+ * Interface for classes that register GraphQL Connections.
+ *
+ * @package WPGraphQLGravityForms\Interfaces
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Interfaces;
 
 /**
- * Interface for classes that register GraphQL Connections.
+ * Interface - Connection
  */
 interface Connection {
 	/**

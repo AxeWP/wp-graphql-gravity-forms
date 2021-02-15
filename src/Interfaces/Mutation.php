@@ -1,13 +1,19 @@
 <?php
+/**
+ * Interface for a GraphQL Mutation.
+ *
+ * @package WPGraphQLGravityForms\Interfaces
+ * @since 0.0.1
+ */
 
 namespace WPGraphQLGravityForms\Interfaces;
 
 /**
- * Interface for a GraphQL Mutation.
+ * Interface - Mutation.
  */
 interface Mutation {
-    /**
-     * Register mutation in GraphQL schema.
-     */
-    public function register_mutation();
+	/**
+	 * Register mutation in GraphQL schema.
+	 */
+	public function register_mutation();
 }
