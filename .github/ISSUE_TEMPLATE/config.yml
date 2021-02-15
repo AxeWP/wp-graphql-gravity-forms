@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: General Support Request
+    url: https://github.com/harness-software/wp-graphql-gravity-forms/discussions
+    about: For general help requests, create a new topic in Github Discussions
