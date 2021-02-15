@@ -1,8 +1,12 @@
 # 🚀📄 WPGraphQL for Gravity Forms
 
+[![Project Status: Active.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) ![GitHub](https://img.shields.io/github/license/harness-software/wp-graphql-gravity-forms) ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/harness-software/wp-graphql-gravity-forms?include_prereleases) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/harness-software/wp-graphql-gravity-forms/0.1.0) ![GitHub forks](https://img.shields.io/github/forks/harness-software/wp-graphql-gravity-forms?style=social) ![GitHub Repo stars](https://img.shields.io/github/stars/harness-software/wp-graphql-gravity-forms?style=social)
+
 A WordPress plugin that provides a GraphQL API for interacting with Gravity Forms.
 
-## Overview
+- [Join the WPGraphQL community on Slack.](https://join.slack.com/t/wp-graphql/shared_invite/zt-3vloo60z-PpJV2PFIwEathWDOxCTTLA)
+
+## Overview <a name="overview" />
 
 Using WordPress as a headless CMS with a separate JavaScript-powered frontend single-page app is an increasingly popular tech stack. Traditionally, REST APIs have been used for the purpose of sending data back & forth between the frontend and backend in setups like this but the REST architecture has its limitations.
 
@@ -14,24 +18,79 @@ WPGraphQL for Gravity Forms extends the WPGraphQL plugin, allowing frontend apps
 
 Our hope for this open source project is that it will enable more teams to leverage GraphQL for building fast, interactive frontend apps that source their data from WordPress and Gravity Forms.
 
-## System Requirements
+## System Requirements <a name="system-requirements" />
 
 - PHP 7.4+
-- WPGraphQL 0.12.3
+- WPGraphQL 1.0.0+
 - Gravity Forms 2.4+
 - WordPress 5.4.1+
 
-## Getting Started
+## Quick Install <a name="quick-install" />
 
-1. Use [Composer](https://getcomposer.org/) to require the plugin as a dependency of your project. Alternatively, you can download it into your `plugins` directory, just like any other WordPress plugin.
-1. Activate the plugin, along with the [WPGraphQL](https://www.wpgraphql.com/) and [Gravity Forms](https://www.gravityforms.com/) plugins that it depends on.
-1. Use a tool like [GraphiQL](https://electronjs.org/apps/graphiql) to view the schema and send a few test requests to your `/graphql` endpoint to interact with Gravity Forms data, and start sending requests from your frontend app.
+1. Install & activate [WPGraphQL](https://www.wpgraphql.com/).
+2. Install & activate [Gravity Forms](https://www.gravityforms.com/) and any supported addons.
+3. Download the zip of this repository and upload it to your WordPress install, and activate the plugin.
 
----
+## Supported Features <a name="supported-features"/>
 
-# Documentation
+- Querying forms and entries.
+- Updating and deleting draft entries, and submitting forms.
+- Deleting entries.
 
-## Get a Form and its Fields
+### Supported Form Fields <a name="supported-fields">
+
+| Field             | Querying<sup>[1](#supportsQuery)</sup> | Updating<sup>[2](#supportsMutation)</sup> |
+| ----------------- | -------------------------------------- | ----------------------------------------- |
+| Address           | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Captcha           | :heavy_check_mark:                     | N/A                                       |
+| Chained Selects   | :heavy_check_mark:                     | :hammer:                                  |
+| Checkbox          | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Date              | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Email             | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| FileUpload        | :heavy_check_mark:                     | :hammer:                                  |
+| Hidden            | :heavy_check_mark:                     | :hammer:                                  |
+| HTML              | :heavy_check_mark:                     | N/A<sup>[3](#supportsNA)</sup>            |
+| List              | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Multiselect       | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Name              | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Number            | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Page              | :heavy_check_mark:                     | N/A<sup>[3](#supportsNA)</sup>            |
+| Password          | :heavy_check_mark:                     | :hammer:                                  |
+| Phone             | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Post Category     | :heavy_check_mark:                     | :hammer:                                  |
+| Post Content      | :heavy_check_mark:                     | :hammer:                                  |
+| Post Custom Field | :heavy_check_mark:                     | :hammer:                                  |
+| Post Excerpt      | :heavy_check_mark:                     | :hammer:                                  |
+| Post Image        | :heavy_check_mark:                     | :hammer:                                  |
+| Post Tags         | :heavy_check_mark:                     | :hammer:                                  |
+| Post Title        | :heavy_check_mark:                     | :hammer:                                  |
+| Radio             | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Section           | :heavy_check_mark:                     | N/A<sup>[3](#supportsNA)</sup>            |
+| Select            | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Signature         | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Text              | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| TextArea          | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Time              | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Website           | :heavy_check_mark:                     | :heavy_check_mark:                        |
+
+<a name="supportsQuery">1</a>: Supports [querying the field and its properties](#documentation-get-form).
+<a name="supportsMutation">2</a>: Supports updating the field.
+<a name="supportsNA">3</a>: This field is for display purposes only, so there is no need for updating.
+<a name="supportsCaptcha">4</a>: Captcha fields should be validated before the form is submitted, so it doesn't make sense to handle a server-side update. If you have a use case for when a captcha field should be validated server-side, please submit a Feature Request.
+
+## Future Feature Enhancements <a name="future-enhancements" />
+
+- Add support for backwards pagination of lists of entries.
+- Add support for updating draft entries with additional form fields.
+- Ability to query for lists of draft entries, or both entries and draft entries
+- Ability to get the total count for a list of entries.
+- Ability to update an individual Gravity Forms entry.
+- Ability to create, update, and delete an individual Gravity Form.
+- Create & update integration tests.
+
+# Documentation <a name="documentation" />
+
+## Get a Form and its Fields <a name="documentation-get-form" />
 
 The example query below shows how you can get a form and its fields.
 If you want to get the form with an ID of `1`, you need to generate a global ID for that object and pass the global ID in as the `id` input. This can be done in JavaScript using the `btoa()` function like this, where `GravityFormsForm` is the GraphQL type and `1` is the form ID:
@@ -81,7 +140,7 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 }
 ```
 
-## Submit a Form Entry
+## Submit a Form Entry <a name="documentation-submit-form-entry" />
 
 The form entry submission process works like this:
 
@@ -93,7 +152,7 @@ If you're wondering why several mutations are required to submit a form entry ra
 
 For large forms, #2 on the list above could potentially result in the need to send a large number of "update" mutations to the backend to update form entry field values. Using something like Apollo Client's [apollo-link-batch-http](https://www.apollographql.com/docs/link/links/batch-http/) is recommended so that your app will be able to send a large number of mutations to the backend all within a single HTTP request to update the draft entry.
 
-As of Dec. 23, 2019, updating draft entries with file upload field data is not yet supported, along with a few other field types.
+<strong>Note:</strong> Not all fields currently support updates. For a list of field types that are currently supported, please review the [Supported Form Fields table](#supported-fields).
 
 ### Example Mutations
 
@@ -206,7 +265,7 @@ mutation {
 }
 ```
 
-## Delete a Draft Entry
+## Delete a Draft Entry <a name="documentation-delete-draft-entry" />
 
 The mutation below shows how to delete a draft entry. The `resumeToken` of the deleted draft entry will be in the response.
 
@@ -225,11 +284,11 @@ mutation {
 }
 ```
 
-## Get a Single Draft Entry
+## Get a Single Draft Entry <a name="documentation-get-draft-entry" />
 
 The `gravityFormsEntry` query supports both entries and draft entries. See the "Get a Single Entry" section below.
 
-## Get a List of Entries
+## Get a List of Entries <a name="documentation-get-entries" />
 
 The code comments in the example below explain how you can get a filtered list of entries.
 
@@ -312,7 +371,7 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 }
 ```
 
-## Get a Single Entry
+## Get a Single Entry <a name="documentation-get-single-entry" />
 
 The example query below shows how you can get a single entry by ID, and data about the fields and their values.
 
@@ -376,7 +435,7 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
 }
 ```
 
-## Delete an Entry
+## Delete an Entry <a name="documentation-delete-entry" />
 
 The mutation below shows how to delete an entry. The `entryId` of the deleted entry will be in the response.
 
@@ -390,7 +449,7 @@ mutation {
 }
 ```
 
-## Get a List of Forms
+## Get a List of Forms <a name="documentation-get-forms" />
 
 The example query below shows how you can fetch data for multiple forms at once.
 
@@ -448,15 +507,3 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
   }
 }
 ```
-
-## Future Feature Enhancements
-
-- Add support for backwards pagination of lists of entries.
-- Ability to query for lists of draft entries, or both entries and draft entries
-- Add support for updating draft entries with file upload data.
-- Ability to get the total count for a list of entries.
-- Ability to update an individual Gravity Forms entry.
-- Create & update integration tests.
-- Ability to create an individual Gravity Form.
-- Ability to update an individual Gravity Form.
-- Ability to delete an individual Gravity Form.
