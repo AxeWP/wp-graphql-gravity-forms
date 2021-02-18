@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field
  * @since   0.0.1
+ * @since   0.1.0 Use FieldProperty\SubLabelPlacementProperty instead of local property.
  */
 
 namespace WPGraphQLGravityForms\Types\Field;
@@ -54,19 +55,19 @@ class AddressField extends Field {
 					FieldProperty\SubLabelPlacementProperty::get(),
 					[
 						// @TODO - Convert to an enum. Possible values: international, us, canadian
-						'addressType'       => [
+						'addressType'     => [
 							'type'        => 'String',
 							'description' => __( 'Determines the type of address to be displayed.', 'wp-graphql-gravity-forms' ),
 						],
-						'defaultCountry'    => [
+						'defaultCountry'  => [
 							'type'        => 'String',
 							'description' => __( 'Contains the country that will be selected by default. Only applicable when "addressType" is set to "international".', 'wp-graphql-gravity-forms' ),
 						],
-						'defaultProvince'   => [
+						'defaultProvince' => [
 							'type'        => 'String',
 							'description' => __( 'Contains the province that will be selected by default. Only applicable when "addressType" is set to "canadian".', 'wp-graphql-gravity-forms' ),
 						],
-						'defaultState'      => [
+						'defaultState'    => [
 							'type'        => 'String',
 							'description' => __( 'Contains the state that will be selected by default. Only applicable when "addressType" is set to "us".', 'wp-graphql-gravity-forms' ),
 						],

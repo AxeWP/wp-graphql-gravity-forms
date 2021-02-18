@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field
  * @since   0.0.1
+ * @since   0.1.0 Use FieldProperty\PageNumberProperty instead of local property.
  */
 
 namespace WPGraphQLGravityForms\Types\Field;
