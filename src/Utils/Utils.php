@@ -24,7 +24,7 @@ class Utils {
 	 * @return array
 	 * @since 0.1.0
 	 */
-	public function deprecate_property( array $property, string $reason ) : array {
+	public static function deprecate_property( array $property, string $reason ) : array {
 		$property_key = array_key_first( $property );
 
 		// Add deprecation reason to property.
