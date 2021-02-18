@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field
  * @since   0.0.1
+ * @since   0.1.0 Use FieldProperty\InputTypeProperty instead of local property.
  */
 
 namespace WPGraphQLGravityForms\Types\Field;
@@ -48,6 +49,7 @@ class PostCustomField extends Field {
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\ErrorMessageProperty::get(),
 					FieldProperty\InputNameProperty::get(),
+					FieldProperty\InputTypeProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
 					FieldProperty\NoDuplicatesProperty::get(),
 					FieldProperty\PlaceholderProperty::get(),
@@ -56,10 +58,6 @@ class PostCustomField extends Field {
 						'postCustomFieldName' => [
 							'type'        => 'String',
 							'description' => __( 'The name of the Post Custom Field that the submitted value should be assigned to.', 'wp-graphql-gravity-forms' ),
-						],
-						'inputType'           => [
-							'type'        => 'String',
-							'description' => __( 'Contains a field type and allows a field type to be displayed as another field type. A good example is the Post Custom Field, that can be displayed as various different types of fields.', 'wp-graphql-gravity-forms' ),
 						],
 					]
 				),
