@@ -51,6 +51,7 @@ class AddressField extends Field {
 					FieldProperty\IsRequiredProperty::get(),
 					FieldProperty\LabelPlacementProperty::get(),
 					FieldProperty\SizeProperty::get(),
+					FieldProperty\SubLabelPlacementProperty::get(),
 					[
 						// @TODO - Convert to an enum. Possible values: international, us, canadian
 						'addressType'       => [
@@ -68,10 +69,6 @@ class AddressField extends Field {
 						'defaultState'      => [
 							'type'        => 'String',
 							'description' => __( 'Contains the state that will be selected by default. Only applicable when "addressType" is set to "us".', 'wp-graphql-gravity-forms' ),
-						],
-						'subLabelPlacement' => [
-							'type'        => 'String',
-							'description' => __( 'The placement of the labels for the fields (street, city, zip/postal code, etc.) within the address group. This setting controls all of the address pieces, they cannot be set individually. They may be aligned above or below the inputs. If this property is not set, the “Sub-Label Placement” setting on the Form Settings->Form Layout page is used. If no setting is specified, the default is above inputs.', 'wp-graphql-gravity-forms' ),
 						],
 						// @TODO - add placeholders.
 					],
