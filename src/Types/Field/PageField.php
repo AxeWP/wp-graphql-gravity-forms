@@ -11,6 +11,7 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Button\Button;
+use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
  * Class - PageField
@@ -44,15 +45,13 @@ class PageField extends Field {
 				'fields'      => array_merge(
 					$this->get_global_properties(),
 					$this->get_custom_properties(),
+					FieldProperty\DisplayOnlyProperty::get(),
 					[
-						'displayOnly'    => [
-							'type'        => 'Boolean',
-							'description' => __( 'Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true.', 'wp-graphql-gravity-forms' ),
-						],
 						'nextButton'     => [
 							'type'        => Button::TYPE,
 							'description' => __( 'An array containing the the individual properties for the "Next" button.', 'wp-graphql-gravity-forms' ),
 						],
+						// Although the property name is the same, this field is different than FieldProperty\PageNumberProperty.
 						'pageNumber'     => [
 							'type'        => 'Integer',
 							'description' => __( 'The page number of the current page.', 'wp-graphql-gravity-forms' ),
