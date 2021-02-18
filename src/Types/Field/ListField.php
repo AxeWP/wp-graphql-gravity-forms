@@ -50,6 +50,7 @@ class ListField extends Field {
 					FieldProperty\InputNameProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
 					FieldProperty\LabelPlacementProperty::get(),
+					FieldProperty\PageNumberProperty::get(),
 					[
 						'addIconUrl'    => [
 							'type'        => 'String',
@@ -70,10 +71,6 @@ class ListField extends Field {
 						'maxRows'       => [
 							'type'        => 'Integer',
 							'description' => __( 'The maximum number of rows the user can add to the field.', 'wp-graphql-gravity-forms' ),
-						],
-						'pageNumber'    => [
-							'type'        => 'Integer',
-							'description' => __( 'The form page this field is located on. Default is 1.', 'wp-graphql-gravity-forms' ),
 						],
 					]
 				),
