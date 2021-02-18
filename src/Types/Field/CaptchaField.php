@@ -11,6 +11,7 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - CaptchaField
@@ -44,7 +45,9 @@ class CaptchaField extends Field {
 				'fields'      => array_merge(
 					$this->get_global_properties(),
 					$this->get_custom_properties(),
+					FieldProperty\AdminLabelProperty::get(),
 					FieldProperty\ErrorMessageProperty::get(),
+					FieldProperty\LabelProperty::get(),
 					[
 						/**
 						 * Possible values: recaptcha, simple_captcha, math
@@ -75,7 +78,22 @@ class CaptchaField extends Field {
 							'type'        => 'String',
 							'description' => __( 'Determines the image’s background color, in HEX format (i.e. #CCCCCC). Only applicable to simple_captcha and math captcha types.', 'wp-graphql-gravity-forms' ),
 						],
-					]
+
+					],
+					/**
+					 * Depreciated field properties.
+					 *
+					 * @since 0.1.0
+					 */
+
+					// translators: Gravity Forms Field type.
+					Utils::deprecate_property( FieldProperty\AdminLabelProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
+					// translators: Gravity Forms Field type.
+					Utils::deprecate_property( FieldProperty\AdminOnlyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
+					// translators: Gravity Forms Field type.
+					Utils::deprecate_property( FieldProperty\AllowsPrepopulateProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
+					// translators: Gravity Forms Field type.
+					Utils::deprecate_property( FieldProperty\VisibilityProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
 				),
 			]
 		);

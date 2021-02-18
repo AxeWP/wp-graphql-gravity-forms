@@ -45,14 +45,19 @@ class RadioField extends Field {
 				'fields'      => array_merge(
 					$this->get_global_properties(),
 					$this->get_custom_properties(),
+					FieldProperty\AdminLabelProperty::get(),
+					FieldProperty\AdminOnlyProperty::get(),
+					FieldProperty\AllowsPrepopulateProperty::get(),
 					FieldProperty\ChoicesProperty::get(),
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\EnableChoiceValueProperty::get(),
 					FieldProperty\ErrorMessageProperty::get(),
 					FieldProperty\InputNameProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
+					FieldProperty\LabelProperty::get(),
 					FieldProperty\NoDuplicatesProperty::get(),
 					FieldProperty\SizeProperty::get(),
+					FieldProperty\VisibilityProperty::get(),
 					[
 						'enableOtherChoice' => [
 							'type'        => 'Boolean',

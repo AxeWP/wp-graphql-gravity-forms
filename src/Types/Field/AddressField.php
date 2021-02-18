@@ -45,14 +45,19 @@ class AddressField extends Field {
 				'fields'      => array_merge(
 					$this->get_global_properties(),
 					$this->get_custom_properties(),
+					FieldProperty\AdminLabelProperty::get(),
+					FieldProperty\AdminOnlyProperty::get(),
+					FieldProperty\AllowsPrepopulateProperty::get(),
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\ErrorMessageProperty::get(),
 					FieldProperty\InputNameProperty::get(),
 					FieldProperty\InputsProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
+					FieldProperty\LabelProperty::get(),
 					FieldProperty\LabelPlacementProperty::get(),
 					FieldProperty\SizeProperty::get(),
 					FieldProperty\SubLabelPlacementProperty::get(),
+					FieldProperty\VisibilityProperty::get(),
 					[
 						// @TODO - Convert to an enum. Possible values: international, us, canadian
 						'addressType'     => [

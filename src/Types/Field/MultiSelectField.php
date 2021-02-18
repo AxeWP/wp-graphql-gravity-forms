@@ -47,6 +47,9 @@ class MultiSelectField extends Field {
 				'fields'      => array_merge(
 					$this->get_global_properties(),
 					$this->get_custom_properties(),
+					FieldProperty\AdminLabelProperty::get(),
+					FieldProperty\AdminOnlyProperty::get(),
+					FieldProperty\AllowsPrepopulateProperty::get(),
 					FieldProperty\DescriptionPlacementProperty::get(),
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\EnableChoiceValueProperty::get(),
@@ -54,7 +57,9 @@ class MultiSelectField extends Field {
 					FieldProperty\ErrorMessageProperty::get(),
 					FieldProperty\InputNameProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
+					FieldProperty\LabelProperty::get(),
 					FieldProperty\SizeProperty::get(),
+					FieldProperty\VisibilityProperty::get(),
 					[
 						'choices' => [
 							'type'        => [ 'list_of' => FieldProperty\MultiSelectChoiceProperty::TYPE ],

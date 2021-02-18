@@ -13,6 +13,7 @@ namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Button\Button;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - PageField
@@ -61,7 +62,23 @@ class PageField extends Field {
 							'type'        => Button::TYPE,
 							'description' => __( 'An array containing the the individual properties for the "Previous" button.', 'wp-graphql-gravity-forms' ),
 						],
-					]
+					],
+					/**
+					 * Depreciated field properties.
+					 *
+					 * @since 0.1.0
+					 */
+
+					// translators: Gravity Forms Field type.
+					Utils::deprecate_property( FieldProperty\AdminLabelProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
+					// translators: Gravity Forms Field type.
+					Utils::deprecate_property( FieldProperty\AdminOnlyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
+					// translators: Gravity Forms Field type.
+					Utils::deprecate_property( FieldProperty\AllowsPrepopulateProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
+					// translators: Gravity Forms Field type.
+					Utils::deprecate_property( FieldProperty\LabelProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
+					// translators: Gravity Forms Field type.
+					Utils::deprecate_property( FieldProperty\VisibilityProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
 				),
 			]
 		);
