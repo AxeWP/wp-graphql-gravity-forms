@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field
  * @since   0.0.1
+ * @since   0.2.0 Add missing properties.
  */
 
 namespace WPGraphQLGravityForms\Types\Field;
@@ -44,22 +45,26 @@ class PostCustomField extends Field {
 				'fields'      => array_merge(
 					$this->get_global_properties(),
 					$this->get_custom_properties(),
+					FieldProperty\AdminLabelProperty::get(),
+					FieldProperty\AdminOnlyProperty::get(),
+					FieldProperty\AllowsPrepopulateProperty::get(),
 					FieldProperty\DefaultValueProperty::get(),
+					FieldProperty\DescriptionPlacementProperty::get(),
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\ErrorMessageProperty::get(),
 					FieldProperty\InputNameProperty::get(),
+					FieldProperty\InputTypeProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
+					FieldProperty\LabelProperty::get(),
+					FieldProperty\MaxLengthProperty::get(),
 					FieldProperty\NoDuplicatesProperty::get(),
 					FieldProperty\PlaceholderProperty::get(),
 					FieldProperty\SizeProperty::get(),
+					FieldProperty\VisibilityProperty::get(),
 					[
 						'postCustomFieldName' => [
 							'type'        => 'String',
 							'description' => __( 'The name of the Post Custom Field that the submitted value should be assigned to.', 'wp-graphql-gravity-forms' ),
-						],
-						'inputType'           => [
-							'type'        => 'String',
-							'description' => __( 'Contains a field type and allows a field type to be displayed as another field type. A good example is the Post Custom Field, that can be displayed as various different types of fields.', 'wp-graphql-gravity-forms' ),
 						],
 					]
 				),

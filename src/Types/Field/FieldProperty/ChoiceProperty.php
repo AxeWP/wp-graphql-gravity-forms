@@ -36,7 +36,7 @@ class ChoiceProperty implements Hookable, Type {
 		register_graphql_object_type(
 			self::TYPE,
 			[
-				'description' => __( 'Gravity Forms input property.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Gravity Forms choice property.', 'wp-graphql-gravity-forms' ),
 				'fields'      => [
 					'text'       => [
 						'type'        => 'String',
