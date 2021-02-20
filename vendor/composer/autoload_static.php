@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitaac94083c68e13e1ed85b446db6300b1
+class ComposerStaticInit42bbb390e930de9c48f43248c4deccf1
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -82,6 +82,9 @@ class ComposerStaticInitaac94083c68e13e1ed85b446db6300b1
         'WPGraphQLGravityForms\\Types\\Field\\DateField' => __DIR__ . '/../..' . '/src/Types/Field/DateField.php',
         'WPGraphQLGravityForms\\Types\\Field\\EmailField' => __DIR__ . '/../..' . '/src/Types/Field/EmailField.php',
         'WPGraphQLGravityForms\\Types\\Field\\Field' => __DIR__ . '/../..' . '/src/Types/Field/Field.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AdminLabelProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/AdminLabelProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AdminOnlyProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/AdminOnlyProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AllowsPrepopulateProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/AllowsPrepopulateProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ChainedSelectChoiceProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/ChainedSelectChoiceProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\CheckboxInputProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/CheckboxInputProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ChoiceProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/ChoiceProperty.php',
@@ -89,21 +92,30 @@ class ComposerStaticInitaac94083c68e13e1ed85b446db6300b1
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DefaultValueProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/DefaultValueProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DescriptionPlacementProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/DescriptionPlacementProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DescriptionProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/DescriptionProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DisplayOnlyProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/DisplayOnlyProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\EnableChoiceValueProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/EnableChoiceValueProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\EnableEnhancedUiProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/EnableEnhancedUiProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\EnablePriceProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/EnablePriceProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\EnableSelectAllProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/EnableSelectAllProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ErrorMessageProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/ErrorMessageProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\InputNameProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/InputNameProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\InputProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/InputProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\InputTypeProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/InputTypeProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\InputsProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/InputsProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\IsRequiredProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/IsRequiredProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\LabelPlacementProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/LabelPlacementProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\LabelProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/LabelProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ListChoiceProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/ListChoiceProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\MaxLengthProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/MaxLengthProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\MultiSelectChoiceProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/MultiSelectChoiceProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\NoDuplicatesProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/NoDuplicatesProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\PageNumberProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/PageNumberProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\PasswordInputProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/PasswordInputProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\PlaceholderProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/PlaceholderProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ProductFieldProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/ProductFieldProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\SizeProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/SizeProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\SubLabelPlacementProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/SubLabelPlacementProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\VisibilityProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/VisibilityProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldValue\\AddressFieldValue' => __DIR__ . '/../..' . '/src/Types/Field/FieldValue/AddressFieldValue.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldValue\\ChainedSelectFieldValue' => __DIR__ . '/../..' . '/src/Types/Field/FieldValue/ChainedSelectFieldValue.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldValue\\CheckboxFieldValue' => __DIR__ . '/../..' . '/src/Types/Field/FieldValue/CheckboxFieldValue.php',
@@ -164,15 +176,16 @@ class ComposerStaticInitaac94083c68e13e1ed85b446db6300b1
         'WPGraphQLGravityForms\\Types\\Input\\NameInput' => __DIR__ . '/../..' . '/src/Types/Input/NameInput.php',
         'WPGraphQLGravityForms\\Types\\Union\\ObjectFieldUnion' => __DIR__ . '/../..' . '/src/Types/Union/ObjectFieldUnion.php',
         'WPGraphQLGravityForms\\Types\\Union\\ObjectFieldValueUnion' => __DIR__ . '/../..' . '/src/Types/Union/ObjectFieldValueUnion.php',
+        'WPGraphQLGravityForms\\Utils\\Utils' => __DIR__ . '/../..' . '/src/Utils/Utils.php',
         'WPGraphQLGravityForms\\WPGraphQLGravityForms' => __DIR__ . '/../..' . '/src/WPGraphQLGravityForms.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitaac94083c68e13e1ed85b446db6300b1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitaac94083c68e13e1ed85b446db6300b1::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitaac94083c68e13e1ed85b446db6300b1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit42bbb390e930de9c48f43248c4deccf1::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit42bbb390e930de9c48f43248c4deccf1::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit42bbb390e930de9c48f43248c4deccf1::$classMap;
 
         }, null, ClassLoader::class);
     }
