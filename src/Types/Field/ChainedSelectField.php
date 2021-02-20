@@ -7,6 +7,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field
  * @since   0.0.1
+ * @since   0.2.0 Add missing properties, and deprecate unused ones.
  */
 
 namespace WPGraphQLGravityForms\Types\Field;
@@ -45,11 +46,19 @@ class ChainedSelectField extends Field {
 				'fields'      => array_merge(
 					$this->get_global_properties(),
 					$this->get_custom_properties(),
+					FieldProperty\AdminLabelProperty::get(),
+					FieldProperty\AdminOnlyProperty::get(),
+					FieldProperty\AllowsPrepopulateProperty::get(),
+					FieldProperty\DescriptionPlacementProperty::get(),
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\ErrorMessageProperty::get(),
 					FieldProperty\InputsProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
+					FieldProperty\LabelProperty::get(),
+					FieldProperty\NoDuplicatesProperty::get(),
 					FieldProperty\SizeProperty::get(),
+					FieldProperty\SubLabelPlacementProperty::get(),
+					FieldProperty\VisibilityProperty::get(),
 					[
 						'choices'                    => [
 							'type'        => [ 'list_of' => FieldProperty\ChainedSelectChoiceProperty::TYPE ],
