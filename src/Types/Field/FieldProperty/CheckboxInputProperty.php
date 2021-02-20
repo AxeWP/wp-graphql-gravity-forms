@@ -35,7 +35,7 @@ class CheckboxInputProperty implements Hookable, Type {
 		register_graphql_object_type(
 			self::TYPE,
 			[
-				'description' => __( 'Gravity Forms Chained Select field choice property.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Gravity Forms Checkbox inputs field property.', 'wp-graphql-gravity-forms' ),
 				'fields'      => [
 					'id'    => [
 						'type'        => 'Float',
