@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field
  * @since   0.0.1
+ * @since   0.2.0 Add missing properties, and use ChoicesProperty.
  */
 
 namespace WPGraphQLGravityForms\Types\Field;
@@ -47,6 +48,10 @@ class MultiSelectField extends Field {
 				'fields'      => array_merge(
 					$this->get_global_properties(),
 					$this->get_custom_properties(),
+					FieldProperty\AdminLabelProperty::get(),
+					FieldProperty\AdminOnlyProperty::get(),
+					FieldProperty\AllowsPrepopulateProperty::get(),
+					FieldProperty\ChoicesProperty::get(),
 					FieldProperty\DescriptionPlacementProperty::get(),
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\EnableChoiceValueProperty::get(),
@@ -54,13 +59,9 @@ class MultiSelectField extends Field {
 					FieldProperty\ErrorMessageProperty::get(),
 					FieldProperty\InputNameProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
+					FieldProperty\LabelProperty::get(),
 					FieldProperty\SizeProperty::get(),
-					[
-						'choices' => [
-							'type'        => [ 'list_of' => FieldProperty\MultiSelectChoiceProperty::TYPE ],
-							'description' => __( 'The individual properties for each item in the multi-select.', 'wp-graphql-gravity-forms' ),
-						],
-					]
+					FieldProperty\VisibilityProperty::get(),
 				),
 			]
 		);

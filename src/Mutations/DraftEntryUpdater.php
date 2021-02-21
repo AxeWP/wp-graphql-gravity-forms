@@ -217,12 +217,12 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 
 	/**
 	 * Implement this method in child classes.
+	 * abstract protected function prepare_field_value( $value );
 	 *
 	 * @param mixed $value The field value.
 	 *
 	 * @return mixed The prepared and sanitized field value.
 	 */
-	// abstract protected function prepare_field_value( $value );
 
 	/**
 	 * Returns Gravity Forms Field object for given field id.
@@ -268,7 +268,7 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 			$this->submission['field_values'] ?? '',
 			$this->submission['page_number'] ?? 1, // TODO: Maybe get from request.
 			$this->submission['files'] ?? [], // TODO: Maybe get from request.
-			$this->submission['gform_unique_id'] ?? $this->get_form_unique_id( $draft_entry['form_id'] ),
+			$this->submission['gform_unique_id'] ?? $this->get_form_unique_id( $form_id ),
 			$this->submission['partial_entry']['ip'] ?? '',
 			$this->submission['partial_entry']['source_url'] ?? '',
 			$resume_token

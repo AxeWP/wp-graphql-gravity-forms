@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field
  * @since   0.0.1
+ * @since   0.2.0 Add missing properties.
  */
 
 namespace WPGraphQLGravityForms\Types\Field;
@@ -44,22 +45,26 @@ class TimeField extends Field {
 				'fields'      => array_merge(
 					$this->get_global_properties(),
 					$this->get_custom_properties(),
+					FieldProperty\AdminLabelProperty::get(),
+					FieldProperty\AdminOnlyProperty::get(),
+					FieldProperty\AllowsPrepopulateProperty::get(),
+					FieldProperty\DescriptionPlacementProperty::get(),
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\ErrorMessageProperty::get(),
 					FieldProperty\InputNameProperty::get(),
+					FieldProperty\InputsProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
+					FieldProperty\LabelProperty::get(),
 					FieldProperty\NoDuplicatesProperty::get(),
 					FieldProperty\SizeProperty::get(),
+					FieldProperty\SubLabelPlacementProperty::get(),
+					FieldProperty\VisibilityProperty::get(),
 					[
-						/**
-						 * Possible values: 12, 24
-						 */
 						'timeFormat' => [
 							'type'        => 'String',
-							'description' => __( 'Determines how the time is displayed.', 'wp-graphql-gravity-forms' ),
+							'description' => __( 'Determines how the time is displayed. Possible values: "12", "24"', 'wp-graphql-gravity-forms' ),
 						],
 					]
-					// @TODO: Add placeholders.
 				),
 			]
 		);

@@ -31,6 +31,8 @@
 		<exclude name="WordPress.CodeAnalysis.AssignmentInCondition.Found"/>
 		<exclude name="WordPress.Files.FileName" />
 		<exclude name="WordPress.NamingConventions.ValidVariableName" />
+		<!-- Maybe Add later: -->
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound" />
 	</rule>
 	<rule ref="WordPress-Docs" />
 	<rule ref="WordPress-Extra" />

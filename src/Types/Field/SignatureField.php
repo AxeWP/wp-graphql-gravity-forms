@@ -7,6 +7,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field
  * @since   0.0.1
+ * @since   0.2.0 Add missing properties.
  */
 
 namespace WPGraphQLGravityForms\Types\Field;
@@ -46,9 +47,15 @@ class SignatureField extends Field {
 				'fields'      => array_merge(
 					$this->get_global_properties(),
 					$this->get_custom_properties(),
+					FieldProperty\AdminLabelProperty::get(),
+					FieldProperty\AdminOnlyProperty::get(),
+					FieldProperty\DescriptionPlacementProperty::get(),
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\ErrorMessageProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
+					FieldProperty\LabelProperty::get(),
+					FieldProperty\SizeProperty::get(),
+					FieldProperty\VisibilityProperty::get(),
 					[
 						'penSize'         => [
 							'type'        => 'Integer',

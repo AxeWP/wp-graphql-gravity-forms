@@ -113,6 +113,8 @@ class FormDataManipulator implements DataManipulator {
 	}
 
 	/**
+	 * Replace empty confirmation pageId string values with null.
+	 *
 	 * @param array $confirmations Form confirmations.
 	 *
 	 * @return array Form confirmations with empty string pageId values converted to null.
