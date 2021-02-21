@@ -4,6 +4,7 @@
  *
  * @package WPGraphQLGravityForms
  * @since 0.0.1
+ * @since 0.2.0 Remove MultiSelectChoiceProperty and add RadioChoiceProperty.
  */
 
 namespace WPGraphQLGravityForms;
@@ -111,8 +112,8 @@ final class WPGraphQLGravityForms {
 		$this->instances['choice_property']                = new FieldProperty\ChoiceProperty();
 		$this->instances['input_property']                 = new FieldProperty\InputProperty();
 		$this->instances['list_choice_property']           = new FieldProperty\ListChoiceProperty();
-		$this->instances['multi_select_choice_property']   = new FieldProperty\MultiSelectChoiceProperty();
 		$this->instances['password_input_property']        = new FieldProperty\PasswordInputProperty();
+		$this->instances['radio_choice_property']          = new FieldProperty\RadioChoiceProperty();
 
 		// Field Values.
 		$this->instances['address_field_value']        = new FieldValue\AddressFieldValue();

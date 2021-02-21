@@ -6,7 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field
  * @since   0.0.1
- * @since   0.2.0 Add missing properties.
+ * @since   0.2.0 Add missing properties, and use RadioChoiceProperty.
  */
 
 namespace WPGraphQLGravityForms\Types\Field;
@@ -49,7 +49,6 @@ class RadioField extends Field {
 					FieldProperty\AdminLabelProperty::get(),
 					FieldProperty\AdminOnlyProperty::get(),
 					FieldProperty\AllowsPrepopulateProperty::get(),
-					FieldProperty\ChoicesProperty::get(),
 					FieldProperty\DescriptionPlacementProperty::get(),
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\EnableChoiceValueProperty::get(),
@@ -62,6 +61,10 @@ class RadioField extends Field {
 					FieldProperty\SizeProperty::get(),
 					FieldProperty\VisibilityProperty::get(),
 					[
+						'choices' => [
+							'type'        => [ 'list_of' => FieldProperty\RadioChoiceProperty::TYPE ],
+							'description' => __( 'Choices used to populate the dropdown field. These can be nested multiple levels deep.', 'wp-graphql-gravity-forms' ),
+						],
 						'enableOtherChoice' => [
 							'type'        => 'Boolean',
 							'description' => __( 'Indicates whether the \'Enable "other" choice\' option is checked in the editor.', 'wp-graphql-gravity-forms' ),

@@ -1,27 +1,26 @@
 <?php
 /**
- * GraphQL Object Type - ChoiceProperty
- * An individual property for the 'choices' field property.
+ * GraphQL Object Type - RadioChoiceProperty
+ * An individual property for the 'choices' Radio field property.
  *
- * @see https://docs.gravityforms.com/field-object/#basic-properties
  * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
- * @since   0.0.1
- * @since   0.2.0 Refactor ChoiceProperty for reuse.
+ * @since   0.2.0
  */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Types\Field\FieldProperty\ChoiceProperty;
 
 /**
- * Class - ChoiceProperty
+ * Class - RadioChoiceProperty
  */
-class ChoiceProperty implements Hookable, Type {
+class RadioChoiceProperty implements Hookable, Type {
 	/**
 	 * Type registered in WPGraphQL.
 	 */
-	const TYPE = 'ChoiceProperty';
+	const TYPE = 'RadioChoiceProperty';
 
 	/**
 	 * Register hooks to WordPress.
@@ -37,13 +36,19 @@ class ChoiceProperty implements Hookable, Type {
 		register_graphql_object_type(
 			self::TYPE,
 			[
-				'description' => __( 'Gravity Forms choice property.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Gravity Forms Chained Select field choice property.', 'wp-graphql-gravity-forms' ),
 				'fields'      => array_merge(
 					ChoiceProperty\ChoiceIsSelectedProperty::get(),
 					ChoiceProperty\ChoiceTextProperty::get(),
 					ChoiceProperty\ChoiceValueProperty::get(),
+					[
+						'isOtherChoice' => [
+							'type'        => 'Boolean',
+							'description' => __( 'Indicates the radio button item is the “Other” choice.', 'wp-graphql-gravity-forms' ),
+						],
+					],
 				),
-			]
+			],
 		);
 	}
 }
