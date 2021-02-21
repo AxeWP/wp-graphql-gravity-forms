@@ -97,9 +97,11 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 		$after_cursor = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 		$index        = array_search( $id, array_keys( $this->nodes ) );
 
-		// @TODO: .
-		// $last  = $this->args['last'] ?? 20;
-		// $before_cursor = ! empty( $this->args['before'] ) ? json_decode( base64_decode( $this->args['before'] ), true ) : null;
+		/**
+		 * @ TODO:
+		 * $last  = $this->args['last'] ?? 20;
+		 * $before_cursor = ! empty( $this->args['before'] ) ? json_decode( base64_decode( $this->args['before'] ), true ) : null;
+		 */
 
 		$cursor = [
 			'offset' => $after_cursor ? $after_cursor['offset'] + $after_cursor['index'] + 1 : 0,
@@ -151,6 +153,11 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 		return null;
 	}
 
+	/**
+	 * Gets search criteria for entry Ids.
+	 *
+	 * @return array
+	 */
 	private function get_search_criteria() : array {
 		$search_criteria = $this->apply_status_to_search_criteria( [] );
 
@@ -172,6 +179,12 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 		return $search_criteria;
 	}
 
+	/**
+	 * Adds 'status' value to search criteria.
+	 *
+	 * @param array $search_criteria The search criteria for the entry Ids.
+	 * @return array
+	 */
 	private function apply_status_to_search_criteria( array $search_criteria ) : array {
 		$status = $this->args['where']['status'] ?? 'active'; // Default to active entries.
 
@@ -185,6 +198,12 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 		return $search_criteria;
 	}
 
+	/**
+	 * Correctly formats the field filters for search criteria.
+	 *
+	 * @param array $field_filters .
+	 * @return array
+	 */
 	private function format_field_filters( array $field_filters ) : array {
 		return array_reduce(
 			$field_filters,
@@ -205,6 +224,8 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
+	 * Gets filter value for each field used in search criteria.
+	 *
 	 * @param array  $field_filter Field filter.
 	 * @param string $operator     Operator.
 	 *
@@ -228,6 +249,12 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 		return $field_filter_values;
 	}
 
+	/**
+	 * Returns whether field filter should be limited to a single value.
+	 *
+	 * @param string $operator Operator.
+	 * @return boolean
+	 */
 	private function should_field_filter_be_limited_to_single_value( string $operator ) : bool {
 		$operators_to_limit = [
 			FieldFiltersOperatorInputEnum::CONTAINS,
@@ -238,6 +265,12 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 		return in_array( $operator, $operators_to_limit, true );
 	}
 
+	/**
+	 * Get value fields for the field filter.
+	 *
+	 * @param array $field_filter .
+	 * @return array
+	 */
 	private function get_field_filter_value_fields( array $field_filter ) : array {
 		return array_values(
 			array_filter(
@@ -249,6 +282,11 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 		);
 	}
 
+	/**
+	 * Get sort argument for entry ID query.
+	 *
+	 * @return array
+	 */
 	private function get_sort() : array {
 		if ( ! empty( $this->args['where']['sort'] ) && is_array( $this->args['where']['sort'] ) ) {
 			return [
@@ -261,13 +299,20 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 		return [];
 	}
 
+	/**
+	 * Get paging arguments for entry ID query.
+	 *
+	 * @return array
+	 */
 	private function get_paging() : array {
 		$first        = absint( $this->args['first'] ?? 20 );
 		$after_cursor = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 
-		// @TODO: .
-		// $last  = absint( $this->args['last'] ?? 20 );
-		// $before_cursor = ! empty( $this->args['before'] ) ? json_decode( base64_decode( $this->args['before'] ), true ) : null;
+		/**
+		 * @ TODO:
+		 * $last  = absint( $this->args['last'] ?? 20 );
+		 * $before_cursor = ! empty( $this->args['before'] ) ? json_decode( base64_decode( $this->args['before'] ), true ) : null;
+		 */
 
 		return [
 			'offset'    => $after_cursor ? $after_cursor['offset'] + $after_cursor['index'] + 1 : 0,

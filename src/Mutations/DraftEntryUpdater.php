@@ -217,12 +217,12 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 
 	/**
 	 * Implement this method in child classes.
+	 * abstract protected function prepare_field_value( $value );
 	 *
 	 * @param mixed $value The field value.
 	 *
 	 * @return mixed The prepared and sanitized field value.
 	 */
-	// abstract protected function prepare_field_value( $value );
 
 	/**
 	 * Returns Gravity Forms Field object for given field id.

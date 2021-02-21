@@ -66,10 +66,20 @@ class ObjectFieldValueUnion implements Hookable, Type {
 		);
 	}
 
+	/**
+	 * Get field value type names.
+	 *
+	 * @return array
+	 */
 	private function get_field_value_type_names() : array {
 		return array_values( array_map( fn( $class ) => $class::TYPE, $this->get_field_value_classes() ) );
 	}
 
+	/**
+	 * Get field value classes.
+	 *
+	 * @return array
+	 */
 	private function get_field_value_classes() : array {
 		$is_field_value_instance = fn( $instance ) => $instance instanceof FieldValue;
 		$field_values            = array_filter( $this->instances, $is_field_value_instance );
