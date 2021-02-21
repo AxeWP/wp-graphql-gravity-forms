@@ -268,7 +268,7 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 			$this->submission['field_values'] ?? '',
 			$this->submission['page_number'] ?? 1, // TODO: Maybe get from request.
 			$this->submission['files'] ?? [], // TODO: Maybe get from request.
-			$this->submission['gform_unique_id'] ?? $this->get_form_unique_id( $draft_entry['form_id'] ),
+			$this->submission['gform_unique_id'] ?? $this->get_form_unique_id( $form_id ),
 			$this->submission['partial_entry']['ip'] ?? '',
 			$this->submission['partial_entry']['source_url'] ?? '',
 			$resume_token
