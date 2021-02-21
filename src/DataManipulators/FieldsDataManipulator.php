@@ -87,6 +87,13 @@ class FieldsDataManipulator implements DataManipulator {
 		return $fields;
 	}
 
+	/**
+	 * Add keys to field inputs property.
+	 *
+	 * @param array  $fields .
+	 * @param string $type .
+	 * @return array
+	 */
 	private function add_keys_to_inputs( array $fields, string $type ) : array {
 		$input_keys = $this->get_input_keys( $type );
 
@@ -115,6 +122,12 @@ class FieldsDataManipulator implements DataManipulator {
 		return $fields;
 	}
 
+	/**
+	 * Gets keys for field inputs property.
+	 *
+	 * @param string $type .
+	 * @return array
+	 */
 	private function get_input_keys( string $type ) : array {
 		if ( 'address' === $type ) {
 			return $this->get_address_input_keys();
