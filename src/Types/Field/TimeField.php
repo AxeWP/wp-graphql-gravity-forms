@@ -52,6 +52,7 @@ class TimeField extends Field {
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\ErrorMessageProperty::get(),
 					FieldProperty\InputNameProperty::get(),
+					FieldProperty\InputsProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
 					FieldProperty\LabelProperty::get(),
 					FieldProperty\NoDuplicatesProperty::get(),
@@ -59,15 +60,11 @@ class TimeField extends Field {
 					FieldProperty\SubLabelPlacementProperty::get(),
 					FieldProperty\VisibilityProperty::get(),
 					[
-						/**
-						 * Possible values: 12, 24
-						 */
 						'timeFormat' => [
 							'type'        => 'String',
-							'description' => __( 'Determines how the time is displayed.', 'wp-graphql-gravity-forms' ),
+							'description' => __( 'Determines how the time is displayed. Possible values: "12", "24"', 'wp-graphql-gravity-forms' ),
 						],
 					]
-					// @TODO: Add placeholders.
 				),
 			]
 		);
