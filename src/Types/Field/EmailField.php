@@ -53,6 +53,7 @@ class EmailField extends Field {
 					FieldProperty\DescriptionProperty::get(),
 					FieldProperty\ErrorMessageProperty::get(),
 					FieldProperty\InputNameProperty::get(),
+					FieldProperty\InputsProperty::get(),
 					FieldProperty\IsRequiredProperty::get(),
 					FieldProperty\LabelProperty::get(),
 					FieldProperty\NoDuplicatesProperty::get(),

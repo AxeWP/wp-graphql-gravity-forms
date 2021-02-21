@@ -4,6 +4,7 @@
  *
  * @package WPGraphQLGravityForms
  * @since 0.0.1
+ * @since 0.2.0 Remove MultiSelectChoiceProperty and add RadioChoiceProperty, AddressInputProperty, ChainedSelectInputProperty, and NameInputProperty.
  */
 
 namespace WPGraphQLGravityForms;
@@ -18,7 +19,6 @@ use WPGraphQLGravityForms\Types\Field\FieldProperty;
 use WPGraphQLGravityForms\Types\Field\FieldValue;
 use WPGraphQLGravityForms\Types\FieldError\FieldError;
 use WPGraphQLGravityForms\Types\Union;
-use WPGraphQLGravityForms\Types\Connection;
 use WPGraphQLGravityForms\Types\Entry;
 use WPGraphQLGravityForms\Types\Input;
 
@@ -106,13 +106,16 @@ final class WPGraphQLGravityForms {
 		$this->instances['website_field']        = new Field\WebsiteField();
 
 		// Field Properties.
+		$this->instances['address_input_property']         = new FieldProperty\AddressInputProperty();
 		$this->instances['chained_select_choice_property'] = new FieldProperty\ChainedSelectChoiceProperty();
+		$this->instances['chained_select_input_property']  = new FieldProperty\ChainedSelectInputProperty();
 		$this->instances['checkbox_input_property']        = new FieldProperty\CheckboxInputProperty();
 		$this->instances['choice_property']                = new FieldProperty\ChoiceProperty();
 		$this->instances['input_property']                 = new FieldProperty\InputProperty();
 		$this->instances['list_choice_property']           = new FieldProperty\ListChoiceProperty();
-		$this->instances['multi_select_choice_property']   = new FieldProperty\MultiSelectChoiceProperty();
+		$this->instances['name_input_property']            = new FieldProperty\NameInputProperty();
 		$this->instances['password_input_property']        = new FieldProperty\PasswordInputProperty();
+		$this->instances['radio_choice_property']          = new FieldProperty\RadioChoiceProperty();
 
 		// Field Values.
 		$this->instances['address_field_value']        = new FieldValue\AddressFieldValue();
