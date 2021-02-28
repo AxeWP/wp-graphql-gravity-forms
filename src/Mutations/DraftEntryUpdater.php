@@ -273,7 +273,6 @@ abstract class DraftEntryUpdater implements Hookable, Mutation {
 			$this->submission['partial_entry']['source_url'] ?? '',
 			$resume_token
 		);
-		error_log( 'new' . $new_resume_token . ' old ' . $resume_token );
 
 		if ( ! $new_resume_token ) {
 			throw new UserError( __( 'An error occurred while trying to update the draft entry.', 'wp-graphql-gravity-forms' ) );
