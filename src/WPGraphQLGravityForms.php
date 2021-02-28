@@ -132,6 +132,12 @@ final class WPGraphQLGravityForms {
 		$this->instances['name_field_value']           = new FieldValue\NameFieldValue();
 		$this->instances['number_field_value']         = new FieldValue\NumberFieldValue();
 		$this->instances['phone_field_values']         = new FieldValue\PhoneFieldValue();
+		$this->instances['post_category_field_value']  = new FieldValue\PostCategoryFieldValue();
+		$this->instances['post_content_field_value']   = new FieldValue\PostContentFieldValue();
+		$this->instances['post_custom_field_value']    = new FieldValue\PostCustomFieldValue();
+		$this->instances['post_excerpt_field_value']   = new FieldValue\PostExcerptFieldValue();
+		$this->instances['post_tags_field_value']      = new FieldValue\PostTagsFieldValue();
+		$this->instances['post_title_field_value']     = new FieldValue\PostTitleFieldValue();
 		$this->instances['radio_field_values']         = new FieldValue\RadioFieldValue();
 		$this->instances['select_field_value']         = new FieldValue\SelectFieldValue();
 		$this->instances['signature_field_value']      = new FieldValue\SignatureFieldValue();
@@ -172,27 +178,33 @@ final class WPGraphQLGravityForms {
 		$this->instances['field_error'] = new FieldError();
 
 		// Mutations.
-		$this->instances['delete_entry']                                = new Mutations\DeleteEntry();
-		$this->instances['create_draft_entry']                          = new Mutations\CreateDraftEntry();
-		$this->instances['delete_draft_entry']                          = new Mutations\DeleteDraftEntry();
-		$this->instances['submit_draft_entry']                          = new Mutations\SubmitDraftEntry( $this->instances['entry_data_manipulator'] );
-		$this->instances['update_draft_entry_address_field_value']      = new Mutations\UpdateDraftEntryAddressFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_checkbox_field_value']     = new Mutations\UpdateDraftEntryCheckboxFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_date_field_value']         = new Mutations\UpdateDraftEntryDateFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_email_field_value']        = new Mutations\UpdateDraftEntryEmailFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['delete_entry']                                 = new Mutations\DeleteEntry();
+		$this->instances['create_draft_entry']                           = new Mutations\CreateDraftEntry();
+		$this->instances['delete_draft_entry']                           = new Mutations\DeleteDraftEntry();
+		$this->instances['submit_draft_entry']                           = new Mutations\SubmitDraftEntry( $this->instances['entry_data_manipulator'] );
+		$this->instances['update_draft_entry_address_field_value']       = new Mutations\UpdateDraftEntryAddressFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_checkbox_field_value']      = new Mutations\UpdateDraftEntryCheckboxFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_date_field_value']          = new Mutations\UpdateDraftEntryDateFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_email_field_value']         = new Mutations\UpdateDraftEntryEmailFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_hidden_field_value']        = new Mutations\UpdateDraftEntryHiddenFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_list_field_value']         = new Mutations\UpdateDraftEntryListFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_multi_select_field_value'] = new Mutations\UpdateDraftEntryMultiSelectFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_name_field_value']         = new Mutations\UpdateDraftEntryNameFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_number_field_value']       = new Mutations\UpdateDraftEntryNumberFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_phone_field_value']        = new Mutations\UpdateDraftEntryPhoneFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_radio_field_value']        = new Mutations\UpdateDraftEntryRadioFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_select_field_value']       = new Mutations\UpdateDraftEntrySelectFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_signature_field_value']    = new Mutations\UpdateDraftEntrySignatureFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_text_area_field_value']    = new Mutations\UpdateDraftEntryTextAreaFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_text_field_value']         = new Mutations\UpdateDraftEntryTextFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_time_field_value']         = new Mutations\UpdateDraftEntryTimeFieldValue( $this->instances['draft_entry_data_manipulator'] );
-		$this->instances['update_draft_entry_website_field_value']      = new Mutations\UpdateDraftEntryWebsiteFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_list_field_value']          = new Mutations\UpdateDraftEntryListFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_multi_select_field_value']  = new Mutations\UpdateDraftEntryMultiSelectFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_name_field_value']          = new Mutations\UpdateDraftEntryNameFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_number_field_value']        = new Mutations\UpdateDraftEntryNumberFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_phone_field_value']         = new Mutations\UpdateDraftEntryPhoneFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_post_category_field_value'] = new Mutations\UpdateDraftEntryPostCategoryFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_post_content_field_value']  = new Mutations\UpdateDraftEntryPostContentFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_post_custom_field_value']   = new Mutations\UpdateDraftEntryPostCustomFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_post_excerpt_field_value']  = new Mutations\UpdateDraftEntryPostExcerptFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_post_tags_field_value']     = new Mutations\UpdateDraftEntryPostTagsFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_post_title_field_value']    = new Mutations\UpdateDraftEntryPostTitleFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_radio_field_value']         = new Mutations\UpdateDraftEntryRadioFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_select_field_value']        = new Mutations\UpdateDraftEntrySelectFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_signature_field_value']     = new Mutations\UpdateDraftEntrySignatureFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_text_area_field_value']     = new Mutations\UpdateDraftEntryTextAreaFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_text_field_value']          = new Mutations\UpdateDraftEntryTextFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_time_field_value']          = new Mutations\UpdateDraftEntryTimeFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_website_field_value']       = new Mutations\UpdateDraftEntryWebsiteFieldValue( $this->instances['draft_entry_data_manipulator'] );
 	}
 
 	/**
