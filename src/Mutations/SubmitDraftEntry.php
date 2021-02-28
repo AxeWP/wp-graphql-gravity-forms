@@ -11,6 +11,7 @@
 namespace WPGraphQLGravityForms\Mutations;
 
 use GFAPI;
+use GFCOMMON;
 use GF_Field;
 use GFFormsModel;
 use GraphQL\Error\UserError;
@@ -123,6 +124,8 @@ class SubmitDraftEntry implements Hookable, Mutation {
 
 			$entry_id = $this->create_entry( $draft_entry );
 
+			$this->create_post( $form_id, $entry_id );
+
 			$this->send_notifications( $form_id, $entry_id );
 
 			GFFormsModel::delete_draft_submission( $resume_token );
@@ -180,6 +183,24 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		}
 
 		return $entry_id;
+	}
+
+	/**
+	 * Create WordPress post if the form has any post fields.
+	 *
+	 * @param integer $form_id .
+	 * @param integer $entry_id .
+	 * @throws UserError .
+	 */
+	private function create_post( int $form_id, int $entry_id ) {
+		$form  = GFAPI::get_form( $form_id );
+		$entry = GFAPI::get_entry( $entry_id );
+
+		if ( ! $form || ! $entry ) {
+			throw new UserError( __( 'An error occured while trying to create a post from the form submission. Form or entry not found', 'wp-graphql-gravity-forms' ) );
+		}
+
+		GFCOMMON::create_post( $form, $entry );
 	}
 
 	/**
