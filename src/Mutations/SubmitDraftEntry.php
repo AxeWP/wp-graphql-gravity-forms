@@ -13,6 +13,7 @@ namespace WPGraphQLGravityForms\Mutations;
 use GFAPI;
 use GFCOMMON;
 use GF_Field;
+use GFFormDisplay;
 use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -21,7 +22,6 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Mutation;
 use WPGraphQLGravityForms\Types\Entry\Entry;
 use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
-use WPGraphQLGravityForms\Types\FieldError\FieldError;
 
 /**
  * Class - SubmitDraftEntry
@@ -120,6 +120,9 @@ class SubmitDraftEntry implements Hookable, Mutation {
 			$draft_entry  = $this->get_draft_entry( $resume_token );
 			$form_id      = $draft_entry['form_id'];
 
+			// Sets last page.
+			$this->set_form_page_to_last( $form_id );
+
 			$this->validate_form_id( $form_id );
 
 			$entry_id = $this->create_entry( $draft_entry );
@@ -161,6 +164,7 @@ class SubmitDraftEntry implements Hookable, Mutation {
 	 */
 	private function validate_form_id( int $form_id ) {
 		$form_info = GFFormsModel::get_form( $form_id, true );
+		error_log( print_r( $form_info, true ) );
 
 		if ( ! $form_info || ! $form_info->is_active || $form_info->is_trash ) {
 			throw new UserError( __( 'The form associated with this entry is nonexistent or inactive.', 'wp-graphql-gravity-forms' ) );
@@ -305,5 +309,18 @@ class SubmitDraftEntry implements Hookable, Mutation {
 		}
 
 		return $matching_fields[0];
+	}
+
+	/**
+	 * Sets form page to last page so post creation can work.
+	 *
+	 * @param integer $form_id .
+	 */
+	private function set_form_page_to_last( int $form_id ) {
+		require_once GFCOMMON::get_base_path() . '/form_display.php';
+
+		$form = GFAPI::get_form( $form_id );
+
+		GFFormDisplay::set_current_page( $form_id, GFFormDisplay::get_max_page_number( $form ) );
 	}
 }
