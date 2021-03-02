@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Mutation
  * @since 0.0.1
+ * @since 0.3.0 Sets the form pageNumber to the last page, to avoid post creation validation issues.
  */
 
 namespace WPGraphQLGravityForms\Mutations;
