@@ -165,7 +165,6 @@ class SubmitDraftEntry implements Hookable, Mutation {
 	 */
 	private function validate_form_id( int $form_id ) {
 		$form_info = GFFormsModel::get_form( $form_id, true );
-		error_log( print_r( $form_info, true ) );
 
 		if ( ! $form_info || ! $form_info->is_active || $form_info->is_trash ) {
 			throw new UserError( __( 'The form associated with this entry is nonexistent or inactive.', 'wp-graphql-gravity-forms' ) );
