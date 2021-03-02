@@ -5,6 +5,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field\FieldValue
  * @since   0.0.1
+ * @since   0.3.0 Return early if value is null or empty.
  */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
@@ -61,7 +62,12 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 	 * @throws UserError .
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
-		$entry_values = isset( $entry[ $field['id'] ] ) ? unserialize( $entry[ $field['id'] ] ) : [];
+		$entry_values = isset( $entry[ $field['id'] ] ) ? unserialize( $entry[ $field['id'] ] ) : null;
+
+		// Return null if no value is set, or unserialize creates an empty array.
+		if ( empty( $entry_values ) ) {
+			return [];
+		}
 
 		// Check if there are too many rows.
 		if ( $field['maxRows'] < count( $entry_values ) ) {
