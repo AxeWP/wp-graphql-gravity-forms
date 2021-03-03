@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Mutation
  * @since 0.0.1
+ * @since 0.3.0 use $this->field['id'] to correctly delete signature image.
  */
 
 namespace WPGraphQLGravityForms\Mutations;
@@ -82,7 +83,7 @@ class UpdateDraftEntrySignatureFieldValue extends DraftEntryUpdater {
 	 * Deletes previous signature image.
 	 */
 	private function delete_previous_signature_image() {
-		$prev_filename = $this->submission['partial_entry'][ $this->field_id ] ?? '';
+		$prev_filename = $this->submission['partial_entry'][ $this->field['id'] ] ?? '';
 
 		if ( ! $prev_filename ) {
 			return;

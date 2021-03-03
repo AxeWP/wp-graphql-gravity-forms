@@ -5,11 +5,13 @@
  *
  * @package WPGraphQLGravityForms\Types\Field\FieldValue
  * @since   0.0.1
+ * @since   0.3.0 use $field->get_value_url() to retrieve signature url.
  */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use GF_Field_Signature;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
@@ -58,12 +60,12 @@ class SignatureFieldValue implements Hookable, Type, FieldValue {
 	 * @return array Entry field value.
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
-		if ( ! function_exists( 'gf_signature' ) || ! array_key_exists( $field['id'], $entry ) ) {
+		if ( ! class_exists( 'GF_Field_Signature' ) || ! array_key_exists( $field['id'], $entry ) ) {
 			return [ 'url' => null ];
 		}
 
 		return [
-			'url' => gf_signature()->get_signature_url( $entry[ $field['id'] ] ),
+			'url' => $field->get_value_url( $entry[ $field['id'] ] ),
 		];
 	}
 }
