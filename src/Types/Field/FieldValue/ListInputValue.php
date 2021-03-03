@@ -5,6 +5,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field\FieldValue
  * @since   0.0.1
+ * @since   0.3.0 Deprecate `value` in favor of `values`.
  */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
@@ -37,9 +38,14 @@ class ListInputValue implements Hookable, Type {
 			[
 				'description' => __( 'Value for a single input within a list field.', 'wp-graphql-gravity-forms' ),
 				'fields'      => [
-					'value' => [
+					'value'  => [
+						'type'              => [ 'list_of' => 'String' ],
+						'description'       => __( 'Input value', 'wp-graphql-gravity-forms' ),
+						'deprecationReason' => __( 'Please use `values` instead.', 'wp-graphql-gravity-forms' ),
+					],
+					'values' => [
 						'type'        => [ 'list_of' => 'String' ],
-						'description' => __( 'Input value', 'wp-graphql-gravity-forms' ),
+						'description' => __( 'Input values', 'wp-graphql-gravity-forms' ),
 					],
 				],
 			]
