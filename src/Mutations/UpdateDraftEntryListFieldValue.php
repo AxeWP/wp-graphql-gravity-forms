@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Mutation
  * @since 0.0.1
+ * @since 0.3.0 Deprecate `values` in favor of `rowValues`.
  */
 
 namespace WPGraphQLGravityForms\Mutations;
@@ -46,23 +47,31 @@ class UpdateDraftEntryListFieldValue extends DraftEntryUpdater {
 			function( $row ) {
 				$row_values = []; // Initializes array.
 
+				/**
+				 * Deprecate `values` in favor of `rowValues`.
+				 *
+				 * @since 0.3.0
+				 */
+				if ( ! empty( $row['values'] ) ) {
+					_doing_it_wrong( 'updateDraftEntryListFieldValue', 'The listField input.value.values property has been deprecated. Please use input.value.rowValues instead.', '0.3.0' );
+					$row['rowValues'] = $row['values'];
+				}
+
 				// If columns are enabled, save each choice => value pair.
 				if ( $this->field->enableColumns ) {
 					foreach ( $this->field->choices as $choice_key => $choice ) {
-						$row_values[] = [
-							$choice['value'] => isset( $row['values'][ $choice_key ] ) ? sanitize_text_field( $row['values'][ $choice_key ] ) : null,
-						];
+						$row_values[ $choice['value'] ] = isset( $row['rowValues'][ $choice_key ] ) ? sanitize_text_field( $row['rowValues'][ $choice_key ] ) : null;
 					}
 
 					return $row_values;
 				}
 
 				// If no columns, values can be saved directly to the array.
-				return isset( $row['values'][0] ) ? sanitize_text_field( $row['values'][0] ) : null;
+				return isset( $row['rowValues'][0] ) ? sanitize_text_field( $row['rowValues'][0] ) : null;
 			},
 			$value
 		);
 
-		return (string) serialize( $values_to_save );
+		return (string) serialize( $values_to_save ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 	}
 }

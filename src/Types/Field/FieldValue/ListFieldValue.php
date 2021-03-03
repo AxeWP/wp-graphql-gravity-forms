@@ -6,6 +6,7 @@
  * @package WPGraphQLGravityForms\Types\Field\FieldValue
  * @since   0.0.1
  * @since   0.3.0 Return early if value is null or empty.
+ * @since   0.3.0 Fix array structure and deprecate `value` in favor of `values`.
  */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
@@ -62,7 +63,7 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 	 * @throws UserError .
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
-		$entry_values = isset( $entry[ $field['id'] ] ) ? unserialize( $entry[ $field['id'] ] ) : null;
+		$entry_values = isset( $entry[ $field['id'] ] ) ? unserialize( $entry[ $field['id'] ] ) : null; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 
 		// Return null if no value is set, or unserialize creates an empty array.
 		if ( empty( $entry_values ) ) {
@@ -78,19 +79,19 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 		// If columns are enabled, save each row-value pair.
 		if ( $field['enableColumns'] ) {
 
-			// Get column names.
-			$field_keys = wp_list_pluck( $field->choices, 'text' );
-
 			// Save each row-value pair.
 			$listValues = array_map(
-				function( $row ) use ( $field_keys ) {
+				function( $row ) {
 					$row_values = [];
 
 					foreach ( $row as $key => $single_value ) {
-						$row_values[] = $single_value[ $field_keys[ $key ] ];
+						$row_values[] = $single_value;
 					}
 
-					return [ 'value' => $row_values ];
+					return [
+						'value'  => $row_values, // Deprecated @since 0.3.0.
+						'values' => $row_values,
+					];
 				},
 				$entry_values
 			);
@@ -101,7 +102,10 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 		// If no columns, entry values can be mapped directly to 'value'.
 		$listValues = array_map(
 			function( $single_value ) {
-				return [ 'value' => [ $single_value ] ]; // $single_value must be Iteratable.
+				return [
+					'values' => [ $single_value ], // $single_value must be Iteratable.
+					'value'  => [ $single_value ], // Deprecated @since 0.3.0.
+				];
 			},
 			$entry_values
 		);
