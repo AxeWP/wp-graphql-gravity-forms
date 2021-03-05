@@ -5,6 +5,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Input
  * @since   0.0.1
+ * @since   0.3.0 Deprecate `values` in favor of `rowValues`.
  */
 
 namespace WPGraphQLGravityForms\Types\Input;
@@ -37,9 +38,14 @@ class ListInput implements Hookable, InputType {
 			[
 				'description' => __( 'Input fields for a single List field item.', 'wp-graphql-gravity-forms' ),
 				'fields'      => [
-					'values' => [
+					'values'    => [
+						'type'              => [ 'list_of' => 'String' ],
+						'description'       => __( 'Input value. Deprecated - please use `rowValues` instead.', 'wp-graphql-gravity-forms' ),
+						'deprecationReason' => __( 'Please use `rowValues` instead.', 'wp-graphql-gravity-forms' ),
+					],
+					'rowValues' => [
 						'type'        => [ 'list_of' => 'String' ],
-						'description' => __( 'Input value', 'wp-graphql-gravity-forms' ),
+						'description' => __( 'Input values for the specific listField row.', 'wp-graphql-gravity-forms' ),
 					],
 				],
 			]

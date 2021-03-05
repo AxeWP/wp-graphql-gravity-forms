@@ -29,6 +29,7 @@ class FieldsDataManipulator implements DataManipulator {
 	public function manipulate( array $data ) : array {
 		$data = array_map( [ $this, 'set_css_class_list_for_field' ], $data );
 		$data = $this->set_is_hidden_values( $data );
+		$data = $this->set_list_choice_empty_values( $data );
 		$data = $this->add_keys_to_inputs( $data, 'address' );
 		$data = $this->add_keys_to_inputs( $data, 'name' );
 
@@ -84,6 +85,37 @@ class FieldsDataManipulator implements DataManipulator {
 			$fields[ $field_index ]['inputs'] = $inputs;
 		}
 
+		return $fields;
+	}
+
+	/**
+	 * List fields without columns don't have their `choices` key set.
+	 * This sets them so we can use the same mutation for both single and multi-column list fields.
+	 *
+	 * @param array $fields Form fields.
+	 *
+	 * @return array $fields Form fields with the list `choices` values defined.
+	 */
+	private function set_list_choice_empty_values( array $fields ) {
+		$empty_choices = [
+			'text'       => null,
+			'value'      => null,
+			'isSelected' => null,
+			'price'      => null,
+		];
+
+		$fields_to_modify = array_filter(
+			$fields,
+			function( $field ) {
+				return 'list' === $field['type'];
+			}
+		);
+
+		foreach ( $fields_to_modify as $field_index => $field ) {
+			if ( empty( $field['choices'] ) ) {
+				$fields[ $field_index ]['choices'] = $empty_choices;
+			}
+		}
 		return $fields;
 	}
 
