@@ -38,17 +38,17 @@ class ChainedSelectChoiceProperty implements Hookable, Type {
 			self::TYPE,
 			[
 				'description' => __( 'Gravity Forms Chained Select field choice property.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					array_merge(
-						ChoiceProperty\ChoiceIsSelectedProperty::get(),
-						ChoiceProperty\ChoiceTextProperty::get(),
-						ChoiceProperty\ChoiceValueProperty::get(),
-					),
-					'choices' => [
-						'type'        => [ 'list_of' => self::TYPE ],
-						'description' => __( 'Choices used to populate the dropdown field. These can be nested multiple levels deep.', 'wp-graphql-gravity-forms' ),
+				'fields'      => array_merge(
+					ChoiceProperty\ChoiceIsSelectedProperty::get(),
+					ChoiceProperty\ChoiceTextProperty::get(),
+					ChoiceProperty\ChoiceValueProperty::get(),
+					[
+						'choices' => [
+							'type'        => [ 'list_of' => self::TYPE ],
+							'description' => __( 'Choices used to populate the dropdown field. These can be nested multiple levels deep.', 'wp-graphql-gravity-forms' ),
+						],
 					],
-				],
+				),
 			]
 		);
 	}
