@@ -8,6 +8,7 @@
  * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
  * @since   0.0.1
  * @since   0.2.0 Use InputProperty classes.
+ * @since   0.3.0 Add isHidden property.
  */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
@@ -43,6 +44,7 @@ class PasswordInputProperty implements Hookable, Type {
 				'fields'      => array_merge(
 					InputProperty\InputCustomLabelProperty::get(),
 					InputProperty\InputIdProperty::get(),
+					InputProperty\InputIsHiddenProperty::get(),
 					InputProperty\InputLabelProperty::get(),
 					InputProperty\InputPlaceholderProperty::get(),
 				),
