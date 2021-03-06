@@ -77,6 +77,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['captcha_field']        = new Field\CaptchaField();
 		$this->instances['chained_select_field'] = new Field\ChainedSelectField();
 		$this->instances['checkbox_field']       = new Field\CheckboxField();
+		$this->instances['consent_field']        = new Field\ConsentField();
 		$this->instances['date_field']           = new Field\DateField();
 		$this->instances['email_field']          = new Field\EmailField();
 		$this->instances['file_upload_field']    = new Field\FileUploadField();
@@ -122,6 +123,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['chained_select_field_value'] = new FieldValue\ChainedSelectFieldValue();
 		$this->instances['checkbox_input_value']       = new FieldValue\CheckboxInputValue();
 		$this->instances['checkbox_field_values']      = new FieldValue\CheckboxFieldValue();
+		$this->instances['consent_field_values']       = new FieldValue\ConsentFieldValue();
 		$this->instances['date_field_values']          = new FieldValue\DateFieldValue();
 		$this->instances['email_field_value']          = new FieldValue\EmailFieldValue();
 		$this->instances['hidden_field_value']         = new FieldValue\HiddenFieldValue();
@@ -186,6 +188,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['update_draft_entry_address_field_value']        = new Mutations\UpdateDraftEntryAddressFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_chained_select_field_value'] = new Mutations\UpdateDraftEntryChainedSelectFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_checkbox_field_value']       = new Mutations\UpdateDraftEntryCheckboxFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry_consent_field_value']        = new Mutations\UpdateDraftEntryConsentFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_date_field_value']           = new Mutations\UpdateDraftEntryDateFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_email_field_value']          = new Mutations\UpdateDraftEntryEmailFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_hidden_field_value']         = new Mutations\UpdateDraftEntryHiddenFieldValue( $this->instances['draft_entry_data_manipulator'] );
