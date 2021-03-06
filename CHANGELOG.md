@@ -1,8 +1,37 @@
 # Changelog
 
+## v0.3.0 - Add Missing Mutations, the Consent Field, and more!
+
+This release focuses on adding in missing mutations for existing form field - including those needed for Post Creation. We also added support for the Consent field, and squashed some bugs.
+
+### New Field Support: Consent
+- Added `consentField` and `updateDraftEntryConsentFieldValue`.
+
+### New Field Mutations
+- Added `updateDraftEntryChainedSelectFieldValue` mutation.
+- Added `updateDraftEntryHiddenFieldValue` mutation.
+- Added `updateDraftEntryPostCategoryFieldValue` mutation.
+- Added `updateDraftEntryPostContentFieldValue` mutation.
+- Added `updateDraftEntryPostCustomFieldValue` mutation.
+- Added `updateDraftEntryPostTagsFieldValue` mutation.
+- Added `updateDraftEntryPostTitleFieldValue` mutation.
+
+### Added Field Properties
+- Added the `isHidden` property to  `PasswordInput`. 
+
+### Bugfixes
+- Changed the way we were saving the `listField` values for both single- and multi-column setups, so GF can read them correctly.
+- Fix a bug where a PHP Notice would be thrown when no `listField` value was submitted - even if the field was not required. 
+- Fixed a bug that was preventing unused draft signature images from getting deleted.
+- Updated how we retrieve the signature url so we're no longer using deprecated functions.
+
+### Misc.
+- Renamed `ListInput` and `ListFieldValue` properties to something more sensical. `input.value.values` is now `input.value.rowValues`, and `fieldValue.listValues.value` is now `fieldValue.listValues.values`. The old property names will continue to work until further notice.
+- Updated composer dependencies.
+
 ## v0.2.0 - Add / Deprecate Field Properties
 
-This release focusds on adding in missing properties on the existing form fields, and deprecating any properties that aren't used by Gravity Forms.
+This release focuses on adding in missing properties on the existing form fields, and deprecating any properties that aren't used by Gravity Forms.
 
 ### Added field properties:
 

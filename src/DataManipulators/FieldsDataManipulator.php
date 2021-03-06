@@ -6,14 +6,13 @@
  *
  * @package WPGraphQLGravityForms\DataManipulators
  * @since 0.0.1
+ * @since 0.3.0 Set default choices for listField.
  */
 
 namespace WPGraphQLGravityForms\DataManipulators;
 
 use GF_Field;
-use GraphQLRelay\Relay;
 use WPGraphQLGravityForms\Interfaces\DataManipulator;
-use WPGraphQLGravityForms\Types\Form\Form;
 
 /**
  * Class - FieldsDataManipulator
