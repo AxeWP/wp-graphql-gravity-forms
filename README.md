@@ -1,6 +1,11 @@
 # 🚀📄 WPGraphQL for Gravity Forms
 
-[![Project Status: Active.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) ![GitHub](https://img.shields.io/github/license/harness-software/wp-graphql-gravity-forms) ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/harness-software/wp-graphql-gravity-forms?include_prereleases) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/harness-software/wp-graphql-gravity-forms/0.2.0) ![GitHub forks](https://img.shields.io/github/forks/harness-software/wp-graphql-gravity-forms?style=social) ![GitHub Repo stars](https://img.shields.io/github/stars/harness-software/wp-graphql-gravity-forms?style=social)
+[![Project Status: Active.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) 
+![Packagist License](https://img.shields.io/packagist/l/harness-software/wp-graphql-gravity-forms?color=green)
+![Packagist Version](https://img.shields.io/packagist/v/harness-software/wp-graphql-gravity-forms?label=stable)
+![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/harness-software/wp-graphql-gravity-forms/0.3.0) 
+![GitHub forks](https://img.shields.io/github/forks/harness-software/wp-graphql-gravity-forms?style=social)
+![GitHub Repo stars](https://img.shields.io/github/stars/harness-software/wp-graphql-gravity-forms?style=social)
 
 A WordPress plugin that provides a GraphQL API for interacting with Gravity Forms.
 
@@ -12,7 +17,7 @@ Using WordPress as a headless CMS with a separate JavaScript-powered frontend si
 
 Using GraphQL means that if your frontend app needs to fetch data for a number of different resources, all of that data can be fetched from the server with a single request. Your frontend app can even define which fields it requires for each of the resources, giving it full control over which pieces of data are fetched and included in the response.
 
-Fortunately, a GraphQL implementation exists for WordPress - [WPGraphQL](https://github.com/wp-graphql/wp-graphql).
+Fortunately, a GraphQL implementation exists for WordPress - [WPGraphQL](https://www.wpgraphql.com/).
 
 WPGraphQL for Gravity Forms extends the WPGraphQL plugin, allowing frontend apps to interact with the Gravity Forms data stored in a headless WordPress backend. This plugin couples the great forms functionality of Gravity Forms with the powerful WordPress-specific GraphQL implementation that WPGraphQL provides.
 
@@ -31,24 +36,25 @@ Our hope for this open source project is that it will enable more teams to lever
 2. Install & activate [Gravity Forms](https://www.gravityforms.com/) and any supported addons.
 3. Download the zip of this repository and upload it to your WordPress install, and activate the plugin.
 
-## Supported Features <a name="supported-features"/>
+## Supported Features <a name="supported-features" />
 
 - Querying forms and entries.
 - Updating and deleting draft entries, and submitting forms.
 - Deleting entries.
 
-### Supported Form Fields <a name="supported-fields">
+### Supported Form Fields <a name="supported-fields" >
 
 | Field             | Querying<sup>[1](#supportsQuery)</sup> | Updating<sup>[2](#supportsMutation)</sup> |
 | ----------------- | -------------------------------------- | ----------------------------------------- |
 | Address           | :heavy_check_mark:                     | :heavy_check_mark:                        |
-| Captcha           | :heavy_check_mark:                     | N/A                                       |
-| Chained Selects   | :heavy_check_mark:                     | :hammer:                                  |
+| Captcha           | :heavy_check_mark:                     | N/A<sup>[4](#supportsCaptcha)             |
+| Chained Selects   | :heavy_check_mark:                     | :heavy_check_mark:                        |
 | Checkbox          | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Consent           | :heavy_check_mark:                     | :heavy_check_mark:                        |
 | Date              | :heavy_check_mark:                     | :heavy_check_mark:                        |
 | Email             | :heavy_check_mark:                     | :heavy_check_mark:                        |
 | FileUpload        | :heavy_check_mark:                     | :hammer:                                  |
-| Hidden            | :heavy_check_mark:                     | :hammer:                                  |
+| Hidden            | :heavy_check_mark:                     | :heavy_check_mark:                        |
 | HTML              | :heavy_check_mark:                     | N/A<sup>[3](#supportsNA)</sup>            |
 | List              | :heavy_check_mark:                     | :heavy_check_mark:                        |
 | Multiselect       | :heavy_check_mark:                     | :heavy_check_mark:                        |
@@ -57,13 +63,13 @@ Our hope for this open source project is that it will enable more teams to lever
 | Page              | :heavy_check_mark:                     | N/A<sup>[3](#supportsNA)</sup>            |
 | Password          | :heavy_check_mark:                     | :hammer:                                  |
 | Phone             | :heavy_check_mark:                     | :heavy_check_mark:                        |
-| Post Category     | :heavy_check_mark:                     | :hammer:                                  |
-| Post Content      | :heavy_check_mark:                     | :hammer:                                  |
-| Post Custom Field | :heavy_check_mark:                     | :hammer:                                  |
-| Post Excerpt      | :heavy_check_mark:                     | :hammer:                                  |
+| Post Category     | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Post Content      | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Post Custom Field | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Post Excerpt      | :heavy_check_mark:                     | :heavy_check_mark:                        |
 | Post Image        | :heavy_check_mark:                     | :hammer:                                  |
-| Post Tags         | :heavy_check_mark:                     | :hammer:                                  |
-| Post Title        | :heavy_check_mark:                     | :hammer:                                  |
+| Post Tags         | :heavy_check_mark:                     | :heavy_check_mark:                        |
+| Post Title        | :heavy_check_mark:                     | :heavy_check_mark:                        |
 | Radio             | :heavy_check_mark:                     | :heavy_check_mark:                        |
 | Section           | :heavy_check_mark:                     | N/A<sup>[3](#supportsNA)</sup>            |
 | Select            | :heavy_check_mark:                     | :heavy_check_mark:                        |
@@ -74,8 +80,11 @@ Our hope for this open source project is that it will enable more teams to lever
 | Website           | :heavy_check_mark:                     | :heavy_check_mark:                        |
 
 <a name="supportsQuery">1</a>: Supports [querying the field and its properties](#documentation-get-form).
+
 <a name="supportsMutation">2</a>: Supports updating the field.
+
 <a name="supportsNA">3</a>: This field is for display purposes only, so there is no need for updating.
+
 <a name="supportsCaptcha">4</a>: Captcha fields should be validated before the form is submitted, so it doesn't make sense to handle a server-side update. If you have a use case for when a captcha field should be validated server-side, please submit a Feature Request.
 
 ## Future Feature Enhancements <a name="future-enhancements" />
