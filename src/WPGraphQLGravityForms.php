@@ -5,6 +5,7 @@
  * @package WPGraphQLGravityForms
  * @since 0.0.1
  * @since 0.2.0 Remove MultiSelectChoiceProperty and add RadioChoiceProperty, AddressInputProperty, ChainedSelectInputProperty, and NameInputProperty.
+ * @since 0.3.0 Adds ConsentField, ConsentFieldValue, HiddenFieldValue, PostCategoryFieldValue, PostContentFieldValue, PostCustomFieldValue, PostTagsFieldValue, PostTitleFieldValue, ChainedSelectInput, UpdateDraftEntryChainedSelectFieldValue, UpdateDraftEntryConsentFieldValue, UpdateDraftEntryHiddenFieldValue, UpdateDraftEntryPostCategoryFieldValue, UpdateDraftEntryPostContentFieldValue, UpdateDraftEntryPostCustomFieldValue, UpdateDraftEntryPostExcerptFieldValue, UpdateDraftEntryPostTitleFieldValue, and UpdateDraftEntryPostTagsFieldValue.
  */
 
 namespace WPGraphQLGravityForms;
