@@ -41,8 +41,8 @@ class ConsentFieldValue implements Hookable, Type, FieldValue {
 				'description' => __( 'Consent field value.', 'wp-graphql-gravity-forms' ),
 				'fields'      => [
 					'value' => [
-						'type'        => 'Boolean',
-						'description' => __( 'The value.', 'wp-graphql-gravity-forms' ),
+						'type'        => 'String',
+						'description' => __( 'The value. Returns the consent message on `true`, `null` on false.', 'wp-graphql-gravity-forms' ),
 					],
 				],
 			]
@@ -59,7 +59,7 @@ class ConsentFieldValue implements Hookable, Type, FieldValue {
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
 			return [
-				'value' => $entry[ $field['inputs'][0]['id'] ] ?? null,
+				'value' => $entry[ $field['inputs'][1]['id'] ] ?? null,
 			];
 	}
 }
