@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - PageNumberProperty
  */
-abstract class PageNumberProperty implements FieldProperty {
+class PageNumberProperty implements FieldProperty {
 	/**
 	 * Get 'pageNumber' property.
 	 *

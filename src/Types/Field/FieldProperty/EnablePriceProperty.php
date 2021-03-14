@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - EnablePriceProperty
  */
-abstract class EnablePriceProperty implements FieldProperty {
+class EnablePriceProperty implements FieldProperty {
 	/**
 	 * Get 'enablePrice' property.
 	 *

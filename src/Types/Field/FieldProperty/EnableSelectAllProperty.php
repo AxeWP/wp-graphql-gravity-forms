@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - EnableSelectAllProperty
  */
-abstract class EnableSelectAllProperty implements FieldProperty {
+class EnableSelectAllProperty implements FieldProperty {
 	/**
 	 * Get 'enableSelectAll' property.
 	 *

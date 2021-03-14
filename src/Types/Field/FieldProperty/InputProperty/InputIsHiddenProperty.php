@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - InputIsHiddenProperty
  */
-abstract class InputIsHiddenProperty implements FieldProperty {
+class InputIsHiddenProperty implements FieldProperty {
 	/**
 	 * Get 'isHidden' property for Input.
 	 *

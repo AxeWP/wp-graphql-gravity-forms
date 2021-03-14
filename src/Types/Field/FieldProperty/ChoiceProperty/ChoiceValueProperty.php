@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - ChoiceValueProperty
  */
-abstract class ChoiceValueProperty implements FieldProperty {
+class ChoiceValueProperty implements FieldProperty {
 	/**
 	 * Get 'value' property for Choice.
 	 *

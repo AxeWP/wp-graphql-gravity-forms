@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - PlaceholderProperty
  */
-abstract class PlaceholderProperty implements FieldProperty {
+class PlaceholderProperty implements FieldProperty {
 	/**
 	 * Get 'placeholder' property.
 	 *

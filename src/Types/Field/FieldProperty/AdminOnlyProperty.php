@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - AdminOnlyProperty
  */
-abstract class AdminOnlyProperty implements FieldProperty {
+class AdminOnlyProperty implements FieldProperty {
 	/**
 	 * Get 'adminOnly' property.
 	 *

@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - SubLabelPlacementProperty
  */
-abstract class SubLabelPlacementProperty implements FieldProperty {
+class SubLabelPlacementProperty implements FieldProperty {
 	/**
 	 * Get 'subLabelPlacement' property.
 	 *

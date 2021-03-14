@@ -15,7 +15,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - ChoicesProperty
  */
-abstract class ChoicesProperty implements FieldProperty {
+class ChoicesProperty implements FieldProperty {
 	/**
 	 * Get 'choices' property.
 	 *

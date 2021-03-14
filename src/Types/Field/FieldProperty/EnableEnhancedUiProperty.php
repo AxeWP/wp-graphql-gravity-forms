@@ -15,7 +15,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - EnableEnhancedUiProperty
  */
-abstract class EnableEnhancedUiProperty implements FieldProperty {
+class EnableEnhancedUiProperty implements FieldProperty {
 	/**
 	 * Get 'enableEnhancedUI' property.
 	 *

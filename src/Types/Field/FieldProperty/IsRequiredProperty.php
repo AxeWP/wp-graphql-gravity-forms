@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - IsRequiredProperty
  */
-abstract class IsRequiredProperty implements FieldProperty {
+class IsRequiredProperty implements FieldProperty {
 	/**
 	 * Get 'isRequired' property.
 	 *

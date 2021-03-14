@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - ChoiceIsSelectedProperty
  */
-abstract class ChoiceIsSelectedProperty implements FieldProperty {
+class ChoiceIsSelectedProperty implements FieldProperty {
 	/**
 	 * Get 'isSelected' property for Choice.
 	 *

@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - AllowsPrepopulateProperty
  */
-abstract class AllowsPrepopulateProperty implements FieldProperty {
+class AllowsPrepopulateProperty implements FieldProperty {
 	/**
 	 * Get 'allowsPrepopulate' property.
 	 *
