@@ -9,13 +9,10 @@
 
 namespace WPGraphQLGravityForms\Types\Union;
 
-use GraphQL\Type\Definition\ResolveInfo;
-use WPGraphQL\AppContext;
 use WPGraphQL\Registry\TypeRegistry;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\Types\Field\Field;
 
 /**
  * Class - ObjectFieldValueUnion
