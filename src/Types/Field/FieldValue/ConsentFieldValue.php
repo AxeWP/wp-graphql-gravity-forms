@@ -5,6 +5,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Field\FieldValue
  * @since   0.3.0
+ * @since   0.3.1 `value` changed to type `String`.
  */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;

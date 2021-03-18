@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Form
  * @since   0.0.1
+ * @since   0.3.1 `fieldId` changed to type `Int`.
  */
 
 namespace WPGraphQLGravityForms\Types\Form;
