@@ -20,6 +20,7 @@ use WPGraphQLGravityForms\Interfaces\Connection;
 use WPGraphQLGravityForms\Interfaces\FieldValue as FieldValueInterface;
 use WPGraphQLGravityForms\Types\Entry\Entry;
 use WPGraphQLGravityForms\Types\Field\Field;
+use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
 use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
 
