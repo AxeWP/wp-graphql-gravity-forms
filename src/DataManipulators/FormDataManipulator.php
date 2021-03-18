@@ -99,11 +99,11 @@ class FormDataManipulator implements DataManipulator {
 	 * @return array $form Form meta array with some values converted to null.
 	 */
 	private function prevent_missing_values( array $form ) : array {
-		$form['limitEntriesCount']   = isset( $form['limitEntriesCount'] ) ? (bool) $form['limitEntriesCount'] : false;
+		$form['limitEntriesCount']   = isset( $form['limitEntriesCount'] ) ? (int) $form['limitEntriesCount'] : false;
 		$form['scheduleStartHour']   = isset( $form['scheduleStartHour'] ) ? (int) $form['scheduleStartHour'] : null;
 		$form['scheduleStartMinute'] = isset( $form['scheduleStartMinute'] ) ? (int) $form['scheduleStartMinute'] : null;
-		$form['scheduleEndHour']     = isset( $form['scheduleEndHour'] ) ? (bool) $form['scheduleEndHour'] : null;
-		$form['scheduleEndMinute']   = isset( $form['scheduleEndMinute'] ) ? (bool) $form['scheduleEndMinute'] : null;
+		$form['scheduleEndHour']     = isset( $form['scheduleEndHour'] ) ? (int) $form['scheduleEndHour'] : null;
+		$form['scheduleEndMinute']   = isset( $form['scheduleEndMinute'] ) ? (int) $form['scheduleEndMinute'] : null;
 
 		if ( ! empty( $form['confirmations'] ) ) {
 			$form['confirmations'] = $this->nullify_confirmation_page_id_empty_strings( $form['confirmations'] );
