@@ -36,7 +36,7 @@ class FormNotificationRouting implements Hookable, Type {
 				'description' => __( 'Properties for all the email notifications which exist for a form.', 'wp-graphql-gravity-forms' ),
 				'fields'      => [
 					'fieldId'  => [
-						'type'        => 'String',
+						'type'        => 'Int',
 						'description' => __( 'Target field ID. The field that will have it’s value compared with the value property to determine if this rule is a match.', 'wp-graphql-gravity-forms' ),
 					],
 					// @TODO: convert to an enum.
