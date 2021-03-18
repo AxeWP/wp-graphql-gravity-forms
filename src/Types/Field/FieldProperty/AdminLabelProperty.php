@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - AdminLabelProperty
  */
-abstract class AdminLabelProperty implements FieldProperty {
+class AdminLabelProperty implements FieldProperty {
 	/**
 	 * Get 'adminLabel' property.
 	 *

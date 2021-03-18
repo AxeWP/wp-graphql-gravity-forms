@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - NoDuplicatesProperty
  */
-abstract class NoDuplicatesProperty implements FieldProperty {
+class NoDuplicatesProperty implements FieldProperty {
 	/**
 	 * Get 'noDuplicates' property.
 	 *

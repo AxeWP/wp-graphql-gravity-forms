@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - ErrorMessageProperty
  */
-abstract class ErrorMessageProperty implements FieldProperty {
+class ErrorMessageProperty implements FieldProperty {
 	/**
 	 * Get 'errorMessage' property.
 	 *

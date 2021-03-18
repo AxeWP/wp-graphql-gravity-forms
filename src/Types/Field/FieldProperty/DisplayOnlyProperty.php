@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - DisplayOnlyProperty
  */
-abstract class DisplayOnlyProperty implements FieldProperty {
+class DisplayOnlyProperty implements FieldProperty {
 	/**
 	 * Get 'displayOnly' property.
 	 *

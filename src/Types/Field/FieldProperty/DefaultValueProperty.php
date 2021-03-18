@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - DefaultValueProperty
  */
-abstract class DefaultValueProperty implements FieldProperty {
+class DefaultValueProperty implements FieldProperty {
 	/**
 	 * Get 'defaultValue' property.
 	 *

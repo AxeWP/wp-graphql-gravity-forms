@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - InputsProperty
  */
-abstract class InputsProperty implements FieldProperty {
+class InputsProperty implements FieldProperty {
 	/**
 	 * Get 'inputs' property.
 	 *

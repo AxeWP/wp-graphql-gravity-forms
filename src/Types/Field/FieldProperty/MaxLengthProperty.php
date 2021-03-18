@@ -14,7 +14,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - MaxLengthProperty
  */
-abstract class MaxLengthProperty implements FieldProperty {
+class MaxLengthProperty implements FieldProperty {
 	/**
 	 * Get 'maxLength' property.
 	 *

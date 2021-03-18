@@ -13,7 +13,7 @@ use WPGraphQLGravityForms\Interfaces\FieldProperty;
 /**
  * Class - DescriptionProperty
  */
-abstract class DescriptionProperty implements FieldProperty {
+class DescriptionProperty implements FieldProperty {
 	/**
 	 * Get 'description' property.
 	 */
