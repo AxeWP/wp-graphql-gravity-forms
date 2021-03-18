@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\DataManipulators
  * @since 0.0.1
+ * @since 0.3.1 `limitEntriesCount`, `scheduleEndHour` and `scheduleEndMinute` correctly return as type `Int`.
  */
 
 namespace WPGraphQLGravityForms\DataManipulators;
