@@ -10,8 +10,6 @@
 
 namespace WPGraphQLGravityForms\Mutations;
 
-use WPGraphQLGravityForms\Types\Input\ConsentInput;
-
 /**
  * Class - UpdateDraftEntryConsentFieldValue
  */
