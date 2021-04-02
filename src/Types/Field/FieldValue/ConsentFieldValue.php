@@ -11,43 +11,38 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
-use WPGraphQLGravityForms\Interfaces\FieldValue;
 use WPGraphQLGravityForms\Types\Field\ConsentField;
 
 /**
  * Class - ConsentFieldValue
  */
-class ConsentFieldValue implements Hookable, Type, FieldValue {
+class ConsentFieldValue extends AbstractFieldValue {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = ConsentField::TYPE . 'Value';
+	public static $type = 'ConsentFieldValue';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Consent field value.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Consent field value.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'value' => [
-						'type'        => 'String',
-						'description' => __( 'The value. Returns the consent message on `true`, `null` on false.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_properties() : array {
+		return [
+			'value' => [
+				'type'        => 'String',
+				'description' => __( 'The value. Returns the consent message on `true`, `null` on false.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 
 	/**

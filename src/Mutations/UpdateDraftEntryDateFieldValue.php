@@ -13,11 +13,20 @@ namespace WPGraphQLGravityForms\Mutations;
 /**
  * Class - UpdateDraftEntryDateFieldValue
  */
-class UpdateDraftEntryDateFieldValue extends DraftEntryUpdater {
+class UpdateDraftEntryDateFieldValue extends AbstractDraftEntryUpdater {
 	/**
-	 * Mutation name.
+	 * Mutation Name
+	 *
+	 * @var string
 	 */
-	const NAME = 'updateDraftEntryDateFieldValue';
+	public static $name = 'updateDraftEntryDateFieldValue';
+
+	/**
+	 * Gravity forms field type for the mutation.
+	 *
+	 * @var string
+	 */
+	protected static $gf_type = 'date';
 
 	/**
 	 * Defines the input field value configuration.
@@ -39,6 +48,6 @@ class UpdateDraftEntryDateFieldValue extends DraftEntryUpdater {
 	 * @return string
 	 */
 	protected function prepare_field_value( string $value ) : string {
-		return sanitize_text_field( $value );
+		return $this->prepare_string_value( $value );
 	}
 }

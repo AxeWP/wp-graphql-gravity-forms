@@ -34,4 +34,30 @@ class Utils {
 
 		return $property;
 	}
+
+	/**
+	 * Converts a string to snake_case.
+	 *
+	 * @param string $string the original string.
+	 * @return string
+	 */
+	public static function to_snake_case( $string ) : string {
+		return strtolower( (string) preg_replace( [ '/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/' ], '$1_$2', $string ) );
+	}
+
+	/**
+	 * Mimics Gravity Forms' GFFormsModel::truncate() method.
+	 *
+	 * @param string $str Original string.
+	 * @param int    $length The maximum length of the string.
+	 *
+	 * @return string The string, possibly truncated.
+	 */
+	public static function truncate( string $str, int $length ) : string {
+		if ( strlen( $str ) > $length ) {
+			$str = substr( $str, 0, $length );
+		}
+
+		return $str;
+	}
 }

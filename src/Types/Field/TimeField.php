@@ -11,61 +11,63 @@
 
 namespace WPGraphQLGravityForms\Types\Field;
 
+use WPGraphQLGravityForms\Types\Enum\TimeFieldFormatEnum;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQLGravityForms\Types\GraphQLInterface\FieldInterface;
 
 /**
  * Class - TimeField
  */
-class TimeField extends Field {
+class TimeField extends AbstractField {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'TimeField';
+	public static $type = 'TimeField';
 
 	/**
 	 * Type registered in Gravity Forms.
+	 *
+	 * @var string
 	 */
-	const GF_TYPE = 'time';
+	public static $gf_type = 'time';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'Gravity Forms Time field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() {
-		register_graphql_object_type(
-			self::TYPE,
+	protected function get_properties() : array {
+		return array_merge(
+			$this->get_global_properties(),
+			$this->get_custom_properties(),
+			FieldProperty\AdminLabelProperty::get(),
+			FieldProperty\AdminOnlyProperty::get(),
+			FieldProperty\AllowsPrepopulateProperty::get(),
+			FieldProperty\DescriptionPlacementProperty::get(),
+			FieldProperty\DescriptionProperty::get(),
+			FieldProperty\ErrorMessageProperty::get(),
+			FieldProperty\InputNameProperty::get(),
+			FieldProperty\InputsProperty::get(),
+			FieldProperty\IsRequiredProperty::get(),
+			FieldProperty\LabelProperty::get(),
+			FieldProperty\NoDuplicatesProperty::get(),
+			FieldProperty\SizeProperty::get(),
+			FieldProperty\SubLabelPlacementProperty::get(),
+			FieldProperty\VisibilityProperty::get(),
 			[
-				'description' => __( 'Gravity Forms Time field.', 'wp-graphql-gravity-forms' ),
-				'fields'      => array_merge(
-					$this->get_global_properties(),
-					$this->get_custom_properties(),
-					FieldProperty\AdminLabelProperty::get(),
-					FieldProperty\AdminOnlyProperty::get(),
-					FieldProperty\AllowsPrepopulateProperty::get(),
-					FieldProperty\DescriptionPlacementProperty::get(),
-					FieldProperty\DescriptionProperty::get(),
-					FieldProperty\ErrorMessageProperty::get(),
-					FieldProperty\InputNameProperty::get(),
-					FieldProperty\InputsProperty::get(),
-					FieldProperty\IsRequiredProperty::get(),
-					FieldProperty\LabelProperty::get(),
-					FieldProperty\NoDuplicatesProperty::get(),
-					FieldProperty\SizeProperty::get(),
-					FieldProperty\SubLabelPlacementProperty::get(),
-					FieldProperty\VisibilityProperty::get(),
-					[
-						'timeFormat' => [
-							'type'        => 'String',
-							'description' => __( 'Determines how the time is displayed. Possible values: "12", "24"', 'wp-graphql-gravity-forms' ),
-						],
-					]
-				),
+				'timeFormat' => [
+					'type'        => TimeFieldFormatEnum::$type,
+					'description' => __( 'Determines how the time is displayed.', 'wp-graphql-gravity-forms' ),
+				],
 			]
 		);
 	}

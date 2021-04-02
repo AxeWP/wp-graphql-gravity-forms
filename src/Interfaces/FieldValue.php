@@ -14,6 +14,21 @@ use GF_Field;
  * Interface - FieldValue
  */
 interface FieldValue {
+
+	/**
+	 * Sets the Enum type description.
+	 *
+	 * @return string Enum type description.
+	 */
+	public function get_type_description() : string;
+
+	/**
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
+	 */
+	public function get_properties() : array;
+
 	/**
 	 * Get the field value.
 	 *

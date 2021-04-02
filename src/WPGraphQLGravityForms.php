@@ -12,6 +12,7 @@ namespace WPGraphQLGravityForms;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Types\Button\Button;
+use WPGraphQLGravityForms\Types\Button\LastPageButton;
 use WPGraphQLGravityForms\Types\ConditionalLogic;
 use WPGraphQLGravityForms\Types\Enum;
 use WPGraphQLGravityForms\Types\Form;
@@ -22,11 +23,12 @@ use WPGraphQLGravityForms\Types\FieldError\FieldError;
 use WPGraphQLGravityForms\Types\Union;
 use WPGraphQLGravityForms\Types\Entry;
 use WPGraphQLGravityForms\Types\Input;
-
+use WPGraphQLGravityForms\Types\GraphQLInterface;
 /**
  * Main plugin class.
  */
 final class WPGraphQLGravityForms {
+
 	/**
 	 * Class instances.
 	 *
@@ -37,7 +39,7 @@ final class WPGraphQLGravityForms {
 	/**
 	 * Main method for running the plugin.
 	 */
-	public function run() {
+	public function run() : void {
 		$this->create_instances();
 		$this->register_hooks();
 	}
@@ -45,7 +47,7 @@ final class WPGraphQLGravityForms {
 	/**
 	 * Create instances.
 	 */
-	private function create_instances() {
+	private function create_instances() : void {
 		// Settings.
 		$this->instances['wpgraphql_settings'] = new Settings\WPGraphQLSettings();
 
@@ -59,7 +61,8 @@ final class WPGraphQLGravityForms {
 		$this->instances['loader_registrar'] = new Data\Loader\LoadersRegistrar();
 
 		// Buttons.
-		$this->instances['button'] = new Button();
+		$this->instances['button']           = new Button();
+		$this->instances['last_page_button'] = new LastPageButton();
 
 		// Conditional Logic.
 		$this->instances['conditional_logic']      = new ConditionalLogic\ConditionalLogic();
@@ -73,40 +76,6 @@ final class WPGraphQLGravityForms {
 		$this->instances['form_pagination']           = new Form\FormPagination();
 		$this->instances['form']                      = new Form\Form( $this->instances['form_data_manipulator'] );
 
-		// Fields.
-		$this->instances['address_field']        = new Field\AddressField();
-		$this->instances['captcha_field']        = new Field\CaptchaField();
-		$this->instances['chained_select_field'] = new Field\ChainedSelectField();
-		$this->instances['checkbox_field']       = new Field\CheckboxField();
-		$this->instances['consent_field']        = new Field\ConsentField();
-		$this->instances['date_field']           = new Field\DateField();
-		$this->instances['email_field']          = new Field\EmailField();
-		$this->instances['file_upload_field']    = new Field\FileUploadField();
-		$this->instances['hidden_field']         = new Field\HiddenField();
-		$this->instances['html_field']           = new Field\HtmlField();
-		$this->instances['list_field']           = new Field\ListField();
-		$this->instances['multi_select_field']   = new Field\MultiSelectField();
-		$this->instances['name_field']           = new Field\NameField();
-		$this->instances['number_field']         = new Field\NumberField();
-		$this->instances['page_field']           = new Field\PageField();
-		$this->instances['password_field']       = new Field\PasswordField();
-		$this->instances['phone_field']          = new Field\PhoneField();
-		$this->instances['post_category_field']  = new Field\PostCategoryField();
-		$this->instances['post_content_field']   = new Field\PostContentField();
-		$this->instances['post_custom_field']    = new Field\PostCustomField();
-		$this->instances['post_excerpt_field']   = new Field\PostExcerptField();
-		$this->instances['post_image_field']     = new Field\PostImageField();
-		$this->instances['post_tags_field']      = new Field\PostTagsField();
-		$this->instances['post_title_field']     = new Field\PostTitleField();
-		$this->instances['radio_field']          = new Field\RadioField();
-		$this->instances['section_field']        = new Field\SectionField();
-		$this->instances['signature_field']      = new Field\SignatureField();
-		$this->instances['select_field']         = new Field\SelectField();
-		$this->instances['text_area_field']      = new Field\TextAreaField();
-		$this->instances['text_field']           = new Field\TextField();
-		$this->instances['time_field']           = new Field\TimeField();
-		$this->instances['website_field']        = new Field\WebsiteField();
-
 		// Field Properties.
 		$this->instances['address_input_property']         = new FieldProperty\AddressInputProperty();
 		$this->instances['chained_select_choice_property'] = new FieldProperty\ChainedSelectChoiceProperty();
@@ -118,6 +87,16 @@ final class WPGraphQLGravityForms {
 		$this->instances['name_input_property']            = new FieldProperty\NameInputProperty();
 		$this->instances['password_input_property']        = new FieldProperty\PasswordInputProperty();
 		$this->instances['radio_choice_property']          = new FieldProperty\RadioChoiceProperty();
+
+		// Interfaces.
+		$this->instances['field_interface'] = new GraphQLInterface\FieldInterface();
+
+		// Fields.
+		$enabled_field_types = self::get_enabled_field_types();
+		foreach ( $enabled_field_types as $gf_type => $type ) {
+			$field_class_name                       = 'WPGraphQLGravityForms\\Types\\Field\\' . $type;
+			$this->instances[ $gf_type . '_field' ] = new $field_class_name();
+		}
 
 		// Field Values.
 		$this->instances['address_field_value']        = new FieldValue\AddressFieldValue();
@@ -163,9 +142,9 @@ final class WPGraphQLGravityForms {
 		$this->instances['entries_date_fiters_input']  = new Input\EntriesDateFiltersInput();
 		$this->instances['entries_field_fiters_input'] = new Input\EntriesFieldFiltersInput();
 		$this->instances['entries_sorting_input']      = new Input\EntriesSortingInput();
+		$this->instances['field_values_input']         = new Input\FieldValuesInput();
 
 		// Unions.
-		$this->instances['object_field_union']       = new Union\ObjectFieldUnion( $this->instances );
 		$this->instances['object_field_value_union'] = new Union\ObjectFieldValueUnion( $this->instances );
 
 		// Connections.
@@ -175,17 +154,51 @@ final class WPGraphQLGravityForms {
 		$this->instances['root_query_forms_connection']   = new Connections\RootQueryFormsConnection();
 
 		// Enums.
-		$this->instances['form_status_enum']                  = new Enum\FormStatusEnum();
-		$this->instances['field_filters_operator_input_enum'] = new Enum\FieldFiltersOperatorInputEnum();
+		$this->instances['address_type_enum']                   = new Enum\AddressTypeEnum();
+		$this->instances['button_type_enum']                    = new Enum\ButtonTypeEnum();
+		$this->instances['calendar_icon_type_enum']             = new Enum\CalendarIconTypeEnum();
+		$this->instances['captcha_theme_enum']                  = new Enum\CaptchaThemeEnum();
+		$this->instances['captcha_type_enum']                   = new Enum\CaptchaTypeEnum();
+		$this->instances['chained_selects_alignmnet_enum']      = new Enum\ChainedSelectsAlignmentEnum();
+		$this->instances['conditional_logic_action_type_enum']  = new Enum\ConditionalLogicActionTypeEnum();
+		$this->instances['conditional_logic_logic_type_enum']   = new Enum\ConditionalLogicLogicTypeEnum();
+		$this->instances['confirmation_type_enum']              = new Enum\ConfirmationTypeEnum();
+		$this->instances['date_field_format_enum']              = new Enum\DateFieldFormatEnum();
+		$this->instances['date_type_enum']                      = new Enum\DateTypeEnum();
+		$this->instances['description_placement_property_enum'] = new Enum\DescriptionPlacementPropertyEnum();
+		$this->instances['entry_status_enum']                   = new Enum\EntryStatusEnum();
+		$this->instances['field_filters_mode_enum']             = new Enum\FieldFiltersModeEnum();
+		$this->instances['field_filters_operator_input_enum']   = new Enum\FieldFiltersOperatorInputEnum();
+		$this->instances['form_description_placement_enum']     = new Enum\FormDescriptionPlacementEnum();
+		$this->instances['form_label_placement_enum']           = new Enum\FormLabelPlacementEnum();
+		$this->instances['form_limit_entries_period_enum']      = new Enum\FormLimitEntriesPeriodEnum();
+		$this->instances['form_status_enum']                    = new Enum\FormStatusEnum();
+		$this->instances['form_sub_label_placement_enum']       = new Enum\FormSubLabelPlacementEnum();
+		$this->instances['id_type_enum']                        = new Enum\IdTypeEnum();
+		$this->instances['label_placement_property_enum']       = new Enum\LabelPlacementPropertyEnum();
+		$this->instances['min_password_strength_enum']          = new Enum\MinPasswordStrengthEnum();
+		$this->instances['notification_to_type_enum']           = new Enum\NotificationToTypeEnum();
+		$this->instances['number_field_format_enum']            = new Enum\NumberFieldFormatEnum();
+		$this->instances['page_progress_style_enum']            = new Enum\PageProgressStyleEnum();
+		$this->instances['page_progress_type_enum']             = new Enum\PageProgressTypeEnum();
+		$this->instances['phone_field_format_enum']             = new Enum\PhoneFieldFormatEnum();
+		$this->instances['rule_operator_enum']                  = new Enum\RuleOperatorEnum();
+		$this->instances['signature_border_style_enum']         = new Enum\SignatureBorderStyleEnum();
+		$this->instances['signature_border_width_enum']         = new Enum\SignatureBorderWidthEnum();
+		$this->instances['size_property_enum']                  = new Enum\SizePropertyEnum();
+		$this->instances['sorting_input_enum']                  = new Enum\SortingInputEnum();
+		$this->instances['time_field_format_enum']              = new Enum\TimeFieldFormatEnum();
+		$this->instances['visibility_property_enum']            = new Enum\VisibilityPropertyEnum();
 
 		// Field errors.
 		$this->instances['field_error'] = new FieldError();
 
 		// Mutations.
-		$this->instances['delete_entry']                                  = new Mutations\DeleteEntry();
 		$this->instances['create_draft_entry']                            = new Mutations\CreateDraftEntry();
 		$this->instances['delete_draft_entry']                            = new Mutations\DeleteDraftEntry();
+		$this->instances['delete_entry']                                  = new Mutations\DeleteEntry();
 		$this->instances['submit_draft_entry']                            = new Mutations\SubmitDraftEntry( $this->instances['entry_data_manipulator'] );
+		$this->instances['submit_form']                                   = new Mutations\SubmitForm( $this->instances );
 		$this->instances['update_draft_entry_address_field_value']        = new Mutations\UpdateDraftEntryAddressFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_chained_select_field_value'] = new Mutations\UpdateDraftEntryChainedSelectFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_checkbox_field_value']       = new Mutations\UpdateDraftEntryCheckboxFieldValue( $this->instances['draft_entry_data_manipulator'] );
@@ -211,12 +224,63 @@ final class WPGraphQLGravityForms {
 		$this->instances['update_draft_entry_text_field_value']           = new Mutations\UpdateDraftEntryTextFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_time_field_value']           = new Mutations\UpdateDraftEntryTimeFieldValue( $this->instances['draft_entry_data_manipulator'] );
 		$this->instances['update_draft_entry_website_field_value']        = new Mutations\UpdateDraftEntryWebsiteFieldValue( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_draft_entry']                            = new Mutations\UpdateDraftEntry( $this->instances['draft_entry_data_manipulator'] );
+		$this->instances['update_entry']                                  = new Mutations\UpdateEntry( $this->instances['entry_data_manipulator'] );
+	}
+
+	/**
+	 * Returns Gravity Forms Field types to be exposed to the GraphQL schema.
+	 *
+	 * @return array field types.
+	 */
+	public static function get_enabled_field_types() : array {
+		$fields = [
+			Field\AddressField::$gf_type       => Field\AddressField::$type,
+			Field\CaptchaField::$gf_type       => Field\CaptchaField::$type,
+			Field\ChainedSelectField::$gf_type => Field\ChainedSelectField::$type,
+			Field\CheckboxField::$gf_type      => Field\CheckboxField::$type,
+			Field\ConsentField::$gf_type       => Field\ConsentField::$type,
+			Field\DateField::$gf_type          => Field\DateField::$type,
+			Field\EmailField::$gf_type         => Field\EmailField::$type,
+			Field\FileUploadField::$gf_type    => Field\FileUploadField::$type,
+			Field\HiddenField::$gf_type        => Field\HiddenField::$type,
+			Field\HtmlField::$gf_type          => Field\HtmlField::$type,
+			Field\ListField::$gf_type          => Field\ListField::$type,
+			Field\MultiSelectField::$gf_type   => Field\MultiSelectField::$type,
+			Field\NameField::$gf_type          => Field\NameField::$type,
+			Field\NumberField::$gf_type        => Field\NumberField::$type,
+			Field\PageField::$gf_type          => Field\PageField::$type,
+			Field\PasswordField::$gf_type      => Field\PasswordField::$type,
+			Field\PhoneField::$gf_type         => Field\PhoneField::$type,
+			Field\PostCategoryField::$gf_type  => Field\PostCategoryField::$type,
+			Field\PostContentField::$gf_type   => Field\PostContentField::$type,
+			Field\PostCustomField::$gf_type    => Field\PostCustomField::$type,
+			Field\PostExcerptField::$gf_type   => Field\PostExcerptField::$type,
+			Field\PostImageField::$gf_type     => Field\PostImageField::$type,
+			Field\PostTagsField::$gf_type      => Field\PostTagsField::$type,
+			Field\PostTitleField::$gf_type     => Field\PostTitleField::$type,
+			Field\RadioField::$gf_type         => Field\RadioField::$type,
+			Field\SectionField::$gf_type       => Field\SectionField::$type,
+			Field\SelectField::$gf_type        => Field\SelectField::$type,
+			Field\SignatureField::$gf_type     => Field\SignatureField::$type,
+			Field\TextAreaField::$gf_type      => Field\TextAreaField::$type,
+			Field\TextField::$gf_type          => Field\TextField::$type,
+			Field\TimeField::$gf_type          => Field\TimeField::$type,
+			Field\WebsiteField::$gf_type       => Field\WebsiteField::$type,
+		];
+
+		/**
+		 * Filter to add custom Gravity Forms field types to the GraphQL schema.
+		 *
+		 * @param array The field types.
+		 */
+		return apply_filters( 'wp_graphql_gf_field_types', $fields );
 	}
 
 	/**
 	 * Register all hooks to WordPress.
 	 */
-	private function register_hooks() {
+	private function register_hooks() : void {
 		foreach ( $this->get_hookable_instances() as $instance ) {
 			$instance->register_hooks();
 		}
@@ -227,7 +291,10 @@ final class WPGraphQLGravityForms {
 	 *
 	 * @return array
 	 */
-	private function get_hookable_instances() {
-		return array_filter( $this->instances, fn( $instance ) => $instance instanceof Hookable );
+	private function get_hookable_instances() : array {
+		return array_filter(
+			$this->instances,
+			fn ( $instance) => $instance instanceof Hookable
+		);
 	}
 }

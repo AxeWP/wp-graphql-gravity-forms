@@ -13,11 +13,20 @@ namespace WPGraphQLGravityForms\Mutations;
 /**
  * Class - UpdateDraftEntryPostCustomFieldValue
  */
-class UpdateDraftEntryPostCustomFieldValue extends DraftEntryUpdater {
+class UpdateDraftEntryPostCustomFieldValue extends AbstractDraftEntryUpdater {
 	/**
-	 * Mutation name.
+	 * Mutation Name
+	 *
+	 * @var string
 	 */
-	const NAME = 'updateDraftEntryPostCustomFieldValue';
+	public static $name = 'updateDraftEntryPostCustomFieldValue';
+
+	/**
+	 * Gravity forms field type for the mutation.
+	 *
+	 * @var string
+	 */
+	protected static $gf_type = 'post_custom';
 
 	/**
 	 * Defines the input field value configuration.
@@ -36,9 +45,9 @@ class UpdateDraftEntryPostCustomFieldValue extends DraftEntryUpdater {
 	 *
 	 * @param array $value The field value.
 	 *
-	 * @return string
+	 * @return array
 	 */
-	protected function prepare_field_value( array $value ) : string {
-		return (string) wp_json_encode( array_map( 'sanitize_text_field', $value ) );
+	protected function prepare_field_value( array $value ) : array {
+		return $this->prepare_string_array_value( $value );
 	}
 }

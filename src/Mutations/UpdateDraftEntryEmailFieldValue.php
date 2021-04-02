@@ -13,11 +13,20 @@ namespace WPGraphQLGravityForms\Mutations;
 /**
  * Class - UpdateDraftEntryEmailFieldValue
  */
-class UpdateDraftEntryEmailFieldValue extends DraftEntryUpdater {
+class UpdateDraftEntryEmailFieldValue extends AbstractDraftEntryUpdater {
 	/**
-	 * Mutation name.
+	 * Mutation Name
+	 *
+	 * @var string
 	 */
-	const NAME = 'updateDraftEntryEmailFieldValue';
+	public static $name = 'updateDraftEntryEmailFieldValue';
+
+	/**
+	 * Gravity forms field type for the mutation.
+	 *
+	 * @var string
+	 */
+	protected static $gf_type = 'email';
 
 	/**
 	 * Defines the input field value configuration.
@@ -39,6 +48,6 @@ class UpdateDraftEntryEmailFieldValue extends DraftEntryUpdater {
 	 * @return string
 	 */
 	protected function prepare_field_value( string $value ) : string {
-		return sanitize_email( $value );
+		return $this->prepare_email_field_value( $value );
 	}
 }

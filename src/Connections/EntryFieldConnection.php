@@ -10,29 +10,23 @@
 
 namespace WPGraphQLGravityForms\Connections;
 
-use GFAPI;
-use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Connection;
-use WPGraphQLGravityForms\Interfaces\FieldValue as FieldValueInterface;
-use WPGraphQLGravityForms\Types\Entry\Entry;
-use WPGraphQLGravityForms\Types\Field\Field;
-use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
-use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
 use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
+use WPGraphQLGravityForms\Interfaces\Connection;
+use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Types\Entry\Entry;
+use WPGraphQLGravityForms\Types\Field\AbstractField;
+use WPGraphQLGravityForms\Types\Field\FieldValue\AbstractFieldValue;
+use WPGraphQLGravityForms\Types\GraphQLInterface\FieldInterface;
+use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
+use WPGraphQLGravityForms\Utils\GFUtils;
 
 /**
  * Class - EntryFieldConnection.
  */
 class EntryFieldConnection implements Hookable, Connection {
-	/**
-	 * The from field name.
-	 */
-	const FROM_FIELD = 'fields';
-
 	/**
 	 * WPGraphQL for Gravity Forms plugin's class instances.
 	 *
@@ -52,19 +46,19 @@ class EntryFieldConnection implements Hookable, Connection {
 	/**
 	 * Register hooks to WordPress.
 	 */
-	public function register_hooks() {
+	public function register_hooks() : void {
 		add_action( 'init', [ $this, 'register_connection' ] );
 	}
 
 	/**
 	 * Register connection from GravityFormsEntry type to other types.
 	 */
-	public function register_connection() {
+	public function register_connection() : void {
 		register_graphql_connection(
 			[
 				'fromType'      => Entry::TYPE,
-				'toType'        => ObjectFieldUnion::TYPE,
-				'fromFieldName' => self::FROM_FIELD,
+				'toType'        => FieldInterface::TYPE,
+				'fromFieldName' => 'fields',
 				'edgeFields'    => [
 					'fieldValue' => [
 						'type'        => ObjectFieldValueUnion::TYPE,
@@ -93,11 +87,7 @@ class EntryFieldConnection implements Hookable, Connection {
 					],
 				],
 				'resolve'       => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
-					$form = GFAPI::get_form( $root['formId'] );
-
-					if ( ! $form ) {
-						throw new UserError( __( 'The form used to generate this entry was not found.', 'wp-graphql-gravity-forms' ) );
-					}
+					$form = GFUtils::get_form( $root['formId'], false );
 
 					$fields     = ( new FieldsDataManipulator() )->manipulate( $form['fields'] );
 					$connection = Relay::connectionFromArray( $fields, $args );
@@ -125,15 +115,15 @@ class EntryFieldConnection implements Hookable, Connection {
 	 *
 	 * @param string $gf_field_type The Gravity Forms field type.
 	 *
-	 * @return Field|null The corresponding WPGraphQL field, or null if not found.
+	 * @return AbstractField|null The corresponding WPGraphQL field, or null if not found.
 	 */
 	private function get_field_by_gf_field_type( string $gf_field_type ) {
-		$fields = array_filter( $this->instances, fn( $instance ) => $instance instanceof Field );
+		$fields = array_filter( $this->instances, fn( $instance ) => $instance instanceof AbstractField );
 
 		/**
 		 * Filter for adding custom field class instances.
-		 * Classes must extend the WPGraphQLGravityForms\Types\Field\Field class and
-		 * contain a "GF_TYPE" class constant specifying the Gravity Forms field type.
+		 * Classes must extend the WPGraphQLGravityForms\Types\Field\AbstractField class and
+		 * contain a "$gf_type" class variable specifying the Gravity Forms field type.
 		 *
 		 * @param array $fields Gravity Forms field class instances.
 		 */
@@ -142,7 +132,7 @@ class EntryFieldConnection implements Hookable, Connection {
 		$field_array = array_filter(
 			$fields,
 			function( $instance ) use ( $gf_field_type ) {
-				return $instance instanceof Field && $instance::GF_TYPE === $gf_field_type;
+				return $instance instanceof AbstractField && $instance::$gf_type === $gf_field_type;
 			}
 		);
 
@@ -152,12 +142,12 @@ class EntryFieldConnection implements Hookable, Connection {
 	/**
 	 * Get the field value class associated with a form field.
 	 *
-	 * @param  Field $field The field class.
+	 * @param  AbstractField $field The field class.
 	 *
-	 * @return FieldValue|null The field value class or null if not found.
+	 * @return string|AbstractFieldValue|null The field value class or null if not found.
 	 */
-	private function get_field_value_class( Field $field ) {
-		$field_values = array_filter( $this->instances, fn( $instance ) => $instance instanceof FieldValueInterface );
+	private function get_field_value_class( AbstractField $field ) {
+		$field_values = array_filter( $this->instances, fn( $instance ) => $instance instanceof AbstractFieldValue );
 
 		/**
 		 * Filter for adding custom field value class instances.
@@ -171,7 +161,7 @@ class EntryFieldConnection implements Hookable, Connection {
 		$value_class_array = array_filter(
 			$field_values,
 			function( $instance ) use ( $field ) {
-				return $instance instanceof FieldValueInterface && $instance::TYPE === $field::TYPE . 'Value';
+				return $instance instanceof AbstractFieldValue && $instance::$type === $field::$type . 'Value';
 			}
 		);
 

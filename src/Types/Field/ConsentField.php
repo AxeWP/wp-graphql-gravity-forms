@@ -11,56 +11,57 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQLGravityForms\Types\GraphQLInterface\FieldInterface;
 
 /**
  * Class - ConsentField
  */
-class ConsentField extends Field {
+class ConsentField extends AbstractField {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'ConsentField';
+	public static $type = 'ConsentField';
 
 	/**
 	 * Type registered in Gravity Forms.
+	 *
+	 * @var string
 	 */
-	const GF_TYPE = 'consent';
+	public static $gf_type = 'consent';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'Gravity Forms Consent field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() {
-		register_graphql_object_type(
-			self::TYPE,
+	protected function get_properties() : array {
+		return array_merge(
+			$this->get_global_properties(),
+			$this->get_custom_properties(),
+			FieldProperty\AdminLabelProperty::get(),
+			FieldProperty\AdminOnlyProperty::get(),
+			FieldProperty\DescriptionPlacementProperty::get(),
+			FieldProperty\DescriptionProperty::get(),
+			FieldProperty\ErrorMessageProperty::get(),
+			FieldProperty\InputNameProperty::get(),
+			FieldProperty\IsRequiredProperty::get(),
+			FieldProperty\LabelProperty::get(),
+			FieldProperty\VisibilityProperty::get(),
 			[
-				'description' => __( 'Gravity Forms Consent field.', 'wp-graphql-gravity-forms' ),
-				'fields'      => array_merge(
-					$this->get_global_properties(),
-					$this->get_custom_properties(),
-					FieldProperty\AdminLabelProperty::get(),
-					FieldProperty\AdminOnlyProperty::get(),
-					FieldProperty\DescriptionPlacementProperty::get(),
-					FieldProperty\DescriptionProperty::get(),
-					FieldProperty\ErrorMessageProperty::get(),
-					FieldProperty\InputNameProperty::get(),
-					FieldProperty\IsRequiredProperty::get(),
-					FieldProperty\LabelProperty::get(),
-					FieldProperty\VisibilityProperty::get(),
-					[
-						'checkboxLabel' => [
-							'type'        => 'String',
-							'description' => __( 'Text of the consent checkbox', 'wp-graphql-gravity-forms' ),
-						],
-					],
-				),
-			]
+				'checkboxLabel' => [
+					'type'        => 'String',
+					'description' => __( 'Text of the consent checkbox', 'wp-graphql-gravity-forms' ),
+				],
+			],
 		);
 	}
 }

@@ -12,10 +12,10 @@ namespace WPGraphQLGravityForms\Connections;
 
 use GFAPI;
 use GraphQL\Error\UserError;
-use GraphQLRelay\Connection\ArrayConnection;
-use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQLGravityForms\Data\Loader\EntriesLoader;
+use WPGraphQLGravityForms\Types\Enum\EntryStatusEnum;
+use WPGraphQLGravityForms\Types\Enum\FieldFiltersModeEnum;
 use WPGraphQLGravityForms\Types\Enum\FieldFiltersOperatorInputEnum;
 
 /**
@@ -95,7 +95,7 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	protected function get_cursor_for_node( $id ) : string {
 		$first        = $this->args['first'] ?? 20;
 		$after_cursor = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
-		$index        = array_search( $id, array_keys( $this->nodes ) );
+		$index        = array_search( $id, array_keys( $this->nodes ), true );
 
 		/**
 		 * @ TODO:
@@ -108,7 +108,9 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 			'index'  => $index,
 		];
 
-		return base64_encode( wp_json_encode( $cursor ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+		$json_cursor = wp_json_encode( $cursor );
+
+		return $json_cursor ? base64_encode( $json_cursor ) : ''; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 	}
 
 	/**
@@ -133,24 +135,20 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 			$this->get_paging(),
 		);
 
-		if ( is_wp_error( $entry_ids ) ) {
-			throw new UserError( __( 'An error occurred while trying to get Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );
-		}
-
 		return array_map( 'absint', $entry_ids );
 	}
 
 	/**
 	 * Returns form ids.
 	 *
-	 * @return array|null
+	 * @return array|int
 	 */
 	private function get_form_ids() {
 		if ( ! empty( $this->args['where']['formIds'] ) && is_array( $this->args['where']['formIds'] ) ) {
 			return array_map( 'absint', $this->args['where']['formIds'] );
 		}
 
-		return null;
+		return 0; // Return all forms.
 	}
 
 	/**
@@ -171,7 +169,7 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 
 		if ( ! empty( $this->args['where']['fieldFilters'] ) && is_array( $this->args['where']['fieldFilters'] ) ) {
 			$search_criteria['field_filters'] = array_merge(
-				[ 'mode' => $this->args['where']['fieldFiltersMode'] ?? 'all' ],
+				[ 'mode' => $this->args['where']['fieldFiltersMode'] ?? FieldFiltersModeEnum::ALL ],
 				$this->format_field_filters( $this->args['where']['fieldFilters'] )
 			);
 		}
@@ -186,10 +184,10 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @return array
 	 */
 	private function apply_status_to_search_criteria( array $search_criteria ) : array {
-		$status = $this->args['where']['status'] ?? 'active'; // Default to active entries.
+		$status = $this->args['where']['status'] ?? EntryStatusEnum::ACTIVE; // Default to active entries.
 
 		// For all entries, don't add a 'status' value to search criteria.
-		if ( 'all' === $status ) {
+		if ( 'ALL' === $status ) {
 			return $search_criteria;
 		}
 

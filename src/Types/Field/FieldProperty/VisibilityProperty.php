@@ -9,6 +9,7 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 use WPGraphQLGravityForms\Interfaces\FieldProperty;
+use WPGraphQLGravityForms\Types\Enum\VisibilityPropertyEnum;
 
 /**
  * Class - VisibilityProperty
@@ -24,8 +25,8 @@ class VisibilityProperty implements FieldProperty {
 	public static function get() : array {
 		return [
 			'visibility' => [
-				'type'        => 'String',
-				'description' => __( 'Field visibility. Possible values: visible, hidden, or administrative.', 'wp-graphql-gravity-forms' ),
+				'type'        => VisibilityPropertyEnum::$type,
+				'description' => __( 'Field visibility.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

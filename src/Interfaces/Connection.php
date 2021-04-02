@@ -15,5 +15,5 @@ interface Connection {
 	/**
 	 * Register connection.
 	 */
-	public function register_connection();
+	public function register_connection() : void;
 }

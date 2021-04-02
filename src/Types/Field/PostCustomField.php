@@ -12,62 +12,63 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQLGravityForms\Types\GraphQLInterface\FieldInterface;
 
 /**
  * Class - PostCustomField
  */
-class PostCustomField extends Field {
+class PostCustomField extends AbstractField {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'PostCustomField';
+	public static $type = 'PostCustomField';
 
 	/**
-	 * Type registered in WPGraphQL.
+	 * Type registered in Gravity Forms.
+	 *
+	 * @var string
 	 */
-	const GF_TYPE = 'post_custom_field';
+	public static $gf_type = 'post_custom_field';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'Gravity Forms Post Custom Field field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() {
-		register_graphql_object_type(
-			self::TYPE,
+	protected function get_properties() : array {
+		return array_merge(
+			$this->get_global_properties(),
+			$this->get_custom_properties(),
+			FieldProperty\AdminLabelProperty::get(),
+			FieldProperty\AdminOnlyProperty::get(),
+			FieldProperty\AllowsPrepopulateProperty::get(),
+			FieldProperty\DefaultValueProperty::get(),
+			FieldProperty\DescriptionPlacementProperty::get(),
+			FieldProperty\DescriptionProperty::get(),
+			FieldProperty\ErrorMessageProperty::get(),
+			FieldProperty\InputNameProperty::get(),
+			FieldProperty\InputTypeProperty::get(),
+			FieldProperty\IsRequiredProperty::get(),
+			FieldProperty\LabelProperty::get(),
+			FieldProperty\MaxLengthProperty::get(),
+			FieldProperty\NoDuplicatesProperty::get(),
+			FieldProperty\PlaceholderProperty::get(),
+			FieldProperty\SizeProperty::get(),
+			FieldProperty\VisibilityProperty::get(),
 			[
-				'description' => __( 'Gravity Forms Post Custom Field field.', 'wp-graphql-gravity-forms' ),
-				'fields'      => array_merge(
-					$this->get_global_properties(),
-					$this->get_custom_properties(),
-					FieldProperty\AdminLabelProperty::get(),
-					FieldProperty\AdminOnlyProperty::get(),
-					FieldProperty\AllowsPrepopulateProperty::get(),
-					FieldProperty\DefaultValueProperty::get(),
-					FieldProperty\DescriptionPlacementProperty::get(),
-					FieldProperty\DescriptionProperty::get(),
-					FieldProperty\ErrorMessageProperty::get(),
-					FieldProperty\InputNameProperty::get(),
-					FieldProperty\InputTypeProperty::get(),
-					FieldProperty\IsRequiredProperty::get(),
-					FieldProperty\LabelProperty::get(),
-					FieldProperty\MaxLengthProperty::get(),
-					FieldProperty\NoDuplicatesProperty::get(),
-					FieldProperty\PlaceholderProperty::get(),
-					FieldProperty\SizeProperty::get(),
-					FieldProperty\VisibilityProperty::get(),
-					[
-						'postCustomFieldName' => [
-							'type'        => 'String',
-							'description' => __( 'The name of the Post Custom Field that the submitted value should be assigned to.', 'wp-graphql-gravity-forms' ),
-						],
-					]
-				),
+				'postCustomFieldName' => [
+					'type'        => 'String',
+					'description' => __( 'The name of the Post Custom Field that the submitted value should be assigned to.', 'wp-graphql-gravity-forms' ),
+				],
 			]
 		);
 	}

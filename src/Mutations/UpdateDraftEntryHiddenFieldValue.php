@@ -13,11 +13,20 @@ namespace WPGraphQLGravityForms\Mutations;
 /**
  * Class - UpdateDraftEntryHiddenFieldValue
  */
-class UpdateDraftEntryHiddenFieldValue extends DraftEntryUpdater {
+class UpdateDraftEntryHiddenFieldValue extends AbstractDraftEntryUpdater {
 	/**
-	 * Mutation name.
+	 * Mutation Name
+	 *
+	 * @var string
 	 */
-	const NAME = 'updateDraftEntryHiddenFieldValue';
+	public static $name = 'updateDraftEntryHiddenFieldValue';
+
+	/**
+	 * Gravity forms field type for the mutation.
+	 *
+	 * @var string
+	 */
+	protected static $gf_type = 'hidden';
 
 	/**
 	 * Defines the input field value configuration.
@@ -39,6 +48,6 @@ class UpdateDraftEntryHiddenFieldValue extends DraftEntryUpdater {
 	 * @return string
 	 */
 	protected function prepare_field_value( string $value ) : string {
-		return sanitize_text_field( $value );
+		return $this->prepare_string_value( $value );
 	}
 }

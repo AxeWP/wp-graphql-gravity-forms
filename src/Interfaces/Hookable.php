@@ -15,5 +15,5 @@ interface Hookable {
 	/**
 	 * Register hooks with WordPress.
 	 */
-	public function register_hooks();
+	public function register_hooks() : void;
 }

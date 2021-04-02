@@ -12,45 +12,25 @@ namespace WPGraphQLGravityForms\Mutations;
 
 use GFFormsModel;
 use GraphQL\Error\UserError;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Mutation;
 
 /**
  * Class - DeleteDraftEntry
  */
-class DeleteDraftEntry implements Hookable, Mutation {
-	/**
-	 * Mutation name.
-	 */
-	const NAME = 'deleteGravityFormsDraftEntry';
+class DeleteDraftEntry extends AbstractMutation {
 
 	/**
-	 * Register hooks to WordPress.
+	 * Mutation Name
+	 *
+	 * @var string
 	 */
-	public function register_hooks() {
-		add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
-	}
-
-	/**
-	 * Registers mutation.
-	 */
-	public function register_mutation() {
-		register_graphql_mutation(
-			self::NAME,
-			[
-				'inputFields'         => $this->get_input_fields(),
-				'outputFields'        => $this->get_output_fields(),
-				'mutateAndGetPayload' => $this->mutate_and_get_payload(),
-			]
-		);
-	}
+	public static $name = 'deleteGravityFormsDraftEntry';
 
 	/**
 	 * Defines the input field configuration.
 	 *
 	 * @return array
 	 */
-	public static function get_input_fields() : array {
+	public function get_input_fields() : array {
 		return [
 			'resumeToken' => [
 				'type'        => 'String',
@@ -80,9 +60,7 @@ class DeleteDraftEntry implements Hookable, Mutation {
 	 */
 	public function mutate_and_get_payload() : callable {
 		return function( $input ) : array {
-			if ( empty( $input ) || ! is_array( $input ) || ! isset( $input['resumeToken'] ) ) {
-				throw new UserError( __( 'Mutation not processed. The input data was missing or invalid.', 'wp-graphql-gravity-forms' ) );
-			}
+			$this->check_required_inputs( $input );
 
 			$resume_token = sanitize_text_field( $input['resumeToken'] );
 			$result       = GFFormsModel::delete_draft_submission( $resume_token );
@@ -95,5 +73,18 @@ class DeleteDraftEntry implements Hookable, Mutation {
 				'resumeToken' => $resume_token,
 			];
 		};
+	}
+
+	/**
+	 * Checks that necessary WPGraphQL are set.
+	 *
+	 * @param mixed $input .
+	 * @throws UserError .
+	 */
+	protected function check_required_inputs( $input ) : void {
+		parent::check_required_inputs( $input );
+		if ( ! isset( $input['resumeToken'] ) ) {
+				throw new UserError( __( 'Mutation not processed. The resumeToken must be set.', 'wp-graphql-gravity-forms' ) );
+		}
 	}
 }

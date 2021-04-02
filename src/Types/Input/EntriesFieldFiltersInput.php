@@ -25,14 +25,14 @@ class EntriesFieldFiltersInput implements Hookable, InputType {
 	/**
 	 * Register hooks to WordPress.
 	 */
-	public function register_hooks() {
+	public function register_hooks() : void {
 		add_action( 'graphql_register_types', [ $this, 'register_input_type' ] );
 	}
 
 	/**
 	 * Register input type to GraphQL schema.
 	 */
-	public function register_input_type() {
+	public function register_input_type() : void {
 		register_graphql_input_type(
 			self::TYPE,
 			[
@@ -43,7 +43,7 @@ class EntriesFieldFiltersInput implements Hookable, InputType {
 						'description' => __( 'The ID of the field to filter by. Use "0" to search all keys. You can also use the names of the columns in Gravity Forms\' database table for entries, such as "date_created", "is_read, "created_by", etc.', 'wp-graphql-gravity-forms' ),
 					],
 					'operator'     => [
-						'type'        => FieldFiltersOperatorInputEnum::TYPE,
+						'type'        => FieldFiltersOperatorInputEnum::$type,
 						'description' => __( 'The operator to use for filtering.', 'wp-graphql-gravity-forms' ),
 					],
 					// @TODO - Is there a cleaner way to do this? Values can be any of these types.

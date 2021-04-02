@@ -10,55 +10,50 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
-use WPGraphQLGravityForms\Interfaces\FieldValue;
 use WPGraphQLGravityForms\Types\Field\TimeField;
 
 /**
  * Class - TimeFieldValue
  */
-class TimeFieldValue implements Hookable, Type, FieldValue {
+class TimeFieldValue extends AbstractFieldValue {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = TimeField::TYPE . 'Value';
+	public static $type = 'TimeFieldValue';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Time field values.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Time field values.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'displayValue' => [
-						'type'        => 'String',
-						'description' => __( 'The full display value. Example: "08:25 am".', 'wp-graphql-gravity-forms' ),
-					],
-					'hours'        => [
-						'type'        => 'String',
-						'description' => __( 'The hours, in this format: hh.', 'wp-graphql-gravity-forms' ),
-					],
-					'minutes'      => [
-						'type'        => 'String',
-						'description' => __( 'The minutes, in this format: mm.', 'wp-graphql-gravity-forms' ),
-					],
-					'amPm'         => [
-						'type'        => 'String',
-						'description' => __( 'AM or PM.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_properties() : array {
+		return [
+			'displayValue' => [
+				'type'        => 'String',
+				'description' => __( 'The full display value. Example: "08:25 am".', 'wp-graphql-gravity-forms' ),
+			],
+			'hours'        => [
+				'type'        => 'String',
+				'description' => __( 'The hours, in this format: hh.', 'wp-graphql-gravity-forms' ),
+			],
+			'minutes'      => [
+				'type'        => 'String',
+				'description' => __( 'The minutes, in this format: mm.', 'wp-graphql-gravity-forms' ),
+			],
+			'amPm'         => [
+				'type'        => 'String',
+				'description' => __( 'AM or PM.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 
 	/**

@@ -15,5 +15,5 @@ interface Field {
 	/**
 	 * Register field in GraphQL schema.
 	 */
-	public function register_field();
+	public function register_field() : void;
 }

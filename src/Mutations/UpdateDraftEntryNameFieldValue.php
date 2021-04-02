@@ -15,11 +15,20 @@ use WPGraphQLGravityForms\Types\Input\NameInput;
 /**
  * Class - UpdateDraftEntryNameFieldValue
  */
-class UpdateDraftEntryNameFieldValue extends DraftEntryUpdater {
+class UpdateDraftEntryNameFieldValue extends AbstractDraftEntryUpdater {
 	/**
-	 * Mutation name.
+	 * Mutation Name
+	 *
+	 * @var string
 	 */
-	const NAME = 'updateDraftEntryNameFieldValue';
+	public static $name = 'updateDraftEntryNameFieldValue';
+
+	/**
+	 * Gravity forms field type for the mutation.
+	 *
+	 * @var string
+	 */
+	protected static $gf_type = 'name';
 
 	/**
 	 * Defines the input field value configuration.
@@ -41,12 +50,6 @@ class UpdateDraftEntryNameFieldValue extends DraftEntryUpdater {
 	 * @return array
 	 */
 	protected function prepare_field_value( array $value ) : array {
-		return [
-			$this->field['inputs'][0]['id'] => array_key_exists( 'prefix', $value ) ? sanitize_text_field( $value['prefix'] ) : null,
-			$this->field['inputs'][1]['id'] => array_key_exists( 'first', $value ) ? sanitize_text_field( $value['first'] ) : null,
-			$this->field['inputs'][2]['id'] => array_key_exists( 'middle', $value ) ? sanitize_text_field( $value['middle'] ) : null,
-			$this->field['inputs'][3]['id'] => array_key_exists( 'last', $value ) ? sanitize_text_field( $value['last'] ) : null,
-			$this->field['inputs'][4]['id'] => array_key_exists( 'suffix', $value ) ? sanitize_text_field( $value['suffix'] ) : null,
-		];
+		return $this->prepare_name_field_value( $value, $this->field );
 	}
 }

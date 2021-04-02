@@ -13,6 +13,7 @@ namespace WPGraphQLGravityForms\Types\Form;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
+use WPGraphQLGravityForms\Types\Enum\NotificationToTypeEnum;
 
 /**
  * Class - FormNotification
@@ -23,14 +24,14 @@ class FormNotification implements Hookable, Type {
 	/**
 	 * Register hooks to WordPress.
 	 */
-	public function register_hooks() {
+	public function register_hooks() : void {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 	}
 
 	/**
 	 * Register Object type to GraphQL schema.
 	 */
-	public function register_type() {
+	public function register_type() : void {
 		register_graphql_object_type(
 			self::TYPE,
 			[
@@ -61,8 +62,8 @@ class FormNotification implements Hookable, Type {
 						'description' => __( 'The ID of an email field, an email address or merge tag to be used as the email to address.', 'wp-graphql-gravity-forms' ),
 					],
 					'toType'            => [
-						'type'        => 'String',
-						'description' => __( 'Identifies what to use for the notification to. Possible values: email, field, routing or hidden.', 'wp-graphql-gravity-forms' ),
+						'type'        => NotificationToTypeEnum::$type,
+						'description' => __( 'Identifies what to use for the notification "to".', 'wp-graphql-gravity-forms' ),
 					],
 					'bcc'               => [
 						'type'        => 'String',

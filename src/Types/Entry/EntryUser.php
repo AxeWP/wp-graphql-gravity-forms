@@ -34,7 +34,7 @@ class EntryUser implements Hookable, Type, Field {
 	/**
 	 * Register hooks to WordPress.
 	 */
-	public function register_hooks() {
+	public function register_hooks() : void {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 		add_action( 'graphql_register_types', [ $this, 'register_field' ] );
 	}
@@ -42,7 +42,7 @@ class EntryUser implements Hookable, Type, Field {
 	/**
 	 * Register new edge type.
 	 */
-	public function register_type() {
+	public function register_type() : void {
 		register_graphql_type(
 			self::TYPE,
 			[
@@ -60,7 +60,7 @@ class EntryUser implements Hookable, Type, Field {
 	/**
 	 * Register EntryUser query.
 	 */
-	public function register_field() {
+	public function register_field() : void {
 		register_graphql_field(
 			Entry::TYPE,
 			self::FIELD,
@@ -68,7 +68,7 @@ class EntryUser implements Hookable, Type, Field {
 				'type'        => self::TYPE,
 				'description' => __( 'The user who created the entry.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $entry ) : array {
-					$user = get_userdata( $entry['createdById'] );
+					$user = isset( $entry['createdById'] ) ? get_userdata( $entry['createdById'] ) : null;
 
 					if ( ! $user instanceof WP_User ) {
 						throw new UserError( __( 'The user who created this entry could not be found.', 'wp-graphql-gravity-forms' ) );

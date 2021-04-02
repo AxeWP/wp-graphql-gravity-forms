@@ -1,0 +1,20 @@
+parameters:
+		level: 8
+		inferPrivatePropertyTypeFromConstructor: true
+		checkMissingIterableValueType: false
+		featureToggles:
+			disableRuntimeReflectionProvider: true
+		bootstrapFiles:
+			- wp-graphql-gravity-forms.php
+		paths:
+			- wp-graphql-gravity-forms.php
+			- src/
+		scanDirectories:
+			- ../wp-graphql/
+			- ../gravityforms/
+			- ../gravityformssignature/
+			- ../gravityformschainedselects/
+		ignoreErrors:
+			- '#^Function apply_filters(_ref_array)? invoked with ([1-9]|1[0-2]) parameters, 2 required\.$#'
+			- '#^Function gf_apply_filters(_ref_array)? invoked with ([1-9]|1[0-2]) parameters, 2 required\.$#'
+

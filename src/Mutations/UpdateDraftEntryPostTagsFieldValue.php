@@ -13,11 +13,20 @@ namespace WPGraphQLGravityForms\Mutations;
 /**
  * Class - UpdateDraftEntryPostTagsFieldValue
  */
-class UpdateDraftEntryPostTagsFieldValue extends DraftEntryUpdater {
+class UpdateDraftEntryPostTagsFieldValue extends AbstractDraftEntryUpdater {
 	/**
-	 * Mutation name.
+	 * Mutation Name
+	 *
+	 * @var string
 	 */
-	const NAME = 'updateDraftEntryPostTagsFieldValue';
+	public static $name = 'updateDraftEntryPostTagsFieldValue';
+
+	/**
+	 * Gravity forms field type for the mutation.
+	 *
+	 * @var string
+	 */
+	protected static $gf_type = 'post_tags';
 
 	/**
 	 * Defines the input field value configuration.
@@ -36,9 +45,9 @@ class UpdateDraftEntryPostTagsFieldValue extends DraftEntryUpdater {
 	 *
 	 * @param array $value The field value.
 	 *
-	 * @return string
+	 * @return array
 	 */
-	protected function prepare_field_value( array $value ) : string {
-		return (string) wp_json_encode( array_map( 'sanitize_text_field', $value ) );
+	protected function prepare_field_value( array $value ) : array {
+		return $this->prepare_string_array_value( $value );
 	}
 }

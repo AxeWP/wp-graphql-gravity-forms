@@ -1,0 +1,18 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WPWebDriver or WPBrowser.
+# Use WPDb to set up your initial database fixture.
+# If you need both WPWebDriver and WPBrowser tests - create a separate suite.
+
+actor: AcceptanceTesterActions
+modules:
+    enabled:
+        - Asserts
+        - REST
+        - WPBrowser
+        - WPDb
+        - WPLoader
+    config:
+        WPDb:
+            cleanup: false

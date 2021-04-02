@@ -17,6 +17,8 @@ use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Connection;
 use WPGraphQLGravityForms\Types\Entry\Entry;
+use WPGraphQLGravityForms\Types\Enum\EntryStatusEnum;
+use WPGraphQLGravityForms\Types\Enum\FieldFiltersModeEnum;
 use WPGraphQLGravityForms\Types\Input\EntriesDateFiltersInput;
 use WPGraphQLGravityForms\Types\Input\EntriesFieldFiltersInput;
 use WPGraphQLGravityForms\Types\Input\EntriesSortingInput;
@@ -33,14 +35,14 @@ class RootQueryEntriesConnection implements Hookable, Connection {
 	/**
 	 * Register hooks to WordPress.
 	 */
-	public function register_hooks() {
+	public function register_hooks() : void {
 		add_action( 'init', [ $this, 'register_connection' ] );
 	}
 
 	/**
 	 * Register connection from RootQuery type to GravityFormsEntry type.
 	 */
-	public function register_connection() {
+	public function register_connection() : void {
 		register_graphql_connection(
 			[
 				'fromType'       => 'RootQuery',
@@ -51,10 +53,9 @@ class RootQueryEntriesConnection implements Hookable, Connection {
 						'type'        => [ 'list_of' => 'ID' ],
 						'description' => __( 'Array of form IDs to limit the entries to. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
 					],
-					// @TODO: Convert to an enum.
 					'status'           => [
-						'type'        => 'String',
-						'description' => __( 'Entry status. Possible values: "active" (default), "spam", "trash" or "all".', 'wp-graphql-gravity-forms' ),
+						'type'        => EntryStatusEnum::$type,
+						'description' => __( 'Entry status. Default is "ACTIVE".', 'wp-graphql-gravity-forms' ),
 					],
 					'dateFilters'      => [
 						'type'        => EntriesDateFiltersInput::TYPE,
@@ -64,10 +65,9 @@ class RootQueryEntriesConnection implements Hookable, Connection {
 						'type'        => [ 'list_of' => EntriesFieldFiltersInput::TYPE ],
 						'description' => __( 'Field-specific filters to apply.', 'wp-graphql-gravity-forms' ),
 					],
-					// @TODO: Convert to an enum.
 					'fieldFiltersMode' => [
-						'type'        => 'String',
-						'description' => __( 'Whether to filter by ALL or ANY of the field filters. Possible values: "all" (default) or "any".', 'wp-graphql-gravity-forms' ),
+						'type'        => FieldFiltersModeEnum::$type,
+						'description' => __( 'Whether to filter by ALL or ANY of the field filters. Default is ALL.', 'wp-graphql-gravity-forms' ),
 					],
 					'sort'             => [
 						'type'        => EntriesSortingInput::TYPE,
@@ -78,8 +78,8 @@ class RootQueryEntriesConnection implements Hookable, Connection {
 					/**
 					 * Filter to control whether the user should be allowed to view entries.
 					 *
-					 * @param bool  Whether the current user should be allowed to view form entries.
-					 * @param array The form IDs to get entries by.
+					 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
+					 * @param array $form_ids The form IDs to get entries by.
 					 */
 					$can_user_view_entries = apply_filters( 'wp_graphql_gf_can_view_entries', current_user_can( 'gravityforms_view_entries' ), $this->get_form_ids( $args ) );
 

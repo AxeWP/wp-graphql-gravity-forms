@@ -40,9 +40,8 @@ class DraftEntryDataManipulator {
 	 */
 	public function manipulate( array $draft_entry, string $resume_token ) : array {
 		$draft_entry = $this->set_resume_token_value( $draft_entry, $resume_token );
-		$draft_entry = $this->entry_data_manipulator->manipulate( $draft_entry );
 
-		return $draft_entry;
+		return $this->entry_data_manipulator->manipulate( $draft_entry );
 	}
 
 	/**

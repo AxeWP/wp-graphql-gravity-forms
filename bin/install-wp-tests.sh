@@ -1,21 +1,43 @@
 #!/usr/bin/env bash
 
-if [ $# -lt 3 ]; then
-	echo "usage: $0 <db-name> <db-user> <db-pass> [db-host] [wp-version] [skip-database-creation]"
-	exit 1
+if [[ ! -f ".env" ]]; then
+  echo "No .env file was detected. .env.dist has been copied to .env"
+  echo "Open the .env file and enter values to match your local environment"
+  cp .env.dist .env
 fi
 
-DB_NAME=$1
-DB_USER=$2
-DB_PASS=$3
-DB_HOST=${4-localhost}
-WP_VERSION=${5-latest}
-SKIP_DB_CREATE=${6-false}
+source .env
 
+print_usage_instruction() {
+  echo "ERROR!"
+  echo "Values in the .env file are missing or incorrect."
+  echo "Open the .env file at the root of this plugin and enter values to match your local environment settings"
+	exit 1
+}
+
+if [[ -z "$TEST_DB_NAME" ]]; then
+	echo "TEST_DB_NAME not found"
+	print_usage_instruction
+else
+	DB_NAME=$TEST_DB_NAME
+fi
+if [[ -z "$TEST_DB_USER" ]]; then
+	echo "TEST_DB_USER not found"
+	print_usage_instruction
+else
+	DB_USER=$TEST_DB_USER
+fi
+
+DB_HOST=${TEST_DB_HOST-localhost}
+DB_PASS=${TEST_DB_PASSWORD-""}
+WP_VERSION=${WP_VERSION-latest}
 TMPDIR=${TMPDIR-/tmp}
 TMPDIR=$(echo $TMPDIR | sed -e "s/\/$//")
 WP_TESTS_DIR=${WP_TESTS_DIR-$TMPDIR/wordpress-tests-lib}
-WP_CORE_DIR=${WP_CORE_DIR-$TMPDIR/wordpress/}
+WP_CORE_DIR=${TEST_WP_ROOT_FOLDER-$TMPDIR/wordpress/}
+PLUGIN_DIR=$(pwd)
+DB_SERVE_NAME=${DB_SERVE_NAME-wpgatsby_serve}
+SKIP_DB_CREATE=${SKIP_DB_CREATE-false}
 
 download() {
     if [ `which curl` ]; then
@@ -95,35 +117,6 @@ install_wp() {
 	download https://raw.github.com/markoheijnen/wp-mysqli/master/db.php $WP_CORE_DIR/wp-content/db.php
 }
 
-install_test_suite() {
-	# portable in-place argument for both GNU sed and Mac OSX sed
-	if [[ $(uname -s) == 'Darwin' ]]; then
-		local ioption='-i.bak'
-	else
-		local ioption='-i'
-	fi
-
-	# set up testing suite if it doesn't yet exist
-	if [ ! -d $WP_TESTS_DIR ]; then
-		# set up testing suite
-		mkdir -p $WP_TESTS_DIR
-		svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/includes/ $WP_TESTS_DIR/includes
-		svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/data/ $WP_TESTS_DIR/data
-	fi
-
-	if [ ! -f wp-tests-config.php ]; then
-		download https://develop.svn.wordpress.org/${WP_TESTS_TAG}/wp-tests-config-sample.php "$WP_TESTS_DIR"/wp-tests-config.php
-		# remove all forward slashes in the end
-		WP_CORE_DIR=$(echo $WP_CORE_DIR | sed "s:/\+$::")
-		sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR/':" "$WP_TESTS_DIR"/wp-tests-config.php
-		sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" "$WP_TESTS_DIR"/wp-tests-config.php
-		sed $ioption "s/yourusernamehere/$DB_USER/" "$WP_TESTS_DIR"/wp-tests-config.php
-		sed $ioption "s/yourpasswordhere/$DB_PASS/" "$WP_TESTS_DIR"/wp-tests-config.php
-		sed $ioption "s|localhost|${DB_HOST}|" "$WP_TESTS_DIR"/wp-tests-config.php
-	fi
-
-}
-
 install_db() {
 
 	if [ ${SKIP_DB_CREATE} = "true" ]; then
@@ -147,9 +140,75 @@ install_db() {
 	fi
 
 	# create database
-	mysqladmin create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
+	RESULT=`mysql -u $DB_USER --password="$DB_PASS" --skip-column-names -e "SHOW DATABASES LIKE '$DB_NAME'"$EXTRA`
+	if [ "$RESULT" != $DB_NAME ]; then
+			mysqladmin create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
+	fi
+}
+
+configure_wordpress() {
+    cd $WP_CORE_DIR
+    wp config create --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$DB_PASS" --dbhost="$DB_HOST" --skip-check --force=true
+    wp core install --url=$WP_DOMAIN --title=GFTests --admin_user=$ADMIN_USERNAME --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL
+    wp rewrite structure '/%year%/%monthnum%/%postname%/'
+}
+
+install_gravityforms() {
+		if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityforms ]; then
+		echo "Cloning Gravity Forms"
+		git clone https://github.com/wp-premium/gravityforms.git $WP_CORE_DIR/wp-content/plugins/gravityforms
+	fi
+	echo "Cloning Gravity Forms"
+	wp plugin activate gravityforms
+}
+
+install_gravityforms_signature() {
+		if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityformssignature ]; then
+		echo "Cloning Gravity Forms"
+		git clone https://github.com/wp-premium/gravityformssignature.git $WP_CORE_DIR/wp-content/plugins/gravityformssignature
+	fi
+	echo "Cloning Gravity Forms"
+	wp plugin activate gravityformssignature
+}
+
+setup_plugin() {
+
+	# Add this repo as a plugin to the repo
+	if [ ! -d $WP_CORE_DIR/wp-content/plugins/wp-graphql-gravity-forms ]; then
+		ln -s $PLUGIN_DIR $WP_CORE_DIR/wp-content/plugins/wp-graphql-gravity-forms
+		cd $WP_CORE_DIR/wp-content/plugins
+		pwd
+		ls
+	fi
+
+	cd $PLUGIN_DIR
+
+	composer install
+
+	cd $WP_CORE_DIR
+
+  wp plugin list
+
+  # Install WPGraphQL
+  wp plugin install wp-graphql
+
+	# Activate WPGraphQL
+	wp plugin activate wp-graphql
+
+	# activate the plugin
+	wp plugin activate wp-graphql-gravity-forms
+
+	# Flush the permalinks
+	wp rewrite flush
+
+	# Export the db for codeception to use
+	wp db export $PLUGIN_DIR/tests/_data/dump.sql
+
 }
 
 install_wp
-install_test_suite
 install_db
+configure_wordpress
+install_gravityforms
+install_gravityforms_signature
+setup_plugin

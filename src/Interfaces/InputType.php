@@ -15,5 +15,5 @@ interface InputType {
 	/**
 	 * Register input type in GraphQL schema.
 	 */
-	public function register_input_type();
+	public function register_input_type() : void;
 }
