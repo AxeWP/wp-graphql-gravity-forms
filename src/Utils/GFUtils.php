@@ -22,18 +22,29 @@ use GraphQL\Error\UserError;
  */
 class GFUtils {
 	/**
+	 * Returns IP address.
+	 * Uses GFFormsModel::get_ip()
+	 *
+	 * @param string $ip .
+	 * @return string
+	 */
+	public static function get_ip( string $ip ) : string {
+			return ! empty( $ip ) ? sanitize_text_field( $ip ) : GFFormsModel::get_ip();
+	}
+
+	/**
 	 * Gets the Gravity Form form object for the given form ID.
 	 * Uses GFAPI::get_form().
 	 *
 	 * @see https://docs.gravityforms.com/api-functions/#get-form
 	 *
 	 * @param integer $form_id .
-	 * @param bool    $is_active Whether to only return the form if it is active.
+	 * @param bool    $active_only Whether to only return the form if it is active.
 	 * @return array
 	 *
 	 * @throws UserError .
 	 */
-	public static function get_form( int $form_id, bool $is_active = true ) : array {
+	public static function get_form( int $form_id, bool $active_only = true ) : array {
 		$form = GFAPI::get_form( $form_id );
 
 		if ( ! $form ) {
@@ -43,7 +54,7 @@ class GFUtils {
 			);
 		}
 
-		if ( $is_active && ( ! $form['is_active'] || $form['is_trash'] ) ) {
+		if ( $active_only && ( ! $form['is_active'] || $form['is_trash'] ) ) {
 			throw new UserError(
 				// translators: Gravity Forms form id.
 				sprintf( __( 'The form for the given ID %s is inactive or trashed.', 'wp-graphql-gravity-forms' ), $form_id ),
@@ -52,6 +63,63 @@ class GFUtils {
 
 		return $form;
 	}
+
+	/**
+	 * Gets the last page of the form. Useful for form submissions.
+	 *
+	 * @param array $form .
+	 */
+	public static function get_last_form_page( array $form ) : int {
+		require_once GFCommon::get_base_path() . '/form_display.php';
+
+		return GFFormDisplay::get_max_page_number( $form );
+	}
+
+	/**
+	 * Mimics Gravity Forms' GFFormsModel::get_form_unique_id() method.
+	 *
+	 * @param int $form_id Form ID.
+	 *
+	 * @return string Unique ID.
+	 */
+	public static function get_form_unique_id( int $form_id ) : string {
+		if ( ! isset( GFFormsModel::$unique_ids[ $form_id ] ) ) {
+			GFFormsModel::$unique_ids[ $form_id ] = uniqid();
+		}
+
+		return GFFormsModel::$unique_ids[ $form_id ];
+	}
+
+	/**
+	 * Returns Gravity Forms Field object for given field id.
+	 *
+	 * @param array $form     The form.
+	 * @param int   $field_id Field ID.
+	 *
+	 * @return GF_Field
+	 *
+	 * @throws UserError .
+	 */
+	public static function get_field_by_id( array $form, int $field_id ) : GF_Field {
+		$matching_fields = array_values(
+			array_filter(
+				$form['fields'],
+				function( GF_Field $field ) use ( $field_id ) : bool {
+					return $field['id'] === $field_id;
+				}
+			)
+		);
+
+		if ( ! $matching_fields ) {
+			throw new UserError(
+				// translators: Gravity Forms form id and field id.
+				sprintf( __( 'The form (ID %1$s) does not contain a field with the field ID %2$s.', 'wp-graphql-gravity-forms' ), $form['id'], $field_id )
+			);
+		}
+
+		return $matching_fields[0];
+	}
+
 
 	/**
 	 * Gets the Gravity Form entry object for the given form ID.
@@ -70,7 +138,7 @@ class GFUtils {
 		if ( is_wp_error( $entry ) ) {
 			throw new UserError(
 				// translators: Gravity Forms form id.
-				sprintf( __( 'The entry the given ID %s was not found. Error: ', 'wp-graphql-gravity-forms' ), $entry_id ) . $entry->get_error_message()
+				sprintf( __( 'The entry for the given ID %s was not found. Error: ', 'wp-graphql-gravity-forms' ), $entry_id ) . $entry->get_error_message()
 			);
 		}
 
@@ -79,19 +147,82 @@ class GFUtils {
 
 
 	/**
-	 * Mimics Gravity Forms' GFFormsModel::get_form_unique_id() method.
+	 * Updates the existing Gravity Form entry.
+	 * Uses GFAPI::update_entry().
 	 *
-	 * @param int $form_id Form ID.
+	 * @see https://docs.gravityforms.com/api-functions/#update-entry
 	 *
-	 * @return string Unique ID.
+	 * @param array $entry_data .
+	 * @param int   $entry_id .
+	 * @return integer
+	 *
+	 * @throws UserError .
 	 */
-	public static function get_form_unique_id( int $form_id ) : string {
-		if ( ! isset( GFFormsModel::$unique_ids[ $form_id ] ) ) {
-			GFFormsModel::$unique_ids[ $form_id ] = uniqid();
+	public static function update_entry( array $entry_data, int $entry_id = null ) : int {
+		$entry_id = $entry_id ?? $entry_data['id'];
+
+		$is_entry_updated = GFAPI::update_entry( $entry_data, $entry_id );
+
+		if ( is_wp_error( ( $is_entry_updated ) ) ) {
+			throw new UserError(
+				// translators: Gravity Forms entry id.
+				sprintf( __( 'An error occured while trying to update the entry (ID: %s). Error: ', 'wp-graphql-gravity-forms' ), $entry_data['id'] ) . $is_entry_updated->get_error_message()
+			);
 		}
 
-		return GFFormsModel::$unique_ids[ $form_id ];
+		return $entry_id;
 	}
+
+
+	/**
+	 * Returns draft entry array from a given resume token.
+	 * Uses GFFormsModel::get_draft_submission_values().
+	 *
+	 * @param string $resume_token .
+	 * @return array
+	 *
+	 * @throws UserError .
+	 */
+	public static function get_draft_entry( string $resume_token ) : array {
+		$draft_entry = GFFormsModel::get_draft_submission_values( $resume_token );
+
+		if ( ! is_array( $draft_entry ) || empty( $draft_entry ) ) {
+			throw new UserError(
+				// translators: Gravity Forms form id and field id.
+				sprintf( __( 'A draft entry with the resume token %s could not be found', 'wp-graphql-gravity-forms' ), $resume_token )
+			);
+		}
+
+		return $draft_entry;
+	}
+
+
+
+	/**
+	 * Returns draft entry submittion data.
+	 *
+	 * @param string $resume_token Draft entry resume token.
+	 *
+	 * @return array
+	 *
+	 * @throws UserError .
+	 */
+	public static function get_draft_submission( string $resume_token ) : array {
+		$draft_entry = self::get_draft_entry( $resume_token );
+
+		$submission = json_decode( $draft_entry['submission'], true );
+
+		if ( ! $submission ) {
+			throw new UserError(
+					// translators: Gravity Forms form id and field id.
+				sprintf( __( 'The draft entry submission data for the resume token %s could not be read', 'wp-graphql-gravity-forms' ), $resume_token )
+			);
+		}
+
+		return $submission;
+	}
+
+
 
 	/**
 	 * Get the draft resume URL.
@@ -125,93 +256,6 @@ class GFUtils {
 				''
 			)
 		);
-	}
-
-	/**
-	 * Returns IP address.
-	 * Uses GFFormsModel::get_ip()
-	 *
-	 * @param string $ip .
-	 * @return string
-	 */
-	public static function get_ip( string $ip ) : string {
-			return ! empty( $ip ) ? sanitize_text_field( $ip ) : GFFormsModel::get_ip();
-	}
-
-	/**
-	 * Returns Gravity Forms Field object for given field id.
-	 *
-	 * @param array $form     The form.
-	 * @param int   $field_id Field ID.
-	 *
-	 * @return GF_Field
-	 *
-	 * @throws UserError .
-	 */
-	public static function get_field_by_id( array $form, int $field_id ) : GF_Field {
-		$matching_fields = array_values(
-			array_filter(
-				$form['fields'],
-				function( GF_Field $field ) use ( $field_id ) : bool {
-					return $field['id'] === $field_id;
-				}
-			)
-		);
-
-		if ( ! $matching_fields ) {
-			throw new UserError(
-				// translators: Gravity Forms form id and field id.
-				sprintf( __( 'The Form (ID %1$s) does not not contain a field with the field ID %2$s.', 'wp-graphql-gravity-forms' ), $form['id'], $field_id )
-			);
-		}
-
-		return $matching_fields[0];
-	}
-
-	/**
-	 * Returns draft entry array from a given resume token.
-	 * Uses GFFormsModel::get_draft_submission_values().
-	 *
-	 * @param string $resume_token .
-	 * @return array
-	 *
-	 * @throws UserError .
-	 */
-	public static function get_draft_entry( string $resume_token ) : array {
-		$draft_entry = GFFormsModel::get_draft_submission_values( $resume_token );
-
-		if ( ! is_array( $draft_entry ) || empty( $draft_entry ) ) {
-			throw new UserError(
-				// translators: Gravity Forms form id and field id.
-				sprintf( __( 'A draft entry with the resume token %s could not be found', 'wp-graphql-gravity-forms' ), $resume_token )
-			);
-		}
-
-		return $draft_entry;
-	}
-
-	/**
-	 * Returns draft entry submittion data.
-	 *
-	 * @param string $resume_token Draft entry resume token.
-	 *
-	 * @return array
-	 *
-	 * @throws UserError .
-	 */
-	public static function get_draft_submission( string $resume_token ) : array {
-		$draft_entry = self::get_draft_entry( $resume_token );
-
-		$submission = json_decode( $draft_entry['submission'], true );
-
-		if ( ! $submission ) {
-			throw new UserError(
-					// translators: Gravity Forms form id and field id.
-				sprintf( __( 'The draft entry submission data for the resume token %s could not be read', 'wp-graphql-gravity-forms' ), $resume_token )
-			);
-		}
-
-		return $submission;
 	}
 
 	/**
@@ -256,32 +300,6 @@ class GFUtils {
 		return $new_resume_token ? (string) $new_resume_token : $resume_token;
 	}
 
-	/**
-	 * Updates the existing Gravity Form entry.
-	 * Uses GFAPI::update_entry().
-	 *
-	 * @see https://docs.gravityforms.com/api-functions/#update-entry
-	 *
-	 * @param array $entry_data .
-	 * @param int   $entry_id .
-	 * @return integer
-	 *
-	 * @throws UserError .
-	 */
-	public static function update_entry( array $entry_data, int $entry_id = null ) : int {
-		$entry_id = $entry_id ?? $entry_data['id'];
-
-		$is_entry_updated = GFAPI::update_entry( $entry_data, $entry_id );
-
-		if ( is_wp_error( ( $is_entry_updated ) ) ) {
-			throw new UserError(
-				// translators: Gravity Forms entry id.
-				sprintf( __( 'An error occured while trying to update the entry (ID: %s). Error: ', 'wp-graphql-gravity-forms' ), $entry_data['id'] ) . $is_entry_updated->get_error_message()
-			);
-		}
-
-		return $entry_id;
-	}
 
 	/**
 	 * Submits a Gravity Forms form.
@@ -312,16 +330,5 @@ class GFUtils {
 		}
 
 		return $submission;
-	}
-
-	/**
-	 * Gets the last page of the form. Useful for form submissions.
-	 *
-	 * @param array $form .
-	 */
-	public static function get_last_form_page( array $form ) : int {
-		require_once GFCommon::get_base_path() . '/form_display.php';
-
-		return GFFormDisplay::get_max_page_number( $form );
 	}
 }
