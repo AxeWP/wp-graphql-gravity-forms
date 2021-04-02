@@ -1,121 +1,110 @@
 # Changelog
 
-## v0.4.0 - DOGFOOD @TODO
+## v0.4.0 - A Simpler Form Submission Flow!
 
-- Adds `submitGravityFormsForm` mutation to bypass the existing draft entry flow. E.g. :
-```graphql
-  submitGravityFormsForm(
-		input: {
-			formId: 50, 
-			clientMutationId: "uniqueMutationId", 
-			fieldValues: [
-				{	# simple values
-					id: 1,
-					value: "a"
-				},
-				{ # NameField value
-					id: 9,
-					nameValues: {
-						first: "David",
-						last: "Levine"
-					}
-				},
-				{ # ListField value
-					id: 20,
-					listValues: [
-						{ rowValues: ["a", "b", "c"] }
-					]
-				}
-			],
-			saveAsDraft: true
-		}
-	) {
-		entryId
-		errors {
-			id
-			message
-		}
-		resumeToken
-		resumeUrl
-	}
+This release adds a few new mutations letting you submit forms with a single mutation! That's right: you no longer need to create a draft entry and update each field value individually before submitting.
 
-```
+Similarly, we've added support for updating entries and draft entries with a single mutation each, and added support for using form and entry IDs in queries - without needing to convert them to a global ID first.
+
+Also, we made several (breaking) changes to streamline queries and mutations: many GraphQL properties have been changed to `Enum` types and Form `fields` are now an interface. This should make your queries and mutations less error-prone and (a bit ) more concise. We're also now using native Gravity Forms functions wherever possible, which should help ensure consistency going forward.
+
+Beyond that, we've squashed some bugs, deprecated some confusing and unnecessary fields, and refactored a huge portion of the codebase that should speed up development and improve code quality in the long term.
+
+### New features
+
+- Adds `submitGravityFormsForm` mutation to bypass the existing draft entry flow. See [README.MD](https://github.com/harness-software/wp-graphql-gravity-forms/README.md#documentation-submit-form-mutation) for usage.
+- Adds `updateGravityFormsEntry` and `updateGravityFormsDraftEntry` mutations that follow the same pattern.
 - Adds `idType` to `GravityFormsForm` and `GravityFormsEntry`, so you can now query them using the database ID, instead of generating a global id first.
-- Adds support for updating existing entries. Specifically:
- - `createGravityFormsDraftEntry` now has an optional `fromEntryId` input field. If set, the draft entry will use the id to clone a new draft entry.
- - `submitGravityFormsDraftEntry` now has an optional `forceCreate` input field. If `true`, a new entry will be created. If `false` or unset, the mutation will check if the draft entry was created from an existing entry and replace it. Draft entries created without `fromEntryId` will continue to generate new Gravity Forms Entries.
+- Support cloning an existing entry when using `createGravityFormsDraftEntry`.
 - Converts all Gravity Forms `fields` to an interface. That means your queries can now look like this:
-```graphql
-query{
-	gravityFormsForms {
-			nodes {
-				fields {
-					nodes {
-						formId
-						type
-						id
-						... on AddressField {
-							inputs {
-								defaultValue
-							}
-						}
-						... on TextField {
-							defaultValue
-						}
-					}
-				}
-			}
-		}
-	}
-```
-@TODO: consider making certain properties global to the interface, even if they return null for most fields.
 
-- Switch many field types from `String` to `Enum`: 
- - `AddressField.addressType`
- - `Button.type`
- - `CaptchaField.captchaTheme`
- - `CaptchaField.captchaType`
- - `CaptchaField.simpleCaptchaSize`
- - `ChainedSelectField.chainedSelectsAlignment`
- - `ConditionalLogic.actionType`
- - `ConditionalLogic.logicType`
- - `ConditionalLogicRule.operator`
- - `DateField.calendarIconType`
- - `DateField.dateFormat`
- - `DateField.dateType`
- - `EntriesFieldFilterInput.operator`
- - `EntriesSortingInput.direction`
- - `Form.descriptionPlacement`
- - `Form.labelPlacement`
- - `Form.limitEntriesPeriod`
- - `Form.subLabelPlacement`
- - `FormConfirmation.type`
- - `FormNotification.toType`
- - `FormNotificationRouting.operator`
- - `FormPagination.style`
- - `FormPagination.type`
- - `GravityFormsEntry.fieldFiltersNode`
- - `GravityFormsEntry.status`
- - `NumberField.numberFormat`
- - `PasswordField.minPasswordStrength`
- - `PhoneField.phoneFormat`
- - `RootQueryToGravityFormsFormConnection.status`
- - `SignatureField.borderStyle`
- - `SignatureField.borderWidth`
- - `TimeField.timeFormat`
- - `visibilityProperty`
- - FieldProperty: `descriptionPlacement`
- - FieldProperty: `labelPlacement`
- - FieldProperty: `sizeProperty`
+```graphql
+query {
+  gravityFormsForms {
+    nodes {
+      fields {
+        nodes {
+          formId
+          type
+          id
+          ... on AddressField {
+            inputs {
+              defaultValue
+            }
+          }
+          ... on TextField {
+            defaultValue
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+- Switch many field types from `String` to `Enum`:
+- `AddressField.addressType`
+- `Button.type`
+- `CaptchaField.captchaTheme`
+- `CaptchaField.captchaType`
+- `CaptchaField.simpleCaptchaSize`
+- `ChainedSelectField.chainedSelectsAlignment`
+- `ConditionalLogic.actionType`
+- `ConditionalLogic.logicType`
+- `ConditionalLogicRule.operator`
+- `DateField.calendarIconType`
+- `DateField.dateFormat`
+- `DateField.dateType`
+- `EntriesFieldFilterInput.operator`
+- `EntriesSortingInput.direction`
+- `Form.descriptionPlacement`
+- `Form.labelPlacement`
+- `Form.limitEntriesPeriod`
+- `Form.subLabelPlacement`
+- `FormConfirmation.type`
+- `FormNotification.toType`
+- `FormNotificationRouting.operator`
+- `FormPagination.style`
+- `FormPagination.type`
+- `GravityFormsEntry.fieldFiltersNode`
+- `GravityFormsEntry.status`
+- `NumberField.numberFormat`
+- `PasswordField.minPasswordStrength`
+- `PhoneField.phoneFormat`
+- `RootQueryToGravityFormsFormConnection.status`
+- `SignatureField.borderStyle`
+- `SignatureField.borderWidth`
+- `TimeField.timeFormat`
+- `visibilityProperty`
+- FieldProperty: `descriptionPlacement`
+- FieldProperty: `labelPlacement`
+- FieldProperty: `sizeProperty`
+
+### Bugfixes
+
+- `SaveAndContinue` now uses `buttonText` instead of the `Button` type.
+- `lastPageButton` now uses its own GraphQL type with the relevant fields.
+- When querying entries, we check that `createdByID` is set before trying to fetch the uerdata.
+- Where possible, mutations and queries now try to return an `errors` object instead of throwing an Exception.
+- We've added more descriptive Exception messages across the plugin, to help you figure out what went wrong.
 - Fix ConsentFieldValue conflict. `value` now returns a `String` with the consent message, or `null` if false.
 - Deprecated `url` in favor of `value` on `FileUploadFieldValue` and `SignatureFieldValue`.
-- Add basic codeception tests.
+- Deprecated `cssClassList` in favor of `cssClass`.
+
+### Under the hood
+
+- Refactored Fields, FieldValues, and Mutations, removing over 500 lines of code and improving consistency across classes.
+- Switch to using `GFAPI::submit_form()` instead of local implementations for submitting forms and draft entries.
+- Implemented phpstan linting.
+- Started backfiling unit tests using codeception.
+- Updated composer dependencies.
 
 ## v0.3.1 - Bugfixes
- - Removes `abstract` class definition from FieldProperty classes. (#79)
- - `ConsentFieldValue`: The `value` field was a conflicting type `Boolean`. Now it correctly returns a `String` with the consent message. ( #80 )
- - `FormNotificationRouting`: The `fieldId` now correctly returns an `Int` instead of a `String`. (#81)
- - When checking for missing `GravityFormsForm` values, `limitEntriesCount`, `scheduleEndHour` and `scheduleEndMinute` now correctly return as type `Int` (#83)
+
+- Removes `abstract` class definition from FieldProperty classes. (#79)
+- `ConsentFieldValue`: The `value` field was a conflicting type `Boolean`. Now it correctly returns a `String` with the consent message. ( #80 )
+- `FormNotificationRouting`: The `fieldId` now correctly returns an `Int` instead of a `String`. (#81)
+- When checking for missing `GravityFormsForm` values, `limitEntriesCount`, `scheduleEndHour` and `scheduleEndMinute` now correctly return as type `Int` (#83)
 
 ## v0.3.0 - Add Missing Mutations, the Consent Field, and more!
 
