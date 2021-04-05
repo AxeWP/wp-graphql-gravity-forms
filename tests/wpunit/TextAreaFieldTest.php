@@ -187,7 +187,6 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		codecept_debug( $actual );
 
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertEquals( $expected, $actual['data'] );

@@ -68,7 +68,6 @@ class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
 			$args['source_url'],
 			$args['resume_token'],
 		);
-		codecept_debug($resume_token);
 
 		return $resume_token;
 	}

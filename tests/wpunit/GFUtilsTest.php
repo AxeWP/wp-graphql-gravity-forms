@@ -1,9 +1,17 @@
 <?php
+/**
+ * Test GFUtils functions.
+ *
+ * @package .
+ */
 
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Utils\GFUtils;
 use WPGraphQLGravityForms\Tests\Factories;
 
+/**
+ * Class - GFUtilsTest
+ */
 class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 
 	/**
@@ -204,7 +212,6 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 		// Test empty source_url.
 		$actual = GFUtils::get_resume_url( '', $this->draft_token );
 		$this->assertEquals( '', $actual );
-
 	}
 
 	/**
@@ -223,7 +230,6 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 		$actual = GFUtils::save_draft_submission( $form, $submission, null, 1, [], null, '', '', $this->draft_token );
 
 		$this->assertEquals( $this->draft_token, $actual );
-		codecept_debug($actual);
 
 		// Test empty form.
 		$this->expectException( UserError::class );
@@ -240,9 +246,11 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 		$this->expectExceptionMessage( 'An error occured while trying to save the draft entry. Database Error:' );
 		$actual = GFUtils::save_draft_submission( $form, $entry_data );
 		$this->factory->draft->delete( $actual );
-
 	}
 
+	/**
+	 * Tests GFUtils::submit_form() when invalid.
+	 */
 	public function testSubmitForm_invalid() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$input_values = [

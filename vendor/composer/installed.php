@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '7c99d3b6dfeddd06b3ff3ea49c92b8f7a363f06e',
+    'reference' => '41c2eb4fbedfdb211792fb90d65c9fbbc2027a3e',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
@@ -31,12 +31,12 @@
     ),
     'codeception/codeception' => 
     array (
-      'pretty_version' => '4.1.19',
-      'version' => '4.1.19.0',
+      'pretty_version' => '4.1.20',
+      'version' => '4.1.20.0',
       'aliases' => 
       array (
       ),
-      'reference' => '138dc9345a81ec994dcd6b9680c501a752a37b00',
+      'reference' => 'd8b16e13e1781dbc3a7ae8292117d520c89a9c5a',
     ),
     'codeception/lib-asserts' => 
     array (
@@ -237,7 +237,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '7c99d3b6dfeddd06b3ff3ea49c92b8f7a363f06e',
+      'reference' => '41c2eb4fbedfdb211792fb90d65c9fbbc2027a3e',
     ),
     'hautelook/phpass' => 
     array (
@@ -474,12 +474,12 @@
     ),
     'phpstan/phpstan' => 
     array (
-      'pretty_version' => '0.12.82',
-      'version' => '0.12.82.0',
+      'pretty_version' => '0.12.83',
+      'version' => '0.12.83.0',
       'aliases' => 
       array (
       ),
-      'reference' => '3920f0fb0aff39263d3a4cb0bca120a67a1a6a11',
+      'reference' => '4a967cec6efb46b500dd6d768657336a3ffe699f',
     ),
     'phpunit/php-code-coverage' => 
     array (

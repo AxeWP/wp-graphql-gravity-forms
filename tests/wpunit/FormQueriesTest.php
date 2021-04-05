@@ -366,7 +366,6 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 			[ 'fields' => [] ]
 		);
 
-		codecept_debug( $form_ids );
 		$query = '
 			query( $first: Int, $after: String, $last:Int, $before: String ) {
 				gravityFormsForms(first: $first, after: $after, last: $last, before: $before) {
@@ -509,7 +508,6 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 		';
 
 		$actual = graphql( [ 'query' => $query ] );
-		codecept_debug( $actual );
 
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		// Test inactive.
