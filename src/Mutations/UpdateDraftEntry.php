@@ -77,7 +77,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	public function get_input_fields() : array {
 		return [
 			'resumeToken' => [
-				'type'        => 'String',
+				'type'        => [ 'non_null' => 'String' ],
 				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
