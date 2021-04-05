@@ -1,12 +1,26 @@
 <?php
+/**
+ * Factory for Gravity Forms entries.
+ *
+ * @package WPGraphQLGravityForms\Tests\Factories
+ */
 
 namespace WPGraphQLGravityForms\Tests\Factories;
 
 use GFAPI;
+use GFFormsModel;
 use WP_UnitTest_Generator_Sequence;
 
+/**
+ * Class - Entry
+ */
 class Entry extends \WP_UnitTest_Factory_For_Thing {
 
+	/**
+	 * Constructor
+	 *
+	 * @param object $factory .
+	 */
 	public function __construct( $factory = null ) {
 		parent::__construct( $factory );
 		$this->default_generation_definitions = [
@@ -14,10 +28,22 @@ class Entry extends \WP_UnitTest_Factory_For_Thing {
 		];
 	}
 
-	public function create_object( $args ) {
+	/**
+	 * Creates an entry object.
+	 *
+	 * @param array $args entry arguments.
+	 */
+	public function create_object( $args ) : int {
 		return GFAPI::add_entry( $args );
 	}
 
+	/**
+	 * Creates multiple entry objects.
+	 *
+	 * @param int   $count number to create.
+	 * @param array $args entry arguments.
+	 * @param array $generation_definitions .
+	 */
 	public function create_many( $count, $args = [], $generation_definitions = null ) {
 		$entry_ids = [];
 		for ( $n = 0; $n < $count; $n++ ) {
@@ -30,6 +56,12 @@ class Entry extends \WP_UnitTest_Factory_For_Thing {
 		return $entry_ids;
 	}
 
+	/**
+	 * Updates an entry object.
+	 *
+	 * @param int   $entry_id .
+	 * @param array $properties properties to update.
+	 */
 	public function update_object( $entry_id, $properties ) {
 		$result = true;
 
@@ -43,7 +75,25 @@ class Entry extends \WP_UnitTest_Factory_For_Thing {
 		return $result;
 	}
 
-	public function get_object_by_id( $form_id ) {
-		return GFAPI::get_entry( $form_id );
+	/**
+	 * Gets the entry object from an object id.
+	 *
+	 * @param int $entry_id .
+	 * @return array
+	 */
+	public function get_object_by_id( $entry_id ) : array {
+		return GFAPI::get_entry( $entry_id );
+	}
+
+	/**
+	 * Delete entries.
+	 *
+	 * @param array|string $entry_ids .
+	 */
+	public function delete( $entry_ids ) {
+		if ( ! is_array( $entry_ids ) ) {
+			$entry_ids = [ $entry_ids ];
+		}
+		return GFFormsModel::delete_entries( $entry_ids );
 	}
 }

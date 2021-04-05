@@ -1,24 +1,28 @@
 <?php
+/**
+ * Test WPGraphQLSettings
+ *
+ * @package .
+ */
 
 use WPGraphQLGravityForms\Settings\WPGraphQLSettings;
 
+/**
+ * Class - WPGraphQLSettingsTest
+ */
 class WPGraphQLSettingsTest extends \Codeception\Test\Unit {
+	public $instance;
 
 	/**
-	 * @var \UnitTester
+	 * Run before each test.
 	 */
-	protected $tester;
-		public $instance;
-
-
 	protected function _before() {
 			$this->instance = new WPGraphQLSettings();
 	}
 
-	protected function _after() {
-	}
-
-	// tests
+	/**
+	 * Tests setMaxQueryAmount .
+	 */
 	public function testSetMaxQueryAmount() {
 			// Tests if current max_query_amount is larger than 600.
 			$query_amount = $this->instance->set_max_query_amount( 900 );

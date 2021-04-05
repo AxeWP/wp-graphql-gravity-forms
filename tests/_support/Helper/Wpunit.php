@@ -1,102 +1,207 @@
 <?php
+/**
+ * Helpers for WPUnit tests.
+ *
+ * @package .
+ */
+
 namespace Helper;
 
-// here you can define custom actions
-// all public methods declared in helper class will be available in $I
-
+/**
+ * Class - Wpunit
+ * All public methods declared in helper class will be available in $I
+ */
 class Wpunit extends \Codeception\Module {
 
-	function getTextFieldDefaultArgs() : array {
+	/**
+	 * Get the default args for a text field.
+	 *
+	 * @return array
+	 */
+	public function getTextFieldDefaultArgs() : array {
 		return [
-			'type'                 => 'text',
-			'id'                   => 1,
-			'label'                => 'Single Line Text',
 			'adminLabel'           => '',
-			'isRequired'           => false,
-			'size'                 => 'medium',
-			'errorMessage'         => '',
-			'visibility'           => 'visible',
-			'inputs'               => null,
-			'formId'               => 2,
+			'allowsPrepopulate'    => true,
+			'calculationFormula'   => '',
+			'calculationRounding'  => '',
+			'choices'              => '',
+			'cssClass'             => 'first-class second-class',
+			'defaultValue'         => 'Default',
 			'description'          => 'I am a single line text field.',
-			'allowsPrepopulate'    => false,
-			'inputMask'            => false,
-			'inputMaskValue'       => '',
-			'inputMaskIsCustom'    => false,
-			'maxLength'            => '',
-			'inputType'            => '',
-			'labelPlacement'       => '',
 			'descriptionPlacement' => '',
-			'subLabelPlacement'    => '',
-			'placeholder'          => '',
-			'cssClass'             => '',
-			'inputName'            => '',
-			'noDuplicates'         => false,
-			'defaultValue'         => '',
-			'choices'              => '',
-			'productField'         => '',
+			'disableQuantity'      => false,
+			'displayAllCategories' => false,
+			'displayOnly'          => '',
+			'enableCalculation'    => '',
 			'enablePasswordInput'  => '',
-			'multipleFiles'        => false,
-			'maxFiles'             => '',
-			'calculationFormula'   => '',
-			'calculationRounding'  => '',
-			'enableCalculation'    => '',
-			'disableQuantity'      => false,
-			'displayAllCategories' => false,
-			'useRichTextEditor'    => false,
-			'checkboxLabel'        => '',
-			'pageNumber'           => 1,
+			'errorMessage'         => 'Some error message',
 			'fields'               => '',
-			'displayOnly'          => '',
-		];
-	}
-
-	function getTextAreaFieldDefaultArgs() : array {
-		return [
-			'type'                 => 'textarea',
-			'id'                   => 2,
-			'label'                => 'Text Area',
-			'adminLabel'           => '',
-			'isRequired'           => false,
-			'size'                 => 'medium',
-			'errorMessage'         => '',
-			'visibility'           => 'visible',
-			'inputs'               => null,
 			'formId'               => 2,
-			'description'          => 'I am a text area field.',
-			'allowsPrepopulate'    => false,
+			'id'                   => 1,
 			'inputMask'            => false,
-			'inputMaskValue'       => '',
 			'inputMaskIsCustom'    => false,
-			'maxLength'            => 28,
+			'inputMaskValue'       => '',
+			'inputName'            => 'textinputname',
+			'inputs'               => null,
 			'inputType'            => '',
+			'isRequired'           => true,
+			'label'                => 'Single Line Text',
 			'labelPlacement'       => '',
-			'descriptionPlacement' => '',
-			'subLabelPlacement'    => '',
-			'placeholder'          => '',
-			'cssClass'             => '',
-			'inputName'            => '',
-			'noDuplicates'         => false,
-			'defaultValue'         => '',
-			'choices'              => '',
-			'conditionalLogic'     => '',
-			'productField'         => '',
-			'form_id'              => '',
-			'useRichTextEditor'    => false,
-			'multipleFiles'        => false,
 			'maxFiles'             => '',
-			'calculationFormula'   => '',
-			'calculationRounding'  => '',
-			'enableCalculation'    => '',
-			'disableQuantity'      => false,
-			'displayAllCategories' => false,
+			'maxLength'            => 100,
+			'multipleFiles'        => false,
+			'noDuplicates'         => true,
 			'pageNumber'           => 1,
-			'fields'               => '',
-			'displayOnly'          => '',
+			'placeholder'          => 'some placeholder',
+			'productField'         => '',
+			'size'                 => 'medium',
+			'subLabelPlacement'    => '',
+			'type'                 => 'text',
+			'useRichTextEditor'    => false,
+			'visibility'           => 'visible',
 		];
 	}
 
-	function getFormDefaultArgs() : array {
+	/**
+	 * Get the default args for a textarea field.
+	 *
+	 * @return array
+	 */
+	public function getTextAreaFieldDefaultArgs() : array {
+		return [
+			'adminLabel'           => '',
+			'allowsPrepopulate'    => false,
+			'calculationFormula'   => '',
+			'calculationRounding'  => '',
+			'choices'              => '',
+			'cssClass'             => 'first-class second-class',
+			'defaultValue'         => 'Default',
+			'description'          => 'I am a text area field.',
+			'descriptionPlacement' => '',
+			'disableQuantity'      => false,
+			'displayAllCategories' => false,
+			'displayOnly'          => '',
+			'enableCalculation'    => '',
+			'errorMessage'         => 'Some error message',
+			'fields'               => '',
+			'formId'               => 2,
+			'id'                   => 2,
+			'inputMask'            => false,
+			'inputMaskIsCustom'    => false,
+			'inputMaskValue'       => '',
+			'inputName'            => 'textareainputname',
+			'inputs'               => null,
+			'inputType'            => '',
+			'isRequired'           => true,
+			'label'                => 'Text Area',
+			'labelPlacement'       => '',
+			'maxFiles'             => '',
+			'maxLength'            => 250,
+			'multipleFiles'        => false,
+			'noDuplicates'         => false,
+			'pageNumber'           => 1,
+			'placeholder'          => 'Some placeholder',
+			'productField'         => '',
+			'size'                 => 'medium',
+			'subLabelPlacement'    => '',
+			'type'                 => 'textarea',
+			'useRichTextEditor'    => true,
+			'visibility'           => 'visible',
+		];
+	}
+
+	/**
+	 * Get the default args for an address field.
+	 *
+	 * @return array
+	 */
+	public function getAddressFieldDefaultArgs() : array {
+		return [
+			'addressType'             => 'international',
+			'adminLabel'              => '',
+			'adminOnly'               => false,
+			'copyValuesOptionDefault' => '',
+			'copyValuesOptionField'   => null,
+			'cssClass'                => 'first-class second-class',
+			'defaultCountry'          => 'United States',
+			'defaultProvince'         => '',
+			'defaultState'            => '',
+			'description'             => '',
+			'descriptionPlacement'    => '',
+			'enableCopyValuesOption'  => '',
+			'errorMessage'            => 'Some Error Message',
+			'id'                      => 3,
+			'isRequired'              => false,
+			'label'                   => 'Address',
+			'labelPlacement'          => '',
+			'size'                    => 'medium',
+			'subLabelPlacement'       => '',
+			'type'                    => 'address',
+			'visibility'              => 'visible',
+			'inputs'                  => [
+				[
+					'customLabel'  => 'Street',
+					'defaultValue' => 'Default Street Address',
+					'id'           => '3.1',
+					'isHidden'     => true,
+					'label'        => 'Street Address',
+					'name'         => 'ab',
+					'placeholder'  => 'some Placeholder',
+				],
+				[
+					'customLabel'  => 'line 2',
+					'defaultValue' => '',
+					'id'           => '3.2',
+					'label'        => 'Address Line 2',
+					'name'         => '',
+					'placeholder'  => '',
+				],
+				[
+					'customLabel'  => null,
+					'defaultValue' => null,
+					'id'           => '3.3',
+					'isHidden'     => false,
+					'label'        => 'City',
+					'name'         => '',
+					'placeholder'  => null,
+				],
+				[
+					'customLabel'  => null,
+					'defaultValue' => null,
+					'id'           => '3.4',
+					'isHidden'     => false,
+					'label'        => 'State / Province',
+					'name'         => '',
+					'placeholder'  => 'State',
+				],
+				[
+					'customLabel'  => null,
+					'defaultValue' => null,
+					'id'           => '3.5',
+					'isHidden'     => true,
+					'label'        => 'ZIP / Postal Code',
+					'name'         => '',
+					'placeholder'  => null,
+				],
+				[
+					'customLabel'  => null,
+					'defaultValue' => null,
+					'id'           => '3.6',
+					'isHidden'     => false,
+					'label'        => 'Country',
+					'name'         => '',
+					'placeholder'  => null,
+				],
+			],
+		];
+	}
+
+	/**
+	 * Get the default args for a form.
+	 *
+	 * @return array
+	 */
+	public function getFormDefaultArgs() : array {
 		return [
 			'button'                     => [
 				'conditionalLogic' => [
@@ -216,7 +321,7 @@ class Wpunit extends \Codeception\Module {
 			'postStatus'                 => 'publish',
 			'postTitleTemplate'          => 'Post title template',
 			'postTitleTemplateEnabled'   => false,
-			'requireLogin'               => true,
+			'requireLogin'               => false,
 			'requireLoginMessage'        => 'You must be logged in to submit this form.',
 			'save'                       => [
 				'button'  => [
@@ -240,9 +345,15 @@ class Wpunit extends \Codeception\Module {
 		];
 	}
 
-	function get_enum_for_value( string $enumName, string $value ) : string {
+	/**
+	 * Converts a string value to its Enum equivalent
+	 *
+	 * @param string $enumName Name of the Enum registered in GraphQL.
+	 * @param string $value .
+	 * @return string
+	 */
+	public function get_enum_for_value( string $enumName, string $value ) : string {
 		$typeRegistry = \WPGraphQL::get_type_registry();
-
 		return $typeRegistry->get_type( $enumName )->serialize( $value );
 	}
 }

@@ -189,7 +189,7 @@ class GFUtils {
 		if ( ! is_array( $draft_entry ) || empty( $draft_entry ) ) {
 			throw new UserError(
 				// translators: Gravity Forms form id and field id.
-				sprintf( __( 'A draft entry with the resume token %s could not be found', 'wp-graphql-gravity-forms' ), $resume_token )
+				sprintf( __( 'A draft entry with the resume token %s could not be found.', 'wp-graphql-gravity-forms' ), $resume_token )
 			);
 		}
 
@@ -215,7 +215,7 @@ class GFUtils {
 		if ( ! $submission ) {
 			throw new UserError(
 					// translators: Gravity Forms form id and field id.
-				sprintf( __( 'The draft entry submission data for the resume token %s could not be read', 'wp-graphql-gravity-forms' ), $resume_token )
+				sprintf( __( 'The draft entry submission data for the resume token %s could not be read.', 'wp-graphql-gravity-forms' ), $resume_token )
 			);
 		}
 
@@ -275,7 +275,7 @@ class GFUtils {
 	 *
 	 * @throws UserError .
 	 */
-	public static function save_draft_submission( array $form, array $entry, array $field_values = null, int $page_number = 1, array $files = [], string $form_unique_id = null, string $ip = null, string $source_url = '', string $resume_token = '' ) : string {
+	public static function save_draft_submission( array $form, array $entry, array $field_values = null, int $page_number = 1, array $files = [], string $form_unique_id = null, string $ip = '', string $source_url = '', string $resume_token = '' ) : string {
 		if ( empty( $form ) || empty( $entry ) ) {
 			throw new UserError( __( 'An error occured while trying to save the draft entry. Form or Entry not set.', 'wp-graphql-gravity-forms' ) );
 		}
@@ -294,7 +294,8 @@ class GFUtils {
 			$resume_token,
 		);
 		if ( false === $new_resume_token ) {
-			throw new UserError( __( 'An error occured while trying to save the draft entry.', 'wp-graphql-gravity-forms' ) );
+			global $wpdb;
+			throw new UserError( __( 'An error occured while trying to save the draft entry. Database Error: ', 'wp-graphql-gravity-forms' ) . $wpdb->print_error() );
 		}
 
 		return $new_resume_token ? (string) $new_resume_token : $resume_token;

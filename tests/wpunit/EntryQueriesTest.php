@@ -1,9 +1,17 @@
 <?php
+/**
+ * Test GraphQL Entry Queries.
+ *
+ * @package .
+ */
 
 use GraphQLRelay\Relay;
 use WPGraphQLGravityForms\Tests\Factories;
 use WPGraphQLGravityForms\Types\Enum;
 
+/**
+ * Class - EntryQueriesTest
+ */
 class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 
 	/**
@@ -16,6 +24,9 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 	private $form_id;
 	private $entry_ids;
 
+	/**
+	 * Run before each test.
+	 */
 	public function setUp(): void {
 		// Before...
 		parent::setUp();
@@ -43,15 +54,22 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 		);
 	}
 
+	/**
+	 * Run after each test.
+	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-
+		wp_delete_user( $this->admin->id );
+		$this->factory->entry->delete( $this->entry_ids );
+		$this->factory->form->delete( $this->form_id );
 		// Then...
 		parent::tearDown();
 	}
 
-	// Tests
-	public function testGravityFormsEntryQuery() {
+	/**
+	 * Tests `gravityFormsEntry`.
+	 */
+	public function testGravityFormsEntryQuery() : void {
 		$global_id = Relay::toGlobalId( 'GravityFormsEntry', $this->entry_ids[0] );
 		$entry     = GFAPI::get_entry( $this->entry_ids[0] );
 		$form      = GFAPI::get_form( $this->form_id );
@@ -110,11 +128,12 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 				'postId'      => $entry['post_id'],
 				'resumeToken' => null,
 				'sourceUrl'   => $entry['source_url'],
-				'status'      => $this->tester->get_enum_for_value( Enum\EntryStatusEnum::TYPE, $entry['status'] ),
+				'status'      => $this->tester->get_enum_for_value( Enum\EntryStatusEnum::$type, $entry['status'] ),
 				'userAgent'   => $entry['user_agent'],
 			],
 		];
 		// Test with Database Id.
+		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertEquals( $expected, $actual['data'] );
 
 		// Test with Global Id.
@@ -127,26 +146,14 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 				],
 			],
 		);
-
+		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertEquals( $expected, $actual['data'] );
 	}
 
-	public function testGravityFormsEntriesQuery() {
-		$query = '
-			query {
-				gravityFormsEntries {
-					nodes {
-						entryId
-					}
-				}
-			}
-		';
-
-		$actual = graphql( [ 'query' => $query ] );
-		$this->assertEquals( 2, count( $actual['data']['gravityFormsEntries']['nodes'] ) );
-	}
-
-	public function testEmptyGravityFormsEntryQuery() {
+	/**
+	 * Tests `gravityFormsEntry` with no setup variables.
+	 */
+	public function testGravityFormsEntryQuery_empty() {
 		$entry_id  = $this->factory->entry->create(
 			[ 'form_id' => $this->form_id ]
 		);
@@ -207,14 +214,137 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 				'postId'      => null,
 				'resumeToken' => null,
 				'sourceUrl'   => $entry['source_url'],
-				'status'      => $this->tester->get_enum_for_value( Enum\EntryStatusEnum::TYPE, $entry['status'] ),
+				'status'      => $this->tester->get_enum_for_value( Enum\EntryStatusEnum::$type, $entry['status'] ),
 				'userAgent'   => $entry['user_agent'],
 			],
 		];
-
+		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertEquals( $expected, $actual['data'] );
+
+		$this->factory->entry->delete( $entry_id );
 	}
 
+	/**
+	 * Tests `gravityFormsEntry` with draft entry.
+	 */
+	public function testGravityFormsEntryQuery_draft() : void {
+		$draft_tokens = $this->factory->draft->create_many( 2, [ 'form_id' => $this->form_id ] );
+
+		$query = '
+			query( $id: ID! ) {
+				gravityFormsEntry( id: $id ) {
+					resumeToken
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'id' => $draft_tokens[0],
+				],
+			]
+		);
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertEquals( $draft_tokens[0], $actual['data']['gravityFormsEntry']['resumeToken'] );
+
+		$this->factory->draft->delete( $draft_tokens );
+	}
+
+	/**
+	 * Tests `gravityFormsEntries`.
+	 */
+	public function testGravityFormsEntriesQuery() : void {
+		$query = '
+			query {
+				gravityFormsEntries {
+					nodes {
+						entryId
+					}
+				}
+			}
+		';
+
+		$actual = graphql( [ 'query' => $query ] );
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertEquals( 2, count( $actual['data']['gravityFormsEntries']['nodes'] ) );
+	}
+
+	/**
+	 * Tests `gravityFormsEntries` with query args .
+	 */
+	public function testGravityFormsEntriesQueryArgs() {
+		$entry_ids = $this->factory->entry->create_many(
+			20,
+			[
+				'form_id'              => $this->form_id,
+				$this->fields[0]['id'] => 'This is a default Text entry.',
+			]
+		);
+
+		$query = '
+				query( $first: Int, $after: String, $last:Int, $before: String ) {
+					gravityFormsEntries( first: $first, after: $after, last: $last, before: $before ) {
+						pageInfo{
+							hasNextPage
+							hasPreviousPage
+							startCursor
+							endCursor
+						}
+						edges {
+							cursor
+						}
+						nodes {
+							entryId
+						}
+					}
+				}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'first'  => 10,
+					'after'  => null,
+					'last'   => null,
+					'before' => null,
+				],
+			]
+		);
+
+		// Check `first` argument.
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertEquals( 10, count( $actual['data']['gravityFormsEntries']['nodes'] ) );
+
+		// Check `after` argument.
+		$expected_ids = wp_list_pluck( $actual['data']['gravityFormsEntries']['nodes'], 'entryId' );
+
+		$cursor = $actual['data']['gravityFormsEntries']['edges'][4]['cursor'];
+
+		$actual     = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'first' => 5,
+					'after' => $cursor,
+				],
+			]
+		);
+		$actual_ids = wp_list_pluck( $actual['data']['gravityFormsEntries']['nodes'], 'entryId' );
+
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertSame( array_slice( $expected_ids, 5, 5 ), $actual_ids );
+
+		$this->factory->entry->delete( $entry_ids );
+	}
+
+	/**
+	 * Returns the full entry query for reuse.
+	 *
+	 * @return string
+	 */
 	private function get_entry_query() : string {
 		return '
 			query getEntry($id: ID!, $idType: IdTypeEnum) {

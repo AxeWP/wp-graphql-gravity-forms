@@ -1,4 +1,9 @@
 <?php
+/**
+ * Factory for Gravity Forms forms.
+ *
+ * @package WPGraphQLGravityForms\Tests\Factories
+ */
 
 namespace WPGraphQLGravityForms\Tests\Factories;
 
@@ -6,8 +11,15 @@ use GFAPI;
 use GFFormsModel;
 use WP_UnitTest_Generator_Sequence;
 
+/**
+ * Class - Form
+ */
 class Form extends \WP_UnitTest_Factory_For_Thing {
-
+	/**
+	 * Constructor
+	 *
+	 * @param object $factory .
+	 */
 	public function __construct( $factory = null ) {
 		parent::__construct( $factory );
 		$this->default_generation_definitions = [
@@ -17,6 +29,11 @@ class Form extends \WP_UnitTest_Factory_For_Thing {
 		];
 	}
 
+	/**
+	 * Creates a form object.
+	 *
+	 * @param array $args form arguments.
+	 */
 	public function create_object( $args ) {
 		$form_id = GFAPI::add_form( $args );
 		if ( ( array_key_exists( 'is_active', $args ) && ! $args['is_active'] ) || ! empty( $args['is_trash'] ) ) {
@@ -35,6 +52,13 @@ class Form extends \WP_UnitTest_Factory_For_Thing {
 		return $form_id;
 	}
 
+	/**
+	 * Creates multiple form objects.
+	 *
+	 * @param int   $count number to create.
+	 * @param array $args form arguments.
+	 * @param array $generation_definitions .
+	 */
 	public function create_many( $count, $args = [], $generation_definitions = null ) {
 		$form_ids = [];
 		for ( $n = 0; $n < $count; $n++ ) {
@@ -45,6 +69,12 @@ class Form extends \WP_UnitTest_Factory_For_Thing {
 		return $form_ids;
 	}
 
+	/**
+	 * Updates a form object.
+	 *
+	 * @param int   $form_id .
+	 * @param array $args properties to update.
+	 */
 	public function update_object( $form_id, $args ) {
 		$form       = GFAPI::get_form( $form_id );
 		$form       = array_merge( $form, $args );
@@ -55,7 +85,32 @@ class Form extends \WP_UnitTest_Factory_For_Thing {
 		return $is_updated;
 	}
 
+	/**
+	 * Gets the form object from an object id.
+	 *
+	 * @param int $form_id .
+	 * @return array
+	 */
 	public function get_object_by_id( $form_id ) {
 		return GFAPI::get_form( $form_id );
+	}
+
+	/**
+	 * Delete forms.
+	 *
+	 * @param array|string $form_ids .
+	 */
+	public function delete( $form_ids ) {
+		if ( ! is_array( $form_ids ) ) {
+			$form_ids = [ $form_ids ];
+		}
+
+		GFAPI::delete_forms( $form_ids );
+
+		foreach ( $form_ids as $id ) {
+			if ( isset( GFFormsModel::$unique_ids[ $id ] ) ) {
+				unset( GFFormsModel::$unique_ids[ $id ] );
+			}
+		}
 	}
 }
