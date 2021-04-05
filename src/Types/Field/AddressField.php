@@ -13,7 +13,7 @@ namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Enum\AddressTypeEnum;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FieldInterface;
+use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 use WPGraphQLGravityForms\Utils\Utils;
 
 

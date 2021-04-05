@@ -15,7 +15,7 @@ use WPGraphQLGravityForms\Types\Enum\CalendarIconTypeEnum;
 use WPGraphQLGravityForms\Types\Enum\DateFieldFormatEnum;
 use WPGraphQLGravityForms\Types\Enum\DateTypeEnum;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FieldInterface;
+use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 
 /**
  * Class - DateField

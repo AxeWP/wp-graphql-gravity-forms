@@ -89,7 +89,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['radio_choice_property']          = new FieldProperty\RadioChoiceProperty();
 
 		// Interfaces.
-		$this->instances['field_interface'] = new GraphQLInterface\FieldInterface();
+		$this->instances['field_interface'] = new GraphQLInterface\FormFieldInterface();
 
 		// Fields.
 		$enabled_field_types = self::get_enabled_field_types();

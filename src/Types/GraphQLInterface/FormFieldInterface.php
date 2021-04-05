@@ -18,13 +18,13 @@ use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 /**
- * Class - FieldInterface
+ * Class - FormFieldInterface
  */
-class FieldInterface implements Hookable, Type {
+class FormFieldInterface implements Hookable, Type {
 	/**
 	 * Type registered in WPGraphQL.
 	 */
-	const TYPE = 'Field';
+	const TYPE = 'FormField';
 
 	/**
 	 * Register hooks to WordPress.

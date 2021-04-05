@@ -15,7 +15,7 @@ namespace WPGraphQLGravityForms\Types\Field;
 use WPGraphQLGravityForms\Types\Enum\SignatureBorderStyleEnum;
 use WPGraphQLGravityForms\Types\Enum\SignatureBorderWidthEnum;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FieldInterface;
+use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 
 /**
  * Class - SignatureField

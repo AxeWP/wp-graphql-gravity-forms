@@ -14,7 +14,7 @@ namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FieldInterface;
+use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 /**
  * Class - AbstractField
  */
@@ -48,7 +48,7 @@ abstract class AbstractField implements Hookable, Type {
 			static::$type,
 			[
 				'description' => $this->get_type_description(),
-				'interfaces'  => [ FieldInterface::TYPE ],
+				'interfaces'  => [ FormFieldInterface::TYPE ],
 				'fields'      => $this->get_properties(),
 			]
 		);
@@ -74,7 +74,7 @@ abstract class AbstractField implements Hookable, Type {
 	 * @return array
 	 */
 	protected function get_global_properties() : array {
-		return FieldInterface::get_properties();
+		return FormFieldInterface::get_properties();
 	}
 
 	/**

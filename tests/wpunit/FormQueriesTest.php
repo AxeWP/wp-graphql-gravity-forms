@@ -115,7 +115,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 				'descriptionPlacement'       => $this->tester->get_enum_for_value( Enum\FormDescriptionPlacementEnum::$type, $form['descriptionPlacement'] ),
 				'enableAnimation'            => $form['enableAnimation'],
 				'enableHoneypot'             => $form['enableHoneypot'],
-				'fields'                     => [
+				'formFields'                     => [
 					'nodes' => [
 						[ 'type' => $form['fields'][0]['type'] ],
 						[ 'type' => $form['fields'][1]['type'] ],
@@ -287,7 +287,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					'descriptionPlacement'       => null,
 					'enableAnimation'            => null,
 					'enableHoneypot'             => null,
-					'fields'                     => [
+					'formFields'                     => [
 						'nodes' => [],
 					],
 					'firstPageCssClass'          => null,
@@ -565,7 +565,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					descriptionPlacement
 					enableAnimation
 					enableHoneypot
-					fields {
+					formFields {
 						nodes {
 							type
 						}

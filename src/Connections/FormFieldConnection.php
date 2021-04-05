@@ -21,7 +21,7 @@ use WPGraphQLGravityForms\Interfaces\Connection;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Types\Entry\Entry;
 use WPGraphQLGravityForms\Types\Form\Form;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FieldInterface;
+use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 
 /**
  * Class - FormFieldConnection
@@ -42,9 +42,29 @@ class FormFieldConnection implements Hookable, Connection {
 		register_graphql_connection(
 			[
 				'fromType'      => Form::TYPE,
-				'toType'        => FieldInterface::TYPE,
-				'fromFieldName' => 'fields',
+				'toType'        => FormFieldInterface::TYPE,
+				'fromFieldName' => 'formFields',
 				'resolve'       => function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
+						$fields              = ( new FieldsDataManipulator() )->manipulate( $root['fields'] );
+						$connection          = Relay::connectionFromArray( $fields, $args );
+						$nodes               = array_map( fn( $edge ) => $edge['node'] ?? null, $connection['edges'] );
+						$connection['nodes'] = $nodes ?: null;
+						return $connection;
+				},
+			]
+		);
+		/**
+		 * Deprecated: `fields`.
+		 *
+		 * @since 0.4.0
+		 */
+		register_graphql_connection(
+			[
+				'deprecationReason' => __( 'Deprecated in favor of `formFields`.', 'wp-graphql-gravity-forms' ),
+				'fromType'          => Form::TYPE,
+				'toType'            => FormFieldInterface::TYPE,
+				'fromFieldName'     => 'fields',
+				'resolve'           => function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
 						$fields              = ( new FieldsDataManipulator() )->manipulate( $root['fields'] );
 						$connection          = Relay::connectionFromArray( $fields, $args );
 						$nodes               = array_map( fn( $edge ) => $edge['node'] ?? null, $connection['edges'] );

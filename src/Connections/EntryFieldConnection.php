@@ -19,7 +19,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Types\Entry\Entry;
 use WPGraphQLGravityForms\Types\Field\AbstractField;
 use WPGraphQLGravityForms\Types\Field\FieldValue\AbstractFieldValue;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FieldInterface;
+use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
 use WPGraphQLGravityForms\Utils\GFUtils;
 
@@ -57,8 +57,8 @@ class EntryFieldConnection implements Hookable, Connection {
 		register_graphql_connection(
 			[
 				'fromType'      => Entry::TYPE,
-				'toType'        => FieldInterface::TYPE,
-				'fromFieldName' => 'fields',
+				'toType'        => FormFieldInterface::TYPE,
+				'fromFieldName' => 'formFields',
 				'edgeFields'    => [
 					'fieldValue' => [
 						'type'        => ObjectFieldValueUnion::TYPE,
@@ -87,6 +87,67 @@ class EntryFieldConnection implements Hookable, Connection {
 					],
 				],
 				'resolve'       => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
+					$form = GFUtils::get_form( $root['formId'], false );
+
+					$fields     = ( new FieldsDataManipulator() )->manipulate( $form['fields'] );
+					$connection = Relay::connectionFromArray( $fields, $args );
+
+					// Add the entry to each edge with a key of 'source'. This is needed so that
+					// the fieldValue edge field resolver has has access to the form entry.
+					$connection['edges'] = array_map(
+						function( $edge ) use ( $root ) {
+							$edge['source'] = $root;
+							return $edge;
+						},
+						$connection['edges']
+					);
+
+					$nodes               = array_map( fn( $edge ) => $edge['node'] ?? null, $connection['edges'] );
+					$connection['nodes'] = $nodes ?: null;
+					return $connection;
+				},
+			]
+		);
+
+		/**
+		 * Deprecated `fields`.
+		 *
+		 * @since 0.4.0
+		 */
+		register_graphql_connection(
+			[
+				'deprecationReason' => __( 'Deprecated in favor of `formFields`.', 'wp-graphql-gravity-forms' ),
+				'fromType'          => Entry::TYPE,
+				'toType'            => FormFieldInterface::TYPE,
+				'fromFieldName'     => 'fields',
+				'edgeFields'        => [
+					'fieldValue' => [
+						'type'        => ObjectFieldValueUnion::TYPE,
+						'description' => __( 'Field value.', 'wp-graphql-gravity-forms' ),
+						'resolve'     => function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
+							$field = $this->get_field_by_gf_field_type( $root['node']['type'] );
+
+							if ( ! $field ) {
+								return null;
+							}
+
+							$value_class = $this->get_field_value_class( $field );
+
+							// Account for fields that do not have a value class.
+							if ( ! $value_class ) {
+								return null;
+							}
+
+							return array_merge(
+								// 'value_class' is included here to pass it through to the "resolveType"
+								// callback function in ObjectFieldValueUnion.
+								[ 'value_class' => $value_class ],
+								$value_class::get( $root['source'], $root['node'] )
+							);
+						},
+					],
+				],
+				'resolve'           => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
 					$form = GFUtils::get_form( $root['formId'], false );
 
 					$fields     = ( new FieldsDataManipulator() )->manipulate( $form['fields'] );

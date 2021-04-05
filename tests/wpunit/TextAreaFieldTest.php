@@ -80,7 +80,7 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 		$query = '
 			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
 				gravityFormsEntry(id: $id, idType: $idType ) {
-					fields {
+					formFields {
 						nodes {
 							conditionalLogic {
 								actionType
@@ -138,7 +138,7 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 
 		$expected = [
 			'gravityFormsEntry' => [
-				'fields' => [
+				'formFields' => [
 					'nodes' => [
 						0 => [
 							'conditionalLogic'     => null,

@@ -14,7 +14,7 @@ namespace WPGraphQLGravityForms\Types\Field;
 use GF_Field_Number;
 use WPGraphQLGravityForms\Types\Enum\NumberFieldFormatEnum;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FieldInterface;
+use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 
 /**
  * Class - NumberField
