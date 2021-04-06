@@ -10,7 +10,6 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
-use WPGraphQLGravityForms\Types\Field\TextAreaField;
 
 /**
  * Class - TextAreaFieldValue

@@ -15,7 +15,6 @@ use WPGraphQLGravityForms\Types\Enum\CaptchaThemeEnum;
 use WPGraphQLGravityForms\Types\Enum\CaptchaTypeEnum;
 use WPGraphQLGravityForms\Types\Enum\SizePropertyEnum;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 use WPGraphQLGravityForms\Utils\Utils;
 
 /**

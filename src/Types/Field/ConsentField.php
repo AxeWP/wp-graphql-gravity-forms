@@ -11,7 +11,6 @@
 namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 
 /**
  * Class - ConsentField

@@ -13,7 +13,6 @@ namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Button\Button;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 use WPGraphQLGravityForms\Utils\Utils;
 
 /**

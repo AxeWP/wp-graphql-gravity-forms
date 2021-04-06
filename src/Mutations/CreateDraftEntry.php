@@ -10,7 +10,6 @@
 
 namespace WPGraphQLGravityForms\Mutations;
 
-use GFFormsModel;
 use GFCommon;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;

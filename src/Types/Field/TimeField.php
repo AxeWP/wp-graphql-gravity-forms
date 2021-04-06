@@ -13,7 +13,6 @@ namespace WPGraphQLGravityForms\Types\Field;
 
 use WPGraphQLGravityForms\Types\Enum\TimeFieldFormatEnum;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 
 /**
  * Class - TimeField

@@ -12,7 +12,6 @@ namespace WPGraphQLGravityForms\Types\Button;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
-use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 use WPGraphQLGravityForms\Types\Enum\ButtonTypeEnum;
 
 /**

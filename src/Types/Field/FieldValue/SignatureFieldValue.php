@@ -12,7 +12,6 @@ namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
 use GF_Field_Signature;
-use WPGraphQLGravityForms\Types\Field\SignatureField;
 
 /**
  * Class - SignatureFieldValue
