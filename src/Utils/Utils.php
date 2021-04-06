@@ -38,6 +38,8 @@ class Utils {
 	/**
 	 * Converts a string to snake_case.
 	 *
+	 * @since 0.4.0
+	 *
 	 * @param string $string the original string.
 	 * @return string
 	 */

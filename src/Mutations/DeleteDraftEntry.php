@@ -78,6 +78,8 @@ class DeleteDraftEntry extends AbstractMutation {
 	/**
 	 * Checks that necessary WPGraphQL are set.
 	 *
+	 * @since 0.4.0
+	 *
 	 * @param mixed $input .
 	 * @throws UserError .
 	 */

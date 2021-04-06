@@ -1,10 +1,11 @@
 <?php
 /**
  * GraphQL Input Type - FieldValuesInput
- * Input fields for address field.
+ *
+ * Used to submit multiple field values.
  *
  * @package WPGraphQLGravityForms\Types\Input
- * @since   0.0.1
+ * @since   0.4.o
  */
 
 namespace WPGraphQLGravityForms\Types\Input;

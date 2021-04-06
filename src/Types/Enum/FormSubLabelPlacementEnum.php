@@ -3,7 +3,7 @@
  * Enum Type - FormSubLabelPlacementEnum
  *
  * @package WPGraphQLGravityForms\Types\Enum,
- * @since   0.0.1
+ * @since   0.4.0
  */
 
 namespace WPGraphQLGravityForms\Types\Enum;

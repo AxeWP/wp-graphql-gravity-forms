@@ -18,12 +18,16 @@ interface FieldValue {
 	/**
 	 * Sets the Enum type description.
 	 *
+	 * @since 0.4.0
+	 *
 	 * @return string Enum type description.
 	 */
 	public function get_type_description() : string;
 
 	/**
 	 * Gets the properties for the Field.
+	 *
+	 * @since 0.4.0
 	 *
 	 * @return array
 	 */

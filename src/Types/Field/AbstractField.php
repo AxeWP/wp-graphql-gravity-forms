@@ -6,8 +6,7 @@
  * @see https://docs.gravityforms.com/gf_field/
  *
  * @package WPGraphQLGravityForms\Types\Field
- * @since   0.0.1
- * @since   0.2.0 Remove adminLabel, adminOnly, allowsPrepopulate, label, and visibility from global properties.
+ * @since   0.4.0
  */
 
 namespace WPGraphQLGravityForms\Types\Field;

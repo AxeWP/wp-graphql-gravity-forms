@@ -5,7 +5,7 @@
  * @see https://docs.gravityforms.com/button/
  *
  * @package WPGraphQLGravityForms\Types\LastPageButton
- * @since   0.0.1
+ * @since   0.4.0
  */
 
 namespace WPGraphQLGravityForms\Types\Button;

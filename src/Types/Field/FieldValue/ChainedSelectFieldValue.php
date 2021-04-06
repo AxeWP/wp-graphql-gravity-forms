@@ -25,6 +25,8 @@ class ChainedSelectFieldValue extends AbstractFieldValue {
 
 	/**
 	 * Sets the field type description.
+	 *
+	 * @since 0.4.0
 	 */
 	public function get_type_description() : string {
 		return __( 'Chained Select field values.', 'wp-graphql-gravity-forms' );
@@ -33,6 +35,7 @@ class ChainedSelectFieldValue extends AbstractFieldValue {
 	/**
 	 * Gets the properties for the Field.
 	 *
+	 * @since 0.4.0
 	 * @return array
 	 */
 	public function get_properties() : array {

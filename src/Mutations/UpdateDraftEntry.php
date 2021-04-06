@@ -2,11 +2,10 @@
 /**
  * Mutation - UpdateGravityFormsDraftEntry
  *
- * Registers mutation to submit a Gravity Forms draft entry so that it becomes a permanent entry.
+ * Updates a Gravity Forms draft entry.
  *
  * @package WPGraphQLGravityForms\Mutation
- * @since 0.0.1
- * @since 0.3.0 Support post creation.
+ * @since 0.4.0
  */
 
 namespace WPGraphQLGravityForms\Mutations;

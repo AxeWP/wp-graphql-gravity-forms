@@ -27,6 +27,8 @@ class SignatureFieldValue extends AbstractFieldValue {
 
 	/**
 	 * Sets the field type description.
+	 *
+	 * @since 0.4.0
 	 */
 	public function get_type_description() : string {
 		return __( 'Signature field value.', 'wp-graphql-gravity-forms' );
@@ -34,6 +36,8 @@ class SignatureFieldValue extends AbstractFieldValue {
 
 	/**
 	 * Gets the properties for the Field.
+	 *
+	 * @since 0.4.0
 	 *
 	 * @return array
 	 */

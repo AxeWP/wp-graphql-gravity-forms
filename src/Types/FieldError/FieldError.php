@@ -4,6 +4,7 @@
  *
  * @package WPGraphQLGravityForms\Types\FieldError
  * @since   0.0.1
+ * @since   0.4.0 add `id` property.
  */
 
 namespace WPGraphQLGravityForms\Types\FieldError;

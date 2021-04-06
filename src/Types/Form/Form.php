@@ -6,6 +6,7 @@
  *
  * @package WPGraphQLGravityForms\Types\Form
  * @since   0.0.1
+ * @since   0.4.0 Accept database Ids in query.
  */
 
 namespace WPGraphQLGravityForms\Types\Form;

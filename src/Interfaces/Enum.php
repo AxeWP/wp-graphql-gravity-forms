@@ -20,12 +20,16 @@ interface Enum {
 	/**
 	 * Sets the Enum type description.
 	 *
+	 * @since 0.4.0
+	 *
 	 * @return string Enum type description.
 	 */
 	public function get_type_description() : string;
 
 	/**
 	 * Sets the Enum type values.
+	 *
+	 * @since 0.4.0
 	 *
 	 * @return array
 	 */

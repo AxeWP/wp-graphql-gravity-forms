@@ -21,12 +21,16 @@ interface Mutation {
 	/**
 	 * Defines the input field configuration.
 	 *
+	 * @since 0.4.0
+	 *
 	 * @return array
 	 */
 	public function get_input_fields() : array;
 
 	/**
 	 * Defines the output field configuration.
+	 *
+	 * @since 0.4.0
 	 *
 	 * @return array
 	 */
@@ -35,6 +39,8 @@ interface Mutation {
 
 	/**
 	 * Defines the data modification closure.
+	 *
+	 * @since 0.4.0
 	 *
 	 * @return callable
 	 */
