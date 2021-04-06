@@ -2,11 +2,11 @@
 
 ## v0.4.0 - A Simpler Form Submission Flow!
 
-This release adds a few new mutations letting you submit forms with a single mutation! That's right: you no longer need to create a draft entry and update each field value individually before submitting.
+This release adds the `submitGravityFormsForm` mutation that submit forms without needing to use the existing `createGravityFormsDraftEntry` -> `updateDraftEntry{fieldType}Value` -> `submitGravityFormsDraftEntry` flow.
 
-Similarly, we've added support for updating entries and draft entries with a single mutation each, and added support for using form and entry IDs in queries - without needing to convert them to a global ID first.
+Similarly, we've added support for updating entries and draft entries with a single mutation each, and added support for using form and entry IDs in queries - without needing to convert them to a global ID first. We also deprecated `fields` in favor of `formFields`, so there's less confusion between GF fields and GraphQL fields.
 
-Also, we made several (breaking) changes to streamline queries and mutations: many GraphQL properties have been changed to `Enum` types and Form `fields` are now an interface. This should make your queries and mutations less error-prone and (a bit ) more concise. We're also now using native Gravity Forms functions wherever possible, which should help ensure consistency going forward.
+Also, we made several (breaking) changes to streamline queries and mutations: many GraphQL properties have been changed to `Enum` types, and `formFields` (and the now-deprecated `fields`) are now an interface. This should make your queries and mutations less error-prone and (a bit) more concise. We're also now using native Gravity Forms functions wherever possible, which should help ensure consistency going forward.
 
 Beyond that, we've squashed some bugs, deprecated some confusing and unnecessary fields, and refactored a huge portion of the codebase that should speed up development and improve code quality in the long term.
 
@@ -15,14 +15,15 @@ Beyond that, we've squashed some bugs, deprecated some confusing and unnecessary
 - Adds `submitGravityFormsForm` mutation to bypass the existing draft entry flow. See [README.MD](https://github.com/harness-software/wp-graphql-gravity-forms/README.md#documentation-submit-form-mutation) for usage.
 - Adds `updateGravityFormsEntry` and `updateGravityFormsDraftEntry` mutations that follow the same pattern.
 - Adds `idType` to `GravityFormsForm` and `GravityFormsEntry`, so you can now query them using the database ID, instead of generating a global id first.
-- Support cloning an existing entry when using `createGravityFormsDraftEntry`.
-- Converts all Gravity Forms `fields` to an interface. That means your queries can now look like this:
+- Deprecated the `fields` property on `GravityFormsForm` and `GravityFormsEntry` in favor of `formFields`.
+- Support cloning an existing entry when using `createGravityFormsDraftEntry` using the `fromEntryId` input property.
+- Converts all Gravity Forms `formFields` (and the now-deprecated `fields`) to an interface. That means your queries can now look like this:
 
 ```graphql
 query {
   gravityFormsForms {
     nodes {
-      fields {
+      formFields {
         nodes {
           formId
           type
@@ -86,17 +87,18 @@ query {
 - `lastPageButton` now uses its own GraphQL type with the relevant fields.
 - When querying entries, we check that `createdByID` is set before trying to fetch the uerdata.
 - Where possible, mutations and queries now try to return an `errors` object instead of throwing an Exception.
-- We've added more descriptive Exception messages across the plugin, to help you figure out what went wrong.
-- Fix ConsentFieldValue conflict. `value` now returns a `String` with the consent message, or `null` if false.
+- We've added more descriptive `Exception` messages across the plugin, to help you figure out what went wrong.
+- We fixed a type conflict with `ConsentFieldValue`. `value` now returns a `String` with the consent message, or `null` if false.
 - Deprecated `url` in favor of `value` on `FileUploadFieldValue` and `SignatureFieldValue`.
 - Deprecated `cssClassList` in favor of `cssClass`.
+- The `resumeToken` input field on the `deleteGravityFormsDraftEntry`, `SubmitGravityFormsDraftEntry`, and all the `updateDraftEntry{fieldType}Value` mutations is now a non-nullable `String!`.
 
 ### Under the hood
 
 - Refactored Fields, FieldValues, and Mutations, removing over 500 lines of code and improving consistency across classes.
 - Switch to using `GFAPI::submit_form()` instead of local implementations for submitting forms and draft entries.
 - Implemented phpstan linting.
-- Started backfiling unit tests using codeception.
+- Migrated unit tests to Codeception, and started backfilling missing tests.
 - Updated composer dependencies.
 
 ## v0.3.1 - Bugfixes
