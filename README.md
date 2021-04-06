@@ -3,7 +3,7 @@
 [![Project Status: Active.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 ![Packagist License](https://img.shields.io/packagist/l/harness-software/wp-graphql-gravity-forms?color=green)
 ![Packagist Version](https://img.shields.io/packagist/v/harness-software/wp-graphql-gravity-forms?label=stable)
-![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/harness-software/wp-graphql-gravity-forms/0.3.0)
+![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/harness-software/wp-graphql-gravity-forms/0.4.0)
 ![GitHub forks](https://img.shields.io/github/forks/harness-software/wp-graphql-gravity-forms?style=social)
 ![GitHub Repo stars](https://img.shields.io/github/stars/harness-software/wp-graphql-gravity-forms?style=social)
 
@@ -20,7 +20,7 @@ A WordPress plugin that provides a GraphQL API for interacting with Gravity Form
     - [Get a list of entries](#documentation-get-entries)
     - [Global IDs vs Database IDs](#documentation-using-global-ids)
   - [Submit a form](#documentation-submit-form)
-    - [Using `submitGravityFormsForm` (new)](#documentation-submit-form-mutation)
+    - [Using `submitGravityFormsForm` (v0.4.0+)](#documentation-submit-form-mutation)
     - [Building a draft entry incrementally](#documentation-submit-entry-incrementally)
   - [ Updating Entries and Draft Entries](#documentation-update-entry)
   - [ Deleting Entries and Draft Entries](#documentation-delete-entries)
@@ -127,9 +127,9 @@ The example query below shows how you can get a form and its fields.
 
 The `id` input accepts either the Gravity Forms form ID (`idType: DATABASE_ID`) or a [global ID](#documentation-using-global-ids) (`idType: ID`).
 
-For `fields`, pass in `first:300`, where `300` is the maximum number of fields you want to query for.
+For `formFields`, pass in `first:300`, where `300` is the maximum number of fields you want to query for.
 
-Inside of `fields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragment for every type of field that your form has.
+Inside of `formFields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragment for every type of field that your form has.
 
 #### Example Query
 
@@ -138,7 +138,7 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
   gravityFormsForm(id: 50, idType: DATABASE_ID) {
     formId
     cssClass
-    fields(first: 300) {
+    formFields(first: 300) {
       nodes {
         id
         type
@@ -202,7 +202,7 @@ Filtering is also supported. For the `where` field, you can specify a `status` t
       node {
         formId
         title
-        fields(first: 300) {
+        formFields(first: 300) {
           nodes {
             type
             id
@@ -226,9 +226,9 @@ The example query below shows how you can get a single entry by ID, and data abo
 
 The `id` input accepts either the Gravity Forms Entry ID (`idType: DATABASE_ID`), or a [global ID](#documentation-using-global-ids) (`idType: ID`). The `id` input can also accept the `resumeToken` for a draft entry when `idType` is set to `ID`.
 
-For `fields`, pass in `first: 300`, where `300` is the maximum number of fields you want to query for.
+For `formFields`, pass in `first: 300`, where `300` is the maximum number of fields you want to query for.
 
-Inside of `fields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragments inside of `node { ... }` and inside of `fieldValue { ... }` for every type of field that your form has.
+Inside of `formFields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragments inside of `node { ... }` and inside of `fieldValue { ... }` for every type of field that your form has.
 
 #### Example Query
 
@@ -240,7 +240,7 @@ Inside of `fields`, you must include query fragments indicating what data you'd 
     formId
     isDraft
     resumeToken
-    fields(first: 300) {
+    formFields(first: 300) {
       edges {
         node {
           id
@@ -357,7 +357,7 @@ The plugin supports first/after cursor-based pagination, but does not yet suppor
           name
         }
       }
-      fields(first: 300) {
+      formFields(first: 300) {
         edges {
           node {
             type
@@ -408,7 +408,7 @@ The example query below shows how you can use a Global ID as your input:
 
 There are two different ways to submit forms: using `submitGravityFormsForm` (which allows you to batch submit all of the field values at once), or by incrementally building a draft entry.
 
-<strong>Note:</strong> Not all fields currently support updates. For a list of field types that are currently supported, please review the [Supported Form Fields table](#supported-fields).
+<strong>Note:</strong> Not all form fields currently support updates. For a list of field types that are currently supported, please review the [Supported Form Fields table](#supported-fields).
 
 <a name="documentation-submit-form-mutation" />
 
@@ -465,12 +465,10 @@ This is an interim solution until [the GraphQL Spec adds support for Input Union
           id: 5
           checkboxValues: [
             {
-              # Dont Collapse
               inputId: 5.1
               value: "This checkbox field is selected"
             }
             {
-              # Dont Collapse
               inputId: 5.2
               value: "This checkbox field is also selected"
             }
@@ -480,7 +478,6 @@ This is an interim solution until [the GraphQL Spec adds support for Input Union
           # Multi-column List field value
           id: 6
           listValues: {
-            #dont collapse
             rowValues: ["a", "b", "c"]
           }
         }
@@ -585,7 +582,7 @@ mutation {
       entryId # This will be null, since draft entries don't have an ID yet.
       resumeToken # This will be the same resumeToken that was passed in.
       isDraft # This will be set to true.
-      fields(first: 300) {
+      formFields(first: 300) {
         edges {
           fieldValue {
             ... on TextFieldValue {
@@ -635,7 +632,7 @@ mutation {
       entryId # This will be the ID of the newly created entry.
       resumeToken # This will be null, since the entry is no longer a draft.
       isDraft # This will be set to false.
-      fields {
+      formFields {
         edges {
           fieldValue {
             __typename
