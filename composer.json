@@ -7,27 +7,31 @@
     {
       "name": "Kellen Mace",
       "email": "kellen@harnessup.com"
-    }
+    },
+		{
+			"name": "Dovid Levine"
+		}
   ],
   "require": {
     "php": ">=7.4"
   },
   "require-dev": {
     "lucatume/wp-browser": "^3.0",
-    "codeception/module-asserts": "^1.0",
-    "codeception/module-phpbrowser": "^1.0",
-    "codeception/module-webdriver": "^1.0",
+		"codeception/lib-innerbrowser": "^1.0",
+    "codeception/module-asserts": "^1.1",
+    "codeception/module-cli": "^1.0",
     "codeception/module-db": "^1.0",
     "codeception/module-filesystem": "^1.0",
-    "codeception/module-cli": "^1.0",
-    "codeception/util-universalframework": "^1.0",
+    "codeception/module-phpbrowser": "^1.0",
     "codeception/module-rest": "^1.2",
+    "codeception/module-webdriver": "^1.0",
+    "codeception/util-universalframework": "^1.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
     "wp-coding-standards/wpcs": "^2.3",
-    "phpcompatibility/phpcompatibility-wp": "2.1.0",
+    "phpcompatibility/phpcompatibility-wp": "^2.1.0",
     "squizlabs/php_codesniffer": "^3.5.8",
-    "phpstan/phpstan": "^0.12.64",
-    "szepeviktor/phpstan-wordpress": "^0.7.1",
+    "phpstan/phpstan": "^0.12",
+    "szepeviktor/phpstan-wordpress": "^0.7",
     "phpstan/extension-installer": "^1.1",
     "phpunit/phpunit": "^9.5",
     "simpod/php-coveralls-mirror": "^3.0"
@@ -41,6 +45,11 @@
       "WPGraphQLGravityForms\\": "src/"
     }
   },
+	"autoload-dev": {
+		"psr-4": {
+			"WPGraphQLGravityForms\\Tests\\": "tests/_support"
+		}
+	},
   "scripts": {
     "lint": "vendor/bin/phpcs",
     "phpcs-i": [

@@ -12,44 +12,43 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use GF_Field_List;
 use GraphQL\Error\UserError;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
-use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\Types\Field\ListField;
 
 /**
  * Class - ListFieldValue
  */
-class ListFieldValue implements Hookable, Type, FieldValue {
+class ListFieldValue extends AbstractFieldValue {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = ListField::TYPE . 'Value';
+	public static $type = 'ListFieldValue';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
+	 *
+	 * @since 0.4.0
 	 */
-	public function register_hooks() {
-			add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'List field values.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @since 0.4.0
+	 *
+	 * @return array
 	 */
-	public function register_type() {
-			register_graphql_object_type(
-				self::TYPE,
-				[
-					'description' => __( 'List field values.', 'wp-graphql-gravity-forms' ),
-					'fields'      => [
-						'listValues' => [
-							'type'        => [ 'list_of' => ListInputValue::TYPE ],
-							'description' => __( 'Field values.', 'wp-graphql-gravity-forms' ),
-						],
-					],
-				]
-			);
+	public function get_properties() : array {
+		return [
+			'listValues' => [
+				'type'        => [ 'list_of' => ListInputValue::$type ],
+				'description' => __( 'Field values.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 
 	/**
@@ -63,17 +62,20 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 	 * @throws UserError .
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
-		$entry_values = isset( $entry[ $field['id'] ] ) ? unserialize( $entry[ $field['id'] ] ) : null; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
+		if ( ! $field instanceof GF_Field_List ) {
+			throw new UserError( __( 'Error! Trying to use a non ListField as a ListField!', 'wp-graphql-gravity-forms' ) );
+		}
 
-		// Return null if no value is set, or unserialize creates an empty array.
+		$entry_values = $entry[ $field['id'] ] ?? null;
+
 		if ( empty( $entry_values ) ) {
 			return [];
 		}
 
-		// Check if there are too many rows.
-		if ( $field['maxRows'] < count( $entry_values ) ) {
-			// translators: maximum number of rows.
-			throw new UserError( sprintf( __( 'You may only submit %d rows.', 'wp-graphql-gravity-forms' ), $field['maxRows'] ) );
+		if ( is_string( $entry_values ) ) {
+			$entry_values = maybe_unserialize( $entry_values );
+		} else {
+			$entry_values = $field->create_list_array_recursive( $entry_values );
 		}
 
 		// If columns are enabled, save each row-value pair.
@@ -84,7 +86,7 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 				function( $row ) {
 					$row_values = [];
 
-					foreach ( $row as $key => $single_value ) {
+					foreach ( $row as $single_value ) {
 						$row_values[] = $single_value;
 					}
 
@@ -95,7 +97,6 @@ class ListFieldValue implements Hookable, Type, FieldValue {
 				},
 				$entry_values
 			);
-
 			return compact( 'listValues' );
 		}
 

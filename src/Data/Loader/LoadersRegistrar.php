@@ -20,7 +20,7 @@ class LoadersRegistrar implements Hookable {
 	/**
 	 * Register hooks to WordPress.
 	 */
-	public function register_hooks() {
+	public function register_hooks() : void {
 		add_filter( 'graphql_data_loaders', [ $this, 'register_loaders' ], 10, 2 );
 	}
 

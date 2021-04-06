@@ -11,82 +11,80 @@
 
 namespace WPGraphQLGravityForms\Types\Field;
 
+use WPGraphQLGravityForms\Types\Enum\CalendarIconTypeEnum;
+use WPGraphQLGravityForms\Types\Enum\DateFieldFormatEnum;
+use WPGraphQLGravityForms\Types\Enum\DateTypeEnum;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
  * Class - DateField
  */
-class DateField extends Field {
+class DateField extends AbstractField {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'DateField';
+	public static $type = 'DateField';
 
 	/**
 	 * Type registered in Gravity Forms.
+	 *
+	 * @var string
 	 */
-	const GF_TYPE = 'date';
+	public static $gf_type = 'date';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'Gravity Forms Date field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() {
-		register_graphql_object_type(
-			self::TYPE,
+	protected function get_properties() : array {
+		return array_merge(
+			$this->get_global_properties(),
+			$this->get_custom_properties(),
+			FieldProperty\AdminLabelProperty::get(),
+			FieldProperty\AdminOnlyProperty::get(),
+			FieldProperty\AllowsPrepopulateProperty::get(),
+			FieldProperty\DefaultValueProperty::get(),
+			FieldProperty\DescriptionPlacementProperty::get(),
+			FieldProperty\DescriptionProperty::get(),
+			FieldProperty\ErrorMessageProperty::get(),
+			FieldProperty\InputNameProperty::get(),
+			FieldProperty\InputsProperty::get(),
+			FieldProperty\IsRequiredProperty::get(),
+			FieldProperty\LabelProperty::get(),
+			FieldProperty\NoDuplicatesProperty::get(),
+			FieldProperty\PlaceholderProperty::get(),
+			FieldProperty\SizeProperty::get(),
+			FieldProperty\SubLabelPlacementProperty::get(),
+			FieldProperty\VisibilityProperty::get(),
 			[
-				'description' => __( 'Gravity Forms Date field.', 'wp-graphql-gravity-forms' ),
-				'fields'      => array_merge(
-					$this->get_global_properties(),
-					$this->get_custom_properties(),
-					FieldProperty\AdminLabelProperty::get(),
-					FieldProperty\AdminOnlyProperty::get(),
-					FieldProperty\AllowsPrepopulateProperty::get(),
-					FieldProperty\DefaultValueProperty::get(),
-					FieldProperty\DescriptionPlacementProperty::get(),
-					FieldProperty\DescriptionProperty::get(),
-					FieldProperty\ErrorMessageProperty::get(),
-					FieldProperty\InputNameProperty::get(),
-					FieldProperty\InputsProperty::get(),
-					FieldProperty\IsRequiredProperty::get(),
-					FieldProperty\LabelProperty::get(),
-					FieldProperty\NoDuplicatesProperty::get(),
-					FieldProperty\PlaceholderProperty::get(),
-					FieldProperty\SizeProperty::get(),
-					FieldProperty\SubLabelPlacementProperty::get(),
-					FieldProperty\VisibilityProperty::get(),
-					[
-						/**
-						 * Possible values: Possible values: calendar, custom, none
-						 */
-						'calendarIconType' => [
-							'type'        => 'String',
-							'description' => __( 'Determines how the date field displays it’s calendar icon.', 'wp-graphql-gravity-forms' ),
-						],
-						'calendarIconUrl'  => [
-							'type'        => 'String',
-							'description' => __( 'Contains the URL to the custom calendar icon. Only applicable when calendarIconType is set to custom.', 'wp-graphql-gravity-forms' ),
-						],
-						/**
-						 * Possible values: mdy, dmy
-						 */
-						'dateFormat'       => [
-							'type'        => 'String',
-							'description' => __( 'Determines how the date is displayed.', 'wp-graphql-gravity-forms' ),
-						],
-						'dateType'         => [
-							'type'        => 'String',
-							'description' => __( 'The type of date field to display, from a simple date field, to a drop down, to a calendar picker. Values are “datefield”, “datedropdown”, “datepicker”.', 'wp-graphql-gravity-forms' ),
-						],
-					]
-				),
+				'calendarIconType' => [
+					'type'        => CalendarIconTypeEnum::$type,
+					'description' => __( 'Determines how the date field displays it’s calendar icon.', 'wp-graphql-gravity-forms' ),
+				],
+				'calendarIconUrl'  => [
+					'type'        => 'String',
+					'description' => __( 'Contains the URL to the custom calendar icon. Only applicable when calendarIconType is set to custom.', 'wp-graphql-gravity-forms' ),
+				],
+				'dateFormat'       => [
+					'type'        => DateFieldFormatEnum::$type,
+					'description' => __( 'Determines how the date is displayed.', 'wp-graphql-gravity-forms' ),
+				],
+				'dateType'         => [
+					'type'        => DateTypeEnum::$type,
+					'description' => __( 'The type of date field to display.', 'wp-graphql-gravity-forms' ),
+				],
 			]
 		);
 	}
+
 }

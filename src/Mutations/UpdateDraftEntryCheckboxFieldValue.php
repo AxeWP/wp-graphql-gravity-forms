@@ -15,11 +15,20 @@ use WPGraphQLGravityForms\Types\Input\CheckboxInput;
 /**
  * Class - UpdateDraftEntryCheckboxFieldValue
  */
-class UpdateDraftEntryCheckboxFieldValue extends DraftEntryUpdater {
+class UpdateDraftEntryCheckboxFieldValue extends AbstractDraftEntryUpdater {
 	/**
-	 * Mutation name.
+	 * Mutation Name
+	 *
+	 * @var string
 	 */
-	const NAME = 'updateDraftEntryCheckboxFieldValue';
+	public static $name = 'updateDraftEntryCheckboxFieldValue';
+
+	/**
+	 * Gravity forms field type for the mutation.
+	 *
+	 * @var string
+	 */
+	protected static $gf_type = 'checkbox';
 
 	/**
 	 * Defines the input field value configuration.
@@ -41,28 +50,6 @@ class UpdateDraftEntryCheckboxFieldValue extends DraftEntryUpdater {
 	 * @return array
 	 */
 	protected function prepare_field_value( array $value ) : array {
-		$values_to_save = array_reduce(
-			$this->field->inputs,
-			function( array $values_to_save, array $input ) : array {
-				$values_to_save[ $input['id'] ] = ''; // Initialize all inputs to an empty string.
-				return $values_to_save;
-			},
-			[]
-		);
-
-		foreach ( $value as $single_value ) {
-			$input_id    = sanitize_text_field( $single_value['inputId'] );
-			$input_value = sanitize_text_field( $single_value['value'] );
-
-			// Make sure the input ID passed in exists.
-			if ( ! isset( $values_to_save[ $input_id ] ) ) {
-				continue;
-			}
-
-			// Overwrite initial empty string with the value passed in.
-			$values_to_save[ $input_id ] = $input_value;
-		}
-
-		return $values_to_save;
+		return $this->prepare_complex_field_value( $value, $this->field );
 	}
 }

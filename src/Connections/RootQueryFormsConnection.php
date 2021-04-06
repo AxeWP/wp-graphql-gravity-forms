@@ -29,14 +29,14 @@ class RootQueryFormsConnection implements Hookable, Connection {
 	/**
 	 * Register hooks to WordPress.
 	 */
-	public function register_hooks() {
+	public function register_hooks() : void {
 		add_action( 'init', [ $this, 'register_connection' ] );
 	}
 
 	/**
 	 * Register connection from RootQuery type to GravityFormsForm type.
 	 */
-	public function register_connection() {
+	public function register_connection() : void {
 		register_graphql_connection(
 			[
 				'fromType'       => 'RootQuery',
@@ -44,7 +44,7 @@ class RootQueryFormsConnection implements Hookable, Connection {
 				'fromFieldName'  => self::FROM_FIELD,
 				'connectionArgs' => [
 					'status' => [
-						'type'        => FormStatusEnum::TYPE,
+						'type'        => FormStatusEnum::$type,
 						'description' => __( 'Status of the forms to get.', 'wp-graphql-gravity-forms' ),
 					],
 				],

@@ -10,63 +10,61 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
-use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\Types\Field\AddressField;
 
 /**
  * Class - AddressFieldValue
  */
-class AddressFieldValue implements Hookable, Type, FieldValue {
+class AddressFieldValue extends AbstractFieldValue {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = AddressField::TYPE . 'Value';
+	public static $type = 'AddressFieldValue';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
+	 *
+	 * @since 0.4.0
 	 */
-	public function register_hooks() {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Gravity Forms address field values.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @since 0.4.0
+	 *
+	 * @return array
 	 */
-	public function register_type() {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Gravity Forms address field values.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'street'  => [
-						'type'        => 'String',
-						'description' => __( 'Street address.', 'wp-graphql-gravity-forms' ),
-					],
-					'lineTwo' => [
-						'type'        => 'String',
-						'description' => __( 'Address line two.', 'wp-graphql-gravity-forms' ),
-					],
-					'city'    => [
-						'type'        => 'String',
-						'description' => __( 'City.', 'wp-graphql-gravity-forms' ),
-					],
-					'state'   => [
-						'type'        => 'String',
-						'description' => __( 'State / province.', 'wp-graphql-gravity-forms' ),
-					],
-					'zip'     => [
-						'type'        => 'String',
-						'description' => __( 'ZIP / postal code.', 'wp-graphql-gravity-forms' ),
-					],
-					'country' => [
-						'type'        => 'String',
-						'description' => __( 'Country.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_properties() : array {
+		return [
+			'street'  => [
+				'type'        => 'String',
+				'description' => __( 'Street address.', 'wp-graphql-gravity-forms' ),
+			],
+			'lineTwo' => [
+				'type'        => 'String',
+				'description' => __( 'Address line two.', 'wp-graphql-gravity-forms' ),
+			],
+			'city'    => [
+				'type'        => 'String',
+				'description' => __( 'City.', 'wp-graphql-gravity-forms' ),
+			],
+			'state'   => [
+				'type'        => 'String',
+				'description' => __( 'State / province.', 'wp-graphql-gravity-forms' ),
+			],
+			'zip'     => [
+				'type'        => 'String',
+				'description' => __( 'ZIP / postal code.', 'wp-graphql-gravity-forms' ),
+			],
+			'country' => [
+				'type'        => 'String',
+				'description' => __( 'Country.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 
 	/**

@@ -17,11 +17,20 @@ use WPGraphQLGravityForms\Types\Input\ListInput;
 /**
  * Class - UpdateDraftEntryListFieldValue
  */
-class UpdateDraftEntryListFieldValue extends DraftEntryUpdater {
+class UpdateDraftEntryListFieldValue extends AbstractDraftEntryUpdater {
 	/**
-	 * Mutation name.
+	 * Mutation Name
+	 *
+	 * @var string
 	 */
-	const NAME = 'updateDraftEntryListFieldValue';
+	public static $name = 'updateDraftEntryListFieldValue';
+
+	/**
+	 * Gravity forms field type for the mutation.
+	 *
+	 * @var string
+	 */
+	protected static $gf_type = 'list';
 
 	/**
 	 * Defines the input field value configuration.
@@ -40,38 +49,9 @@ class UpdateDraftEntryListFieldValue extends DraftEntryUpdater {
 	 *
 	 * @param array $value The field values.
 	 *
-	 * @return string
+	 * @return array
 	 */
-	protected function prepare_field_value( array $value ) : string {
-		$values_to_save = array_map(
-			function( $row ) {
-				$row_values = []; // Initializes array.
-
-				/**
-				 * Deprecate `values` in favor of `rowValues`.
-				 *
-				 * @since 0.3.0
-				 */
-				if ( ! empty( $row['values'] ) ) {
-					_doing_it_wrong( 'updateDraftEntryListFieldValue', 'The listField input.value.values property has been deprecated. Please use input.value.rowValues instead.', '0.3.0' );
-					$row['rowValues'] = $row['values'];
-				}
-
-				// If columns are enabled, save each choice => value pair.
-				if ( $this->field->enableColumns ) {
-					foreach ( $this->field->choices as $choice_key => $choice ) {
-						$row_values[ $choice['value'] ] = isset( $row['rowValues'][ $choice_key ] ) ? sanitize_text_field( $row['rowValues'][ $choice_key ] ) : null;
-					}
-
-					return $row_values;
-				}
-
-				// If no columns, values can be saved directly to the array.
-				return isset( $row['rowValues'][0] ) ? sanitize_text_field( $row['rowValues'][0] ) : null;
-			},
-			$value
-		);
-
-		return (string) serialize( $values_to_save ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
+	protected function prepare_field_value( array $value ) : array {
+		return $this->prepare_list_field_value( $value );
 	}
 }

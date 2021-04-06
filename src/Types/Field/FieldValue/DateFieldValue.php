@@ -10,43 +10,41 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
-use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\Types\Field\DateField;
 
 /**
  * Class - DateFieldValue
  */
-class DateFieldValue implements Hookable, Type, FieldValue {
+class DateFieldValue extends AbstractFieldValue {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = DateField::TYPE . 'Value';
+	public static $type = 'DateFieldValue';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
+	 *
+	 * @since 0.4.0
 	 */
-	public function register_hooks() {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Date field value.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @since 0.4.0
+	 *
+	 * @return array
 	 */
-	public function register_type() {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Date field value.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'value' => [
-						'type'        => 'String',
-						'description' => __( 'The value.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_properties() : array {
+		return [
+			'value' => [
+				'type'        => 'String',
+				'description' => __( 'The value.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 
 	/**

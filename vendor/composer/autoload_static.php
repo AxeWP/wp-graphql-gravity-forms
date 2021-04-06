@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit42bbb390e930de9c48f43248c4deccf1
+class ComposerStaticInitbfbf9175b8255d015875c8ce55751c20
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -44,11 +44,14 @@ class ComposerStaticInit42bbb390e930de9c48f43248c4deccf1
         'WPGraphQLGravityForms\\Interfaces\\InputType' => __DIR__ . '/../..' . '/src/Interfaces/InputType.php',
         'WPGraphQLGravityForms\\Interfaces\\Mutation' => __DIR__ . '/../..' . '/src/Interfaces/Mutation.php',
         'WPGraphQLGravityForms\\Interfaces\\Type' => __DIR__ . '/../..' . '/src/Interfaces/Type.php',
+        'WPGraphQLGravityForms\\Mutations\\AbstractDraftEntryUpdater' => __DIR__ . '/../..' . '/src/Mutations/AbstractDraftEntryUpdater.php',
+        'WPGraphQLGravityForms\\Mutations\\AbstractMutation' => __DIR__ . '/../..' . '/src/Mutations/AbstractMutation.php',
         'WPGraphQLGravityForms\\Mutations\\CreateDraftEntry' => __DIR__ . '/../..' . '/src/Mutations/CreateDraftEntry.php',
         'WPGraphQLGravityForms\\Mutations\\DeleteDraftEntry' => __DIR__ . '/../..' . '/src/Mutations/DeleteDraftEntry.php',
         'WPGraphQLGravityForms\\Mutations\\DeleteEntry' => __DIR__ . '/../..' . '/src/Mutations/DeleteEntry.php',
-        'WPGraphQLGravityForms\\Mutations\\DraftEntryUpdater' => __DIR__ . '/../..' . '/src/Mutations/DraftEntryUpdater.php',
         'WPGraphQLGravityForms\\Mutations\\SubmitDraftEntry' => __DIR__ . '/../..' . '/src/Mutations/SubmitDraftEntry.php',
+        'WPGraphQLGravityForms\\Mutations\\SubmitForm' => __DIR__ . '/../..' . '/src/Mutations/SubmitForm.php',
+        'WPGraphQLGravityForms\\Mutations\\UpdateDraftEntry' => __DIR__ . '/../..' . '/src/Mutations/UpdateDraftEntry.php',
         'WPGraphQLGravityForms\\Mutations\\UpdateDraftEntryAddressFieldValue' => __DIR__ . '/../..' . '/src/Mutations/UpdateDraftEntryAddressFieldValue.php',
         'WPGraphQLGravityForms\\Mutations\\UpdateDraftEntryChainedSelectFieldValue' => __DIR__ . '/../..' . '/src/Mutations/UpdateDraftEntryChainedSelectFieldValue.php',
         'WPGraphQLGravityForms\\Mutations\\UpdateDraftEntryCheckboxFieldValue' => __DIR__ . '/../..' . '/src/Mutations/UpdateDraftEntryCheckboxFieldValue.php',
@@ -74,16 +77,53 @@ class ComposerStaticInit42bbb390e930de9c48f43248c4deccf1
         'WPGraphQLGravityForms\\Mutations\\UpdateDraftEntryTextFieldValue' => __DIR__ . '/../..' . '/src/Mutations/UpdateDraftEntryTextFieldValue.php',
         'WPGraphQLGravityForms\\Mutations\\UpdateDraftEntryTimeFieldValue' => __DIR__ . '/../..' . '/src/Mutations/UpdateDraftEntryTimeFieldValue.php',
         'WPGraphQLGravityForms\\Mutations\\UpdateDraftEntryWebsiteFieldValue' => __DIR__ . '/../..' . '/src/Mutations/UpdateDraftEntryWebsiteFieldValue.php',
+        'WPGraphQLGravityForms\\Mutations\\UpdateEntry' => __DIR__ . '/../..' . '/src/Mutations/UpdateEntry.php',
         'WPGraphQLGravityForms\\Settings\\WPGraphQLSettings' => __DIR__ . '/../..' . '/src/Settings/WPGraphQLSettings.php',
         'WPGraphQLGravityForms\\Types\\Button\\Button' => __DIR__ . '/../..' . '/src/Types/Button/Button.php',
+        'WPGraphQLGravityForms\\Types\\Button\\LastPageButton' => __DIR__ . '/../..' . '/src/Types/Button/LastPageButton.php',
         'WPGraphQLGravityForms\\Types\\ConditionalLogic\\ConditionalLogic' => __DIR__ . '/../..' . '/src/Types/ConditionalLogic/ConditionalLogic.php',
         'WPGraphQLGravityForms\\Types\\ConditionalLogic\\ConditionalLogicRule' => __DIR__ . '/../..' . '/src/Types/ConditionalLogic/ConditionalLogicRule.php',
         'WPGraphQLGravityForms\\Types\\Entry\\Entry' => __DIR__ . '/../..' . '/src/Types/Entry/Entry.php',
         'WPGraphQLGravityForms\\Types\\Entry\\EntryForm' => __DIR__ . '/../..' . '/src/Types/Entry/EntryForm.php',
         'WPGraphQLGravityForms\\Types\\Entry\\EntryUser' => __DIR__ . '/../..' . '/src/Types/Entry/EntryUser.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\AbstractEnum' => __DIR__ . '/../..' . '/src/Types/Enum/AbstractEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\AddressTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/AddressTypeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\ButtonTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/ButtonTypeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\CalendarIconTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/CalendarIconTypeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\CaptchaThemeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/CaptchaThemeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\CaptchaTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/CaptchaTypeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\ChainedSelectsAlignmentEnum' => __DIR__ . '/../..' . '/src/Types/Enum/ChainedSelectsAlignmentEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\ConditionalLogicActionTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/ConditionalLogicActionTypeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\ConditionalLogicLogicTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/ConditionalLogicLogicTypeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\ConfirmationTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/ConfirmationTypeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\DateFieldFormatEnum' => __DIR__ . '/../..' . '/src/Types/Enum/DateFieldFormatEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\DateTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/DateTypeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\DescriptionPlacementPropertyEnum' => __DIR__ . '/../..' . '/src/Types/Enum/DescriptionPlacementPropertyEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\EntryStatusEnum' => __DIR__ . '/../..' . '/src/Types/Enum/EntryStatusEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\FieldFiltersModeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FieldFiltersModeEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\FieldFiltersOperatorInputEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FieldFiltersOperatorInputEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\FormDescriptionPlacementEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FormDescriptionPlacementEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\FormLabelPlacementEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FormLabelPlacementEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\FormLimitEntriesPeriodEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FormLimitEntriesPeriodEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\FormStatusEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FormStatusEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\FormSubLabelPlacementEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FormSubLabelPlacementEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\IdTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/IdTypeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\LabelPlacementPropertyEnum' => __DIR__ . '/../..' . '/src/Types/Enum/LabelPlacementPropertyEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\MinPasswordStrengthEnum' => __DIR__ . '/../..' . '/src/Types/Enum/MinPasswordStrengthEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\NotificationToTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/NotificationToTypeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\NumberFieldFormatEnum' => __DIR__ . '/../..' . '/src/Types/Enum/NumberFieldFormatEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\PageProgressStyleEnum' => __DIR__ . '/../..' . '/src/Types/Enum/PageProgressStyleEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\PageProgressTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/PageProgressTypeEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\PhoneFieldFormatEnum' => __DIR__ . '/../..' . '/src/Types/Enum/PhoneFieldFormatEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\RuleOperatorEnum' => __DIR__ . '/../..' . '/src/Types/Enum/RuleOperatorEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\SignatureBorderStyleEnum' => __DIR__ . '/../..' . '/src/Types/Enum/SignatureBorderStyleEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\SignatureBorderWidthEnum' => __DIR__ . '/../..' . '/src/Types/Enum/SignatureBorderWidthEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\SizePropertyEnum' => __DIR__ . '/../..' . '/src/Types/Enum/SizePropertyEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\SortingInputEnum' => __DIR__ . '/../..' . '/src/Types/Enum/SortingInputEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\TimeFieldFormatEnum' => __DIR__ . '/../..' . '/src/Types/Enum/TimeFieldFormatEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\VisibilityPropertyEnum' => __DIR__ . '/../..' . '/src/Types/Enum/VisibilityPropertyEnum.php',
         'WPGraphQLGravityForms\\Types\\FieldError\\FieldError' => __DIR__ . '/../..' . '/src/Types/FieldError/FieldError.php',
+        'WPGraphQLGravityForms\\Types\\Field\\AbstractField' => __DIR__ . '/../..' . '/src/Types/Field/AbstractField.php',
         'WPGraphQLGravityForms\\Types\\Field\\AddressField' => __DIR__ . '/../..' . '/src/Types/Field/AddressField.php',
         'WPGraphQLGravityForms\\Types\\Field\\CaptchaField' => __DIR__ . '/../..' . '/src/Types/Field/CaptchaField.php',
         'WPGraphQLGravityForms\\Types\\Field\\ChainedSelectField' => __DIR__ . '/../..' . '/src/Types/Field/ChainedSelectField.php',
@@ -91,7 +131,6 @@ class ComposerStaticInit42bbb390e930de9c48f43248c4deccf1
         'WPGraphQLGravityForms\\Types\\Field\\ConsentField' => __DIR__ . '/../..' . '/src/Types/Field/ConsentField.php',
         'WPGraphQLGravityForms\\Types\\Field\\DateField' => __DIR__ . '/../..' . '/src/Types/Field/DateField.php',
         'WPGraphQLGravityForms\\Types\\Field\\EmailField' => __DIR__ . '/../..' . '/src/Types/Field/EmailField.php',
-        'WPGraphQLGravityForms\\Types\\Field\\Field' => __DIR__ . '/../..' . '/src/Types/Field/Field.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AddressInputProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/AddressInputProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AdminLabelProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/AdminLabelProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AdminOnlyProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/AdminOnlyProperty.php',
@@ -140,6 +179,7 @@ class ComposerStaticInit42bbb390e930de9c48f43248c4deccf1
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\SizeProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/SizeProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\SubLabelPlacementProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/SubLabelPlacementProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\VisibilityProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/VisibilityProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldValue\\AbstractFieldValue' => __DIR__ . '/../..' . '/src/Types/Field/FieldValue/AbstractFieldValue.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldValue\\AddressFieldValue' => __DIR__ . '/../..' . '/src/Types/Field/FieldValue/AddressFieldValue.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldValue\\ChainedSelectFieldValue' => __DIR__ . '/../..' . '/src/Types/Field/FieldValue/ChainedSelectFieldValue.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldValue\\CheckboxFieldValue' => __DIR__ . '/../..' . '/src/Types/Field/FieldValue/CheckboxFieldValue.php',
@@ -199,16 +239,18 @@ class ComposerStaticInit42bbb390e930de9c48f43248c4deccf1
         'WPGraphQLGravityForms\\Types\\Form\\FormNotificationRouting' => __DIR__ . '/../..' . '/src/Types/Form/FormNotificationRouting.php',
         'WPGraphQLGravityForms\\Types\\Form\\FormPagination' => __DIR__ . '/../..' . '/src/Types/Form/FormPagination.php',
         'WPGraphQLGravityForms\\Types\\Form\\SaveAndContinue' => __DIR__ . '/../..' . '/src/Types/Form/SaveAndContinue.php',
+        'WPGraphQLGravityForms\\Types\\GraphQLInterface\\FormFieldInterface' => __DIR__ . '/../..' . '/src/Types/GraphQLInterface/FormFieldInterface.php',
         'WPGraphQLGravityForms\\Types\\Input\\AddressInput' => __DIR__ . '/../..' . '/src/Types/Input/AddressInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\ChainedSelectInput' => __DIR__ . '/../..' . '/src/Types/Input/ChainedSelectInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\CheckboxInput' => __DIR__ . '/../..' . '/src/Types/Input/CheckboxInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\EntriesDateFiltersInput' => __DIR__ . '/../..' . '/src/Types/Input/EntriesDateFiltersInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\EntriesFieldFiltersInput' => __DIR__ . '/../..' . '/src/Types/Input/EntriesFieldFiltersInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\EntriesSortingInput' => __DIR__ . '/../..' . '/src/Types/Input/EntriesSortingInput.php',
+        'WPGraphQLGravityForms\\Types\\Input\\FieldValuesInput' => __DIR__ . '/../..' . '/src/Types/Input/FieldValuesInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\ListInput' => __DIR__ . '/../..' . '/src/Types/Input/ListInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\NameInput' => __DIR__ . '/../..' . '/src/Types/Input/NameInput.php',
-        'WPGraphQLGravityForms\\Types\\Union\\ObjectFieldUnion' => __DIR__ . '/../..' . '/src/Types/Union/ObjectFieldUnion.php',
         'WPGraphQLGravityForms\\Types\\Union\\ObjectFieldValueUnion' => __DIR__ . '/../..' . '/src/Types/Union/ObjectFieldValueUnion.php',
+        'WPGraphQLGravityForms\\Utils\\GFUtils' => __DIR__ . '/../..' . '/src/Utils/GFUtils.php',
         'WPGraphQLGravityForms\\Utils\\Utils' => __DIR__ . '/../..' . '/src/Utils/Utils.php',
         'WPGraphQLGravityForms\\WPGraphQLGravityForms' => __DIR__ . '/../..' . '/src/WPGraphQLGravityForms.php',
     );
@@ -216,9 +258,9 @@ class ComposerStaticInit42bbb390e930de9c48f43248c4deccf1
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit42bbb390e930de9c48f43248c4deccf1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit42bbb390e930de9c48f43248c4deccf1::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit42bbb390e930de9c48f43248c4deccf1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitbfbf9175b8255d015875c8ce55751c20::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitbfbf9175b8255d015875c8ce55751c20::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitbfbf9175b8255d015875c8ce55751c20::$classMap;
 
         }, null, ClassLoader::class);
     }

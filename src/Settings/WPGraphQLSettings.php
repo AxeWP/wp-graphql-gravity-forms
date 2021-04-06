@@ -21,7 +21,7 @@ class WPGraphQLSettings implements Hookable {
 	 *
 	 * @see: https://www.wpgraphql.com/filters/graphql_connection_max_query_amount/
 	 */
-	public function register_hooks() {
+	public function register_hooks() : void {
 		add_action( 'graphql_connection_max_query_amount', [ $this, 'set_max_query_amount' ], 11 );
 	}
 

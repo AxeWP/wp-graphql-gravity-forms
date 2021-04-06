@@ -13,11 +13,20 @@ namespace WPGraphQLGravityForms\Mutations;
 /**
  * Class - UpdateDraftEntryPostContentFieldValue
  */
-class UpdateDraftEntryPostContentFieldValue extends DraftEntryUpdater {
+class UpdateDraftEntryPostContentFieldValue extends AbstractDraftEntryUpdater {
 	/**
-	 * Mutation name.
+	 * Mutation Name
+	 *
+	 * @var string
 	 */
-	const NAME = 'updateDraftEntryPostContentFieldValue';
+	public static $name = 'updateDraftEntryPostContentFieldValue';
+
+	/**
+	 * Gravity forms field type for the mutation.
+	 *
+	 * @var string
+	 */
+	protected static $gf_type = 'post_content';
 
 	/**
 	 * Defines the input field value configuration.
@@ -39,6 +48,6 @@ class UpdateDraftEntryPostContentFieldValue extends DraftEntryUpdater {
 	 * @return string
 	 */
 	protected function prepare_field_value( string $value ) : string {
-		return wp_kses_post( $value );
+		return $this->prepare_post_content_field_value( $value );
 	}
 }

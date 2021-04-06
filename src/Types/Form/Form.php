@@ -6,19 +6,25 @@
  *
  * @package WPGraphQLGravityForms\Types\Form
  * @since   0.0.1
+ * @since   0.4.0 Accept database Ids in query.
  */
 
 namespace WPGraphQLGravityForms\Types\Form;
 
-use GFAPI;
 use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\Field;
 use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
-use WPGraphQLGravityForms\Types\Union\ObjectFieldUnion;
 use WPGraphQLGravityForms\Types\Button\Button;
+use WPGraphQLGravityForms\Types\Button\LastPageButton;
+use WPGraphQLGravityForms\Types\Enum\FormDescriptionPlacementEnum;
+use WPGraphQLGravityForms\Types\Enum\FormLabelPlacementEnum;
+use WPGraphQLGravityForms\Types\Enum\FormLimitEntriesPeriodEnum;
+use WPGraphQLGravityForms\Types\Enum\FormSubLabelPlacementEnum;
+use WPGraphQLGravityForms\Types\Enum\IdTypeEnum;
+use WPGraphQLGravityForms\Utils\GFUtils;
 
 /**
  * Class - Form
@@ -53,7 +59,7 @@ class Form implements Hookable, Type, Field {
 	/**
 	 * Register hooks to WordPress.
 	 */
-	public function register_hooks() {
+	public function register_hooks() : void {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
 		add_action( 'graphql_register_types', [ $this, 'register_field' ] );
 	}
@@ -61,7 +67,7 @@ class Form implements Hookable, Type, Field {
 	/**
 	 * Register Object type to GraphQL schema.
 	 */
-	public function register_type() {
+	public function register_type() : void {
 		register_graphql_object_type(
 			self::TYPE,
 			[
@@ -83,14 +89,12 @@ class Form implements Hookable, Type, Field {
 						'type'        => 'String',
 						'description' => __( 'Form description.', 'wp-graphql-gravity-forms' ),
 					],
-					// @TODO - Convert to enum. Possible values: top_label, left_label, right_label
 					'labelPlacement'             => [
-						'type'        => 'String',
-						'description' => __( 'Determines if the field labels are displayed on top of the fields (top_label), beside the fields and aligned to the left (left_label) or beside the fields and aligned to the right (right_label).', 'wp-graphql-gravity-forms' ),
+						'type'        => FormLabelPlacementEnum::$type,
+						'description' => __( 'Determines where the field labels should be placed in relation to the field.', 'wp-graphql-gravity-forms' ),
 					],
-					// @TODO - Convert to enum. Possible values: above, below
 					'descriptionPlacement'       => [
-						'type'        => 'String',
+						'type'        => FormDescriptionPlacementEnum::$type,
 						'description' => __( 'Determines if the field description is displayed above the field input (i.e. immediately after the field label) or below the field input.', 'wp-graphql-gravity-forms' ),
 					],
 					'button'                     => [
@@ -118,7 +122,7 @@ class Form implements Hookable, Type, Field {
 						'description' => __( 'Template to be used when creating the post content. Field variables (i.e. {Name:3} ) can be added to the template to insert user submitted values into the post content. Only applicable when postContentTemplateEnabled is true.', 'wp-graphql-gravity-forms' ),
 					],
 					'lastPageButton'             => [
-						'type'        => Button::TYPE,
+						'type'        => LastPageButton::TYPE,
 						'description' => __( 'Last page button data.', 'wp-graphql-gravity-forms' ),
 					],
 					'pagination'                 => [
@@ -145,9 +149,8 @@ class Form implements Hookable, Type, Field {
 						'type'        => 'String',
 						'description' => __( 'For forms with Post fields, determines the status that the Post should be created with.', 'wp-graphql-gravity-forms' ),
 					],
-					// @TODO: Convert to an enum. https://docs.gravityforms.com/gf_field_name/
 					'subLabelPlacement'          => [
-						'type'        => 'String',
+						'type'        => FormSubLabelPlacementEnum::$type,
 						'description' => __( 'How sub-labels are aligned.', 'wp-graphql-gravity-forms' ),
 					],
 					'cssClass'                   => [
@@ -155,8 +158,9 @@ class Form implements Hookable, Type, Field {
 						'description' => __( 'String containing the custom CSS classes to be added to the <form> tag.', 'wp-graphql-gravity-forms' ),
 					],
 					'cssClassList'               => [
-						'type'        => [ 'list_of' => 'String' ],
-						'description' => __( 'Array of the custom CSS classes to be added to the <form> tag.', 'wp-graphql-gravity-forms' ),
+						'type'              => [ 'list_of' => 'String' ],
+						'description'       => __( 'Array of the custom CSS classes to be added to the <form> tag.', 'wp-graphql-gravity-forms' ),
+						'deprecationReason' => __( 'Please use `cssClass` instead.', 'wp-graphql-gravity-forms' ),
 					],
 					'enableHoneypot'             => [
 						'type'        => 'Boolean',
@@ -178,10 +182,9 @@ class Form implements Hookable, Type, Field {
 						'type'        => 'Int',
 						'description' => __( 'When limitEntries is set to 1, this property specifies the number of submissions allowed.', 'wp-graphql-gravity-forms' ),
 					],
-					// @TODO: Convert to an enum.
 					'limitEntriesPeriod'         => [
-						'type'        => 'String',
-						'description' => __( 'When limitEntries is set to 1, this property specifies the time period during which submissions are allowed. Options are "day", "week", "month" and "year".', 'wp-graphql-gravity-forms' ),
+						'type'        => FormLimitEntriesPeriodEnum::$type,
+						'description' => __( 'When limitEntries is set to 1, this property specifies the time period during which submissions are allowed.', 'wp-graphql-gravity-forms' ),
 					],
 					'limitEntriesMessage'        => [
 						'type'        => 'String',
@@ -271,7 +274,7 @@ class Form implements Hookable, Type, Field {
 	/**
 	 * Register form query.
 	 */
-	public function register_field() {
+	public function register_field() : void {
 		register_graphql_field(
 			'RootQuery',
 			self::FIELD,
@@ -279,25 +282,35 @@ class Form implements Hookable, Type, Field {
 				'description' => __( 'Get a Gravity Forms form.', 'wp-graphql-gravity-forms' ),
 				'type'        => self::TYPE,
 				'args'        => [
-					'id' => [
+					'id'     => [
 						'type'        => [ 'non_null' => 'ID' ],
-						'description' => __( "Unique global ID for the object. Base-64 encode a string like this, where '123' is the form ID: '{self::TYPE}:123'.", 'wp-graphql-gravity-forms' ),
+						'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
+					],
+					'idType' => [
+						'type'        => IdTypeEnum::$type,
+						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID', 'wp-graphql-gravity-forms' ),
 					],
 				],
 				'resolve'     => function( $root, array $args ) : array {
-					$id_parts = Relay::fromGlobalId( $args['id'] );
+					$idType = $args['idType'] ?? 'global_id';
 
-					if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-						throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
+					/**
+					 * If global id is used, get the (int) id.
+					 */
+					if ( 'global_id' === $idType ) {
+						$id_parts = Relay::fromGlobalId( $args['id'] );
+
+						if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
+							throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
+						}
+						$id = (int) sanitize_text_field( $id_parts['id'] );
+					} else {
+						$id = (int) sanitize_text_field( $args['id'] );
 					}
 
-					$form_raw = GFAPI::get_form( $id_parts['id'] );
+					$form_raw = GFUtils::get_form( $id, false );
 
-					if ( ! $form_raw ) {
-						throw new UserError( __( 'A valid form ID must be provided.', 'wp-graphql-gravity-forms' ) );
-					}
-
-					$form = $this->form_data_manipulator->manipulate( $form_raw, $args );
+					$form = $this->form_data_manipulator->manipulate( $form_raw );
 
 					/**
 					 * "wp_graphql_gf_form_object" filter

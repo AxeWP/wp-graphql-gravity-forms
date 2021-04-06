@@ -19,58 +19,58 @@ use WPGraphQLGravityForms\Utils\Utils;
  *
  * @see https://docs.gravityforms.com/gf_field_hidden/
  */
-class HiddenField extends Field {
+class HiddenField extends AbstractField {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'HiddenField';
+	public static $type = 'HiddenField';
 
 	/**
 	 * Type registered in Gravity Forms.
+	 *
+	 * @var string
 	 */
-	const GF_TYPE = 'hidden';
+	public static $gf_type = 'hidden';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'Gravity Forms Hidden field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Gravity Forms Hidden field.', 'wp-graphql-gravity-forms' ),
-				'fields'      => array_merge(
-					$this->get_global_properties(),
-					$this->get_custom_properties(),
-					FieldProperty\AllowsPrepopulateProperty::get(),
-					FieldProperty\DefaultValueProperty::get(),
-					FieldProperty\InputNameProperty::get(),
-					FieldProperty\LabelProperty::get(),
-					FieldProperty\SizeProperty::get(),
-					/**
-					 * Deprecated field properties.
-					 *
-					 * @since 0.2.0
-					 */
+	protected function get_properties() : array {
+		return array_merge(
+			$this->get_global_properties(),
+			$this->get_custom_properties(),
+			FieldProperty\AllowsPrepopulateProperty::get(),
+			FieldProperty\DefaultValueProperty::get(),
+			FieldProperty\InputNameProperty::get(),
+			FieldProperty\LabelProperty::get(),
+			FieldProperty\SizeProperty::get(),
+			/**
+			* Deprecated field properties.
+			*
+			* @since 0.2.0
+			*/
 
-					// translators: Gravity Forms Field type.
-					Utils::deprecate_property( FieldProperty\AdminLabelProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
-					// translators: Gravity Forms Field type.
-					Utils::deprecate_property( FieldProperty\AdminOnlyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
-					// translators: Gravity Forms Field type.
-					Utils::deprecate_property( FieldProperty\IsRequiredProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
-					// translators: Gravity Forms Field type.
-					Utils::deprecate_property( FieldProperty\NoDuplicatesProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
-					// translators: Gravity Forms Field type.
-					Utils::deprecate_property( FieldProperty\VisibilityProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
-				),
-			]
+			// translators: Gravity Forms Field type.
+			Utils::deprecate_property( FieldProperty\AdminLabelProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
+			// translators: Gravity Forms Field type.
+			Utils::deprecate_property( FieldProperty\AdminOnlyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
+			// translators: Gravity Forms Field type.
+			Utils::deprecate_property( FieldProperty\IsRequiredProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
+			// translators: Gravity Forms Field type.
+			Utils::deprecate_property( FieldProperty\NoDuplicatesProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
+			// translators: Gravity Forms Field type.
+			Utils::deprecate_property( FieldProperty\VisibilityProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
 		);
 	}
 }

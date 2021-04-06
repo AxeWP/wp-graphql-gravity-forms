@@ -11,7 +11,6 @@
 namespace WPGraphQLGravityForms\Data\Loader;
 
 use GF_Query;
-use GraphQL\Deferred;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
 use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 
@@ -36,7 +35,7 @@ class EntriesLoader extends AbstractDataLoader {
 	 *
 	 * @param array $keys .
 	 *
-	 * @return array
+	 * @return array|false
 	 * @throws \Exception .
 	 */
 	public function loadKeys( array $keys ) {

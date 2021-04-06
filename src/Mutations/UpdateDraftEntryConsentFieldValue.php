@@ -13,11 +13,20 @@ namespace WPGraphQLGravityForms\Mutations;
 /**
  * Class - UpdateDraftEntryConsentFieldValue
  */
-class UpdateDraftEntryConsentFieldValue extends DraftEntryUpdater {
+class UpdateDraftEntryConsentFieldValue extends AbstractDraftEntryUpdater {
 	/**
-	 * Mutation name.
+	 * Mutation Name
+	 *
+	 * @var string
 	 */
-	const NAME = 'updateDraftEntryConsentFieldValue';
+	public static $name = 'updateDraftEntryConsentFieldValue';
+
+	/**
+	 * Gravity forms field type for the mutation.
+	 *
+	 * @var string
+	 */
+	protected static $gf_type = 'consent';
 
 	/**
 	 * Defines the input field value configuration.
@@ -39,10 +48,6 @@ class UpdateDraftEntryConsentFieldValue extends DraftEntryUpdater {
 	 * @return array
 	 */
 	protected function prepare_field_value( bool $value ) : array {
-		return [
-			$this->field->inputs[0]['id'] => (bool) $value,
-			$this->field->inputs[1]['id'] => isset( $this->field->checkboxLabel ) ? sanitize_text_field( $this->field->checkboxLabel ) : null,
-			$this->field->inputs[2]['id'] => isset( $this->field->descriptiom ) ? sanitize_text_field( $this->field->description ) : null,
-		];
+		return $this->prepare_consent_field_value( $value, $this->field );
 	}
 }

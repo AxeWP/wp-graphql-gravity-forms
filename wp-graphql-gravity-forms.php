@@ -6,7 +6,7 @@
  * Description: Adds Gravity Forms functionality to the WPGraphQL schema.
  * Author: Harness Software
  * Author URI: https://www.harnessup.com
- * Version: 0.3.1
+ * Version: 0.4.0
  * Text Domain: wp-graphql-gravity-forms
  * Domain Path: /languages
  * Requires at least: 5.4.1

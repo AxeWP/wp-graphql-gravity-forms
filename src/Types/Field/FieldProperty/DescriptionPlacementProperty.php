@@ -9,6 +9,7 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 use WPGraphQLGravityForms\Interfaces\FieldProperty;
+use WPGraphQLGravityForms\Types\Enum\DescriptionPlacementPropertyEnum;
 
 /**
  * Class - DescriptionPlacementProperty
@@ -25,8 +26,8 @@ class DescriptionPlacementProperty implements FieldProperty {
 	public static function get() : array {
 		return [
 			'descriptionPlacement' => [
-				'type'        => 'String',
-				'description' => __( 'The placement of the field description. The description may be placed “above” or “below” the field inputs. If the placement is not specified, then the description placement setting for the Form Layout is used.', 'wp-graphql-gravity-forms' ),
+				'type'        => DescriptionPlacementPropertyEnum::$type,
+				'description' => __( 'The placement of the field description.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

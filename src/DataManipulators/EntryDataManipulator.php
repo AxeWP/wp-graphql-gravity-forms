@@ -28,9 +28,8 @@ class EntryDataManipulator implements DataManipulator {
 	public function manipulate( array $data ) : array {
 		$data = $this->set_is_draft_value( $data );
 		$data = $this->set_global_and_entry_ids( $data );
-		$data = $this->convert_keys_to_camelcase( $data );
 
-		return $data;
+		return $this->convert_keys_to_camelcase( $data );
 	}
 
 	/**

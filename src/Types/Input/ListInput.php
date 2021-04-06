@@ -25,14 +25,14 @@ class ListInput implements Hookable, InputType {
 	/**
 	 * Register hooks to WordPress.
 	 */
-	public function register_hooks() {
+	public function register_hooks() : void {
 		add_action( 'graphql_register_types', [ $this, 'register_input_type' ] );
 	}
 
 	/**
 	 * Register input type to GraphQL schema.
 	 */
-	public function register_input_type() {
+	public function register_input_type() : void {
 		register_graphql_input_type(
 			self::TYPE,
 			[
