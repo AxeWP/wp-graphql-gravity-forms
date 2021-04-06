@@ -2,7 +2,7 @@
 
 ## v0.4.0 - A Simpler Form Submission Flow!
 
-**  :warning: This release contains multiple breaking changes. **
+** :warning: This release contains multiple breaking changes. **
 
 This release adds the `submitGravityFormsForm` mutation that submit forms without needing to use the existing `createGravityFormsDraftEntry` -> `updateDraftEntry{fieldType}Value` -> `submitGravityFormsDraftEntry` flow.
 
@@ -95,6 +95,7 @@ query {
 - We fixed a type conflict with `ConsentFieldValue`. `value` now returns a `String` with the consent message, or `null` if false.
 - Deprecated `url` in favor of `value` on `FileUploadFieldValue` and `SignatureFieldValue`.
 - Deprecated `cssClassList` in favor of `cssClass`.
+- The `resumeToken` input field on the `deleteGravityFormsDraftEntry`, `SubmitGravityFormsDraftEntry`, and all the `updateDraftEntry{fieldType}Value` mutations is now a non-nullable `String!`.
 
 ### Under the hood
 
