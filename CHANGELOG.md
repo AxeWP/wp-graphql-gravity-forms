@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.4.1 - Bugfix
+- Uses `sanitize_text_field` to sanitize email values, so failing values can be validated by Gravity Forms. ( h/t @PudparK )
+
 ## v0.4.0 - A Simpler Form Submission Flow!
 
 ** :warning: This release contains multiple breaking changes. **
