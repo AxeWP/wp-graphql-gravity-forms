@@ -48,6 +48,6 @@ class UpdateDraftEntryEmailFieldValue extends AbstractDraftEntryUpdater {
 	 * @return string
 	 */
 	protected function prepare_field_value( string $value ) : string {
-		return $this->prepare_email_field_value( $value );
+		return $this->prepare_string_value( $value );
 	}
 }

@@ -292,17 +292,6 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	}
 
 	/**
-	 * Sanitizes the EmailField value.
-	 *
-	 * @param string $value .
-	 * @return string
-	 */
-	protected function prepare_email_field_value( string $value ) : string {
-		return sanitize_email( $value );
-	}
-
-
-	/**
 	 * Formats and sanitizes ListField values.
 	 *
 	 * @param array $value .
@@ -534,8 +523,6 @@ abstract class AbstractMutation implements Hookable, Mutation {
 				return $this->prepare_complex_field_value( $value, $field );
 			case 'consent':
 				return $this->prepare_consent_field_value( $value, $field );
-			case 'email':
-				return $this->prepare_email_field_value( $value );
 			case 'list':
 				return $this->prepare_list_field_value( $value );
 			case 'multiselect':
@@ -552,6 +539,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			case 'website':
 				return $this->prepare_website_field_value( $value );
 			case 'date':
+			case 'email':
 			case 'hidden':
 			case 'number':
 			case 'phone':
