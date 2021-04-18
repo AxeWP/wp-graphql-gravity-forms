@@ -117,7 +117,7 @@ class SubmitDraftEntry extends AbstractMutation {
 			);
 			remove_filter( 'gform_field_validation', [ $this, 'disable_validation_for_unsupported_fields' ] );
 
-			if ( $result['entry_id'] ) {
+			if ( ! empty( $result['entry_id'] ) ) {
 				GFFormsModel::delete_draft_submission( $resume_token );
 				GFFormsModel::purge_expired_draft_submissions();
 			}
