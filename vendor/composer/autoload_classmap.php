@@ -228,6 +228,7 @@ return array(
     'WPGraphQLGravityForms\\Types\\Input\\AddressInput' => $baseDir . '/src/Types/Input/AddressInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\ChainedSelectInput' => $baseDir . '/src/Types/Input/ChainedSelectInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\CheckboxInput' => $baseDir . '/src/Types/Input/CheckboxInput.php',
+    'WPGraphQLGravityForms\\Types\\Input\\EmailInput' => $baseDir . '/src/Types/Input/EmailInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\EntriesDateFiltersInput' => $baseDir . '/src/Types/Input/EntriesDateFiltersInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\EntriesFieldFiltersInput' => $baseDir . '/src/Types/Input/EntriesFieldFiltersInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\EntriesSortingInput' => $baseDir . '/src/Types/Input/EntriesSortingInput.php',

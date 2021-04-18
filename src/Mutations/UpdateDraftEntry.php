@@ -186,23 +186,16 @@ class UpdateDraftEntry extends AbstractMutation {
 		foreach ( $field_values as $values ) {
 			$field = GFUtils::get_field_by_id( $this->form, $values['id'] );
 
-			$this->validate_field_value_type( $field, $values );
+			$value = $this->prepare_single_field_value( $values, $field );
 
-			$value = $values['addressValues'] ?? $values['chainedSelectValues'] ?? $values['checkboxValues'] ?? $values['listValues'] ?? $values['nameValues'] ?? $values['values'] ?? $values['value'];
-
-			$value = $this->prepare_field_value_by_type( $value, $field );
-
+			// Validate the field value.
 			$this->validate_field_value( $this->form, $field, $value );
 
 			// Add field values to submitted values.
 			$this->submission['submitted_values'][ $field->id ] = $value;
 
 			// Add values to array based on field type.
-			if ( in_array( $field->type, [ 'address', 'chainedselect', 'checkbox', 'consent', 'name' ], true ) ) {
-				$formatted_values += $value;
-			} else {
-				$formatted_values[ $values['id'] ] = $value;
-			}
+			$formatted_values = $this->add_value_to_array( $formatted_values, $field, $value );
 		}
 
 		return $formatted_values;
