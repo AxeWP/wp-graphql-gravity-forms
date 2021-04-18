@@ -155,7 +155,10 @@ abstract class AbstractDraftEntryUpdater extends AbstractMutation {
 				return [
 					'resumeToken' => $resume_token,
 					'errors'      => [
-						[ 'message' => $this->field->validation_message ],
+						[
+							'id'      => $this->field->id,
+							'message' => $this->field->validation_message,
+						],
 					],
 				];
 			}
