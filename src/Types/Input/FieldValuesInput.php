@@ -54,6 +54,10 @@ class FieldValuesInput implements Hookable, InputType {
 						'type'        => [ 'list_of' => CheckboxInput::TYPE ],
 						'description' => __( 'The form field values for Checkbox fields', 'wp-graphql-gravity-forms' ),
 					],
+					'emailValues'         => [
+						'type'        => EmailInput::TYPE,
+						'description' => __( 'The form field values for Email fields.', 'wp-graphql-gravity-forms' ),
+					],
 					'listValues'          => [
 						'type'        => [ 'list_of' => ListInput::TYPE ],
 						'description' => __( 'The form field values for List fields', 'wp-graphql-gravity-forms' ),

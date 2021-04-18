@@ -10,6 +10,8 @@
 
 namespace WPGraphQLGravityForms\Mutations;
 
+use WPGraphQLGravityForms\Types\Input\EmailInput;
+
 /**
  * Class - UpdateDraftEntryEmailFieldValue
  */
@@ -35,7 +37,7 @@ class UpdateDraftEntryEmailFieldValue extends AbstractDraftEntryUpdater {
 	 */
 	protected function get_value_input_field() : array {
 		return [
-			'type'        => 'String',
+			'type'        => EmailInput::TYPE,
 			'description' => __( 'The form field value.', 'wp-graphql-gravity-forms' ),
 		];
 	}
@@ -43,11 +45,11 @@ class UpdateDraftEntryEmailFieldValue extends AbstractDraftEntryUpdater {
 	/**
 	 * Sanitizes the field values.
 	 *
-	 * @param string $value The field value.
+	 * @param array $value The field value.
 	 *
-	 * @return string
+	 * @return array
 	 */
-	protected function prepare_field_value( string $value ) : string {
-		return $this->prepare_string_value( $value );
+	protected function prepare_field_value( array $value ) : array {
+		return $this->prepare_email_field_value( $value, $this->field );
 	}
 }

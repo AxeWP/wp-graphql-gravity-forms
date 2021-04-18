@@ -475,6 +475,14 @@ This is an interim solution until [the GraphQL Spec adds support for Input Union
           ]
         }
         {
+          # Email field value
+          id: 6
+          emailValues: {
+            value: "myemail@email.test"
+            confirmationValue: "myemail@email.test" # Only necessary if Email confirmation is enabled.
+          }
+        }
+        {
           # Multi-column List field value
           id: 6
           listValues: {

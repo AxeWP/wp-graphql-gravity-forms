@@ -78,10 +78,16 @@ abstract class AbstractMutation implements Hookable, Mutation {
 		$array = [];
 
 		// For an array of sub-values, add each to the partial entry individually.
-		if ( is_array( $value ) && ! in_array( $field->type, [ 'list', 'multiselect', 'post_category', 'post_custom', 'post_tags' ], true ) ) {
+		if ( is_array( $value ) && ! in_array( $field->type, [ 'email', 'list', 'multiselect', 'post_category', 'post_custom', 'post_tags' ], true ) ) {
 			foreach ( $value as $key => $single_value ) {
 				$array[ $key ] = $single_value;
 			}
+			return $array;
+		}
+		if ( 'email' === $field->type ) {
+			$array[ $field->id ]              = $value[0];
+			$array[ $field->inputs[1]['id'] ] = $value[1];
+
 			return $array;
 		}
 
@@ -147,6 +153,48 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	}
 
 	/**
+	 * Validates the field value type and then prepares the field value.
+	 *
+	 * @param array    $values input values.
+	 * @param GF_Field $field .
+	 * @return mixed
+	 */
+	public function prepare_single_field_value( array $values, GF_Field $field ) {
+		$this->validate_field_value_type( $field, $values );
+
+		$value = $values['addressValues'] ?? $values['chainedSelectValues'] ?? $values['checkboxValues'] ?? $values['emailValues'] ?? $values['listValues'] ?? $values['nameValues'] ?? $values['values'] ?? $values['value'];
+
+		$value = $this->prepare_field_value_by_type( $value, $field );
+
+		return $value;
+	}
+
+	/**
+	 * Adds the value to the field values array for processing by Gravity Forms.
+	 *
+	 * @param array    $values the existing field values array.
+	 * @param GF_Field $field .
+	 * @param mixed    $value_to_add .
+	 * @return array
+	 */
+	public function add_value_to_array( array $values, GF_Field $field, $value_to_add ) : array {
+		if ( 'email' === $field->type ) {
+			$values[ $field->id ] = $value_to_add[0];
+			if ( isset( $value_to_add[1] ) ) {
+				$values[ $field->inputs[1]['id'] ] = $value_to_add[1];
+			}
+			return $values;
+		}
+
+		if ( in_array( $field->type, [ 'address', 'chainedselect', 'checkbox', 'consent', 'name' ], true ) ) {
+			return $values + $value_to_add;
+		}
+
+		$values[ $values['id'] ] = $value_to_add;
+		return $values;
+	}
+
+	/**
 	 * Validates the Gravity Forms field value.
 	 *
 	 * @param array    $form .
@@ -192,6 +240,12 @@ abstract class AbstractMutation implements Hookable, Mutation {
 				if ( ! isset( $values['checkboxValues'] ) ) {
 					// translators: Gravity Forms field id.
 					throw new UserError( sprintf( __( 'Mutation not processed. Field %s requires the use of `checkboxValues`.', 'wp-graphql-gravity-forms' ), $field->id ) );
+				}
+				break;
+			case 'email':
+				if ( ! isset( $values['emailValues'] ) ) {
+					// translators: Gravity Forms field id.
+					throw new UserError( sprintf( __( 'Mutation not processed. Field %s requires the use of `emailValues`.', 'wp-graphql-gravity-forms' ), $field->id ) );
 				}
 				break;
 			case 'list':
@@ -289,6 +343,25 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			$field->inputs[1]['id'] => isset( $field->checkboxLabel ) ? sanitize_text_field( $field->checkboxLabel ) : null,
 			$field->inputs[2]['id'] => isset( $field->descriptiom ) ? sanitize_text_field( $field->description ) : null,
 		];
+	}
+
+	/**
+	 * Formats and sanitizes the email field value.
+	 *
+	 * @param array    $value .
+	 * @param GF_Field $field .
+	 * @return array
+	 */
+	protected function prepare_email_field_value( array $value, GF_Field $field ) : array {
+		$values_to_save = [];
+
+		$values_to_save[] = isset( $value['value'] ) ? sanitize_text_field( $value['value'] ) : null;
+
+		if ( $field->emailConfirmEnabled ) {
+			$values_to_save[] = isset( $value['confirmationValue'] ) ? sanitize_text_field( $value['confirmationValue'] ) : null;
+		}
+
+		return $values_to_save;
 	}
 
 	/**
@@ -523,6 +596,8 @@ abstract class AbstractMutation implements Hookable, Mutation {
 				return $this->prepare_complex_field_value( $value, $field );
 			case 'consent':
 				return $this->prepare_consent_field_value( $value, $field );
+			case 'email':
+				return $this->prepare_email_field_value( $value, $field );
 			case 'list':
 				return $this->prepare_list_field_value( $value );
 			case 'multiselect':
@@ -539,7 +614,6 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			case 'website':
 				return $this->prepare_website_field_value( $value );
 			case 'date':
-			case 'email':
 			case 'hidden':
 			case 'number':
 			case 'phone':

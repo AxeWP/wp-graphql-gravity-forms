@@ -278,18 +278,10 @@ class SubmitForm extends AbstractMutation {
 		foreach ( $field_values as $values ) {
 			$field = GFUtils::get_field_by_id( $this->form, $values['id'] );
 
-			$this->validate_field_value_type( $field, $values );
-
-			$value = $values['addressValues'] ?? $values['chainedSelectValues'] ?? $values['checkboxValues'] ?? $values['listValues'] ?? $values['nameValues'] ?? $values['values'] ?? $values['value'];
-
-			$value = $this->prepare_field_value_by_type( $value, $field );
+			$value = $this->prepare_single_field_value( $values, $field );
 
 			// Add values to array based on field type.
-			if ( in_array( $field->type, [ 'address', 'chainedselect', 'checkbox', 'consent', 'name' ], true ) ) {
-				$formatted_values += $value;
-			} else {
-				$formatted_values[ $values['id'] ] = $value;
-			}
+			$formatted_values = $this->add_value_to_array( $formatted_values, $field, $value );
 		}
 
 		return $formatted_values;

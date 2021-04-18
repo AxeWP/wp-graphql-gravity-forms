@@ -243,6 +243,7 @@ class ComposerStaticInitbfbf9175b8255d015875c8ce55751c20
         'WPGraphQLGravityForms\\Types\\Input\\AddressInput' => __DIR__ . '/../..' . '/src/Types/Input/AddressInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\ChainedSelectInput' => __DIR__ . '/../..' . '/src/Types/Input/ChainedSelectInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\CheckboxInput' => __DIR__ . '/../..' . '/src/Types/Input/CheckboxInput.php',
+        'WPGraphQLGravityForms\\Types\\Input\\EmailInput' => __DIR__ . '/../..' . '/src/Types/Input/EmailInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\EntriesDateFiltersInput' => __DIR__ . '/../..' . '/src/Types/Input/EntriesDateFiltersInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\EntriesFieldFiltersInput' => __DIR__ . '/../..' . '/src/Types/Input/EntriesFieldFiltersInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\EntriesSortingInput' => __DIR__ . '/../..' . '/src/Types/Input/EntriesSortingInput.php',
