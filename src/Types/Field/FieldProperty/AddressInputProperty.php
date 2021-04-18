@@ -43,17 +43,10 @@ class AddressInputProperty implements Hookable, Type {
 					InputProperty\InputDefaultValueProperty::get(),
 					InputProperty\InputIdProperty::get(),
 					InputProperty\InputIsHiddenProperty::get(),
+					InputProperty\InputKeyProperty::get(),
 					InputProperty\InputLabelProperty::get(),
 					InputProperty\InputNameProperty::get(),
 					InputProperty\InputPlaceholderProperty::get(),
-					/**
-					 * Deprecated field properties.
-					 *
-					 * @since 0.2.0
-					 */
-
-					// translators: Gravity Forms Field input property.
-					Utils::deprecate_property( InputProperty\InputKeyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
 				),
 			],
 		);

@@ -106,35 +106,36 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 							id
 							type
 							... on AddressField {
-							addressType
-							adminLabel
-							adminOnly
-							copyValuesOptionDefault
-							copyValuesOptionField
-							defaultCountry
-							defaultProvince
-							defaultState
-							description
-							descriptionPlacement
-							enableCopyValuesOption
-							errorMessage
-							id
-							inputs {
-								customLabel
-								defaultValue
+								addressType
+								adminLabel
+								adminOnly
+								copyValuesOptionDefault
+								copyValuesOptionField
+								defaultCountry
+								defaultProvince
+								defaultState
+								description
+								descriptionPlacement
+								enableCopyValuesOption
+								errorMessage
 								id
-								isHidden
+								inputs {
+									customLabel
+									defaultValue
+									id
+									isHidden
+									key
+									label
+									name
+									placeholder
+								}
+								isRequired
 								label
-								name
-								placeholder
-							}
-							isRequired
-							label
-							labelPlacement
-							size
-							subLabelPlacement
-							type
-							visibility
+								labelPlacement
+								size
+								subLabelPlacement
+								type
+								visibility
 							}
 						}
 						edges {
@@ -192,6 +193,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'defaultValue' => $form['fields'][0]->inputs[0]['defaultValue'],
 									'id'           => $form['fields'][0]->inputs[0]['id'],
 									'isHidden'     => $form['fields'][0]->inputs[0]['isHidden'],
+									'key'          => 'street',
 									'label'        => $form['fields'][0]->inputs[0]['label'],
 									'name'         => $form['fields'][0]->inputs[0]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[0]['placeholder'],
@@ -201,6 +203,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'defaultValue' => $form['fields'][0]->inputs[1]['defaultValue'],
 									'id'           => $form['fields'][0]->inputs[1]['id'],
 									'isHidden'     => $form['fields'][0]->inputs[1]['isHidden'],
+									'key' => 'lineTwo',
 									'label'        => $form['fields'][0]->inputs[1]['label'],
 									'name'         => $form['fields'][0]->inputs[1]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[1]['placeholder'],
@@ -210,6 +213,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'defaultValue' => $form['fields'][0]->inputs[2]['defaultValue'],
 									'id'           => $form['fields'][0]->inputs[2]['id'],
 									'isHidden'     => $form['fields'][0]->inputs[2]['isHidden'],
+									'key' => 'city',
 									'label'        => $form['fields'][0]->inputs[2]['label'],
 									'name'         => $form['fields'][0]->inputs[2]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[2]['placeholder'],
@@ -219,6 +223,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'defaultValue' => $form['fields'][0]->inputs[3]['defaultValue'],
 									'id'           => $form['fields'][0]->inputs[3]['id'],
 									'isHidden'     => $form['fields'][0]->inputs[3]['isHidden'],
+									'key' => 'state',
 									'label'        => $form['fields'][0]->inputs[3]['label'],
 									'name'         => $form['fields'][0]->inputs[3]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[3]['placeholder'],
@@ -228,6 +233,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'defaultValue' => $form['fields'][0]->inputs[4]['defaultValue'],
 									'id'           => $form['fields'][0]->inputs[4]['id'],
 									'isHidden'     => $form['fields'][0]->inputs[4]['isHidden'],
+									'key' => 'zip',
 									'label'        => $form['fields'][0]->inputs[4]['label'],
 									'name'         => $form['fields'][0]->inputs[4]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[4]['placeholder'],
@@ -237,6 +243,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'defaultValue' => $form['fields'][0]->inputs[5]['defaultValue'],
 									'id'           => $form['fields'][0]->inputs[5]['id'],
 									'isHidden'     => $form['fields'][0]->inputs[5]['isHidden'],
+									'key'          => 'country',
 									'label'        => $form['fields'][0]->inputs[5]['label'],
 									'name'         => $form['fields'][0]->inputs[5]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[5]['placeholder'],
