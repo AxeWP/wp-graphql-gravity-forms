@@ -43,6 +43,7 @@ class NameInputProperty implements Hookable, Type {
 					InputProperty\InputDefaultValueProperty::get(),
 					InputProperty\InputIdProperty::get(),
 					InputProperty\InputIsHiddenProperty::get(),
+					InputProperty\InputKeyProperty::get(),
 					InputProperty\InputLabelProperty::get(),
 					InputProperty\InputNameProperty::get(),
 					InputProperty\InputPlaceholderProperty::get(),
@@ -58,14 +59,6 @@ class NameInputProperty implements Hookable, Type {
 							'description' => __( 'Indicates whether the choice has a value, not just the text. This is only available for the Prefix field.', 'wp-graphql-gravity-forms' ),
 						],
 					],
-					/**
-					 * Deprecated field properties.
-					 *
-					 * @since 0.2.0
-					 */
-
-					// translators: Gravity Forms Field input property.
-					Utils::deprecate_property( InputProperty\InputKeyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
 				),
 			],
 		);
