@@ -63,7 +63,7 @@ class RadioField extends AbstractField {
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'choices'           => [
-					'type'        => [ 'list_of' => FieldProperty\RadioChoiceProperty::TYPE ],
+					'type'        => [ 'list_of' => FieldProperty\RadioChoiceProperty::$type ],
 					'description' => __( 'Choices used to populate the dropdown field. These can be nested multiple levels deep.', 'wp-graphql-gravity-forms' ),
 				],
 				'enableOtherChoice' => [

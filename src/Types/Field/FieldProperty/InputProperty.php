@@ -10,54 +10,50 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - InputProperty
  */
-class InputProperty implements Hookable, Type {
+class InputProperty extends AbstractProperty {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'InputProperty';
+	public static $type = 'InputProperty';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'Gravity Forms input property.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Gravity Forms input property.', 'wp-graphql-gravity-forms' ),
-				'fields'      => array_merge(
-					InputProperty\InputCustomLabelProperty::get(),
-					InputProperty\InputDefaultValueProperty::get(),
-					InputProperty\InputIdProperty::get(),
-					InputProperty\InputLabelProperty::get(),
-					InputProperty\InputPlaceholderProperty::get(),
-					/**
-					 * Deprecated field properties.
-					 *
-					 * @since 0.2.0
-					 */
+	protected function get_properties() : array {
+		return array_merge(
+			InputProperty\InputCustomLabelProperty::get(),
+			InputProperty\InputDefaultValueProperty::get(),
+			InputProperty\InputIdProperty::get(),
+			InputProperty\InputLabelProperty::get(),
+			InputProperty\InputPlaceholderProperty::get(),
+			/**
+			 * Deprecated field properties.
+			 *
+			 * @since 0.2.0
+			 */
 
-					// translators: Gravity Forms Field input property.
-					Utils::deprecate_property( InputProperty\InputIsHiddenProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
-					// translators: Gravity Forms Field input property.
-					Utils::deprecate_property( InputProperty\InputKeyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
-					// translators: Gravity Forms Field input property.
-					Utils::deprecate_property( InputProperty\InputNameProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::TYPE ) ),
-				),
-			]
+			// translators: Gravity Forms Field input property.
+			Utils::deprecate_property( InputProperty\InputIsHiddenProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
+			// translators: Gravity Forms Field input property.
+			Utils::deprecate_property( InputProperty\InputKeyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
+			// translators: Gravity Forms Field input property.
+			Utils::deprecate_property( InputProperty\InputNameProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
 		);
 	}
 }

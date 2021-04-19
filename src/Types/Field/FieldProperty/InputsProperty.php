@@ -24,7 +24,7 @@ class InputsProperty implements FieldProperty {
 	public static function get() : array {
 		return [
 			'inputs' => [
-				'type'        => [ 'list_of' => InputProperty::TYPE ],
+				'type'        => [ 'list_of' => InputProperty::$type ],
 				'description' => __( 'An array containing the the individual properties for each element of the field.', 'wp-graphql-gravity-forms' ),
 			],
 		];

@@ -13,42 +13,38 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
 
 /**
  * Class - PasswordInputProperty
  */
-class PasswordInputProperty implements Hookable, Type {
+class PasswordInputProperty extends AbstractProperty {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'PasswordInputProperty';
+	public static $type = 'PasswordInputProperty';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'An array containing the the individual properties for each element of the password field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'An array containing the the individual properties for each element of the password field.', 'wp-graphql-gravity-forms' ),
-				'fields'      => array_merge(
-					InputProperty\InputCustomLabelProperty::get(),
-					InputProperty\InputIdProperty::get(),
-					InputProperty\InputIsHiddenProperty::get(),
-					InputProperty\InputLabelProperty::get(),
-					InputProperty\InputPlaceholderProperty::get(),
-				),
-			]
+	protected function get_properties() : array {
+		return array_merge(
+			InputProperty\InputCustomLabelProperty::get(),
+			InputProperty\InputIdProperty::get(),
+			InputProperty\InputIsHiddenProperty::get(),
+			InputProperty\InputLabelProperty::get(),
+			InputProperty\InputPlaceholderProperty::get(),
 		);
 	}
 }

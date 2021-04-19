@@ -9,57 +9,52 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
-use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - NameInputProperty
  */
-class NameInputProperty implements Hookable, Type {
+class NameInputProperty extends AbstractProperty {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'NameInputProperty';
+	public static $type = 'NameInputProperty';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'An array containing the the individual properties for each element of the name field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
+	protected function get_properties() : array {
+		return array_merge(
+			InputProperty\InputCustomLabelProperty::get(),
+			InputProperty\InputDefaultValueProperty::get(),
+			InputProperty\InputIdProperty::get(),
+			InputProperty\InputIsHiddenProperty::get(),
+			InputProperty\InputKeyProperty::get(),
+			InputProperty\InputLabelProperty::get(),
+			InputProperty\InputNameProperty::get(),
+			InputProperty\InputPlaceholderProperty::get(),
 			[
-				'description' => __( 'An array containing the the individual properties for each element of the name field.', 'wp-graphql-gravity-forms' ),
-				'fields'      => array_merge(
-					InputProperty\InputCustomLabelProperty::get(),
-					InputProperty\InputDefaultValueProperty::get(),
-					InputProperty\InputIdProperty::get(),
-					InputProperty\InputIsHiddenProperty::get(),
-					InputProperty\InputKeyProperty::get(),
-					InputProperty\InputLabelProperty::get(),
-					InputProperty\InputNameProperty::get(),
-					InputProperty\InputPlaceholderProperty::get(),
-					[
-						'choices' => [
-							'type'        => [ 'list_of' => ChoiceProperty::TYPE ],
-							'description' => __( 'This array only exists when the Prefix field is used. It holds the prefix options that display in the drop down. These have been chosen in the admin.', 'wp-graphql-gravity-forms' ),
-						],
-					],
-					[
-						'enableChoiceValue' => [
-							'type'        => 'Boolean',
-							'description' => __( 'Indicates whether the choice has a value, not just the text. This is only available for the Prefix field.', 'wp-graphql-gravity-forms' ),
-						],
-					],
-				),
+				'choices' => [
+					'type'        => [ 'list_of' => ChoiceProperty::$type ],
+					'description' => __( 'This array only exists when the Prefix field is used. It holds the prefix options that display in the drop down. These have been chosen in the admin.', 'wp-graphql-gravity-forms' ),
+				],
+			],
+			[
+				'enableChoiceValue' => [
+					'type'        => 'Boolean',
+					'description' => __( 'Indicates whether the choice has a value, not just the text. This is only available for the Prefix field.', 'wp-graphql-gravity-forms' ),
+				],
 			],
 		);
 	}

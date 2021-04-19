@@ -9,46 +9,41 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
-use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - AddressInputProperty
  */
-class AddressInputProperty implements Hookable, Type {
+class AddressInputProperty extends AbstractProperty {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'AddressInputProperty';
+	public static $type = 'AddressInputProperty';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'An array containing the the individual properties for each element of the address field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'An array containing the the individual properties for each element of the address field.', 'wp-graphql-gravity-forms' ),
-				'fields'      => array_merge(
-					InputProperty\InputCustomLabelProperty::get(),
-					InputProperty\InputDefaultValueProperty::get(),
-					InputProperty\InputIdProperty::get(),
-					InputProperty\InputIsHiddenProperty::get(),
-					InputProperty\InputKeyProperty::get(),
-					InputProperty\InputLabelProperty::get(),
-					InputProperty\InputNameProperty::get(),
-					InputProperty\InputPlaceholderProperty::get(),
-				),
-			],
+	protected function get_properties() : array {
+		return array_merge(
+			InputProperty\InputCustomLabelProperty::get(),
+			InputProperty\InputDefaultValueProperty::get(),
+			InputProperty\InputIdProperty::get(),
+			InputProperty\InputIsHiddenProperty::get(),
+			InputProperty\InputKeyProperty::get(),
+			InputProperty\InputLabelProperty::get(),
+			InputProperty\InputNameProperty::get(),
+			InputProperty\InputPlaceholderProperty::get(),
 		);
 	}
 }

@@ -11,44 +11,39 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
-
 /**
  * Class - ListChoiceProperty
  */
-class ListChoiceProperty implements Hookable, Type {
+class ListChoiceProperty extends AbstractProperty {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'ListChoiceProperty';
+	public static $type = 'ListChoiceProperty';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'List field column labels.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'List field column labels.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'text'  => [
-						'type'        => 'String',
-						'description' => __( 'The text to be displayed in the column header. Required.', 'wp-graphql-gravity-forms' ),
-					],
-					'value' => [
-						'type'        => 'String',
-						'description' => __( 'The text to be displayed in the column header.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	protected function get_properties() : array {
+		return [
+			'text'  => [
+				'type'        => 'String',
+				'description' => __( 'The text to be displayed in the column header. Required.', 'wp-graphql-gravity-forms' ),
+			],
+			'value' => [
+				'type'        => 'String',
+				'description' => __( 'The text to be displayed in the column header.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 }

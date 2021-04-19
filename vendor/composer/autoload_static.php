@@ -131,6 +131,7 @@ class ComposerStaticInitbfbf9175b8255d015875c8ce55751c20
         'WPGraphQLGravityForms\\Types\\Field\\ConsentField' => __DIR__ . '/../..' . '/src/Types/Field/ConsentField.php',
         'WPGraphQLGravityForms\\Types\\Field\\DateField' => __DIR__ . '/../..' . '/src/Types/Field/DateField.php',
         'WPGraphQLGravityForms\\Types\\Field\\EmailField' => __DIR__ . '/../..' . '/src/Types/Field/EmailField.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AbstractProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/AbstractProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AddressInputProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/AddressInputProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AdminLabelProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/AdminLabelProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AdminOnlyProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/AdminOnlyProperty.php',
