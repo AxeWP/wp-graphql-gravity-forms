@@ -96,7 +96,7 @@ class AddressField extends AbstractField {
 					'description' => __( 'Indicates whether the copy values option can be used. This option allows users to skip filling out the field and use the same values as another. For example, if the mailing and billing address are the same.', 'wp-graphql-gravity-forms' ),
 				],
 				'inputs'                  => [
-					'type'        => [ 'list_of' => FieldProperty\AddressInputProperty::TYPE ],
+					'type'        => [ 'list_of' => FieldProperty\AddressInputProperty::$type ],
 					'description' => __( 'An array containing the the individual properties for each element of the address field.', 'wp-graphql-gravity-forms' ),
 				],
 			],

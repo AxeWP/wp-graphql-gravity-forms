@@ -62,7 +62,7 @@ class NameField extends AbstractField {
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'inputs'     => [
-					'type'        => [ 'list_of' => FieldProperty\NameInputProperty::TYPE ],
+					'type'        => [ 'list_of' => FieldProperty\NameInputProperty::$type ],
 					'description' => __( 'An array containing the the individual properties for each element of the name field.', 'wp-graphql-gravity-forms' ),
 				],
 				'nameFormat' => [

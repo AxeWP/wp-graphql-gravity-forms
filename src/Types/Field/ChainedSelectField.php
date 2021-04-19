@@ -63,7 +63,7 @@ class ChainedSelectField extends AbstractField {
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'choices'                    => [
-					'type'        => [ 'list_of' => FieldProperty\ChainedSelectChoiceProperty::TYPE ],
+					'type'        => [ 'list_of' => FieldProperty\ChainedSelectChoiceProperty::$type ],
 					'description' => __( 'Choices used to populate the dropdown field. These can be nested multiple levels deep.', 'wp-graphql-gravity-forms' ),
 				],
 				'chainedSelectsAlignment'    => [
@@ -75,7 +75,7 @@ class ChainedSelectField extends AbstractField {
 					'description' => __( 'Whether inactive dropdowns should be hidden.', 'wp-graphql-gravity-forms' ),
 				],
 				'inputs'                     => [
-					'type'        => [ 'list_of' => FieldProperty\ChainedSelectInputProperty::TYPE ],
+					'type'        => [ 'list_of' => FieldProperty\ChainedSelectInputProperty::$type ],
 					'description' => __( 'An array containing the the individual properties for each element of the Chained Select field.', 'wp-graphql-gravity-forms' ),
 				],
 			],

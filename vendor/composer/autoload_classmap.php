@@ -116,6 +116,7 @@ return array(
     'WPGraphQLGravityForms\\Types\\Field\\ConsentField' => $baseDir . '/src/Types/Field/ConsentField.php',
     'WPGraphQLGravityForms\\Types\\Field\\DateField' => $baseDir . '/src/Types/Field/DateField.php',
     'WPGraphQLGravityForms\\Types\\Field\\EmailField' => $baseDir . '/src/Types/Field/EmailField.php',
+    'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AbstractProperty' => $baseDir . '/src/Types/Field/FieldProperty/AbstractProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AddressInputProperty' => $baseDir . '/src/Types/Field/FieldProperty/AddressInputProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AdminLabelProperty' => $baseDir . '/src/Types/Field/FieldProperty/AdminLabelProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\AdminOnlyProperty' => $baseDir . '/src/Types/Field/FieldProperty/AdminOnlyProperty.php',

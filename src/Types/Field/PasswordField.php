@@ -61,7 +61,7 @@ class PasswordField extends AbstractField {
 			FieldProperty\SubLabelPlacementProperty::get(),
 			[
 				'inputs'                  => [
-					'type'        => [ 'list_of' => FieldProperty\PasswordInputProperty::TYPE ],
+					'type'        => [ 'list_of' => FieldProperty\PasswordInputProperty::$type ],
 					'description' => __( 'Individual properties for each element of the password field.', 'wp-graphql-gravity-forms' ),
 				],
 				'minPasswordStrength'     => [

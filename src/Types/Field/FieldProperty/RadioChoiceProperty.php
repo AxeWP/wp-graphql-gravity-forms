@@ -9,45 +9,41 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ChoiceProperty;
 
 /**
  * Class - RadioChoiceProperty
  */
-class RadioChoiceProperty implements Hookable, Type {
+class RadioChoiceProperty extends AbstractProperty {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'RadioChoiceProperty';
+	public static $type = 'RadioChoiceProperty';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'Gravity Forms Chained Select field choice property.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
+	protected function get_properties() : array {
+		return array_merge(
+			ChoiceProperty\ChoiceIsSelectedProperty::get(),
+			ChoiceProperty\ChoiceTextProperty::get(),
+			ChoiceProperty\ChoiceValueProperty::get(),
 			[
-				'description' => __( 'Gravity Forms Chained Select field choice property.', 'wp-graphql-gravity-forms' ),
-				'fields'      => array_merge(
-					ChoiceProperty\ChoiceIsSelectedProperty::get(),
-					ChoiceProperty\ChoiceTextProperty::get(),
-					ChoiceProperty\ChoiceValueProperty::get(),
-					[
-						'isOtherChoice' => [
-							'type'        => 'Boolean',
-							'description' => __( 'Indicates the radio button item is the “Other” choice.', 'wp-graphql-gravity-forms' ),
-						],
-					],
-				),
+				'isOtherChoice' => [
+					'type'        => 'Boolean',
+					'description' => __( 'Indicates the radio button item is the “Other” choice.', 'wp-graphql-gravity-forms' ),
+				],
 			],
 		);
 	}

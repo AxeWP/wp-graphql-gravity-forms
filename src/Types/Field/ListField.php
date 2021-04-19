@@ -66,7 +66,7 @@ class ListField extends AbstractField {
 					'description' => __( 'The URL of the image to be used for the add row button.', 'wp-graphql-gravity-forms' ),
 				],
 				'choices'       => [
-					'type'        => [ 'list_of' => FieldProperty\ListChoiceProperty::TYPE ],
+					'type'        => [ 'list_of' => FieldProperty\ListChoiceProperty::$type ],
 					'description' => __( 'The column labels. Only used when enableColumns is true.', 'wp-graphql-gravity-forms' ),
 				],
 				'deleteIconUrl' => [

@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => '0.4.0.x-dev',
-    'version' => '0.4.0.9999999-dev',
+    'pretty_version' => 'dev-develop',
+    'version' => 'dev-develop',
     'aliases' => 
     array (
     ),
-    'reference' => '41c2eb4fbedfdb211792fb90d65c9fbbc2027a3e',
+    'reference' => '9b2ad5dfb07df0d2020a5d997a57a046de127781',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
@@ -232,12 +232,12 @@
     ),
     'harness-software/wp-graphql-gravity-forms' => 
     array (
-      'pretty_version' => '0.4.0.x-dev',
-      'version' => '0.4.0.9999999-dev',
+      'pretty_version' => 'dev-develop',
+      'version' => 'dev-develop',
       'aliases' => 
       array (
       ),
-      'reference' => '41c2eb4fbedfdb211792fb90d65c9fbbc2027a3e',
+      'reference' => '9b2ad5dfb07df0d2020a5d997a57a046de127781',
     ),
     'hautelook/phpass' => 
     array (

@@ -10,46 +10,42 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ChoiceProperty;
 
 /**
  * Class - ChainedSelectChoiceProperty
  */
-class ChainedSelectChoiceProperty implements Hookable, Type {
+class ChainedSelectChoiceProperty extends AbstractProperty {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'ChainedSelectChoiceProperty';
+	public static $type = 'ChainedSelectChoiceProperty';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	protected function get_type_description() : string {
+		return __( 'Gravity Forms Chained Select field choice property.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
+	protected function get_properties() : array {
+		return array_merge(
+			ChoiceProperty\ChoiceIsSelectedProperty::get(),
+			ChoiceProperty\ChoiceTextProperty::get(),
+			ChoiceProperty\ChoiceValueProperty::get(),
 			[
-				'description' => __( 'Gravity Forms Chained Select field choice property.', 'wp-graphql-gravity-forms' ),
-				'fields'      => array_merge(
-					ChoiceProperty\ChoiceIsSelectedProperty::get(),
-					ChoiceProperty\ChoiceTextProperty::get(),
-					ChoiceProperty\ChoiceValueProperty::get(),
-					[
-						'choices' => [
-							'type'        => [ 'list_of' => self::TYPE ],
-							'description' => __( 'Choices used to populate the dropdown field. These can be nested multiple levels deep.', 'wp-graphql-gravity-forms' ),
-						],
-					],
-				),
-			]
+				'choices' => [
+					'type'        => [ 'list_of' => self::$type ],
+					'description' => __( 'Choices used to populate the dropdown field. These can be nested multiple levels deep.', 'wp-graphql-gravity-forms' ),
+				],
+			],
 		);
 	}
 }
