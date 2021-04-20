@@ -121,17 +121,16 @@ class SubmitForm extends AbstractMutation {
 					if ( ! empty( $payload['errors'] ) || ( ! $payload['entryId'] && ! $payload['resumeToken'] ) ) {
 						return null;
 					}
+					if ( $payload['resumeToken'] ) {
+						$submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
+
+						return $this->draft_entry_data_manipulator->manipulate( $submission['partial_entry'], $payload['resumeToken'] );
+					}
 
 					if ( $payload['entryId'] ) {
 						$entry = GFUtils::get_entry( $payload['entryId'] );
 
 						return $this->entry_data_manipulator->manipulate( $entry );
-					}
-
-					if ( $payload['resumeToken'] ) {
-						$submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
-
-						return $this->draft_entry_data_manipulator->manipulate( $submission['partial_entry'], $payload['resumeToken'] );
 					}
 				},
 			],
@@ -222,18 +221,19 @@ class SubmitForm extends AbstractMutation {
 		}
 
 		if ( $submission['resume_token'] ) {
-			$draft_entry = GFUtils::get_draft_entry( $submission['resume_token'] );
+			$draft_entry        = GFUtils::get_draft_entry( $submission['resume_token'] );
+			$decoded_submission = json_decode( $draft_entry['submission'], true );
 
-			$ip         = $ip ?? $draft_entry['partial_entry']['ip'];
-			$created_by = $created_by ?? $draft_entry['partial_entry']['created_by'];
-			$is_updated = GFFormsModel::update_draft_submission( $submission['resume_token'], $this->form, $draft_entry['partial_entry']['date_created'], $ip, $source_url, $draft_entry['submission'] );
+			$ip         = ! ! empty( $ip ) ? $ip : $decoded_submission['partial_entry']['ip'];
+			$created_by = $created_by ?? $decoded_submission['partial_entry']['created_by'];
+			$is_updated = GFFormsModel::update_draft_submission( $submission['resume_token'], $this->form, $draft_entry['date_created'], $ip, $source_url, $draft_entry['submission'] );
 			if ( empty( $is_updated ) ) {
 				throw new UserError( __( 'Unable to update the draft entry properties.', 'wp-graphql-gravity-forms' ) );
 			}
 			return;
 		}
 
-		if ( null !== $ip ) {
+		if ( ! empty( $ip ) ) {
 			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'ip', $ip );
 			if ( ! $is_updated ) {
 				throw new UserError( __( 'Unable to update the entry IP address', 'wp-graphql-gravity-forms' ) );
