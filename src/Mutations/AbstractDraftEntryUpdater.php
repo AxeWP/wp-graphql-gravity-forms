@@ -181,7 +181,7 @@ abstract class AbstractDraftEntryUpdater extends AbstractMutation {
 				$this->submission['page_number'] ?? 1, // @TODO: Maybe get from request.
 				$this->submission['files'] ?? [],
 				$this->submission['gform_unique_id'] ?? null,
-				$this->submission['partial_entry']['ip'] ?? null,
+				$this->submission['partial_entry']['ip'] ?? '',
 				$this->submission['partial_entry']['source_url'] ?? '',
 				$resume_token
 			);
