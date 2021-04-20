@@ -115,7 +115,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 				'descriptionPlacement'       => $this->tester->get_enum_for_value( Enum\FormDescriptionPlacementEnum::$type, $form['descriptionPlacement'] ),
 				'enableAnimation'            => $form['enableAnimation'],
 				'enableHoneypot'             => $form['enableHoneypot'],
-				'formFields'                     => [
+				'formFields'                 => [
 					'nodes' => [
 						[ 'type' => $form['fields'][0]['type'] ],
 						[ 'type' => $form['fields'][1]['type'] ],
@@ -287,7 +287,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					'descriptionPlacement'       => null,
 					'enableAnimation'            => null,
 					'enableHoneypot'             => null,
-					'formFields'                     => [
+					'formFields'                 => [
 						'nodes' => [],
 					],
 					'firstPageCssClass'          => null,
@@ -405,7 +405,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 
 		// Check `after` argument.
 		$expected_ids = wp_list_pluck( $actual['data']['gravityFormsForms']['nodes'], 'formId' );
-		$actual = graphql(
+		$actual       = graphql(
 			[
 				'query'     => $query,
 				'variables' => [

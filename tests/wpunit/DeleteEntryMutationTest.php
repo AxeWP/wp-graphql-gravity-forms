@@ -42,7 +42,7 @@ class DeleteEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 		$this->factory            = new Factories\Factory();
 		$this->fields[]           = $this->factory->field->create( $this->tester->getTextFieldDefaultArgs() );
 		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
-		$this->entry_id        = $this->factory->entry->create(
+		$this->entry_id           = $this->factory->entry->create(
 			[
 				'form_id'              => $this->form_id,
 				'created_by'           => $this->admin->ID,
@@ -106,7 +106,7 @@ class DeleteEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 		';
 
 		$variables = [
-			'entryId'      => $args['entryId'] ?? $this->entry_id,
+			'entryId'          => $args['entryId'] ?? $this->entry_id,
 			'clientMutationId' => $this->client_mutation_id,
 		];
 

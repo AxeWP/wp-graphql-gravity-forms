@@ -38,10 +38,6 @@ class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
 	public function create_object( $args ) : string {
 		$form = GFAPI::get_form( $args['form_id'] );
 
-		if ( ! isset( GFFormsModel::$unique_ids[ $args['form_id'] ] ) ) {
-			GFFormsModel::$unique_ids[ $args['form_id'] ] = uniqid();
-		}
-
 		$entry = array_replace(
 			[
 				'id'           => null,
@@ -91,8 +87,8 @@ class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
 	/**
 	 * Updates a draft entry object.
 	 *
-	 * @param string   $resume_token .
-	 * @param array $properties properties to update.
+	 * @param string $resume_token .
+	 * @param array  $properties properties to update.
 	 */
 	public function update_object( $resume_token, $properties ) {
 		$properties['resume_token'] = $resume_token;

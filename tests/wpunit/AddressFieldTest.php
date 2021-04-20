@@ -54,14 +54,22 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 		);
 		$this->draft_token = $this->factory->draft->create(
 			[
-				'form_id' => $this->form_id,
-				'entry'   => [
+				'form_id'     => $this->form_id,
+				'entry'       => [
 					$this->fields[0]['inputs'][0]['id'] => '123 Main St.',
 					$this->fields[0]['inputs'][1]['id'] => 'Apt. 456',
 					$this->fields[0]['inputs'][2]['id'] => 'Rochester Hills',
 					$this->fields[0]['inputs'][3]['id'] => 'Michigan',
 					$this->fields[0]['inputs'][4]['id'] => '48306',
 					$this->fields[0]['inputs'][5]['id'] => 'USA',
+				],
+				'fieldValues' => [
+					'input_' . $this->fields[0]['inputs'][0]['id'] => '123 Main St.',
+					'input_' . $this->fields[0]['inputs'][1]['id'] => 'Apt. 456',
+					'input_' . $this->fields[0]['inputs'][2]['id'] => 'Rochester Hills',
+					'input_' . $this->fields[0]['inputs'][3]['id'] => 'Michigan',
+					'input_' . $this->fields[0]['inputs'][4]['id'] => '48306',
+					'input_' . $this->fields[0]['inputs'][5]['id'] => 'USA',
 				],
 			]
 		);
@@ -203,7 +211,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'defaultValue' => $form['fields'][0]->inputs[1]['defaultValue'],
 									'id'           => $form['fields'][0]->inputs[1]['id'],
 									'isHidden'     => $form['fields'][0]->inputs[1]['isHidden'],
-									'key' => 'lineTwo',
+									'key'          => 'lineTwo',
 									'label'        => $form['fields'][0]->inputs[1]['label'],
 									'name'         => $form['fields'][0]->inputs[1]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[1]['placeholder'],
@@ -213,7 +221,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'defaultValue' => $form['fields'][0]->inputs[2]['defaultValue'],
 									'id'           => $form['fields'][0]->inputs[2]['id'],
 									'isHidden'     => $form['fields'][0]->inputs[2]['isHidden'],
-									'key' => 'city',
+									'key'          => 'city',
 									'label'        => $form['fields'][0]->inputs[2]['label'],
 									'name'         => $form['fields'][0]->inputs[2]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[2]['placeholder'],
@@ -223,7 +231,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'defaultValue' => $form['fields'][0]->inputs[3]['defaultValue'],
 									'id'           => $form['fields'][0]->inputs[3]['id'],
 									'isHidden'     => $form['fields'][0]->inputs[3]['isHidden'],
-									'key' => 'state',
+									'key'          => 'state',
 									'label'        => $form['fields'][0]->inputs[3]['label'],
 									'name'         => $form['fields'][0]->inputs[3]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[3]['placeholder'],
@@ -233,7 +241,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'defaultValue' => $form['fields'][0]->inputs[4]['defaultValue'],
 									'id'           => $form['fields'][0]->inputs[4]['id'],
 									'isHidden'     => $form['fields'][0]->inputs[4]['isHidden'],
-									'key' => 'zip',
+									'key'          => 'zip',
 									'label'        => $form['fields'][0]->inputs[4]['label'],
 									'name'         => $form['fields'][0]->inputs[4]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[4]['placeholder'],
@@ -281,7 +289,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 			[
 				'query'     => $query,
 				'variables' => [
-					'id' => $this->draft_token,
+					'id'     => $this->draft_token,
 					'idType' => 'ID',
 				],
 			]

@@ -36,6 +36,11 @@ class Form extends \WP_UnitTest_Factory_For_Thing {
 	 */
 	public function create_object( $args ) {
 		$form_id = GFAPI::add_form( $args );
+
+		if ( ! isset( GFFormsModel::$unique_ids[ $form_id ] ) ) {
+			GFFormsModel::$unique_ids[ $form_id ] = uniqid();
+		}
+
 		if ( ( array_key_exists( 'is_active', $args ) && ! $args['is_active'] ) || ! empty( $args['is_trash'] ) ) {
 			$form = GFAPI::get_form( $form_id );
 			$this->update_object(
