@@ -190,7 +190,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			return $values + $value_to_add;
 		}
 
-		$values[ $values['id'] ] = $value_to_add;
+		$values[ $field->id ] = $value_to_add;
 		return $values;
 	}
 
