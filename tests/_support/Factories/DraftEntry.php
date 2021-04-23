@@ -91,8 +91,8 @@ class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
 	/**
 	 * Updates a draft entry object.
 	 *
-	 * @param string   $resume_token .
-	 * @param array $properties properties to update.
+	 * @param string $resume_token .
+	 * @param array  $properties properties to update.
 	 */
 	public function update_object( $resume_token, $properties ) {
 		$properties['resume_token'] = $resume_token;

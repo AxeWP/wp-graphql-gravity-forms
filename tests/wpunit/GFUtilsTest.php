@@ -254,7 +254,7 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 	public function testSubmitForm_invalid() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$input_values = [
-			'input_' . $form['fields'][0]->id => 'Some other value',
+			'input_' . $form['fields'][0]->id => 'value2',
 		];
 
 		$this->expectException( UserError::class );

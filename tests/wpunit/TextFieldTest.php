@@ -10,7 +10,6 @@ use WPGraphQLGravityForms\Tests\Factories;
  * Class -TextFieldTest
  */
 class TextFieldTest extends \Codeception\TestCase\WPTestCase {
-
 	/**
 	 * @var \WpunitTesterActions
 	 */
@@ -49,9 +48,12 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 		);
 		$this->draft_token = $this->factory->draft->create(
 			[
-				'form_id' => $this->form_id,
-				'entry'   => [
+				'form_id'     => $this->form_id,
+				'entry'       => [
 					$this->fields[0]['id'] => 'This is a default Text Entry',
+				],
+				'fieldValues' => [
+					'input_' . $this->fields[0]['id'] => 'This is a default Text Entry',
 				],
 			]
 		);
@@ -66,6 +68,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->factory->entry->delete( $this->entry_id );
 		$this->factory->draft->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
+		GFFormsModel::set_current_lead( null );
 		// Then...
 		parent::tearDown();
 	}
@@ -73,10 +76,9 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Tests TextField properties and values.
 	 */
-	public function testTextField() :void {
+	public function testTextField() : void {
 		$entry = $this->factory->entry->get_object_by_id( $this->entry_id );
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
-
 
 		$query = '
 			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
@@ -112,6 +114,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 								noDuplicates
 								placeholder
 								size
+								value
 								visibility
 							}
 						}
@@ -162,6 +165,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 							'noDuplicates'         => $form['fields'][0]->noDuplicates,
 							'placeholder'          => $form['fields'][0]->placeholder,
 							'size'                 => $this->tester->get_enum_for_value( Enum\SizePropertyEnum::$type, $form['fields'][0]->size ),
+							'value'                => $entry[ $form['fields'][0]->id ],
 							'visibility'           => $this->tester->get_enum_for_value( Enum\VisibilityPropertyEnum::$type, $form['fields'][0]->visibility ),
 						],
 					],
@@ -175,7 +179,6 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			],
 		];
-
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertEquals( $expected, $actual['data'] );
 
@@ -191,5 +194,287 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertEquals( $expected, $actual['data'] );
+	}
+
+	/**
+	 * Test submitting TextField asa draft entry with submitGravityFormsForm.
+	 */
+	public function testSubmitFormTextFieldValue_draft() : void {
+		$form        = $this->factory->form->get_object_by_id( $this->form_id );
+		$field_value = 'value1';
+
+		$actual = graphql(
+			[
+				'query'     => $this->get_submit_form_query(),
+				'variables' => [
+					'draft'   => true,
+					'formId'  => $this->form_id,
+					'fieldId' => $form['fields'][0]->id,
+					'value'   => $field_value,
+				],
+			]
+		);
+
+		$this->assertArrayNotHasKey( 'errors', $actual );
+
+		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
+		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
+
+		$expected = [
+			'submitGravityFormsForm' => [
+				'errors'      => null,
+				'entryId'     => $entry_id,
+				'resumeToken' => $resume_token,
+				'entry'       => [
+					'formFields' => [
+						'edges' => [
+							0 => [
+								'fieldValue' => [
+									'value' => $field_value,
+								],
+							],
+						],
+						'nodes' => [
+							0 => [
+								'value' => $field_value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertEquals( $expected, $actual['data'] );
+
+		$this->factory->draft->delete( $resume_token );
+	}
+
+	/**
+	 * Test submitting TextField with submitGravityFormsForm.
+	 */
+	public function testSubmitGravityFormsFormTextFieldValue() : void {
+		$form        = $this->factory->form->get_object_by_id( $this->form_id );
+		$field_value = 'value1';
+
+		// Test entry.
+		$actual = graphql(
+			[
+				'query'     => $this->get_submit_form_query(),
+				'variables' => [
+					'draft'   => false,
+					'formId'  => $this->form_id,
+					'fieldId' => $form['fields'][0]->id,
+					'value'   => $field_value,
+				],
+			]
+		);
+		$this->assertArrayNotHasKey( 'errors', $actual );
+
+		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
+		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
+		$expected     = [
+			'submitGravityFormsForm' => [
+				'errors'      => null,
+				'entryId'     => $entry_id,
+				'resumeToken' => $resume_token,
+				'entry'       => [
+					'formFields' => [
+						'edges' => [
+							0 => [
+								'fieldValue' => [
+									'value' => $field_value,
+								],
+							],
+						],
+						'nodes' => [
+							0 => [
+								'value' => $field_value,
+							],
+						],
+					],
+				],
+			],
+		];
+
+		$this->assertEquals( $expected, $actual['data'] );
+
+		$actualEntry = GFAPI::get_entry( $entry_id );
+
+		$this->assertEquals( $field_value, $actualEntry[ $form['fields'][0]->id ] );
+		$this->factory->entry->delete( $entry_id );
+	}
+
+	/**
+	 * Test submitting TextField with updateDraftEntryTextFieldValue.
+	 */
+	public function testUpdateDraftEntryTextFieldValue() : void {
+		$form         = $this->factory->form->get_object_by_id( $this->form_id );
+		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$field_value  = 'value1';
+
+		// Test draft entry.
+		$query = '
+			mutation updateDraftEntryTextFieldValue( $fieldId: Int!, $resumeToken: String!, $value: String! ){
+				updateDraftEntryTextFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on TextFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on TextField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'fieldId'     => $form['fields'][0]->id,
+					'resumeToken' => $resume_token,
+					'value'       => $field_value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateDraftEntryTextFieldValue' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							0 => [
+								'fieldValue' => [
+									'value' => $field_value,
+								],
+							],
+						],
+						'nodes' => [
+							0 => [
+								'value' => $field_value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertEquals( $expected, $actual['data'] );
+
+		// Test submitted query.
+		$query = '
+			mutation( $resumeToken: String!) {
+				submitGravityFormsDraftEntry(input: {clientMutationId: "123abc", resumeToken: $resumeToken}) {
+					errors {
+						id
+						message
+					}
+					entryId
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on TextFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on TextField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'resumeToken' => $resume_token,
+				],
+			]
+		);
+		$this->assertArrayNotHasKey( 'errors', $actual );
+
+		$entry_id = $actual['data']['submitGravityFormsDraftEntry']['entryId'];
+
+		$expected = [
+			'submitGravityFormsDraftEntry' => [
+				'errors'  => null,
+				'entryId' => $entry_id,
+				'entry'   => [
+					'formFields' => [
+						'edges' => [
+							0 => [
+								'fieldValue' => [
+									'value' => $field_value,
+								],
+							],
+						],
+						'nodes' => [
+							0 => [
+								'value' => $field_value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertEquals( $expected, $actual['data'] );
+
+		$this->factory->entry->delete( $entry_id );
+	}
+
+	/**
+	 * Returns the SubmitForm graphQL query.
+	 *
+	 * @return string
+	 */
+	public function get_submit_form_query() : string {
+		return '
+			mutation ($formId: Int!, $fieldId: Int!, $value: String!, $draft: Boolean) {
+				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
+					errors {
+						id
+						message
+					}
+					entryId
+					resumeToken
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on TextFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on TextField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
 	}
 }
