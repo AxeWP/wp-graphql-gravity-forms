@@ -27,7 +27,7 @@ class TimeFieldValueProperty extends AbstractValueProperty {
 	 *
 	 * @var string
 	 */
-	public static $field_name = 'timeValue';
+	public static $field_name = 'timeValues';
 
 	/**
 	 * Gets the field type description.

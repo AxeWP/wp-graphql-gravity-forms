@@ -27,7 +27,7 @@ class AddressFieldValueProperty extends AbstractValueProperty {
 	 *
 	 * @var string
 	 */
-	public static $field_name = 'addressValue';
+	public static $field_name = 'addressValues';
 
 	/**
 	 * Gets the field type description.
