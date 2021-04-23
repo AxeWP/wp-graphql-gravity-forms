@@ -117,6 +117,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['post_content_field_value']   = new FieldValue\PostContentFieldValue();
 		$this->instances['post_custom_field_value']    = new FieldValue\PostCustomFieldValue();
 		$this->instances['post_excerpt_field_value']   = new FieldValue\PostExcerptFieldValue();
+		$this->instances['post_image_field_value']     = new FieldValue\PostImageFieldValue();
 		$this->instances['post_tags_field_value']      = new FieldValue\PostTagsFieldValue();
 		$this->instances['post_title_field_value']     = new FieldValue\PostTitleFieldValue();
 		$this->instances['radio_field_values']         = new FieldValue\RadioFieldValue();
@@ -132,6 +133,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['checkbox_value_property']             = new ValueProperty\CheckboxValueProperty();
 		$this->instances['list_value_property']                 = new ValueProperty\ListValueProperty();
 		$this->instances['name_value_property']                 = new ValueProperty\NameValueProperty();
+		$this->instances['post_image_value_property']           = new ValueProperty\PostImageValueProperty();
 		$this->instances['time_value_property']                 = new ValueProperty\TimeValueProperty();
 		$this->instances['address_field_value_property']        = new ValueProperty\AddressFieldValueProperty();
 		$this->instances['chained_select_field_value_property'] = new ValueProperty\ChainedSelectFieldValueProperty();
@@ -150,6 +152,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['post_content_field_value_property']   = new ValueProperty\PostContentFieldValueProperty();
 		$this->instances['post_custom_field_value_property']    = new ValueProperty\PostCustomFieldValueProperty();
 		$this->instances['post_excerpt_field_value_property']   = new ValueProperty\PostExcerptFieldValueProperty();
+		$this->instances['post_image_field_value_property']     = new ValueProperty\PostImageFieldValueProperty();
 		$this->instances['post_tags_field_value_property']      = new ValueProperty\PostTagsFieldValueProperty();
 		$this->instances['post_title_field_value_property']     = new ValueProperty\PostTitleFieldValueProperty();
 		$this->instances['radio_field_value_property']          = new ValueProperty\RadioFieldValueProperty();
