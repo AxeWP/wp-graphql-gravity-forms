@@ -11,6 +11,7 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\ConsentFieldValueProperty;
 
 /**
  * Class - ConsentFieldValue
@@ -57,8 +58,6 @@ class ConsentFieldValue extends AbstractFieldValue {
 	 * @return array Entry field value.
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
-			return [
-				'value' => $entry[ $field['inputs'][1]['id'] ] ?? null,
-			];
+		return [ 'value' => ConsentFieldValueProperty::get( $entry, $field ) ];
 	}
 }

@@ -10,6 +10,7 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\TextFieldValueProperty;
 
 /**
  * Class - TextFieldValue
@@ -57,7 +58,7 @@ class TextFieldValue extends AbstractFieldValue {
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
 		return [
-			'value' => isset( $entry[ $field['id'] ] ) ? (string) $entry[ $field['id'] ] : null,
+			'value' => TextFieldValueProperty::get( $entry, $field ),
 		];
 	}
 }

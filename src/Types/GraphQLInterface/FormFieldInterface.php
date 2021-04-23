@@ -17,6 +17,8 @@ use WPGraphQLGravityForms\WPGraphQLGravityForms;
 use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
+
+
 /**
  * Class - FormFieldInterface
  */
