@@ -54,10 +54,10 @@ class PostCategoryFieldValueProperty extends AbstractValueProperty {
 	 * @return array|null Entry field value.
 	 */
 	public static function get( array $entry, GF_Field $field ) {
-		$values      = $entry[ $field->id ] ?? null;
+		$values      = $entry[ $field->id ] ?: null;
 		$value_array = null;
 
-		if ( empty( $values ) ) {
+		if ( null === $values ) {
 			return null;
 		}
 

@@ -62,7 +62,7 @@ class ListFieldValueProperty extends AbstractValueProperty {
 			throw new UserError( __( 'Error! Trying to use a non ListField as a ListField!', 'wp-graphql-gravity-forms' ) );
 		}
 
-		$entry_values = $entry[ $field->id ] ?? null;
+		$entry_values = $entry[ $field->id ] ?: null;
 
 		if ( empty( $entry_values ) ) {
 			return [];

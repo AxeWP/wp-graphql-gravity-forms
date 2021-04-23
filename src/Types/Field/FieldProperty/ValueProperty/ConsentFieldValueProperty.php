@@ -54,6 +54,6 @@ class ConsentFieldValueProperty extends AbstractValueProperty {
 	 * @return string|null Entry field value.
 	 */
 	public static function get( array $entry, GF_Field $field ) {
-		return $entry[ $field->inputs[1]['id'] ] ?? null;
+		return $entry[ $field->inputs[1]['id'] ] ?: null;
 	}
 }

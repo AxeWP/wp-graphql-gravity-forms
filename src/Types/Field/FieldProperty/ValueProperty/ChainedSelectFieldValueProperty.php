@@ -56,7 +56,7 @@ class ChainedSelectFieldValueProperty extends AbstractValueProperty {
 	public static function get( array $entry, GF_Field $field ) : array {
 		$values = array_map(
 			function( $input ) use ( $entry ) {
-				return $entry[ $input['id'] ] ?? '';
+				return $entry[ $input['id'] ] ?: null;
 			},
 			$field->inputs
 		);

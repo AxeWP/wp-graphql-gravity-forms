@@ -58,7 +58,7 @@ class SignatureFieldValueProperty extends AbstractValueProperty {
 		if ( ! class_exists( 'GF_Field_Signature' ) || ! $field instanceof GF_Field_Signature || ! array_key_exists( $field->id, $entry ) ) {
 			return null;
 		}
-		$value = $field->get_value_url( $entry[ $field->id ] ) ?? null;
+		$value = $field->get_value_url( $entry[ $field->id ] ) ?: null;
 		return $value;
 	}
 }

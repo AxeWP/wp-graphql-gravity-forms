@@ -71,10 +71,10 @@ class TimeFieldValueProperty extends AbstractValueProperty {
 		$minutes        = rtrim( ltrim( $display_value, "{$hours}:" ), " {$am_pm}" );
 
 		return [
-			'displayValue' => $display_value,
-			'hours'        => $hours,
-			'minutes'      => $minutes,
-			'amPm'         => $am_pm,
+			'displayValue' => $display_value ?: null,
+			'hours'        => $hours ?: null,
+			'minutes'      => $minutes ?: null,
+			'amPm'         => $am_pm ?: null,
 		];
 	}
 }
