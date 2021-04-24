@@ -64,33 +64,55 @@ class EntryFieldConnection implements Hookable, Connection {
 						'type'              => ObjectFieldValueUnion::TYPE,
 						'description'       => __( 'Field value.', 'wp-graphql-gravity-forms' ),
 						'deprecationReason' => __( 'Please use `formFields.nodes.value` instead.', 'wp-graphql-gravity-forms' ),
-						'resolve'           => $this->edge_field_value_resolver(),
-					],
-				],
-				'resolve'       => $this->form_fields_resolver(),
-			]
-		);
+						'resolve'           => function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
+							$field = $this->get_field_by_gf_field_type( $root['node']['type'] );
+							if ( ! $field ) {
+								return null;
+							}
+							$value_class = $this->get_field_value_class( $field );
 
-		/**
-		 * Deprecated `fields`.
-		 *
-		 * @since 0.4.0
-		 */
-		register_graphql_connection(
-			[
-				'deprecationReason' => __( 'Deprecated in favor of `formFields`.', 'wp-graphql-gravity-forms' ),
-				'fromType'          => Entry::TYPE,
-				'toType'            => FormFieldInterface::TYPE,
-				'fromFieldName'     => 'fields',
-				'edgeFields'        => [
-					'fieldValue' => [
-						'type'              => ObjectFieldValueUnion::TYPE,
-						'deprecationReason' => __( 'Please use `formFields.nodes.value` instead.', 'wp-graphql-gravity-forms' ),
-						'description'       => __( 'Field value.', 'wp-graphql-gravity-forms' ),
-						'resolve'           => $this->edge_field_value_resolver(),
+							// Account for fields that do not have a value class.
+							if ( ! $value_class ) {
+								return null;
+							}
+
+							return array_merge(
+							// 'value_class' is included here to pass it through to the "resolveType"
+							// callback function in ObjectFieldValueUnion.
+								[ 'value_class' => $value_class ],
+								$value_class::get( $root['source'], $root['node'] )
+							);
+						},
 					],
 				],
-				'resolve'           => $this->form_fields_resolver(),
+				'resolve'       => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
+					$form = GFUtils::get_form( $root['formId'], false );
+
+					$fields = ( new FieldsDataManipulator() )->manipulate( $form['fields'] );
+
+					$connection = Relay::connectionFromArray( $fields, $args );
+
+					// Add the entry to each edge with a key of 'source'. This is needed so that
+					// the fieldValue edge field resolver has has access to the form entry.
+					$connection['edges'] = array_map(
+						function( $edge ) use ( $root ) {
+							$edge['source'] = $root;
+							return $edge;
+						},
+						$connection['edges']
+					);
+
+					$nodes               = array_map(
+						function( $edge ) {
+							$edge['node']           = $edge['node'] ?? null;
+							$edge['node']['source'] = $edge['source'];
+							return $edge['node'];
+						},
+						$connection['edges']
+					);
+					$connection['nodes'] = $nodes ?: null;
+					return $connection;
+				},
 			]
 		);
 	}
@@ -151,68 +173,5 @@ class EntryFieldConnection implements Hookable, Connection {
 		);
 
 		return $value_class_array ? array_values( $value_class_array )[0] : null;
-	}
-
-	/**
-	 * Resolves fieldValue on formField edges.
-	 *
-	 * @deprecated since 0.5.0
-	 *
-	 * @return callable
-	 */
-	public function edge_field_value_resolver() : callable {
-		return function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
-			$field = $this->get_field_by_gf_field_type( $root['node']['type'] );
-			if ( ! $field ) {
-				return null;
-			}
-			$value_class = $this->get_field_value_class( $field );
-
-			// Account for fields that do not have a value class.
-			if ( ! $value_class ) {
-				return null;
-			}
-
-			return array_merge(
-				// 'value_class' is included here to pass it through to the "resolveType"
-				// callback function in ObjectFieldValueUnion.
-				[ 'value_class' => $value_class ],
-				$value_class::get( $root['source'], $root['node'] )
-			);
-		};
-	}
-
-	/**
-	 * Resolves formFields.
-	 */
-	public function form_fields_resolver() : callable {
-		return function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
-			$form = GFUtils::get_form( $root['formId'], false );
-
-			$fields = ( new FieldsDataManipulator() )->manipulate( $form['fields'] );
-
-			$connection = Relay::connectionFromArray( $fields, $args );
-
-			// Add the entry to each edge with a key of 'source'. This is needed so that
-			// the fieldValue edge field resolver has has access to the form entry.
-			$connection['edges'] = array_map(
-				function( $edge ) use ( $root ) {
-					$edge['source'] = $root;
-					return $edge;
-				},
-				$connection['edges']
-			);
-
-			$nodes               = array_map(
-				function( $edge ) {
-					$edge['node']           = $edge['node'] ?? null;
-					$edge['node']['source'] = $edge['source'];
-					return $edge['node'];
-				},
-				$connection['edges']
-			);
-			$connection['nodes'] = $nodes ?: null;
-			return $connection;
-		};
 	}
 }

@@ -3,7 +3,7 @@
  * Interface for Gravity Forms entry value property.
  *
  * @package WPGraphQLGravityForms\Interfaces
- * @since 0.0.1
+ * @since 0.5.0
  */
 
 namespace WPGraphQLGravityForms\Interfaces;
@@ -17,8 +17,6 @@ interface ValueProperty {
 
 	/**
 	 * Sets the field type description.
-	 *
-	 * @since 0.4.0
 	 *
 	 * @return string field type description.
 	 */
