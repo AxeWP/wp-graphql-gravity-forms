@@ -1,11 +1,14 @@
 # Changelog
 
-## v0.5.0 - Gatsby Support
+## v0.5.0 - Add Gatsby Support, Email Confirmation, and more!
+
+** :warning: This release contains multiple breaking changes. **
+
+This release moves `entry.formField` values from `edges` to `nodes`, slimming down the query boilerplate and making the plugin compatible with `gatsby-source-wordpress`. We also added support for submitting an email `confirmationValue` and retrieving `PostImage` values, squashed a few bugs, and made the `wp_graphql_gf_can_view_entries` filter more useful.
 
 ### New features
-- [Breaking] Added support for submitting email confirmation values by using a new input type `FieldValuesInput.emailValues`.
-
-```diffgraphql
+- [**Breaking**] Added support for submitting email confirmation values by using a new input type `FieldValuesInput.emailValues`.
+```diff
 {
   submitGravityFormsForm(
     input: {
@@ -24,18 +27,101 @@
     }
   )
 }
+```
+- [**Breaking**] The `wp_graphql_gf_can_view_entries` filter now passes `entry_ids` instead of `field_ids`. This lets you do cool things like allowing authenticated users to edit _only their own_ entries:
+```php
+add_filter(
+  'wp_graphql_gf_can_view_entries',
+  function( bool $can_view_entries, array $entry_ids ) {
+    if ( ! $can_view_entries ) {
+      $current_user_id = get_current_user_id();
 
+      // Grab each queried entry and check if the `created_by` id matches the current user id.
+      foreach ( $entry_ids as $id ) {
+        $entry = GFAPI::get_entry( $id );
+
+        if ( $current_user_id !== (int) $entry['created_by'] ) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  },
+  10,
+  2
+);
+```
+- Deprecated `formFields.edges.fieldValue` in favor of `formFields.nodes.{value|typeValues}`. Not just does this dramatically slim down the boilerplate needed for your queries, but it also works with `gatsby-source-wordpress`. 
+```diff
+{
+  gravityFormsEntry(id: 2977, idType: DATABASE_ID) {
+    formFields{
+-     edges {
+-       fieldValue {
+-         ... on TextFieldValue {
+-           value
+-         }
+-         ... on CheckboxFieldValue {
+-           checkboxValues {
+-             inputId
+-             value
+-           }
+-         }
+-         ... on AddressFieldValue {
+-           addressValues {
+-             street
+-             lineTwo
+-             city
+-             state
+-             zip
+-             country
+-           }
+-         }
+-       }
+-     }
+      nodes {
+        ... on TextField {
+          # Other field properties
++         value
+        }
+        ... on CheckboxField {
+          # Other field properties
++         checkboxValues {
++           inputId
++           value
++         }
+        }
+        ... on AddressField {
+          # Other field properties
++         addressValues {
++           street
++           lineTwo
++           city
++           state
++           zip
++           country
++         }
+        }
+      }
+    }
+  }
+}
 ```
 
+- Added support for retrieving `PostImage` field values.
+
 ### Bugfixes
-- Fix field `id`s missing from `UpdateDraftEntry{Type}FieldValue` `errors`.
-- Prevent PHP notice about missing `entry_id` when `submitGravityFormsDraftEntry fails.
+- Fixed field `id`s missing from `UpdateDraftEntry{Type}FieldValue` `errors`.
+- Prevented PHP notices about missing `entry_id` when `submitGravityFormsDraftEntry fails.
+- Prevented `UpdateDraftEntry{Type}FieldValue` from deleting the previously stored `ip`.
+- Entry queries now correctly check for `gform_full_access` permission when `gravityforms_edit_entries` doesn't exist.
 - Undeprecate `InputKeyProperty` on `name` and `address` fields. Although this is not part of the GF api, it is helpful to associate the `inputs` with their entry `values`.
-- Prevent `UpdateDraftEntry{Type}FieldValue` from deleting the previously stored `ip`.
 
 ### Under the hood
 - Added more unit tests for `TextField`, `TextAreaField`, and `AddressField`.
-- Refactor `FieldProperty` classes to use `AbstractProperty`.
+- Refactored `FieldProperty` classes to use `AbstractProperty`.
+
 ## v0.4.1 - Bugfix
 - Uses `sanitize_text_field` to sanitize email values, so failing values can be validated by Gravity Forms. ( h/t @PudparK )
 
