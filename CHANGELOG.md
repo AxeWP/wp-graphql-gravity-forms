@@ -1,5 +1,41 @@
 # Changelog
 
+## v0.5.0 - Gatsby Support
+
+### New features
+- [Breaking] Added support for submitting email confirmation values by using a new input type `FieldValuesInput.emailValues`.
+
+```diffgraphql
+{
+  submitGravityFormsForm(
+    input: {
+      formId: 1
+      clientMutationId: "123abcc"
+      fieldValues: [
+        {
+          id: 1
+-         value: "myemail@email.test"
++         emailValues: {
++           value: "myemail@email.test"
++           confirmationValue: "myemail@email.test" # Only necessary if Email confirmation is enabled.
+         }
+        }
+      ]
+    }
+  )
+}
+
+```
+
+### Bugfixes
+- Fix field `id`s missing from `UpdateDraftEntry{Type}FieldValue` `errors`.
+- Prevent PHP notice about missing `entry_id` when `submitGravityFormsDraftEntry fails.
+- Undeprecate `InputKeyProperty` on `name` and `address` fields. Although this is not part of the GF api, it is helpful to associate the `inputs` with their entry `values`.
+- Prevent `UpdateDraftEntry{Type}FieldValue` from deleting the previously stored `ip`.
+
+### Under the hood
+- Added more unit tests for `TextField`, `TextAreaField`, and `AddressField`.
+- Refactor `FieldProperty` classes to use `AbstractProperty`.
 ## v0.4.1 - Bugfix
 - Uses `sanitize_text_field` to sanitize email values, so failing values can be validated by Gravity Forms. ( h/t @PudparK )
 
