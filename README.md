@@ -262,18 +262,19 @@ Inside of `formFields`, you must include query fragments indicating what data yo
         ... on AddressField {
           label
           inputs {
-        isHidden
+            key
+            isHidden
+          }
+          addressValues { # The field value
+            street
+            lineTwo
+            city
+            state
+            zip
+            country
+          }
+        }
       }
-      addressValues { # The field value
-    street
-    lineTwo
-    city
-    state
-    zip
-    country
-      }
-    }
-  }
     }
   }
 }
