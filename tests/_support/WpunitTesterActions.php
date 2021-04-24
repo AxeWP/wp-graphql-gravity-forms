@@ -3,6 +3,7 @@
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -15,12 +16,12 @@
  * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
-*/
-class WpunitTesterActions extends \Codeception\Actor
-{
-    use _generated\WpunitTesterActionsActions;
+ */
+class WpunitTesterActions extends \Codeception\Actor {
 
-    /**
-     * Define custom actions here
-     */
+	use _generated\WpunitTesterActionsActions;
+
+	/**
+	 * Define custom actions here
+	 */
 }

@@ -228,7 +228,8 @@ The `id` input accepts either the Gravity Forms Entry ID (`idType: DATABASE_ID`)
 
 For `formFields`, pass in `first: 300`, where `300` is the maximum number of fields you want to query for.
 
-Inside of `formFields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragments inside of `node { ... }` and inside of `fieldValue { ... }` for every type of field that your form has.
+Inside of `formFields`, you must include query fragments indicating what data you'd like back for each field, as shown below. You'll want to make sure that you have a fragment for every type of field that your form has.
+
 
 #### Example Query
 
@@ -241,46 +242,38 @@ Inside of `formFields`, you must include query fragments indicating what data yo
     isDraft
     resumeToken
     formFields(first: 300) {
-      edges {
-        node {
-          id
-          type
-          ... on TextField {
-            label
-          }
-          ... on CheckboxField {
-            label
-            choices {
-              isSelected
-            }
-          }
-          ... on AddressField {
-            label
-            inputs {
-              isHidden
-            }
-          }
+      nodes {
+        id
+        type
+        ... on TextField {
+          label
+          value # The field value
         }
-        fieldValue {
-          ... on TextFieldValue {
+        ... on CheckboxField {
+          label
+          choices {
+            isSelected
+          }
+          checkboxValues { # The field value
+            inputId
             value
           }
-          ... on CheckboxFieldValue {
-            checkboxValues {
-              inputId
-              value
-            }
-          }
-          ... on AddressFieldValue {
-            street
-            lineTwo
-            city
-            state
-            zip
-            country
-          }
         }
+        ... on AddressField {
+          label
+          inputs {
+        isHidden
       }
+      addressValues { # The field value
+    street
+    lineTwo
+    city
+    state
+    zip
+    country
+      }
+    }
+  }
     }
   }
 }
@@ -299,8 +292,8 @@ To query a Draft Entry, simply pass the `resumeToken` to the input `id` field, a
 ```graphql
 {
   gravityFormsEntry(id: "f82a5d986f4d4f199893f751adee98e9", idType: ID) {
-		# The fields you want to return.
-	}
+    # The fields you want to return.
+  }
 }
 ```
 
@@ -358,17 +351,10 @@ The plugin supports first/after cursor-based pagination, but does not yet suppor
         }
       }
       formFields(first: 300) {
-        edges {
-          node {
+        nodes {
+          ... on TextField {
             type
-            ... on TextField {
-              type
-            }
-          }
-          fieldValue {
-            ... on TextFieldValue {
-              value
-            }
+            value
           }
         }
       }
@@ -591,11 +577,9 @@ mutation {
       resumeToken # This will be the same resumeToken that was passed in.
       isDraft # This will be set to true.
       formFields(first: 300) {
-        edges {
-          fieldValue {
-            ... on TextFieldValue {
-              value
-            }
+        nodes {
+          ... on TextField {
+            value
           }
         }
       }
@@ -640,13 +624,10 @@ mutation {
       entryId # This will be the ID of the newly created entry.
       resumeToken # This will be null, since the entry is no longer a draft.
       isDraft # This will be set to false.
-      formFields {
-        edges {
-          fieldValue {
-            __typename
-            ... on TextFieldValue {
-              value
-            }
+      formFields(first: 300) {
+        nodes {
+          ... on TextField {
+            value
           }
         }
       }

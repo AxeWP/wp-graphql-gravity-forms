@@ -10,6 +10,7 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\AddressFieldValueProperty;
 
 /**
  * Class - AddressFieldValue
@@ -76,13 +77,6 @@ class AddressFieldValue extends AbstractFieldValue {
 	 * @return array Entry field value.
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
-		return [
-			'street'  => $entry[ $field['inputs'][0]['id'] ] ?? null,
-			'lineTwo' => $entry[ $field['inputs'][1]['id'] ] ?? null,
-			'city'    => $entry[ $field['inputs'][2]['id'] ] ?? null,
-			'state'   => $entry[ $field['inputs'][3]['id'] ] ?? null,
-			'zip'     => $entry[ $field['inputs'][4]['id'] ] ?? null,
-			'country' => $entry[ $field['inputs'][5]['id'] ] ?? null,
-		];
+		return AddressFieldValueProperty::get( $entry, $field );
 	}
 }

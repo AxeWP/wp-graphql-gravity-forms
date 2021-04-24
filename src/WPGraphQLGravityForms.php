@@ -16,6 +16,7 @@ use WPGraphQLGravityForms\Types\Enum;
 use WPGraphQLGravityForms\Types\Form;
 use WPGraphQLGravityForms\Types\Field;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
 use WPGraphQLGravityForms\Types\Field\FieldValue;
 use WPGraphQLGravityForms\Types\FieldError\FieldError;
 use WPGraphQLGravityForms\Types\Union;
@@ -116,6 +117,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['post_content_field_value']   = new FieldValue\PostContentFieldValue();
 		$this->instances['post_custom_field_value']    = new FieldValue\PostCustomFieldValue();
 		$this->instances['post_excerpt_field_value']   = new FieldValue\PostExcerptFieldValue();
+		$this->instances['post_image_field_value']     = new FieldValue\PostImageFieldValue();
 		$this->instances['post_tags_field_value']      = new FieldValue\PostTagsFieldValue();
 		$this->instances['post_title_field_value']     = new FieldValue\PostTitleFieldValue();
 		$this->instances['radio_field_values']         = new FieldValue\RadioFieldValue();
@@ -125,6 +127,41 @@ final class WPGraphQLGravityForms {
 		$this->instances['text_field_value']           = new FieldValue\TextFieldValue();
 		$this->instances['time_field_value']           = new FieldValue\TimeFieldValue();
 		$this->instances['website_field_value']        = new FieldValue\WebsiteFieldValue();
+
+		// Field Value Property.
+		$this->instances['address_value_property']              = new ValueProperty\AddressValueProperty();
+		$this->instances['checkbox_value_property']             = new ValueProperty\CheckboxValueProperty();
+		$this->instances['list_value_property']                 = new ValueProperty\ListValueProperty();
+		$this->instances['name_value_property']                 = new ValueProperty\NameValueProperty();
+		$this->instances['post_image_value_property']           = new ValueProperty\PostImageValueProperty();
+		$this->instances['time_value_property']                 = new ValueProperty\TimeValueProperty();
+		$this->instances['address_field_value_property']        = new ValueProperty\AddressFieldValueProperty();
+		$this->instances['chained_select_field_value_property'] = new ValueProperty\ChainedSelectFieldValueProperty();
+		$this->instances['checkbox_field_value_property']       = new ValueProperty\CheckboxFieldValueProperty();
+		$this->instances['consent_field_value_property']        = new ValueProperty\ConsentFieldValueProperty();
+		$this->instances['date_field_value_property']           = new ValueProperty\DateFieldValueProperty();
+		$this->instances['email_field_value_property']          = new ValueProperty\EmailFieldValueProperty();
+		$this->instances['file_upload_field_value_property']    = new ValueProperty\FileUploadFieldValueProperty();
+		$this->instances['hidden_field_value_property']         = new ValueProperty\HiddenFieldValueProperty();
+		$this->instances['list_field_value_property']           = new ValueProperty\ListFieldValueProperty();
+		$this->instances['multiselect_field_value_property']    = new ValueProperty\MultiSelectFieldValueProperty();
+		$this->instances['name_field_value_property']           = new ValueProperty\NameFieldValueProperty();
+		$this->instances['number_field_value_property']         = new ValueProperty\NumberFieldValueProperty();
+		$this->instances['phone_field_value_property']          = new ValueProperty\PhoneFieldValueProperty();
+		$this->instances['post_category_field_value_property']  = new ValueProperty\PostCategoryFieldValueProperty();
+		$this->instances['post_content_field_value_property']   = new ValueProperty\PostContentFieldValueProperty();
+		$this->instances['post_custom_field_value_property']    = new ValueProperty\PostCustomFieldValueProperty();
+		$this->instances['post_excerpt_field_value_property']   = new ValueProperty\PostExcerptFieldValueProperty();
+		$this->instances['post_image_field_value_property']     = new ValueProperty\PostImageFieldValueProperty();
+		$this->instances['post_tags_field_value_property']      = new ValueProperty\PostTagsFieldValueProperty();
+		$this->instances['post_title_field_value_property']     = new ValueProperty\PostTitleFieldValueProperty();
+		$this->instances['radio_field_value_property']          = new ValueProperty\RadioFieldValueProperty();
+		$this->instances['select_field_value_property']         = new ValueProperty\SelectFieldValueProperty();
+		$this->instances['signature_field_value_property']      = new ValueProperty\SignatureFieldValueProperty();
+		$this->instances['text_area_field_value_property']      = new ValueProperty\TextAreaFieldValueProperty();
+		$this->instances['text_field_value_property']           = new ValueProperty\TextFieldValueProperty();
+		$this->instances['time_field_value_property']           = new ValueProperty\TimeFieldValueProperty();
+		$this->instances['website_field_value_property']        = new ValueProperty\WebsiteFieldValueProperty();
 
 		// Entries.
 		$this->instances['entry']      = new Entry\Entry( $this->instances['entry_data_manipulator'], $this->instances['draft_entry_data_manipulator'] );

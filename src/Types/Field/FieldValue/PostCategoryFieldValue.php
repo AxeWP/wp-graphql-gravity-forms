@@ -10,6 +10,7 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\PostCategoryFieldValueProperty;
 
 /**
  * Class - PostCategoryFieldValue
@@ -56,18 +57,6 @@ class PostCategoryFieldValue extends AbstractFieldValue {
 	 * @return array Entry field value.
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
-		$entry_values = $entry[ $field['id'] ] ?? null;
-
-		if ( empty( $entry_values ) ) {
-			return [ 'values' => null ];
-		}
-
-		if ( is_string( $entry_values ) ) {
-			$entry_values = json_decode( $entry_values );
-		}
-
-		return [
-			'values' => $entry_values,
-		];
+		return [ 'values' => PostCategoryFieldValueProperty::get( $entry, $field ) ];
 	}
 }

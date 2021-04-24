@@ -26,9 +26,25 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	 * Returns whether query should execute.
 	 *
 	 * @return bool
+	 *
+	 * @throws UserError .
 	 */
 	public function should_execute() : bool {
-		return current_user_can( 'gravityforms_view_entries' );
+		/**
+		 * Filter to control whether the user should be allowed to view entries.
+		 *
+		 * @since 0.5.0
+		 *
+		 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
+		 * @param array $entry_ids The entry IDs being queried.
+		 */
+		$can_user_view_entries = apply_filters( 'wp_graphql_gf_can_view_entries', current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ), $this->get_ids() );
+
+		if ( ! $can_user_view_entries ) {
+			throw new UserError( __( 'Sorry, you are not allowed to view Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		return $can_user_view_entries;
 	}
 
 	/**

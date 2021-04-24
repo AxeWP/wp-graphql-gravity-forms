@@ -10,6 +10,7 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\CheckboxFieldValueProperty;
 
 /**
  * Value for a checkbox field.
@@ -55,20 +56,6 @@ class CheckboxFieldValue extends AbstractFieldValue {
 	 * @return array Entry field value.
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
-		$field_input_ids = wp_list_pluck( $field->inputs, 'id' );
-		$checkboxValues  = [];
-
-		foreach ( $entry as $input_id => $value ) {
-			$is_field_input_value = in_array( $input_id, $field_input_ids, true ) && '' !== $value;
-
-			if ( $is_field_input_value ) {
-				$checkboxValues[] = [
-					'inputId' => $input_id,
-					'value'   => $value,
-				];
-			}
-		}
-
-		return compact( 'checkboxValues' );
+		return [ 'checkboxValues' => CheckboxFieldValueProperty::get( $entry, $field ) ];
 	}
 }

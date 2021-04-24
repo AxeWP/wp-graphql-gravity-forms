@@ -97,7 +97,7 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 				'dateCreated' => $entry['date_created'],
 				'dateUpdated' => $entry['date_updated'],
 				'entryId'     => (int) $entry['id'],
-				'formFields'      => [
+				'formFields'  => [
 					'edges' => [
 						[
 							'fieldValue' => [
@@ -183,7 +183,7 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 				'dateCreated' => $entry['date_created'],
 				'dateUpdated' => $entry['date_updated'],
 				'entryId'     => (int) $entry['id'],
-				'formFields'      => [
+				'formFields'  => [
 					'edges' => [
 						[
 							'fieldValue' => [

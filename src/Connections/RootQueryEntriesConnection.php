@@ -11,7 +11,6 @@
 namespace WPGraphQLGravityForms\Connections;
 
 use GraphQL\Type\Definition\ResolveInfo;
-use GraphQL\Error\UserError;
 use GraphQL\Deferred;
 use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Interfaces\Hookable;
@@ -75,35 +74,9 @@ class RootQueryEntriesConnection implements Hookable, Connection {
 					],
 				],
 				'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) : Deferred {
-					/**
-					 * Filter to control whether the user should be allowed to view entries.
-					 *
-					 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
-					 * @param array $form_ids The form IDs to get entries by.
-					 */
-					$can_user_view_entries = apply_filters( 'wp_graphql_gf_can_view_entries', current_user_can( 'gravityforms_view_entries' ), $this->get_form_ids( $args ) );
-
-					if ( ! $can_user_view_entries ) {
-						throw new UserError( __( 'Sorry, you are not allowed to view Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );
-					}
-
 					return ( new RootQueryEntriesConnectionResolver( $root, $args, $context, $info ) )->get_connection();
 				},
 			]
 		);
-	}
-
-	/**
-	 * Gets array of form ids.
-	 *
-	 * @param array $args The input arguments for the query.
-	 * @return array
-	 */
-	private function get_form_ids( array $args ) : array {
-		if ( ! empty( $args['where']['formIds'] ) && is_array( $args['where']['formIds'] ) ) {
-			return array_map( 'absint', $args['where']['formIds'] );
-		}
-
-		return [];
 	}
 }

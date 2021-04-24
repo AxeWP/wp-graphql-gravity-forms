@@ -10,6 +10,7 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\PostTitleFieldValueProperty;
 
 /**
  * Class - PostTitleFieldValue
@@ -56,8 +57,6 @@ class PostTitleFieldValue extends AbstractFieldValue {
 	 * @return array Entry field value.
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
-		return [
-			'value' => isset( $entry[ $field['id'] ] ) ? (string) $entry[ $field['id'] ] : null,
-		];
+		return [ 'value' => PostTitleFieldValueProperty::get( $entry, $field ) ];
 	}
 }
