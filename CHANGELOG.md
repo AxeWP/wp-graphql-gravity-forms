@@ -6,7 +6,10 @@
 
 This release moves `entry.formField` values from `edges` to `nodes`, slimming down the query boilerplate and making the plugin compatible with `gatsby-source-wordpress`. We also added support for submitting an email `confirmationValue` and retrieving `PostImage` values, squashed a few bugs, and made the `wp_graphql_gf_can_view_entries` filter more useful.
 
+We also complete removed the form/entry `fields` property. All usage should be replaced with `formFields`.
+
 ### New features
+- [**Breaking**] Removed `fields` from `entry` and `form`. Please update your code to use `formFields` instead.
 - [**Breaking**] Added support for submitting email confirmation values by using a new input type `FieldValuesInput.emailValues`.
 ```diff
 {
