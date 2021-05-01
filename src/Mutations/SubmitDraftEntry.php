@@ -197,7 +197,9 @@ class SubmitDraftEntry implements Hookable, Mutation {
 			throw new UserError( __( 'An error occurred while trying to send notifications, form or entry not found.', 'wp-graphql-gravity-forms' ) );
 		}
 
-		GFAPI::send_notifications( $form, $entry );
+		if ( ! is_wp_error( $entry ) && ! is_wp_error( $form ) ) {
+			GFAPI::send_notifications( $form, $entry );
+		}
 	}
 
 	/**
