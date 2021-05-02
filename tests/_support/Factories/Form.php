@@ -106,6 +106,8 @@ class Form extends \WP_UnitTest_Factory_For_Thing {
 	 * @param array|string $form_ids .
 	 */
 	public function delete( $form_ids ) {
+		require_once \GFCommon::get_base_path() . '/form_display.php';
+
 		if ( ! is_array( $form_ids ) ) {
 			$form_ids = [ $form_ids ];
 		}
@@ -115,6 +117,9 @@ class Form extends \WP_UnitTest_Factory_For_Thing {
 		foreach ( $form_ids as $id ) {
 			if ( isset( GFFormsModel::$unique_ids[ $id ] ) ) {
 				unset( GFFormsModel::$unique_ids[ $id ] );
+			}
+			if ( isset( \GFFormDisplay::$submission[ $id ] ) ) {
+				unset( \GFFormDisplay::$submission[ $id ] );
 			}
 		}
 	}
