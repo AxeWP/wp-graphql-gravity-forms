@@ -86,11 +86,6 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 								'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['button']['conditionalLogic']['rules'][0]['operator'] ),
 								'value'    => $form['button']['conditionalLogic']['rules'][0]['value'],
 							],
-							[
-								'fieldId'  => $form['button']['conditionalLogic']['rules'][1]['fieldId'],
-								'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['button']['conditionalLogic']['rules'][1]['operator'] ),
-								'value'    => $form['button']['conditionalLogic']['rules'][1]['value'],
-							],
 						],
 					],
 					'imageUrl'         => $form['button']['imageUrl'],

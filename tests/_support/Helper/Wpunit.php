@@ -83,7 +83,8 @@ class Wpunit extends \Codeception\Module {
 			'enableCalculation'    => '',
 			'errorMessage'         => 'Some error message',
 			'fields'               => '',
-			'id'                   => 2,
+			'formId'               => 2,
+			'id'                   => 1,
 			'inputMask'            => false,
 			'inputMaskIsCustom'    => false,
 			'inputMaskValue'       => '',
@@ -128,7 +129,7 @@ class Wpunit extends \Codeception\Module {
 			'descriptionPlacement'    => '',
 			'enableCopyValuesOption'  => '',
 			'errorMessage'            => 'Some Error Message',
-			'id'                      => 3,
+			'id'                      => 1,
 			'isRequired'              => false,
 			'label'                   => 'Address',
 			'labelPlacement'          => '',
@@ -203,14 +204,9 @@ class Wpunit extends \Codeception\Module {
 		return [
 			'button'                     => [
 				'conditionalLogic' => [
-					'actionType' => 'show',
+					'actionType' => 'hide',
 					'logicType'  => 'any',
 					'rules'      => [
-						[
-							'fieldId'  => 1,
-							'operator' => 'is',
-							'value'    => 'value1',
-						],
 						[
 							'fieldId'  => 1,
 							'operator' => 'is',

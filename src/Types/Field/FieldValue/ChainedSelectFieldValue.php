@@ -10,6 +10,7 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\ChainedSelectFieldValueProperty;
 
 /**
  * Class - ChainedSelectFieldValue
@@ -20,7 +21,7 @@ class ChainedSelectFieldValue extends AbstractFieldValue {
 	 *
 	 * @var string
 	 */
-	public static $type = 'ChainedSelectValue';
+	public static $type = 'ChainedSelectFieldValue';
 
 	/**
 	 * Sets the field type description.
@@ -55,13 +56,6 @@ class ChainedSelectFieldValue extends AbstractFieldValue {
 	 * @return array Entry field values.
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
-		$values = array_map(
-			function( $input ) use ( $entry ) {
-				return $entry[ $input['id'] ] ?? '';
-			},
-			$field->inputs
-		);
-
-		return compact( 'values' );
+		return [ 'values' => ChainedSelectFieldValueProperty::get( $entry, $field ) ];
 	}
 }

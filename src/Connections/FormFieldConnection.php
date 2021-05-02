@@ -53,26 +53,6 @@ class FormFieldConnection implements Hookable, Connection {
 				},
 			]
 		);
-		/**
-		 * Deprecated: `fields`.
-		 *
-		 * @since 0.4.0
-		 */
-		register_graphql_connection(
-			[
-				'deprecationReason' => __( 'Deprecated in favor of `formFields`.', 'wp-graphql-gravity-forms' ),
-				'fromType'          => Form::TYPE,
-				'toType'            => FormFieldInterface::TYPE,
-				'fromFieldName'     => 'fields',
-				'resolve'           => function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
-						$fields              = ( new FieldsDataManipulator() )->manipulate( $root['fields'] );
-						$connection          = Relay::connectionFromArray( $fields, $args );
-						$nodes               = array_map( fn( $edge ) => $edge['node'] ?? null, $connection['edges'] );
-						$connection['nodes'] = $nodes ?: null;
-						return $connection;
-				},
-			]
-		);
 
 		// From GravityFormsForm to GravityFormsEntry.
 		register_graphql_connection(
