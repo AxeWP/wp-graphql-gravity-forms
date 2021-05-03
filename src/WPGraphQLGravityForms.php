@@ -179,6 +179,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['entries_field_fiters_input'] = new Input\EntriesFieldFiltersInput();
 		$this->instances['entries_sorting_input']      = new Input\EntriesSortingInput();
 		$this->instances['field_values_input']         = new Input\FieldValuesInput();
+		$this->instances['forms_sorting_input']        = new Input\FormsSortingInput();
 
 		// Unions.
 		$this->instances['object_field_value_union'] = new Union\ObjectFieldValueUnion( $this->instances );

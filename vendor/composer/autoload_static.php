@@ -289,6 +289,7 @@ class ComposerStaticInitbfbf9175b8255d015875c8ce55751c20
         'WPGraphQLGravityForms\\Types\\Input\\EntriesFieldFiltersInput' => __DIR__ . '/../..' . '/src/Types/Input/EntriesFieldFiltersInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\EntriesSortingInput' => __DIR__ . '/../..' . '/src/Types/Input/EntriesSortingInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\FieldValuesInput' => __DIR__ . '/../..' . '/src/Types/Input/FieldValuesInput.php',
+        'WPGraphQLGravityForms\\Types\\Input\\FormsSortingInput' => __DIR__ . '/../..' . '/src/Types/Input/FormsSortingInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\ListInput' => __DIR__ . '/../..' . '/src/Types/Input/ListInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\NameInput' => __DIR__ . '/../..' . '/src/Types/Input/NameInput.php',
         'WPGraphQLGravityForms\\Types\\Union\\ObjectFieldValueUnion' => __DIR__ . '/../..' . '/src/Types/Union/ObjectFieldValueUnion.php',

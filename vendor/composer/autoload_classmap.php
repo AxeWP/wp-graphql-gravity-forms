@@ -274,6 +274,7 @@ return array(
     'WPGraphQLGravityForms\\Types\\Input\\EntriesFieldFiltersInput' => $baseDir . '/src/Types/Input/EntriesFieldFiltersInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\EntriesSortingInput' => $baseDir . '/src/Types/Input/EntriesSortingInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\FieldValuesInput' => $baseDir . '/src/Types/Input/FieldValuesInput.php',
+    'WPGraphQLGravityForms\\Types\\Input\\FormsSortingInput' => $baseDir . '/src/Types/Input/FormsSortingInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\ListInput' => $baseDir . '/src/Types/Input/ListInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\NameInput' => $baseDir . '/src/Types/Input/NameInput.php',
     'WPGraphQLGravityForms\\Types\\Union\\ObjectFieldValueUnion' => $baseDir . '/src/Types/Union/ObjectFieldValueUnion.php',
