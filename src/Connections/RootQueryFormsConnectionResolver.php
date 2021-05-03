@@ -120,6 +120,9 @@ class RootQueryFormsConnectionResolver {
 			];
 		}
 
-		return [];
+		return [
+			'key'       => '',
+			'direction' => 'ASC',
+		];
 	}
 }
