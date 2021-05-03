@@ -37,14 +37,14 @@ class AddressInputProperty extends AbstractProperty {
 	protected function get_properties() : array {
 		return array_merge(
 			AutocompleteAttributeProperty::get(),
+			DefaultValueProperty::get(),
+			PlaceholderProperty::get(),
+			LabelProperty::get(),
 			InputProperty\InputCustomLabelProperty::get(),
-			InputProperty\InputDefaultValueProperty::get(),
 			InputProperty\InputIdProperty::get(),
 			InputProperty\InputIsHiddenProperty::get(),
 			InputProperty\InputKeyProperty::get(),
-			InputProperty\InputLabelProperty::get(),
 			InputProperty\InputNameProperty::get(),
-			InputProperty\InputPlaceholderProperty::get(),
 		);
 	}
 }

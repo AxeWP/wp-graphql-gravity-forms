@@ -37,12 +37,12 @@ class InputProperty extends AbstractProperty {
 	 */
 	protected function get_properties() : array {
 		return array_merge(
-			InputProperty\InputCustomLabelProperty::get(),
-			InputProperty\InputDefaultValueProperty::get(),
-			InputProperty\InputIdProperty::get(),
-			InputProperty\InputLabelProperty::get(),
-			InputProperty\InputPlaceholderProperty::get(),
 			AutocompleteAttributeProperty::get(),
+			DefaultValueProperty::get(),
+			LabelProperty::get(),
+			PlaceholderProperty::get(),
+			InputProperty\InputCustomLabelProperty::get(),
+			InputProperty\InputIdProperty::get(),
 			/**
 			 * Deprecated field properties.
 			 *
