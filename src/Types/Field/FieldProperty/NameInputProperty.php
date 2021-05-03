@@ -36,6 +36,7 @@ class NameInputProperty extends AbstractProperty {
 	 */
 	protected function get_properties() : array {
 		return array_merge(
+			AutocompleteAttributeProperty::get(),
 			InputProperty\InputCustomLabelProperty::get(),
 			InputProperty\InputDefaultValueProperty::get(),
 			InputProperty\InputIdProperty::get(),

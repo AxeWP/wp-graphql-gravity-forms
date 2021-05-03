@@ -47,6 +47,7 @@ class PostImageField extends AbstractField {
 		return array_merge(
 			$this->get_global_properties(),
 			$this->get_custom_properties(),
+			FieldProperty\AllowedExtensionsProperty::get(),
 			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AllowsPrepopulateProperty::get(),
@@ -59,17 +60,25 @@ class PostImageField extends AbstractField {
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
+				'displayAlt'         => [
+					'type'        => 'Boolean',
+					'description' => __( 'Controls the visibility of the alt metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
+				],
 				'displayCaption'     => [
 					'type'        => 'Boolean',
-					'description' => __( 'Controls the visibility of the caption metadata for Post Image fields. 1 will display the caption field, 0 will hide it.', 'wp-graphql-gravity-forms' ),
+					'description' => __( 'Controls the visibility of the caption metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
 				],
 				'displayDescription' => [
 					'type'        => 'Boolean',
-					'description' => __( 'Controls the visibility of the description metadata for Post Image fields. 1 will display the description field, 0 will hide it.', 'wp-graphql-gravity-forms' ),
+					'description' => __( 'Controls the visibility of the description metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
 				],
 				'displayTitle'       => [
 					'type'        => 'Boolean',
-					'description' => __( 'Controls the visibility of the title metadata for Post Image fields. 1 will display the title field, 0 will hide it.', 'wp-graphql-gravity-forms' ),
+					'description' => __( 'Controls the visibility of the title metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
+				],
+				'postFeaturedImage'  => [
+					'type'        => 'Boolean',
+					'description' => __( "Whether the image field should be used to set the post's Featured Image", 'wp-graphql-gravity-forms' ),
 				],
 			]
 		);

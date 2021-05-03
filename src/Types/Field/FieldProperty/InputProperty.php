@@ -42,6 +42,7 @@ class InputProperty extends AbstractProperty {
 			InputProperty\InputIdProperty::get(),
 			InputProperty\InputLabelProperty::get(),
 			InputProperty\InputPlaceholderProperty::get(),
+			AutocompleteAttributeProperty::get(),
 			/**
 			 * Deprecated field properties.
 			 *

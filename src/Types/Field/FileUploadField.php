@@ -48,6 +48,7 @@ class FileUploadField extends AbstractField {
 		return array_merge(
 			$this->get_global_properties(),
 			$this->get_custom_properties(),
+			FieldProperty\AllowedExtensionsProperty::get(),
 			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
@@ -58,19 +59,15 @@ class FileUploadField extends AbstractField {
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
-				'allowedExtensions' => [
-					'type'        => 'String',
-					'description' => __( 'A comma-delimited list of the file extensions which may be uploaded.', 'wp-graphql-gravity-forms' ),
-				],
-				'maxFiles'          => [
+				'maxFiles'      => [
 					'type'        => 'String',
 					'description' => __( 'When the field is set to allow multiple files to be uploaded, this property is available to set a limit on how many may be uploaded.', 'wp-graphql-gravity-forms' ),
 				],
-				'maxFileSize'       => [
+				'maxFileSize'   => [
 					'type'        => 'Integer',
 					'description' => __( 'The maximum size (in MB) an uploaded file may be .', 'wp-graphql-gravity-forms' ),
 				],
-				'multipleFiles'     => [
+				'multipleFiles' => [
 					'type'        => 'Boolean',
 					'description' => __( 'Indicates whether multiple files may be uploaded.', 'wp-graphql-gravity-forms' ),
 				],
