@@ -15,6 +15,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Connection;
 use WPGraphQLGravityForms\Types\Form\Form;
 use WPGraphQLGravityForms\Types\Enum\FormStatusEnum;
+use WPGraphQLGravityForms\Types\Input\FormsSortingInput;
 
 /**
  * Class - RootQueryFormsConnection
@@ -46,6 +47,10 @@ class RootQueryFormsConnection implements Hookable, Connection {
 					'status' => [
 						'type'        => FormStatusEnum::$type,
 						'description' => __( 'Status of the forms to get.', 'wp-graphql-gravity-forms' ),
+					],
+					'sort'   => [
+						'type'        => FormsSortingInput::TYPE,
+						'description' => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
 					],
 				],
 				'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {

@@ -37,7 +37,9 @@ class RootQueryFormsConnectionResolver {
 	 */
 	public function resolve( $source, array $args, AppContext $context, ResolveInfo $info ) {
 		$status = $this->get_form_status( $args );
-		$forms  = GFAPI::get_forms( $status['active'], $status['trashed'] );
+		$sort   = $this->get_sort( $args );
+		error_log( print_r( $sort, true ) );
+		$forms = GFAPI::get_forms( $status['active'], $status['trashed'], $sort['key'], $sort['direction'] );
 
 		if ( ! empty( $forms ) ) {
 			$form_data_manipulator = new FormDataManipulator( new FieldsDataManipulator() );
@@ -103,5 +105,22 @@ class RootQueryFormsConnectionResolver {
 			'active'  => true,
 			'trashed' => false,
 		];
+	}
+
+	/**
+	 * Get sort argument for forms ID query.
+	 *
+	 * @param array $args the query arguments.
+	 * @return array
+	 */
+	private function get_sort( array $args ) : array {
+		if ( ! empty( $args['where']['sort'] ) && is_array( $args['where']['sort'] ) ) {
+			return [
+				'key'       => $args['where']['sort']['key'] ?? '',
+				'direction' => $args['where']['sort']['direction'] ?? 'ASC',
+			];
+		}
+
+		return [];
 	}
 }
