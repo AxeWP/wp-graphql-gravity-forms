@@ -116,6 +116,7 @@ class ComposerStaticInitbfbf9175b8255d015875c8ce55751c20
         'WPGraphQLGravityForms\\Types\\Enum\\PageProgressStyleEnum' => __DIR__ . '/../..' . '/src/Types/Enum/PageProgressStyleEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\PageProgressTypeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/PageProgressTypeEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\PhoneFieldFormatEnum' => __DIR__ . '/../..' . '/src/Types/Enum/PhoneFieldFormatEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\RequiredIndicatorEnum' => __DIR__ . '/../..' . '/src/Types/Enum/RequiredIndicatorEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\RuleOperatorEnum' => __DIR__ . '/../..' . '/src/Types/Enum/RuleOperatorEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\SignatureBorderStyleEnum' => __DIR__ . '/../..' . '/src/Types/Enum/SignatureBorderStyleEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\SignatureBorderWidthEnum' => __DIR__ . '/../..' . '/src/Types/Enum/SignatureBorderWidthEnum.php',

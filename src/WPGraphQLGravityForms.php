@@ -218,6 +218,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['page_progress_style_enum']            = new Enum\PageProgressStyleEnum();
 		$this->instances['page_progress_type_enum']             = new Enum\PageProgressTypeEnum();
 		$this->instances['phone_field_format_enum']             = new Enum\PhoneFieldFormatEnum();
+		$this->instances['required_indicator_enum']             = new Enum\RequiredIndicatorEnum();
 		$this->instances['rule_operator_enum']                  = new Enum\RuleOperatorEnum();
 		$this->instances['signature_border_style_enum']         = new Enum\SignatureBorderStyleEnum();
 		$this->instances['signature_border_width_enum']         = new Enum\SignatureBorderWidthEnum();

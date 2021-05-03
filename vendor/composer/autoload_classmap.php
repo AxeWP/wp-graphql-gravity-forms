@@ -101,6 +101,7 @@ return array(
     'WPGraphQLGravityForms\\Types\\Enum\\PageProgressStyleEnum' => $baseDir . '/src/Types/Enum/PageProgressStyleEnum.php',
     'WPGraphQLGravityForms\\Types\\Enum\\PageProgressTypeEnum' => $baseDir . '/src/Types/Enum/PageProgressTypeEnum.php',
     'WPGraphQLGravityForms\\Types\\Enum\\PhoneFieldFormatEnum' => $baseDir . '/src/Types/Enum/PhoneFieldFormatEnum.php',
+    'WPGraphQLGravityForms\\Types\\Enum\\RequiredIndicatorEnum' => $baseDir . '/src/Types/Enum/RequiredIndicatorEnum.php',
     'WPGraphQLGravityForms\\Types\\Enum\\RuleOperatorEnum' => $baseDir . '/src/Types/Enum/RuleOperatorEnum.php',
     'WPGraphQLGravityForms\\Types\\Enum\\SignatureBorderStyleEnum' => $baseDir . '/src/Types/Enum/SignatureBorderStyleEnum.php',
     'WPGraphQLGravityForms\\Types\\Enum\\SignatureBorderWidthEnum' => $baseDir . '/src/Types/Enum/SignatureBorderWidthEnum.php',
