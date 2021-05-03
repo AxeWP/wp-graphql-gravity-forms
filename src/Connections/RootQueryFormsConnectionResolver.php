@@ -38,7 +38,7 @@ class RootQueryFormsConnectionResolver {
 	public function resolve( $source, array $args, AppContext $context, ResolveInfo $info ) {
 		$status = $this->get_form_status( $args );
 		$sort   = $this->get_sort( $args );
-		$forms = GFAPI::get_forms( $status['active'], $status['trashed'], $sort['key'], $sort['direction'] );
+		$forms  = GFAPI::get_forms( $status['active'], $status['trashed'], $sort['key'], $sort['direction'] );
 
 		if ( ! empty( $forms ) ) {
 			$form_data_manipulator = new FormDataManipulator( new FieldsDataManipulator() );
