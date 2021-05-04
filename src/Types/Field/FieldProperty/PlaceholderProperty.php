@@ -23,7 +23,7 @@ class PlaceholderProperty implements FieldProperty {
 		return [
 			'placeholder' => [
 				'type'        => 'String',
-				'description' => __( 'Field placeholder.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Placeholder text to give the user a hint on how to fill out the field. This is not submitted with the form.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

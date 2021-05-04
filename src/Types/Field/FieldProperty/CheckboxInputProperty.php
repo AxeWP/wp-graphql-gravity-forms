@@ -38,7 +38,7 @@ class CheckboxInputProperty extends AbstractProperty {
 	protected function get_properties() : array {
 		return array_merge(
 			InputProperty\InputIdProperty::get(),
-			InputProperty\InputLabelProperty::get(),
+			LabelProperty::get(),
 			InputProperty\InputNameProperty::get(),
 		);
 	}

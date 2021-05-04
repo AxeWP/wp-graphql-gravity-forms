@@ -134,6 +134,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 								defaultState
 								description
 								descriptionPlacement
+								enableAutocomplete
 								enableCopyValuesOption
 								errorMessage
 								id
@@ -146,6 +147,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									label
 									name
 									placeholder
+									autocompleteAttribute
 								}
 								isRequired
 								label
@@ -211,6 +213,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 							'defaultState'            => $form['fields'][0]->defaultState,
 							'description'             => $form['fields'][0]->description,
 							'descriptionPlacement'    => $this->tester->get_enum_for_value( Enum\DescriptionPlacementPropertyEnum::$type, $form['fields'][0]->descriptionPlacement ),
+							'enableAutocomplete'      => $form['fields'][0]->enableAutocomplete,
 							'enableCopyValuesOption'  => (bool) $form['fields'][0]->enableCopyValuesOption,
 							'errorMessage'            => $form['fields'][0]->errorMessage,
 							'inputs'                  => [
@@ -223,6 +226,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'label'        => $form['fields'][0]->inputs[0]['label'],
 									'name'         => $form['fields'][0]->inputs[0]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[0]['placeholder'],
+									'autocompleteAttribute' => $form['fields'][0]->inputs[0]['autocompleteAttribute'],
 								],
 								1 => [
 									'customLabel'  => $form['fields'][0]->inputs[1]['customLabel'],
@@ -233,6 +237,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'label'        => $form['fields'][0]->inputs[1]['label'],
 									'name'         => $form['fields'][0]->inputs[1]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[1]['placeholder'],
+									'autocompleteAttribute' => $form['fields'][0]->inputs[1]['autocompleteAttribute'],
 								],
 								2 => [
 									'customLabel'  => $form['fields'][0]->inputs[2]['customLabel'],
@@ -243,6 +248,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'label'        => $form['fields'][0]->inputs[2]['label'],
 									'name'         => $form['fields'][0]->inputs[2]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[2]['placeholder'],
+									'autocompleteAttribute' => $form['fields'][0]->inputs[2]['autocompleteAttribute'],
 								],
 								3 => [
 									'customLabel'  => $form['fields'][0]->inputs[3]['customLabel'],
@@ -253,6 +259,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'label'        => $form['fields'][0]->inputs[3]['label'],
 									'name'         => $form['fields'][0]->inputs[3]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[3]['placeholder'],
+									'autocompleteAttribute' => $form['fields'][0]->inputs[3]['autocompleteAttribute'],
 								],
 								4 => [
 									'customLabel'  => $form['fields'][0]->inputs[4]['customLabel'],
@@ -263,6 +270,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'label'        => $form['fields'][0]->inputs[4]['label'],
 									'name'         => $form['fields'][0]->inputs[4]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[4]['placeholder'],
+									'autocompleteAttribute' => $form['fields'][0]->inputs[4]['autocompleteAttribute'],
 								],
 								5 => [
 									'customLabel'  => $form['fields'][0]->inputs[5]['customLabel'],
@@ -273,6 +281,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									'label'        => $form['fields'][0]->inputs[5]['label'],
 									'name'         => $form['fields'][0]->inputs[5]['name'],
 									'placeholder'  => $form['fields'][0]->inputs[5]['placeholder'],
+									'autocompleteAttribute' => $form['fields'][0]->inputs[5]['autocompleteAttribute'],
 								],
 							],
 							'isRequired'              => $form['fields'][0]->isRequired,

@@ -72,28 +72,36 @@ class FormFieldInterface implements Hookable, Type {
 		return apply_filters(
 			'wp_graphql_gf_global_properties',
 			[
-				'conditionalLogic' => [
+				'conditionalLogic'           => [
 					'type'        => ConditionalLogic::TYPE,
 					'description' => __( 'Controls the visibility of the field based on values selected by the user.', 'wp-graphql-gravity-forms' ),
 				],
-				'cssClass'         => [
+				'cssClass'                   => [
 					'type'        => 'String',
 					'description' => __( 'String containing the custom CSS classes to be added to the <li> tag that contains the field. Useful for applying custom formatting to specific fields.', 'wp-graphql-gravity-forms' ),
 				],
-				'cssClassList'     => [
+				'cssClassList'               => [
 					'type'              => [ 'list_of' => 'String' ],
 					'description'       => __( 'Array of the custom CSS classes to be added to the <li> tag that contains the field. Useful for applying custom formatting to specific fields.', 'wp-graphql-gravity-forms' ),
 					'deprecationReason' => __( 'Please use `cssClass` instead.', 'wp-graphql-gravity-forms' ),
 				],
-				'formId'           => [
+				'formId'                     => [
 					'type'        => [ 'non_null' => 'Int' ],
 					'description' => __( 'The ID of the form this field belongs to.', 'wp-graphql-gravity-forms' ),
 				],
-				'id'               => [
+				'id'                         => [
 					'type'        => [ 'non_null' => 'Int' ],
 					'description' => __( 'Field ID.', 'wp-graphql-gravity-forms' ),
 				],
-				'type'             => [
+				'layoutGridColumnSpan'       => [
+					'type'        => 'Int',
+					'description' => __( 'The number of CSS grid columns the field should span.', 'wp-graphql-gravity-forms' ),
+				],
+				'layoutSpacerGridColumnSpan' => [
+					'type'        => 'Int',
+					'description' => __( 'The number of CSS grid columns the spacer field following this one should span.', 'wp-graphql-gravity-forms' ),
+				],
+				'type'                       => [
 					'type'        => [ 'non_null' => 'String' ],
 					'description' => __( 'The type of field to be displayed.', 'wp-graphql-gravity-forms' ),
 				],

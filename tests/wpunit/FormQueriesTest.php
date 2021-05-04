@@ -105,6 +105,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					],
 				],
 				'cssClass'                   => $form['cssClass'],
+				'customRequiredIndicator'    => $form['customRequiredIndicator'],
 				'dateCreated'                => $form['date_created'],
 				'description'                => $form['description'],
 				'descriptionPlacement'       => $this->tester->get_enum_for_value( Enum\FormDescriptionPlacementEnum::$type, $form['descriptionPlacement'] ),
@@ -131,6 +132,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 				'limitEntriesCount'          => $form['limitEntriesCount'],
 				'limitEntriesMessage'        => $form['limitEntriesMessage'],
 				'limitEntriesPeriod'         => $this->tester->get_enum_for_value( Enum\FormLimitEntriesPeriodEnum::$type, $form['limitEntriesPeriod'] ),
+				'markupVersion'              => $form['markupVersion'],
 				'nextFieldId'                => $form['nextFieldId'],
 				'notifications'              => [
 					[
@@ -199,6 +201,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 				'postStatus'                 => $form['postStatus'],
 				'postTitleTemplate'          => $form['postTitleTemplate'],
 				'postTitleTemplateEnabled'   => $form['postTitleTemplateEnabled'],
+				'requiredIndicator'          => $this->tester->get_enum_for_value( Enum\RequiredIndicatorEnum::$type, $form['requiredIndicator'] ),
 				'requireLogin'               => $form['requireLogin'],
 				'requireLoginMessage'        => $form['requireLoginMessage'],
 				'save'                       => [
@@ -219,6 +222,8 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 				'subLabelPlacement'          => $this->tester->get_enum_for_value( Enum\FormSubLabelPlacementEnum::$type, $form['subLabelPlacement'] ),
 				'title'                      => $form['title'],
 				'useCurrentUserAsAuthor'     => $form['useCurrentUserAsAuthor'],
+				'validationSummary'          => $form['validationSummary'],
+				'version'                    => $form['version'],
 			],
 		];
 
@@ -277,6 +282,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 						],
 					],
 					'cssClass'                   => null,
+					'customRequiredIndicator'    => null,
 					'dateCreated'                => $form['date_created'],
 					'description'                => $form['description'],
 					'descriptionPlacement'       => null,
@@ -293,9 +299,10 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					'labelPlacement'             => null,
 					'lastPageButton'             => null,
 					'limitEntries'               => null,
-					'limitEntriesCount'          => null,
+					'limitEntriesCount'          => 0,
 					'limitEntriesMessage'        => null,
 					'limitEntriesPeriod'         => null,
+					'markupVersion'              => $form['markupVersion'] ?? null,
 					'nextFieldId'                => $form['nextFieldId'],
 					'notifications'              => [],
 					'pagination'                 => null,
@@ -307,6 +314,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					'postStatus'                 => null,
 					'postTitleTemplate'          => null,
 					'postTitleTemplateEnabled'   => null,
+					'requiredIndicator'          => null,
 					'requireLogin'               => null,
 					'requireLoginMessage'        => null,
 					'save'                       => null,
@@ -324,6 +332,8 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					'subLabelPlacement'          => null,
 					'title'                      => $form['title'],
 					'useCurrentUserAsAuthor'     => null,
+					'validationSummary'          => null,
+					'version'                    => null,
 				],
 			];
 
@@ -348,6 +358,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 		';
 
 		$actual = graphql( [ 'query' => $query ] );
+
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertEquals( 2, count( $actual['data']['gravityFormsForms']['nodes'] ) );
 	}
@@ -518,6 +529,26 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertFalse( $actual['data']['inactive_trashed']['nodes'][0]['isActive'] );
 		$this->assertTrue( $actual['data']['inactive_trashed']['nodes'][0]['isTrash'] );
 
+		// Test where.sort argument.
+		$query = '
+			query {
+				gravityFormsForms( where: { sort: { key: "id", direction: DESC } } ) {
+					nodes {
+						formId
+					}
+				}
+			}
+		';
+
+		$actual = graphql( [ 'query' => $query ] );
+
+		if ( version_compare( '2.5.0', \GFForms::$version, '>' ) ) {
+			$this->assertArrayHasKey( 'errors', $actual );
+		} else {
+			$this->assertArrayNotHasKey( 'errors', $actual );
+			$this->assertGreaterThan( $actual['data']['gravityFormsForms']['nodes'][1]['formId'], $actual['data']['gravityFormsForms']['nodes'][0]['formId'] );
+		}
+
 		$this->factory->form->delete( $form_ids );
 	}
 
@@ -553,6 +584,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 						url
 					}
 					cssClass
+					customRequiredIndicator
 					dateCreated
 					description
 					descriptionPlacement
@@ -578,6 +610,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					limitEntriesCount
 					limitEntriesMessage
 					limitEntriesPeriod
+					markupVersion
 					nextFieldId
 					notifications {
 						bcc
@@ -628,6 +661,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					postStatus
 					postTitleTemplate
 					postTitleTemplateEnabled
+					requiredIndicator
 					requireLogin
 					requireLoginMessage
 					save {
@@ -648,6 +682,8 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					subLabelPlacement
 					title
 					useCurrentUserAsAuthor
+					validationSummary
+					version
 				}
 			}
 		';

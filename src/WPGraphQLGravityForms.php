@@ -81,6 +81,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['chained_select_input_property']  = new FieldProperty\ChainedSelectInputProperty();
 		$this->instances['checkbox_input_property']        = new FieldProperty\CheckboxInputProperty();
 		$this->instances['choice_property']                = new FieldProperty\ChoiceProperty();
+		$this->instances['email_input_property']           = new FieldProperty\EmailInputProperty();
 		$this->instances['input_property']                 = new FieldProperty\InputProperty();
 		$this->instances['list_choice_property']           = new FieldProperty\ListChoiceProperty();
 		$this->instances['name_input_property']            = new FieldProperty\NameInputProperty();
@@ -179,6 +180,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['entries_field_fiters_input'] = new Input\EntriesFieldFiltersInput();
 		$this->instances['entries_sorting_input']      = new Input\EntriesSortingInput();
 		$this->instances['field_values_input']         = new Input\FieldValuesInput();
+		$this->instances['forms_sorting_input']        = new Input\FormsSortingInput();
 
 		// Unions.
 		$this->instances['object_field_value_union'] = new Union\ObjectFieldValueUnion( $this->instances );
@@ -218,6 +220,7 @@ final class WPGraphQLGravityForms {
 		$this->instances['page_progress_style_enum']            = new Enum\PageProgressStyleEnum();
 		$this->instances['page_progress_type_enum']             = new Enum\PageProgressTypeEnum();
 		$this->instances['phone_field_format_enum']             = new Enum\PhoneFieldFormatEnum();
+		$this->instances['required_indicator_enum']             = new Enum\RequiredIndicatorEnum();
 		$this->instances['rule_operator_enum']                  = new Enum\RuleOperatorEnum();
 		$this->instances['signature_border_style_enum']         = new Enum\SignatureBorderStyleEnum();
 		$this->instances['signature_border_width_enum']         = new Enum\SignatureBorderWidthEnum();

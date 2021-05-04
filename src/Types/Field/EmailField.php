@@ -50,12 +50,13 @@ class EmailField extends AbstractField {
 			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AllowsPrepopulateProperty::get(),
+			FieldPRoperty\AutocompleteAttributeProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\DescriptionProperty::get(),
+			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
-			FieldProperty\InputsProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\LabelProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
@@ -67,6 +68,10 @@ class EmailField extends AbstractField {
 				'emailConfirmEnabled' => [
 					'type'        => 'Boolean',
 					'description' => __( 'Determines whether the Confirm Email field is active.', 'wp-graphql-gravity-forms' ),
+				],
+				'inputs'              => [
+					'type'        => [ 'list_of' => FieldProperty\EmailInputProperty::$type ],
+					'description' => __( 'An array containing the the individual properties for each element of the address field.', 'wp-graphql-gravity-forms' ),
 				],
 			],
 		);

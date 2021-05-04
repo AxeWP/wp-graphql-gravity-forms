@@ -56,6 +56,9 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 						'input_' . $this->fields[0]['id'] => 'This is a default Text Area Entry',
 					],
 				],
+				'fieldValues'   => [
+					'input_' . $this->fields[0]['id'] => 'This is a default Text Area Entry',
+				],
 			]
 		);
 	}

@@ -52,8 +52,8 @@ class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		$this->factory->form->delete( $this->form_id );
 		$this->factory->draft->delete( $this->draft_token );
+		$this->factory->form->delete( $this->form_id );
 		// Then...
 		parent::tearDown();
 	}

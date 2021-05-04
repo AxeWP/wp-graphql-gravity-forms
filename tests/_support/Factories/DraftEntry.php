@@ -38,10 +38,6 @@ class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
 	public function create_object( $args ) : string {
 		$form = GFAPI::get_form( $args['form_id'] );
 
-		if ( ! isset( GFFormsModel::$unique_ids[ $args['form_id'] ] ) ) {
-			GFFormsModel::$unique_ids[ $args['form_id'] ] = uniqid();
-		}
-
 		$entry = array_replace(
 			[
 				'id'           => null,

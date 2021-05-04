@@ -40,11 +40,11 @@ class PasswordInputProperty extends AbstractProperty {
 	 */
 	protected function get_properties() : array {
 		return array_merge(
+			PlaceholderProperty::get(),
+			LabelProperty::get(),
 			InputProperty\InputCustomLabelProperty::get(),
 			InputProperty\InputIdProperty::get(),
 			InputProperty\InputIsHiddenProperty::get(),
-			InputProperty\InputLabelProperty::get(),
-			InputProperty\InputPlaceholderProperty::get(),
 		);
 	}
 }
