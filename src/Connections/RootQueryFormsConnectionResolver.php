@@ -11,6 +11,7 @@
 namespace WPGraphQLGravityForms\Connections;
 
 use GFAPI;
+use GFForms;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Error\UserError;
 use GraphQLRelay\Relay;
@@ -38,7 +39,8 @@ class RootQueryFormsConnectionResolver {
 	public function resolve( $source, array $args, AppContext $context, ResolveInfo $info ) {
 		$status = $this->get_form_status( $args );
 		$sort   = $this->get_sort( $args );
-		$forms  = GFAPI::get_forms( $status['active'], $status['trashed'], $sort['key'], $sort['direction'] );
+
+		$forms = GFAPI::get_forms( $status['active'], $status['trashed'], $sort['key'], $sort['direction'] );
 
 		if ( ! empty( $forms ) ) {
 			$form_data_manipulator = new FormDataManipulator( new FieldsDataManipulator() );
@@ -114,6 +116,16 @@ class RootQueryFormsConnectionResolver {
 	 */
 	private function get_sort( array $args ) : array {
 		if ( ! empty( $args['where']['sort'] ) && is_array( $args['where']['sort'] ) ) {
+			if ( version_compare( '2.5.0', GFForms::$version, '>' ) ) {
+				throw new UserError(
+					sprintf(
+						// translators: Gravity Forms version.
+						__( 'The `RootQueryToGravityFormsFormConnection.sort` argument requires Gravity Forms v2.5.0+. Version installed: %1$s', 'wp-graphql-gravity-forms' ),
+						GFForms::$version
+					)
+				);
+			}
+
 			return [
 				'key'       => $args['where']['sort']['key'] ?? '',
 				'direction' => $args['where']['sort']['direction'] ?? 'ASC',
