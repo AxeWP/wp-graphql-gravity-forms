@@ -113,6 +113,8 @@ class RootQueryFormsConnectionResolver {
 	 *
 	 * @param array $args the query arguments.
 	 * @return array
+	 *
+	 * @throws UserError .
 	 */
 	private function get_sort( array $args ) : array {
 		if ( ! empty( $args['where']['sort'] ) && is_array( $args['where']['sort'] ) ) {
