@@ -97,6 +97,8 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 							cssClass
 							formId
 							id
+							layoutGridColumnSpan
+							layoutSpacerGridColumnSpan
 							type
 							... on TextField {
 								adminLabel
@@ -145,28 +147,30 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 				'formFields' => [
 					'nodes' => [
 						0 => [
-							'conditionalLogic'     => null,
-							'cssClass'             => $form['fields'][0]->cssClass,
-							'formId'               => $form['fields'][0]->formId,
-							'id'                   => $form['fields'][0]->id,
-							'type'                 => $form['fields'][0]->type,
-							'adminLabel'           => $form['fields'][0]->adminLabel,
-							'adminOnly'            => (bool) $form['fields'][0]->adminOnly,
-							'allowsPrepopulate'    => $form['fields'][0]->allowsPrepopulate,
-							'defaultValue'         => $form['fields'][0]->defaultValue,
-							'description'          => $form['fields'][0]->description,
-							'descriptionPlacement' => $this->tester->get_enum_for_value( Enum\DescriptionPlacementPropertyEnum::$type, $form['fields'][0]->descriptionPlacement ),
-							'enablePasswordInput'  => (bool) $form['fields'][0]->enablePasswordInput,
-							'errorMessage'         => $form['fields'][0]->errorMessage,
-							'inputName'            => $form['fields'][0]->inputName,
-							'isRequired'           => $form['fields'][0]->isRequired,
-							'label'                => $form['fields'][0]->label,
-							'maxLength'            => (int) $form['fields'][0]->maxLength,
-							'noDuplicates'         => $form['fields'][0]->noDuplicates,
-							'placeholder'          => $form['fields'][0]->placeholder,
-							'size'                 => $this->tester->get_enum_for_value( Enum\SizePropertyEnum::$type, $form['fields'][0]->size ),
-							'value'                => $entry[ $form['fields'][0]->id ],
-							'visibility'           => $this->tester->get_enum_for_value( Enum\VisibilityPropertyEnum::$type, $form['fields'][0]->visibility ),
+							'conditionalLogic'           => null,
+							'cssClass'                   => $form['fields'][0]->cssClass,
+							'formId'                     => $form['fields'][0]->formId,
+							'id'                         => $form['fields'][0]->id,
+							'layoutGridColumnSpan'       => $form['fields'][0]['layoutGridColumnSpan'],
+							'layoutSpacerGridColumnSpan' => $form['fields'][0]['layoutSpacerGridColumnSpan'],
+							'type'                       => $form['fields'][0]->type,
+							'adminLabel'                 => $form['fields'][0]->adminLabel,
+							'adminOnly'                  => (bool) $form['fields'][0]->adminOnly,
+							'allowsPrepopulate'          => $form['fields'][0]->allowsPrepopulate,
+							'defaultValue'               => $form['fields'][0]->defaultValue,
+							'description'                => $form['fields'][0]->description,
+							'descriptionPlacement'       => $this->tester->get_enum_for_value( Enum\DescriptionPlacementPropertyEnum::$type, $form['fields'][0]->descriptionPlacement ),
+							'enablePasswordInput'        => (bool) $form['fields'][0]->enablePasswordInput,
+							'errorMessage'               => $form['fields'][0]->errorMessage,
+							'inputName'                  => $form['fields'][0]->inputName,
+							'isRequired'                 => $form['fields'][0]->isRequired,
+							'label'                      => $form['fields'][0]->label,
+							'maxLength'                  => (int) $form['fields'][0]->maxLength,
+							'noDuplicates'               => $form['fields'][0]->noDuplicates,
+							'placeholder'                => $form['fields'][0]->placeholder,
+							'size'                       => $this->tester->get_enum_for_value( Enum\SizePropertyEnum::$type, $form['fields'][0]->size ),
+							'value'                      => $entry[ $form['fields'][0]->id ],
+							'visibility'                 => $this->tester->get_enum_for_value( Enum\VisibilityPropertyEnum::$type, $form['fields'][0]->visibility ),
 						],
 					],
 					'edges' => [
