@@ -55,6 +55,7 @@ class CaptchaField extends AbstractField {
 			$this->get_custom_properties(),
 			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
+			FieldProperty\DisplayOnlyProperty::get(),
 			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\LabelProperty::get(),
