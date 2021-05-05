@@ -11,6 +11,8 @@
 
 namespace WPGraphQLGravityForms\Types\Field;
 
+use GraphQL\Type\Definition\ResolveInfo;
+use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Types\Enum\CaptchaThemeEnum;
 use WPGraphQLGravityForms\Types\Enum\CaptchaTypeEnum;
 use WPGraphQLGravityForms\Types\Enum\SizePropertyEnum;
@@ -53,6 +55,7 @@ class CaptchaField extends AbstractField {
 			$this->get_custom_properties(),
 			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
+			FieldProperty\DisplayOnlyProperty::get(),
 			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\LabelProperty::get(),
@@ -65,10 +68,12 @@ class CaptchaField extends AbstractField {
 				'captchaTheme'                 => [
 					'type'        => CaptchaThemeEnum::$type,
 					'description' => __( 'Determines the theme to be used for the reCAPTCHA field. Only applicable to the recaptcha captcha type.', 'wp-graphql-gravity-forms' ),
+					'resolve'     => fn ( $root ) => $root['captchaTheme'] ?: null,
 				],
 				'captchaType'                  => [
 					'type'        => CaptchaTypeEnum::$type,
 					'description' => __( 'Determines the type of CAPTCHA field to be used.', 'wp-graphql-gravity-forms' ),
+					'resolve'     => fn( $root ) => $root['captchaType'] ?: 'recaptcha',
 				],
 				'simpleCaptchaSize'            => [
 					'type'        => SizePropertyEnum::$type,

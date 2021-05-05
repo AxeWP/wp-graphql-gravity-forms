@@ -20,10 +20,8 @@ class CaptchaThemeEnum extends AbstractEnum {
 	public static $type = 'CaptchaThemeEnum';
 
 	// Individual elements.
-	const RED        = 'red';
-	const WHITE      = 'white';
-	const BLACKGLASS = 'blackglass';
-	const CLEAN      = 'clean';
+	const DARK  = 'dark';
+	const LIGHT = 'light';
 
 	/**
 	 * Sets the Enum type description.
@@ -41,21 +39,13 @@ class CaptchaThemeEnum extends AbstractEnum {
 	 */
 	public function set_values() : array {
 		return [
-			'RED'        => [
-				'description' => __( 'Red reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::RED,
+			'LIGHT' => [
+				'description' => __( 'Light reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::LIGHT,
 			],
-			'WHITE'      => [
-				'description' => __( 'White reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::WHITE,
-			],
-			'BLACKGLASS' => [
-				'description' => __( 'Black glass reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::BLACKGLASS,
-			],
-			'CLEAN'      => [
-				'description' => __( 'Clean reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::CLEAN,
+			'DARK'  => [
+				'description' => __( 'Dark reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::DARK,
 			],
 		];
 	}
