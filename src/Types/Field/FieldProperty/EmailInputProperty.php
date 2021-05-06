@@ -6,9 +6,7 @@
  * @see https://docs.gravityforms.com/gf_field_email/
  *
  * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
- * @since   0.0.1
- * @since   0.2.0 Use InputProperty classes.
- * @since   0.3.0 Add isHidden property.
+ * @since   0.6.0
  */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;

@@ -4,7 +4,7 @@
  * Sorting input type for Forms queries.
  *
  * @package WPGraphQLGravityForms\Types\Input
- * @since   0.0.1
+ * @since   0.6.0
  */
 
 namespace WPGraphQLGravityForms\Types\Input;
