@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.6.0 - Gravity Forms v2.5 Support
+This release adds support for all the new goodies in Gravity Forms v2.5, squashes a few bugs related to Captcha fields, and refactors the `InputProperty` on various form fields.
+
+### New Features
+- Added `customRequiredIndicator`, `markupVersion`, `requiredIndicator`, `validationSummary` and `version` to `GravityFormsForm` object. 
+- Added `layoutGridColumnSpan` and `layoutSpacerGridColumnSpan` to `formFields` interface.
+- Added `enableAutocomplete` and `autocompleteAttribute` to `AddressField`, `EmailField` ,`NameField`, `NumberField`, `PhoneField`, `SelectField`, and `TextField`.
+- Added `displayOnly` property to `CaptchaField`. 
+- Added `allowedExtensions` and `displayAlt` property to `PostImageField`.
+- Added `sort` argument for filtering `RootQueryToGravityFormsFormConnection`. *Note*: Attempting to sort on GF < v2.5.0.0 will throw a `UserError`.
+
+### Bugfixes
+- [Breaking]: Fixed the `captchaTheme` enum to use the correct possible values: `light` and `dark`.
+- `captchaTheme` and `captchaType` now correctly return `null` when not set by the field.
+- The `captchaType` enum now has a default value of `RECAPTCHA`.
+
+### Under the hood
+- Refactor various `InputProperty` classes. `InputDefaultValueProperty`, `InputLabelProperty`, and `InputplaceholderProperty` have been removed for their `FieldProperty` cousins, and `EmailInputProperty` is now being used for `EmailField`.
+- Tests: Clear `GFFormDisplay::$submission` between individual tests.
+- Tests: Allow overriding the default field factories.
+- Tests: Adds tests for `CaptchaField`.
+
 ## v0.5.0 - Add Gatsby Support, Email Confirmation, and more!
 
 ** :warning: This release contains multiple breaking changes. **
