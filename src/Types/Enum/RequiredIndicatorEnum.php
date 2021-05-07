@@ -3,7 +3,7 @@
  * Enum Type - RequiredIndicatorEnum
  *
  * @package WPGraphQLGravityForms\Types\Enum,
- * @since   0.4.0
+ * @since   0.6.0
  */
 
 namespace WPGraphQLGravityForms\Types\Enum;

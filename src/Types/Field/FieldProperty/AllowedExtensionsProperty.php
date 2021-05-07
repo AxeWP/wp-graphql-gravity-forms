@@ -1,9 +1,9 @@
 <?php
 /**
- * Admin label field property.
+ * Allowed Extensions field property.
  *
  * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
- * @since   0.2.0
+ * @since   0.6.0
  */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;

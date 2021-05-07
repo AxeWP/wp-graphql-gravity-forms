@@ -11,8 +11,6 @@
 
 namespace WPGraphQLGravityForms\Types\Field;
 
-use GraphQL\Type\Definition\ResolveInfo;
-use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Types\Enum\CaptchaThemeEnum;
 use WPGraphQLGravityForms\Types\Enum\CaptchaTypeEnum;
 use WPGraphQLGravityForms\Types\Enum\SizePropertyEnum;
