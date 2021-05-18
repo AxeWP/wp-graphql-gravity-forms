@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.6.1 - Bugfix
+- Fixes a fatal error when adding support for new fields with the `wp_graphql_gf_field_types` filter.
+
 ## v0.6.0 - Gravity Forms v2.5 Support
 This release adds support for all the new goodies in Gravity Forms v2.5, squashes a few bugs related to Captcha fields, and refactors the `InputProperty` on various form fields.
 
