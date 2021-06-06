@@ -167,6 +167,16 @@ abstract class AbstractMutation implements Hookable, Mutation {
 
 		$value = $this->prepare_field_value_by_type( $value, $field, $prev_value );
 
+		/**
+		 * Filter to prepare the fieldValue for submissions to Gravity Forms.
+		 *
+		 * @param mixed $value the formatted value to be added to the GF submission object.
+		 * @param array $input_values the unformatted input values.
+		 * @param GF_Field $field .
+		 * @param mixed $prev_value The previous submission value, if exists.
+		 */
+		$value = apply_filters( 'wp_graphql_gf_prepare_field_value', $value, $values, $field, $prev_value );
+
 		return $value;
 	}
 
