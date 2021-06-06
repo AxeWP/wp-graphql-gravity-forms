@@ -196,6 +196,7 @@ class UpdateEntry extends AbstractMutation {
 	 * Converts the provided field values into a format that Gravity Forms can understand.
 	 *
 	 * @param array $field_values .
+	 * @param array $entry .
 	 * @return array
 	 */
 	private function prepare_field_values( array $field_values, array $entry ) : array {
