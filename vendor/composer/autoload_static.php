@@ -279,6 +279,7 @@ class ComposerStaticInitbfbf9175b8255d015875c8ce55751c20
         'WPGraphQLGravityForms\\Types\\Form\\FormPagination' => __DIR__ . '/../..' . '/src/Types/Form/FormPagination.php',
         'WPGraphQLGravityForms\\Types\\Form\\SaveAndContinue' => __DIR__ . '/../..' . '/src/Types/Form/SaveAndContinue.php',
         'WPGraphQLGravityForms\\Types\\GraphQLInterface\\FormFieldInterface' => __DIR__ . '/../..' . '/src/Types/GraphQLInterface/FormFieldInterface.php',
+        'WPGraphQLGravityForms\\Types\\Input\\AbstractInput' => __DIR__ . '/../..' . '/src/Types/Input/AbstractInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\AddressInput' => __DIR__ . '/../..' . '/src/Types/Input/AddressInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\ChainedSelectInput' => __DIR__ . '/../..' . '/src/Types/Input/ChainedSelectInput.php',
         'WPGraphQLGravityForms\\Types\\Input\\CheckboxInput' => __DIR__ . '/../..' . '/src/Types/Input/CheckboxInput.php',

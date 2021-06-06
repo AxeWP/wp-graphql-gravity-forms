@@ -57,11 +57,11 @@ class RootQueryEntriesConnection implements Hookable, Connection {
 						'description' => __( 'Entry status. Default is "ACTIVE".', 'wp-graphql-gravity-forms' ),
 					],
 					'dateFilters'      => [
-						'type'        => EntriesDateFiltersInput::TYPE,
+						'type'        => EntriesDateFiltersInput::$type,
 						'description' => __( 'Date filters to apply.', 'wp-graphql-gravity-forms' ),
 					],
 					'fieldFilters'     => [
-						'type'        => [ 'list_of' => EntriesFieldFiltersInput::TYPE ],
+						'type'        => [ 'list_of' => EntriesFieldFiltersInput::$type ],
 						'description' => __( 'Field-specific filters to apply.', 'wp-graphql-gravity-forms' ),
 					],
 					'fieldFiltersMode' => [
@@ -69,7 +69,7 @@ class RootQueryEntriesConnection implements Hookable, Connection {
 						'description' => __( 'Whether to filter by ALL or ANY of the field filters. Default is ALL.', 'wp-graphql-gravity-forms' ),
 					],
 					'sort'             => [
-						'type'        => EntriesSortingInput::TYPE,
+						'type'        => EntriesSortingInput::$type,
 						'description' => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
 					],
 				],

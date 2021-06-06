@@ -264,6 +264,7 @@ return array(
     'WPGraphQLGravityForms\\Types\\Form\\FormPagination' => $baseDir . '/src/Types/Form/FormPagination.php',
     'WPGraphQLGravityForms\\Types\\Form\\SaveAndContinue' => $baseDir . '/src/Types/Form/SaveAndContinue.php',
     'WPGraphQLGravityForms\\Types\\GraphQLInterface\\FormFieldInterface' => $baseDir . '/src/Types/GraphQLInterface/FormFieldInterface.php',
+    'WPGraphQLGravityForms\\Types\\Input\\AbstractInput' => $baseDir . '/src/Types/Input/AbstractInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\AddressInput' => $baseDir . '/src/Types/Input/AddressInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\ChainedSelectInput' => $baseDir . '/src/Types/Input/ChainedSelectInput.php',
     'WPGraphQLGravityForms\\Types\\Input\\CheckboxInput' => $baseDir . '/src/Types/Input/CheckboxInput.php',
