@@ -73,7 +73,7 @@ class UpdateEntry extends AbstractMutation {
 				'description' => __( 'The Gravity Forms entry id.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
-				'type'        => [ 'list_of' => FieldValuesInput::TYPE ],
+				'type'        => [ 'list_of' => FieldValuesInput::$type ],
 				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
 			],
 			'isStarred'   => [

@@ -9,45 +9,41 @@
 
 namespace WPGraphQLGravityForms\Types\Input;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\InputType;
 use WPGraphQLGravityForms\Types\Enum\SortingInputEnum;
 
 /**
  * Class - FormsSortingInput
  */
-class FormsSortingInput implements Hookable, InputType {
+class FormsSortingInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'FormsSortingInput';
+	public static $type = 'FormsSortingInput';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_input_type' ] );
+	public function get_type_description() : string {
+		return __( 'Sorting input fields for Forms queries.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register input type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_input_type() : void {
-		register_graphql_input_type(
-			self::TYPE,
-			[
-				'description' => __( 'Sorting input fields for Forms queries.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'key'       => [
-						'type'        => 'String',
-						'description' => __( 'The key of the field to sort by.', 'wp-graphql-gravity-forms' ),
-					],
-					'direction' => [
-						'type'        => SortingInputEnum::$type,
-						'description' => __( 'The sorting direction.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_properties() : array {
+		return [
+			'key'       => [
+				'type'        => 'String',
+				'description' => __( 'The key of the field to sort by.', 'wp-graphql-gravity-forms' ),
+			],
+			'direction' => [
+				'type'        => SortingInputEnum::$type,
+				'description' => __( 'The sorting direction.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 }

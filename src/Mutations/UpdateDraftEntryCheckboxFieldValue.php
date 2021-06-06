@@ -37,7 +37,7 @@ class UpdateDraftEntryCheckboxFieldValue extends AbstractDraftEntryUpdater {
 	 */
 	protected function get_value_input_field() : array {
 		return [
-			'type'        => [ 'list_of' => CheckboxInput::TYPE ],
+			'type'        => [ 'list_of' => CheckboxInput::$type ],
 			'description' => __( 'Checkbox input values.', 'wp-graphql-gravity-forms' ),
 		];
 	}

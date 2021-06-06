@@ -37,7 +37,7 @@ class UpdateDraftEntryAddressFieldValue extends AbstractDraftEntryUpdater {
 	 */
 	protected function get_value_input_field() : array {
 		return [
-			'type'        => AddressInput::TYPE,
+			'type'        => AddressInput::$type,
 			'description' => __( 'The form field value.', 'wp-graphql-gravity-forms' ),
 		];
 	}

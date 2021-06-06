@@ -9,44 +9,39 @@
 
 namespace WPGraphQLGravityForms\Types\Input;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\InputType;
-
 /**
  * Class - EntriesDateFiltersInput
  */
-class EntriesDateFiltersInput implements Hookable, InputType {
+class EntriesDateFiltersInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'EntriesDateFiltersInput';
+	public static $type = 'EntriesDateFiltersInput';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_input_type' ] );
+	public function get_type_description() : string {
+		return __( 'Date Filters input fields for Entries queries.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register input type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_input_type() : void {
-		register_graphql_input_type(
-			self::TYPE,
-			[
-				'description' => __( 'Date Filters input fields for Entries queries.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'startDate' => [
-						'type'        => 'String',
-						'description' => __( 'Start date in Y-m-d H:i:s format.', 'wp-graphql-gravity-forms' ),
-					],
-					'endDate'   => [
-						'type'        => 'String',
-						'description' => __( 'End date in Y-m-d H:i:s format.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_properties() : array {
+		return [
+			'startDate' => [
+				'type'        => 'String',
+				'description' => __( 'Start date in Y-m-d H:i:s format.', 'wp-graphql-gravity-forms' ),
+			],
+			'endDate'   => [
+				'type'        => 'String',
+				'description' => __( 'End date in Y-m-d H:i:s format.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 }

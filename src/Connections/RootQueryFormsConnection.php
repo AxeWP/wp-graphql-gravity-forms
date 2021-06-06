@@ -49,7 +49,7 @@ class RootQueryFormsConnection implements Hookable, Connection {
 						'description' => __( 'Status of the forms to get.', 'wp-graphql-gravity-forms' ),
 					],
 					'sort'   => [
-						'type'        => FormsSortingInput::TYPE,
+						'type'        => FormsSortingInput::$type,
 						'description' => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
 					],
 				],
