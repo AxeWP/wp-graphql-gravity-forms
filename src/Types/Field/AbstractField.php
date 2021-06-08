@@ -11,20 +11,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Types\AbstractType;
 use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 /**
  * Class - AbstractField
  */
-abstract class AbstractField implements Hookable, Type {
-	/**
-	 * Type registered in WPGraphQL.
-	 *
-	 * @var string
-	 */
-	public static $type;
-
+abstract class AbstractField extends AbstractType {
 	/**
 	 * Type registered in Gravity Forms.
 	 *
@@ -33,39 +25,11 @@ abstract class AbstractField implements Hookable, Type {
 	public static $gf_type;
 
 	/**
-	 * Register hooks to WordPress.
+	 * Get the custom properties for the WPGraphQL type config array.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_custom_config_properties() : array {
+		return [ 'interfaces' => [ FormFieldInterface::TYPE ] ];
 	}
-
-	/**
-	 * Register Object type to GraphQL schema.
-	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			static::$type,
-			[
-				'description' => $this->get_type_description(),
-				'interfaces'  => [ FormFieldInterface::TYPE ],
-				'fields'      => $this->get_properties(),
-			]
-		);
-	}
-
-	/**
-	 * Sets the Field type description.
-	 *
-	 * @return string
-	 */
-	abstract protected function get_type_description() : string;
-
-	/**
-	 * Gets the properties for the Field.
-	 *
-	 * @return array
-	 */
-	abstract protected function get_properties() : array;
 
 	/**
 	 * Get the global properties that apply to all GF field types.
