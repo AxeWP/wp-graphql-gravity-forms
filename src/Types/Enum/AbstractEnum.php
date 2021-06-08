@@ -8,40 +8,42 @@
 
 namespace WPGraphQLGravityForms\Types\Enum;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Enum;
+use WPGraphQLGravityForms\Types\AbstractType;
 use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Abstract Class - Abstract Enum
  */
-abstract class AbstractEnum implements Hookable, Enum {
-	/**
-	 * Type registered in WPGraphQL.
-	 *
-	 * @var string
-	 */
-	public static $type;
-
-	/**
-	 * Register hooks to WordPress.
-	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register' ] );
-	}
-
+abstract class AbstractEnum extends AbstractType {
 	/**
 	 * Registers Enum type.
 	 */
-	public function register() : void {
+	public function register_type() : void {
+		if ( method_exists( $this, 'register' ) ) {
+			_deprecated_function( 'register', '0.6.4', 'register_type' );
+
+			$this->register();
+		}
+
 		register_graphql_enum_type(
 			static::$type,
-			[
-				'description' => $this->get_type_description(),
-				'values'      => $this->prepare_values(),
-			],
+			$this->get_type_config(
+				[
+					'description' => $this->get_type_description(),
+					'values'      => $this->prepare_values(),
+				]
+			)
 		);
 	}
+
+	/**
+	 * Sets the Enum type values.
+	 *
+	 * @since 0.4.0
+	 *
+	 * @return array
+	 */
+	abstract public function set_values() : array;
 
 	/**
 	 * Filters and sorts the values before register().
@@ -49,7 +51,6 @@ abstract class AbstractEnum implements Hookable, Enum {
 	 * @return array
 	 */
 	private function prepare_values() : array {
-
 		/**
 		 * Pass the values through a filter.
 		 */
