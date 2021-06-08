@@ -10,47 +10,47 @@
 
 namespace WPGraphQLGravityForms\Types\ConditionalLogic;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Types\AbstractType;
 use WPGraphQLGravityForms\Types\Enum\ConditionalLogicActionTypeEnum;
 use WPGraphQLGravityForms\Types\Enum\ConditionalLogicLogicTypeEnum;
 
 /**
  * Class - ConditionalLogic
  */
-class ConditionalLogic implements Hookable, Type {
-	const TYPE = 'ConditionalLogic';
+class ConditionalLogic extends AbstractType {
+	/**
+	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
+	 */
+	public static $type = 'ConditionalLogic';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Gets the GraphQL type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Gravity Forms conditional logic.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the GraphQL fields for the type.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Gravity Forms conditional logic.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'actionType' => [
-						'type'        => ConditionalLogicActionTypeEnum::$type,
-						'description' => __( 'The type of action the conditional logic will perform.', 'wp-graphql-gravity-forms' ),
-					],
-					'logicType'  => [
-						'type'        => ConditionalLogicLogicTypeEnum::$type,
-						'description' => __( 'Determines how to the rules should be evaluated.', 'wp-graphql-gravity-forms' ),
-					],
-					'rules'      => [
-						'type'        => [ 'list_of' => ConditionalLogicRule::TYPE ],
-						'description' => __( 'Conditional logic rules.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_type_fields() : array {
+		return [
+			'actionType' => [
+				'type'        => ConditionalLogicActionTypeEnum::$type,
+				'description' => __( 'The type of action the conditional logic will perform.', 'wp-graphql-gravity-forms' ),
+			],
+			'logicType'  => [
+				'type'        => ConditionalLogicLogicTypeEnum::$type,
+				'description' => __( 'Determines how to the rules should be evaluated.', 'wp-graphql-gravity-forms' ),
+			],
+			'rules'      => [
+				'type'        => [ 'list_of' => ConditionalLogicRule::$type ],
+				'description' => __( 'Conditional logic rules.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 }

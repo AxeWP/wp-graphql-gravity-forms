@@ -69,11 +69,11 @@ class Form implements Hookable, Type, Field {
 				'description' => __( 'Gravity Forms form.', 'wp-graphql-gravity-forms' ),
 				'fields'      => [
 					'button'                     => [
-						'type'        => Button\Button::TYPE,
+						'type'        => Button\Button::$type,
 						'description' => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
 					],
 					'confirmations'              => [
-						'type'        => [ 'list_of' => FormConfirmation::TYPE ],
+						'type'        => [ 'list_of' => FormConfirmation::$type ],
 						'description' => __( 'Contains the form confirmation settings such as confirmation text or redirect URL', 'wp-graphql-gravity-forms' ),
 					],
 					'cssClass'                   => [
@@ -134,7 +134,7 @@ class Form implements Hookable, Type, Field {
 						'description' => __( 'Determines where the field labels should be placed in relation to the field.', 'wp-graphql-gravity-forms' ),
 					],
 					'lastPageButton'             => [
-						'type'        => Button\LastPageButton::TYPE,
+						'type'        => Button\LastPageButton::$type,
 						'description' => __( 'Last page button data.', 'wp-graphql-gravity-forms' ),
 					],
 					'limitEntries'               => [
@@ -158,7 +158,7 @@ class Form implements Hookable, Type, Field {
 						'description' => __( 'The Gravity Forms markup version.', 'wp-graphql-gravity-forms' ),
 					],
 					'notifications'              => [
-						'type'        => [ 'list_of' => FormNotification::TYPE ],
+						'type'        => [ 'list_of' => FormNotification::$type ],
 						'description' => __( 'The properties for all the email notifications which exist for a form.', 'wp-graphql-gravity-forms' ),
 					],
 					'nextFieldId'                => [
@@ -166,7 +166,7 @@ class Form implements Hookable, Type, Field {
 						'description' => __( 'The ID to assign to the next field that is added to the form.', 'wp-graphql-gravity-forms' ),
 					],
 					'pagination'                 => [
-						'type'        => FormPagination::TYPE,
+						'type'        => FormPagination::$type,
 						'description' => __( 'Pagination data.', 'wp-graphql-gravity-forms' ),
 					],
 					'postAuthor'                 => [
@@ -214,7 +214,7 @@ class Form implements Hookable, Type, Field {
 						'description' => __( 'When requireLogin is set to true, this controls the message displayed when non-logged in user tries to access the form.', 'wp-graphql-gravity-forms' ),
 					],
 					'save'                       => [
-						'type'        => SaveAndContinue::TYPE,
+						'type'        => SaveAndContinue::$type,
 						'description' => __( '"Save and Continue" data.', 'wp-graphql-gravity-forms' ),
 					],
 					'scheduleEnd'                => [

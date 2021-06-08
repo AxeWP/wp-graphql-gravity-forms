@@ -80,6 +80,7 @@ class ComposerStaticInitbfbf9175b8255d015875c8ce55751c20
         'WPGraphQLGravityForms\\Mutations\\UpdateDraftEntryWebsiteFieldValue' => __DIR__ . '/../..' . '/src/Mutations/UpdateDraftEntryWebsiteFieldValue.php',
         'WPGraphQLGravityForms\\Mutations\\UpdateEntry' => __DIR__ . '/../..' . '/src/Mutations/UpdateEntry.php',
         'WPGraphQLGravityForms\\Settings\\WPGraphQLSettings' => __DIR__ . '/../..' . '/src/Settings/WPGraphQLSettings.php',
+        'WPGraphQLGravityForms\\Types\\AbstractType' => __DIR__ . '/../..' . '/src/Types/AbstractType.php',
         'WPGraphQLGravityForms\\Types\\Button\\Button' => __DIR__ . '/../..' . '/src/Types/Button/Button.php',
         'WPGraphQLGravityForms\\Types\\Button\\LastPageButton' => __DIR__ . '/../..' . '/src/Types/Button/LastPageButton.php',
         'WPGraphQLGravityForms\\Types\\ConditionalLogic\\ConditionalLogic' => __DIR__ . '/../..' . '/src/Types/ConditionalLogic/ConditionalLogic.php',

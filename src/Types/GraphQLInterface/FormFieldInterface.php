@@ -73,7 +73,7 @@ class FormFieldInterface implements Hookable, Type {
 			'wp_graphql_gf_global_properties',
 			[
 				'conditionalLogic'           => [
-					'type'        => ConditionalLogic::TYPE,
+					'type'        => ConditionalLogic::$type,
 					'description' => __( 'Controls the visibility of the field based on values selected by the user.', 'wp-graphql-gravity-forms' ),
 				],
 				'cssClass'                   => [
