@@ -68,6 +68,16 @@ abstract class AbstractType implements Hookable {
 		$fields = $this->get_type_fields();
 
 		/**
+		 * Call deprecated get_properties() function, in case it's used in a child class.
+		 *
+		 * @since 0.6.4
+		 */
+		if ( method_exists( $this, 'get_properties' ) ) {
+			_deprecated_function( 'get_properties', '0.6.4', 'get_type_fields' );
+			$fields = array_merge( $fields, $this->get_properties() );
+		}
+
+		/**
 		 * Filters for modifying the GraphQL type fields.
 		 *
 		 * @param array  $fields The GraphQL fields array.
@@ -98,8 +108,10 @@ abstract class AbstractType implements Hookable {
 
 	/**
 	 * Get the custom properties for the WPGraphQL type config array.
+	 *
+	 * @return array
 	 */
-	public function get_custom_config_properties() {
+	public function get_custom_config_properties() : array {
 		return [];
 	}
 }
