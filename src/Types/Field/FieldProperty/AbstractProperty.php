@@ -11,50 +11,18 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Types\AbstractType;
+
 /**
  * Class - AbstractProperty
  */
-abstract class AbstractProperty implements Hookable, Type {
+abstract class AbstractProperty extends AbstractType {
 	/**
-	 * Type registered in WPGraphQL.
+	 * Constructor used to deprecate the class.
 	 *
-	 * @var string
+	 * @since 0.6.4
 	 */
-	public static $type;
-
-	/**
-	 * Register hooks to WordPress.
-	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function __construct() {
+		_deprecated_function( __FUNCTION__, '0.6.4' );
 	}
-
-	/**
-	 * Register Object type to GraphQL schema.
-	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			static::$type,
-			[
-				'description' => $this->get_type_description(),
-				'fields'      => $this->get_properties(),
-			]
-		);
-	}
-
-	/**
-	 * Sets the Field type description.
-	 *
-	 * @return string
-	 */
-	abstract protected function get_type_description() : string;
-
-	/**
-	 * Gets the properties for the Field.
-	 *
-	 * @return array
-	 */
-	abstract protected function get_properties() : array;
 }

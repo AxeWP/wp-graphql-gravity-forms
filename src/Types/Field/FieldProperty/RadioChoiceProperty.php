@@ -9,12 +9,13 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use WPGraphQLGravityForms\Types\AbstractType;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ChoiceProperty;
 
 /**
  * Class - RadioChoiceProperty
  */
-class RadioChoiceProperty extends AbstractProperty {
+class RadioChoiceProperty extends AbstractType {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -34,7 +35,7 @@ class RadioChoiceProperty extends AbstractProperty {
 	 *
 	 * @return array
 	 */
-	protected function get_properties() : array {
+	protected function get_type_fields() : array {
 		return array_merge(
 			ChoiceProperty\ChoiceIsSelectedProperty::get(),
 			ChoiceProperty\ChoiceTextProperty::get(),

@@ -10,12 +10,13 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use WPGraphQLGravityForms\Types\AbstractType;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
 
 /**
  * Class - CheckboxInputProperty
  */
-class CheckboxInputProperty extends AbstractProperty {
+class CheckboxInputProperty extends AbstractType {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -35,7 +36,7 @@ class CheckboxInputProperty extends AbstractProperty {
 	 *
 	 * @return array
 	 */
-	protected function get_properties() : array {
+	protected function get_type_fields() : array {
 		return array_merge(
 			InputProperty\InputIdProperty::get(),
 			LabelProperty::get(),

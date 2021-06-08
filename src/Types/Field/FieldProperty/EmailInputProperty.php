@@ -11,13 +11,14 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use WPGraphQLGravityForms\Types\AbstractType;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
 use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - EmailInputProperty
  */
-class EmailInputProperty extends AbstractProperty {
+class EmailInputProperty extends AbstractType {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -37,7 +38,7 @@ class EmailInputProperty extends AbstractProperty {
 	 *
 	 * @return array
 	 */
-	protected function get_properties() : array {
+	protected function get_type_fields() : array {
 		return array_merge(
 			AutocompleteAttributeProperty::get(),
 			DefaultValueProperty::get(),

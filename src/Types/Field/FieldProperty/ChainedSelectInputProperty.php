@@ -9,15 +9,15 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use WPGraphQLGravityForms\Types\AbstractType;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
 use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - ChainedSelectInputProperty
  */
-class ChainedSelectInputProperty extends AbstractProperty {
-	/**
-	 * Type registered in WPGraphQL.
+class ChainedSelectInputProperty extends AbstractType {
+	/** Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
@@ -35,7 +35,7 @@ class ChainedSelectInputProperty extends AbstractProperty {
 	 *
 	 * @return array
 	 */
-	protected function get_properties() : array {
+	protected function get_type_fields() : array {
 		return array_merge(
 			InputProperty\InputIdProperty::get(),
 			LabelProperty::get(),

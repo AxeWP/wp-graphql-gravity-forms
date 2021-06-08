@@ -10,12 +10,13 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use WPGraphQLGravityForms\Types\AbstractType;
 use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - InputProperty
  */
-class InputProperty extends AbstractProperty {
+class InputProperty extends AbstractType {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -35,7 +36,7 @@ class InputProperty extends AbstractProperty {
 	 *
 	 * @return array
 	 */
-	protected function get_properties() : array {
+	protected function get_type_fields() : array {
 		return array_merge(
 			AutocompleteAttributeProperty::get(),
 			DefaultValueProperty::get(),

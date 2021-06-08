@@ -9,12 +9,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
 
-use WPGraphQLGravityForms\Types\Field\FieldProperty\AbstractProperty;
+use WPGraphQLGravityForms\Types\AbstractType;
 
 /**
  * Class - AddressValueProperty
  */
-class AddressValueProperty extends AbstractProperty {
+class AddressValueProperty extends AbstractType {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -36,7 +36,7 @@ class AddressValueProperty extends AbstractProperty {
 	 *
 	 * @return array
 	 */
-	public function get_properties(): array {
+	public function get_type_fields(): array {
 		return [
 			'street'  => [
 				'type'        => 'String',

@@ -13,12 +13,13 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use WPGraphQLGravityForms\Types\AbstractType;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
 
 /**
  * Class - PasswordInputProperty
  */
-class PasswordInputProperty extends AbstractProperty {
+class PasswordInputProperty extends AbstractType {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -38,7 +39,7 @@ class PasswordInputProperty extends AbstractProperty {
 	 *
 	 * @return array
 	 */
-	protected function get_properties() : array {
+	protected function get_type_fields() : array {
 		return array_merge(
 			PlaceholderProperty::get(),
 			LabelProperty::get(),

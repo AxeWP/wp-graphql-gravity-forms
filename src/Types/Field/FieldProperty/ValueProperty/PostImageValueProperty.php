@@ -9,12 +9,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
 
-use WPGraphQLGravityForms\Types\Field\FieldProperty\AbstractProperty;
+use WPGraphQLGravityForms\Types\AbstractType;
 
 /**
  * Class - PostImageValueProperty
  */
-class PostImageValueProperty extends AbstractProperty {
+class PostImageValueProperty extends AbstractType {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -36,7 +36,7 @@ class PostImageValueProperty extends AbstractProperty {
 	 *
 	 * @return array
 	 */
-	public function get_properties(): array {
+	public function get_type_fields(): array {
 		return [
 			'caption'     => [
 				'type'        => 'String',
