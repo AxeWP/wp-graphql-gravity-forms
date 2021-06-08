@@ -38,14 +38,7 @@ abstract class AbstractObject extends AbstractType {
 	}
 
 	/**
-	 * Gets the Field type description.
-	 *
-	 * @return string
-	 */
-	abstract protected function get_type_description() : string;
-
-	/**
-	 * Gets the properties for the Field.
+	 * Gets the properties for the Field. Not abstract, so deprecated child classes don't break.
 	 *
 	 * @todo convert to abstract class.
 	 * @return array
