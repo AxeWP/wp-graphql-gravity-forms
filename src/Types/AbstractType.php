@@ -44,9 +44,12 @@ abstract class AbstractType implements Hookable {
 	/**
 	 * Gets the properties for the Field.
 	 *
+	 * @todo convert to abstract class.
 	 * @return array
 	 */
-	abstract protected function get_type_fields() : array;
+	protected function get_type_fields() : array {
+		return [];
+	}
 
 	/**
 	 * Gets the filterable $config array for the GraphQL type.
