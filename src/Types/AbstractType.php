@@ -76,14 +76,17 @@ abstract class AbstractType implements Hookable {
 		$fields = apply_filters( 'wp_graphql_gf_type_fields', $fields, static::$type );
 		$fields = apply_filters( 'wp_graphql_gf_' . static::$type . '_type_fields', $fields );
 
-		$config = [
-			'description' => $description,
-			'fields'      => $fields,
-		];
+		$config = array_merge(
+			[
+				'description' => $description,
+				'fields'      => $fields,
+			],
+			$this->get_custom_config_properties(),
+		);
 
 		/**
 		 * Filter for modifying the GraphQL type $config array used to register the type in WPGraphQL.
-		 * 
+		 *
 		 * @param array  $config The config array.
 		 * @param string $type The GraphQL type name.
 		 */
@@ -91,5 +94,12 @@ abstract class AbstractType implements Hookable {
 		$config = apply_filters( 'wp_graphql_gf_' . static::$type . '_type_config', $config );
 
 		return $config;
+	}
+
+	/**
+	 * Get the custom properties for the WPGraphQL type config array.
+	 */
+	public function get_custom_config_properties() {
+		return [];
 	}
 }
