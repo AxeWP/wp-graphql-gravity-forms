@@ -9,12 +9,12 @@
 
 namespace WPGraphQLGravityForms\Types\FieldError;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 
 /**
  * Class - FieldError
  */
-class FieldError extends AbstractType {
+class FieldError extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

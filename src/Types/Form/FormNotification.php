@@ -10,14 +10,14 @@
 
 namespace WPGraphQLGravityForms\Types\Form;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 use WPGraphQLGravityForms\Types\Enum\NotificationToTypeEnum;
 
 /**
  * Class - FormNotification
  */
-class FormNotification extends AbstractType {
+class FormNotification extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

@@ -11,13 +11,13 @@
 
 namespace WPGraphQLGravityForms\Types\Form;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Enum\RuleOperatorEnum;
 
 /**
  * Class - FormNotificationRouting
  */
-class FormNotificationRouting extends AbstractType {
+class FormNotificationRouting extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

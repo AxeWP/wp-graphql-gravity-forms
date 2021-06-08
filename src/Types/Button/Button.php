@@ -10,14 +10,14 @@
 
 namespace WPGraphQLGravityForms\Types\Button;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
 use WPGraphQLGravityForms\Types\Enum\ButtonTypeEnum;
 
 /**
  * Class - Button
  */
-class Button extends AbstractType {
+class Button extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

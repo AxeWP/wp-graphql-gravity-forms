@@ -11,47 +11,16 @@
 
 namespace WPGraphQLGravityForms\Types\Field;
 
-use WPGraphQLGravityForms\Types\AbstractType;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 /**
  * Class - AbstractField
  */
-abstract class AbstractField extends AbstractType {
+abstract class AbstractField extends AbstractFormField {
 	/**
-	 * Type registered in Gravity Forms.
+	 * Constructor used to deprecate the class.
 	 *
-	 * @var string
+	 * @since 0.6.4
 	 */
-	public static $gf_type;
-
-	/**
-	 * Get the custom properties for the WPGraphQL type config array.
-	 */
-	public function get_custom_config_properties() : array {
-		return [ 'interfaces' => [ FormFieldInterface::TYPE ] ];
-	}
-
-	/**
-	 * Get the global properties that apply to all GF field types.
-	 *
-	 * @return array
-	 */
-	protected function get_global_properties() : array {
-		return FormFieldInterface::get_properties();
-	}
-
-	/**
-	 * Get the custom properties.
-	 *
-	 * @return array
-	 */
-	protected function get_custom_properties() : array {
-		/**
-		 * Add GraphQL fields for custom field properties.
-		 *
-		 * @param array Additional GraphQL field definitions.
-		 * @param array The type of Gravity Forms field.
-		 */
-		return apply_filters( 'wp_graphql_gf_custom_properties', [], static::$gf_type );
+	public function __construct() {
+		_deprecated_function( __FUNCTION__, '0.6.4' );
 	}
 }

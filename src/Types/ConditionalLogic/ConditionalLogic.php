@@ -10,14 +10,14 @@
 
 namespace WPGraphQLGravityForms\Types\ConditionalLogic;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Enum\ConditionalLogicActionTypeEnum;
 use WPGraphQLGravityForms\Types\Enum\ConditionalLogicLogicTypeEnum;
 
 /**
  * Class - ConditionalLogic
  */
-class ConditionalLogic extends AbstractType {
+class ConditionalLogic extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

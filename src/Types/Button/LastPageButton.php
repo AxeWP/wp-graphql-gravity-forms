@@ -10,13 +10,13 @@
 
 namespace WPGraphQLGravityForms\Types\Button;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Enum\ButtonTypeEnum;
 
 /**
  * Class - LastPageButton
  */
-class LastPageButton extends AbstractType {
+class LastPageButton extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

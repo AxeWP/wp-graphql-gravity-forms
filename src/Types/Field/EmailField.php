@@ -16,7 +16,7 @@ use WPGraphQLGravityForms\Types\Field\FieldProperty;
 /**
  * Class - EmailField
  */
-class EmailField extends AbstractField {
+class EmailField extends AbstractFormField {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
