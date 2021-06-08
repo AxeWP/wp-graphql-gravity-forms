@@ -9,12 +9,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
 
-use WPGraphQLGravityForms\Types\Field\FieldProperty\AbstractProperty;
+use WPGraphQLGravityForms\Types\AbstractType;
 
 /**
  * Class - TimeValueProperty
  */
-class TimeValueProperty extends AbstractProperty {
+class TimeValueProperty extends AbstractType {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -36,7 +36,7 @@ class TimeValueProperty extends AbstractProperty {
 	 *
 	 * @return array
 	 */
-	public function get_properties(): array {
+	public function get_type_fields(): array {
 		return [
 			'displayValue' => [
 				'type'        => 'String',

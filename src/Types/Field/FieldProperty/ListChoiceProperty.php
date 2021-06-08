@@ -11,10 +11,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use WPGraphQLGravityForms\Types\AbstractType;
+
 /**
  * Class - ListChoiceProperty
  */
-class ListChoiceProperty extends AbstractProperty {
+class ListChoiceProperty extends AbstractType {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -34,7 +36,7 @@ class ListChoiceProperty extends AbstractProperty {
 	 *
 	 * @return array
 	 */
-	protected function get_properties() : array {
+	protected function get_type_fields() : array {
 		return [
 			'text'  => [
 				'type'        => 'String',
