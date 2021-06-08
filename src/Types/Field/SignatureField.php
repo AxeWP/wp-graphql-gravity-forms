@@ -19,7 +19,7 @@ use WPGraphQLGravityForms\Types\Field\FieldProperty;
 /**
  * Class - SignatureField
  */
-class SignatureField extends AbstractField {
+class SignatureField extends AbstractFormField {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

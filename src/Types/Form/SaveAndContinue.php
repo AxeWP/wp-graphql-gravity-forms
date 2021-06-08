@@ -8,12 +8,12 @@
 
 namespace WPGraphQLGravityForms\Types\Form;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 
 /**
  * Class - SaveAndContinue
  */
-class SaveAndContinue extends AbstractType {
+class SaveAndContinue extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

@@ -10,13 +10,13 @@
 
 namespace WPGraphQLGravityForms\Types\ConditionalLogic;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Enum\RuleOperatorEnum;
 
 /**
  * Class - ConditionalLogicRule
  */
-class ConditionalLogicRule extends AbstractType {
+class ConditionalLogicRule extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

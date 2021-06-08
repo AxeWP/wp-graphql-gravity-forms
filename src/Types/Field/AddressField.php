@@ -19,7 +19,7 @@ use WPGraphQLGravityForms\Utils\Utils;
 /**
  * Class - AddressField
  */
-class AddressField extends AbstractField {
+class AddressField extends AbstractFormField {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

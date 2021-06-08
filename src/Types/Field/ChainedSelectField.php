@@ -18,7 +18,7 @@ use WPGraphQLGravityForms\Types\Enum\ChainedSelectsAlignmentEnum;
 /**
  * Class - ChainedSelectField
  */
-class ChainedSelectField extends AbstractField {
+class ChainedSelectField extends AbstractFormField {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

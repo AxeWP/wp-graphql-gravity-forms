@@ -10,13 +10,13 @@
 
 namespace WPGraphQLGravityForms\Types\Form;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Enum\ConfirmationTypeEnum;
 
 /**
  * Class - FormConfirmation
  */
-class FormConfirmation extends AbstractType {
+class FormConfirmation extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

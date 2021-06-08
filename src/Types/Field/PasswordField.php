@@ -18,7 +18,7 @@ use WPGraphQLGravityForms\Utils\Utils;
 /**
  * Class - PasswordField
  */
-class PasswordField extends AbstractField {
+class PasswordField extends AbstractFormField {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

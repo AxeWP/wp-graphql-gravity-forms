@@ -10,14 +10,14 @@
 
 namespace WPGraphQLGravityForms\Types\Form;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Enum\PageProgressStyleEnum;
 use WPGraphQLGravityForms\Types\Enum\PageProgressTypeEnum;
 
 /**
  * Class - FormPagination
  */
-class FormPagination extends AbstractType {
+class FormPagination extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
