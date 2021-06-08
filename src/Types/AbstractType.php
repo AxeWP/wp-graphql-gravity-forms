@@ -1,6 +1,6 @@
 <?php
 /**
- * Abstract GraphQL Type.
+ * Abstract GraphQL Type. Defaults to `register_graphql_object_type` unless overridden by the child class.
  *
  * @package WPGraphQLGravityForms\Types;
  */
@@ -56,21 +56,38 @@ abstract class AbstractType implements Hookable {
 	protected function get_type_config() : array {
 		$description = $this->get_type_description();
 
+		/**
+		 * Filters for modifying the GraphQL description.
+		 *
+		 * @param string $description The GraphQL type description
+		 * @param string $type The GraphQL type name.
+		 */
 		$description = apply_filters( 'wp_graphql_gf_type_description', $description, static::$type );
 		$description = apply_filters( 'wp_graphql_gf_' . static::$type . '_type_description', $description );
 
 		$fields = $this->get_type_fields();
 
-		$fields = apply_filters( 'wp_graphql_gf_type_properties', $fields, static::$type );
-		$fields = apply_filters( 'wp_graphql_gf_' . static::$type . '_type_properties', $fields );
+		/**
+		 * Filters for modifying the GraphQL type fields.
+		 *
+		 * @param array  $fields The GraphQL fields array.
+		 * @param string $type The GraphQL type name.
+		 */
+		$fields = apply_filters( 'wp_graphql_gf_type_fields', $fields, static::$type );
+		$fields = apply_filters( 'wp_graphql_gf_' . static::$type . '_type_fields', $fields );
 
 		$config = [
 			'description' => $description,
 			'fields'      => $fields,
 		];
 
+		/**
+		 * Filter for modifying the GraphQL type $config array used to register the type in WPGraphQL.
+		 * 
+		 * @param array  $config The config array.
+		 * @param string $type The GraphQL type name.
+		 */
 		$config = apply_filters( 'wp_graphql_gf_type_config', $config, static::$type );
-
 		$config = apply_filters( 'wp_graphql_gf_' . static::$type . '_type_config', $config );
 
 		return $config;
