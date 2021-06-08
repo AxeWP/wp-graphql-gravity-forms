@@ -53,7 +53,7 @@ class PageField extends AbstractField {
 			FieldProperty\SizeProperty::get(),
 			[
 				'nextButton'     => [
-					'type'        => Button::TYPE,
+					'type'        => Button::$type,
 					'description' => __( 'An array containing the the individual properties for the "Next" button.', 'wp-graphql-gravity-forms' ),
 				],
 				// Although the property name is the same, this field is different than FieldProperty\PageNumberProperty.
@@ -62,7 +62,7 @@ class PageField extends AbstractField {
 					'description' => __( 'The page number of the current page.', 'wp-graphql-gravity-forms' ),
 				],
 				'previousButton' => [
-					'type'        => Button::TYPE,
+					'type'        => Button::$type,
 					'description' => __( 'An array containing the the individual properties for the "Previous" button.', 'wp-graphql-gravity-forms' ),
 				],
 			],

@@ -109,7 +109,7 @@ class UpdateDraftEntry extends AbstractMutation {
 				},
 			],
 			'errors'      => [
-				'type'        => [ 'list_of' => FieldError::TYPE ],
+				'type'        => [ 'list_of' => FieldError::$type ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
 			'resumeUrl'   => [

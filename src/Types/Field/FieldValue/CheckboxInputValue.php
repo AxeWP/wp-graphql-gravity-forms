@@ -9,13 +9,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Types\AbstractType;
 
 /**
  * Class - CheckboxInputValue
  */
-class CheckboxInputValue implements Hookable, Type {
+class CheckboxInputValue extends AbstractType {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -24,31 +23,27 @@ class CheckboxInputValue implements Hookable, Type {
 	public static $type = 'CheckboxInputValue';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Gets the GraphQL type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Value for a single input within a checkbox field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the GraphQL fields for the type.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::$type,
-			[
-				'description' => __( 'Value for a single input within a checkbox field.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'inputId' => [
-						'type'        => 'Float',
-						'description' => __( 'Input ID.', 'wp-graphql-gravity-forms' ),
-					],
-					'value'   => [
-						'type'        => 'String',
-						'description' => __( 'Input value', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_type_fields() : array {
+		return [
+			'inputId' => [
+				'type'        => 'Float',
+				'description' => __( 'Input ID.', 'wp-graphql-gravity-forms' ),
+			],
+			'value'   => [
+				'type'        => 'String',
+				'description' => __( 'Input value', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 }

@@ -10,66 +10,66 @@
 
 namespace WPGraphQLGravityForms\Types\Form;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Types\AbstractType;
 use WPGraphQLGravityForms\Types\Enum\ConfirmationTypeEnum;
 
 /**
  * Class - FormConfirmation
  */
-class FormConfirmation implements Hookable, Type {
-	const TYPE = 'FormConfirmation';
+class FormConfirmation extends AbstractType {
+	/**
+	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
+	 */
+	public static $type = 'FormConfirmation';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Gets the GraphQL type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Properties for all the email notifications which exist for a form.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the GraphQL fields for the type.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Properties for all the email notifications which exist for a form.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'id'          => [
-						'type'        => 'String',
-						'description' => __( 'ID.', 'wp-graphql-gravity-forms' ),
-					],
-					'name'        => [
-						'type'        => 'String',
-						'description' => __( 'Name.', 'wp-graphql-gravity-forms' ),
-					],
-					'isDefault'   => [
-						'type'        => 'Boolean',
-						'description' => __( 'Whether this is the default confirmation.', 'wp-graphql-gravity-forms' ),
-					],
-					'type'        => [
-						'type'        => ConfirmationTypeEnum::$type,
-						'description' => __( 'Determines the type of confirmation to be used.', 'wp-graphql-gravity-forms' ),
-					],
-					'message'     => [
-						'type'        => 'String',
-						'description' => __( 'Contains the confirmation message that will be displayed. Only applicable when type is set to "MESSAGE".', 'wp-graphql-gravity-forms' ),
-					],
-					'url'         => [
-						'type'        => 'String',
-						'description' => __( 'Contains the URL that the browser will be redirected to. Only applicable when type is set to "REDIRECT".', 'wp-graphql-gravity-forms' ),
-					],
-					'pageId'      => [
-						'type'        => 'Integer',
-						'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to "PAGE".', 'wp-graphql-gravity-forms' ),
-					],
-					'queryString' => [
-						'type'        => 'String',
-						'description' => __( 'Contains the query string to be appended to the redirection url. Only applicable when type is set to redirect.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_type_fields() : array {
+		return [
+			'id'          => [
+				'type'        => 'String',
+				'description' => __( 'ID.', 'wp-graphql-gravity-forms' ),
+			],
+			'name'        => [
+				'type'        => 'String',
+				'description' => __( 'Name.', 'wp-graphql-gravity-forms' ),
+			],
+			'isDefault'   => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether this is the default confirmation.', 'wp-graphql-gravity-forms' ),
+			],
+			'type'        => [
+				'type'        => ConfirmationTypeEnum::$type,
+				'description' => __( 'Determines the type of confirmation to be used.', 'wp-graphql-gravity-forms' ),
+			],
+			'message'     => [
+				'type'        => 'String',
+				'description' => __( 'Contains the confirmation message that will be displayed. Only applicable when type is set to "MESSAGE".', 'wp-graphql-gravity-forms' ),
+			],
+			'url'         => [
+				'type'        => 'String',
+				'description' => __( 'Contains the URL that the browser will be redirected to. Only applicable when type is set to "REDIRECT".', 'wp-graphql-gravity-forms' ),
+			],
+			'pageId'      => [
+				'type'        => 'Integer',
+				'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to "PAGE".', 'wp-graphql-gravity-forms' ),
+			],
+			'queryString' => [
+				'type'        => 'String',
+				'description' => __( 'Contains the query string to be appended to the redirection url. Only applicable when type is set to redirect.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 }
