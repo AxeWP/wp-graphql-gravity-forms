@@ -33,7 +33,7 @@ class ListInput extends AbstractInput {
 	 *
 	 * @return array
 	 */
-	public function get_properties() : array {
+	public function get_type_fields() : array {
 		return [
 			'values'    => [
 				'type'              => [ 'list_of' => 'String' ],

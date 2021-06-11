@@ -11,12 +11,14 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\ConsentFieldValueProperty;
 
 /**
  * Class - ConsentFieldValue
  */
-class ConsentFieldValue extends AbstractFieldValue {
+class ConsentFieldValue extends AbstractObject implements FieldValue {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -40,7 +42,7 @@ class ConsentFieldValue extends AbstractFieldValue {
 	 *
 	 * @return array
 	 */
-	public function get_properties() : array {
+	public function get_type_fields() : array {
 		return [
 			'value' => [
 				'type'        => 'String',

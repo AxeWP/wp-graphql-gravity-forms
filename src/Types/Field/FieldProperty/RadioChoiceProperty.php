@@ -9,13 +9,13 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ChoiceProperty;
 
 /**
  * Class - RadioChoiceProperty
  */
-class RadioChoiceProperty extends AbstractType {
+class RadioChoiceProperty extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -26,7 +26,7 @@ class RadioChoiceProperty extends AbstractType {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'Gravity Forms Chained Select field choice property.', 'wp-graphql-gravity-forms' );
 	}
 
@@ -35,7 +35,7 @@ class RadioChoiceProperty extends AbstractType {
 	 *
 	 * @return array
 	 */
-	protected function get_type_fields() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			ChoiceProperty\ChoiceIsSelectedProperty::get(),
 			ChoiceProperty\ChoiceTextProperty::get(),

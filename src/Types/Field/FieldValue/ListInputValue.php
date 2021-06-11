@@ -10,12 +10,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 
 /**
  * Class - ListInputValue
  */
-class ListInputValue extends AbstractType {
+class ListInputValue extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

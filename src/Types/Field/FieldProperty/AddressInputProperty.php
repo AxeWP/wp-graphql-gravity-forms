@@ -9,13 +9,13 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
 
 /**
  * Class - AddressInputProperty
  */
-class AddressInputProperty extends AbstractType {
+class AddressInputProperty extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -26,7 +26,7 @@ class AddressInputProperty extends AbstractType {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'An array containing the the individual properties for each element of the address field.', 'wp-graphql-gravity-forms' );
 	}
 
@@ -35,7 +35,7 @@ class AddressInputProperty extends AbstractType {
 	 *
 	 * @return array
 	 */
-	protected function get_type_fields() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			AutocompleteAttributeProperty::get(),
 			DefaultValueProperty::get(),

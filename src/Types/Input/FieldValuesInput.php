@@ -33,7 +33,7 @@ class FieldValuesInput extends AbstractInput {
 	 *
 	 * @return array
 	 */
-	public function get_properties() : array {
+	public function get_type_fields() : array {
 		return [
 			'id'                  => [
 				'type'        => [ 'non_null' => 'Int' ],

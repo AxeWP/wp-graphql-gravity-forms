@@ -7,51 +7,45 @@
 
 namespace WPGraphQLGravityForms\Types\Input;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\InputType;
+use WPGraphQLGravityForms\Types\AbstractType;
 
 /**
  * Class - AbstractInput
  */
-abstract class AbstractInput implements Hookable, InputType {
-	/**
-	 * Type registered in WPGraphQL.
-	 *
-	 * @var string
-	 */
-	public static $type;
-
-	/**
-	 * Register hooks to WordPress.
-	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
-	}
-
+abstract class AbstractInput extends AbstractType {
 	/**
 	 * Register Input type to GraphQL schema.
 	 */
 	public function register_type() : void {
+		/**
+		 * Call deprecated get_properties() function, in case it's used in a child class.
+		 *
+		 * @since 0.6.4
+		 */
+		$fields = $this->get_type_fields();
+		if ( method_exists( $this, 'get_properties' ) ) {
+			_deprecated_function( 'get_properties', '0.6.4', 'get_type_fields' );
+			$fields = array_merge( $fields, $this->get_properties() );
+		}
+
 		register_graphql_input_type(
 			static::$type,
-			[
-				'description' => $this->get_type_description(),
-				'fields'      => $this->get_properties(),
-			]
+			$this->get_type_config(
+				[
+					'description' => $this->get_type_description(),
+					'fields'      => $fields,
+				]
+			)
 		);
 	}
 
 	/**
-	 * Sets the Field type description.
+	 * Gets the properties for the Field. Not abstract, so deprecated child classes don't break.
 	 *
-	 * @return string
-	 */
-	abstract protected function get_type_description() : string;
-
-	/**
-	 * Gets the properties for the Field.
-	 *
+	 * @todo convert to abstract class.
 	 * @return array
 	 */
-	abstract protected function get_properties() : array;
+	public function get_type_fields() : array {
+		return [];
+	}
 }

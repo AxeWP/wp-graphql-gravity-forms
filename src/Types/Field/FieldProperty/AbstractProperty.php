@@ -11,12 +11,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 
 /**
  * Class - AbstractProperty
  */
-abstract class AbstractProperty extends AbstractType {
+abstract class AbstractProperty extends AbstractObject {
 	/**
 	 * Constructor used to deprecate the class.
 	 *

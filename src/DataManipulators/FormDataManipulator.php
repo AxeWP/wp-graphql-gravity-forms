@@ -62,7 +62,7 @@ class FormDataManipulator implements DataManipulator {
 	 */
 	private function set_global_and_form_ids( array $form ) : array {
 		$form['formId'] = $form['id'];
-		$form['id']     = Relay::toGlobalId( Form::TYPE, $form['formId'] );
+		$form['id']     = Relay::toGlobalId( Form::$type, $form['formId'] );
 
 		return $form;
 	}

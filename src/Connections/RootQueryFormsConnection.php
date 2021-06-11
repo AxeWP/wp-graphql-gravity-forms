@@ -11,8 +11,6 @@ namespace WPGraphQLGravityForms\Connections;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Connection;
 use WPGraphQLGravityForms\Types\Form\Form;
 use WPGraphQLGravityForms\Types\Enum\FormStatusEnum;
 use WPGraphQLGravityForms\Types\Input\FormsSortingInput;
@@ -20,43 +18,52 @@ use WPGraphQLGravityForms\Types\Input\FormsSortingInput;
 /**
  * Class - RootQueryFormsConnection
  */
-class RootQueryFormsConnection implements Hookable, Connection {
+class RootQueryFormsConnection  extends AbstractConnection {
 	/**
-	 * The from field name.
+	 * GraphQL field name in node tree.
+	 *
+	 * @var string
 	 */
-	const FROM_FIELD = 'gravityFormsForms';
-
+	public static $from_field_name = 'gravityFormsForms';
 
 	/**
-	 * Register hooks to WordPress.
+	 * GraphQL Connection from type.
+	 *
+	 * @return string
 	 */
-	public function register_hooks() : void {
-		add_action( 'init', [ $this, 'register_connection' ] );
+	public function get_connection_from_type() : string {
+		return 'RootQuery';
 	}
 
 	/**
-	 * Register connection from RootQuery type to GravityFormsForm type.
+	 * GraphQL Connection to type.
+	 *
+	 * @return string
 	 */
-	public function register_connection() : void {
-		register_graphql_connection(
-			[
-				'fromType'       => 'RootQuery',
-				'toType'         => Form::TYPE,
-				'fromFieldName'  => self::FROM_FIELD,
-				'connectionArgs' => [
-					'status' => [
-						'type'        => FormStatusEnum::$type,
-						'description' => __( 'Status of the forms to get.', 'wp-graphql-gravity-forms' ),
-					],
-					'sort'   => [
-						'type'        => FormsSortingInput::$type,
-						'description' => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
-					],
+	public function get_connection_to_type() : string {
+		return Form::$type;
+	}
+
+	/**
+	 * Gets custom connection configuration arguments, such as the resolver, edgeFields, connectionArgs, etc.
+	 *
+	 * @return array
+	 */
+	public function get_connection_config_args() : array {
+		return [
+			'connectionArgs' => [
+				'status' => [
+					'type'        => FormStatusEnum::$type,
+					'description' => __( 'Status of the forms to get.', 'wp-graphql-gravity-forms' ),
 				],
-				'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-					return ( new RootQueryFormsConnectionResolver() )->resolve( $root, $args, $context, $info );
-				},
-			]
-		);
+				'sort'   => [
+					'type'        => FormsSortingInput::$type,
+					'description' => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
+				],
+			],
+			'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+				return ( new RootQueryFormsConnectionResolver() )->resolve( $root, $args, $context, $info );
+			},
+		];
 	}
 }

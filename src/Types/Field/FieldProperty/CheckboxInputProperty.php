@@ -10,13 +10,13 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
 
 /**
  * Class - CheckboxInputProperty
  */
-class CheckboxInputProperty extends AbstractType {
+class CheckboxInputProperty extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -27,7 +27,7 @@ class CheckboxInputProperty extends AbstractType {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'An array containing the the individual properties for each element of the checkbox field.', 'wp-graphql-gravity-forms' );
 	}
 
@@ -36,7 +36,7 @@ class CheckboxInputProperty extends AbstractType {
 	 *
 	 * @return array
 	 */
-	protected function get_type_fields() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			InputProperty\InputIdProperty::get(),
 			LabelProperty::get(),

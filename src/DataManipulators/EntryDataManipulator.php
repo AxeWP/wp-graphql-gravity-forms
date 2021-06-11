@@ -53,7 +53,7 @@ class EntryDataManipulator implements DataManipulator {
 	 */
 	private function set_global_and_entry_ids( array $entry ) : array {
 		$entry['entryId'] = $entry['id'];
-		$entry['id']      = Relay::toGlobalId( Entry::TYPE, $this->get_id_for_global_id_generation( $entry ) );
+		$entry['id']      = Relay::toGlobalId( Entry::$type, $this->get_id_for_global_id_generation( $entry ) );
 
 		return $entry;
 	}

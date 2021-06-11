@@ -9,12 +9,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 
 /**
  * Class - NameValueProperty
  */
-class NameValueProperty extends AbstractType {
+class NameValueProperty extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

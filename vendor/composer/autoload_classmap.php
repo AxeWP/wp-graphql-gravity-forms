@@ -7,7 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'WPGraphQLGravityForms\\Connections\\AbstractConnection' => $baseDir . '/src/Connections/AbstractConnection.php',
     'WPGraphQLGravityForms\\Connections\\EntryFieldConnection' => $baseDir . '/src/Connections/EntryFieldConnection.php',
+    'WPGraphQLGravityForms\\Connections\\FormEntryConnection' => $baseDir . '/src/Connections/FormEntryConnection.php',
     'WPGraphQLGravityForms\\Connections\\FormFieldConnection' => $baseDir . '/src/Connections/FormFieldConnection.php',
     'WPGraphQLGravityForms\\Connections\\RootQueryEntriesConnection' => $baseDir . '/src/Connections/RootQueryEntriesConnection.php',
     'WPGraphQLGravityForms\\Connections\\RootQueryEntriesConnectionResolver' => $baseDir . '/src/Connections/RootQueryEntriesConnectionResolver.php',
@@ -21,7 +23,6 @@ return array(
     'WPGraphQLGravityForms\\Data\\Loader\\LoadersRegistrar' => $baseDir . '/src/Data/Loader/LoadersRegistrar.php',
     'WPGraphQLGravityForms\\Interfaces\\Connection' => $baseDir . '/src/Interfaces/Connection.php',
     'WPGraphQLGravityForms\\Interfaces\\DataManipulator' => $baseDir . '/src/Interfaces/DataManipulator.php',
-    'WPGraphQLGravityForms\\Interfaces\\Enum' => $baseDir . '/src/Interfaces/Enum.php',
     'WPGraphQLGravityForms\\Interfaces\\Field' => $baseDir . '/src/Interfaces/Field.php',
     'WPGraphQLGravityForms\\Interfaces\\FieldProperty' => $baseDir . '/src/Interfaces/FieldProperty.php',
     'WPGraphQLGravityForms\\Interfaces\\FieldValue' => $baseDir . '/src/Interfaces/FieldValue.php',
@@ -65,6 +66,7 @@ return array(
     'WPGraphQLGravityForms\\Mutations\\UpdateDraftEntryWebsiteFieldValue' => $baseDir . '/src/Mutations/UpdateDraftEntryWebsiteFieldValue.php',
     'WPGraphQLGravityForms\\Mutations\\UpdateEntry' => $baseDir . '/src/Mutations/UpdateEntry.php',
     'WPGraphQLGravityForms\\Settings\\WPGraphQLSettings' => $baseDir . '/src/Settings/WPGraphQLSettings.php',
+    'WPGraphQLGravityForms\\Types\\AbstractObject' => $baseDir . '/src/Types/AbstractObject.php',
     'WPGraphQLGravityForms\\Types\\AbstractType' => $baseDir . '/src/Types/AbstractType.php',
     'WPGraphQLGravityForms\\Types\\Button\\Button' => $baseDir . '/src/Types/Button/Button.php',
     'WPGraphQLGravityForms\\Types\\Button\\LastPageButton' => $baseDir . '/src/Types/Button/LastPageButton.php',
@@ -112,6 +114,7 @@ return array(
     'WPGraphQLGravityForms\\Types\\Enum\\VisibilityPropertyEnum' => $baseDir . '/src/Types/Enum/VisibilityPropertyEnum.php',
     'WPGraphQLGravityForms\\Types\\FieldError\\FieldError' => $baseDir . '/src/Types/FieldError/FieldError.php',
     'WPGraphQLGravityForms\\Types\\Field\\AbstractField' => $baseDir . '/src/Types/Field/AbstractField.php',
+    'WPGraphQLGravityForms\\Types\\Field\\AbstractFormField' => $baseDir . '/src/Types/Field/AbstractFormField.php',
     'WPGraphQLGravityForms\\Types\\Field\\AddressField' => $baseDir . '/src/Types/Field/AddressField.php',
     'WPGraphQLGravityForms\\Types\\Field\\CaptchaField' => $baseDir . '/src/Types/Field/CaptchaField.php',
     'WPGraphQLGravityForms\\Types\\Field\\ChainedSelectField' => $baseDir . '/src/Types/Field/ChainedSelectField.php',
