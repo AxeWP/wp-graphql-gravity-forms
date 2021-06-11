@@ -12,49 +12,57 @@ namespace WPGraphQLGravityForms\Types\Entry;
 use WP_User;
 use WPGraphQL\Model\User;
 use GraphQL\Error\UserError;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\Field;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Entry\Entry;
 
 /**
  * Creates a 1:1 relationship between an Entry and the User who created it.
  */
-class EntryUser implements Hookable, Type, Field {
+class EntryUser extends AbstractObject implements Field {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'EntryUser';
+	public static $type = 'EntryUser';
 
 	/**
 	 * Field registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const FIELD = 'createdBy';
+	public static $field_name = 'createdBy';
 
 	/**
 	 * Register hooks to WordPress.
 	 */
 	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+		parent::register_hooks();
 		add_action( 'graphql_register_types', [ $this, 'register_field' ] );
 	}
 
 	/**
-	 * Register new edge type.
+	 * Sets the field type description.
+	 *
+	 * @return string
 	 */
-	public function register_type() : void {
-		register_graphql_type(
-			self::TYPE,
-			[
+	public function get_type_description() : string {
+		return __( 'The user who created the entry.', 'wp-graphql-gravity-forms' );
+	}
+
+	/**
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
+	 */
+	public function get_type_fields() : array {
+		return [
+			'node' => [
+				'type'        => 'User',
 				'description' => __( 'The user who created the entry.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'node' => [
-						'type'        => 'User',
-						'description' => __( 'The user who created the entry.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+			],
+		];
 	}
 
 	/**
@@ -62,10 +70,10 @@ class EntryUser implements Hookable, Type, Field {
 	 */
 	public function register_field() : void {
 		register_graphql_field(
-			Entry::TYPE,
-			self::FIELD,
+			Entry::$type,
+			self::$field_name,
 			[
-				'type'        => self::TYPE,
+				'type'        => self::$type,
 				'description' => __( 'The user who created the entry.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $entry ) : array {
 					$user = isset( $entry['createdById'] ) ? get_userdata( $entry['createdById'] ) : null;

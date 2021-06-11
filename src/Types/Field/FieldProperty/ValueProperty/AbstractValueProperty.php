@@ -8,23 +8,15 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
 
+use GF_Field;
 use WPGraphQL\AppContext;
 use GraphQL\Type\Definition\ResolveInfo;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
-use WPGraphQLGravityForms\Interfaces\ValueProperty;
+use WPGraphQLGravityForms\Types\AbstractType;
 
 /**
  * Class - AbstractValueProperty
  */
-abstract class AbstractValueProperty implements Hookable, Type, ValueProperty {
-	/**
-	 * Existing type registered in WPGraphQL that we are adding the field to.
-	 *
-	 * @var string
-	 */
-	public static $type;
-
+abstract class AbstractValueProperty extends AbstractType {
 	/**
 	 * Existing type registered in WPGraphQL that we are adding the field to.
 	 *
@@ -33,30 +25,45 @@ abstract class AbstractValueProperty implements Hookable, Type, ValueProperty {
 	public static $field_name;
 
 	/**
-	 * Register hooks to WordPress.
-	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
-	}
-
-	/**
 	 * Register Object type to GraphQL schema.
 	 */
 	public function register_type() : void {
 		register_graphql_field(
 			static::$type,
 			static::$field_name,
-			[
-				'type'        => $this->get_field_type(),
-				'description' => $this->get_type_description(),
-				'resolve'     => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-					if ( ! isset( $root['source'] ) || ! is_array( $root['source'] ) ) {
-						return null;
-					}
-					$value = static::get( $root['source'], $root );
-					return $value;
-				},
-			]
+			$this->get_type_config(
+				[
+					'type'        => $this->get_field_type(),
+					'description' => $this->get_type_description(),
+					'resolve'     => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+						if ( ! isset( $root['source'] ) || ! is_array( $root['source'] ) ) {
+							return null;
+						}
+
+						$value = static::get( $root['source'], $root );
+						return $value;
+					},
+				]
+			)
 		);
 	}
+
+	/**
+	 * Get the field value.
+	 *
+	 * @todo stop returning array once fieldValue is removed.
+	 *
+	 * @param array    $entry Gravity Forms entry.
+	 * @param GF_Field $field Gravity Forms field.
+	 *
+	 * @return mixed Entry field value.
+	 */
+	abstract public static function get( array $entry, GF_Field $field );
+
+	/**
+	 * Gets the GraphQL type for the field.
+	 *
+	 * @return string|array
+	 */
+	abstract public function get_field_type();
 }

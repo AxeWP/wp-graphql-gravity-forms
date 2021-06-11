@@ -10,12 +10,14 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\PostImageFieldValueProperty;
 
 /**
  * Class - PostImageFieldValue
  */
-class PostImageFieldValue extends AbstractFieldValue {
+class PostImageFieldValue extends AbstractObject implements FieldValue {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -35,7 +37,7 @@ class PostImageFieldValue extends AbstractFieldValue {
 	 *
 	 * @return array
 	 */
-	public function get_properties() : array {
+	public function get_type_fields() : array {
 		return [
 			'caption'     => [
 				'type'        => 'String',

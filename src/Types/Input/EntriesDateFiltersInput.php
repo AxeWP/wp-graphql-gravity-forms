@@ -32,7 +32,7 @@ class EntriesDateFiltersInput extends AbstractInput {
 	 *
 	 * @return array
 	 */
-	public function get_properties() : array {
+	public function get_type_fields() : array {
 		return [
 			'startDate' => [
 				'type'        => 'String',

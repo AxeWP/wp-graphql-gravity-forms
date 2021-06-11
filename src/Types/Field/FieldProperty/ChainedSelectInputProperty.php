@@ -9,14 +9,14 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
 use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - ChainedSelectInputProperty
  */
-class ChainedSelectInputProperty extends AbstractType {
+class ChainedSelectInputProperty extends AbstractObject {
 	/** Type registered in WPGraphQL.
 	 *
 	 * @var string
@@ -26,7 +26,7 @@ class ChainedSelectInputProperty extends AbstractType {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'An array containing the the individual properties for each element of the address field.', 'wp-graphql-gravity-forms' );
 	}
 
@@ -35,7 +35,7 @@ class ChainedSelectInputProperty extends AbstractType {
 	 *
 	 * @return array
 	 */
-	protected function get_type_fields() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			InputProperty\InputIdProperty::get(),
 			LabelProperty::get(),

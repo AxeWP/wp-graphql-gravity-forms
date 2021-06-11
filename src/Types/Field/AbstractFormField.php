@@ -14,7 +14,7 @@ namespace WPGraphQLGravityForms\Types\Field;
 use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 /**
- * Class - AbstractField
+ * Class - AbstractFormField
  */
 abstract class AbstractFormField extends AbstractObject {
 	/**
@@ -44,7 +44,7 @@ abstract class AbstractFormField extends AbstractObject {
 			$this->get_type_config(
 				[
 					'description' => $this->get_type_description(),
-					'interfaces'  => [ FormFieldInterface::TYPE ],
+					'interfaces'  => [ FormFieldInterface::$type ],
 					'fields'      => $fields,
 				]
 			)
@@ -57,7 +57,7 @@ abstract class AbstractFormField extends AbstractObject {
 	 * @return array
 	 */
 	protected function get_global_properties() : array {
-		return FormFieldInterface::get_properties();
+		return FormFieldInterface::get_type_fields();
 	}
 
 	/**

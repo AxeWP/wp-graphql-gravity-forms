@@ -11,17 +11,18 @@ namespace WPGraphQLGravityForms\Types\Union;
 
 use WPGraphQL\Registry\TypeRegistry;
 use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
 
 /**
  * Class - ObjectFieldValueUnion
  */
-class ObjectFieldValueUnion implements Hookable, Type {
+class ObjectFieldValueUnion implements Hookable {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'ObjectFieldValueUnion';
+	public static $type = 'ObjectFieldValueUnion';
 
 	/**
 	 * WPGraphQL for Gravity Forms plugin's class instances.
@@ -53,13 +54,15 @@ class ObjectFieldValueUnion implements Hookable, Type {
 	 */
 	public function register_type( TypeRegistry $type_registry ) : void {
 		register_graphql_union_type(
-			self::TYPE,
-			[
-				'typeNames'   => $this->get_field_value_type_names(),
-				'resolveType' => function( $object ) use ( $type_registry ) {
-					return $type_registry->get_type( $object['value_class']::$type );
-				},
-			]
+			self::$type,
+			$this->get_type_config(
+				[
+					'typeNames'   => $this->get_field_value_type_names(),
+					'resolveType' => function( $object ) use ( $type_registry ) {
+						return $type_registry->get_type( $object['value_class']::$type );
+					},
+				]
+			)
 		);
 	}
 
@@ -92,5 +95,25 @@ class ObjectFieldValueUnion implements Hookable, Type {
 
 		// Filter the array a second time to guarantee that any classes added are instances of FieldValue.
 		return array_filter( $field_values, $is_field_value_instance );
+	}
+
+	/**
+	 * Gets the filterable $config array for the GraphQL type.
+	 *
+	 * @param array $config The individual config values.
+	 *
+	 * @return array
+	 */
+	public function get_type_config( array $config ) : array {
+		/**
+		 * Filter for modifying the GraphQL type $config array used to register the type in WPGraphQL.
+		 *
+		 * @param array  $config The config array.
+		 * @param string $type The GraphQL type name.
+		 */
+		$config = apply_filters( 'wp_graphql_gf_type_config', $config, static::$type );
+		$config = apply_filters( 'wp_graphql_gf_' . static::$type . '_type_config', $config );
+
+		return $config;
 	}
 }

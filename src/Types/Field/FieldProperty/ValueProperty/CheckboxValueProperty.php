@@ -9,12 +9,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 
 /**
  * Class - CheckboxValueProperty
  */
-class CheckboxValueProperty extends AbstractType {
+class CheckboxValueProperty extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

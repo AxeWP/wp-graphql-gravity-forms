@@ -215,6 +215,7 @@ final class WPGraphQLGravityForms {
 		// Connections.
 		$this->instances['entry_field_connection']        = new Connections\EntryFieldConnection( $this->instances );
 		$this->instances['form_field_connection']         = new Connections\FormFieldConnection();
+		$this->instances['form_entry_connection']         = new Connections\FormEntryConnection();
 		$this->instances['root_query_entries_connection'] = new Connections\RootQueryEntriesConnection();
 		$this->instances['root_query_forms_connection']   = new Connections\RootQueryFormsConnection();
 

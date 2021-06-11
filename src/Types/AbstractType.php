@@ -8,11 +8,12 @@
 namespace WPGraphQLGravityForms\Types;
 
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Type;
 
 /**
  * Class - AbstractType
  */
-abstract class AbstractType implements Hookable {
+abstract class AbstractType implements Hookable, Type {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -33,21 +34,13 @@ abstract class AbstractType implements Hookable {
 	abstract public function register_type() : void;
 
 	/**
-	 * Gets the Field type description.
-	 *
-	 * @return string
-	 */
-	abstract protected function get_type_description() : string;
-
-
-	/**
 	 * Gets the filterable $config array for the GraphQL type.
 	 *
 	 * @param array $config The individual config values.
 	 *
 	 * @return array
 	 */
-	protected function get_type_config( array $config ) : array {
+	public function get_type_config( array $config ) : array {
 		/**
 		 * Filter for modifying the GraphQL type $config array used to register the type in WPGraphQL.
 		 *

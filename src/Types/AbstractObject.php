@@ -43,7 +43,7 @@ abstract class AbstractObject extends AbstractType {
 	 * @todo convert to abstract class.
 	 * @return array
 	 */
-	protected function get_type_fields() : array {
+	public function get_type_fields() : array {
 		return [];
 	}
 }

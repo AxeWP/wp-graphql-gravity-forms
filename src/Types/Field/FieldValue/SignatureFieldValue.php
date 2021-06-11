@@ -11,13 +11,14 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
-use GF_Field_Signature;
+use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\SignatureFieldValueProperty;
 
 /**
  * Class - SignatureFieldValue
  */
-class SignatureFieldValue extends AbstractFieldValue {
+class SignatureFieldValue extends AbstractObject implements FieldValue {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -41,7 +42,7 @@ class SignatureFieldValue extends AbstractFieldValue {
 	 *
 	 * @return array
 	 */
-	public function get_properties() : array {
+	public function get_type_fields() : array {
 		return [
 			'value' => [
 				'type'        => 'String',

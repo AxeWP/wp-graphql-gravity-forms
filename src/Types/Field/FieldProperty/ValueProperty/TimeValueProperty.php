@@ -9,12 +9,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQLGravityForms\Types\AbstractObject;
 
 /**
  * Class - TimeValueProperty
  */
-class TimeValueProperty extends AbstractType {
+class TimeValueProperty extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
