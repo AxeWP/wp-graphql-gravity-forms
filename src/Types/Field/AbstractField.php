@@ -21,6 +21,6 @@ abstract class AbstractField extends AbstractFormField {
 	 * @since 0.6.4
 	 */
 	public function __construct() {
-		_deprecated_function( __FUNCTION__, '0.6.4' );
+		_deprecated_function( 'AbstractField::__contstruct', '0.6.4', 'AbstractFormField::__construct' );
 	}
 }
