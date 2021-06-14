@@ -682,15 +682,6 @@ abstract class AbstractMutation implements Hookable {
 				return null;
 		}
 
-		/**
-		 * Filter for preparing custom field value for submission to gravity forms.
-		 *
-		 * @param mixed $prepared_value The prepared value.
-		 * @param GF_Field $field .
-		 * @param mixed $prev_value The previous value, if it exists.
-		 */
-		$prepared_value = apply_filters( 'wp_graphql_gf_prepare_field_value', $prepared_value, $field, $prev_value );
-
 		return $prepared_value;
 	}
 }
