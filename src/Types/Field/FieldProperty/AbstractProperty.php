@@ -23,6 +23,6 @@ abstract class AbstractProperty extends AbstractObject {
 	 * @since 0.6.4
 	 */
 	public function __construct() {
-		_deprecated_function( __FUNCTION__, '0.6.4' );
+		_deprecated_function( 'AbstractProperty::__construct', '0.6.4', 'AbstractObject::__construct' );
 	}
 }
