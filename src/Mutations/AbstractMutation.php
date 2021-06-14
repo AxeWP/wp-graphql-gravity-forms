@@ -17,7 +17,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 /**
  * Class - DraftEntryUpdator
  */
-abstract class AbstractMutation implements Hookable {
+abstract class AbstractMutation implements Hookable{
 
 	/**
 	 * Mutation Name
@@ -53,34 +53,6 @@ abstract class AbstractMutation implements Hookable {
 			]
 		);
 	}
-
-	/**
-	 * Defines the input field configuration.
-	 *
-	 * @since 0.4.0
-	 *
-	 * @return array
-	 */
-	abstract public function get_input_fields() : array;
-
-	/**
-	 * Defines the output field configuration.
-	 *
-	 * @since 0.4.0
-	 *
-	 * @return array
-	 */
-	abstract public function get_output_fields() : array;
-
-	/**
-	 * Defines the data modification closure.
-	 *
-	 * @since 0.4.0
-	 *
-	 * @return callable
-	 */
-	abstract public function mutate_and_get_payload() : callable;
-
 
 	/**
 	 * Checks that necessary WPGraphQL are set.
@@ -190,7 +162,7 @@ abstract class AbstractMutation implements Hookable {
 	public function prepare_single_field_value( array $values, GF_Field $field, $prev_value = null ) {
 		$this->validate_field_value_type( $field, $values );
 
-		$value = $values['addressValues'] ?? $values['chainedSelectValues'] ?? $values['checkboxValues'] ?? $values['emailValues'] ?? $values['listValues'] ?? $values['nameValues'] ?? $values['values'] ?? $values['value'];
+		$value = $values['addressValues'] ?? $values['chainedSelectValues'] ?? $values['checkboxValues'] ?? $values['emailValues'] ?? $values['listValues'] ?? $values['nameValues'] ?? $values['values'] ?? $values['value'] ?? null;
 
 		$value = $this->prepare_field_value_by_type( $value, $field, $prev_value );
 
@@ -635,31 +607,43 @@ abstract class AbstractMutation implements Hookable {
 	 * @return mixed
 	 */
 	public function prepare_field_value_by_type( $value, GF_Field $field, $prev_value = null ) {
+		$prepared_value = null;
+
 		switch ( $field->type ) {
 			case 'address':
-				return $this->prepare_address_field_value( $value, $field );
+				$prepared_value = $this->prepare_address_field_value( $value, $field );
+				break;
 			case 'chainedselect':
 			case 'checkbox':
-				return $this->prepare_complex_field_value( $value, $field );
+				$prepared_value = $this->prepare_complex_field_value( $value, $field );
+				break;
 			case 'consent':
-				return $this->prepare_consent_field_value( $value, $field );
+				$prepared_value = $this->prepare_consent_field_value( $value, $field );
+				break;
 			case 'email':
-				return $this->prepare_email_field_value( $value, $field );
+				$prepared_value = $this->prepare_email_field_value( $value, $field );
+				break;
 			case 'list':
-				return $this->prepare_list_field_value( $value );
+				$prepared_value = $this->prepare_list_field_value( $value );
+				break;
 			case 'multiselect':
 			case 'post_category':
 			case 'post_custom':
 			case 'post_tags':
-				return $this->prepare_string_array_value( $value );
+				$prepared_value = $this->prepare_string_array_value( $value );
+				break;
 			case 'name':
-				return $this->prepare_name_field_value( $value, $field );
+				$prepared_value = $this->prepare_name_field_value( $value, $field );
+				break;
 			case 'post_content':
-				return $this->prepare_post_content_field_value( $value );
+				$prepared_value = $this->prepare_post_content_field_value( $value );
+				break;
 			case 'signature':
-				return $this->prepare_signature_field_value( $value, $prev_value );
+				$prepared_value = $this->prepare_signature_field_value( $value, $prev_value );
+				break;
 			case 'website':
-				return $this->prepare_website_field_value( $value );
+				$prepared_value = $this->prepare_website_field_value( $value );
+				break;
 			case 'date':
 			case 'hidden':
 			case 'number':
@@ -671,8 +655,19 @@ abstract class AbstractMutation implements Hookable {
 			case 'textarea':
 			case 'text':
 			case 'time':
-			default:
-				return $this->prepare_string_value( $value );
+				$prepared_value = $this->prepare_string_value( $value );
+				break;
 		}
+
+		/**
+		 * Filter for preparing custom field value for submission to gravity forms.
+		 * 
+		 * @param mixed $prepared_value The prepared value.
+		 * @param GF_Field $field .
+		 * @param mixed $prev_value The previous value, if it exists.
+		 */
+		$prepared_value = apply_filters( 'wp_graphql_gf_prepare_field_value', $prepared_value, $field, $prev_value );
+
+		return $prepared_value;
 	}
 }
