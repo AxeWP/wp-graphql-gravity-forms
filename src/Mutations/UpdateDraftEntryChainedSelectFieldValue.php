@@ -37,7 +37,7 @@ class UpdateDraftEntryChainedSelectFieldValue extends AbstractDraftEntryUpdater 
 	 */
 	protected function get_value_input_field() : array {
 		return [
-			'type'        => [ 'list_of' => ChainedSelectInput::TYPE ],
+			'type'        => [ 'list_of' => ChainedSelectInput::$type ],
 			'description' => __( 'ChainedSelect input values.', 'wp-graphql-gravity-forms' ),
 		];
 	}

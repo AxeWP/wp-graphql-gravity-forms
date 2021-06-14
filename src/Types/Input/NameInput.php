@@ -9,56 +9,51 @@
 
 namespace WPGraphQLGravityForms\Types\Input;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\InputType;
-
 /**
  * Class - NameInput
  */
-class NameInput implements Hookable, InputType {
+class NameInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'NameInput';
+	public static $type = 'NameInput';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_input_type' ] );
+	public function get_type_description() : string {
+		return __( 'Input fields for name field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register input type to GraphQL schema.
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
 	 */
-	public function register_input_type() : void {
-		register_graphql_input_type(
-			self::TYPE,
-			[
-				'description' => __( 'Input fields for name field.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'prefix' => [
-						'type'        => 'String',
-						'description' => __( 'Prefix, such as Mr., Mrs. etc.', 'wp-graphql-gravity-forms' ),
-					],
-					'first'  => [
-						'type'        => 'String',
-						'description' => __( 'First name.', 'wp-graphql-gravity-forms' ),
-					],
-					'middle' => [
-						'type'        => 'String',
-						'description' => __( 'Middle name.', 'wp-graphql-gravity-forms' ),
-					],
-					'last'   => [
-						'type'        => 'String',
-						'description' => __( 'Last name.', 'wp-graphql-gravity-forms' ),
-					],
-					'suffix' => [
-						'type'        => 'String',
-						'description' => __( 'Suffix, such as Sr., Jr. etc.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_type_fields() : array {
+		return [
+			'prefix' => [
+				'type'        => 'String',
+				'description' => __( 'Prefix, such as Mr., Mrs. etc.', 'wp-graphql-gravity-forms' ),
+			],
+			'first'  => [
+				'type'        => 'String',
+				'description' => __( 'First name.', 'wp-graphql-gravity-forms' ),
+			],
+			'middle' => [
+				'type'        => 'String',
+				'description' => __( 'Middle name.', 'wp-graphql-gravity-forms' ),
+			],
+			'last'   => [
+				'type'        => 'String',
+				'description' => __( 'Last name.', 'wp-graphql-gravity-forms' ),
+			],
+			'suffix' => [
+				'type'        => 'String',
+				'description' => __( 'Suffix, such as Sr., Jr. etc.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 }

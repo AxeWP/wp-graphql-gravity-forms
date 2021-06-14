@@ -10,12 +10,13 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - InputProperty
  */
-class InputProperty extends AbstractProperty {
+class InputProperty extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -26,7 +27,7 @@ class InputProperty extends AbstractProperty {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'Gravity Forms input property.', 'wp-graphql-gravity-forms' );
 	}
 
@@ -35,7 +36,7 @@ class InputProperty extends AbstractProperty {
 	 *
 	 * @return array
 	 */
-	protected function get_properties() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			AutocompleteAttributeProperty::get(),
 			DefaultValueProperty::get(),

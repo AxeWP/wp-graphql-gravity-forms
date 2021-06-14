@@ -9,41 +9,41 @@
 
 namespace WPGraphQLGravityForms\Types\FieldError;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Types\AbstractObject;
 
 /**
  * Class - FieldError
  */
-class FieldError implements Hookable, Type {
-	const TYPE = 'FieldError';
+class FieldError extends AbstractObject {
+	/**
+	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
+	 */
+	public static $type = 'FieldError';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Gets the GraphQL type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Field error.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the GraphQL fields for the type.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Field error.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'id'      => [
-						'type'        => 'Float',
-						'description' => __( 'The field with the associated error message', 'wp-graphql-gravity-forms' ),
-					],
-					'message' => [
-						'type'        => 'String',
-						'description' => __( 'Error message.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_type_fields() : array {
+		return [
+			'id'      => [
+				'type'        => 'Float',
+				'description' => __( 'The field with the associated error message', 'wp-graphql-gravity-forms' ),
+			],
+			'message' => [
+				'type'        => 'String',
+				'description' => __( 'Error message.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 }

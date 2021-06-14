@@ -77,7 +77,7 @@ class SubmitForm extends AbstractMutation {
 				'description' => __( 'Optional. ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
-				'type'        => [ 'list_of' => FieldValuesInput::TYPE ],
+				'type'        => [ 'list_of' => FieldValuesInput::$type ],
 				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
 			],
 			'formId'      => [
@@ -115,7 +115,7 @@ class SubmitForm extends AbstractMutation {
 				'description' => __( 'The ID of the entry that was created. Null if the entry was only partially submitted or submitted as a draft.', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'       => [
-				'type'        => Entry::TYPE,
+				'type'        => Entry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload ) {
 					if ( ! empty( $payload['errors'] ) || ( ! $payload['entryId'] && ! $payload['resumeToken'] ) ) {
@@ -135,7 +135,7 @@ class SubmitForm extends AbstractMutation {
 				},
 			],
 			'errors'      => [
-				'type'        => [ 'list_of' => FieldError::TYPE ],
+				'type'        => [ 'list_of' => FieldError::$type ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
 			'resumeToken' => [

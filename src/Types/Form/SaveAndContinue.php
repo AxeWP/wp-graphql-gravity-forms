@@ -8,45 +8,44 @@
 
 namespace WPGraphQLGravityForms\Types\Form;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
-use WPGraphQLGravityForms\Types\Button\Button;
+use WPGraphQLGravityForms\Types\AbstractObject;
 
 /**
  * Class - SaveAndContinue
  */
-class SaveAndContinue implements Hookable, Type {
-	const TYPE = 'SaveAndContinue';
+class SaveAndContinue extends AbstractObject {
+	/**
+	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
+	 */
+	public static $type = 'SaveAndContinue';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Gets the GraphQL type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Gravity Forms form Save and Continue data.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the GraphQL fields for the type.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Gravity Forms form Save and Continue data.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'enabled'    => [
-						'type'        => 'Boolean',
-						'description' => __( 'Whether the Save And Continue feature is enabled.', 'wp-graphql-gravity-forms' ),
-					],
-					'buttonText' => [
-						'type'        => 'string',
-						'description' => __( 'Contains the save button text.', 'wp-graphql-gravity-forms' ),
-						'resolve'     => function( $root ) : string {
-							return $root['button']['text'];
-						},
-					],
-				],
-			]
-		);
+	public function get_type_fields() : array {
+		return [
+			'enabled'    => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the Save And Continue feature is enabled.', 'wp-graphql-gravity-forms' ),
+			],
+			'buttonText' => [
+				'type'        => 'string',
+				'description' => __( 'Contains the save button text.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $root ) : string {
+					return $root['button']['text'];
+				},
+			],
+		];
 	}
 }

@@ -14,11 +14,10 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
-use WPGraphQLGravityForms\Interfaces\Connection;
-use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\FieldValue as FieldValueInterface;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Entry\Entry;
-use WPGraphQLGravityForms\Types\Field\AbstractField;
-use WPGraphQLGravityForms\Types\Field\FieldValue\AbstractFieldValue;
+use WPGraphQLGravityForms\Types\Field\AbstractFormField;
 use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
 use WPGraphQLGravityForms\Utils\GFUtils;
@@ -26,7 +25,14 @@ use WPGraphQLGravityForms\Utils\GFUtils;
 /**
  * Class - EntryFieldConnection.
  */
-class EntryFieldConnection implements Hookable, Connection {
+class EntryFieldConnection extends AbstractConnection {
+	/**
+	 * GraphQL field name in node tree.
+	 *
+	 * @var string
+	 */
+	public static $from_field_name = 'formFields';
+
 	/**
 	 * WPGraphQL for Gravity Forms plugin's class instances.
 	 *
@@ -44,77 +50,86 @@ class EntryFieldConnection implements Hookable, Connection {
 	}
 
 	/**
-	 * Register hooks to WordPress.
+	 * GraphQL Connection from type.
+	 *
+	 * @return string
 	 */
-	public function register_hooks() : void {
-		add_action( 'init', [ $this, 'register_connection' ] );
+	public function get_connection_from_type() : string {
+		return Entry::$type;
 	}
 
 	/**
-	 * Register connection from GravityFormsEntry type to other types.
+	 * GraphQL Connection to type.
+	 *
+	 * @return string
 	 */
-	public function register_connection() : void {
-		register_graphql_connection(
-			[
-				'fromType'      => Entry::TYPE,
-				'toType'        => FormFieldInterface::TYPE,
-				'fromFieldName' => 'formFields',
-				'edgeFields'    => [
-					'fieldValue' => [
-						'type'              => ObjectFieldValueUnion::TYPE,
-						'description'       => __( 'Field value.', 'wp-graphql-gravity-forms' ),
-						'deprecationReason' => __( 'Please use `formFields.nodes.value` instead.', 'wp-graphql-gravity-forms' ),
-						'resolve'           => function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
-							$field = $this->get_field_by_gf_field_type( $root['node']['type'] );
-							if ( ! $field ) {
-								return null;
-							}
-							$value_class = $this->get_field_value_class( $field );
+	public function get_connection_to_type() : string {
+		return FormFieldInterface::$type;
+	}
 
-							// Account for fields that do not have a value class.
-							if ( ! $value_class ) {
-								return null;
-							}
 
-							return array_merge(
-							// 'value_class' is included here to pass it through to the "resolveType"
-							// callback function in ObjectFieldValueUnion.
-								[ 'value_class' => $value_class ],
-								$value_class::get( $root['source'], $root['node'] )
-							);
-						},
-					],
+	/**
+	 * Gets custom connection configuration arguments, such as the resolver, edgeFields, connectionArgs, etc.
+	 *
+	 * @return array
+	 */
+	public function get_connection_config_args() : array {
+		return [
+			'edgeFields' => [
+				'fieldValue' => [
+					'type'              => ObjectFieldValueUnion::$type,
+					'description'       => __( 'Field value.', 'wp-graphql-gravity-forms' ),
+					'deprecationReason' => __( 'Please use `formFields.nodes.value` instead.', 'wp-graphql-gravity-forms' ),
+					'resolve'           => function( array $root, array $args, AppContext $context, ResolveInfo $info ) {
+						$field = $this->get_field_by_gf_field_type( $root['node']['type'] );
+						if ( ! $field ) {
+							return null;
+						}
+						$value_class = $this->get_field_value_class( $field );
+
+						// Account for fields that do not have a value class.
+						if ( ! $value_class ) {
+							return null;
+						}
+
+						return array_merge(
+						// 'value_class' is included here to pass it through to the "resolveType"
+						// callback function in ObjectFieldValueUnion.
+							[ 'value_class' => $value_class ],
+							$value_class::get( $root['source'], $root['node'] )
+						);
+					},
 				],
-				'resolve'       => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
-					$form = GFUtils::get_form( $root['formId'], false );
+			],
+			'resolve'    => function( $root, array $args, AppContext $context, ResolveInfo $info ) : array {
+				$form = GFUtils::get_form( $root['formId'], false );
 
-					$fields = ( new FieldsDataManipulator() )->manipulate( $form['fields'] );
+				$fields = ( new FieldsDataManipulator() )->manipulate( $form['fields'] );
 
-					$connection = Relay::connectionFromArray( $fields, $args );
+				$connection = Relay::connectionFromArray( $fields, $args );
 
-					// Add the entry to each edge with a key of 'source'. This is needed so that
-					// the fieldValue edge field resolver has has access to the form entry.
-					$connection['edges'] = array_map(
-						function( $edge ) use ( $root ) {
-							$edge['source'] = $root;
-							return $edge;
-						},
-						$connection['edges']
-					);
+				// Add the entry to each edge with a key of 'source'. This is needed so that
+				// the fieldValue edge field resolver has has access to the form entry.
+				$connection['edges'] = array_map(
+					function( $edge ) use ( $root ) {
+						$edge['source'] = $root;
+						return $edge;
+					},
+					$connection['edges']
+				);
 
-					$nodes               = array_map(
-						function( $edge ) {
-							$edge['node']           = $edge['node'] ?? null;
-							$edge['node']['source'] = $edge['source'];
-							return $edge['node'];
-						},
-						$connection['edges']
-					);
-					$connection['nodes'] = $nodes ?: null;
-					return $connection;
-				},
-			]
-		);
+				$nodes               = array_map(
+					function( $edge ) {
+						$edge['node']           = $edge['node'] ?? null;
+						$edge['node']['source'] = $edge['source'];
+						return $edge['node'];
+					},
+					$connection['edges']
+				);
+				$connection['nodes'] = $nodes ?: null;
+				return $connection;
+			},
+		];
 	}
 
 	/**
@@ -122,14 +137,14 @@ class EntryFieldConnection implements Hookable, Connection {
 	 *
 	 * @param string $gf_field_type The Gravity Forms field type.
 	 *
-	 * @return AbstractField|null The corresponding WPGraphQL field, or null if not found.
+	 * @return AbstractFormField|null The corresponding WPGraphQL field, or null if not found.
 	 */
 	private function get_field_by_gf_field_type( string $gf_field_type ) {
-		$fields = array_filter( $this->instances, fn( $instance ) => $instance instanceof AbstractField );
+		$fields = array_filter( $this->instances, fn( $instance ) => $instance instanceof AbstractFormField );
 
 		/**
 		 * Filter for adding custom field class instances.
-		 * Classes must extend the WPGraphQLGravityForms\Types\Field\AbstractField class and
+		 * Classes must extend the WPGraphQLGravityForms\Types\Field\AbstractFormField class and
 		 * contain a "$gf_type" class variable specifying the Gravity Forms field type.
 		 *
 		 * @param array $fields Gravity Forms field class instances.
@@ -139,7 +154,7 @@ class EntryFieldConnection implements Hookable, Connection {
 		$field_array = array_filter(
 			$fields,
 			function( $instance ) use ( $gf_field_type ) {
-				return $instance instanceof AbstractField && $instance::$gf_type === $gf_field_type;
+				return $instance instanceof AbstractFormField && $instance::$gf_type === $gf_field_type;
 			}
 		);
 
@@ -149,12 +164,12 @@ class EntryFieldConnection implements Hookable, Connection {
 	/**
 	 * Get the field value class associated with a form field.
 	 *
-	 * @param  AbstractField $field The field class.
+	 * @param  AbstractFormField $field The field class.
 	 *
-	 * @return string|AbstractFieldValue|null The field value class or null if not found.
+	 * @return string|FieldValueInterface|null The field value class or null if not found.
 	 */
-	private function get_field_value_class( AbstractField $field ) {
-		$field_values = array_filter( $this->instances, fn( $instance ) => $instance instanceof AbstractFieldValue );
+	private function get_field_value_class( AbstractFormField $field ) {
+		$field_values = array_filter( $this->instances, fn( $instance ) => $instance instanceof FieldValueInterface );
 
 		/**
 		 * Filter for adding custom field value class instances.
@@ -168,7 +183,7 @@ class EntryFieldConnection implements Hookable, Connection {
 		$value_class_array = array_filter(
 			$field_values,
 			function( $instance ) use ( $field ) {
-				return $instance instanceof AbstractFieldValue && $instance::$type === $field::$type . 'Value';
+				return $instance instanceof AbstractObject && $instance instanceof FieldValueInterface && $instance::$type === $field::$type . 'Value';
 			}
 		);
 

@@ -16,7 +16,7 @@ use WPGraphQLGravityForms\Types\Field\FieldProperty;
 /**
  * Class - SelectField
  */
-class SelectField extends AbstractField {
+class SelectField extends AbstractFormField {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -34,7 +34,7 @@ class SelectField extends AbstractField {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'Gravity Forms Select field.', 'wp-graphql-gravity-forms' );
 	}
 
@@ -43,7 +43,7 @@ class SelectField extends AbstractField {
 	 *
 	 * @return array
 	 */
-	protected function get_properties() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			$this->get_global_properties(),
 			$this->get_custom_properties(),

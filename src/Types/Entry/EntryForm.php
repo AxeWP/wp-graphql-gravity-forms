@@ -9,26 +9,29 @@
 
 namespace WPGraphQLGravityForms\Types\Entry;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\Field;
 use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Form\Form;
 use WPGraphQLGravityForms\Utils\GFUtils;
 
 /**
  * Creates a 1:1 relationship between an Entry and the Form associated with it.
  */
-class EntryForm implements Hookable, Type, Field {
+class EntryForm extends AbstractObject implements Field {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'EntryForm';
+	public static $type = 'EntryForm';
 
 	/**
 	 * Field registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const FIELD = 'form';
+	public static $field_name = 'form';
 
 	/**
 	 * FormDataManipulator instance.
@@ -50,26 +53,31 @@ class EntryForm implements Hookable, Type, Field {
 	 * Register hooks to WordPress.
 	 */
 	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+		parent::register_hooks();
 		add_action( 'graphql_register_types', [ $this, 'register_field' ] );
 	}
 
 	/**
-	 * Register new edge type.
+	 * Sets the field type description.
+	 *
+	 * @return string
 	 */
-	public function register_type() : void {
-		register_graphql_type(
-			self::TYPE,
-			[
+	public function get_type_description() : string {
+		return __( 'The Gravity Forms form associated with the entry.', 'wp-graphql-gravity-forms' );
+	}
+
+	/**
+	 * Gets the properties for the Field.
+	 *
+	 * @return array
+	 */
+	public function get_type_fields() : array {
+		return [
+			'node' => [
+				'type'        => Form::$type,
 				'description' => __( 'The Gravity Forms form associated with the entry.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'node' => [
-						'type'        => Form::TYPE,
-						'description' => __( 'The Gravity Forms form associated with the entry.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+			],
+		];
 	}
 
 	/**
@@ -77,10 +85,10 @@ class EntryForm implements Hookable, Type, Field {
 	 */
 	public function register_field() : void {
 		register_graphql_field(
-			Entry::TYPE,
-			self::FIELD,
+			Entry::$type,
+			self::$field_name,
 			[
-				'type'        => self::TYPE,
+				'type'        => self::$type,
 				'description' => __( 'The Gravity Forms form associated with the entry.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $entry ) : array {
 					$form = GFUtils::get_form( $entry['formId'], false );

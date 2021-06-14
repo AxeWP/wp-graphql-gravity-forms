@@ -10,12 +10,14 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\ChainedSelectFieldValueProperty;
 
 /**
  * Class - ChainedSelectFieldValue
  */
-class ChainedSelectFieldValue extends AbstractFieldValue {
+class ChainedSelectFieldValue extends AbstractObject implements FieldValue {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -38,7 +40,7 @@ class ChainedSelectFieldValue extends AbstractFieldValue {
 	 * @since 0.4.0
 	 * @return array
 	 */
-	public function get_properties() : array {
+	public function get_type_fields() : array {
 		return [
 			'values' => [
 				'type'        => [ 'list_of' => 'String' ],

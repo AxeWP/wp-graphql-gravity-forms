@@ -16,7 +16,7 @@ use WPGraphQLGravityForms\Types\Field\FieldProperty;
 /**
  * Class - WebsiteField
  */
-class WebsiteField extends AbstractField {
+class WebsiteField extends AbstractFormField {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -34,7 +34,7 @@ class WebsiteField extends AbstractField {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'Gravity Forms Website field.', 'wp-graphql-gravity-forms' );
 	}
 
@@ -43,7 +43,7 @@ class WebsiteField extends AbstractField {
 	 *
 	 * @return array
 	 */
-	protected function get_properties() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			$this->get_global_properties(),
 			$this->get_custom_properties(),

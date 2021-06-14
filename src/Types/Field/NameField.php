@@ -17,7 +17,7 @@ use WPGraphQLGravityForms\Utils\Utils;
 /**
  * Class - NameField
  */
-class NameField extends AbstractField {
+class NameField extends AbstractFormField {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -35,7 +35,7 @@ class NameField extends AbstractField {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'Gravity Forms Name field.', 'wp-graphql-gravity-forms' );
 	}
 
@@ -44,7 +44,7 @@ class NameField extends AbstractField {
 	 *
 	 * @return array
 	 */
-	protected function get_properties() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			$this->get_global_properties(),
 			$this->get_custom_properties(),

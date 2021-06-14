@@ -13,12 +13,11 @@ use GFCommon;
 use GFSignature;
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Mutation;
 
 /**
  * Class - DraftEntryUpdator
  */
-abstract class AbstractMutation implements Hookable, Mutation {
+abstract class AbstractMutation implements Hookable {
 
 	/**
 	 * Mutation Name
@@ -54,6 +53,34 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			]
 		);
 	}
+
+	/**
+	 * Defines the input field configuration.
+	 *
+	 * @since 0.4.0
+	 *
+	 * @return array
+	 */
+	abstract public function get_input_fields() : array;
+
+	/**
+	 * Defines the output field configuration.
+	 *
+	 * @since 0.4.0
+	 *
+	 * @return array
+	 */
+	abstract public function get_output_fields() : array;
+
+	/**
+	 * Defines the data modification closure.
+	 *
+	 * @since 0.4.0
+	 *
+	 * @return callable
+	 */
+	abstract public function mutate_and_get_payload() : callable;
+
 
 	/**
 	 * Checks that necessary WPGraphQL are set.

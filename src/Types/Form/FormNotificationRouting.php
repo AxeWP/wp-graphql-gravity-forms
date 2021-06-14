@@ -11,50 +11,50 @@
 
 namespace WPGraphQLGravityForms\Types\Form;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Enum\RuleOperatorEnum;
 
 /**
  * Class - FormNotificationRouting
  */
-class FormNotificationRouting implements Hookable, Type {
-	const TYPE = 'FormNotificationRouting';
+class FormNotificationRouting extends AbstractObject {
+	/**
+	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
+	 */
+	public static $type = 'FormNotificationRouting';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Gets the GraphQL type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Properties for all the email notifications which exist for a form.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the GraphQL fields for the type.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Properties for all the email notifications which exist for a form.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'fieldId'  => [
-						'type'        => 'Int',
-						'description' => __( 'Target field ID. The field that will have it’s value compared with the value property to determine if this rule is a match.', 'wp-graphql-gravity-forms' ),
-					],
-					'operator' => [
-						'type'        => RuleOperatorEnum::$type,
-						'description' => __( 'Operator to be used when evaluating this rule.', 'wp-graphql-gravity-forms' ),
-					],
-					'value'    => [
-						'type'        => 'String',
-						'description' => __( 'The value to compare with the field specified by fieldId.', 'wp-graphql-gravity-forms' ),
-					],
-					'email'    => [
-						'type'        => 'String',
-						'description' => __( 'The email or merge tag to be used as the email To address if this rule is a match.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_type_fields() : array {
+		return [
+			'fieldId'  => [
+				'type'        => 'Int',
+				'description' => __( 'Target field ID. The field that will have it’s value compared with the value property to determine if this rule is a match.', 'wp-graphql-gravity-forms' ),
+			],
+			'operator' => [
+				'type'        => RuleOperatorEnum::$type,
+				'description' => __( 'Operator to be used when evaluating this rule.', 'wp-graphql-gravity-forms' ),
+			],
+			'value'    => [
+				'type'        => 'String',
+				'description' => __( 'The value to compare with the field specified by fieldId.', 'wp-graphql-gravity-forms' ),
+			],
+			'email'    => [
+				'type'        => 'String',
+				'description' => __( 'The email or merge tag to be used as the email To address if this rule is a match.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 }

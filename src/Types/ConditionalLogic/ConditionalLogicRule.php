@@ -10,46 +10,46 @@
 
 namespace WPGraphQLGravityForms\Types\ConditionalLogic;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Enum\RuleOperatorEnum;
 
 /**
  * Class - ConditionalLogicRule
  */
-class ConditionalLogicRule implements Hookable, Type {
-	const TYPE = 'ConditionalLogicRule';
+class ConditionalLogicRule extends AbstractObject {
+	/**
+	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
+	 */
+	public static $type = 'ConditionalLogicRule';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Gets the GraphQL type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Gravity Forms conditional logic rule.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the GraphQL fields for the type.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::TYPE,
-			[
-				'description' => __( 'Gravity Forms conditional logic rule.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'fieldId'  => [
-						'type'        => 'Float',
-						'description' => __( 'Target field Id. Field that will have it’s value compared with the value property to determine if this rule is a match.', 'wp-graphql-gravity-forms' ),
-					],
-					'operator' => [
-						'type'        => RuleOperatorEnum::$type,
-						'description' => __( 'Operator to be used when evaluating this rule.', 'wp-graphql-gravity-forms' ),
-					],
-					'value'    => [
-						'type'        => 'String',
-						'description' => __( 'The value to compare with field specified by fieldId.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_type_fields() : array {
+		return [
+			'fieldId'  => [
+				'type'        => 'Float',
+				'description' => __( 'Target field Id. Field that will have it’s value compared with the value property to determine if this rule is a match.', 'wp-graphql-gravity-forms' ),
+			],
+			'operator' => [
+				'type'        => RuleOperatorEnum::$type,
+				'description' => __( 'Operator to be used when evaluating this rule.', 'wp-graphql-gravity-forms' ),
+			],
+			'value'    => [
+				'type'        => 'String',
+				'description' => __( 'The value to compare with field specified by fieldId.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 }

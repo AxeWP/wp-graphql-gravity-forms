@@ -19,4 +19,20 @@ interface Type {
 	// now that Types\Union\ObjectFieldUnion::register_type()
 	// requires an argument.
 	// public function register_type(); .
+
+	/**
+	 * Gets the Field type description.
+	 *
+	 * @return string
+	 */
+	public function get_type_description() : string;
+
+	/**
+	 * Gets the filterable $config array for the GraphQL type.
+	 *
+	 * @param array $config The individual config values.
+	 *
+	 * @return array
+	 */
+	public function get_type_config( array $config ) : array;
 }
