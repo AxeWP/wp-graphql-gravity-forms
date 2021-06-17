@@ -13,11 +13,12 @@ use GFCommon;
 use GFSignature;
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Mutation;
 
 /**
  * Class - DraftEntryUpdator
  */
-abstract class AbstractMutation implements Hookable {
+abstract class AbstractMutation implements Hookable, Mutation {
 
 	/**
 	 * Mutation Name
