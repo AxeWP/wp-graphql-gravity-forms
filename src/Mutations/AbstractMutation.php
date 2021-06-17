@@ -13,11 +13,12 @@ use GFCommon;
 use GFSignature;
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQLGravityForms\Interfaces\Mutation;
 
 /**
  * Class - DraftEntryUpdator
  */
-abstract class AbstractMutation implements Hookable{
+abstract class AbstractMutation implements Hookable, Mutation {
 
 	/**
 	 * Mutation Name
@@ -267,7 +268,7 @@ abstract class AbstractMutation implements Hookable{
 					$value_type_name = 'nameValues';
 				}
 				break;
-			case 'multiselect':	
+			case 'multiselect':
 			case 'post_category':
 			case 'post_custom':
 			case 'post_tags':
@@ -284,7 +285,7 @@ abstract class AbstractMutation implements Hookable{
 
 		/**
 		 * Filter to set a custom valid fieldValue input type.
-		 * 
+		 *
 		 * @param string|false   $value_type_name The name of the missing input type. False if valid key exists.
 		 * @param GF_Field $field The gravity forms field.
 		 * @param array    $values the FieldValues input array.
