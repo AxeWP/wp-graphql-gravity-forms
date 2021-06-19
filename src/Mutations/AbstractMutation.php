@@ -641,7 +641,14 @@ abstract class AbstractMutation implements Hookable, Mutation {
 				break;
 			case 'signature':
 				$prepared_value = $this->prepare_signature_field_value( $value, $prev_value );
-				break;
+
+				// Save values to $_POST for GF validation.
+				if ( ! empty( $prepared_value ) ) {
+					$_POST[ 'input_' . $field->formId . '_' . $field->id . '_signature_filname' ] = $prepared_value;
+					$_POST[ 'input_' . $field->formId . '_' . $field->id . '_valid' ]             = true;
+				}
+
+				return $prepared_value;
 			case 'website':
 				$prepared_value = $this->prepare_website_field_value( $value );
 				break;
