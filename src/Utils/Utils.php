@@ -62,4 +62,30 @@ class Utils {
 
 		return $str;
 	}
+
+	/**
+	 * Tries to decode json.
+	 *
+	 * @param mixed $value the value to try to decode.
+	 *
+	 * @return array|false
+	 */
+	public static function maybe_decode_json( $value ) {
+		if ( is_array( $value ) ) {
+			return $value;
+		}
+
+		if ( ! is_string( $value ) ) {
+			return false;
+		}
+
+		$value_array = json_decode( $value );
+
+		// If the value isnt JSON, then convert it to an array.
+		if ( 0 !== json_last_error() ) {
+			$value_array = [ $value ];
+		}
+
+		return $value_array;
+	}
 }

@@ -169,12 +169,13 @@ class SubmitForm extends AbstractMutation {
 			$created_by    = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : null;
 			$source_url    = esc_url_raw( Utils::truncate( $_SERVER['HTTP_REFERER'] ?? '', 250 ) );
 
-			$field_values = $this->get_field_values( $input['fieldValues'] );
+			$file_upload_values = [];
+			$field_values       = $this->get_field_values( $input['fieldValues'] );
 
 			add_filter( 'gform_field_validation', [ $this, 'disable_validation_for_unsupported_fields' ], 10, 4 );
 			$submission = GFUtils::submit_form(
 				$input['formId'],
-				$this->get_input_values( $save_as_draft, $field_values ),
+				$this->get_input_values( $save_as_draft, $field_values, $file_upload_values ),
 				$field_values,
 				$target_page,
 				$source_page,
@@ -260,9 +261,10 @@ class SubmitForm extends AbstractMutation {
 	 * @param array   $field_values The field values. Required so submit_form() can generate the $_POST object.
 	 * @return array
 	 */
-	private function get_input_values( bool $is_draft, array $field_values ) : array {
+	private function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ) : array {
 		return [
-			'gform_save' => $is_draft,
+			'gform_save'           => $is_draft,
+			'gform_uploaded_files' => wp_json_encode( $file_upload_values ),
 		] + $field_values;
 	}
 

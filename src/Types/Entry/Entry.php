@@ -188,7 +188,7 @@ class Entry extends AbstractObject implements Field {
 					],
 				],
 				'resolve'     => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-					if ( ! current_user_can( 'gravityforms_view_entries' ) ) {
+					if ( ! apply_filters( 'wp_graphql_gf_can_view_entries', current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ) ) ) {
 						throw new UserError( __( 'Sorry, you are not allowed to view Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );
 					}
 

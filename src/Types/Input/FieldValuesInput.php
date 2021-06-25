@@ -34,7 +34,7 @@ class FieldValuesInput extends AbstractInput {
 	 * @return array
 	 */
 	public function get_type_fields() : array {
-		return [
+		$fields = [
 			'id'                  => [
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'The field id.', 'wp-graphql-gravity-forms' ),
@@ -72,5 +72,14 @@ class FieldValuesInput extends AbstractInput {
 				'description' => __( 'The form field values for basic fields', 'wp-graphql-gravity-forms' ),
 			],
 		];
+
+		if ( class_exists( 'WPGraphQL\Upload\Type\Upload' ) ) {
+			$fields['fileUploadValues'] = [
+				'type'        => [ 'list_of' => 'Upload' ],
+				'description' => __( 'The form field values for file uploads', 'wp-graphql-gravity-forms' ),
+			];
+		}
+
+		return $fields;
 	}
 }
