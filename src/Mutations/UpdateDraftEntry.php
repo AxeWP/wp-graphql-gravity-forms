@@ -45,13 +45,6 @@ class UpdateDraftEntry extends AbstractMutation {
 	private $submission = [];
 
 	/**
-	 * The Gravity Forms Form object.
-	 *
-	 * @var array
-	 */
-	private $form;
-
-	/**
 	 * Gravity Forms field validation errors.
 	 *
 	 * @var array
@@ -192,7 +185,7 @@ class UpdateDraftEntry extends AbstractMutation {
 			$value = $this->prepare_single_field_value( $values, $field, $prev_value );
 
 			// Validate the field value.
-			$this->validate_field_value( $this->form, $field, $value );
+			$this->validate_field_value( $field, $value );
 
 			// Add field values to submitted values.
 			$this->submission['submitted_values'][ $field->id ] = $value;

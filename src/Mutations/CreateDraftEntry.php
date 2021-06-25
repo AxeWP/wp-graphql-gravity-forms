@@ -82,19 +82,19 @@ class CreateDraftEntry extends AbstractMutation {
 		return function( $input, AppContext $context, ResolveInfo $info ) : array {
 			$this->check_required_inputs( $input );
 
-			$form_id = absint( $input['formId'] );
-			$form    = GFUtils::get_form( $form_id );
+			$form_id    = absint( $input['formId'] );
+			$this->form = GFUtils::get_form( $form_id );
 
 			$source_url  = esc_url_raw( Utils::truncate( $_SERVER['HTTP_REFERER'] ?? '', 250 ) );
 			$page_number = isset( $input['pageNumber'] ) ? absint( $input['pageNumber'] ) : 1;
 
-			$ip = empty( $form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
+			$ip = empty( $this->form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
 
 			// Get existing entry if `fromEntryId` is set, otherwise create new draft entry.
-			$entry = isset( $input['fromEntryId'] ) ? GFUtils::get_entry( $input['fromEntryId'] ) : $this->get_draft_entry_data( $form, $ip, $source_url );
+			$entry = isset( $input['fromEntryId'] ) ? GFUtils::get_entry( $input['fromEntryId'] ) : $this->get_draft_entry_data( $this->form, $ip, $source_url );
 
 			$resume_token = GFUtils::save_draft_submission(
-				$form,
+				$this->form,
 				$entry,
 				null,
 				$page_number,
@@ -106,7 +106,7 @@ class CreateDraftEntry extends AbstractMutation {
 
 			return [
 				'resumeToken' => $resume_token,
-				'resumeUrl'   => GFUtils::get_resume_url( $source_url, $resume_token, $form ),
+				'resumeUrl'   => GFUtils::get_resume_url( $source_url, $resume_token, $this->form ),
 			];
 		};
 	}

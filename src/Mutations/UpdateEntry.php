@@ -39,13 +39,6 @@ class UpdateEntry extends AbstractMutation {
 	private $entry_data_manipulator;
 
 	/**
-	 * The Gravity Forms Form object.
-	 *
-	 * @var array
-	 */
-	private $form;
-
-	/**
 	 * Gravity Forms field validation errors.
 	 *
 	 * @var array
@@ -210,7 +203,7 @@ class UpdateEntry extends AbstractMutation {
 			$value = $this->prepare_single_field_value( $values, $field, $prev_value );
 
 			// Validate the field value.
-			$this->validate_field_value( $this->form, $field, $value );
+			$this->validate_field_value( $field, $value );
 
 			// Add values to array based on field type.
 			$formatted_values = $this->add_value_to_array( $formatted_values, $field, $value );

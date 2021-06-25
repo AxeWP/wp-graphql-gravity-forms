@@ -35,6 +35,14 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	protected $errors;
 
 	/**
+	 * The form object.
+	 *
+	 * @var array
+	 */
+	protected $form;
+
+
+	/**
 	 * Register hooks to WordPress.
 	 */
 	public function register_hooks() : void {
@@ -208,14 +216,13 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	/**
 	 * Validates the Gravity Forms field value.
 	 *
-	 * @param array    $form .
 	 * @param GF_Field $field .
 	 * @param mixed    $value .
 	 *
 	 * @return mixed
 	 */
-	protected function validate_field_value( array $form, GF_Field $field, $value ) {
-		$field->validate( $value, $form );
+	protected function validate_field_value( GF_Field $field, $value ) {
+		$field->validate( $value, $this->form );
 		if ( $field->failed_validation ) {
 			$this->errors[] = [
 				'id'      => $field->id,
