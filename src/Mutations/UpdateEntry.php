@@ -10,6 +10,7 @@
 
 namespace WPGraphQLGravityForms\Mutations;
 
+use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
@@ -209,6 +210,8 @@ class UpdateEntry extends AbstractMutation {
 			$formatted_values = $this->add_value_to_array( $formatted_values, $field, $value );
 		}
 
+		$formatted_values = $this->prepare_field_values_for_save( $formatted_values, $entry );
+
 		return $formatted_values;
 	}
 
@@ -228,5 +231,24 @@ class UpdateEntry extends AbstractMutation {
 		if ( empty( $input['fieldValues'] ) ) {
 			throw new UserError( __( 'Mutation not processed. Field values not provided.', 'wp-graphql-gravity-forms' ) );
 		}
+	}
+
+	/**
+	 * Prepares field values before saving it to the entry.
+	 *
+	 * @param array $values the entry values.
+	 * @param array $entry the existing entry.
+	 * @return array
+	 */
+	public function prepare_field_values_for_save( array $values, array $entry ) : array {
+		foreach ( $values as $id => &$value ) {
+			$input_name = 'input_' . str_replace( '.', '_', $id );
+			$field_id   = strtok( $id, '.' );
+			$field      = GFUtils::get_field_by_id( $this->form, (int) $field_id );
+
+			$value = GFFormsModel::prepare_value( $this->form, $field, $value, $input_name, $entry['id'], $entry );
+		}
+
+		return $values;
 	}
 }

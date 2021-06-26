@@ -41,7 +41,6 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	 */
 	protected $form;
 
-
 	/**
 	 * Register hooks to WordPress.
 	 */
