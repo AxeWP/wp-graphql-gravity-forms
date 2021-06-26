@@ -224,41 +224,38 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	 * @throws UserError .
 	 */
 	protected function validate_field_value_type( GF_Field $field, array $values ) : void {
+		// Stores the name of the necessary field value type if it is missing from the mutation.
+		$value_type_name = false;
+
 		switch ( $field->type ) {
 			case 'address':
 				if ( ! isset( $values['addressValues'] ) ) {
-					// translators: Gravity Forms field id.
-					throw new UserError( sprintf( __( 'Mutation not processed. Field %s requires the use of `addressValues`.', 'wp-graphql-gravity-forms' ), $field->id ) );
+					$value_type_name = 'addressValues';
 				}
 				break;
 			case 'chainedselect':
 				if ( ! isset( $values['chainedSelectValues'] ) ) {
-					// translators: Gravity Forms field id.
-					throw new UserError( sprintf( __( 'Mutation not processed. Field %s requires the use of `chainedSelectValues`.', 'wp-graphql-gravity-forms' ), $field->id ) );
+					$value_type_name = 'chainedSelectValues';
 				}
 				break;
 			case 'checkbox':
 				if ( ! isset( $values['checkboxValues'] ) ) {
-					// translators: Gravity Forms field id.
-					throw new UserError( sprintf( __( 'Mutation not processed. Field %s requires the use of `checkboxValues`.', 'wp-graphql-gravity-forms' ), $field->id ) );
+					$value_type_name = 'checkboxValues';
 				}
 				break;
 			case 'email':
 				if ( ! isset( $values['emailValues'] ) ) {
-					// translators: Gravity Forms field id.
-					throw new UserError( sprintf( __( 'Mutation not processed. Field %s requires the use of `emailValues`.', 'wp-graphql-gravity-forms' ), $field->id ) );
+					$value_type_name = 'emailValues';
 				}
 				break;
 			case 'list':
 				if ( ! isset( $values['listValues'] ) ) {
-					// translators: Gravity Forms field id.
-					throw new UserError( sprintf( __( 'Mutation not processed. Field %s requires the use of `listValues`.', 'wp-graphql-gravity-forms' ), $field->id ) );
+					$value_type_name = 'listValues';
 				}
 				break;
 			case 'name':
 				if ( ! isset( $values['nameValues'] ) ) {
-					// translators: Gravity Forms field id.
-					throw new UserError( sprintf( __( 'Mutation not processed. Field %s requires the use of `nameValues`.', 'wp-graphql-gravity-forms' ), $field->id ) );
+					$value_type_name = 'nameValues';
 				}
 				break;
 			case 'multiselect':
@@ -266,16 +263,28 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			case 'post_custom':
 			case 'post_tags':
 				if ( ! isset( $values['values'] ) ) {
-					// translators: Gravity Forms field id.
-					throw new UserError( sprintf( __( 'Mutation not processed. Field %s requires the use of `values`.', 'wp-graphql-gravity-forms' ), $field->id ) );
+					$value_type_name = 'values';
 				}
 				break;
 			default:
 				if ( ! isset( $values['value'] ) ) {
-					// translators: Gravity Forms field id.
-					throw new UserError( sprintf( __( 'Mutation not processed. Field %s requires the use of `value`.', 'wp-graphql-gravity-forms' ), $field->id ) );
+					$value_type_name = 'value';
 				}
 				break;
+		}
+
+		/**
+		 * Filter to set a custom valid fieldValue input type.
+		 *
+		 * @param string|false   $value_type_name The name of the missing input type. False if valid key exists.
+		 * @param GF_Field $field The gravity forms field.
+		 * @param array    $values the FieldValues input array.
+		 */
+		$value_type_name = apply_filters( 'wp_graphql_gf_field_value_type', $value_type_name, $field, $values );
+
+		if ( false !== $value_type_name ) {
+			// translators: Gravity Forms field id.
+			throw new UserError( sprintf( __( 'Mutation not processed. Field %1$s requires the use of `%2$s`.', 'wp-graphql-gravity-forms' ), $field->id, $value_type_name ) );
 		}
 	}
 
