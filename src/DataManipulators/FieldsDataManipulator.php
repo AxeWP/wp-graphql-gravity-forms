@@ -26,13 +26,26 @@ class FieldsDataManipulator implements DataManipulator {
 	 * @return array Manipulated form fields data.
 	 */
 	public function manipulate( array $data ) : array {
-		$data = array_map( [ $this, 'set_css_class_list_for_field' ], $data );
+		$data = array_map( [ $this, 'set_all_field_values' ], $data );
 		$data = $this->set_is_hidden_values( $data );
 		$data = $this->set_list_choice_empty_values( $data );
 		$data = $this->add_keys_to_inputs( $data, 'address' );
 		$data = $this->add_keys_to_inputs( $data, 'name' );
 
 		return $data;
+	}
+
+	/**
+	 * Transformations that will be applied to every form field.
+	 *
+	 * @param GF_Field $field .
+	 * @return GF_Field
+	 */
+	private function set_all_field_values( GF_Field $field ) : GF_Field {
+		$field = $this->set_css_class_list_for_field( $field );
+		$field = $this->convert_value_to_expected_type( $field );
+
+		return $field;
 	}
 
 	/**
@@ -49,6 +62,19 @@ class FieldsDataManipulator implements DataManipulator {
 				return '' !== $css_class;
 			}
 		);
+
+		return $field;
+	}
+
+	/**
+	 * Returns Form Field with fixed value types.
+	 *
+	 * @param GF_Field $field Form field.
+	 *
+	 * @return GF_Field
+	 */
+	private function convert_value_to_expected_type( GF_Field $field ) : GF_Field {
+		$field->layoutGridColumnSpan = ! empty( $field->layoutGridColumnSpan ) ? (int) $field->layoutGridColumnSpan : null;
 
 		return $field;
 	}
