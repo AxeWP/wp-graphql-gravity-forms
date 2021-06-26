@@ -39,7 +39,7 @@ class ChainedSelectInputProperty extends AbstractProperty {
 		return array_merge(
 			InputProperty\InputIdProperty::get(),
 			LabelProperty::get(),
-			InputNameProperty::get(),
+			InputProperty\InputNameProperty::get(),
 			/**
 			 * Deprecated field properties.
 			 *
