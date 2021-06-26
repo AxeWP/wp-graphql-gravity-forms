@@ -163,9 +163,19 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	public function prepare_single_field_value( array $values, GF_Field $field, $prev_value = null ) {
 		$this->validate_field_value_type( $field, $values );
 
-		$value = $values['addressValues'] ?? $values['chainedSelectValues'] ?? $values['checkboxValues'] ?? $values['emailValues'] ?? $values['listValues'] ?? $values['nameValues'] ?? $values['values'] ?? $values['value'];
+		$value = $values['addressValues'] ?? $values['chainedSelectValues'] ?? $values['checkboxValues'] ?? $values['emailValues'] ?? $values['listValues'] ?? $values['nameValues'] ?? $values['values'] ?? $values['value'] ?? null;
 
 		$value = $this->prepare_field_value_by_type( $value, $field, $prev_value );
+
+		/**
+		 * Filter to prepare the fieldValue for submissions to Gravity Forms.
+		 *
+		 * @param mixed $value the formatted value to be added to the GF submission object.
+		 * @param array $input_values the unformatted input values.
+		 * @param GF_Field $field .
+		 * @param mixed $prev_value The previous submission value, if exists.
+		 */
+		$value = apply_filters( 'wp_graphql_gf_prepare_field_value', $value, $values, $field, $prev_value );
 
 		return $value;
 	}
@@ -634,8 +644,9 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			case 'textarea':
 			case 'text':
 			case 'time':
-			default:
 				return $this->prepare_string_value( $value );
+			default:
+				return null;
 		}
 	}
 }
