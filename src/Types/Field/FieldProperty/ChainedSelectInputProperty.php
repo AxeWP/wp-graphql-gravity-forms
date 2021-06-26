@@ -39,6 +39,7 @@ class ChainedSelectInputProperty extends AbstractProperty {
 		return array_merge(
 			InputProperty\InputIdProperty::get(),
 			LabelProperty::get(),
+			InputNameProperty::get(),
 			/**
 			 * Deprecated field properties.
 			 *
@@ -49,8 +50,6 @@ class ChainedSelectInputProperty extends AbstractProperty {
 			Utils::deprecate_property( InputProperty\InputIsHiddenProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
 			// translators: Gravity Forms Field input property.
 			Utils::deprecate_property( InputProperty\InputKeyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
-			// translators: Gravity Forms Field input property.
-			Utils::deprecate_property( InputProperty\InputNameProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
 		);
 	}
 }
