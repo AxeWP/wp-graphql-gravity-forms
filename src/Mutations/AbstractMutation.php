@@ -678,9 +678,8 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			case 'textarea':
 			case 'text':
 			case 'time':
-				return $this->prepare_string_value( $value );
-			default:
-				return null;
+				$prepared_value = $this->prepare_string_value( $value );
+				break;
 		}
 
 		return $prepared_value;
