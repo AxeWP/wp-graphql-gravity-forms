@@ -217,7 +217,7 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
-	 * Get the default args for an address field.
+	 * Get the default args for a Captcha field.
 	 *
 	 * @param array $args .
 	 * @return array
@@ -246,6 +246,142 @@ class Wpunit extends \Codeception\Module {
 			$args
 		);
 	}
+
+	/**
+	 * Get the default args for a ChainedSelect field
+	 * 
+	 * @param array $args .
+	 * @return array
+	 */
+	public function getChainedSelectFieldDefaultArgs( array $args =[] ) : array {
+		return array_merge( 
+			[
+				'chainedSelectsAlignment' => 'vertical',
+				'chainedSelectsHideInactive' => true,
+				'description' => 'Some description',
+				'errorMessage' => 'some Error Message',
+				'id' => 1,
+				'isRequired' => 1,
+				'label' => 'ChainedSelect',
+				'size' => 'large',
+				'type' => 'chainedselect',
+				'visibility' => 'visible',
+				'inputs' => [
+					[
+						'id' => '1.1',
+						'label' => 'Year',
+						'name'  => 'ab'
+					],
+					[
+						'id' => '1.2',
+						'label' => 'Make',
+						'name' => null,
+					],
+					[
+						'id' => '1.3',
+						'label' => 'Model',
+						'name' => null,
+					],
+				],
+				'choices' => [
+					[
+						'text' => '2015',
+						'value' => '2015',
+						'isSelected' => null,
+						'choices' => [
+							[
+								'text' => 'Acura',
+								'value' => 'Acura',
+								'isSelected' => null,
+								'choices' => [
+									[
+										'text' => 'ILX',
+										'value' => 'ILX',
+										'isSelected' => null,
+										'choices' => null,
+									],
+									[
+										'text' => 'MDX',
+										'value' => 'MDX',
+										'isSelected' => null,
+										'choices' => null,
+									],
+								],
+							],
+							[
+								'text' => 'Alfa Romeo',
+								'value' => 'Alfa Romeo',
+								'isSelected' => null,
+								'choices' => [
+									[
+										'text' => '4C',
+										'value' => '4c',
+										'isSelected' => null,
+										'choices' => null,
+									],
+									[
+										'text' => '4C Spider',
+										'value' => '$C Spider',
+										'isSelected' => null,
+										'choices' => null,
+									],
+								],
+							],
+							
+						]
+					],
+					[
+						'text' => '2016',
+						'value' => '2016',
+						'isSelected' => null,
+						'choices' => [
+							[
+								'text' => 'Acura',
+								'value' => 'Acura',
+								'isSelected' => null,
+								'choices' => [
+									[
+										'text' => 'ILX',
+										'value' => 'ILX',
+										'isSelected' => null,
+										'choices' => null,
+									],
+									[
+										'text' => 'MDX 2016',
+										'value' => 'MDX 2016',
+										'isSelected' => null,
+										'choices' => null,
+									],
+								],
+							],
+							[
+								'text' => 'Alfa Romeo',
+								'value' => 'Alfa Romeo',
+								'isSelected' => null,
+								'choices' => [
+									[
+										'text' => '4C',
+										'value' => '4c',
+										'isSelected' => null,
+										'choices' => null,
+									],
+									[
+										'text' => '4C Spider',
+										'value' => '$C Spider',
+										'isSelected' => null,
+										'choices' => null,
+									],
+								],
+							],
+						]
+					]
+				],
+			],
+			$args
+		);
+	}
+
+
 
 	/**
 	 * Get the default args for a form.
