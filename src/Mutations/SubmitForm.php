@@ -47,13 +47,6 @@ class SubmitForm extends AbstractMutation {
 	 */
 	private $draft_entry_data_manipulator;
 
-	/**
-	 * The Gravity Forms form object.
-	 *
-	 * @var array
-	 */
-	private $form;
-
 
 	/**
 	 * Constructor
