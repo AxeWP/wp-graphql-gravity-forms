@@ -105,9 +105,9 @@ class SubmitDraftEntry extends AbstractMutation {
 			$submission   = GFUtils::get_draft_submission( $resume_token );
 			$form_id      = $submission['partial_entry']['form_id'];
 
-			$form = GFUtils::get_form( $form_id );
+			$this->form = GFUtils::get_form( $form_id );
 
-			$submission['page_number'] = GFUtils::get_last_form_page( $form );
+			$submission['page_number'] = GFUtils::get_last_form_page( $this->form );
 
 			add_filter( 'gform_field_validation', [ $this, 'disable_validation_for_unsupported_fields' ], 10, 4 );
 			$result = GFUtils::submit_form(

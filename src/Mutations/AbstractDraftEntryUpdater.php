@@ -129,10 +129,10 @@ abstract class AbstractDraftEntryUpdater extends AbstractMutation {
 
 			$this->submission = GFUtils::get_draft_submission( $resume_token );
 
-			$form = GFUtils::get_form( $this->submission['partial_entry']['form_id'] );
+			$this->form = GFUtils::get_form( $this->submission['partial_entry']['form_id'] );
 
 			$field_id    = absint( $input['fieldId'] );
-			$this->field = GFUtils::get_field_by_id( $form, $field_id );
+			$this->field = GFUtils::get_field_by_id( $this->form, $field_id );
 			if ( $this->field->type !== static::$gf_type ) {
 				throw new UserError(
 					sprintf(
@@ -150,7 +150,7 @@ abstract class AbstractDraftEntryUpdater extends AbstractMutation {
 			}
 			$this->value = $this->prepare_field_value( $input['value'] );
 			// Validate the field.
-			$this->field->validate( $this->value, $form );
+			$this->field->validate( $this->value, $this->form );
 			if ( $this->field->failed_validation ) {
 				return [
 					'resumeToken' => $resume_token,
@@ -175,7 +175,7 @@ abstract class AbstractDraftEntryUpdater extends AbstractMutation {
 			$this->submission['field_values'] = array_replace( $this->submission['field_values'] ?? [], $this->rename_keys_for_field_values( $value_array ) );
 
 			$resume_token = GFUtils::save_draft_submission(
-				$form,
+				$this->form,
 				$this->submission['partial_entry'],
 				$this->submission['field_values'],
 				$this->submission['page_number'] ?? 1, // @TODO: Maybe get from request.
