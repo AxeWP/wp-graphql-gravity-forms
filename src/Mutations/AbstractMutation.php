@@ -157,14 +157,15 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	 *
 	 * @param array    $values input values.
 	 * @param GF_Field $field .
+	 * @param mixed    $prev_value Optional.
 	 * @return mixed
 	 */
-	public function prepare_single_field_value( array $values, GF_Field $field ) {
+	public function prepare_single_field_value( array $values, GF_Field $field, $prev_value = null ) {
 		$this->validate_field_value_type( $field, $values );
 
 		$value = $values['addressValues'] ?? $values['chainedSelectValues'] ?? $values['checkboxValues'] ?? $values['emailValues'] ?? $values['listValues'] ?? $values['nameValues'] ?? $values['values'] ?? $values['value'];
 
-		$value = $this->prepare_field_value_by_type( $value, $field );
+		$value = $this->prepare_field_value_by_type( $value, $field, $prev_value );
 
 		return $value;
 	}
@@ -579,15 +580,15 @@ abstract class AbstractMutation implements Hookable, Mutation {
 		return strlen( $signature_decoded ) > wp_max_upload_size();
 	}
 
-
 	/**
 	 * Prepares the field value based on the field type.
 	 *
 	 * @param mixed    $value .
 	 * @param GF_Field $field .
+	 * @param mixed    $prev_value .
 	 * @return mixed
 	 */
-	public function prepare_field_value_by_type( $value, GF_Field $field ) {
+	public function prepare_field_value_by_type( $value, GF_Field $field, $prev_value = null ) {
 		switch ( $field->type ) {
 			case 'address':
 				return $this->prepare_address_field_value( $value, $field );
@@ -610,7 +611,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			case 'post_content':
 				return $this->prepare_post_content_field_value( $value );
 			case 'signature':
-				return $this->prepare_signature_field_value( $value );
+				return $this->prepare_signature_field_value( $value, $prev_value );
 			case 'website':
 				return $this->prepare_website_field_value( $value );
 			case 'date':

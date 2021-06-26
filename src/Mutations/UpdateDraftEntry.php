@@ -142,7 +142,7 @@ class UpdateDraftEntry extends AbstractMutation {
 
 			$this->form = GFUtils::get_form( $this->submission['partial_entry']['form_id'] );
 
-			$values = $this->prepare_field_values( $input['fieldValues'] );
+			$values = $this->prepare_field_values( $input['fieldValues'], $this->submission['partial_entry'] );
 			if ( ! empty( $this->errors ) ) {
 				return [ 'errors' => $this->errors ];
 			}
@@ -178,15 +178,18 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * Converts the provided field values into a format that Gravity Forms can understand.
 	 *
 	 * @param array $field_values .
+	 * @param array $entry .
 	 * @return array
 	 */
-	private function prepare_field_values( array $field_values ) : array {
+	private function prepare_field_values( array $field_values, array $entry ) : array {
 		$formatted_values = [];
 
 		foreach ( $field_values as $values ) {
 			$field = GFUtils::get_field_by_id( $this->form, $values['id'] );
 
-			$value = $this->prepare_single_field_value( $values, $field );
+			$prev_value = $entry[ $values['id'] ] ?? null;
+
+			$value = $this->prepare_single_field_value( $values, $field, $prev_value );
 
 			// Validate the field value.
 			$this->validate_field_value( $this->form, $field, $value );
