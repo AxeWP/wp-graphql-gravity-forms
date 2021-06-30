@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.6.2.1 - Hotfix
+- Fixes `updateGravityFormsEntry` not saving signature field value.
+
 ## v0.6.2 - Bugfixes
 - Fixes `updateGravityFormsEntry` mutation not propery saving complex field values (h/t @natac13 )
 - Fixes mutations not correctly deleting old `SignatureField` files from the server (h/t @natac13 )
