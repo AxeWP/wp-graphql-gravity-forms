@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.6.2.2 - Hotfix
+- Fixes `submitGravityFormsForms` not saving signature field value after v0.6.2.1.
+
 ## v0.6.2.1 - Hotfix
 - Fixes `updateGravityFormsEntry` not saving signature field value.
 

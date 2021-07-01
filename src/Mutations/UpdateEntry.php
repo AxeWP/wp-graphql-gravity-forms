@@ -207,6 +207,11 @@ class UpdateEntry extends AbstractMutation {
 				$_POST[ 'input_' . $field->id ] = $value;
 			}
 
+			// Signature field requires $_POST['input_{#}'] on update.
+			if ( 'signature' === $field->type ) {
+				$_POST[ 'input_' . $field->id ] = $value;
+			}
+
 			// Validate the field value.
 			$this->validate_field_value( $field, $value );
 
