@@ -202,6 +202,10 @@ class UpdateEntry extends AbstractMutation {
 			$prev_value = $entry[ $values['id'] ] ?? null;
 
 			$value = $this->prepare_single_field_value( $values, $field, $prev_value );
+			// Signature field requires $_POST['input_{#}'] on update.
+			if ( 'signature' === $field->type ) {
+				$_POST[ 'input_' . $field->id ] = $value;
+			}
 
 			// Validate the field value.
 			$this->validate_field_value( $field, $value );
