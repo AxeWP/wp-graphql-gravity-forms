@@ -148,6 +148,7 @@ class ComposerStaticInitbfbf9175b8255d015875c8ce55751c20
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ChoiceProperty\\ChoiceTextProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/ChoiceProperty/ChoiceTextProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ChoiceProperty\\ChoiceValueProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/ChoiceProperty/ChoiceValueProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ChoicesProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/ChoicesProperty.php',
+        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DateInputProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/DateInputProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DefaultValueProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/DefaultValueProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DescriptionPlacementProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/DescriptionPlacementProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DescriptionProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/DescriptionProperty.php',
