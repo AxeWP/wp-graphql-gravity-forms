@@ -3,14 +3,12 @@
  * Test AddressField.
  */
 
-use WPGraphQLGravityForms\Types\Enum;
 use WPGraphQLGravityForms\Tests\Factories;
 
 /**
  * Class -AddressFieldTest
  */
 class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
-
 	/**
 	 * @var \WpunitTesterActions
 	 */
@@ -22,6 +20,8 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
+	private $property_helper;
+	private $value;
 
 	/**
 	 * Run before each test.
@@ -39,41 +39,11 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->admin->add_cap( 'gravityforms_view_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory     = new Factories\Factory();
-		$this->fields[]    = $this->factory->field->create( $this->tester->getAddressFieldDefaultArgs() );
-		$this->form_id     = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
-		$this->entry_id    = $this->factory->entry->create(
-			[
-				'form_id'                           => $this->form_id,
-				$this->fields[0]['inputs'][0]['id'] => '123 Main St.',
-				$this->fields[0]['inputs'][1]['id'] => 'Apt. 456',
-				$this->fields[0]['inputs'][2]['id'] => 'Rochester Hills',
-				$this->fields[0]['inputs'][3]['id'] => 'Michigan',
-				$this->fields[0]['inputs'][4]['id'] => '48306',
-				$this->fields[0]['inputs'][5]['id'] => 'USA',
-			]
-		);
-		$this->draft_token = $this->factory->draft->create(
-			[
-				'form_id'     => $this->form_id,
-				'entry'       => [
-					$this->fields[0]['inputs'][0]['id'] => '123 Main St.',
-					$this->fields[0]['inputs'][1]['id'] => 'Apt. 456',
-					$this->fields[0]['inputs'][2]['id'] => 'Rochester Hills',
-					$this->fields[0]['inputs'][3]['id'] => 'Michigan',
-					$this->fields[0]['inputs'][4]['id'] => '48306',
-					$this->fields[0]['inputs'][5]['id'] => 'USA',
-				],
-				'fieldValues' => [
-					'input_' . $this->fields[0]['inputs'][0]['id'] => '123 Main St.',
-					'input_' . $this->fields[0]['inputs'][1]['id'] => 'Apt. 456',
-					'input_' . $this->fields[0]['inputs'][2]['id'] => 'Rochester Hills',
-					'input_' . $this->fields[0]['inputs'][3]['id'] => 'Michigan',
-					'input_' . $this->fields[0]['inputs'][4]['id'] => '48306',
-					'input_' . $this->fields[0]['inputs'][5]['id'] => 'USA',
-				],
-			]
-		);
+		$this->factory         = new Factories\Factory();
+		$this->property_helper = $this->tester->getAddressFieldHelper();
+
+		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
+
 		$this->field_value = [
 			'street'  => '123 Main St.',
 			'lineTwo' => 'Apt. 456',
@@ -82,6 +52,41 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 			'zip'     => '48306',
 			'country' => 'USA',
 		];
+		$this->value       = [
+			$this->fields[0]['inputs'][0]['id'] => $this->field_value['street'],
+			$this->fields[0]['inputs'][1]['id'] => $this->field_value['lineTwo'],
+			$this->fields[0]['inputs'][2]['id'] => $this->field_value['city'],
+			$this->fields[0]['inputs'][3]['id'] => $this->field_value['state'],
+			$this->fields[0]['inputs'][4]['id'] => $this->field_value['zip'],
+			$this->fields[0]['inputs'][5]['id'] => $this->field_value['country'],
+		];
+
+		$this->form_id = $this->factory->form->create(
+			array_merge(
+				[ 'fields' => $this->fields ],
+				$this->tester->getFormDefaultArgs()
+			)
+		);
+
+		$this->entry_id = $this->factory->entry->create(
+			array_merge(
+				[ 'form_id' => $this->form_id ],
+				$this->value
+			)
+		);
+
+		$this->draft_token = $this->factory->draft->create(
+			[
+				'form_id'     => $this->form_id,
+				'entry'       => array_merge(
+					$this->value,
+					[
+						'fieldValues' => $this->property_helper->get_field_values( $this->value ),
+					]
+				),
+				'fieldValues' => $this->property_helper->get_field_values( $this->value ),
+			]
+		);
 	}
 
 	/**
@@ -110,6 +115,12 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				gravityFormsEntry(id: $id, idType: $idType ) {
 					formFields {
 						nodes {
+							cssClass
+							formId
+							id
+							layoutGridColumnSpan
+							layoutSpacerGridColumnSpan
+							type
 							conditionalLogic {
 								actionType
 								logicType
@@ -119,14 +130,11 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									value
 								}
 							}
-							cssClass
-							formId
-							id
-							type
 							... on AddressField {
 								addressType
 								adminLabel
 								adminOnly
+								allowsPrepopulate
 								copyValuesOptionDefault
 								copyValuesOptionField
 								defaultCountry
@@ -137,7 +145,6 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 								enableAutocomplete
 								enableCopyValuesOption
 								errorMessage
-								id
 								inputs {
 									customLabel
 									defaultValue
@@ -197,127 +204,38 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 			'gravityFormsEntry' => [
 				'formFields' => [
 					'nodes' => [
-						0 => [
-							'conditionalLogic'        => null,
-							'cssClass'                => $form['fields'][0]->cssClass,
-							'formId'                  => $form['fields'][0]->formId,
-							'id'                      => $form['fields'][0]->id,
-							'type'                    => $form['fields'][0]->type,
-							'addressType'             => $this->tester->get_enum_for_value( Enum\AddressTypeEnum::$type, $form['fields'][0]->addressType ),
-							'adminLabel'              => $form['fields'][0]->adminLabel,
-							'adminOnly'               => $form['fields'][0]->adminOnly,
-							'copyValuesOptionDefault' => (bool) $form['fields'][0]->copyValuesOptionDefault,
-							'copyValuesOptionField'   => $form['fields'][0]->copyValuesOptionField,
-							'defaultCountry'          => $form['fields'][0]->defaultCountry,
-							'defaultProvince'         => $form['fields'][0]->defaultProvince,
-							'defaultState'            => $form['fields'][0]->defaultState,
-							'description'             => $form['fields'][0]->description,
-							'descriptionPlacement'    => $this->tester->get_enum_for_value( Enum\DescriptionPlacementPropertyEnum::$type, $form['fields'][0]->descriptionPlacement ),
-							'enableAutocomplete'      => $form['fields'][0]->enableAutocomplete,
-							'enableCopyValuesOption'  => (bool) $form['fields'][0]->enableCopyValuesOption,
-							'errorMessage'            => $form['fields'][0]->errorMessage,
-							'inputs'                  => [
-								0 => [
-									'customLabel'  => $form['fields'][0]->inputs[0]['customLabel'],
-									'defaultValue' => $form['fields'][0]->inputs[0]['defaultValue'],
-									'id'           => $form['fields'][0]->inputs[0]['id'],
-									'isHidden'     => $form['fields'][0]->inputs[0]['isHidden'],
-									'key'          => 'street',
-									'label'        => $form['fields'][0]->inputs[0]['label'],
-									'name'         => $form['fields'][0]->inputs[0]['name'],
-									'placeholder'  => $form['fields'][0]->inputs[0]['placeholder'],
-									'autocompleteAttribute' => $form['fields'][0]->inputs[0]['autocompleteAttribute'],
-								],
-								1 => [
-									'customLabel'  => $form['fields'][0]->inputs[1]['customLabel'],
-									'defaultValue' => $form['fields'][0]->inputs[1]['defaultValue'],
-									'id'           => $form['fields'][0]->inputs[1]['id'],
-									'isHidden'     => $form['fields'][0]->inputs[1]['isHidden'],
-									'key'          => 'lineTwo',
-									'label'        => $form['fields'][0]->inputs[1]['label'],
-									'name'         => $form['fields'][0]->inputs[1]['name'],
-									'placeholder'  => $form['fields'][0]->inputs[1]['placeholder'],
-									'autocompleteAttribute' => $form['fields'][0]->inputs[1]['autocompleteAttribute'],
-								],
-								2 => [
-									'customLabel'  => $form['fields'][0]->inputs[2]['customLabel'],
-									'defaultValue' => $form['fields'][0]->inputs[2]['defaultValue'],
-									'id'           => $form['fields'][0]->inputs[2]['id'],
-									'isHidden'     => $form['fields'][0]->inputs[2]['isHidden'],
-									'key'          => 'city',
-									'label'        => $form['fields'][0]->inputs[2]['label'],
-									'name'         => $form['fields'][0]->inputs[2]['name'],
-									'placeholder'  => $form['fields'][0]->inputs[2]['placeholder'],
-									'autocompleteAttribute' => $form['fields'][0]->inputs[2]['autocompleteAttribute'],
-								],
-								3 => [
-									'customLabel'  => $form['fields'][0]->inputs[3]['customLabel'],
-									'defaultValue' => $form['fields'][0]->inputs[3]['defaultValue'],
-									'id'           => $form['fields'][0]->inputs[3]['id'],
-									'isHidden'     => $form['fields'][0]->inputs[3]['isHidden'],
-									'key'          => 'state',
-									'label'        => $form['fields'][0]->inputs[3]['label'],
-									'name'         => $form['fields'][0]->inputs[3]['name'],
-									'placeholder'  => $form['fields'][0]->inputs[3]['placeholder'],
-									'autocompleteAttribute' => $form['fields'][0]->inputs[3]['autocompleteAttribute'],
-								],
-								4 => [
-									'customLabel'  => $form['fields'][0]->inputs[4]['customLabel'],
-									'defaultValue' => $form['fields'][0]->inputs[4]['defaultValue'],
-									'id'           => $form['fields'][0]->inputs[4]['id'],
-									'isHidden'     => $form['fields'][0]->inputs[4]['isHidden'],
-									'key'          => 'zip',
-									'label'        => $form['fields'][0]->inputs[4]['label'],
-									'name'         => $form['fields'][0]->inputs[4]['name'],
-									'placeholder'  => $form['fields'][0]->inputs[4]['placeholder'],
-									'autocompleteAttribute' => $form['fields'][0]->inputs[4]['autocompleteAttribute'],
-								],
-								5 => [
-									'customLabel'  => $form['fields'][0]->inputs[5]['customLabel'],
-									'defaultValue' => $form['fields'][0]->inputs[5]['defaultValue'],
-									'id'           => $form['fields'][0]->inputs[5]['id'],
-									'isHidden'     => $form['fields'][0]->inputs[5]['isHidden'],
-									'key'          => 'country',
-									'label'        => $form['fields'][0]->inputs[5]['label'],
-									'name'         => $form['fields'][0]->inputs[5]['name'],
-									'placeholder'  => $form['fields'][0]->inputs[5]['placeholder'],
-									'autocompleteAttribute' => $form['fields'][0]->inputs[5]['autocompleteAttribute'],
-								],
-							],
-							'isRequired'              => $form['fields'][0]->isRequired,
-							'label'                   => $form['fields'][0]->label,
-							'labelPlacement'          => $this->tester->get_enum_for_value( Enum\LabelPlacementPropertyEnum::$type, $form['fields'][0]->labelPlacement ),
-							'size'                    => $this->tester->get_enum_for_value( Enum\SizePropertyEnum::$type, $form['fields'][0]->size ),
-							'subLabelPlacement'       => $form['fields'][0]->subLabelPlacement,
-							'addressValues'           => [
-								'street'  => $entry[ $form['fields'][0]->inputs[0]['id'] ],
-								'lineTwo' => $entry[ $form['fields'][0]->inputs[1]['id'] ],
-								'city'    => $entry[ $form['fields'][0]->inputs[2]['id'] ],
-								'state'   => $entry[ $form['fields'][0]->inputs[3]['id'] ],
-								'zip'     => $entry[ $form['fields'][0]->inputs[4]['id'] ],
-								'country' => $entry[ $form['fields'][0]->inputs[5]['id'] ],
-							],
-							'visibility'              => $this->tester->get_enum_for_value( Enum\VisibilityPropertyEnum::$type, $form['fields'][0]->visibility ),
-						],
+						array_merge_recursive(
+							$this->property_helper->getAllActualValues( $form['fields'][0] ),
+							[ 'addressValues' => $this->field_value ],
+						),
 					],
 					'edges' => [
-						0 => [
-							'fieldValue' => [
-								'street'  => $entry[ $form['fields'][0]->inputs[0]['id'] ],
-								'lineTwo' => $entry[ $form['fields'][0]->inputs[1]['id'] ],
-								'city'    => $entry[ $form['fields'][0]->inputs[2]['id'] ],
-								'state'   => $entry[ $form['fields'][0]->inputs[3]['id'] ],
-								'zip'     => $entry[ $form['fields'][0]->inputs[4]['id'] ],
-								'country' => $entry[ $form['fields'][0]->inputs[5]['id'] ],
-							],
+						[
+							'fieldValue' => $this->field_value,
 						],
 					],
 				],
 			],
 		];
 
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Test entry has error.' );
+		$this->assertEquals( $expected, $actual['data'], 'Test entry is not equal' );
+
+		// Ensures draft token is set.
+		if ( empty( $this->draft_token ) ) {
+			$this->draft_token = $this->factory->draft->create(
+				[
+					'form_id'     => $this->form_id,
+					'entry'       => array_merge(
+						$this->value,
+						[
+							'fieldValues' => $this->property_helper->get_field_values( $this->value ),
+						]
+					),
+					'fieldValues' => $this->property_helper->get_field_values( $this->value ),
+				]
+			);
+		}
 
 		// Test Draft entry.
 		$actual = graphql(
@@ -329,22 +247,8 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
-
-		// Test Draft entry.
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'id' => $this->draft_token,
-				],
-			]
-		);
-
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Test draft entry has error.' );
+		$this->assertEquals( $expected, $actual['data'], 'Test draft entry is not equal.' );
 	}
 
 
@@ -366,7 +270,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 			]
 		);
 
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
 		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
@@ -392,7 +296,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			],
 		];
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
 		$this->factory->draft->delete( $resume_token );
 	}
@@ -415,7 +319,9 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
+
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
+
 		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
 		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
 		$expected     = [
@@ -440,16 +346,16 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 			],
 		];
 
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
 		$actualEntry = GFAPI::get_entry( $entry_id );
 
-		$this->assertEquals( $this->field_value['street'], $actualEntry[ $form['fields'][0]['inputs'][0]['id'] ] );
-		$this->assertEquals( $this->field_value['lineTwo'], $actualEntry[ $form['fields'][0]['inputs'][1]['id'] ] );
-		$this->assertEquals( $this->field_value['city'], $actualEntry[ $form['fields'][0]['inputs'][2]['id'] ] );
-		$this->assertEquals( $this->field_value['state'], $actualEntry[ $form['fields'][0]['inputs'][3]['id'] ] );
-		$this->assertEquals( $this->field_value['zip'], $actualEntry[ $form['fields'][0]['inputs'][4]['id'] ] );
-		$this->assertEquals( $this->field_value['country'], $actualEntry[ $form['fields'][0]['inputs'][5]['id'] ] );
+		$this->assertEquals( $this->field_value['street'], $actualEntry[ $form['fields'][0]['inputs'][0]['id'] ], 'Submit mutation entry value 1 not equal' );
+		$this->assertEquals( $this->field_value['lineTwo'], $actualEntry[ $form['fields'][0]['inputs'][1]['id'] ], 'Submit mutation entry value 2 not equal' );
+		$this->assertEquals( $this->field_value['city'], $actualEntry[ $form['fields'][0]['inputs'][2]['id'] ], 'Submit mutation entry value 3 not equal' );
+		$this->assertEquals( $this->field_value['state'], $actualEntry[ $form['fields'][0]['inputs'][3]['id'] ], 'Submit mutation entry value 4 not equal' );
+		$this->assertEquals( $this->field_value['zip'], $actualEntry[ $form['fields'][0]['inputs'][4]['id'] ], 'Submit mutation entry value 5 not equal' );
+		$this->assertEquals( $this->field_value['country'], $actualEntry[ $form['fields'][0]['inputs'][5]['id'] ], 'Submit mutation entry value 6 not equal' );
 
 		$this->factory->entry->delete( $entry_id );
 	}
@@ -531,8 +437,8 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			],
 		];
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
 
 		// Test submitted query.
 		$query = '
@@ -583,7 +489,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id = $actual['data']['submitGravityFormsDraftEntry']['entryId'];
 
@@ -607,7 +513,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			],
 		];
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equals' );
 
 		$this->factory->entry->delete( $entry_id );
 	}

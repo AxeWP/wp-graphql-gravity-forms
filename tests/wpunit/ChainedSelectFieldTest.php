@@ -3,14 +3,12 @@
  * Test ChainedSelectField.
  */
 
-use WPGraphQLGravityForms\Types\Enum;
 use WPGraphQLGravityForms\Tests\Factories;
 
 /**
  * Class -ChainedSelectFieldTest
  */
 class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
-
 	/**
 	 * @var \WpunitTesterActions
 	 */
@@ -23,6 +21,8 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
+	private $property_helper;
+	private $value;
 
 	/**
 	 * Run before each test.
@@ -40,49 +40,63 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->admin->add_cap( 'gravityforms_view_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory     = new Factories\Factory();
-		$this->fields[]    = $this->factory->field->create( $this->tester->getChainedSelectFieldDefaultArgs() );
-		$this->form_id     = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
+		$this->factory         = new Factories\Factory();
+		$this->property_helper = $this->tester->getChainedSelectFieldHelper();
+
+		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
+
+		$this->form_id = $this->factory->form->create(
+			array_merge(
+				[ 'fields' => $this->fields ],
+				$this->tester->getFormDefaultArgs()
+			)
+		);
+
 		$this->field_value = [ '2015', 'Acura', 'MDX' ];
+		$this->value       = [
+			$this->fields[0]['inputs'][0]['id'] => $this->field_value[0],
+			$this->fields[0]['inputs'][1]['id'] => $this->field_value[1],
+			$this->fields[0]['inputs'][2]['id'] => $this->field_value[2],
+		];
+
 		$this->field_value_input = [
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
-				'value' => $this->field_value[0],
+				'value'   => $this->field_value[0],
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
-				'value' => $this->field_value[1],
+				'value'   => $this->field_value[1],
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
-				'value' => $this->field_value[2],
+				'value'   => $this->field_value[2],
 			],
 		];
-		$this->entry_id    = $this->factory->entry->create(
-			[
-				'form_id'                           => $this->form_id,
-				$this->fields[0]['inputs'][0]['id'] => $this->field_value[0],
-				$this->fields[0]['inputs'][1]['id'] => $this->field_value[1],
-				$this->fields[0]['inputs'][2]['id'] => $this->field_value[2],
-			]
+
+		$this->entry_id = $this->factory->entry->create(
+			array_merge(
+				[
+					'form_id' => $this->form_id,
+				],
+				$this->value,
+			)
 		);
+
 		$this->draft_token = $this->factory->draft->create(
 			[
 				'form_id'     => $this->form_id,
-				'entry'       => [
-					$this->fields[0]['inputs'][0]['id'] => $this->field_value[0],
-					$this->fields[0]['inputs'][1]['id'] => $this->field_value[1],
-					$this->fields[0]['inputs'][2]['id'] => $this->field_value[2],
-				],
-				'fieldValues' => [
-					'input_' . $this->fields[0]['inputs'][0]['id'] => $this->field_value[0],
-					'input_' . $this->fields[0]['inputs'][1]['id'] => $this->field_value[1],
-					'input_' . $this->fields[0]['inputs'][2]['id'] => $this->field_value[2],
-				],
+				'entry'       => array_merge(
+					$this->value,
+					[
+						'fieldValues' => $this->property_helper->get_field_values( $this->value ),
+					]
+				),
+				'fieldValues' => $this->property_helper->get_field_values( $this->value ),
 			]
 		);
-		
 	}
+
 
 	/**
 	 * Run after each test.
@@ -110,15 +124,37 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				gravityFormsEntry(id: $id, idType: $idType ) {
 					formFields {
 						nodes {
+						cssClass
+							formId
 							id
+							layoutGridColumnSpan
+							layoutSpacerGridColumnSpan
+							type
+							conditionalLogic {
+								actionType
+								logicType
+								rules {
+									fieldId
+									operator
+									value
+								}
+							}
 							... on ChainedSelectField {
+								adminLabel
+								allowsPrepopulate
+								adminOnly
 								chainedSelectsAlignment
 								chainedSelectsHideInactive
+								description
+								descriptionPlacement
 								errorMessage
 								isRequired
 								label
-								type
+								noDuplicates
+								size
+								subLabelPlacement
 								values
+								visibility
 								inputs {
 									id
 									label
@@ -167,132 +203,15 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			'gravityFormsEntry' => [
 				'formFields' => [
 					'nodes' => [
-						 [
-							'id'                      => $form['fields'][0]->id,
-							'type'                    => $form['fields'][0]->type,
-							'chainedSelectsAlignment' => $this->tester->get_enum_for_value( Enum\ChainedSelectsAlignmentEnum::$type, $form['fields'][0]->chainedSelectsAlignment ),
-							'chainedSelectsHideInactive' => $form['fields'][0]->chainedSelectsHideInactive,
-							'choices' => [
-								[
-									'text' => $form['fields'][0]->choices[0]['text'],
-									'value' => $form['fields'][0]->choices[0]['value'],
-									'isSelected' => $form['fields'][0]->choices[0]['isSelected'],
-									'choices' => [
-										[
-											'text' => $form['fields'][0]->choices[0]['choices'][0]['text'],
-											'value' => $form['fields'][0]->choices[0]['choices'][0]['value'],
-											'isSelected' => $form['fields'][0]->choices[0]['choices'][0]['isSelected'],
-											'choices' => [
-												[
-													'text' => $form['fields'][0]->choices[0]['choices'][0]['choices'][0]['text'],
-													'value' => $form['fields'][0]->choices[0]['choices'][0]['choices'][0]['value'],
-													'isSelected' => $form['fields'][0]->choices[0]['choices'][0]['choices'][0]['isSelected'],
-												],
-												[
-													'text' => $form['fields'][0]->choices[0]['choices'][0]['choices'][1]['text'],
-													'value' => $form['fields'][0]->choices[0]['choices'][0]['choices'][1]['value'],
-													'isSelected' => $form['fields'][0]->choices[0]['choices'][0]['choices'][1]['isSelected'],
-												]
-											]
-										],
-										[
-											'text' => $form['fields'][0]->choices[0]['choices'][1]['text'],
-											'value' => $form['fields'][0]->choices[0]['choices'][1]['value'],
-											'isSelected' => $form['fields'][0]->choices[0]['choices'][1]['isSelected'],
-											'choices' => [
-												[
-													'text' => $form['fields'][0]->choices[0]['choices'][1]['choices'][0]['text'],
-													'value' => $form['fields'][0]->choices[0]['choices'][1]['choices'][0]['value'],
-													'isSelected' => $form['fields'][0]->choices[0]['choices'][1]['choices'][0]['isSelected'],
-												],
-												[
-													'text' => $form['fields'][0]->choices[0]['choices'][1]['choices'][1]['text'],
-													'value' => $form['fields'][0]->choices[0]['choices'][1]['choices'][1]['value'],
-													'isSelected' => $form['fields'][0]->choices[0]['choices'][1]['choices'][1]['isSelected'],
-												]
-											]
-										]
-									]
-								],
-								[
-									'text' => $form['fields'][0]->choices[1]['text'],
-									'value' => $form['fields'][0]->choices[1]['value'],
-									'isSelected' => $form['fields'][0]->choices[1]['isSelected'],
-									'choices' => [
-										[
-											'text' => $form['fields'][0]->choices[1]['choices'][0]['text'],
-											'value' => $form['fields'][0]->choices[1]['choices'][0]['value'],
-											'isSelected' => $form['fields'][0]->choices[1]['choices'][0]['isSelected'],
-											'choices' => [
-												[
-													'text' => $form['fields'][0]->choices[1]['choices'][0]['choices'][0]['text'],
-													'value' => $form['fields'][0]->choices[1]['choices'][0]['choices'][0]['value'],
-													'isSelected' => $form['fields'][0]->choices[1]['choices'][0]['choices'][0]['isSelected'],
-												],
-												[
-													'text' => $form['fields'][0]->choices[1]['choices'][0]['choices'][1]['text'],
-													'value' => $form['fields'][0]->choices[1]['choices'][0]['choices'][1]['value'],
-													'isSelected' => $form['fields'][0]->choices[1]['choices'][0]['choices'][1]['isSelected'],
-												]
-											]
-										],
-										[
-											'text' => $form['fields'][0]->choices[1]['choices'][1]['text'],
-											'value' => $form['fields'][0]->choices[1]['choices'][1]['value'],
-											'isSelected' => $form['fields'][0]->choices[1]['choices'][1]['isSelected'],
-											'choices' => [
-												[
-													'text' => $form['fields'][0]->choices[1]['choices'][1]['choices'][0]['text'],
-													'value' => $form['fields'][0]->choices[1]['choices'][1]['choices'][0]['value'],
-													'isSelected' => $form['fields'][0]->choices[1]['choices'][1]['choices'][0]['isSelected'],
-												],
-												[
-													'text' => $form['fields'][0]->choices[1]['choices'][1]['choices'][1]['text'],
-													'value' => $form['fields'][0]->choices[1]['choices'][1]['choices'][1]['value'],
-													'isSelected' => $form['fields'][0]->choices[1]['choices'][1]['choices'][1]['isSelected'],
-												]
-											]
-										]
-									]
-								]
-							],
-							'errorMessage'            => $form['fields'][0]->errorMessage,
-							'inputs'                  => [
-								[
-									'id'           => $form['fields'][0]->inputs[0]['id'],
-									'label'        => $form['fields'][0]->inputs[0]['label'],
-									'name'         => $form['fields'][0]->inputs[0]['name'],
-								],
-								[
-									'id'           => $form['fields'][0]->inputs[1]['id'],
-									'label'        => $form['fields'][0]->inputs[1]['label'],
-									'name'         => $form['fields'][0]->inputs[1]['name'],
-								],
-								[
-									'id'           => $form['fields'][0]->inputs[2]['id'],
-									'label'        => $form['fields'][0]->inputs[2]['label'],
-									'name'         => $form['fields'][0]->inputs[2]['name'],
-								],
-							],
-							'isRequired'              => (bool) $form['fields'][0]->isRequired,
-							'label'                   => $form['fields'][0]->label,
-							'type'                   => $form['fields'][0]->type,
-							'values'  => [
-								$entry[ $form['fields'][0]->inputs[0]['id'] ],
-								$entry[ $form['fields'][0]->inputs[1]['id'] ],
-								$entry[ $form['fields'][0]->inputs[2]['id'] ],
-							],
-							
-						],
+						array_merge_recursive(
+							$this->property_helper->getAllActualValues( $form['fields'][0] ),
+							[ 'values' => $this->field_value ],
+						),
 					],
 					'edges' => [
 						[
 							'fieldValue' => [
-								'values' => [
-									$entry[ $form['fields'][0]->inputs[0]['id'] ],
-									$entry[ $form['fields'][0]->inputs[1]['id'] ],
-									$entry[ $form['fields'][0]->inputs[2]['id'] ],
-								],
+								'values' => $this->field_value,
 							],
 						],
 					],
@@ -300,8 +219,24 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			],
 		];
 
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Test entry has error.' );
+		$this->assertEquals( $expected, $actual['data'], 'Test entry is not equal' );
+
+		// Ensures draft token is set.
+		if ( empty( $this->draft_token ) ) {
+			$this->draft_token = $this->factory->draft->create(
+				[
+					'form_id'     => $this->form_id,
+					'entry'       => array_merge(
+						$this->value,
+						[
+							'fieldValues' => $this->property_helper->get_field_values( $this->value ),
+						]
+					),
+					'fieldValues' => $this->property_helper->get_field_values( $this->value ),
+				]
+			);
+		}
 
 		// Test Draft entry.
 		$actual = graphql(
@@ -313,22 +248,10 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
-
-		// Test Draft entry.
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'id' => $this->draft_token,
-				],
-			]
-		);
-
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		codecept_debug( $actual );
+		codecept_debug( $expected );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Test draft entry has error.' );
+		$this->assertEquals( $expected, $actual['data'], 'Test draft entry is not equal.' );
 	}
 
 
@@ -349,8 +272,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
 		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
@@ -366,7 +288,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 							[
 								'fieldValue' => [
 									'values' => $this->field_value,
-								]
+								],
 							],
 						],
 						'nodes' => [
@@ -378,7 +300,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			],
 		];
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
 		$this->factory->draft->delete( $resume_token );
 	}
@@ -401,7 +323,8 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
+
 		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
 		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
 		$expected     = [
@@ -415,7 +338,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 							[
 								'fieldValue' => [
 									'values' => $this->field_value,
-								]
+								],
 							],
 						],
 						'nodes' => [
@@ -428,13 +351,13 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			],
 		];
 
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
 		$actualEntry = GFAPI::get_entry( $entry_id );
 
-		$this->assertEquals( $this->field_value[0], $actualEntry[ $form['fields'][0]['inputs'][0]['id'] ] );
-		$this->assertEquals( $this->field_value[1], $actualEntry[ $form['fields'][0]['inputs'][1]['id'] ] );
-		$this->assertEquals( $this->field_value[2], $actualEntry[ $form['fields'][0]['inputs'][2]['id'] ] );
+		$this->assertEquals( $this->field_value[0], $actualEntry[ $form['fields'][0]['inputs'][0]['id'] ], 'Submit mutation entry value 1 not equal.' );
+		$this->assertEquals( $this->field_value[1], $actualEntry[ $form['fields'][0]['inputs'][1]['id'] ], 'Submit mutation entry value 2 not equal.' );
+		$this->assertEquals( $this->field_value[2], $actualEntry[ $form['fields'][0]['inputs'][2]['id'] ], 'Submit mutation entry value 3 not equal.' );
 
 		$this->factory->entry->delete( $entry_id );
 	}
@@ -494,7 +417,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 							[
 								'fieldValue' => [
 									'values' => $this->field_value,
-								]
+								],
 							],
 						],
 						'nodes' => [
@@ -506,8 +429,9 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			],
 		];
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Update has errors.' );
-		$this->assertEquals( $expected, $actual['data'], 'Update isnt equal.' );
+
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
 
 		// Test submitted query.
 		$query = '
@@ -546,7 +470,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		$this->assertArrayNotHasKey( 'errors', $actual, 'submit has errors' );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id = $actual['data']['submitGravityFormsDraftEntry']['entryId'];
 

@@ -18,6 +18,7 @@ class CreateDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 	private $fields = [];
 	private $form_id;
 	private $client_mutation_id;
+	private $text_field_helper;
 
 	/**
 	 * Run before each test.
@@ -27,8 +28,10 @@ class CreateDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 		parent::setUp();
 
 		// Your set up methods here.
-		$this->factory            = new Factories\Factory();
-		$this->fields[]           = $this->factory->field->create( $this->tester->getTextFieldDefaultArgs() );
+		$this->factory           = new Factories\Factory();
+		$this->text_field_helper = $this->tester->getTextFieldHelper();
+		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
+
 		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
 		$this->client_mutation_id = 'someUniqueId';
 	}

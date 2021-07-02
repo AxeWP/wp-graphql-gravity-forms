@@ -2,10 +2,12 @@
 /**
  * Helpers for WPUnit tests.
  *
- * @package .
+ * @package Helper.
  */
 
 namespace Helper;
+
+use Helper\GFHelpers\PropertyHelper;
 
 /**
  * Class - Wpunit
@@ -17,370 +19,528 @@ class Wpunit extends \Codeception\Module {
 	 * Get the default args for a text field.
 	 *
 	 * @param array $args .
-	 * @return array
+	 * @return PropertyHelper
 	 */
-	public function getTextFieldDefaultArgs( array $args = [] ) : array {
-		return array_merge(
+
+	public function getTextFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
 			[
-				'adminLabel'                 => '',
-				'allowsPrepopulate'          => true,
-				'calculationFormula'         => '',
-				'calculationRounding'        => '',
-				'choices'                    => '',
-				'cssClass'                   => 'first-class second-class',
-				'defaultValue'               => 'Default',
-				'description'                => 'I am a single line text field.',
-				'descriptionPlacement'       => '',
-				'disableQuantity'            => false,
-				'displayAllCategories'       => false,
-				'displayOnly'                => '',
-				'enableCalculation'          => '',
-				'enablePasswordInput'        => '',
-				'errorMessage'               => 'Some error message',
-				'fields'                     => '',
-				'id'                         => 1,
-				'inputMask'                  => false,
-				'inputMaskIsCustom'          => false,
-				'inputMaskValue'             => '',
-				'inputName'                  => 'textinputname',
-				'inputs'                     => null,
-				'inputType'                  => '',
-				'isRequired'                 => true,
-				'label'                      => 'Single Line Text',
-				'labelPlacement'             => '',
-				'layoutGridColumnSpan'       => 6,
-				'layoutSpacerGridColumnSpan' => 0,
-				'maxFiles'                   => '',
-				'maxLength'                  => 100,
-				'multipleFiles'              => false,
-				'noDuplicates'               => true,
-				'pageNumber'                 => 1,
-				'placeholder'                => 'some placeholder',
-				'productField'               => '',
-				'size'                       => 'medium',
-				'subLabelPlacement'          => '',
-				'type'                       => 'text',
-				'useRichTextEditor'          => false,
-				'visibility'                 => 'visible',
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				'autocompleteAttribute',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'defaultValue',
+				'description',
+				'descriptionPlacement',
+				'enablePasswordInput',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'maxLength',
+				'noDuplicates',
+				'placeholder',
+				'size',
+				[ 'type' => 'text' ],
+				'visibility',
 			],
-			$args
+			$args,
 		);
+		return new PropertyHelper( $keys );
 	}
 
 	/**
 	 * Get the default args for a textarea field.
 	 *
 	 * @param array $args .
-	 * @return array
+	 * @return PropertyHelper
 	 */
-	public function getTextAreaFieldDefaultArgs( array $args = [] ) : array {
-		return array_merge(
+	public function getTextAreaFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
 			[
-				'adminLabel'           => '',
-				'allowsPrepopulate'    => false,
-				'calculationFormula'   => '',
-				'calculationRounding'  => '',
-				'choices'              => '',
-				'cssClass'             => 'first-class second-class',
-				'defaultValue'         => 'Default',
-				'description'          => 'I am a text area field.',
-				'descriptionPlacement' => '',
-				'disableQuantity'      => false,
-				'displayAllCategories' => false,
-				'displayOnly'          => '',
-				'enableCalculation'    => '',
-				'errorMessage'         => 'Some error message',
-				'fields'               => '',
-				'formId'               => 2,
-				'id'                   => 1,
-				'inputMask'            => false,
-				'inputMaskIsCustom'    => false,
-				'inputMaskValue'       => '',
-				'inputName'            => 'textareainputname',
-				'inputs'               => null,
-				'inputType'            => '',
-				'isRequired'           => true,
-				'label'                => 'Text Area',
-				'labelPlacement'       => '',
-				'maxFiles'             => '',
-				'maxLength'            => 250,
-				'multipleFiles'        => false,
-				'noDuplicates'         => false,
-				'pageNumber'           => 1,
-				'placeholder'          => 'Some placeholder',
-				'productField'         => '',
-				'size'                 => 'medium',
-				'subLabelPlacement'    => '',
-				'type'                 => 'textarea',
-				'useRichTextEditor'    => true,
-				'visibility'           => 'visible',
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'defaultValue',
+				'description',
+				'descriptionPlacement',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'maxLength',
+				'noDuplicates',
+				'placeholder',
+				'size',
+				[ 'type' => 'textarea' ],
+				'useRichTextEditor',
+				'visibility',
 			],
 			$args
 		);
+		return new PropertyHelper( $keys );
 	}
 
 	/**
 	 * Get the default args for an address field.
 	 *
 	 * @param array $args .
-	 * @return array
+	 * @return PropertyHelper
 	 */
-	public function getAddressFieldDefaultArgs( array $args = [] ) : array {
-		return array_merge(
+	public function getAddressFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
 			[
-				'addressType'             => 'international',
-				'adminLabel'              => '',
-				'adminOnly'               => false,
-				'copyValuesOptionDefault' => '',
-				'copyValuesOptionField'   => null,
-				'cssClass'                => 'first-class second-class',
-				'defaultCountry'          => 'United States',
-				'defaultProvince'         => '',
-				'defaultState'            => '',
-				'description'             => '',
-				'descriptionPlacement'    => '',
-				'enableCopyValuesOption'  => '',
-				'enableAutocomplete'      => 1,
-				'errorMessage'            => 'Some Error Message',
-				'id'                      => 1,
-				'isRequired'              => false,
-				'label'                   => 'Address',
-				'labelPlacement'          => '',
-				'size'                    => 'medium',
-				'subLabelPlacement'       => '',
-				'type'                    => 'address',
-				'visibility'              => 'visible',
-				'inputs'                  => [
-					[
-						'customLabel'           => 'Street',
-						'defaultValue'          => 'Default Street Address',
-						'id'                    => '3.1',
-						'isHidden'              => true,
-						'label'                 => 'Street Address',
-						'name'                  => 'ab',
-						'placeholder'           => 'some Placeholder',
-						'autocompleteAttribute' => 'street-autocomplete',
-					],
-					[
-						'customLabel'           => 'line 2',
-						'defaultValue'          => '',
-						'id'                    => '3.2',
-						'label'                 => 'Address Line 2',
-						'name'                  => '',
-						'placeholder'           => '',
-						'autocompleteAttribute' => null,
-					],
-					[
-						'customLabel'           => null,
-						'defaultValue'          => null,
-						'id'                    => '3.3',
-						'isHidden'              => false,
-						'label'                 => 'City',
-						'name'                  => '',
-						'placeholder'           => null,
-						'autocompleteAttribute' => null,
-					],
-					[
-						'customLabel'           => null,
-						'defaultValue'          => null,
-						'id'                    => '3.4',
-						'isHidden'              => false,
-						'label'                 => 'State / Province',
-						'name'                  => '',
-						'placeholder'           => 'State',
-						'autocompleteAttribute' => null,
-					],
-					[
-						'customLabel'           => null,
-						'defaultValue'          => null,
-						'id'                    => '3.5',
-						'isHidden'              => true,
-						'label'                 => 'ZIP / Postal Code',
-						'name'                  => '',
-						'placeholder'           => null,
-						'autocompleteAttribute' => null,
-					],
-					[
-						'customLabel'           => null,
-						'defaultValue'          => null,
-						'id'                    => '3.6',
-						'isHidden'              => false,
-						'label'                 => 'Country',
-						'name'                  => '',
-						'placeholder'           => null,
-						'autocompleteAttribute' => null,
+				'addressType',
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				'copyValuesOptionDefault',
+				'copyValuesOptionField',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'defaultCountry',
+				'defaultProvince',
+				'defaultState',
+				'description',
+				'descriptionPlacement',
+				'enableAutocomplete',
+				'enableCopyValuesOption',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'isRequired',
+				'label',
+				'labelPlacement',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'size',
+				'subLabelPlacement',
+				[
+					'inputs' => [
+						'fieldId' => 1,
+						'count'   => 6,
+						'keys'    => [ 'customLabel', 'defaultValue', 'isHidden', 'label', 'name', 'placeholder', 'autocompleteAttribute' ],
 					],
 				],
+				[ 'type' => 'address' ],
+				'visibility',
 			],
 			$args
 		);
+		return new PropertyHelper( $keys );
 	}
 
 	/**
 	 * Get the default args for a Captcha field.
 	 *
 	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getCaptchaFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'captchaLanguage',
+				'captchaTheme',
+				'captchaType',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'description',
+				'descriptionPlacement',
+				'displayOnly',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'simpleCaptchaBackgroundColor',
+				'simpleCaptchaSize',
+				'simpleCaptchaFontColor',
+				'size',
+				[ 'type' => 'captcha' ],
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
+	 * Get the default args for a ChainedSelect field
+	 *
+	 * @param array $args .
 	 * @return array
 	 */
-	public function getCaptchaFieldDefaultArgs( array $args = [] ) : array {
+	public function getChainedSelectFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				'chainedSelectsAlignment',
+				'chainedSelectsHideInactive',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'description',
+				'descriptionPlacement',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'size',
+				'subLabelPlacement',
+				[ 'type' => 'chainedselect' ],
+				'visibility',
+				[
+					'inputs' => [
+						'fieldId' => 1,
+						'count'   => 3,
+						'keys'    => [ 'label', 'name' ],
+					],
+				],
+				[
+					'choices' => [
+						[
+							'text'       => '2015',
+							'value'      => '2015',
+							'isSelected' => null,
+							'choices'    => [
+								[
+									'text'       => 'Acura',
+									'value'      => 'Acura',
+									'isSelected' => null,
+									'choices'    => [
+										[
+											'text'       => 'ILX',
+											'value'      => 'ILX',
+											'isSelected' => null,
+										],
+										[
+											'text'       => 'MDX',
+											'value'      => 'MDX',
+											'isSelected' => null,
+										],
+									],
+								],
+								[
+									'text'       => 'Alfa Romeo',
+									'value'      => 'Alfa Romeo',
+									'isSelected' => null,
+									'choices'    => [
+										[
+											'text'       => '4C',
+											'value'      => '4c',
+											'isSelected' => null,
+										],
+										[
+											'text'       => '4C Spider',
+											'value'      => '$C Spider',
+											'isSelected' => null,
+										],
+									],
+								],
+
+							],
+						],
+						[
+							'text'       => '2016',
+							'value'      => '2016',
+							'isSelected' => null,
+							'choices'    => [
+								[
+									'text'       => 'Acura',
+									'value'      => 'Acura',
+									'isSelected' => null,
+									'choices'    => [
+										[
+											'text'       => 'ILX',
+											'value'      => 'ILX',
+											'isSelected' => null,
+										],
+										[
+											'text'       => 'MDX 2016',
+											'value'      => 'MDX 2016',
+											'isSelected' => null,
+										],
+									],
+								],
+								[
+									'text'       => 'Alfa Romeo',
+									'value'      => 'Alfa Romeo',
+									'isSelected' => null,
+									'choices'    => [
+										[
+											'text'       => '4C',
+											'value'      => '4c',
+											'isSelected' => null,
+										],
+										[
+											'text'       => '4C Spider',
+											'value'      => '$C Spider',
+											'isSelected' => null,
+										],
+									],
+								],
+							],
+						],
+					],
+				],
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+
+	public function getChainedSelectFieldDefaultArgs( array $args = [] ) : array {
 		return array_merge(
 			[
-				'captchaLanguage'              => 'iw',
-				'captchaTheme'                 => 'dark',
-				'captchaType'                  => '',
-				'cssClass'                     => 'first-class second-class',
-				'description'                  => '',
-				'descriptionPlacement'         => '',
-				'displayOnly'                  => 1,
-				'errorMessage'                 => 'Some Error Message',
-				'id'                           => 1,
-				'label'                        => 'CAPTCHA',
-				'layoutGridColumnSpan'         => null,
-				'layoutSpacerGridColumnSpan'   => null,
-				'simpleCaptchaBackgroundColor' => null,
-				'simpleCaptchaSize'            => null,
-				'simpleCaptchaFontColor'       => null,
-				'size'                         => 'large',
-				'type'                         => 'captcha',
+				'choices' => [
+					[
+						'text'       => '2015',
+						'value'      => '2015',
+						'isSelected' => null,
+						'choices'    => [
+							[
+								'text'       => 'Acura',
+								'value'      => 'Acura',
+								'isSelected' => null,
+								'choices'    => [
+									[
+										'text'       => 'ILX',
+										'value'      => 'ILX',
+										'isSelected' => null,
+										'choices'    => null,
+									],
+									[
+										'text'       => 'MDX',
+										'value'      => 'MDX',
+										'isSelected' => null,
+										'choices'    => null,
+									],
+								],
+							],
+							[
+								'text'       => 'Alfa Romeo',
+								'value'      => 'Alfa Romeo',
+								'isSelected' => null,
+								'choices'    => [
+									[
+										'text'       => '4C',
+										'value'      => '4c',
+										'isSelected' => null,
+										'choices'    => null,
+									],
+									[
+										'text'       => '4C Spider',
+										'value'      => '$C Spider',
+										'isSelected' => null,
+										'choices'    => null,
+									],
+								],
+							],
+
+						],
+					],
+					[
+						'text'       => '2016',
+						'value'      => '2016',
+						'isSelected' => null,
+						'choices'    => [
+							[
+								'text'       => 'Acura',
+								'value'      => 'Acura',
+								'isSelected' => null,
+								'choices'    => [
+									[
+										'text'       => 'ILX',
+										'value'      => 'ILX',
+										'isSelected' => null,
+										'choices'    => null,
+									],
+									[
+										'text'       => 'MDX 2016',
+										'value'      => 'MDX 2016',
+										'isSelected' => null,
+										'choices'    => null,
+									],
+								],
+							],
+							[
+								'text'       => 'Alfa Romeo',
+								'value'      => 'Alfa Romeo',
+								'isSelected' => null,
+								'choices'    => [
+									[
+										'text'       => '4C',
+										'value'      => '4c',
+										'isSelected' => null,
+										'choices'    => null,
+									],
+									[
+										'text'       => '4C Spider',
+										'value'      => '$C Spider',
+										'isSelected' => null,
+										'choices'    => null,
+									],
+								],
+							],
+						],
+					],
+				],
 			],
 			$args
 		);
 	}
 
 	/**
-	 * Get the default args for a ChainedSelect field
-	 * 
+	 * Get the default args for a Checkbox field
+	 *
 	 * @param array $args .
 	 * @return array
 	 */
-	public function getChainedSelectFieldDefaultArgs( array $args =[] ) : array {
-		return array_merge( 
+	public function getCheckboxDefaultArgs( array $args = [] ) : array {
+		return array_merge(
 			[
-				'chainedSelectsAlignment' => 'vertical',
+				'chainedSelectsAlignment'    => 'vertical',
 				'chainedSelectsHideInactive' => true,
-				'description' => 'Some description',
-				'errorMessage' => 'some Error Message',
-				'id' => 1,
-				'isRequired' => 1,
-				'label' => 'ChainedSelect',
-				'size' => 'large',
-				'type' => 'chainedselect',
-				'visibility' => 'visible',
-				'inputs' => [
+				'description'                => 'Some description',
+				'errorMessage'               => 'some Error Message',
+				'id'                         => 1,
+				'isRequired'                 => 1,
+				'label'                      => 'ChainedSelect',
+				'size'                       => 'large',
+				'type'                       => 'chainedselect',
+				'visibility'                 => 'visible',
+				'inputs'                     => [
 					[
-						'id' => '1.1',
+						'id'    => '1.1',
 						'label' => 'Year',
-						'name'  => 'ab'
+						'name'  => 'ab',
 					],
 					[
-						'id' => '1.2',
+						'id'    => '1.2',
 						'label' => 'Make',
-						'name' => null,
+						'name'  => null,
 					],
 					[
-						'id' => '1.3',
+						'id'    => '1.3',
 						'label' => 'Model',
-						'name' => null,
+						'name'  => null,
 					],
 				],
-				'choices' => [
+				'choices'                    => [
 					[
-						'text' => '2015',
-						'value' => '2015',
+						'text'       => '2015',
+						'value'      => '2015',
 						'isSelected' => null,
-						'choices' => [
+						'choices'    => [
 							[
-								'text' => 'Acura',
-								'value' => 'Acura',
+								'text'       => 'Acura',
+								'value'      => 'Acura',
 								'isSelected' => null,
-								'choices' => [
+								'choices'    => [
 									[
-										'text' => 'ILX',
-										'value' => 'ILX',
+										'text'       => 'ILX',
+										'value'      => 'ILX',
 										'isSelected' => null,
-										'choices' => null,
+										'choices'    => null,
 									],
 									[
-										'text' => 'MDX',
-										'value' => 'MDX',
+										'text'       => 'MDX',
+										'value'      => 'MDX',
 										'isSelected' => null,
-										'choices' => null,
+										'choices'    => null,
 									],
 								],
 							],
 							[
-								'text' => 'Alfa Romeo',
-								'value' => 'Alfa Romeo',
+								'text'       => 'Alfa Romeo',
+								'value'      => 'Alfa Romeo',
 								'isSelected' => null,
-								'choices' => [
+								'choices'    => [
 									[
-										'text' => '4C',
-										'value' => '4c',
+										'text'       => '4C',
+										'value'      => '4c',
 										'isSelected' => null,
-										'choices' => null,
+										'choices'    => null,
 									],
 									[
-										'text' => '4C Spider',
-										'value' => '$C Spider',
+										'text'       => '4C Spider',
+										'value'      => '$C Spider',
 										'isSelected' => null,
-										'choices' => null,
+										'choices'    => null,
 									],
 								],
 							],
-							
-						]
+
+						],
 					],
 					[
-						'text' => '2016',
-						'value' => '2016',
+						'text'       => '2016',
+						'value'      => '2016',
 						'isSelected' => null,
-						'choices' => [
+						'choices'    => [
 							[
-								'text' => 'Acura',
-								'value' => 'Acura',
+								'text'       => 'Acura',
+								'value'      => 'Acura',
 								'isSelected' => null,
-								'choices' => [
+								'choices'    => [
 									[
-										'text' => 'ILX',
-										'value' => 'ILX',
+										'text'       => 'ILX',
+										'value'      => 'ILX',
 										'isSelected' => null,
-										'choices' => null,
+										'choices'    => null,
 									],
 									[
-										'text' => 'MDX 2016',
-										'value' => 'MDX 2016',
+										'text'       => 'MDX 2016',
+										'value'      => 'MDX 2016',
 										'isSelected' => null,
-										'choices' => null,
+										'choices'    => null,
 									],
 								],
 							],
 							[
-								'text' => 'Alfa Romeo',
-								'value' => 'Alfa Romeo',
+								'text'       => 'Alfa Romeo',
+								'value'      => 'Alfa Romeo',
 								'isSelected' => null,
-								'choices' => [
+								'choices'    => [
 									[
-										'text' => '4C',
-										'value' => '4c',
+										'text'       => '4C',
+										'value'      => '4c',
 										'isSelected' => null,
-										'choices' => null,
+										'choices'    => null,
 									],
 									[
-										'text' => '4C Spider',
-										'value' => '$C Spider',
+										'text'       => '4C Spider',
+										'value'      => '$C Spider',
 										'isSelected' => null,
-										'choices' => null,
+										'choices'    => null,
 									],
 								],
 							],
-						]
-					]
+						],
+					],
 				],
 			],
 			$args
 		);
 	}
-
 
 
 	/**
@@ -542,5 +702,27 @@ class Wpunit extends \Codeception\Module {
 	public function get_enum_for_value( string $enumName, string $value ) : string {
 		$typeRegistry = \WPGraphQL::get_type_registry();
 		return $typeRegistry->get_type( $enumName )->serialize( $value );
+	}
+
+	public function merge_default_args( $default, $custom = [] ) {
+		array_walk(
+			$default,
+			function( &$value ) use ( $custom ) {
+				if ( empty( $custom ) ) {
+					return;
+				}
+
+				if ( is_string( $value ) && ! empty( $custom[ $value ] ) ) {
+					$value = [ $value => $custom[ $value ] ];
+					return;
+				}
+
+				if ( is_array( $value ) && ! empty( $custom[ array_key_first( $value ) ] ) ) {
+					$value[ array_key_first( $value ) ] = $custom[ array_key_first( $value ) ];
+					return;
+				}
+			}
+		);
+		return $default;
 	}
 }

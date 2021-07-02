@@ -3,7 +3,6 @@
  * Test CaptchaField.
  */
 
-use WPGraphQLGravityForms\Types\Enum;
 use WPGraphQLGravityForms\Tests\Factories;
 
 /**
@@ -20,6 +19,8 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
+	private $property_helper;
+	private $value;
 
 	/**
 	 * Run before each test.
@@ -37,24 +38,37 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->admin->add_cap( 'gravityforms_view_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory     = new Factories\Factory();
-		$this->fields[]    = $this->factory->field->create( $this->tester->getCaptchaFieldDefaultArgs() );
-		$this->fields[]    = $this->factory->field->create( $this->tester->getTextFieldDefaultArgs( [ 'id' => 2 ] ) );
-		$this->form_id     = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
-		$this->entry_id    = $this->factory->entry->create(
+		$this->factory           = new Factories\Factory();
+		$this->property_helper   = $this->tester->getCaptchaFieldHelper();
+		$this->text_field_helper = $this->tester->getTextFieldHelper( [ 'id' => 2 ] );
+		$this->value             = $this->property_helper->dummy->words( 1, 5 );
+
+		// codecept_debug( $this->text_field_helper->values );
+		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
+		$this->fields[] = $this->factory->field->create( $this->text_field_helper->values );
+
+		$this->form_id = $this->factory->form->create(
+			array_merge(
+				[ 'fields' => $this->fields ],
+				$this->tester->getFormDefaultArgs()
+			)
+		);
+
+		$this->entry_id = $this->factory->entry->create(
 			[
 				'form_id'              => $this->form_id,
-				$this->fields[1]['id'] => 'This is a default Text Entry',
+				$this->fields[1]['id'] => $this->value,
 			]
 		);
+
 		$this->draft_token = $this->factory->draft->create(
 			[
 				'form_id'     => $this->form_id,
 				'entry'       => [
-					$this->fields[1]['id'] => 'This is a default Text Entry',
+					$this->fields[1]['id'] => $this->value,
 				],
 				'fieldValues' => [
-					'input_' . $this->fields[1]['id'] => 'This is a default Text Entry',
+					'input_' . $this->fields[1]['id'] => $this->value,
 				],
 			]
 		);
@@ -106,6 +120,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 								captchaTheme
 								description
 								descriptionPlacement
+								displayOnly
 								errorMessage
 								label
 								simpleCaptchaBackgroundColor
@@ -133,41 +148,44 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 			'gravityFormsForm' => [
 				'formFields' => [
 					'nodes' => [
-						0 => [
-							'conditionalLogic'             => null,
-							'cssClass'                     => $form['fields'][0]->cssClass,
-							'formId'                       => $form['fields'][0]->formId,
-							'id'                           => $form['fields'][0]->id,
-							'layoutGridColumnSpan'         => $form['fields'][0]['layoutGridColumnSpan'],
-							'layoutSpacerGridColumnSpan'   => $form['fields'][0]['layoutSpacerGridColumnSpan'],
-							'type'                         => $form['fields'][0]->type,
-							'captchaLanguage'              => $form['fields'][0]->captchaLanguage,
-							'captchaType'                  => $this->tester->get_enum_for_value( Enum\CaptchaTypeEnum::$type, $form['fields'][0]->captchaType ?: 'recaptcha' ),
-							'captchaTheme'                 => $this->tester->get_enum_for_value( Enum\CaptchaThemeEnum::$type, $form['fields'][0]->captchaTheme ),
-							'description'                  => $form['fields'][0]->description,
-							'descriptionPlacement'         => $this->tester->get_enum_for_value( Enum\DescriptionPlacementPropertyEnum::$type, $form['fields'][0]->descriptionPlacement ),
-							'errorMessage'                 => $form['fields'][0]->errorMessage,
-							'label'                        => $form['fields'][0]->label,
-							'simpleCaptchaBackgroundColor' => $form['fields'][0]->simpleCaptchaBackgroundColor,
-							'simpleCaptchaSize'            => $form['fields'][0]->simpleCaptchaSize,
-							'simpleCaptchaFontColor'       => $form['fields'][0]->simpleCaptchaFontColor,
-							'size'                         => $this->tester->get_enum_for_value( Enum\SizePropertyEnum::$type, $form['fields'][0]->size ),
-						],
-						1 => new stdClass(),
+						$this->property_helper->getAllActualValues( $form['fields'][0] ),
+						// 0 => [
+						// 'conditionalLogic'             => null,
+						// 'cssClass'                     => $form['fields'][0]->cssClass,
+						// 'formId'                       => $form['fields'][0]->formId,
+						// 'id'                           => $form['fields'][0]->id,
+						// 'layoutGridColumnSpan'         => $form['fields'][0]['layoutGridColumnSpan'],
+						// 'layoutSpacerGridColumnSpan'   => $form['fields'][0]['layoutSpacerGridColumnSpan'],
+						// 'type'                         => $form['fields'][0]->type,
+						// 'captchaLanguage'              => $form['fields'][0]->captchaLanguage,
+						// 'captchaType'                  => $this->tester->get_enum_for_value( Enum\CaptchaTypeEnum::$type, $form['fields'][0]->captchaType ?: 'recaptcha' ),
+						// 'captchaTheme'                 => $this->tester->get_enum_for_value( Enum\CaptchaThemeEnum::$type, $form['fields'][0]->captchaTheme ),
+						// 'description'                  => $form['fields'][0]->description,
+						// 'descriptionPlacement'         => $this->tester->get_enum_for_value( Enum\DescriptionPlacementPropertyEnum::$type, $form['fields'][0]->descriptionPlacement ),
+						// 'errorMessage'                 => $form['fields'][0]->errorMessage,
+						// 'label'                        => $form['fields'][0]->label,
+						// 'simpleCaptchaBackgroundColor' => $form['fields'][0]->simpleCaptchaBackgroundColor,
+						// 'simpleCaptchaSize'            => $form['fields'][0]->simpleCaptchaSize,
+						// 'simpleCaptchaFontColor'       => $form['fields'][0]->simpleCaptchaFontColor,
+						// 'size'                         => $this->tester->get_enum_for_value( Enum\SizePropertyEnum::$type, $form['fields'][0]->size ),
+						// ],
+						new stdClass(),
 					],
 				],
 			],
 		];
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Test form has error.' );
+		$this->assertEquals( $expected, $actual['data'], 'Test form is not equal.' );
 	}
 
 	/**
 	 * Test submitting TextField asa draft entry with submitGravityFormsForm.
 	 */
 	public function testSubmitFormWithCaptchaField_draft() : void {
-		$form        = $this->factory->form->get_object_by_id( $this->form_id );
-		$field_value = 'value1';
+		$form  = $this->factory->form->get_object_by_id( $this->form_id );
+		$value = $this->property_helper->dummy->words( 1, 5 );
+
+		// codecept_debug( $form );
 
 		$actual = graphql(
 			[
@@ -176,12 +194,12 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 					'draft'   => true,
 					'formId'  => $this->form_id,
 					'fieldId' => $form['fields'][1]->id,
-					'value'   => $field_value,
+					'value'   => $value,
 				],
 			]
 		);
 
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
 		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
@@ -194,26 +212,26 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'       => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => null,
 							],
-							1 => [
+							[
 								'fieldValue' => [
-									'value' => $field_value,
+									'value' => $value,
 								],
 							],
 						],
 						'nodes' => [
-							0 => new stdClass(),
-							1 => [
-								'value' => $field_value,
+							new stdClass(),
+							[
+								'value' => $value,
 							],
 						],
 					],
 				],
 			],
 		];
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
 		$this->factory->draft->delete( $resume_token );
 	}
@@ -222,8 +240,8 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	 * Test submitting TextField with submitGravityFormsForm.
 	 */
 	public function testSubmitFormWithCaptchaField() : void {
-		$form        = $this->factory->form->get_object_by_id( $this->form_id );
-		$field_value = 'value1';
+		$form  = $this->factory->form->get_object_by_id( $this->form_id );
+		$value = $this->property_helper->dummy->words( 1, 5 );
 
 		// Test entry.
 		$actual = graphql(
@@ -233,11 +251,11 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 					'draft'   => false,
 					'formId'  => $this->form_id,
 					'fieldId' => $form['fields'][1]->id,
-					'value'   => $field_value,
+					'value'   => $value,
 				],
 			]
 		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
 		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
@@ -249,19 +267,19 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'       => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => null,
 							],
-							1 => [
+							[
 								'fieldValue' => [
-									'value' => $field_value,
+									'value' => $value,
 								],
 							],
 						],
 						'nodes' => [
-							0 => new stdClass(),
-							1 => [
-								'value' => $field_value,
+							new stdClass(),
+							[
+								'value' => $value,
 							],
 						],
 					],
@@ -269,7 +287,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 			],
 		];
 
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
 		$this->factory->entry->delete( $entry_id );
 	}
@@ -280,7 +298,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	public function testUpdateDraftEntryTextFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
-		$field_value  = 'value1';
+		$value        = $this->property_helper->dummy->words( 1, 5 );
 
 		// Test draft entry.
 		$query = '
@@ -316,7 +334,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				'variables' => [
 					'fieldId'     => $form['fields'][1]->id,
 					'resumeToken' => $resume_token,
-					'value'       => $field_value,
+					'value'       => $value,
 				],
 			]
 		);
@@ -327,28 +345,27 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'  => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => null,
 							],
-							1 => [
+							[
 								'fieldValue' => [
-									'value' => $field_value,
+									'value' => $value,
 								],
 							],
 						],
 						'nodes' => [
-							0 => new stdClass(),
-							1 => [
-								'value' => $field_value,
+							new stdClass(),
+							[
+								'value' => $value,
 							],
 						],
 					],
 				],
 			],
 		];
-
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
 
 		// Test submitted query.
 		$query = '
@@ -387,7 +404,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id = $actual['data']['submitGravityFormsDraftEntry']['entryId'];
 
@@ -398,26 +415,26 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'   => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => null,
 							],
-							1 => [
+							[
 								'fieldValue' => [
-									'value' => $field_value,
+									'value' => $value,
 								],
 							],
 						],
 						'nodes' => [
-							0 => new stdClass(),
-							1 => [
-								'value' => $field_value,
+							new stdClass(),
+							[
+								'value' => $value,
 							],
 						],
 					],
 				],
 			],
 		];
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equals' );
 
 		$this->factory->entry->delete( $entry_id );
 	}
