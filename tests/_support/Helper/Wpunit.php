@@ -370,6 +370,66 @@ class Wpunit extends \Codeception\Module {
 		return new PropertyHelper( $keys );
 	}
 
+
+	/**
+	 * Get the default args for a consent field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getConsentFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'checkboxLabel',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'description',
+				'descriptionPlacement',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				[ 'type' => 'consent' ],
+				'visibility',
+				[
+					'inputs' => [
+						[
+							'id'    => '1.1',
+							'label' => 'Conset',
+						],
+						[
+							'id'       => '1.2',
+							'label'    => 'Text',
+							'isHidden' => true,
+						],
+						[
+							'id'       => '1.3',
+							'label'    => 'Description',
+							'isHidden' => 1,
+						],
+					],
+				],
+				[
+					'choices' => [
+						[
+							'text'       => 'Checked',
+							'value'      => 1,
+							'isSelected' => null,
+						],
+					],
+				],
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
 	/**
 	 * Get the default args for a form.
 	 *

@@ -91,7 +91,7 @@ abstract class GFHelpers {
 			if ( is_array( $key ) ) {
 				$k = array_key_first( $key );
 
-				if ( 'inputs' === $k ) {
+				if ( 'inputs' === $k && isset( $key['inputs']['fieldId'] ) ) {
 					$new_value      = [ $k => $this->getFieldInputs( $key[ $k ]['fieldId'], $key[ $k ]['count'], $key[ $k ]['keys'] ) ];
 					$return_values += $new_value;
 					continue;
@@ -148,10 +148,13 @@ abstract class GFHelpers {
 	 *
 	 * @param mixed $object
 	 */
-	public function getAllActualValues( $object ) {
+	public function getAllActualValues( $object, array $exclude = null ) {
 		$return_values = [];
 
 		foreach ( $this->keys as $key ) {
+			if ( ! empty( $exclude ) && in_array( $key, $exclude, true ) ) {
+				continue;
+			}
 			$return_values += $this->getActualValue( $key, $object );
 		}
 		return $return_values;

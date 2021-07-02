@@ -43,7 +43,6 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->text_field_helper = $this->tester->getTextFieldHelper( [ 'id' => 2 ] );
 		$this->value             = $this->property_helper->dummy->words( 1, 5 );
 
-		// codecept_debug( $this->text_field_helper->values );
 		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
 		$this->fields[] = $this->factory->field->create( $this->text_field_helper->values );
 
@@ -184,8 +183,6 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	public function testSubmitFormWithCaptchaField_draft() : void {
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 		$value = $this->property_helper->dummy->words( 1, 5 );
-
-		// codecept_debug( $form );
 
 		$actual = graphql(
 			[

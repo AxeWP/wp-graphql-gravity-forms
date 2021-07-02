@@ -24,6 +24,9 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : ( $this->dummy->text( 0, 8, true ) ?? null );
 	}
 
+	public function checkboxLabel( $value = null ) {
+		return isset( $value ) ? $value : $this->dummy->text( 1, 8, true );
+	}
 
 	public function calculationFormula( $value = null ) {
 		return isset( $value ) ? $value : '';
@@ -201,7 +204,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function noDuplicates( $value = null ) {
-		return isset( $value ) ? $value : $this->dummy->yesno();
+		return isset( $value ) ? $value : false;
 	}
 
 	public function pageNumber( $value = null ) {

@@ -496,6 +496,8 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			],
 		];
 
+		codecept_debug( $actual );
+
 		$this->assertEquals( $expected, $actual['data'], 'Submit isnt equals.' );
 
 		$this->factory->entry->delete( $entry_id );

@@ -1,14 +1,14 @@
 <?php
 /**
- * Test CheckboxField.
+ * Test TextArea type.
  */
 
 use WPGraphQLGravityForms\Tests\Factories;
 
 /**
- * Class -CheckboxFieldTest
+ * Class -ConsentFieldTest.
  */
-class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
+class ConsentFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \WpunitTesterActions
 	 */
@@ -16,11 +16,11 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 	protected $factory;
 	private $admin;
 	private $fields = [];
-	private $field_value;
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
 	private $property_helper;
+	private $field_value_input;
 	private $value;
 
 	/**
@@ -40,9 +40,16 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 		wp_set_current_user( $this->admin->ID );
 
 		$this->factory         = new Factories\Factory();
-		$this->property_helper = $this->tester->getCheckboxFieldHelper();
+		$this->property_helper = $this->tester->getConsentFieldHelper();
 
 		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
+
+		$this->field_value_input = $this->fields[0]->checkboxLabel;
+		$this->value             = [
+			(string) $this->fields[0]->inputs[0]['id'] => true,
+			(string) $this->fields[0]->inputs[1]['id'] => $this->fields[0]->checkboxLabel,
+			(string) $this->fields[0]->inputs[2]['id'] => true,
+		];
 
 		$this->form_id = $this->factory->form->create(
 			array_merge(
@@ -50,26 +57,6 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 				$this->tester->getFormDefaultArgs()
 			)
 		);
-
-		$this->field_value = [
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
-				'value'   => $this->fields[0]['choices'][0]['value'],
-			],
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
-				'value'   => null,
-			],
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
-				'value'   => $this->fields[0]['choices'][2]['value'],
-			],
-		];
-
-		$this->value = [
-			(string) $this->field_value[0]['inputId'] => $this->field_value[0]['value'],
-			(string) $this->field_value[2]['inputId'] => $this->field_value[2]['value'],
-		];
 
 		$this->entry_id = $this->factory->entry->create(
 			array_merge(
@@ -109,9 +96,9 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Tests CheckboxField properties and values.
+	 * Tests ConsentField properties and values.
 	 */
-	public function testCheckboxField() :void {
+	public function testConsentField() :void {
 		$entry = $this->factory->entry->get_object_by_id( $this->entry_id );
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 
@@ -135,45 +122,25 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 									value
 								}
 							}
-							... on CheckboxField {
+							... on ConsentField {
 								adminLabel
 								adminOnly
-								allowsPrepopulate
+								checkboxLabel
 								description
 								descriptionPlacement
-								enablePrice
-								enableChoiceValue
-								enableSelectAll
 								errorMessage
+								formId
 								inputName
 								isRequired
 								label
-								size
-								type
+								value
 								visibility
-								checkboxValues {
-									inputId
-									value
-								}
-								inputs {
-									id
-									label
-									name
-								}
-								choices {
-									isSelected
-									text
-									value
-								}
 							}
 						}
 						edges {
 							fieldValue {
-								... on CheckboxFieldValue {
-									checkboxValues {
-										inputId
-										value
-									}
+								... on ConsentFieldValue {
+									value
 								}
 							}
 						}
@@ -196,15 +163,15 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 			'gravityFormsEntry' => [
 				'formFields' => [
 					'nodes' => [
-						array_merge_recursive(
-							$this->property_helper->getAllActualValues( $form['fields'][0] ),
-							[ 'checkboxValues' => $this->field_value ],
-						),
+						$this->property_helper->getAllActualValues( $form['fields'][0], [ 'inputs', 'choices' ] )
+						+ [
+							'value' => $entry[ $form['fields'][0]->inputs[1]['id'] ],
+						],
 					],
 					'edges' => [
 						[
 							'fieldValue' => [
-								'checkboxValues' => $this->field_value,
+								'value' => $entry[ $form['fields'][0]->inputs[1]['id'] ],
 							],
 						],
 					],
@@ -220,13 +187,12 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 			$this->draft_token = $this->factory->draft->create(
 				[
 					'form_id'     => $this->form_id,
-					'entry'       => array_merge(
-						$this->value,
-						[
-							'fieldValues' => $this->property_helper->get_field_values( $this->value ),
-						]
-					),
-					'fieldValues' => $this->property_helper->get_field_values( $this->value ),
+					'entry'       => [
+						$this->fields[0]['id'] => $this->value,
+					],
+					'fieldValues' => [
+						'input_' . $this->fields[0]['id'] => $this->value,
+					],
 				]
 			);
 		}
@@ -240,15 +206,15 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
+
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Test draft entry has error.' );
 		$this->assertEquals( $expected, $actual['data'], 'Test draft entry is not equal.' );
 	}
 
-
 	/**
-	 * Test submitting CheckboxField asa draft entry with submitGravityFormsForm.
+	 * Test submitting ConsentField asa draft entry with submitGravityFormsForm.
 	 */
-	public function testSubmitFormCheckboxFieldValue_draft() : void {
+	public function testSubmitFormConsentFieldValue_draft() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$actual = graphql(
@@ -258,10 +224,11 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 					'draft'   => true,
 					'formId'  => $this->form_id,
 					'fieldId' => $form['fields'][0]->id,
-					'value'   => $this->field_value,
+					'value'   => $this->field_value_input,
 				],
 			]
 		);
+
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
@@ -275,15 +242,15 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'       => [
 					'formFields' => [
 						'edges' => [
-							[
+							0 => [
 								'fieldValue' => [
-									'checkboxValues' => $this->field_value,
+									'value' => $this->field_value_input,
 								],
 							],
 						],
 						'nodes' => [
-							[
-								'checkboxValues' => $this->field_value,
+							0 => [
+								'value' => $this->field_value_input,
 							],
 						],
 					],
@@ -296,9 +263,9 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting CheckboxField with submitGravityFormsForm.
+	 * Test submitting ConsentField with submitGravityFormsForm.
 	 */
-	public function testSubmitGravityFormsFormCheckboxFieldValue() : void {
+	public function testSubmitGravityFormsFormConsentFieldValue() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		// Test entry.
@@ -309,11 +276,11 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 					'draft'   => false,
 					'formId'  => $this->form_id,
 					'fieldId' => $form['fields'][0]->id,
-					'value'   => $this->field_value,
+					'value'   => $this->field_value_input,
 				],
 			]
 		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
 		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
@@ -325,15 +292,15 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'       => [
 					'formFields' => [
 						'edges' => [
-							[
+							0 => [
 								'fieldValue' => [
-									'checkboxValues' => $this->field_value,
+									'value' => $this->field_value_input,
 								],
 							],
 						],
 						'nodes' => [
-							[
-								'checkboxValues' => $this->field_value,
+							0 => [
+								'value' => $this->field_value_input,
 							],
 						],
 					],
@@ -345,24 +312,21 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 
 		$actualEntry = GFAPI::get_entry( $entry_id );
 
-		$this->assertEquals( $this->field_value[0]['value'], $actualEntry[ $form['fields'][0]['inputs'][0]['id'] ] );
-		$this->assertEquals( $this->field_value[1]['value'], $actualEntry[ $form['fields'][0]['inputs'][1]['id'] ] );
-		$this->assertEquals( $this->field_value[2]['value'], $actualEntry[ $form['fields'][0]['inputs'][2]['id'] ] );
-
+		$this->assertEquals( $this->field_value_input, $actualEntry[ $form['fields'][0]->inputs[1]['id'] ], 'Submit mutation entry value not equal' );
 		$this->factory->entry->delete( $entry_id );
 	}
 
 	/**
-	 * Test submitting CheckboxField with updateDraftEntryCheckboxFieldValue.
+	 * Test submitting ConsentField with updateDraftEntryConsentFieldValue.
 	 */
-	public function testUpdateDraftEntryCheckboxFieldValue() : void {
+	public function testUpdateDraftEntryConsentFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 
 		// Test draft entry.
 		$query = '
-			mutation updateDraftEntryCheckboxFieldValue( $fieldId: Int!, $resumeToken: String!, $value: [CheckboxInput]! ){
-				updateDraftEntryCheckboxFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
+			mutation updateDraftEntryConsentFieldValue( $fieldId: Int!, $resumeToken: String!, $value: Boolean! ){
+				updateDraftEntryConsentFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
 					errors {
 						id
 						message
@@ -371,20 +335,14 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on CheckboxFieldValue {
-										checkboxValues {
-											inputId
-											value
-										}
+									... on ConsentFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on CheckboxField {
-									checkboxValues {
-										inputId
-										value
-									}
+								... on ConsentField {
+									value
 								}
 							}
 						}
@@ -399,35 +357,34 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 				'variables' => [
 					'fieldId'     => $form['fields'][0]->id,
 					'resumeToken' => $resume_token,
-					'value'       => $this->field_value,
+					'value'       => (bool) $this->field_value_input,
 				],
 			]
 		);
 
 		$expected = [
-			'updateDraftEntryCheckboxFieldValue' => [
+			'updateDraftEntryConsentFieldValue' => [
 				'errors' => null,
 				'entry'  => [
 					'formFields' => [
 						'edges' => [
 							[
 								'fieldValue' => [
-									'checkboxValues' => $this->field_value,
+									'value' => $this->field_value_input,
 								],
 							],
 						],
 						'nodes' => [
 							[
-								'checkboxValues' => $this->field_value,
+								'value' => $this->field_value_input,
 							],
 						],
 					],
 				],
 			],
 		];
-
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Update has errors.' );
-		$this->assertEquals( $expected, $actual['data'], 'Update isnt equal.' );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
 
 		// Test submitted query.
 		$query = '
@@ -442,20 +399,14 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on CheckboxFieldValue {
-										checkboxValues {
-											inputId
-											value
-										}
+									... on ConsentFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on CheckboxField {
-									checkboxValues {
-										inputId
-										value
-									}
+								... on ConsentField {
+									value
 								}
 							}
 						}
@@ -472,7 +423,7 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		$this->assertArrayNotHasKey( 'errors', $actual, 'submit has errors' );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id = $actual['data']['submitGravityFormsDraftEntry']['entryId'];
 
@@ -483,23 +434,22 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'   => [
 					'formFields' => [
 						'edges' => [
-							[
+							0 => [
 								'fieldValue' => [
-									'checkboxValues' => $this->field_value,
+									'value' => $this->field_value_input,
 								],
 							],
 						],
 						'nodes' => [
-							[
-								'checkboxValues' => $this->field_value,
+							0 => [
+								'value' => $this->field_value_input,
 							],
 						],
 					],
 				],
 			],
 		];
-
-		$this->assertEquals( $expected, $actual['data'], 'Submit isnt equals.' );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equals' );
 
 		$this->factory->entry->delete( $entry_id );
 	}
@@ -511,8 +461,8 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function get_submit_form_query() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: [CheckboxInput]!, $draft: Boolean) {
-				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, checkboxValues: $value}}) {
+			mutation ($formId: Int!, $fieldId: Int!, $value: String!, $draft: Boolean) {
+				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
 					errors {
 						id
 						message
@@ -523,20 +473,14 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on CheckboxFieldValue {
-										checkboxValues {
-											inputId
-											value
-										}
+									... on ConsentFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on CheckboxField {
-									checkboxValues {
-										inputId
-										value
-									}
+								... on ConsentField {
+									value
 								}
 							}
 						}
