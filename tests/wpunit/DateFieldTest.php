@@ -1,14 +1,14 @@
 <?php
 /**
- * Test ChainedSelectField.
+ * Test Date field type.
  */
 
 use WPGraphQLGravityForms\Tests\Factories;
 
 /**
- * Class -ChainedSelectFieldTest
+ * Class -DateFieldTest.
  */
-class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
+class DateFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \WpunitTesterActions
 	 */
@@ -16,8 +16,6 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	protected $factory;
 	private $admin;
 	private $fields = [];
-	private $field_value;
-	private $field_value_input;
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
@@ -41,7 +39,8 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 		wp_set_current_user( $this->admin->ID );
 
 		$this->factory         = new Factories\Factory();
-		$this->property_helper = $this->tester->getChainedSelectFieldHelper();
+		$this->property_helper = $this->tester->getDateFieldHelper();
+		$this->value           = $this->property_helper->dummy->ymd();
 
 		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
 
@@ -52,51 +51,28 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			)
 		);
 
-		$this->field_value = [ '2015', 'Acura', 'MDX' ];
-		$this->value       = [
-			$this->fields[0]['inputs'][0]['id'] => $this->field_value[0],
-			$this->fields[0]['inputs'][1]['id'] => $this->field_value[1],
-			$this->fields[0]['inputs'][2]['id'] => $this->field_value[2],
-		];
-
-		$this->field_value_input = [
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
-				'value'   => $this->field_value[0],
-			],
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
-				'value'   => $this->field_value[1],
-			],
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
-				'value'   => $this->field_value[2],
-			],
-		];
-
 		$this->entry_id = $this->factory->entry->create(
-			array_merge(
-				[
-					'form_id' => $this->form_id,
-				],
-				$this->value,
-			)
+			[
+				'form_id'              => $this->form_id,
+				$this->fields[0]['id'] => $this->value,
+			]
 		);
 
 		$this->draft_token = $this->factory->draft->create(
 			[
 				'form_id'     => $this->form_id,
-				'entry'       => array_merge(
-					$this->value,
-					[
-						'fieldValues' => $this->property_helper->get_field_values( $this->value ),
-					]
-				),
-				'fieldValues' => $this->property_helper->get_field_values( $this->value ),
+				'entry'       => [
+					$this->fields[0]['id'] => $this->value,
+					'fieldValues'          => [
+						'input_' . $this->fields[0]['id'] => $this->value,
+					],
+				],
+				'fieldValues' => [
+					'input_' . $this->fields[0]['id'] => $this->value,
+				],
 			]
 		);
 	}
-
 
 	/**
 	 * Run after each test.
@@ -113,9 +89,9 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Tests ChainedSelectField properties and values.
+	 * Tests DateField properties and values.
 	 */
-	public function testChainedSelectField() :void {
+	public function testField() :void {
 		$entry = $this->factory->entry->get_object_by_id( $this->entry_id );
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 
@@ -139,48 +115,40 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 									value
 								}
 							}
-							... on ChainedSelectField {
+							... on DateField {
 								adminLabel
 								adminOnly
 								allowsPrepopulate
-								chainedSelectsAlignment
-								chainedSelectsHideInactive
+								calendarIconType
+								calendarIconUrl
+								dateFormat
+								dateType
+								defaultValue
 								description
 								descriptionPlacement
 								errorMessage
+								inputName
 								isRequired
 								label
 								noDuplicates
+								placeholder
 								size
 								subLabelPlacement
-								values
+								value
 								visibility
 								inputs {
+									customLabel
+									defaultValue
 									id
 									label
-									name
-								}
-								choices {
-									choices {
-										choices {
-											isSelected
-											text
-											value
-										}
-										isSelected
-										text
-										value
-									}
-									isSelected
-									text
-									value
+									placeholder
 								}
 							}
 						}
 						edges {
 							fieldValue {
-								... on ChainedSelectFieldValue {
-									values
+								... on DateFieldValue {
+									value
 								}
 							}
 						}
@@ -203,15 +171,15 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			'gravityFormsEntry' => [
 				'formFields' => [
 					'nodes' => [
-						array_merge_recursive(
-							$this->property_helper->getAllActualValues( $form['fields'][0] ),
-							[ 'values' => $this->field_value ],
-						),
+						$this->property_helper->getAllActualValues( $form['fields'][0] )
+						+ [
+							'value' => $entry[ $form['fields'][0]->id ],
+						],
 					],
 					'edges' => [
 						[
 							'fieldValue' => [
-								'values' => $this->field_value,
+								'value' => $entry[ $form['fields'][0]->id ],
 							],
 						],
 					],
@@ -227,13 +195,12 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			$this->draft_token = $this->factory->draft->create(
 				[
 					'form_id'     => $this->form_id,
-					'entry'       => array_merge(
-						$this->value,
-						[
-							'fieldValues' => $this->property_helper->get_field_values( $this->value ),
-						]
-					),
-					'fieldValues' => $this->property_helper->get_field_values( $this->value ),
+					'entry'       => [
+						$this->fields[0]['id'] => $this->value,
+					],
+					'fieldValues' => [
+						'input_' . $this->fields[0]['id'] => $this->value,
+					],
 				]
 			);
 		}
@@ -243,8 +210,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			[
 				'query'     => $query,
 				'variables' => [
-					'id'     => $this->draft_token,
-					'idType' => 'ID',
+					'id' => $this->draft_token,
 				],
 			]
 		);
@@ -253,11 +219,10 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertEquals( $expected, $actual['data'], 'Test draft entry is not equal.' );
 	}
 
-
 	/**
-	 * Test submitting ChainedSelectField asa draft entry with submitGravityFormsForm.
+	 * Test submitting DateField asa draft entry with submitGravityFormsForm.
 	 */
-	public function testSubmitFormChainedSelectFieldValue_draft() : void {
+	public function testSubmit_draft() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$actual = graphql(
@@ -267,7 +232,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 					'draft'   => true,
 					'formId'  => $this->form_id,
 					'fieldId' => $form['fields'][0]->id,
-					'value'   => $this->field_value_input,
+					'value'   => $this->value,
 				],
 			]
 		);
@@ -286,13 +251,13 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 						'edges' => [
 							[
 								'fieldValue' => [
-									'values' => $this->field_value,
+									'value' => $this->value,
 								],
 							],
 						],
 						'nodes' => [
 							[
-								'values' => $this->field_value,
+								'value' => $this->value,
 							],
 						],
 					],
@@ -305,9 +270,9 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting ChainedSelectField with submitGravityFormsForm.
+	 * Test submitting DateField with submitGravityFormsForm.
 	 */
-	public function testSubmitGravityFormsFormChainedSelectFieldValue() : void {
+	public function testSubmit() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		// Test entry.
@@ -318,7 +283,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 					'draft'   => false,
 					'formId'  => $this->form_id,
 					'fieldId' => $form['fields'][0]->id,
-					'value'   => $this->field_value_input,
+					'value'   => $this->value,
 				],
 			]
 		);
@@ -336,13 +301,13 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 						'edges' => [
 							[
 								'fieldValue' => [
-									'values' => $this->field_value,
+									'value' => $this->value,
 								],
 							],
 						],
 						'nodes' => [
 							[
-								'values' => $this->field_value,
+								'value' => $this->value,
 							],
 						],
 					],
@@ -354,24 +319,21 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 
 		$actualEntry = GFAPI::get_entry( $entry_id );
 
-		$this->assertEquals( $this->field_value[0], $actualEntry[ $form['fields'][0]['inputs'][0]['id'] ], 'Submit mutation entry value 1 not equal.' );
-		$this->assertEquals( $this->field_value[1], $actualEntry[ $form['fields'][0]['inputs'][1]['id'] ], 'Submit mutation entry value 2 not equal.' );
-		$this->assertEquals( $this->field_value[2], $actualEntry[ $form['fields'][0]['inputs'][2]['id'] ], 'Submit mutation entry value 3 not equal.' );
-
+		$this->assertEquals( $this->value, $actualEntry[ $form['fields'][0]->id ], 'Submit mutation entry value not equal' );
 		$this->factory->entry->delete( $entry_id );
 	}
 
 	/**
-	 * Test submitting ChainedSelectField with updateDraftEntryChainedSelectFieldValue.
+	 * Test submitting DateField with updateDraftEntryDateFieldValue.
 	 */
-	public function testUpdateDraftEntryChainedSelectFieldValue() : void {
+	public function testUpdateDraftEntry() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 
 		// Test draft entry.
 		$query = '
-			mutation updateDraftEntryChainedSelectFieldValue( $fieldId: Int!, $resumeToken: String!, $value: [ChainedSelectInput]! ){
-				updateDraftEntryChainedSelectFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
+			mutation updateDraftEntryDateFieldValue( $fieldId: Int!, $resumeToken: String!, $value: String! ){
+				updateDraftEntryDateFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
 					errors {
 						id
 						message
@@ -380,14 +342,14 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on ChainedSelectFieldValue {
-									values
+									... on DateFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on ChainedSelectField {
-									values
+								... on DateField {
+									value
 								}
 							}
 						}
@@ -402,33 +364,32 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				'variables' => [
 					'fieldId'     => $form['fields'][0]->id,
 					'resumeToken' => $resume_token,
-					'value'       => $this->field_value_input,
+					'value'       => $this->value,
 				],
 			]
 		);
 
 		$expected = [
-			'updateDraftEntryChainedSelectFieldValue' => [
+			'updateDraftEntryDateFieldValue' => [
 				'errors' => null,
 				'entry'  => [
 					'formFields' => [
 						'edges' => [
 							[
 								'fieldValue' => [
-									'values' => $this->field_value,
+									'value' => $this->value,
 								],
 							],
 						],
 						'nodes' => [
 							[
-								'values' => $this->field_value,
+								'value' => $this->value,
 							],
 						],
 					],
 				],
 			],
 		];
-
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
 		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
 
@@ -445,14 +406,14 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on ChainedSelectFieldValue {
-									values
+									... on DateFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on ChainedSelectField {
-									values
+								... on DateField {
+									value
 								}
 							}
 						}
@@ -482,21 +443,20 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 						'edges' => [
 							[
 								'fieldValue' => [
-									'values' => $this->field_value,
+									'value' => $this->value,
 								],
 							],
 						],
 						'nodes' => [
 							[
-								'values' => $this->field_value,
+								'value' => $this->value,
 							],
 						],
 					],
 				],
 			],
 		];
-
-		$this->assertEquals( $expected, $actual['data'], 'Submit isnt equals.' );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equals' );
 
 		$this->factory->entry->delete( $entry_id );
 	}
@@ -508,8 +468,8 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function get_submit_form_query() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: [ChainedSelectInput]!, $draft: Boolean) {
-				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, chainedSelectValues: $value}}) {
+			mutation ($formId: Int!, $fieldId: Int!, $value: String!, $draft: Boolean) {
+				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
 					errors {
 						id
 						message
@@ -520,14 +480,14 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on ChainedSelectFieldValue {
-										values
+									... on DateFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on ChainedSelectField {
-									values
+								... on DateField {
+									value
 								}
 							}
 						}

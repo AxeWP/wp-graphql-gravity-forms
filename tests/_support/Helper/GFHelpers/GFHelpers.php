@@ -117,6 +117,8 @@ abstract class GFHelpers {
 			case 'addressType':
 			case 'captchaType':
 			case 'captchaTheme':
+			case 'calendarIconType':
+			case 'dateType':
 				$string = ucfirst( $key ) . 'Enum';
 				$value  = $this->get_enum_for_value( $string, $object->$key );
 				break;
@@ -124,7 +126,13 @@ abstract class GFHelpers {
 			case 'descriptionPlacement':
 			case 'size':
 			case 'visibility':
+				// @todo: rename classes.
 				$string = ucfirst( $key ) . 'PropertyEnum';
+				$value  = $this->get_enum_for_value( $string, $object->$key );
+				break;
+			case 'dateFormat':
+				// @todo: rename classes.
+				$string = 'DateFieldFormatEnum';
 				$value  = $this->get_enum_for_value( $string, $object->$key );
 				break;
 			case 'copyValuesOptionDefault':

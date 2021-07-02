@@ -36,6 +36,13 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : '';
 	}
 
+	public function calendarIconType( $value = null ) {
+		return isset( $value ) ? $value : 'none';
+	}
+
+	public function calendarIconUrl( $value = null ) {
+		return isset( $value ) ? $value : null;
+	}
 
 	public function captchaLanguage( $value = null ) {
 		return isset( $value ) ? $value : 'iw';
@@ -70,6 +77,14 @@ class PropertyHelper extends GFHelpers {
 
 	public function cssClass( $value = null ) {
 		return isset( $value ) ? $value : ( $this->dummy->text( 0, 8, true ) ?? null );
+	}
+
+	public function dateFormat( $value = null ) {
+		return isset( $value ) ? $value : 'dmy';
+	}
+
+	public function dateType( $value = null ) {
+		return isset( $value ) ? $value : 'datepicker';
 	}
 
 	public function defaultCountry( $value = null ) {

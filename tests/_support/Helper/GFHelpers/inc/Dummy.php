@@ -1,8 +1,8 @@
 <?php
 /**
- * Simple dummy text generator
+ * Simple dummy text generator. Modified with some additonal functions.
  *
- * @author @morningtoast, @kidunot89
+ * @author @morningtoast, @kidunot89, @justlevine
  * @link https://github.com/the-events-calendar/ql-events/blob/65e10caa181edc9c41ff439c9ab634059bb18863/tests/_support/Helper/tec-helpers/includes/class-dummy.php
  */
 
@@ -67,6 +67,15 @@ class Dummy {
 	public function mdy() {
 		return( rand( 1, 12 ) . '/' . rand( 1, 30 ) . '/' . rand( 1943, 2010 ) );
 	}
+
+	public function dmy() {
+		return( rand( 1, 30 ) . '/' . rand( 1, 12 ) . '/' . rand( 1943, 2025 ) );
+	}
+
+	public function ymd() {
+		return( rand( 1943, 2025 ) . '-0' . rand( 1, 9 ) . '-' . rand( 11, 30 ) );
+	}
+
 
 	public function hm( $s = false ) {
 		$t = rand( 1, 12 ) . ':' . rand( 10, 59 );

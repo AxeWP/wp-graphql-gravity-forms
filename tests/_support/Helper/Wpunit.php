@@ -370,7 +370,6 @@ class Wpunit extends \Codeception\Module {
 		return new PropertyHelper( $keys );
 	}
 
-
 	/**
 	 * Get the default args for a consent field.
 	 *
@@ -422,6 +421,54 @@ class Wpunit extends \Codeception\Module {
 							'value'      => 1,
 							'isSelected' => null,
 						],
+					],
+				],
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
+	 * Get the default args for a consent field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getDateFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				'calendarIconType',
+				'calendarIconUrl',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'dateFormat',
+				'dateType',
+				'defaultValue',
+				'description',
+				'descriptionPlacement',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'placeholder',
+				'size',
+				'subLabelPlacement',
+				[ 'type' => 'date' ],
+				'visibility',
+				[
+					'inputs' => [
+						'fieldId' => 1,
+						'count'   => 3,
+						'keys'    => [ 'customLabel', 'defaultValue', 'label', 'placeholder' ],
 					],
 				],
 			],
