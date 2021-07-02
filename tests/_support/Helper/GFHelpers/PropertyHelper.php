@@ -113,20 +113,28 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : '';
 	}
 
+	public function enableChoiceValue( $value = null ) {
+		return isset( $value ) ? $value : $this->dummy->yesno();
+	}
+
 	public function enableCopyValuesOption( $value = null ) {
 		return isset( $value ) ? $value : '';
+	}
+
+	public function enablePrice( $value = null ) {
+		return isset( $value ) ? $value : null;
 	}
 
 	public function enablePasswordInput( $value = null ) {
 		return isset( $value ) ? $value : '';
 	}
 
-	public function errorMessage( $value = null ) {
-		return isset( $value ) ? $value : $this->dummy->text();
+	public function enableSelectAll( $value = null ) {
+		return isset( $value ) ? $value : $this->dummy->yesno();
 	}
 
-	public function fields( $value = null ) {
-		return isset( $value ) ? $value : '';
+	public function errorMessage( $value = null ) {
+		return isset( $value ) ? $value : $this->dummy->text();
 	}
 
 	public function id( $value = null ) {

@@ -124,7 +124,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				gravityFormsEntry(id: $id, idType: $idType ) {
 					formFields {
 						nodes {
-						cssClass
+							cssClass
 							formId
 							id
 							layoutGridColumnSpan
@@ -141,8 +141,8 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 							}
 							... on ChainedSelectField {
 								adminLabel
-								allowsPrepopulate
 								adminOnly
+								allowsPrepopulate
 								chainedSelectsAlignment
 								chainedSelectsHideInactive
 								description
@@ -248,8 +248,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		codecept_debug( $actual );
-		codecept_debug( $expected );
+
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Test draft entry has error.' );
 		$this->assertEquals( $expected, $actual['data'], 'Test draft entry is not equal.' );
 	}
