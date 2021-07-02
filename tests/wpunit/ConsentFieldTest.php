@@ -98,7 +98,7 @@ class ConsentFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Tests ConsentField properties and values.
 	 */
-	public function testConsentField() :void {
+	public function testField() :void {
 		$entry = $this->factory->entry->get_object_by_id( $this->entry_id );
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 
@@ -214,7 +214,7 @@ class ConsentFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting ConsentField asa draft entry with submitGravityFormsForm.
 	 */
-	public function testSubmitFormConsentFieldValue_draft() : void {
+	public function testSubmit_draft() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$actual = graphql(
@@ -265,7 +265,7 @@ class ConsentFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting ConsentField with submitGravityFormsForm.
 	 */
-	public function testSubmitGravityFormsFormConsentFieldValue() : void {
+	public function testSubmit() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		// Test entry.

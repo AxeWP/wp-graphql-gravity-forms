@@ -91,7 +91,7 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Tests TextAreaField properties and values.
 	 */
-	public function testTextAreaField() :void {
+	public function testField() :void {
 		$entry = $this->factory->entry->get_object_by_id( $this->entry_id );
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 
@@ -212,7 +212,7 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting TextAreaField asa draft entry with submitGravityFormsForm.
 	 */
-	public function testSubmitFormTextAreaFieldValue_draft() : void {
+	public function testSubmit_draft() : void {
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 		$value = $this->property_helper->dummy->words( 1, 5 );
 
@@ -263,7 +263,7 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting TextAreaField with submitGravityFormsForm.
 	 */
-	public function testSubmitGravityFormsFormTextAreaFieldValue() : void {
+	public function testSubmit() : void {
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 		$value = $this->property_helper->dummy->words( 1, 5 );
 
@@ -318,7 +318,7 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting TextAreaField with updateDraftEntryTextAreaFieldValue.
 	 */
-	public function testUpdateDraftEntryTextAreaFieldValue() : void {
+	public function testUpdateDraftEntry() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 		$value        = $this->property_helper->dummy->words( 1, 5 );

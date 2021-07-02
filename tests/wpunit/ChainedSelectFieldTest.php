@@ -115,9 +115,8 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Tests ChainedSelectField properties and values.
 	 */
-	public function testChainedSelectField() :void {
-		$entry = $this->factory->entry->get_object_by_id( $this->entry_id );
-		$form  = $this->factory->form->get_object_by_id( $this->form_id );
+	public function testField() :void {
+		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$query = '
 			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
@@ -222,22 +221,6 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Test entry has error.' );
 		$this->assertEquals( $expected, $actual['data'], 'Test entry is not equal' );
 
-		// Ensures draft token is set.
-		if ( empty( $this->draft_token ) ) {
-			$this->draft_token = $this->factory->draft->create(
-				[
-					'form_id'     => $this->form_id,
-					'entry'       => array_merge(
-						$this->value,
-						[
-							'fieldValues' => $this->property_helper->get_field_values( $this->value ),
-						]
-					),
-					'fieldValues' => $this->property_helper->get_field_values( $this->value ),
-				]
-			);
-		}
-
 		// Test Draft entry.
 		$actual = graphql(
 			[
@@ -257,7 +240,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting ChainedSelectField asa draft entry with submitGravityFormsForm.
 	 */
-	public function testSubmitFormChainedSelectFieldValue_draft() : void {
+	public function testSubmit_draft() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$actual = graphql(
@@ -307,7 +290,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting ChainedSelectField with submitGravityFormsForm.
 	 */
-	public function testSubmitGravityFormsFormChainedSelectFieldValue() : void {
+	public function testSubmit() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		// Test entry.
@@ -364,7 +347,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting ChainedSelectField with updateDraftEntryChainedSelectFieldValue.
 	 */
-	public function testUpdateDraftEntryChainedSelectFieldValue() : void {
+	public function testUpdateDraftEntry() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 

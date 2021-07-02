@@ -91,7 +91,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Tests TextField properties and values.
 	 */
-	public function testTextField() : void {
+	public function testField() : void {
 		$entry = $this->factory->entry->get_object_by_id( $this->entry_id );
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 
@@ -211,7 +211,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting TextField as a draft entry with submitGravityFormsForm.
 	 */
-	public function testSubmitFormTextFieldValue_draft() : void {
+	public function testSubmit_draft() : void {
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 		$value = $this->property_helper->dummy->words( 1, 5 );
 
@@ -263,7 +263,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting TextField with submitGravityFormsForm.
 	 */
-	public function testSubmitGravityFormsFormTextFieldValue() : void {
+	public function testSubmit() : void {
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 		$value = $this->property_helper->dummy->words( 1, 5 );
 
@@ -319,7 +319,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting TextField with updateDraftEntryTextFieldValue.
 	 */
-	public function testUpdateDraftEntryTextFieldValue() : void {
+	public function testUpdateDraftEntry() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 		$value        = $this->property_helper->dummy->words( 1, 5 );

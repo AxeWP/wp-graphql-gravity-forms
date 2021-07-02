@@ -40,7 +40,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->factory           = new Factories\Factory();
 		$this->property_helper   = $this->tester->getCaptchaFieldHelper();
-		$this->text_field_helper = $this->tester->getTextFieldHelper( [ 'id' => 2 ] );
+		$this->text_field_helper = $this->tester->getCaptchaFieldHelper( [ 'id' => 2 ] );
 		$this->value             = $this->property_helper->dummy->words( 1, 5 );
 
 		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
@@ -90,7 +90,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Tests CaptchaField properties and values.
 	 */
-	public function testCaptchaField() : void {
+	public function testField() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$query = '
@@ -148,26 +148,6 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				'formFields' => [
 					'nodes' => [
 						$this->property_helper->getAllActualValues( $form['fields'][0] ),
-						// 0 => [
-						// 'conditionalLogic'             => null,
-						// 'cssClass'                     => $form['fields'][0]->cssClass,
-						// 'formId'                       => $form['fields'][0]->formId,
-						// 'id'                           => $form['fields'][0]->id,
-						// 'layoutGridColumnSpan'         => $form['fields'][0]['layoutGridColumnSpan'],
-						// 'layoutSpacerGridColumnSpan'   => $form['fields'][0]['layoutSpacerGridColumnSpan'],
-						// 'type'                         => $form['fields'][0]->type,
-						// 'captchaLanguage'              => $form['fields'][0]->captchaLanguage,
-						// 'captchaType'                  => $this->tester->get_enum_for_value( Enum\CaptchaTypeEnum::$type, $form['fields'][0]->captchaType ?: 'recaptcha' ),
-						// 'captchaTheme'                 => $this->tester->get_enum_for_value( Enum\CaptchaThemeEnum::$type, $form['fields'][0]->captchaTheme ),
-						// 'description'                  => $form['fields'][0]->description,
-						// 'descriptionPlacement'         => $this->tester->get_enum_for_value( Enum\DescriptionPlacementPropertyEnum::$type, $form['fields'][0]->descriptionPlacement ),
-						// 'errorMessage'                 => $form['fields'][0]->errorMessage,
-						// 'label'                        => $form['fields'][0]->label,
-						// 'simpleCaptchaBackgroundColor' => $form['fields'][0]->simpleCaptchaBackgroundColor,
-						// 'simpleCaptchaSize'            => $form['fields'][0]->simpleCaptchaSize,
-						// 'simpleCaptchaFontColor'       => $form['fields'][0]->simpleCaptchaFontColor,
-						// 'size'                         => $this->tester->get_enum_for_value( Enum\SizePropertyEnum::$type, $form['fields'][0]->size ),
-						// ],
 						new stdClass(),
 					],
 				],
@@ -178,9 +158,9 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting TextField asa draft entry with submitGravityFormsForm.
+	 * Test submitting CaptchaField asa draft entry with submitGravityFormsForm.
 	 */
-	public function testSubmitFormWithCaptchaField_draft() : void {
+	public function testSubmit_draft() : void {
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 		$value = $this->property_helper->dummy->words( 1, 5 );
 
@@ -234,9 +214,9 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting TextField with submitGravityFormsForm.
+	 * Test submitting CaptchaField with submitGravityFormsForm.
 	 */
-	public function testSubmitFormWithCaptchaField() : void {
+	public function testSubmit() : void {
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 		$value = $this->property_helper->dummy->words( 1, 5 );
 
@@ -290,17 +270,17 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting TextField with updateDraftEntryTextFieldValue.
+	 * Test submitting CaptchaField with updateDraftEntryCaptchaFieldValue.
 	 */
-	public function testUpdateDraftEntryTextFieldValue() : void {
+	public function testUpdateDraftEntry() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 		$value        = $this->property_helper->dummy->words( 1, 5 );
 
 		// Test draft entry.
 		$query = '
-			mutation updateDraftEntryTextFieldValue( $fieldId: Int!, $resumeToken: String!, $value: String! ){
-				updateDraftEntryTextFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
+			mutation updateDraftEntryCaptchaFieldValue( $fieldId: Int!, $resumeToken: String!, $value: String! ){
+				updateDraftEntryCaptchaFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
 					errors {
 						id
 						message
@@ -309,13 +289,13 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on TextFieldValue {
+									... on CaptchaFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on TextField {
+								... on CaptchaField {
 									value
 								}
 							}
@@ -337,7 +317,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 		);
 
 		$expected = [
-			'updateDraftEntryTextFieldValue' => [
+			'updateDraftEntryCaptchaFieldValue' => [
 				'errors' => null,
 				'entry'  => [
 					'formFields' => [
@@ -377,13 +357,13 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on TextFieldValue {
+									... on CaptchaFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on TextField {
+								... on CaptchaField {
 									value
 								}
 							}
@@ -455,13 +435,13 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on TextFieldValue {
+									... on CaptchaFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on TextField {
+								... on CaptchaField {
 									value
 								}
 							}
