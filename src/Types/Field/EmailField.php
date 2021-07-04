@@ -71,7 +71,7 @@ class EmailField extends AbstractFormField {
 				],
 				'inputs'              => [
 					'type'        => [ 'list_of' => FieldProperty\EmailInputProperty::$type ],
-					'description' => __( 'An array containing the the individual properties for each element of the address field.', 'wp-graphql-gravity-forms' ),
+					'description' => __( 'An array containing the the individual properties for each element of the email field.', 'wp-graphql-gravity-forms' ),
 				],
 			],
 		);

@@ -23,6 +23,7 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
+	private $text_field_helper;
 
 	/**
 	 * Run before each test.
@@ -32,16 +33,17 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 		parent::setUp();
 
 		// Your set up methods here.
-		$this->factory     = new Factories\Factory();
-		$this->fields[]    = $this->factory->field->create( $this->tester->getTextFieldDefaultArgs() );
-		$this->form_id     = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
-		$this->entry_id    = $this->factory->entry->create(
+		$this->factory           = new Factories\Factory();
+		$this->text_field_helper = $this->tester->getTextFieldHelper();
+		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
+		$this->form_id           = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
+		$this->entry_id          = $this->factory->entry->create(
 			[
 				'form_id'              => $this->form_id,
 				$this->fields[0]['id'] => 'This is a default Text Entry',
 			]
 		);
-		$this->draft_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$this->draft_token       = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 	}
 
 	/**

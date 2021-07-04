@@ -58,7 +58,6 @@ class DateField extends AbstractFormField {
 			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
-			FieldProperty\InputsProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\LabelProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
@@ -82,6 +81,10 @@ class DateField extends AbstractFormField {
 				'dateType'         => [
 					'type'        => DateTypeEnum::$type,
 					'description' => __( 'The type of date field to display.', 'wp-graphql-gravity-forms' ),
+				],
+				'inputs'           => [
+					'type'        => [ 'list_of' => FieldProperty\DateInputProperty::$type ],
+					'description' => __( 'An array containing the the individual properties for each element of the date field.', 'wp-graphql-gravity-forms' ),
 				],
 			]
 		);

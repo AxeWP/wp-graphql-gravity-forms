@@ -23,6 +23,7 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 	private $fields = [];
 	private $form_id;
 	private $entry_ids;
+	private $text_field_helper;
 
 	/**
 	 * Run before each test.
@@ -40,9 +41,11 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 		$this->admin->add_cap( 'gravityforms_view_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory  = new Factories\Factory();
-		$this->fields[] = $this->factory->field->create( $this->tester->getTextFieldDefaultArgs() );
-		$this->form_id  = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
+		$this->factory           = new Factories\Factory();
+		$this->text_field_helper = $this->tester->getTextFieldHelper();
+		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
+
+		$this->form_id = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
 
 		$this->entry_ids = $this->factory->entry->create_many(
 			2,

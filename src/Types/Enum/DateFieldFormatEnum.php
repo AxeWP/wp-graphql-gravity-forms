@@ -20,8 +20,13 @@ class DateFieldFormatEnum extends AbstractEnum {
 	public static $type = 'DateFieldFormatEnum';
 
 	// Individual elements.
-	const MDY = 'mdy';
-	const DMY = 'dmy';
+	const MDY       = 'mdy';
+	const DMY       = 'dmy';
+	const DMY_DASH  = 'dmy_dash';
+	const DMY_DOT   = 'dmy_dot';
+	const YMD_SLASH = 'ymd_slash';
+	const YMD_DASH  = 'ymd_dash';
+	const YMD_DOT   = 'ymd_dot';
 
 	/**
 	 * Sets the Enum type description.
@@ -39,13 +44,33 @@ class DateFieldFormatEnum extends AbstractEnum {
 	 */
 	public function set_values() : array {
 		return [
-			'MDY' => [
-				'description' => __( 'MDY format.', 'wp-graphql-gravity-forms' ),
+			'MDY'       => [
+				'description' => __( 'mm/dd/yyyy format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::MDY,
 			],
-			'DMY' => [
-				'description' => __( 'DMY format.', 'wp-graphql-gravity-forms' ),
+			'DMY'       => [
+				'description' => __( 'dd/mm/yyyy format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DMY,
+			],
+			'DMY_DASH'  => [
+				'description' => __( 'dd-mm-yyyy format.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::DMY_DASH,
+			],
+			'DMY_DOT'   => [
+				'description' => __( 'dd.mm.yyyy format.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::DMY_DOT,
+			],
+			'YMD_SLASH' => [
+				'description' => __( 'yyyy/mm/dd format.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::YMD_SLASH,
+			],
+			'YMD_DASH'  => [
+				'description' => __( 'yyyy/mm/dd format.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::YMD_DASH,
+			],
+			'YMD_DOT'   => [
+				'description' => __( 'yyyy.mm.dd format.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::YMD_DOT,
 			],
 		];
 	}

@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.6.3 - Unit Tests
+- Adds support for missing date formats (dmy_dash, dmy_dot, ymd_slash, ymd_dash, ymd_dot).
+- Fix: EmailInputProperty description updated.
+- Dev: autocompleteAttribute has been deprecated on EmailInputProperty.
+- Tests: Added `updateEntry` and `updateDraftEntry` mutations to existing `formField` tests.
+- Tests: Add tests for CheckboxField, ConsentField, and DateField.
+
+## v0.6.2.2 - Hotfix
+- Fixes `submitGravityFormsForm` not saving signature field value after v0.6.2.1.
+
+## v0.6.2.1 - Hotfix
+- Fixes `updateGravityFormsEntry` not saving signature field value.
+
+## v0.6.2 - Bugfixes
+- Fixes `updateGravityFormsEntry` mutation not propery saving complex field values (h/t @natac13 )
+- Fixes mutations not correctly deleting old `SignatureField` files from the server (h/t @natac13 )
+- Fixes `SignatureFieldValue`s failing Gravity Forms `isRequired` validation (h/t/ @natac13).
+- Fixes empty `formFields.layoutGridColumnSpan` values not returning as `null`.
+- Removes deprecation from `ChainedSelectInput.name`.
+- Correctly sets `graphql_connection_max_query_amount` to a minimum of `600`.
+- `AbstractMutation::prepare_field_value_by_type()` no longer tries processing unrecognized fields.
+- Dev: Added filter `wp_graphql_gf_prepare_field_value` for processing custom field values.
+- Dev: Added filter `wp_graphql_gf_field_value_type` for adding custom field value input types.
+- Dev: The arguments for AbstractMutation::validate_field_value() have changed to no longer require passing the `$form`. Passing the old set of arguments may stop working in future versions of the plugin.
+- Tests: Added unit tests for `ChainedSelect` fields and values.
+
 ## v0.6.1 - Bugfix
 - Fixes a fatal error when adding support for new fields with the `wp_graphql_gf_field_types` filter.
 
