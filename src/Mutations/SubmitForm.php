@@ -162,13 +162,12 @@ class SubmitForm extends AbstractMutation {
 			$created_by    = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : null;
 			$source_url    = esc_url_raw( Utils::truncate( $_SERVER['HTTP_REFERER'] ?? '', 250 ) );
 
-			$file_upload_values = [];
-			$field_values       = $this->get_field_values( $input['fieldValues'] );
+			$field_values = $this->get_field_values( $input['fieldValues'] );
 
 			add_filter( 'gform_field_validation', [ $this, 'disable_validation_for_unsupported_fields' ], 10, 4 );
 			$submission = GFUtils::submit_form(
 				$input['formId'],
-				$this->get_input_values( $save_as_draft, $field_values, $file_upload_values ),
+				$this->get_input_values( $save_as_draft, $field_values, GFFormsModel::$uploaded_files[ $input['formId'] ] ?? [] ),
 				$field_values,
 				$target_page,
 				$source_page,
@@ -178,6 +177,7 @@ class SubmitForm extends AbstractMutation {
 			if ( $submission['is_valid'] ) {
 				$this->update_entry_properties( $submission, $ip, $source_url, $created_by );
 			}
+			$entry = GFAPI::get_entry( $submission['entry_id'] );
 
 			return [
 				'entryId'     => ! empty( $submission['entry_id'] ) ? absint( $submission['entry_id'] ) : null,

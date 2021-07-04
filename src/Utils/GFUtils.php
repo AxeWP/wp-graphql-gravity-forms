@@ -335,47 +335,60 @@ class GFUtils {
 
 	/**
 	 * Determine appropriate GF form-specific uploads dir config and ensure folders are initiated as needed.
-	 * Modified from source.
 	 *
-	 * @author WebDevStudios
-	 * @source https://github.com/WebDevStudios/wds-headless-wordpress/blob/5a8e84a2dbb7a0bb537422223ab409ecd2568b00/themes/wds_headless/inc/wp-graphql.php#L515
+	 * @see GFFormsModel::get_file_upload_path()
+	 *
 	 * @param int $form_id GF form ID.
+	 *
 	 * @return array     GF uploads dir config.
 	 * @throws UserError If directory doesn't exist or cant be created.
 	 */
 	public static function get_gravity_forms_upload_dir( int $form_id ) : array {
 		// Determine YYYY/MM values.
-		$time = current_time( 'mysql' );
-		$y    = substr( $time, 0, 4 );
-		$m    = substr( $time, 5, 2 );
-
+		$time     = (string) current_time( 'mysql' );
+		$y        = substr( $time, 0, 4 );
+		$m        = substr( $time, 5, 2 );
 		$date_dir = DIRECTORY_SEPARATOR . $y . DIRECTORY_SEPARATOR . $m;
 
+		$default_target_root     = GFFormsModel::get_upload_path( $form_id ) . $date_dir;
+		$default_target_root_url = GFFormsModel::get_upload_url( $form_id ) . $date_dir;
+
+		// Adding filter to upload root path and url.
+		$upload_root_info = [
+			'path' => $default_target_root,
+			'url'  => $default_target_root_url,
+		];
+		// $upload_root_info = gf_apply_filters( array( 'gform_upload_path', $form_id ), $upload_root_info, $form_id );
+
 		// Determine upload directory.
-		$target_path = GFFormsModel::get_upload_path( $form_id ) . $date_dir;
-		$target_url  = GFFormsModel::get_upload_url( $form_id ) . $date_dir;
+		$target_root     = $upload_root_info['path'];
+		$target_root_url = $upload_root_info['url'];
+
+		$target_root = trailingslashit( $target_root );
 
 		// Create upload directory if it doesnt exist.
-		if ( ! is_dir( $target_path ) ) {
-			if ( ! wp_mkdir_p( $target_path ) ) {
+		if ( ! is_dir( $target_root ) ) {
+			if ( ! wp_mkdir_p( $target_root ) ) {
 				throw new UserError( __( 'Failed to upload file. The Gravity Forms Signatures directory could not be created.', 'wp-graphql-gravity-forms' ) );
+			}
+
+			// Adding index.html files to all subfolders.
+			if ( $default_target_root !== $target_root && ! file_exists( $target_root . 'index.html' ) ) {
+				GFCommon::recursive_add_index_file( $target_root );
+			} elseif ( ! file_exists( GFFormsModel::get_upload_root() . '/index.html' ) ) {
+				GFCommon::recursive_add_index_file( GFFormsModel::get_upload_root() );
+			} elseif ( ! file_exists( GFFormsModel::get_upload_path( $form_id ) . '/index.html' ) ) {
+				GFCommon::recursive_add_index_file( GFFormsModel::get_upload_path( $form_id ) );
+			} elseif ( ! file_exists( GFFormsModel::get_upload_path( $form_id ) . "/$y/index.html" ) ) {
+				GFCommon::recursive_add_index_file( GFFormsModel::get_upload_path( $form_id ) . "/$y" );
+			} else {
+				GFCommon::recursive_add_index_file( GFFormsModel::get_upload_path( $form_id ) . "/$y/$m" );
 			}
 		}
 
-		// Add index.html files to upload directory subfolders.
-		if ( ! file_exists( GFFormsModel::get_upload_root() . '/index.html' ) ) {
-			GFForms::add_security_files();
-		} elseif ( ! file_exists( GFFormsModel::get_upload_path( $form_id ) . '/index.html' ) ) {
-			GFCommon::recursive_add_index_file( GFFormsModel::get_upload_path( $form_id ) );
-		} elseif ( ! file_exists( GFFormsModel::get_upload_path( $form_id ) . "/$y/index.html" ) ) {
-			GFCommon::recursive_add_index_file( GFFormsModel::get_upload_path( $form_id ) . "/$y" );
-		} else {
-			GFCommon::recursive_add_index_file( GFFormsModel::get_upload_path( $form_id ) . "/$y/$m" );
-		}
-
 		return [
-			'path'    => $target_path,
-			'url'     => $target_url,
+			'path'    => $target_root,
+			'url'     => $target_root_url,
 			'subdir'  => $date_dir,
 			'basedir' => untrailingslashit( GFFormsModel::get_upload_root() ),
 			'baseurl' => untrailingslashit( GFFormsModel::get_upload_url_root() ),
@@ -435,9 +448,11 @@ class GFUtils {
 		}
 
 		// Set correct file permissions.
-		$stat  = stat( dirname( $new_file ) );
-		$perms = $stat['mode'] & 0000666;
-		chmod( $new_file, $perms );
+		$stat = stat( dirname( $new_file ) );
+		if ( is_array( $stat ) ) {
+			$perms = $stat['mode'] & 0000666;
+			chmod( $new_file, $perms );
+		}
 
 		// Compute the URL.
 		$url = $target['url'] . "/{$filename}";

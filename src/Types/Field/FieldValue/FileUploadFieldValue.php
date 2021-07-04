@@ -77,8 +77,8 @@ class FileUploadFieldValue extends AbstractObject implements FieldValue {
 		$value = FileUploadFieldValueProperty::get( $entry, $field );
 
 		return [
-			'value' => $value,
-			'url'   => $value[0], // Deprecated @since 0.4.0 .
+			'value' => $value[0] ?? null,
+			'url'   => $value[0] ?? null, // Deprecated @since 0.4.0 .
 		];
 	}
 }

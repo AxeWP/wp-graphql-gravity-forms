@@ -52,7 +52,7 @@ class FileUploadFieldValueProperty extends AbstractValueProperty {
 	 * @param array    $entry Gravity Forms entry.
 	 * @param GF_Field $field Gravity Forms field.
 	 *
-	 * @return string|null Entry field value.
+	 * @return array|null Entry field value.
 	 */
 	public static function get( array $entry, GF_Field $field ) {
 		$values = $entry[ $field->id ] ?: null;

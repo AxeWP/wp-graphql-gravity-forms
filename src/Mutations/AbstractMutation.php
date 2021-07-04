@@ -11,12 +11,11 @@ namespace WPGraphQLGravityForms\Mutations;
 use GF_Field;
 use GFCommon;
 use GFSignature;
-use RGFormsModel;
+use GFFormsModel;
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Mutation;
 use WPGraphQLGravityForms\Utils\GFUtils;
-use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - DraftEntryUpdator
@@ -422,10 +421,11 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	 *
 	 * @param mixed    $value The file upload object.
 	 * @param GF_Field $field .
+	 * @param string   $prev_value the previous file upload urls.
 	 * @return string|array
 	 * @throws UserError If WPGrahQL Upload isn't activated.
 	 */
-	protected function prepare_file_upload_field_value( $value, GF_Field $field ) {
+	protected function prepare_file_upload_field_value( $value, GF_Field $field, $prev_value = null ) {
 		if ( ! class_exists( 'WPGraphQL\Upload\Type\Upload' ) ) {
 			throw new UserError( __( 'To upload files you must enable the WPGraphQL Upload plugin!.', 'wp-graphql-gravity-forms' ) );
 		}
@@ -434,17 +434,23 @@ abstract class AbstractMutation implements Hookable, Mutation {
 		graphql_debug( __( 'File upload support is experimental, and current relies on WPGraphQL Upload.', 'wp-graphql-gravity-forms' ) );
 
 		$target = GFUtils::get_gravity_forms_upload_dir( $field->formId );
-		error_log( 'prepare value' . print_r( $value, true ) );
 
 		global $_gf_uploaded_files;
 		if ( empty( $_gf_uploaded_files ) ) {
 			$_gf_uploaded_files = [];
 		}
 
-		$files = [];
+		$input_name = 'input_' . $field->id;
 
+		if ( isset( $_gf_uploaded_files[ $input_name ] ) ) {
+			return $_gf_uploaded_files[ $input_name ];
+		}
+
+		$this->delete_previous_files( $prev_value );
+
+		$files = [];
+		$urls  = [];
 		foreach ( $value as $single_value ) {
-			$input_name            = 'input_' . $field->id;
 			$single_value['error'] = ! empty( $single_value['error'] ) ? $single_value['error'] : 0;
 
 			$is_uploaded = GFUtils::handle_file_upload( $single_value, $target );
@@ -456,14 +462,25 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			if ( ! $field->multipleFiles ) {
 				$_FILES[ $input_name ]             = $single_value;
 				$_gf_uploaded_files[ $input_name ] = $is_uploaded['url'];
+				GFFormsModel::$uploaded_files[ $field->formId ][ $input_name ] = $_gf_uploaded_files[ $input_name ];
 
 				return $_gf_uploaded_files[ $input_name ];
 			}
 
-			$files[] = $is_uploaded['url'];
+			$files[] = [
+				'temp_filename'     => $single_value['tmp_name'],
+				'uploaded_filename' => $single_value['name'],
+			];
+			array_push( $urls, $is_uploaded['url'] );
 		}
 
-		return $files;
+		$_gf_uploaded_files[ $input_name ] = wp_json_encode( array_values( $urls ) );
+
+		
+
+		GFFormsModel::$uploaded_files[ $field->formId ][ $input_name ] = $files;
+
+		return $_gf_uploaded_files[ $input_name ];
 	}
 
 	// protected function get_file_upload_values( array $field_values, array $form ) {
@@ -639,6 +656,33 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	}
 
 	/**
+	 * Copy of GFFormsModel::delete_physical_file.
+	 *
+	 * @param string $prev_filename
+	 */
+	private function delete_previous_files( $prev_url = null ) : void {
+		if ( ! $prev_url ) {
+			return;
+		}
+
+		$ary = explode( '|:|', $prev_url );
+		$url = rgar( $ary, 0 );
+		if ( empty( $url ) ) {
+			return;
+		}
+
+		$file_path = GFFormsModel::get_physical_file_path( $url );
+		/**
+		 * Allow the file path to be overridden so files stored outside the /wp-content/uploads/gravity_forms/ directory can be deleted.
+		 */
+		$file_path = apply_filters( 'gform_file_path_pre_delete_file', $file_path, $url );
+
+		if ( file_exists( $file_path ) ) {
+			unlink( $file_path );
+		}
+	}
+
+	/**
 	 * Replacement for the the GFSignature::save_signature() method.
 	 *
 	 * @param string $signature Base-64 encoded png signature image data.
@@ -739,7 +783,9 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			case 'email':
 				return $this->prepare_email_field_value( $value, $field );
 			case 'fileupload':
-				return $this->prepare_file_upload_field_value( $value, $field );
+				$prepared_value = $this->prepare_file_upload_field_value( $value, $field, $prev_value );
+
+				break;
 			case 'list':
 				$prepared_value = $this->prepare_list_field_value( $value );
 				break;
