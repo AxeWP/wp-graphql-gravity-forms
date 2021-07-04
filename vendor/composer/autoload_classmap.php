@@ -133,6 +133,7 @@ return array(
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ChoiceProperty\\ChoiceTextProperty' => $baseDir . '/src/Types/Field/FieldProperty/ChoiceProperty/ChoiceTextProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ChoiceProperty\\ChoiceValueProperty' => $baseDir . '/src/Types/Field/FieldProperty/ChoiceProperty/ChoiceValueProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ChoicesProperty' => $baseDir . '/src/Types/Field/FieldProperty/ChoicesProperty.php',
+    'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DateInputProperty' => $baseDir . '/src/Types/Field/FieldProperty/DateInputProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DefaultValueProperty' => $baseDir . '/src/Types/Field/FieldProperty/DefaultValueProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DescriptionPlacementProperty' => $baseDir . '/src/Types/Field/FieldProperty/DescriptionPlacementProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\DescriptionProperty' => $baseDir . '/src/Types/Field/FieldProperty/DescriptionProperty.php',

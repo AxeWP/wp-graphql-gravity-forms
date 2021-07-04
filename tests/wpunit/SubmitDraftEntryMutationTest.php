@@ -20,6 +20,7 @@ class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 	private $form_id;
 	private $draft_token;
 	private $client_mutation_id;
+	private $text_field_helper;
 
 
 	/**
@@ -31,7 +32,8 @@ class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 
 		// Your set up methods here.
 		$this->factory            = new Factories\Factory();
-		$this->fields[]           = $this->factory->field->create( $this->tester->getTextFieldDefaultArgs() );
+		$this->text_field_helper  = $this->tester->getTextFieldHelper();
+		$this->fields[]           = $this->factory->field->create( $this->text_field_helper->values );
 		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
 		$this->draft_token        = $this->factory->draft->create(
 			[

@@ -54,16 +54,19 @@ class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
 			$args['entry'] ?? []
 		);
 
-		$resume_token = GFFormsModel::save_draft_submission(
-			$form,
-			$entry,
-			$args['field_values'] ?? null,
-			$args['page_number'],
-			[],
-			GFFormsModel::$unique_ids[ $args['form_id'] ],
-			$args['source_url'],
-			$args['resume_token'],
-		);
+		$resume_token = 0;
+		do {
+			$resume_token = GFFormsModel::save_draft_submission(
+				$form,
+				$entry,
+				$args['field_values'] ?? null,
+				$args['page_number'],
+				[],
+				GFFormsModel::$unique_ids[ $args['form_id'] ],
+				$args['source_url'],
+				$args['resume_token'],
+			);
+		} while ( empty( $resume_token ) );
 
 		return $resume_token;
 	}

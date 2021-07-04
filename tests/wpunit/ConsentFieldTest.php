@@ -1,14 +1,14 @@
 <?php
 /**
- * Test AddressField.
+ * Test TextArea type.
  */
 
 use WPGraphQLGravityForms\Tests\Factories;
 
 /**
- * Class -AddressFieldTest
+ * Class -ConsentFieldTest.
  */
-class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
+class ConsentFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \WpunitTesterActions
 	 */
@@ -16,11 +16,11 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 	protected $factory;
 	private $admin;
 	private $fields = [];
-	private $field_value;
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
 	private $property_helper;
+	private $field_value_input;
 	private $value;
 
 	/**
@@ -40,25 +40,15 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 		wp_set_current_user( $this->admin->ID );
 
 		$this->factory         = new Factories\Factory();
-		$this->property_helper = $this->tester->getAddressFieldHelper();
+		$this->property_helper = $this->tester->getConsentFieldHelper();
 
 		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
 
-		$this->field_value = [
-			'street'  => '123 Main St.',
-			'lineTwo' => 'Apt. 456',
-			'city'    => 'Rochester Hills',
-			'state'   => 'Michigan',
-			'zip'     => '48306',
-			'country' => 'USA',
-		];
-		$this->value       = [
-			$this->fields[0]['inputs'][0]['id'] => $this->field_value['street'],
-			$this->fields[0]['inputs'][1]['id'] => $this->field_value['lineTwo'],
-			$this->fields[0]['inputs'][2]['id'] => $this->field_value['city'],
-			$this->fields[0]['inputs'][3]['id'] => $this->field_value['state'],
-			$this->fields[0]['inputs'][4]['id'] => $this->field_value['zip'],
-			$this->fields[0]['inputs'][5]['id'] => $this->field_value['country'],
+		$this->field_value_input = $this->fields[0]->checkboxLabel;
+		$this->value             = [
+			(string) $this->fields[0]->inputs[0]['id'] => true,
+			(string) $this->fields[0]->inputs[1]['id'] => $this->fields[0]->checkboxLabel,
+			(string) $this->fields[0]->inputs[2]['id'] => true,
 		];
 
 		$this->form_id = $this->factory->form->create(
@@ -70,8 +60,10 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->entry_id = $this->factory->entry->create(
 			array_merge(
-				[ 'form_id' => $this->form_id ],
-				$this->value
+				[
+					'form_id' => $this->form_id,
+				],
+				$this->value,
 			)
 		);
 
@@ -104,10 +96,11 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Tests AddressField properties and values.
+	 * Tests ConsentField properties and values.
 	 */
 	public function testField() :void {
-		$form = $this->factory->form->get_object_by_id( $this->form_id );
+		$entry = $this->factory->entry->get_object_by_id( $this->entry_id );
+		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$query = '
 			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
@@ -129,58 +122,25 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 									value
 								}
 							}
-							... on AddressField {
-								addressType
+							... on ConsentField {
 								adminLabel
 								adminOnly
-								allowsPrepopulate
-								copyValuesOptionDefault
-								copyValuesOptionField
-								defaultCountry
-								defaultProvince
-								defaultState
+								checkboxLabel
 								description
 								descriptionPlacement
-								enableAutocomplete
-								enableCopyValuesOption
 								errorMessage
-								inputs {
-									customLabel
-									defaultValue
-									id
-									isHidden
-									key
-									label
-									name
-									placeholder
-									autocompleteAttribute
-								}
+								formId
+								inputName
 								isRequired
 								label
-								labelPlacement
-								size
-								subLabelPlacement
-								type
-								addressValues {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
-								}
+								value
 								visibility
 							}
 						}
 						edges {
 							fieldValue {
-								... on AddressFieldValue {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
+								... on ConsentFieldValue {
+									value
 								}
 							}
 						}
@@ -203,14 +163,16 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 			'gravityFormsEntry' => [
 				'formFields' => [
 					'nodes' => [
-						array_merge_recursive(
-							$this->property_helper->getAllActualValues( $form['fields'][0] ),
-							[ 'addressValues' => $this->field_value ],
-						),
+						$this->property_helper->getAllActualValues( $form['fields'][0], [ 'inputs', 'choices' ] )
+						+ [
+							'value' => $entry[ $form['fields'][0]->inputs[1]['id'] ],
+						],
 					],
 					'edges' => [
 						[
-							'fieldValue' => $this->field_value,
+							'fieldValue' => [
+								'value' => $entry[ $form['fields'][0]->inputs[1]['id'] ],
+							],
 						],
 					],
 				],
@@ -220,23 +182,37 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Test entry has error.' );
 		$this->assertEquals( $expected, $actual['data'], 'Test entry is not equal' );
 
+		// Ensures draft token is set.
+		if ( empty( $this->draft_token ) ) {
+			$this->draft_token = $this->factory->draft->create(
+				[
+					'form_id'     => $this->form_id,
+					'entry'       => [
+						$this->fields[0]['id'] => $this->value,
+					],
+					'fieldValues' => [
+						'input_' . $this->fields[0]['id'] => $this->value,
+					],
+				]
+			);
+		}
+
 		// Test Draft entry.
 		$actual = graphql(
 			[
 				'query'     => $query,
 				'variables' => [
-					'id'     => $this->draft_token,
-					'idType' => 'ID',
+					'id' => $this->draft_token,
 				],
 			]
 		);
+
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Test draft entry has error.' );
 		$this->assertEquals( $expected, $actual['data'], 'Test draft entry is not equal.' );
 	}
 
-
 	/**
-	 * Test submitting AddressField asa draft entry with submitGravityFormsForm.
+	 * Test submitting ConsentField asa draft entry with submitGravityFormsForm.
 	 */
 	public function testSubmit_draft() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
@@ -248,7 +224,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 					'draft'   => true,
 					'formId'  => $this->form_id,
 					'fieldId' => $form['fields'][0]->id,
-					'value'   => $this->field_value,
+					'value'   => $this->field_value_input,
 				],
 			]
 		);
@@ -267,12 +243,14 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 					'formFields' => [
 						'edges' => [
 							[
-								'fieldValue' => $this->field_value,
+								'fieldValue' => [
+									'value' => $this->field_value_input,
+								],
 							],
 						],
 						'nodes' => [
 							[
-								'addressValues' => $this->field_value,
+								'value' => $this->field_value_input,
 							],
 						],
 					],
@@ -285,7 +263,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting AddressField with submitGravityFormsForm.
+	 * Test submitting ConsentField with submitGravityFormsForm.
 	 */
 	public function testSubmit() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
@@ -298,11 +276,10 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 					'draft'   => false,
 					'formId'  => $this->form_id,
 					'fieldId' => $form['fields'][0]->id,
-					'value'   => $this->field_value,
+					'value'   => $this->field_value_input,
 				],
 			]
 		);
-
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
@@ -316,12 +293,14 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 					'formFields' => [
 						'edges' => [
 							[
-								'fieldValue' => $this->field_value,
+								'fieldValue' => [
+									'value' => $this->field_value_input,
+								],
 							],
 						],
 						'nodes' => [
 							[
-								'addressValues' => $this->field_value,
+								'value' => $this->field_value_input,
 							],
 						],
 					],
@@ -333,13 +312,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 
 		$actualEntry = GFAPI::get_entry( $entry_id );
 
-		$this->assertEquals( $this->field_value['street'], $actualEntry[ $form['fields'][0]['inputs'][0]['id'] ], 'Submit mutation entry value 1 not equal' );
-		$this->assertEquals( $this->field_value['lineTwo'], $actualEntry[ $form['fields'][0]['inputs'][1]['id'] ], 'Submit mutation entry value 2 not equal' );
-		$this->assertEquals( $this->field_value['city'], $actualEntry[ $form['fields'][0]['inputs'][2]['id'] ], 'Submit mutation entry value 3 not equal' );
-		$this->assertEquals( $this->field_value['state'], $actualEntry[ $form['fields'][0]['inputs'][3]['id'] ], 'Submit mutation entry value 4 not equal' );
-		$this->assertEquals( $this->field_value['zip'], $actualEntry[ $form['fields'][0]['inputs'][4]['id'] ], 'Submit mutation entry value 5 not equal' );
-		$this->assertEquals( $this->field_value['country'], $actualEntry[ $form['fields'][0]['inputs'][5]['id'] ], 'Submit mutation entry value 6 not equal' );
-
+		$this->assertEquals( $this->field_value_input, $actualEntry[ $form['fields'][0]->inputs[1]['id'] ], 'Submit mutation entry value not equal' );
 		$this->factory->entry->delete( $entry_id );
 	}
 
@@ -347,20 +320,12 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 	 * Test submitting AddressField with updateGravityFormsEntry.
 	 */
 	public function testUpdateEntry() : void {
-		$form = $this->factory->form->get_object_by_id( $this->form_id );
-
-		$field_value = [
-			'street'  => '234 Main St.',
-			'lineTwo' => 'Apt. 456',
-			'city'    => 'Rochester Hills',
-			'state'   => 'Michigan',
-			'zip'     => '48306',
-			'country' => 'USA',
-		];
+		$form  = $this->factory->form->get_object_by_id( $this->form_id );
+		$value = $this->field_value_input;
 
 		$query = '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: AddressInput! ){
-				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, addressValues: $value} }) {
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
 						message
@@ -369,26 +334,14 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on AddressFieldValue {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
+									... on ConsentFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on AddressField {
-									addressValues {
-										street
-										lineTwo
-										city
-										state
-										zip
-										country
-									}
+								... on ConsentField {
+									value
 								}
 							}
 						}
@@ -403,7 +356,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				'variables' => [
 					'entryId' => $this->entry_id,
 					'fieldId' => $form['fields'][0]->id,
-					'value'   => $field_value,
+					'value'   => $value,
 				],
 			]
 		);
@@ -415,12 +368,14 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 					'formFields' => [
 						'edges' => [
 							[
-								'fieldValue' => $field_value,
+								'fieldValue' => [
+									'value' => $value,
+								],
 							],
 						],
 						'nodes' => [
 							[
-								'addressValues' => $field_value,
+								'value' => $value,
 							],
 						],
 					],
@@ -437,19 +392,11 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 	public function testUpdateDraftEntry() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
-
-		$field_value = [
-			'street'  => '234 Main St.',
-			'lineTwo' => 'Apt. 456',
-			'city'    => 'Rochester Hills',
-			'state'   => 'Michigan',
-			'zip'     => '48306',
-			'country' => 'USA',
-		];
+		$value        = $this->field_value_input;
 
 		$query = '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: AddressInput! ){
-				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, addressValues: $value} }) {
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
 						message
@@ -458,26 +405,14 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on AddressFieldValue {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
+									... on ConsentFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on AddressField {
-									addressValues {
-										street
-										lineTwo
-										city
-										state
-										zip
-										country
-									}
+								... on ConsentField {
+									value
 								}
 							}
 						}
@@ -492,7 +427,7 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				'variables' => [
 					'resumeToken' => $resume_token,
 					'fieldId'     => $form['fields'][0]->id,
-					'value'       => $field_value,
+					'value'       => $value,
 				],
 			]
 		);
@@ -504,18 +439,21 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 					'formFields' => [
 						'edges' => [
 							[
-								'fieldValue' => $field_value,
+								'fieldValue' => [
+									'value' => $value,
+								],
 							],
 						],
 						'nodes' => [
 							[
-								'addressValues' => $field_value,
+								'value' => $value,
 							],
 						],
 					],
 				],
 			],
 		];
+
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
 		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
 
@@ -523,16 +461,16 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting AddressField with updateDraftEntryAddressFieldValue.
+	 * Test submitting ConsentField with updateDraftEntryConsentFieldValue.
 	 */
-	public function testUpdateDraftEntryFieldValue() : void {
+	public function testUpdateDraftEntryConsentFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 
 		// Test draft entry.
 		$query = '
-			mutation updateDraftEntryAddressFieldValue( $fieldId: Int!, $resumeToken: String!, $value: AddressInput! ){
-				updateDraftEntryAddressFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
+			mutation updateDraftEntryConsentFieldValue( $fieldId: Int!, $resumeToken: String!, $value: Boolean! ){
+				updateDraftEntryConsentFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
 					errors {
 						id
 						message
@@ -541,26 +479,14 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on AddressFieldValue {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
+									... on ConsentFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on AddressField {
-									addressValues {
-										street
-										lineTwo
-										city
-										state
-										zip
-										country
-									}
+								... on ConsentField {
+									value
 								}
 							}
 						}
@@ -575,24 +501,26 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				'variables' => [
 					'fieldId'     => $form['fields'][0]->id,
 					'resumeToken' => $resume_token,
-					'value'       => $this->field_value,
+					'value'       => (bool) $this->field_value_input,
 				],
 			]
 		);
 
 		$expected = [
-			'updateDraftEntryAddressFieldValue' => [
+			'updateDraftEntryConsentFieldValue' => [
 				'errors' => null,
 				'entry'  => [
 					'formFields' => [
 						'edges' => [
 							[
-								'fieldValue' => $this->field_value,
+								'fieldValue' => [
+									'value' => $this->field_value_input,
+								],
 							],
 						],
 						'nodes' => [
 							[
-								'addressValues' => $this->field_value,
+								'value' => $this->field_value_input,
 							],
 						],
 					],
@@ -615,26 +543,14 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on AddressFieldValue {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
+									... on ConsentFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on AddressField {
-									addressValues {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
-									}
+								... on ConsentField {
+									value
 								}
 							}
 						}
@@ -663,12 +579,14 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 					'formFields' => [
 						'edges' => [
 							[
-								'fieldValue' => $this->field_value,
+								'fieldValue' => [
+									'value' => $this->field_value_input,
+								],
 							],
 						],
 						'nodes' => [
 							[
-								'addressValues' => $this->field_value,
+								'value' => $this->field_value_input,
 							],
 						],
 					],
@@ -687,8 +605,8 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function get_submit_form_query() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: AddressInput!, $draft: Boolean) {
-				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, addressValues: $value}}) {
+			mutation ($formId: Int!, $fieldId: Int!, $value: String!, $draft: Boolean) {
+				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
 					errors {
 						id
 						message
@@ -699,26 +617,14 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on AddressFieldValue {
-										street
-										lineTwo
-										city
-										state
-										zip
-										country
+									... on ConsentFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on AddressField {
-									addressValues {
-										street
-										lineTwo
-										city
-										state
-										zip
-										country
-									}
+								... on ConsentField {
+									value
 								}
 							}
 						}

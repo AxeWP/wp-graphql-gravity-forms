@@ -3,14 +3,12 @@
  * Test TextArea type.
  */
 
-use WPGraphQLGravityForms\Types\Enum;
 use WPGraphQLGravityForms\Tests\Factories;
 
 /**
  * Class -TextAreaFieldTest.
  */
 class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
-
 	/**
 	 * @var \WpunitTesterActions
 	 */
@@ -21,6 +19,8 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
+	private $property_helper;
+	private $value;
 
 	/**
 	 * Run before each test.
@@ -38,26 +38,37 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->admin->add_cap( 'gravityforms_view_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory     = new Factories\Factory();
-		$this->fields[]    = $this->factory->field->create( $this->tester->getTextAreaFieldDefaultArgs() );
-		$this->form_id     = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
-		$this->entry_id    = $this->factory->entry->create(
+		$this->factory         = new Factories\Factory();
+		$this->property_helper = $this->tester->getTextAreaFieldHelper();
+		$this->value           = $this->property_helper->dummy->words( 1, 5 );
+
+		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
+
+		$this->form_id = $this->factory->form->create(
+			array_merge(
+				[ 'fields' => $this->fields ],
+				$this->tester->getFormDefaultArgs()
+			)
+		);
+
+		$this->entry_id = $this->factory->entry->create(
 			[
 				'form_id'              => $this->form_id,
-				$this->fields[0]['id'] => 'This is a default Text Area Entry',
+				$this->fields[0]['id'] => $this->value,
 			]
 		);
+
 		$this->draft_token = $this->factory->draft->create(
 			[
 				'form_id'     => $this->form_id,
 				'entry'       => [
-					$this->fields[0]['id'] => 'This is a default Text Area Entry',
+					$this->fields[0]['id'] => $this->value,
 					'fieldValues'          => [
-						'input_' . $this->fields[0]['id'] => 'This is a default Text Area Entry',
+						'input_' . $this->fields[0]['id'] => $this->value,
 					],
 				],
 				'fieldValues' => [
-					'input_' . $this->fields[0]['id'] => 'This is a default Text Area Entry',
+					'input_' . $this->fields[0]['id'] => $this->value,
 				],
 			]
 		);
@@ -80,7 +91,7 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Tests TextAreaField properties and values.
 	 */
-	public function testTextAreaField() :void {
+	public function testField() :void {
 		$entry = $this->factory->entry->get_object_by_id( $this->entry_id );
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 
@@ -89,6 +100,12 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 				gravityFormsEntry(id: $id, idType: $idType ) {
 					formFields {
 						nodes {
+							cssClass
+							formId
+							id
+							layoutGridColumnSpan
+							layoutSpacerGridColumnSpan
+							type
 							conditionalLogic {
 								actionType
 								logicType
@@ -98,10 +115,6 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 									value
 								}
 							}
-							cssClass
-							formId
-							id
-							type
 							... on TextAreaField {
 								adminLabel
 								adminOnly
@@ -110,8 +123,8 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 								description
 								descriptionPlacement
 								errorMessage
-								inputName
 								isRequired
+								inputName
 								label
 								maxLength
 								noDuplicates
@@ -148,33 +161,13 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 			'gravityFormsEntry' => [
 				'formFields' => [
 					'nodes' => [
-						0 => [
-							'conditionalLogic'     => null,
-							'cssClass'             => $form['fields'][0]->cssClass,
-							'formId'               => $form['fields'][0]->formId,
-							'id'                   => $form['fields'][0]->id,
-							'type'                 => $form['fields'][0]->type,
-							'adminLabel'           => $form['fields'][0]->adminLabel,
-							'adminOnly'            => (bool) $form['fields'][0]->adminOnly,
-							'allowsPrepopulate'    => $form['fields'][0]->allowsPrepopulate,
-							'defaultValue'         => $form['fields'][0]->defaultValue,
-							'description'          => $form['fields'][0]->description,
-							'descriptionPlacement' => $this->tester->get_enum_for_value( Enum\DescriptionPlacementPropertyEnum::$type, $form['fields'][0]->descriptionPlacement ),
-							'errorMessage'         => $form['fields'][0]->errorMessage,
-							'inputName'            => $form['fields'][0]->inputName,
-							'isRequired'           => $form['fields'][0]->isRequired,
-							'label'                => $form['fields'][0]->label,
-							'maxLength'            => (int) $form['fields'][0]->maxLength,
-							'noDuplicates'         => $form['fields'][0]->noDuplicates,
-							'placeholder'          => $form['fields'][0]->placeholder,
-							'size'                 => $this->tester->get_enum_for_value( Enum\SizePropertyEnum::$type, $form['fields'][0]->size ),
-							'useRichTextEditor'    => $form['fields'][0]->useRichTextEditor,
-							'value'                => $entry[ $form['fields'][0]->id ],
-							'visibility'           => $this->tester->get_enum_for_value( Enum\VisibilityPropertyEnum::$type, $form['fields'][0]->visibility ),
+						$this->property_helper->getAllActualValues( $form['fields'][0] )
+						+ [
+							'value' => $entry[ $form['fields'][0]->id ],
 						],
 					],
 					'edges' => [
-						0 => [
+						[
 							'fieldValue' => [
 								'value' => $entry[ $form['fields'][0]->id ],
 							],
@@ -184,8 +177,23 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 			],
 		];
 
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Test entry has error.' );
+		$this->assertEquals( $expected, $actual['data'], 'Test entry is not equal' );
+
+		// Ensures draft token is set.
+		if ( empty( $this->draft_token ) ) {
+			$this->draft_token = $this->factory->draft->create(
+				[
+					'form_id'     => $this->form_id,
+					'entry'       => [
+						$this->fields[0]['id'] => $this->value,
+					],
+					'fieldValues' => [
+						'input_' . $this->fields[0]['id'] => $this->value,
+					],
+				]
+			);
+		}
 
 		// Test Draft entry.
 		$actual = graphql(
@@ -197,16 +205,16 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 			]
 		);
 
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Test draft entry has error.' );
+		$this->assertEquals( $expected, $actual['data'], 'Test draft entry is not equal.' );
 	}
 
 	/**
 	 * Test submitting TextAreaField asa draft entry with submitGravityFormsForm.
 	 */
-	public function testSubmitFormTextAreaFieldValue_draft() : void {
-		$form        = $this->factory->form->get_object_by_id( $this->form_id );
-		$field_value = 'value1';
+	public function testSubmit_draft() : void {
+		$form  = $this->factory->form->get_object_by_id( $this->form_id );
+		$value = $this->property_helper->dummy->words( 1, 5 );
 
 		$actual = graphql(
 			[
@@ -215,11 +223,11 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 					'draft'   => true,
 					'formId'  => $this->form_id,
 					'fieldId' => $form['fields'][0]->id,
-					'value'   => $field_value,
+					'value'   => $value,
 				],
 			]
 		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
 		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
@@ -232,22 +240,22 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'       => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => [
-									'value' => $field_value,
+									'value' => $value,
 								],
 							],
 						],
 						'nodes' => [
-							0 => [
-								'value' => $field_value,
+							[
+								'value' => $value,
 							],
 						],
 					],
 				],
 			],
 		];
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
 		$this->factory->draft->delete( $resume_token );
 	}
@@ -255,9 +263,9 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test submitting TextAreaField with submitGravityFormsForm.
 	 */
-	public function testSubmitGravityFormsFormTextAreaFieldValue() : void {
-		$form        = $this->factory->form->get_object_by_id( $this->form_id );
-		$field_value = 'value1';
+	public function testSubmit() : void {
+		$form  = $this->factory->form->get_object_by_id( $this->form_id );
+		$value = $this->property_helper->dummy->words( 1, 5 );
 
 		// Test entry.
 		$actual = graphql(
@@ -267,11 +275,11 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 					'draft'   => false,
 					'formId'  => $this->form_id,
 					'fieldId' => $form['fields'][0]->id,
-					'value'   => $field_value,
+					'value'   => $value,
 				],
 			]
 		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
 		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
@@ -283,15 +291,15 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'       => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => [
-									'value' => $field_value,
+									'value' => $value,
 								],
 							],
 						],
 						'nodes' => [
-							0 => [
-								'value' => $field_value,
+							[
+								'value' => $value,
 							],
 						],
 					],
@@ -299,21 +307,165 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 			],
 		];
 
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
 		$actualEntry = GFAPI::get_entry( $entry_id );
 
-		$this->assertEquals( $field_value, $actualEntry[ $form['fields'][0]->id ] );
+		$this->assertEquals( $value, $actualEntry[ $form['fields'][0]->id ], 'Submit mutation entry value not equal' );
 		$this->factory->entry->delete( $entry_id );
+	}
+
+	/**
+	 * Test submitting AddressField with updateGravityFormsEntry.
+	 */
+	public function testUpdateEntry() : void {
+		$form  = $this->factory->form->get_object_by_id( $this->form_id );
+		$value = $this->property_helper->dummy->words( 1, 5 );
+
+		$query = '
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on TextAreaFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on TextAreaField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'entryId' => $this->entry_id,
+					'fieldId' => $form['fields'][0]->id,
+					'value'   => $value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => [
+									'value' => $value,
+								],
+							],
+						],
+						'nodes' => [
+							[
+								'value' => $value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+	}
+
+	/**
+	 * Test submitting AddressField with updateGravityFormsEntry.
+	 */
+	public function testUpdateDraftEntry() : void {
+		$form         = $this->factory->form->get_object_by_id( $this->form_id );
+		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$value        = $this->property_helper->dummy->words( 1, 5 );
+
+		$query = '
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on TextAreaFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on TextAreaField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'resumeToken' => $resume_token,
+					'fieldId'     => $form['fields'][0]->id,
+					'value'       => $value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsDraftEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => [
+									'value' => $value,
+								],
+							],
+						],
+						'nodes' => [
+							[
+								'value' => $value,
+							],
+						],
+					],
+				],
+			],
+		];
+
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+
+		$this->factory->draft->delete( $resume_token );
 	}
 
 	/**
 	 * Test submitting TextAreaField with updateDraftEntryTextAreaFieldValue.
 	 */
-	public function testUpdateDraftEntryTextAreaFieldValue() : void {
+	public function testUpdateDraftEntryFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
-		$field_value  = 'value1';
+		$value        = $this->property_helper->dummy->words( 1, 5 );
 
 		// Test draft entry.
 		$query = '
@@ -349,7 +501,7 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 				'variables' => [
 					'fieldId'     => $form['fields'][0]->id,
 					'resumeToken' => $resume_token,
-					'value'       => $field_value,
+					'value'       => $value,
 				],
 			]
 		);
@@ -360,23 +512,23 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'  => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => [
-									'value' => $field_value,
+									'value' => $value,
 								],
 							],
 						],
 						'nodes' => [
-							0 => [
-								'value' => $field_value,
+							[
+								'value' => $value,
 							],
 						],
 					],
 				],
 			],
 		];
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
 
 		// Test submitted query.
 		$query = '
@@ -415,7 +567,7 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
 
 		$entry_id = $actual['data']['submitGravityFormsDraftEntry']['entryId'];
 
@@ -426,22 +578,22 @@ class TextAreaFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'   => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => [
-									'value' => $field_value,
+									'value' => $value,
 								],
 							],
 						],
 						'nodes' => [
-							0 => [
-								'value' => $field_value,
+							[
+								'value' => $value,
 							],
 						],
 					],
 				],
 			],
 		];
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equals' );
 
 		$this->factory->entry->delete( $entry_id );
 	}
