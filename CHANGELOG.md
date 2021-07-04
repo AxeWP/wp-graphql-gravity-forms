@@ -1,7 +1,14 @@
 # Changelog
 
+## v0.6.3 - Unit Tests
+- Adds support for missing date formats (dmy_dash, dmy_dot, ymd_slash, ymd_dash, ymd_dot).
+- Fix: EmailInputProperty description updated.
+- Dev: autocompleteAttribute has been deprecated on EmailInputProperty.
+- Tests: Added `updateEntry` and `updateDraftEntry` mutations to existing `formField` tests.
+- Tests: Add tests for CheckboxField, ConsentField, and DateField.
+
 ## v0.6.2.2 - Hotfix
-- Fixes `submitGravityFormsForms` not saving signature field value after v0.6.2.1.
+- Fixes `submitGravityFormsForm` not saving signature field value after v0.6.2.1.
 
 ## v0.6.2.1 - Hotfix
 - Fixes `updateGravityFormsEntry` not saving signature field value.
