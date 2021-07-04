@@ -40,7 +40,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->factory           = new Factories\Factory();
 		$this->property_helper   = $this->tester->getCaptchaFieldHelper();
-		$this->text_field_helper = $this->tester->getCaptchaFieldHelper( [ 'id' => 2 ] );
+		$this->text_field_helper = $this->tester->getTextFieldHelper( [ 'id' => 2 ] );
 		$this->value             = $this->property_helper->dummy->words( 1, 5 );
 
 		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
@@ -153,6 +153,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			],
 		];
+		codecept_debug( $actual );
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Test form has error.' );
 		$this->assertEquals( $expected, $actual['data'], 'Test form is not equal.' );
 	}
@@ -270,17 +271,15 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting CaptchaField with updateDraftEntryCaptchaFieldValue.
+	 * Test submitting CaptchaField with updateGravityFormsEntry.
 	 */
-	public function testUpdateDraftEntry() : void {
-		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
-		$value        = $this->property_helper->dummy->words( 1, 5 );
+	public function testUpdateEntry() : void {
+		$form  = $this->factory->form->get_object_by_id( $this->form_id );
+		$value = $this->property_helper->dummy->words( 1, 5 );
 
-		// Test draft entry.
 		$query = '
-			mutation updateDraftEntryCaptchaFieldValue( $fieldId: Int!, $resumeToken: String!, $value: String! ){
-				updateDraftEntryCaptchaFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
 						message
@@ -289,13 +288,167 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on CaptchaFieldValue {
+									... on TextFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on CaptchaField {
+								... on TextField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'entryId' => $this->entry_id,
+					'fieldId' => $form['fields'][1]->id,
+					'value'   => $value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => null,
+							],
+							[
+								'fieldValue' => [
+									'value' => $value,
+								],
+							],
+						],
+						'nodes' => [
+							new stdClass(),
+							[
+								'value' => $value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+	}
+
+	/**
+	 * Test submitting CaptchaField with updateGravityFormsEntry.
+	 */
+	public function testUpdateDraftEntry() : void {
+		$form         = $this->factory->form->get_object_by_id( $this->form_id );
+		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$value        = $this->property_helper->dummy->words( 1, 5 );
+
+		$query = '
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on TextFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on TextField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'resumeToken' => $resume_token,
+					'fieldId'     => $form['fields'][1]->id,
+					'value'       => $value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsDraftEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => null,
+							],
+							[
+								'fieldValue' => [
+									'value' => $value,
+								],
+							],
+						],
+						'nodes' => [
+							new stdClass(),
+							[
+								'value' => $value,
+							],
+						],
+					],
+				],
+			],
+		];
+
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+
+		$this->factory->draft->delete( $resume_token );
+	}
+
+	/**
+	 * Test submitting CaptchaField with updateDraftEntryTextFieldValue.
+	 */
+	public function testUpdateDraftEntryFieldValue() : void {
+		$form         = $this->factory->form->get_object_by_id( $this->form_id );
+		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$value        = $this->property_helper->dummy->words( 1, 5 );
+
+		// Test draft entry.
+		$query = '
+			mutation updateDraftEntryTextFieldValue( $fieldId: Int!, $resumeToken: String!, $value: String! ){
+				updateDraftEntryTextFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on TextFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on TextField {
 									value
 								}
 							}
@@ -317,7 +470,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 		);
 
 		$expected = [
-			'updateDraftEntryCaptchaFieldValue' => [
+			'updateDraftEntryTextFieldValue' => [
 				'errors' => null,
 				'entry'  => [
 					'formFields' => [
@@ -357,13 +510,13 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on CaptchaFieldValue {
+									... on TextFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on CaptchaField {
+								... on TextField {
 									value
 								}
 							}
@@ -435,13 +588,13 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 						formFields {
 							edges {
 								fieldValue {
-									... on CaptchaFieldValue {
+									... on TextFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on CaptchaField {
+								... on TextField {
 									value
 								}
 							}

@@ -242,14 +242,14 @@ class ConsentFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'       => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => [
 									'value' => $this->field_value_input,
 								],
 							],
 						],
 						'nodes' => [
-							0 => [
+							[
 								'value' => $this->field_value_input,
 							],
 						],
@@ -292,14 +292,14 @@ class ConsentFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'       => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => [
 									'value' => $this->field_value_input,
 								],
 							],
 						],
 						'nodes' => [
-							0 => [
+							[
 								'value' => $this->field_value_input,
 							],
 						],
@@ -314,6 +314,150 @@ class ConsentFieldTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->assertEquals( $this->field_value_input, $actualEntry[ $form['fields'][0]->inputs[1]['id'] ], 'Submit mutation entry value not equal' );
 		$this->factory->entry->delete( $entry_id );
+	}
+
+	/**
+	 * Test submitting AddressField with updateGravityFormsEntry.
+	 */
+	public function testUpdateEntry() : void {
+		$form  = $this->factory->form->get_object_by_id( $this->form_id );
+		$value = $this->field_value_input;
+
+		$query = '
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on ConsentFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on ConsentField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'entryId' => $this->entry_id,
+					'fieldId' => $form['fields'][0]->id,
+					'value'   => $value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => [
+									'value' => $value,
+								],
+							],
+						],
+						'nodes' => [
+							[
+								'value' => $value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+	}
+
+	/**
+	 * Test submitting AddressField with updateGravityFormsEntry.
+	 */
+	public function testUpdateDraftEntry() : void {
+		$form         = $this->factory->form->get_object_by_id( $this->form_id );
+		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$value        = $this->field_value_input;
+
+		$query = '
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on ConsentFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on ConsentField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'resumeToken' => $resume_token,
+					'fieldId'     => $form['fields'][0]->id,
+					'value'       => $value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsDraftEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => [
+									'value' => $value,
+								],
+							],
+						],
+						'nodes' => [
+							[
+								'value' => $value,
+							],
+						],
+					],
+				],
+			],
+		];
+
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+
+		$this->factory->draft->delete( $resume_token );
 	}
 
 	/**
@@ -434,14 +578,14 @@ class ConsentFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'   => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => [
 									'value' => $this->field_value_input,
 								],
 							],
 						],
 						'nodes' => [
-							0 => [
+							[
 								'value' => $this->field_value_input,
 							],
 						],

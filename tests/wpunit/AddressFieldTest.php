@@ -266,12 +266,12 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'       => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => $this->field_value,
 							],
 						],
 						'nodes' => [
-							0 => [
+							[
 								'addressValues' => $this->field_value,
 							],
 						],
@@ -315,12 +315,12 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'       => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => $this->field_value,
 							],
 						],
 						'nodes' => [
-							0 => [
+							[
 								'addressValues' => $this->field_value,
 							],
 						],
@@ -344,9 +344,188 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting AddressField with updateDraftEntryAddressFieldValue.
+	 * Test submitting AddressField with updateGravityFormsEntry.
+	 */
+	public function testUpdateEntry() : void {
+		$form = $this->factory->form->get_object_by_id( $this->form_id );
+
+		$field_value = [
+			'street'  => '234 Main St.',
+			'lineTwo' => 'Apt. 456',
+			'city'    => 'Rochester Hills',
+			'state'   => 'Michigan',
+			'zip'     => '48306',
+			'country' => 'USA',
+		];
+
+		$query = '
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: AddressInput! ){
+				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, addressValues: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on AddressFieldValue {
+									street
+									lineTwo
+									city
+									state
+									zip
+									country
+									}
+								}
+							}
+							nodes {
+								... on AddressField {
+									addressValues {
+										street
+										lineTwo
+										city
+										state
+										zip
+										country
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'entryId' => $this->entry_id,
+					'fieldId' => $form['fields'][0]->id,
+					'value'   => $field_value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => $field_value,
+							],
+						],
+						'nodes' => [
+							[
+								'addressValues' => $field_value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+	}
+
+	/**
+	 * Test submitting AddressField with updateGravityFormsEntry.
 	 */
 	public function testUpdateDraftEntry() : void {
+		$form         = $this->factory->form->get_object_by_id( $this->form_id );
+		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+
+		$field_value = [
+			'street'  => '234 Main St.',
+			'lineTwo' => 'Apt. 456',
+			'city'    => 'Rochester Hills',
+			'state'   => 'Michigan',
+			'zip'     => '48306',
+			'country' => 'USA',
+		];
+
+		$query = '
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: AddressInput! ){
+				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, addressValues: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on AddressFieldValue {
+									street
+									lineTwo
+									city
+									state
+									zip
+									country
+									}
+								}
+							}
+							nodes {
+								... on AddressField {
+									addressValues {
+										street
+										lineTwo
+										city
+										state
+										zip
+										country
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'resumeToken' => $resume_token,
+					'fieldId'     => $form['fields'][0]->id,
+					'value'       => $field_value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsDraftEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => $field_value,
+							],
+						],
+						'nodes' => [
+							[
+								'addressValues' => $field_value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+
+		$this->factory->draft->delete( $resume_token );
+	}
+
+	/**
+	 * Test submitting AddressField with updateDraftEntryAddressFieldValue.
+	 */
+	public function testUpdateDraftEntryFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 
@@ -407,12 +586,12 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'  => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => $this->field_value,
 							],
 						],
 						'nodes' => [
-							0 => [
+							[
 								'addressValues' => $this->field_value,
 							],
 						],
@@ -483,12 +662,12 @@ class AddressFieldTest extends \Codeception\TestCase\WPTestCase {
 				'entry'   => [
 					'formFields' => [
 						'edges' => [
-							0 => [
+							[
 								'fieldValue' => $this->field_value,
 							],
 						],
 						'nodes' => [
-							0 => [
+							[
 								'addressValues' => $this->field_value,
 							],
 						],

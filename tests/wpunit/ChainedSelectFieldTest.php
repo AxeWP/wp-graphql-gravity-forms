@@ -217,7 +217,6 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			],
 		];
-
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Test entry has error.' );
 		$this->assertEquals( $expected, $actual['data'], 'Test entry is not equal' );
 
@@ -235,7 +234,6 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Test draft entry has error.' );
 		$this->assertEquals( $expected, $actual['data'], 'Test draft entry is not equal.' );
 	}
-
 
 	/**
 	 * Test submitting ChainedSelectField asa draft entry with submitGravityFormsForm.
@@ -345,9 +343,182 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting ChainedSelectField with updateDraftEntryChainedSelectFieldValue.
+	 * Test submitting ChainedSelectField with updateGravityFormsEntry.
+	 */
+	public function testUpdateEntry() : void {
+		$form = $this->factory->form->get_object_by_id( $this->form_id );
+
+		$field_value       = [ '2016', 'Acura', 'ILX' ];
+		$field_value_input = [
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
+				'value'   => $field_value[0],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
+				'value'   => $field_value[1],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
+				'value'   => $field_value[2],
+			],
+		];
+
+		$query = '
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [ChainedSelectInput]! ){
+				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, chainedSelectValues: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on ChainedSelectFieldValue {
+										values
+									}
+								}
+							}
+							nodes {
+								... on ChainedSelectField {
+									values
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'entryId' => $this->entry_id,
+					'fieldId' => $form['fields'][0]->id,
+					'value'   => $field_value_input,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => [
+									'values' => $field_value,
+								],
+							],
+						],
+						'nodes' => [
+							[
+								'values' => $field_value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+	}
+
+	/**
+	 * Test submitting ChainedSelectField with updateGravityFormsEntry.
 	 */
 	public function testUpdateDraftEntry() : void {
+		$form         = $this->factory->form->get_object_by_id( $this->form_id );
+		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+
+		$field_value       = [ '2016', 'Acura', 'ILX' ];
+		$field_value_input = [
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
+				'value'   => $field_value[0],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
+				'value'   => $field_value[1],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
+				'value'   => $field_value[2],
+			],
+		];
+
+		$query = '
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [ChainedSelectInput]! ){
+				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, chainedSelectValues: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on ChainedSelectFieldValue {
+										values
+									}
+								}
+							}
+							nodes {
+								... on ChainedSelectField {
+									values
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'resumeToken' => $resume_token,
+					'fieldId'     => $form['fields'][0]->id,
+					'value'       => $field_value_input,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsDraftEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => [
+									'values' => $field_value,
+								],
+							],
+						],
+						'nodes' => [
+							[
+								'values' => $field_value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+
+		$this->factory->draft->delete( $resume_token );
+	}
+
+	/**
+	 * Test submitting ChainedSelectField with updateDraftEntryChainedSelectFieldValue.
+	 */
+	public function testUpdateDraftEntryFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 

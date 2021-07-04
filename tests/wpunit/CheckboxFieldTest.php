@@ -336,9 +336,192 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting CheckboxField with updateDraftEntryCheckboxFieldValue.
+	 * Test submitting CheckboxField with updateGravityFormsEntry.
+	 */
+	public function testUpdateEntry() : void {
+		$form = $this->factory->form->get_object_by_id( $this->form_id );
+
+		$field_value = [
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
+				'value'   => null,
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
+				'value'   => $this->fields[0]['choices'][1]['value'],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
+				'value'   => $this->fields[0]['choices'][2]['value'],
+			],
+		];
+
+		$query = '
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [CheckboxInput]! ){
+				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on CheckboxFieldValue {
+									checkboxValues {
+											inputId
+											value
+										}
+									}
+								}
+							}
+							nodes {
+								... on CheckboxField {
+									checkboxValues {
+										inputId
+										value
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'entryId' => $this->entry_id,
+					'fieldId' => $form['fields'][0]->id,
+					'value'   => $field_value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => [
+									'checkboxValues' => $field_value,
+								],
+							],
+						],
+						'nodes' => [
+							[
+								'checkboxValues' => $field_value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+	}
+
+	/**
+	 * Test submitting CheckboxField with updateGravityFormsEntry.
 	 */
 	public function testUpdateDraftEntry() : void {
+		$form         = $this->factory->form->get_object_by_id( $this->form_id );
+		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+
+		$field_value = [
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
+				'value'   => null,
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
+				'value'   => $this->fields[0]['choices'][1]['value'],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
+				'value'   => $this->fields[0]['choices'][2]['value'],
+			],
+		];
+
+		$query = '
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [CheckboxInput]! ){
+				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on CheckboxFieldValue {
+										checkboxValues {
+											inputId
+											value
+										}
+									}
+								}
+							}
+							nodes {
+								... on CheckboxField {
+									checkboxValues {
+										inputId
+										value
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'resumeToken' => $resume_token,
+					'fieldId'     => $form['fields'][0]->id,
+					'value'       => $field_value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsDraftEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => [
+									'checkboxValues' => $field_value,
+								],
+							],
+						],
+						'nodes' => [
+							[
+								'checkboxValues' => $field_value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+
+		$this->factory->draft->delete( $resume_token );
+	}
+
+	/**
+	 * Test submitting CheckboxField with updateDraftEntryCheckboxFieldValue.
+	 */
+	public function testUpdateDraftEntryFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 

@@ -324,9 +324,153 @@ class DateFieldTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Test submitting DateField with updateDraftEntryDateFieldValue.
+	 * Test submitting AddressField with updateGravityFormsEntry.
+	 */
+	public function testUpdateEntry() : void {
+		$form  = $this->factory->form->get_object_by_id( $this->form_id );
+		$value = $this->property_helper->dummy->ymd();
+
+		$query = '
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on DateFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on DateField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'entryId' => $this->entry_id,
+					'fieldId' => $form['fields'][0]->id,
+					'value'   => $value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => [
+									'value' => $value,
+								],
+							],
+						],
+						'nodes' => [
+							[
+								'value' => $value,
+							],
+						],
+					],
+				],
+			],
+		];
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+	}
+
+	/**
+	 * Test submitting AddressField with updateGravityFormsEntry.
 	 */
 	public function testUpdateDraftEntry() : void {
+		$form         = $this->factory->form->get_object_by_id( $this->form_id );
+		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$value        = $this->property_helper->dummy->ymd();
+
+		$query = '
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on DateFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on DateField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+
+		$actual = graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'resumeToken' => $resume_token,
+					'fieldId'     => $form['fields'][0]->id,
+					'value'       => $value,
+				],
+			]
+		);
+
+		$expected = [
+			'updateGravityFormsDraftEntry' => [
+				'errors' => null,
+				'entry'  => [
+					'formFields' => [
+						'edges' => [
+							[
+								'fieldValue' => [
+									'value' => $value,
+								],
+							],
+						],
+						'nodes' => [
+							[
+								'value' => $value,
+							],
+						],
+					],
+				],
+			],
+		];
+
+		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
+		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+
+		$this->factory->draft->delete( $resume_token );
+	}
+
+	/**
+	 * Test submitting DateField with updateDraftEntryDateFieldValue.
+	 */
+	public function testUpdateDraftEntryFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
 
