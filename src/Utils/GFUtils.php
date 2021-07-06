@@ -358,7 +358,7 @@ class GFUtils {
 			'path' => $default_target_root,
 			'url'  => $default_target_root_url,
 		];
-		// $upload_root_info = gf_apply_filters( array( 'gform_upload_path', $form_id ), $upload_root_info, $form_id );
+		$upload_root_info = gf_apply_filters( [ 'gform_upload_path', $form_id ], $upload_root_info, $form_id );
 
 		// Determine upload directory.
 		$target_root     = $upload_root_info['path'];
@@ -403,11 +403,16 @@ class GFUtils {
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/_wp_handle_upload/
 	 *
+	 * @todo mimic GFFieldUpload::validate().
+	 *
 	 * @author WebDevStudios
 	 * @source https://github.com/WebDevStudios/wds-headless-wordpress/blob/5a8e84a2dbb7a0bb537422223ab409ecd2568b00/themes/wds_headless/inc/wp-graphql.php#L452
 	 * @param array $file   File data to upload.
 	 * @param array $target Target upload directory; WP uploads dir will be used if none provided.
+	 *
 	 * @return array        Uploaded file data.
+	 *
+	 * @throws UserError .
 	 */
 	public static function handle_file_upload( $file, $target ) {
 		// Default to uploads dir if alternative not provided.
@@ -426,7 +431,7 @@ class GFUtils {
 
 		// Return error if file type not allowed.
 		if ( ( ! $type || ! $ext ) && ! current_user_can( 'unfiltered_upload' ) ) {
-			return call_user_func_array( 'wp_handle_upload_error', [ &$file, esc_html__( 'Sorry, this file type is not permitted for security reasons.', 'wp-graphql-gravity-forms' ) ] );
+			throw new UserError( __( 'This file type is not permitted for security reasons', 'wp-graphql-gravity-forms' ) );
 		}
 
 		$type = ! $type ? $file['type'] : $type;
@@ -442,9 +447,7 @@ class GFUtils {
 		unlink( $file['tmp_name'] );
 
 		if ( ! $move_new_file ) {
-			$field['value'] = '';
-
-			return $field;
+			throw new UserError( __( 'Failed to copy the file to the server.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		// Set correct file permissions.

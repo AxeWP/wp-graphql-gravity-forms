@@ -51,7 +51,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	protected $form;
 
 	/**
-	 * Register hooks to WordPress.
+	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
 		add_action( 'graphql_register_types', [ $this, 'register_mutation' ] );
@@ -159,7 +159,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	 * @return array
 	 */
 	public function disable_validation_for_unsupported_fields( array $result, $value, array $form, GF_Field $field ) : array {
-		if ( in_array( $field->type, [ 'captcha', 'post_image', 'fileupload' ], true ) ) {
+		if ( in_array( $field->type, [ 'captcha', 'post_image' ], true ) ) {
 			$result = [
 				'is_valid' => true,
 				'message'  => __( 'This field type is not (yet) supported.', 'wp-graphql-gravity-forms' ),
@@ -287,7 +287,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 				break;
 			case 'fileupload':
 				if ( ! isset( $values['fileUploadValues'] ) ) {
-					$valueTypeName = 'fileUploadValues';
+					$value_type_name = 'fileUploadValues';
 				}
 				break;
 			case 'list':
@@ -422,7 +422,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	 * @param mixed    $value The file upload object.
 	 * @param GF_Field $field .
 	 * @param string   $prev_value the previous file upload urls.
-	 * @return string|array
+	 * @return string|null
 	 * @throws UserError If WPGrahQL Upload isn't activated.
 	 */
 	protected function prepare_file_upload_field_value( $value, GF_Field $field, $prev_value = null ) {
@@ -435,6 +435,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 
 		$target = GFUtils::get_gravity_forms_upload_dir( $field->formId );
 
+		// Gravity Forms uses $_gf_uploaded_files to store and validate multipleFile uploads.
 		global $_gf_uploaded_files;
 		if ( empty( $_gf_uploaded_files ) ) {
 			$_gf_uploaded_files = [];
@@ -446,6 +447,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			return $_gf_uploaded_files[ $input_name ];
 		}
 
+		// Delete previous file, if exists.
 		$this->delete_previous_files( $prev_value );
 
 		$files = [];
@@ -459,6 +461,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 				continue;
 			}
 
+			// Set values needed for validation.
 			if ( ! $field->multipleFiles ) {
 				$_FILES[ $input_name ]             = $single_value;
 				$_gf_uploaded_files[ $input_name ] = $is_uploaded['url'];
@@ -476,45 +479,10 @@ abstract class AbstractMutation implements Hookable, Mutation {
 
 		$_gf_uploaded_files[ $input_name ] = wp_json_encode( array_values( $urls ) );
 
-		
-
 		GFFormsModel::$uploaded_files[ $field->formId ][ $input_name ] = $files;
 
-		return $_gf_uploaded_files[ $input_name ];
+		return $_gf_uploaded_files[ $input_name ] ?: null;
 	}
-
-	// protected function get_file_upload_values( array $field_values, array $form ) {
-	// $formatted_values = [];
-	// foreach ( $field_values as $values ) {
-	// if ( ! isset( $values['fileUploadValues'] ) ) {
-	// continue;
-	// }
-
-	// $field = GFUtils::get_field_by_id( $form, $values['id'] );
-
-	// if ( 'fileupload' !== $field->type ) {
-	// continue;
-	// }
-
-	// if ( empty( $values['fileUploadValues']['error'] ) ) {
-	// $values['fileUploadValues']['error'] = $values['fileUploadValues']['error'] ?: 0;
-	// }
-
-	// $target = GFUtils::get_gravity_forms_upload_dir( $field['formId'] );
-
-	// $file = GFUtils::handle_file_upload( $values['fileUploadValues'], $target );
-	// if ( $file ) {
-	// global $_gf_uploaded_files;
-	// $_gf_uploaded_files[ 'input_' . $values['id'] ] = $file['url'] ?? null;
-	// }
-
-	// $formatted_values[ 'input_' . $values['id'] ] = $values['fileUploadValues'];
-	// $_FILES[ 'input_' . $values['id'] ]           = $values['fileUploadValues'];
-
-	// $field->validate( $values, $form );
-	// }
-	// return $formatted_values;
-	// }
 
 	/**
 	 * Formats and sanitizes ListField values.
@@ -658,27 +626,36 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	/**
 	 * Copy of GFFormsModel::delete_physical_file.
 	 *
-	 * @param string $prev_filename
+	 * @param string $prev_url .
 	 */
 	private function delete_previous_files( $prev_url = null ) : void {
 		if ( ! $prev_url ) {
 			return;
 		}
 
-		$ary = explode( '|:|', $prev_url );
-		$url = rgar( $ary, 0 );
-		if ( empty( $url ) ) {
-			return;
+		// Create array of urls for deletion loop.
+		$files_to_delete = json_decode( $prev_url, true );
+		if ( 0 !== json_last_error() ) {
+			$files_to_delete = [ $prev_url ];
 		}
 
-		$file_path = GFFormsModel::get_physical_file_path( $url );
-		/**
-		 * Allow the file path to be overridden so files stored outside the /wp-content/uploads/gravity_forms/ directory can be deleted.
-		 */
-		$file_path = apply_filters( 'gform_file_path_pre_delete_file', $file_path, $url );
+		foreach ( $files_to_delete as $file ) {
+			$ary = explode( '|:|', $file );
+			$url = $ary[0];
 
-		if ( file_exists( $file_path ) ) {
-			unlink( $file_path );
+			if ( empty( $url ) ) {
+				break;
+			}
+
+			$file_path = GFFormsModel::get_physical_file_path( $url );
+			/**
+			 * Allow the file path to be overridden so files stored outside the /wp-content/uploads/gravity_forms/ directory can be deleted.
+			 */
+			$file_path = apply_filters( 'gform_file_path_pre_delete_file', $file_path, $url );
+
+			if ( file_exists( $file_path ) ) {
+				unlink( $file_path );
+			}
 		}
 	}
 
@@ -781,10 +758,10 @@ abstract class AbstractMutation implements Hookable, Mutation {
 				$prepared_value = $this->prepare_consent_field_value( $value, $field );
 				break;
 			case 'email':
-				return $this->prepare_email_field_value( $value, $field );
+				$prepared_value = $this->prepare_email_field_value( $value, $field );
+				break;
 			case 'fileupload':
 				$prepared_value = $this->prepare_file_upload_field_value( $value, $field, $prev_value );
-
 				break;
 			case 'list':
 				$prepared_value = $this->prepare_list_field_value( $value );
