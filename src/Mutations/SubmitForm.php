@@ -60,8 +60,6 @@ class SubmitForm extends AbstractMutation {
 
 	/**
 	 * Defines the input field configuration.
-	 *
-	 * @return array
 	 */
 	public function get_input_fields() : array {
 		return [
@@ -177,7 +175,6 @@ class SubmitForm extends AbstractMutation {
 			if ( $submission['is_valid'] ) {
 				$this->update_entry_properties( $submission, $ip, $source_url, $created_by );
 			}
-			$entry = GFAPI::get_entry( $submission['entry_id'] );
 
 			return [
 				'entryId'     => ! empty( $submission['entry_id'] ) ? absint( $submission['entry_id'] ) : null,
@@ -189,10 +186,7 @@ class SubmitForm extends AbstractMutation {
 	}
 
 	/**
-	 * Gets the field values, properly formatted for Gravity Forms.
-	 *
-	 * @param array $field_values .
-	 * @return array
+	 * {@inheritDoc}
 	 */
 	private function get_field_values( array $field_values ) : array {
 		$field_values = $this->prepare_field_values( $field_values );
@@ -251,7 +245,8 @@ class SubmitForm extends AbstractMutation {
 	 * Creates the $input_values array required by GFAPI::submit_form().
 	 *
 	 * @param boolean $is_draft .
-	 * @param array   $field_values The field values. Required so submit_form() can generate the $_POST object.
+	 * @param array   $field_values . Required so submit_form() can generate the $_POST object.
+	 * @param array   $file_upload_values .
 	 * @return array
 	 */
 	private function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ) : array {

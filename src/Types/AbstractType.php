@@ -22,7 +22,7 @@ abstract class AbstractType implements Hookable, Type {
 	public static $type;
 
 	/**
-	 * Register hooks to WordPress.
+	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
