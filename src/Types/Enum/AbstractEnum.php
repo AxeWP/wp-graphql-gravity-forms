@@ -55,11 +55,21 @@ abstract class AbstractEnum extends AbstractType {
 	 * Filters and sorts the values before register().
 	 */
 	private function prepare_values() : array {
-		/**
-		 * Pass the values through a filter.
-		 */
 
-		$values = apply_filters( 'wp_graphql_' . Utils::to_snake_case( static::$type ) . '_values', $this->get_values() );
+
+		/**
+		 * Deprecated filter modifying the enum values.
+		 *
+		 * @since 0.7.0
+		 */
+		$values = apply_filters_deprecated( 'wp_graphql_' . Utils::to_snake_case( static::$type ) . '_values', [ $this->get_values() ], '0.7.0', 'wp_graphql_gf_' . Utils::to_snake_case( static::$type ) . '_values');
+
+		/**
+		 * Filter for modifying the GraphQL enum values.
+		 *
+		 * @param array $values the registered enum values.
+		 */
+		$values = apply_filters( 'wp_graphql_gf_' . Utils::to_snake_case( static::$type ) . '_values', $this->get_values() );
 
 		/**
 		 * Sort the values alpahbetically by key.
