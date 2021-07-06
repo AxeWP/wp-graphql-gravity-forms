@@ -170,7 +170,7 @@ class FormFieldInterface implements Hookable, Type {
 		 *
 		 * @param array The field types.
 		 */
-		$types = apply_filters_deprecated( 'wp_graphql_gf_field_types', [ $types ], '0.7.0', 'wp_graphql_gf_instances', __('Please remove your code, and use `wp_graphql_gf_instances` hook to register your custom fields instead', 'wp-graphql-gravity-forms' ) );
+		$types = apply_filters_deprecated( 'wp_graphql_gf_field_types', [ $types ], '0.7.0', 'wp_graphql_gf_instances', __( 'Please remove your code, and use `wp_graphql_gf_instances` hook to register your custom fields instead', 'wp-graphql-gravity-forms' ) );
 
 		return $types;
 	}

@@ -70,13 +70,11 @@ class ObjectFieldValueUnion implements Hookable {
 		$field_values            = array_filter( WPGraphQLGravityForms::instances(), $is_field_value_instance );
 
 		/**
-		 * Filter for adding custom field value class instances.
-		 * Classes must implement the WPGraphQLGravityForms\Interfaces\FieldValue interface
-		 * and define a "TYPE" class constant string in this format: "<field_name>Value".
+		 * Deprecated filter for modifying the instances.
 		 *
-		 * @param array $field_values Field value class instances.
+		 * @since 0.7.0
 		 */
-		$field_values = apply_filters( 'wp_graphql_gf_field_value_instances', $field_values );
+		$fields = apply_filters_deprecated( 'wp_graphql_gf_field_value_instances', [ $fields ], '0.7.0', 'wp_graphql_gf_instances' );
 
 		// Filter the array a second time to guarantee that any classes added are instances of FieldValue.
 		return array_filter( $field_values, $is_field_value_instance );

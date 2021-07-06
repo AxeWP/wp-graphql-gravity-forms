@@ -123,6 +123,13 @@ class EntryFieldConnection extends AbstractConnection {
 	private function get_field_by_gf_field_type( string $gf_field_type ) {
 		$fields = array_filter( WPGraphQLGravityForms::instances(), fn( $instance ) => $instance instanceof AbstractFormField );
 
+		/**
+		 * Deprecated filter for modifying the instances.
+		 *
+		 * @since 0.7.0
+		 */
+		$fields = apply_filters_deprecated( 'wp_graphql_gf_form_field_instances', [ $fields ], '0.7.0', 'wp_graphql_gf_instances' );
+
 		$field_array = array_filter(
 			$fields,
 			function( $instance ) use ( $gf_field_type ) {
