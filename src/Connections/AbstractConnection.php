@@ -63,7 +63,7 @@ abstract class AbstractConnection implements Hookable {
 		$config = array_merge( $config, $this->get_connection_config_args() );
 
 		/**
-		 * Filter for modifying the GraphQL connection  $config array used to register the connection in WPGraphQL.
+		 * Filter for modifying the GraphQL connection $config array used to register the connection in WPGraphQL.
 		 *
 		 * @param array  $config The config array.
 		 * @param string $type The GraphQL type name.

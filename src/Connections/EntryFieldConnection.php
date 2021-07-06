@@ -51,8 +51,6 @@ class EntryFieldConnection extends AbstractConnection {
 
 	/**
 	 * GraphQL Connection from type.
-	 *
-	 * @return string
 	 */
 	public function get_connection_from_type() : string {
 		return Entry::$type;
@@ -60,8 +58,6 @@ class EntryFieldConnection extends AbstractConnection {
 
 	/**
 	 * GraphQL Connection to type.
-	 *
-	 * @return string
 	 */
 	public function get_connection_to_type() : string {
 		return FormFieldInterface::$type;

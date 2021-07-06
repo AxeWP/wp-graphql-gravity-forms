@@ -28,8 +28,6 @@ class RootQueryFormsConnection  extends AbstractConnection {
 
 	/**
 	 * GraphQL Connection from type.
-	 *
-	 * @return string
 	 */
 	public function get_connection_from_type() : string {
 		return 'RootQuery';
@@ -37,8 +35,6 @@ class RootQueryFormsConnection  extends AbstractConnection {
 
 	/**
 	 * GraphQL Connection to type.
-	 *
-	 * @return string
 	 */
 	public function get_connection_to_type() : string {
 		return Form::$type;
@@ -46,8 +42,6 @@ class RootQueryFormsConnection  extends AbstractConnection {
 
 	/**
 	 * Gets custom connection configuration arguments, such as the resolver, edgeFields, connectionArgs, etc.
-	 *
-	 * @return array
 	 */
 	public function get_connection_config_args() : array {
 		return [
