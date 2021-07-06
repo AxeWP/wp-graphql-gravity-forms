@@ -28,33 +28,21 @@ abstract class AbstractFormField extends AbstractObject {
 	 * Register Object type to GraphQL schema.
 	 */
 	public function register_type() : void {
-		/**
-		 * Call deprecated get_properties() function, in case it's used in a child class.
-		 *
-		 * @since 0.6.4
-		 */
-		$fields = $this->get_type_fields();
-		if ( method_exists( $this, 'get_properties' ) ) {
-			_deprecated_function( 'get_properties', '0.6.4', 'get_type_fields' );
-			$fields = array_merge( $fields, $this->get_properties() );
-		}
-
 		register_graphql_object_type(
 			static::$type,
 			$this->get_type_config(
 				[
 					'description' => $this->get_type_description(),
 					'interfaces'  => [ FormFieldInterface::$type ],
-					'fields'      => $fields,
+					'fields'      => $this->prepare_fields(),
 				]
 			)
 		);
 	}
 
+
 	/**
 	 * Get the global properties that apply to all GF field types.
-	 *
-	 * @return array
 	 */
 	protected function get_global_properties() : array {
 		return FormFieldInterface::get_type_fields();
@@ -62,8 +50,6 @@ abstract class AbstractFormField extends AbstractObject {
 
 	/**
 	 * Get the custom properties.
-	 *
-	 * @return array
 	 */
 	protected function get_custom_properties() : array {
 		/**

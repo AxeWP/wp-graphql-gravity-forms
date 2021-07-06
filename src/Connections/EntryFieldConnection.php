@@ -167,15 +167,6 @@ class EntryFieldConnection extends AbstractConnection {
 	private function get_field_value_class( AbstractFormField $field ) {
 		$field_values = array_filter( $this->instances, fn( $instance ) => $instance instanceof FieldValueInterface );
 
-		/**
-		 * Filter for adding custom field value class instances.
-		 * Classes must implement the WPGraphQLGravityForms\Interfaces\FieldValue interface
-		 * and contain a "TYPE" class constant string in this format: "<field_name>Value".
-		 *
-		 * @param array $field_values Field value class instances.
-		 */
-		$field_values = apply_filters( 'wp_graphql_gf_field_value_instances', $field_values );
-
 		$value_class_array = array_filter(
 			$field_values,
 			function( $instance ) use ( $field ) {

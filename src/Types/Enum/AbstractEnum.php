@@ -44,8 +44,8 @@ abstract class AbstractEnum extends AbstractType {
 	 * @since 0.7.0
 	 */
 	public function get_values() : array {
-		if( method_exists( $this, 'set_values') ) {
-			_deprecated_function( 'set_values', '0.7.0', 'get_values');
+		if ( method_exists( $this, 'set_values' ) ) {
+			_deprecated_function( 'set_values', '0.7.0', 'get_values' );
 			return $this->set_values();
 		}
 		return [];

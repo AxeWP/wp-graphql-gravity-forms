@@ -33,8 +33,6 @@ class ListChoiceProperty extends AbstractObject {
 
 	/**
 	 * Gets the properties for the Field.
-	 *
-	 * @return array
 	 */
 	public function get_type_fields() : array {
 		return [

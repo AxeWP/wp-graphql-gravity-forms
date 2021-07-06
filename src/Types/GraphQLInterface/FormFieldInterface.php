@@ -47,8 +47,6 @@ class FormFieldInterface implements Hookable, Type {
 
 	/**
 	 * Gets the properties for the Field.
-	 *
-	 * @return array
 	 */
 	public static function get_type_fields() : array {
 		return [

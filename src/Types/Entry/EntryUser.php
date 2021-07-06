@@ -53,8 +53,6 @@ class EntryUser extends AbstractObject implements Field {
 
 	/**
 	 * Gets the properties for the Field.
-	 *
-	 * @return array
 	 */
 	public function get_type_fields() : array {
 		return [
