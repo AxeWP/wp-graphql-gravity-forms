@@ -8,39 +8,19 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\Types\AbstractObject;
 
 /**
  * Class - AbstractFieldValue
  */
-abstract class AbstractFieldValue implements Hookable, Type, FieldValue {
+abstract class AbstractFieldValue extends AbstractObject implements FieldValue {
 	/**
-	 * Type registered in WPGraphQL.
+	 * Constructor used to deprecate the class.
 	 *
-	 * @var string
+	 * @since 0.7.0
 	 */
-	public static $type;
-
-	/**
-	 * Register hooks to WordPress.
-	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function __construct() {
+		_deprecated_function( 'AbstractFieldValue::__construct', '0.7.0', 'AbstractObject::__construct' );
 	}
-
-	/**
-	 * Register Object type to GraphQL schema.
-	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			static::$type,
-			[
-				'description' => $this->get_type_description(),
-				'fields'      => $this->get_properties(),
-			]
-		);
-	}
-
 }

@@ -10,12 +10,14 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\CheckboxFieldValueProperty;
 
 /**
  * Value for a checkbox field.
  */
-class CheckboxFieldValue extends AbstractFieldValue {
+class CheckboxFieldValue extends AbstractObject implements FieldValue {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -38,7 +40,7 @@ class CheckboxFieldValue extends AbstractFieldValue {
 	 * @since 0.4.0
 	 * @return array
 	 */
-	public function get_properties() : array {
+	public function get_type_fields() : array {
 		return [
 			'checkboxValues' => [
 				'type'        => [ 'list_of' => CheckboxInputValue::$type ],

@@ -39,7 +39,7 @@ class SignatureBorderWidthEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'NONE'   => [
 				'description' => __( 'No border width.', 'wp-graphql-gravity-forms' ),

@@ -16,7 +16,7 @@ use WPGraphQLGravityForms\Types\Field\FieldProperty;
 /**
  * Class - PostImageField
  */
-class PostImageField extends AbstractField {
+class PostImageField extends AbstractFormField {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -34,16 +34,14 @@ class PostImageField extends AbstractField {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'Gravity Forms Post Image field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * Gets the properties for the Field.
-	 *
-	 * @return array
 	 */
-	protected function get_properties() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			$this->get_global_properties(),
 			$this->get_custom_properties(),

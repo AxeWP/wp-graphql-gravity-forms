@@ -19,11 +19,7 @@ use WPGraphQLGravityForms\Types\Entry\Entry;
  */
 class EntryDataManipulator implements DataManipulator {
 	/**
-	 * Manipulate entry data.
-	 *
-	 * @param array $data The entry data to be manipulated.
-	 *
-	 * @return array Manipulated entry data.
+	 * {@inheritDoc}
 	 */
 	public function manipulate( array $data ) : array {
 		$data = $this->set_is_draft_value( $data );
@@ -53,7 +49,7 @@ class EntryDataManipulator implements DataManipulator {
 	 */
 	private function set_global_and_entry_ids( array $entry ) : array {
 		$entry['entryId'] = $entry['id'];
-		$entry['id']      = Relay::toGlobalId( Entry::TYPE, $this->get_id_for_global_id_generation( $entry ) );
+		$entry['id']      = Relay::toGlobalId( Entry::$type, $this->get_id_for_global_id_generation( $entry ) );
 
 		return $entry;
 	}

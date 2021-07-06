@@ -11,10 +11,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use WPGraphQLGravityForms\Types\AbstractObject;
+
 /**
  * Class - ListChoiceProperty
  */
-class ListChoiceProperty extends AbstractProperty {
+class ListChoiceProperty extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -25,16 +27,14 @@ class ListChoiceProperty extends AbstractProperty {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'List field column labels.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * Gets the properties for the Field.
-	 *
-	 * @return array
 	 */
-	protected function get_properties() : array {
+	public function get_type_fields() : array {
 		return [
 			'text'  => [
 				'type'        => 'String',

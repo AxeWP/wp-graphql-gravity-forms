@@ -11,36 +11,22 @@ namespace WPGraphQLGravityForms\Types\Union;
 
 use WPGraphQL\Registry\TypeRegistry;
 use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\WPGraphQLGravityForms;
 
 /**
  * Class - ObjectFieldValueUnion
  */
-class ObjectFieldValueUnion implements Hookable, Type {
+class ObjectFieldValueUnion implements Hookable {
 	/**
 	 * Type registered in WPGraphQL.
-	 */
-	const TYPE = 'ObjectFieldValueUnion';
-
-	/**
-	 * WPGraphQL for Gravity Forms plugin's class instances.
 	 *
-	 * @var array
+	 * @var string
 	 */
-	private $instances;
+	public static $type = 'ObjectFieldValueUnion';
 
 	/**
-	 * Constructor
-	 *
-	 * @param array $instances WPGraphQL for Gravity Forms plugin's class instances.
-	 */
-	public function __construct( array $instances ) {
-		$this->instances = $instances;
-	}
-
-	/**
-	 * Register hooks to WordPress.
+	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
 		add_action( 'graphql_register_types', [ $this, 'register_type' ], 11 );
@@ -53,13 +39,15 @@ class ObjectFieldValueUnion implements Hookable, Type {
 	 */
 	public function register_type( TypeRegistry $type_registry ) : void {
 		register_graphql_union_type(
-			self::TYPE,
-			[
-				'typeNames'   => $this->get_field_value_type_names(),
-				'resolveType' => function( $object ) use ( $type_registry ) {
-					return $type_registry->get_type( $object['value_class']::$type );
-				},
-			]
+			self::$type,
+			$this->get_type_config(
+				[
+					'typeNames'   => $this->get_field_value_type_names(),
+					'resolveType' => function( $object ) use ( $type_registry ) {
+						return $type_registry->get_type( $object['value_class']::$type );
+					},
+				]
+			)
 		);
 	}
 
@@ -79,18 +67,36 @@ class ObjectFieldValueUnion implements Hookable, Type {
 	 */
 	private function get_field_value_classes() : array {
 		$is_field_value_instance = fn( $instance ) => $instance instanceof FieldValue;
-		$field_values            = array_filter( $this->instances, $is_field_value_instance );
+		$field_values            = array_filter( WPGraphQLGravityForms::instances(), $is_field_value_instance );
 
 		/**
-		 * Filter for adding custom field value class instances.
-		 * Classes must implement the WPGraphQLGravityForms\Interfaces\FieldValue interface
-		 * and define a "TYPE" class constant string in this format: "<field_name>Value".
+		 * Deprecated filter for modifying the instances.
 		 *
-		 * @param array $field_values Field value class instances.
+		 * @since 0.7.0
 		 */
-		$field_values = apply_filters( 'wp_graphql_gf_field_value_instances', $field_values );
+		$fields = apply_filters_deprecated( 'wp_graphql_gf_field_value_instances', [ $fields ], '0.7.0', 'wp_graphql_gf_instances' );
 
 		// Filter the array a second time to guarantee that any classes added are instances of FieldValue.
 		return array_filter( $field_values, $is_field_value_instance );
+	}
+
+	/**
+	 * Gets the filterable $config array for the GraphQL type.
+	 *
+	 * @param array $config The individual config values.
+	 *
+	 * @return array
+	 */
+	public function get_type_config( array $config ) : array {
+		/**
+		 * Filter for modifying the GraphQL type $config array used to register the type in WPGraphQL.
+		 *
+		 * @param array  $config The config array.
+		 * @param string $type The GraphQL type name.
+		 */
+		$config = apply_filters( 'wp_graphql_gf_type_config', $config, static::$type );
+		$config = apply_filters( 'wp_graphql_gf_' . static::$type . '_type_config', $config );
+
+		return $config;
 	}
 }

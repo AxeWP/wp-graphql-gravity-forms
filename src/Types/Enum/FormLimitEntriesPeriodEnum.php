@@ -39,7 +39,7 @@ class FormLimitEntriesPeriodEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'DAY'   => [
 				'description' => __( 'Limit entries by "day".', 'wp-graphql-gravity-forms' ),

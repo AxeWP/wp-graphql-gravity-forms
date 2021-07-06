@@ -22,6 +22,7 @@ use WPGraphQLGravityForms\Types\FieldError\FieldError;
 use WPGraphQLGravityForms\Types\Input\FieldValuesInput;
 use WPGraphQLGravityForms\Utils\GFUtils;
 use WPGraphQLGravityForms\Utils\Utils;
+use WPGraphQLGravityForms\WPGraphQLGravityForms;
 
 /**
  * Class - SubmitForm
@@ -49,19 +50,16 @@ class SubmitForm extends AbstractMutation {
 
 
 	/**
-	 * Constructor
-	 *
-	 * @param array $instances .
+	 * Constructor.
 	 */
-	public function __construct( array $instances ) {
+	public function __construct() {
+		$instances                          = WPGraphQLGravityForms::instances();
 		$this->entry_data_manipulator       = $instances['entry_data_manipulator'];
 		$this->draft_entry_data_manipulator = $instances['draft_entry_data_manipulator'];
 	}
 
 	/**
 	 * Defines the input field configuration.
-	 *
-	 * @return array
 	 */
 	public function get_input_fields() : array {
 		return [
@@ -70,7 +68,7 @@ class SubmitForm extends AbstractMutation {
 				'description' => __( 'Optional. ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
-				'type'        => [ 'list_of' => FieldValuesInput::TYPE ],
+				'type'        => [ 'list_of' => FieldValuesInput::$type ],
 				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
 			],
 			'formId'      => [
@@ -108,7 +106,7 @@ class SubmitForm extends AbstractMutation {
 				'description' => __( 'The ID of the entry that was created. Null if the entry was only partially submitted or submitted as a draft.', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'       => [
-				'type'        => Entry::TYPE,
+				'type'        => Entry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload ) {
 					if ( ! empty( $payload['errors'] ) || ( ! $payload['entryId'] && ! $payload['resumeToken'] ) ) {
@@ -128,7 +126,7 @@ class SubmitForm extends AbstractMutation {
 				},
 			],
 			'errors'      => [
-				'type'        => [ 'list_of' => FieldError::TYPE ],
+				'type'        => [ 'list_of' => FieldError::$type ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
 			'resumeToken' => [
@@ -167,7 +165,7 @@ class SubmitForm extends AbstractMutation {
 			add_filter( 'gform_field_validation', [ $this, 'disable_validation_for_unsupported_fields' ], 10, 4 );
 			$submission = GFUtils::submit_form(
 				$input['formId'],
-				$this->get_input_values( $save_as_draft, $field_values ),
+				$this->get_input_values( $save_as_draft, $field_values, GFFormsModel::$uploaded_files[ $input['formId'] ] ?? [] ),
 				$field_values,
 				$target_page,
 				$source_page,
@@ -188,10 +186,7 @@ class SubmitForm extends AbstractMutation {
 	}
 
 	/**
-	 * Gets the field values, properly formatted for Gravity Forms.
-	 *
-	 * @param array $field_values .
-	 * @return array
+	 * {@inheritDoc}
 	 */
 	private function get_field_values( array $field_values ) : array {
 		$field_values = $this->prepare_field_values( $field_values );
@@ -250,12 +245,14 @@ class SubmitForm extends AbstractMutation {
 	 * Creates the $input_values array required by GFAPI::submit_form().
 	 *
 	 * @param boolean $is_draft .
-	 * @param array   $field_values The field values. Required so submit_form() can generate the $_POST object.
+	 * @param array   $field_values . Required so submit_form() can generate the $_POST object.
+	 * @param array   $file_upload_values .
 	 * @return array
 	 */
-	private function get_input_values( bool $is_draft, array $field_values ) : array {
+	private function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ) : array {
 		return [
-			'gform_save' => $is_draft,
+			'gform_save'           => $is_draft,
+			'gform_uploaded_files' => wp_json_encode( $file_upload_values ),
 		] + $field_values;
 	}
 

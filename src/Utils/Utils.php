@@ -62,4 +62,62 @@ class Utils {
 
 		return $str;
 	}
+
+	/**
+	 * Tries to decode json.
+	 *
+	 * @param mixed $value the value to try to decode.
+	 *
+	 * @return array|false
+	 */
+	public static function maybe_decode_json( $value ) {
+		if ( is_array( $value ) ) {
+			return $value;
+		}
+
+		if ( ! is_string( $value ) ) {
+			return false;
+		}
+
+		$value_array = json_decode( $value );
+
+		// If the value isnt JSON, then convert it to an array.
+		if ( 0 !== json_last_error() ) {
+			$value_array = [ $value ];
+		}
+
+		return $value_array;
+	}
+
+	/**
+	 * Preprocessing for apply filters.
+	 *
+	 * Allows additional filters based on the object type to be defined easliy.
+	 *
+	 * @param array $filters .
+	 * @param mixed $value .
+	 *
+	 * @return mixed
+	 */
+	public static function apply_filters( $filters, $value ) {
+		$args = func_get_args();
+
+		$modifiers = array_splice( $filters, 1, count( $filters ) );
+		$filter    = $filters[0];
+		$args      = array_slice( $args, 2 );
+
+		// Add an empty modifier so the base filter will be applied as well.
+		array_unshift( $modifiers, '' );
+
+		$args = array_pad( $args, 10, null );
+
+			// Apply modified versions of filter.
+		foreach ( $modifiers as $modifier ) {
+			$modifier = empty( $modifier ) ? '' : sprintf( '_%s', $modifier );
+			$filter  .= $modifier;
+			$value    = apply_filters( $filter, $value, ...$args ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
+		}
+
+		return $value;
+	}
 }

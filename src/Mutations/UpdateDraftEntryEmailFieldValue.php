@@ -37,7 +37,7 @@ class UpdateDraftEntryEmailFieldValue extends AbstractDraftEntryUpdater {
 	 */
 	protected function get_value_input_field() : array {
 		return [
-			'type'        => EmailInput::TYPE,
+			'type'        => EmailInput::$type,
 			'description' => __( 'The form field value.', 'wp-graphql-gravity-forms' ),
 		];
 	}

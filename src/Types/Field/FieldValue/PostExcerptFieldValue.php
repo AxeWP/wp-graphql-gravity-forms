@@ -10,12 +10,14 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\PostExcerptFieldValueProperty;
 
 /**
  * Class - PostExcerptFieldValue
  */
-class PostExcerptFieldValue extends AbstractFieldValue {
+class PostExcerptFieldValue extends AbstractObject implements FieldValue {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -39,7 +41,7 @@ class PostExcerptFieldValue extends AbstractFieldValue {
 	 *
 	 * @return array
 	 */
-	public function get_properties() : array {
+	public function get_type_fields() : array {
 		return [
 			'value' => [
 				'type'        => 'String',

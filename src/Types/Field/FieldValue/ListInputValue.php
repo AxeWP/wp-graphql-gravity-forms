@@ -10,13 +10,12 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQLGravityForms\Types\AbstractObject;
 
 /**
  * Class - ListInputValue
  */
-class ListInputValue implements Hookable, Type {
+class ListInputValue extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -25,32 +24,29 @@ class ListInputValue implements Hookable, Type {
 	public static $type = 'ListInputValue';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Gets the GraphQL type description.
 	 */
-	public function register_hooks() : void {
-			add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+	public function get_type_description() : string {
+		return __( 'Value for a single input within a list field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register Object type to GraphQL schema.
+	 * Gets the GraphQL fields for the type.
+	 *
+	 * @return array
 	 */
-	public function register_type() : void {
-		register_graphql_object_type(
-			self::$type,
-			[
-				'description' => __( 'Value for a single input within a list field.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'value'  => [
-						'type'              => [ 'list_of' => 'String' ],
-						'description'       => __( 'Input value', 'wp-graphql-gravity-forms' ),
-						'deprecationReason' => __( 'Please use `values` instead.', 'wp-graphql-gravity-forms' ),
-					],
-					'values' => [
-						'type'        => [ 'list_of' => 'String' ],
-						'description' => __( 'Input values', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_type_fields() : array {
+		return [
+			'value'  => [
+				'type'              => [ 'list_of' => 'String' ],
+				'description'       => __( 'Input value', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Please use `values` instead.', 'wp-graphql-gravity-forms' ),
+			],
+			'values' => [
+				'type'        => [ 'list_of' => 'String' ],
+				'description' => __( 'Input values', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
+
 }

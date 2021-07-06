@@ -36,9 +36,4 @@ class WPGraphQLGravityFormsTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->assertTrue( true );
 	}
-
-	public function testGetEnabledFieldTypes() {
-		$fields = $this->instance::get_enabled_field_types();
-		$this->assertIsArray( $fields );
-	}
 }

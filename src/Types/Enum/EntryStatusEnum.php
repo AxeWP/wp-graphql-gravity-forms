@@ -38,7 +38,7 @@ class EntryStatusEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'ACTIVE' => [
 				'description' => __( 'Active entries (default).', 'wp-graphql-gravity-forms' ),

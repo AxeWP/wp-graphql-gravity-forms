@@ -16,7 +16,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
  */
 class WPGraphQLSettings implements Hookable {
 	/**
-	 * Register hooks to WordPress.
+	 * {@inheritDoc}.
 	 *
 	 * @TODO: This should be a filter.
 	 *

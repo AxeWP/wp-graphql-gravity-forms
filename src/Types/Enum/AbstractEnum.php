@@ -8,53 +8,66 @@
 
 namespace WPGraphQLGravityForms\Types\Enum;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Enum;
+use WPGraphQLGravityForms\Types\AbstractType;
 use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Abstract Class - Abstract Enum
  */
-abstract class AbstractEnum implements Hookable, Enum {
-	/**
-	 * Type registered in WPGraphQL.
-	 *
-	 * @var string
-	 */
-	public static $type;
-
-	/**
-	 * Register hooks to WordPress.
-	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register' ] );
-	}
-
+abstract class AbstractEnum extends AbstractType {
 	/**
 	 * Registers Enum type.
 	 */
-	public function register() : void {
+	public function register_type() : void {
+		if ( method_exists( $this, 'register' ) ) {
+			_deprecated_function( 'register', '0.7.0', 'register_type' );
+
+			$this->register();
+		}
+
 		register_graphql_enum_type(
 			static::$type,
-			[
-				'description' => $this->get_type_description(),
-				'values'      => $this->prepare_values(),
-			],
+			$this->get_type_config(
+				[
+					'description' => $this->get_type_description(),
+					'values'      => $this->prepare_values(),
+				]
+			)
 		);
 	}
 
 	/**
-	 * Filters and sorts the values before register().
+	 * Gets the Enum type values.
 	 *
-	 * @return array
+	 * @todo convert to abstract function after deprecation is removed.
+	 *
+	 * @since 0.7.0
+	 */
+	public function get_values() : array {
+		if ( method_exists( $this, 'set_values' ) ) {
+			_deprecated_function( 'set_values', '0.7.0', 'get_values' );
+			return $this->set_values();
+		}
+		return [];
+	}
+
+	/**
+	 * Filters and sorts the values before register().
 	 */
 	private function prepare_values() : array {
+		/**
+		 * Deprecated filter modifying the enum values.
+		 *
+		 * @since 0.7.0
+		 */
+		$values = apply_filters_deprecated( 'wp_graphql_' . Utils::to_snake_case( static::$type ) . '_values', [ $this->get_values() ], '0.7.0', 'wp_graphql_gf_' . Utils::to_snake_case( static::$type ) . '_values' );
 
 		/**
-		 * Pass the values through a filter.
+		 * Filter for modifying the GraphQL enum values.
+		 *
+		 * @param array $values the registered enum values.
 		 */
-
-		$values = apply_filters( 'wp_graphql_' . Utils::to_snake_case( static::$type ) . '_values', $this->set_values() );
+		$values = apply_filters( 'wp_graphql_gf_' . Utils::to_snake_case( static::$type ) . '_values', $this->get_values() );
 
 		/**
 		 * Sort the values alpahbetically by key.

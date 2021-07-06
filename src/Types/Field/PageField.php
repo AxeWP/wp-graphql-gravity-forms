@@ -18,7 +18,7 @@ use WPGraphQLGravityForms\Utils\Utils;
 /**
  * Class - PageField
  */
-class PageField extends AbstractField {
+class PageField extends AbstractFormField {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -36,16 +36,14 @@ class PageField extends AbstractField {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'Gravity Forms Page field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * Gets the properties for the Field.
-	 *
-	 * @return array
 	 */
-	protected function get_properties() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			$this->get_global_properties(),
 			$this->get_custom_properties(),
@@ -53,7 +51,7 @@ class PageField extends AbstractField {
 			FieldProperty\SizeProperty::get(),
 			[
 				'nextButton'     => [
-					'type'        => Button::TYPE,
+					'type'        => Button::$type,
 					'description' => __( 'An array containing the the individual properties for the "Next" button.', 'wp-graphql-gravity-forms' ),
 				],
 				// Although the property name is the same, this field is different than FieldProperty\PageNumberProperty.
@@ -62,7 +60,7 @@ class PageField extends AbstractField {
 					'description' => __( 'The page number of the current page.', 'wp-graphql-gravity-forms' ),
 				],
 				'previousButton' => [
-					'type'        => Button::TYPE,
+					'type'        => Button::$type,
 					'description' => __( 'An array containing the the individual properties for the "Previous" button.', 'wp-graphql-gravity-forms' ),
 				],
 			],

@@ -38,7 +38,7 @@ class PageProgressTypeEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'PERCENTAGE' => [
 				'description' => __( 'Show page progress indicator as a percentage.', 'wp-graphql-gravity-forms' ),

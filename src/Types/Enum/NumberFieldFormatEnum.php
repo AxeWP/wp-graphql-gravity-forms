@@ -38,7 +38,7 @@ class NumberFieldFormatEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'CURRENCY'      => [
 				'description' => __( 'Currency format.', 'wp-graphql-gravity-forms' ),

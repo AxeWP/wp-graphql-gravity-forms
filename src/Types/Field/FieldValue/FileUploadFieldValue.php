@@ -10,18 +10,20 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldValue;
 
 use GF_Field;
+use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\FileUploadFieldValueProperty;
 
 /**
  * Class - FileUploadFieldValue
  */
-class FileUploadFieldValue extends AbstractFieldValue {
+class FileUploadFieldValue extends AbstractObject implements FieldValue {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static $type = 'FileUploadFieldValue';
+	public static $type = 'FileUploadFieldValues';
 
 	/**
 	 * Sets the field type description.
@@ -39,21 +41,26 @@ class FileUploadFieldValue extends AbstractFieldValue {
 	 *
 	 * @return array
 	 */
-	public function get_properties() : array {
+	public function get_type_fields() : array {
 		return [
-			'value' => [
-				'type'        => 'String',
+			'values' => [
+				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'URL to the uploaded file.', 'wp-graphql-gravity-forms' ),
 			],
 			/**
 			 * Deprecated properties.
 			 *
-			 * @since 0.4.0
+			 * @since 0.7.0
 			 */
-			'url'   => [
+			'value'  => [
 				'type'              => 'String',
 				'description'       => __( 'URL to the uploaded file.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Please use `value` instead.', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Please use `values` instead.', 'wp-graphql-gravity-forms' ),
+			],
+			'url'    => [
+				'type'              => 'String',
+				'description'       => __( 'URL to the uploaded file.', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Please use `values` instead.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -70,8 +77,9 @@ class FileUploadFieldValue extends AbstractFieldValue {
 		$value = FileUploadFieldValueProperty::get( $entry, $field );
 
 		return [
-			'value' => $value,
-			'url'   => $value, // Deprecated @since 0.4.0 .
+			'values' => $value[0] ?? null,
+			'value'  => $value[0] ?? null, // Deprecated @since 0.7.0 .
+			'url'    => $value[0] ?? null, // Deprecated @since 0.4.0 .
 		];
 	}
 }

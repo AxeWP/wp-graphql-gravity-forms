@@ -41,7 +41,7 @@ class PageProgressStyleEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'BLUE'   => [
 				'description' => __( 'Blue progress bar style.', 'wp-graphql-gravity-forms' ),

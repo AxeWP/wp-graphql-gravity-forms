@@ -9,44 +9,37 @@
 
 namespace WPGraphQLGravityForms\Types\Input;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\InputType;
-
 /**
  * Class - EmailInput
  */
-class EmailInput implements Hookable, InputType {
+class EmailInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
 	 */
-	const TYPE = 'EmailInput';
+	public static $type = 'EmailInput';
 
 	/**
-	 * Register hooks to WordPress.
+	 * Sets the field type description.
 	 */
-	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_input_type' ] );
+	public function get_type_description() : string {
+		return __( 'Input fields for email field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
-	 * Register input type to GraphQL schema.
+	 * Gets the properties for the Field.
 	 */
-	public function register_input_type() : void {
-		register_graphql_input_type(
-			self::TYPE,
-			[
-				'description' => __( 'Input fields for a single checkbox.', 'wp-graphql-gravity-forms' ),
-				'fields'      => [
-					'value'             => [
-						'type'        => 'String',
-						'description' => __( 'Email input value', 'wp-graphql-gravity-forms' ),
-					],
-					'confirmationValue' => [
-						'type'        => 'String',
-						'description' => __( 'Email confirmation input value. Only used when email confirmation is enabled.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-			]
-		);
+	public function get_type_fields() : array {
+		return [
+			'value'             => [
+				'type'        => 'String',
+				'description' => __( 'Email input value', 'wp-graphql-gravity-forms' ),
+			],
+			'confirmationValue' => [
+				'type'        => 'String',
+				'description' => __( 'Email confirmation input value. Only used when email confirmation is enabled.', 'wp-graphql-gravity-forms' ),
+			],
+		];
 	}
 }

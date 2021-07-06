@@ -37,7 +37,7 @@ class ChainedSelectsAlignmentEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'HORIZONTAL' => [
 				'description' => __( 'Horizontal alignment (in a row).', 'wp-graphql-gravity-forms' ),

@@ -39,7 +39,7 @@ class MinPasswordStrengthEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'SHORT'  => [
 				'description' => __( 'The password strength must be "short" or better.', 'wp-graphql-gravity-forms' ),

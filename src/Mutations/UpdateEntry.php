@@ -67,7 +67,7 @@ class UpdateEntry extends AbstractMutation {
 				'description' => __( 'The Gravity Forms entry id.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
-				'type'        => [ 'list_of' => FieldValuesInput::TYPE ],
+				'type'        => [ 'list_of' => FieldValuesInput::$type ],
 				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
 			],
 			'isStarred'   => [
@@ -105,7 +105,7 @@ class UpdateEntry extends AbstractMutation {
 				'description' => __( 'The ID of the entry that was created. Null if the entry was only partially submitted or submitted as a draft.', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'   => [
-				'type'        => Entry::TYPE,
+				'type'        => Entry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload ) {
 					if ( ! empty( $payload['errors'] ) || ! $payload['entryId'] ) {
@@ -118,7 +118,7 @@ class UpdateEntry extends AbstractMutation {
 				},
 			],
 			'errors'  => [
-				'type'        => [ 'list_of' => FieldError::TYPE ],
+				'type'        => [ 'list_of' => FieldError::$type ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -202,6 +202,10 @@ class UpdateEntry extends AbstractMutation {
 			$prev_value = $entry[ $values['id'] ] ?? null;
 
 			$value = $this->prepare_single_field_value( $values, $field, $prev_value );
+			// Signature field requires $_POST['input_{#}'] on update.
+			if ( 'signature' === $field->type ) {
+				$_POST[ 'input_' . $field->id ] = $value;
+			}
 
 			// Signature field requires $_POST['input_{#}'] on update.
 			if ( 'signature' === $field->type ) {

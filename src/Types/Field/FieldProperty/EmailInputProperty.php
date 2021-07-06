@@ -11,13 +11,14 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
 use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - EmailInputProperty
  */
-class EmailInputProperty extends AbstractProperty {
+class EmailInputProperty extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -28,16 +29,14 @@ class EmailInputProperty extends AbstractProperty {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'An array containing the the individual properties for each element of the Email field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * Gets the properties for the Field.
-	 *
-	 * @return array
 	 */
-	protected function get_properties() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			AutocompleteAttributeProperty::get(),
 			DefaultValueProperty::get(),

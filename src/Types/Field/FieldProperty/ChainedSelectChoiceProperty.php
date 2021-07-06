@@ -10,12 +10,13 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ChoiceProperty;
 
 /**
  * Class - ChainedSelectChoiceProperty
  */
-class ChainedSelectChoiceProperty extends AbstractProperty {
+class ChainedSelectChoiceProperty extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -26,16 +27,14 @@ class ChainedSelectChoiceProperty extends AbstractProperty {
 	/**
 	 * Sets the field type description.
 	 */
-	protected function get_type_description() : string {
+	public function get_type_description() : string {
 		return __( 'Gravity Forms Chained Select field choice property.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * Gets the properties for the Field.
-	 *
-	 * @return array
 	 */
-	protected function get_properties() : array {
+	public function get_type_fields() : array {
 		return array_merge(
 			ChoiceProperty\ChoiceIsSelectedProperty::get(),
 			ChoiceProperty\ChoiceTextProperty::get(),

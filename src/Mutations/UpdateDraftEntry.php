@@ -72,7 +72,7 @@ class UpdateDraftEntry extends AbstractMutation {
 				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
-				'type'        => [ 'list_of' => FieldValuesInput::TYPE ],
+				'type'        => [ 'list_of' => FieldValuesInput::$type ],
 				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
 			],
 			'ip'          => [
@@ -98,7 +98,7 @@ class UpdateDraftEntry extends AbstractMutation {
 				'description' => __( 'Draft entry resume token.', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'       => [
-				'type'        => Entry::TYPE,
+				'type'        => Entry::$type,
 				'description' => __( 'The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload ) {
 					if ( ! empty( $payload['errors'] ) || ! $payload['resumeToken'] ) {
@@ -109,7 +109,7 @@ class UpdateDraftEntry extends AbstractMutation {
 				},
 			],
 			'errors'      => [
-				'type'        => [ 'list_of' => FieldError::TYPE ],
+				'type'        => [ 'list_of' => FieldError::$type ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
 			'resumeUrl'   => [

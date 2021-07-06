@@ -18,7 +18,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
  */
 class LoadersRegistrar implements Hookable {
 	/**
-	 * Register hooks to WordPress.
+	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
 		add_filter( 'graphql_data_loaders', [ $this, 'register_loaders' ], 10, 2 );

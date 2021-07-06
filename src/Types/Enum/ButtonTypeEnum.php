@@ -37,7 +37,7 @@ class ButtonTypeEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'IMAGE' => [
 				'description' => __( 'Image button.', 'wp-graphql-gravity-forms' ),

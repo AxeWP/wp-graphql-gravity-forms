@@ -10,6 +10,7 @@
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
 
 use GF_Field;
+use WPGraphQLGravityForms\Utils\Utils;
 
 /**
  * Class - FileUploadFieldValueProperty
@@ -27,7 +28,7 @@ class FileUploadFieldValueProperty extends AbstractValueProperty {
 	 *
 	 * @var string
 	 */
-	public static $field_name = 'value';
+	public static $field_name = 'values';
 
 	/**
 	 * Gets the field type description.
@@ -39,10 +40,10 @@ class FileUploadFieldValueProperty extends AbstractValueProperty {
 	/**
 	 * Gets the GraphQL type for the field.
 	 *
-	 * @return string
+	 * @return array
 	 */
-	public function get_field_type() : string {
-		return 'String';
+	public function get_field_type() : array {
+		return [ 'list_of' => 'String' ];
 	}
 
 	/**
@@ -51,9 +52,17 @@ class FileUploadFieldValueProperty extends AbstractValueProperty {
 	 * @param array    $entry Gravity Forms entry.
 	 * @param GF_Field $field Gravity Forms field.
 	 *
-	 * @return string|null Entry field value.
+	 * @return array|null Entry field value.
 	 */
 	public static function get( array $entry, GF_Field $field ) {
-		return isset( $entry[ $field->id ] ) ? str_replace( [ '["', '"]' ], '', stripslashes( $entry[ $field->id ] ) ) : null;
+		$values = $entry[ $field->id ] ?: null;
+
+		if ( null === $values ) {
+			return $values;
+		}
+
+		$values = Utils::maybe_decode_json( $values );
+
+		return ! $values ? null : $values;
 	}
 }

@@ -39,7 +39,7 @@ class FormStatusEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			self::ACTIVE           => [
 				'description' => __( 'Active forms (default).', 'wp-graphql-gravity-forms' ),

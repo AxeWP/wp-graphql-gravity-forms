@@ -40,7 +40,7 @@ class FieldFiltersOperatorInputEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'IN'           => [
 				'description' => __( 'Find field values that match those in the values array (default).', 'wp-graphql-gravity-forms' ),

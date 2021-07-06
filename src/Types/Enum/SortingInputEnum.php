@@ -37,7 +37,7 @@ class SortingInputEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			self::ASC  => [
 				'description' => __( 'Sort by ascending.', 'wp-graphql-gravity-forms' ),
