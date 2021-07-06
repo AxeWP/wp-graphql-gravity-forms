@@ -32,7 +32,7 @@ abstract class AbstractConnection implements Hookable {
 	 */
 	public function register_connection() : void {
 		register_graphql_connection(
-			$this->get_connection_config(
+			$this->prepare_connection_config(
 				[
 					'fromType'      => $this->get_connection_from_type(),
 					'toType'        => $this->get_connection_to_type(),
@@ -59,7 +59,7 @@ abstract class AbstractConnection implements Hookable {
 	 *
 	 * @param array $config The individual config values.
 	 */
-	public function get_connection_config( array $config ) : array {
+	private function prepare_connection_config( array $config ) : array {
 		$config = array_merge( $config, $this->get_connection_config_args() );
 
 		/**
