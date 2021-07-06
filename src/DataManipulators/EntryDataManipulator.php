@@ -19,11 +19,7 @@ use WPGraphQLGravityForms\Types\Entry\Entry;
  */
 class EntryDataManipulator implements DataManipulator {
 	/**
-	 * Manipulate entry data.
-	 *
-	 * @param array $data The entry data to be manipulated.
-	 *
-	 * @return array Manipulated entry data.
+	 * {@inheritDoc}
 	 */
 	public function manipulate( array $data ) : array {
 		$data = $this->set_is_draft_value( $data );

@@ -19,11 +19,7 @@ use WPGraphQLGravityForms\Interfaces\DataManipulator;
  */
 class FieldsDataManipulator implements DataManipulator {
 	/**
-	 * Manipulate form fields data.
-	 *
-	 * @param array $data The form fields data to be manipulated.
-	 *
-	 * @return array Manipulated form fields data.
+	 * {@inheritDoc}
 	 */
 	public function manipulate( array $data ) : array {
 		$data = array_map( [ $this, 'set_all_field_values' ], $data );

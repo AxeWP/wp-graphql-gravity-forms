@@ -70,7 +70,7 @@ class Entry extends AbstractObject implements Field {
 	}
 
 	/**
-	 * Register hooks to WordPress.
+	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
 		parent::register_hooks();
@@ -165,7 +165,6 @@ class Entry extends AbstractObject implements Field {
 			 */
 		];
 	}
-
 
 	/**
 	 * Register entry query.

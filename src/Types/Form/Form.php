@@ -55,7 +55,7 @@ class Form extends AbstractObject implements Field {
 	}
 
 	/**
-	 * Register hooks to WordPress.
+	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
 		parent::register_hooks();

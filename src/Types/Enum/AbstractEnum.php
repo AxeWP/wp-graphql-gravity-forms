@@ -40,15 +40,11 @@ abstract class AbstractEnum extends AbstractType {
 	 * Sets the Enum type values.
 	 *
 	 * @since 0.4.0
-	 *
-	 * @return array
 	 */
 	abstract public function set_values() : array;
 
 	/**
 	 * Filters and sorts the values before register().
-	 *
-	 * @return array
 	 */
 	private function prepare_values() : array {
 		/**

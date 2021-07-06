@@ -21,7 +21,7 @@ abstract class AbstractConnection implements Hookable {
 	public static $from_field_name;
 
 	/**
-	 * Register hooks to WordPress.
+	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
 		add_action( 'init', [ $this, 'register_connection' ] );
@@ -51,8 +51,6 @@ abstract class AbstractConnection implements Hookable {
 
 	/**
 	 * GraphQL Connection to type.
-	 *
-	 * @return string
 	 */
 	abstract public function get_connection_to_type() : string;
 
@@ -60,8 +58,6 @@ abstract class AbstractConnection implements Hookable {
 	 * Gets the filterable $config array for the GraphQL connection.
 	 *
 	 * @param array $config The individual config values.
-	 *
-	 * @return array
 	 */
 	public function get_connection_config( array $config ) : array {
 		$config = array_merge( $config, $this->get_connection_config_args() );

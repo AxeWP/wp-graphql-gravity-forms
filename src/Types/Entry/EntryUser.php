@@ -35,7 +35,7 @@ class EntryUser extends AbstractObject implements Field {
 	public static $field_name = 'createdBy';
 
 	/**
-	 * Register hooks to WordPress.
+	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
 		parent::register_hooks();

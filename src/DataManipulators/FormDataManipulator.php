@@ -36,11 +36,7 @@ class FormDataManipulator implements DataManipulator {
 	}
 
 	/**
-	 * Manipulate form data.
-	 *
-	 * @param array $data The form data to be manipulated.
-	 *
-	 * @return array Manipulated form data.
+	 * {@inheritDoc}
 	 */
 	public function manipulate( array $data ) : array {
 		$data = $this->set_global_and_form_ids( $data );

@@ -32,7 +32,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'e5e75c89d8bdfb47f987e297c0763d0bf7109489',
+    'reference' => '56c70d67bea2f57ab927602c2a75d267693897f6',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
@@ -263,7 +263,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'e5e75c89d8bdfb47f987e297c0763d0bf7109489',
+      'reference' => '56c70d67bea2f57ab927602c2a75d267693897f6',
     ),
     'hautelook/phpass' => 
     array (
@@ -321,12 +321,12 @@ private static $installed = array (
     ),
     'lucatume/wp-browser' => 
     array (
-      'pretty_version' => '3.0.7',
-      'version' => '3.0.7.0',
+      'pretty_version' => '3.0.8',
+      'version' => '3.0.8.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c8bc37b5837c99ace82b9c353069c2617462eefe',
+      'reference' => '22e7ff337c8e5966eedec5551d93b9ed3148799a',
     ),
     'mikehaertl/php-shellcommand' => 
     array (
@@ -500,12 +500,12 @@ private static $installed = array (
     ),
     'phpstan/phpstan' => 
     array (
-      'pretty_version' => '0.12.90',
-      'version' => '0.12.90.0',
+      'pretty_version' => '0.12.91',
+      'version' => '0.12.91.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'f0e4b56630fc3d4eb5be86606d07212ac212ede4',
+      'reference' => '8226701cd228a0d63c2df995de7ab6070c69ac6a',
     ),
     'phpunit/php-code-coverage' => 
     array (
