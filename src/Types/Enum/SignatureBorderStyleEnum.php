@@ -43,7 +43,7 @@ class SignatureBorderStyleEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'DOTTED' => [
 				'description' => __( 'A "dotted" border style.', 'wp-graphql-gravity-forms' ),

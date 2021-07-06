@@ -42,7 +42,7 @@ class DateFieldFormatEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'MDY'       => [
 				'description' => __( 'mm/dd/yyyy format.', 'wp-graphql-gravity-forms' ),

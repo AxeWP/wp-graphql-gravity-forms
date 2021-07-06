@@ -38,7 +38,7 @@ class SizePropertyEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'SMALL'  => [
 				'description' => __( 'Small field size.', 'wp-graphql-gravity-forms' ),

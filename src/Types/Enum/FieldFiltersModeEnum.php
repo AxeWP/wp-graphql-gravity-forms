@@ -37,7 +37,7 @@ class FieldFiltersModeEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'ALL' => [
 				'description' => __( 'All field filters (default).', 'wp-graphql-gravity-forms' ),

@@ -38,7 +38,7 @@ class AddressTypeEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'INTERNATIONAL' => [
 				'description' => __( 'International address type.', 'wp-graphql-gravity-forms' ),

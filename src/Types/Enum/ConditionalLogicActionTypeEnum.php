@@ -37,7 +37,7 @@ class ConditionalLogicActionTypeEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'SHOW' => [
 				'description' => __( 'Image button.', 'wp-graphql-gravity-forms' ),

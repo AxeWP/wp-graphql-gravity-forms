@@ -38,7 +38,7 @@ class DateTypeEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'FIELD'    => [
 				'description' => __( 'A simple date field.', 'wp-graphql-gravity-forms' ),

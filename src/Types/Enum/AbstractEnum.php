@@ -37,11 +37,19 @@ abstract class AbstractEnum extends AbstractType {
 	}
 
 	/**
-	 * Sets the Enum type values.
+	 * Gets the Enum type values.
 	 *
-	 * @since 0.4.0
+	 * @todo convert to abstract function after deprecation is removed.
+	 *
+	 * @since 0.7.0
 	 */
-	abstract public function set_values() : array;
+	public function get_values() : array {
+		if( method_exists( $this, 'set_values') ) {
+			_deprecated_function( 'set_values', '0.7.0', 'get_values');
+			return $this->set_values();
+		}
+		return [];
+	}
 
 	/**
 	 * Filters and sorts the values before register().
@@ -51,7 +59,7 @@ abstract class AbstractEnum extends AbstractType {
 		 * Pass the values through a filter.
 		 */
 
-		$values = apply_filters( 'wp_graphql_' . Utils::to_snake_case( static::$type ) . '_values', $this->set_values() );
+		$values = apply_filters( 'wp_graphql_' . Utils::to_snake_case( static::$type ) . '_values', $this->get_values() );
 
 		/**
 		 * Sort the values alpahbetically by key.

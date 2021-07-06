@@ -37,7 +37,7 @@ class CaptchaThemeEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'LIGHT' => [
 				'description' => __( 'Light reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),

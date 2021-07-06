@@ -37,7 +37,7 @@ class IdTypeEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'ID'          => [
 				'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),

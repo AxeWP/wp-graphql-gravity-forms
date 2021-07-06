@@ -38,7 +38,7 @@ class FormLabelPlacementEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'TOP'   => [
 				'description' => __( 'Field labels are displayed on top of the fields.', 'wp-graphql-gravity-forms' ),

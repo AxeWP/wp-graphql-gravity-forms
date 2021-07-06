@@ -37,7 +37,7 @@ class PhoneFieldFormatEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'STANDARD'      => [
 				'description' => __( 'Standard phone number format.', 'wp-graphql-gravity-forms' ),

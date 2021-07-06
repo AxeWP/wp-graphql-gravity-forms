@@ -39,7 +39,7 @@ class NotificationToTypeEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'EMAIL'   => [
 				'description' => __( 'Email address.', 'wp-graphql-gravity-forms' ),

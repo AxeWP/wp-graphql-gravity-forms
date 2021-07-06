@@ -38,7 +38,7 @@ class VisibilityPropertyEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'VISIBLE'        => [
 				'description' => __( 'The field is "visible".', 'wp-graphql-gravity-forms' ),

@@ -38,7 +38,7 @@ class ConfirmationTypeEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'MESSAGE'  => [
 				'description' => __( 'Use a confirmation "message".', 'wp-graphql-gravity-forms' ),

@@ -37,7 +37,7 @@ class ConditionalLogicLogicTypeEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'ALL' => [
 				'description' => __( 'Evaulate all logic rules.', 'wp-graphql-gravity-forms' ),

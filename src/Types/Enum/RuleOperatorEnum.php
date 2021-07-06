@@ -42,7 +42,7 @@ class RuleOperatorEnum extends AbstractEnum {
 	 *
 	 * @return array
 	 */
-	public function set_values() : array {
+	public function get_values() : array {
 		return [
 			'IS'           => [
 				'description' => __( 'Evaluates values that match the comparison value.', 'wp-graphql-gravity-forms' ),
