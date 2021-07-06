@@ -18,9 +18,9 @@ abstract class AbstractFieldValue extends AbstractObject implements FieldValue {
 	/**
 	 * Constructor used to deprecate the class.
 	 *
-	 * @since 0.6.4
+	 * @since 0.7.0
 	 */
 	public function __construct() {
-		_deprecated_function( 'AbstractFieldValue::__construct', '0.6.4', 'AbstractObject::__construct' );
+		_deprecated_function( 'AbstractFieldValue::__construct', '0.7.0', 'AbstractObject::__construct' );
 	}
 }

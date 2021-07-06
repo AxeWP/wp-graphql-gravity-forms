@@ -18,9 +18,9 @@ abstract class AbstractField extends AbstractFormField {
 	/**
 	 * Constructor used to deprecate the class.
 	 *
-	 * @since 0.6.4
+	 * @since 0.7.0
 	 */
 	public function __construct() {
-		_deprecated_function( 'AbstractField::__contstruct', '0.6.4', 'AbstractFormField::__construct' );
+		_deprecated_function( 'AbstractField::__contstruct', '0.7.0', 'AbstractFormField::__construct' );
 	}
 }

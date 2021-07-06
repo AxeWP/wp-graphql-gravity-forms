@@ -22,6 +22,7 @@ use WPGraphQLGravityForms\Types\FieldError\FieldError;
 use WPGraphQLGravityForms\Types\Input\FieldValuesInput;
 use WPGraphQLGravityForms\Utils\GFUtils;
 use WPGraphQLGravityForms\Utils\Utils;
+use WPGraphQLGravityForms\WPGraphQLGravityForms;
 
 /**
  * Class - SubmitForm
@@ -49,11 +50,10 @@ class SubmitForm extends AbstractMutation {
 
 
 	/**
-	 * Constructor
-	 *
-	 * @param array $instances .
+	 * Constructor.
 	 */
-	public function __construct( array $instances ) {
+	public function __construct() {
+		$instances                          = WPGraphQLGravityForms::instances();
 		$this->entry_data_manipulator       = $instances['entry_data_manipulator'];
 		$this->draft_entry_data_manipulator = $instances['draft_entry_data_manipulator'];
 	}

@@ -20,7 +20,7 @@ abstract class AbstractEnum extends AbstractType {
 	 */
 	public function register_type() : void {
 		if ( method_exists( $this, 'register' ) ) {
-			_deprecated_function( 'register', '0.6.4', 'register_type' );
+			_deprecated_function( 'register', '0.7.0', 'register_type' );
 
 			$this->register();
 		}

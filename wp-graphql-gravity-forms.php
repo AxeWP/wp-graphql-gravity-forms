@@ -59,6 +59,6 @@ add_action(
 
 		require_once $autoload;
 
-		( new WPGraphQLGravityForms\WPGraphQLGravityForms() )->run();
+		WPGraphQLGravityForms\WPGraphQLGravityForms::run();
 	}
 );

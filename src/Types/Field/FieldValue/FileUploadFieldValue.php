@@ -50,7 +50,7 @@ class FileUploadFieldValue extends AbstractObject implements FieldValue {
 			/**
 			 * Deprecated properties.
 			 *
-			 * @since 0.6.4
+			 * @since 0.7.0
 			 */
 			'value'  => [
 				'type'              => 'String',

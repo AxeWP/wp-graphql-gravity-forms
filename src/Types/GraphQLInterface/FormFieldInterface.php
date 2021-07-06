@@ -17,6 +17,7 @@ use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\Type;
 use WPGraphQLGravityForms\WPGraphQLGravityForms;
 use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
+use WPGraphQLGravityForms\Types\Field\AbstractFormField;
 
 /**
  * Class - FormFieldInterface
@@ -28,6 +29,12 @@ class FormFieldInterface implements Hookable, Type {
 	 * @var string
 	 */
 	public static $type = 'FormField';
+	/**
+	 * WPGraphQL for Gravity Forms plugin's class instances.
+	 *
+	 * @var array
+	 */
+	private $instances;
 
 	/**
 	 * {@inheritDoc}.
@@ -100,7 +107,7 @@ class FormFieldInterface implements Hookable, Type {
 					'description' => $this->get_type_description(),
 					'fields'      => self::get_type_fields(),
 					'resolveType' => function( $value ) use ( $type_registry ) {
-						$possible_types = WPGraphQLGravityForms::get_enabled_field_types();
+						$possible_types = $this->get_registered_form_field_types();
 						if ( isset( $possible_types[ $value->type ] ) ) {
 							return $type_registry->get_type( $possible_types[ $value->type ] );
 						}
@@ -128,9 +135,9 @@ class FormFieldInterface implements Hookable, Type {
 		/**
 		 * Deprecated filter for modifying the the type fields.
 		 *
-		 * @since 0.6.4
+		 * @since 0.7.0
 		 */
-		$config['fields'] = apply_filters_deprecated( 'wp_graphql_gf_global_properties', [ $config['fields'] ], '0.6.4', 'wp_graphql_gf_' . static::$type . '_type_config' );
+		$config['fields'] = apply_filters_deprecated( 'wp_graphql_gf_global_properties', [ $config['fields'] ], '0.7.0', 'wp_graphql_gf_' . static::$type . '_type_config' );
 
 		/**
 		 * Filter for modifying the GraphQL type $config array used to register the type in WPGraphQL.
@@ -143,4 +150,22 @@ class FormFieldInterface implements Hookable, Type {
 
 		return $config;
 	}
+
+	/**
+	 * Returns Gravity Forms Field types to be exposed to the GraphQL schema.
+	 *
+	 * @return array field types.
+	 */
+	public function get_registered_form_field_types() : array {
+		$fields = array_filter( WPGraphQLGravityForms::instances(), fn( $instance ) => $instance instanceof AbstractFormField );
+
+		$types = [];
+
+		foreach ( $fields as $field ) {
+			$types[ $field::$gf_type ] = $field::$type;
+		}
+
+		return $types;
+	}
+
 }

@@ -60,11 +60,11 @@ abstract class AbstractType implements Hookable, Type {
 		/**
 		 * Call deprecated get_properties() function, in case it's used in a child class.
 		 *
-		 * @since 0.6.4
+		 * @since 0.7.0
 		 */
 		$fields = $this->get_type_fields();
 		if ( method_exists( $this, 'get_properties' ) ) {
-			_deprecated_function( 'get_properties', '0.6.4', 'get_type_fields' );
+			_deprecated_function( 'get_properties', '0.7.0', 'get_type_fields' );
 			$fields = array_merge( $fields, $this->get_properties() );
 		}
 

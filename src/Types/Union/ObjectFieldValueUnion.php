@@ -12,6 +12,7 @@ namespace WPGraphQLGravityForms\Types\Union;
 use WPGraphQL\Registry\TypeRegistry;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
+use WPGraphQLGravityForms\WPGraphQLGravityForms;
 
 /**
  * Class - ObjectFieldValueUnion
@@ -23,22 +24,6 @@ class ObjectFieldValueUnion implements Hookable {
 	 * @var string
 	 */
 	public static $type = 'ObjectFieldValueUnion';
-
-	/**
-	 * WPGraphQL for Gravity Forms plugin's class instances.
-	 *
-	 * @var array
-	 */
-	private $instances;
-
-	/**
-	 * Constructor
-	 *
-	 * @param array $instances WPGraphQL for Gravity Forms plugin's class instances.
-	 */
-	public function __construct( array $instances ) {
-		$this->instances = $instances;
-	}
 
 	/**
 	 * {@inheritDoc}.
@@ -82,7 +67,7 @@ class ObjectFieldValueUnion implements Hookable {
 	 */
 	private function get_field_value_classes() : array {
 		$is_field_value_instance = fn( $instance ) => $instance instanceof FieldValue;
-		$field_values            = array_filter( $this->instances, $is_field_value_instance );
+		$field_values            = array_filter( WPGraphQLGravityForms::instances(), $is_field_value_instance );
 
 		/**
 		 * Filter for adding custom field value class instances.

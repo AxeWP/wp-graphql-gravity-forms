@@ -96,12 +96,14 @@ class Utils {
 	 *
 	 * @param array $filters .
 	 * @param mixed $value .
+	 *
+	 * @return mixed
 	 */
 	public static function apply_filters( $filters, $value ) {
 		$args = func_get_args();
 
-		$modifiers = array_splice( $filter, 1, count( $filters ) );
-		$filter    = $filter[0];
+		$modifiers = array_splice( $filters, 1, count( $filters ) );
+		$filter    = $filters[0];
 		$args      = array_slice( $args, 2 );
 
 		// Add an empty modifier so the base filter will be applied as well.
@@ -113,7 +115,7 @@ class Utils {
 		foreach ( $modifiers as $modifier ) {
 			$modifier = empty( $modifier ) ? '' : sprintf( '_%s', $modifier );
 			$filter  .= $modifier;
-			$value    = apply_filters( $filter, $value, ...$args );
+			$value    = apply_filters( $filter, $value, ...$args ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
 		}
 
 		return $value;
