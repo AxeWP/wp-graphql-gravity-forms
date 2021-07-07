@@ -45,17 +45,14 @@ class PostImageField extends AbstractFormField {
 		return array_merge(
 			$this->get_global_properties(),
 			$this->get_custom_properties(),
-			FieldProperty\AllowedExtensionsProperty::get(),
 			FieldProperty\AdminLabelProperty::get(),
-			FieldProperty\AdminOnlyProperty::get(),
-			FieldProperty\AllowsPrepopulateProperty::get(),
+			FieldProperty\AllowedExtensionsProperty::get(),
+			FieldProperty\ErrorMessageProperty::get(),
+			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\DescriptionProperty::get(),
-			FieldProperty\ErrorMessageProperty::get(),
-			FieldProperty\InputNameProperty::get(),
-			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\LabelProperty::get(),
-			FieldProperty\SizeProperty::get(),
+			FieldProperty\SubLabelPlacementProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'displayAlt'         => [
@@ -78,7 +75,20 @@ class PostImageField extends AbstractFormField {
 					'type'        => 'Boolean',
 					'description' => __( "Whether the image field should be used to set the post's Featured Image", 'wp-graphql-gravity-forms' ),
 				],
-			]
+			],
+			/**
+			* Deprecated field properties.
+			*
+			* @since 0.7.0
+			*/
+			// translators: Gravity Forms Field type.
+			Utils::deprecate_property( FieldProperty\AdminOnlyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
+			// translators: Gravity Forms Field type.
+			Utils::deprecate_property( FieldProperty\AllowsPrepopulateProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
+			// translators: Gravity Forms Field type.
+			Utils::deprecate_property( FieldProperty\InputNameProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
+			// translators: Gravity Forms Field type.
+			Utils::deprecate_property( FieldProperty\SizeProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
 		);
 	}
 }
