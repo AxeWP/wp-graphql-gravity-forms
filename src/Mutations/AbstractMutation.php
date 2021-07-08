@@ -150,7 +150,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	/**
 	 * Disables validation for unsupported fields when submitting a form.
 	 * Applied using the 'gform_field_validation' filter.
-	 * Currently unsupported fields: captcha, fileupload, post_image
+	 * Currently unsupported fields: captcha
 	 *
 	 * @param array    $result .
 	 * @param mixed    $value .
@@ -159,7 +159,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	 * @return array
 	 */
 	public function disable_validation_for_unsupported_fields( array $result, $value, array $form, GF_Field $field ) : array {
-		if ( in_array( $field->type, [ 'captcha', 'post_image' ], true ) ) {
+		if ( in_array( $field->type, [ 'captcha' ], true ) ) {
 			$result = [
 				'is_valid' => true,
 				'message'  => __( 'This field type is not (yet) supported.', 'wp-graphql-gravity-forms' ),
@@ -179,7 +179,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	public function prepare_single_field_value( array $values, GF_Field $field, $prev_value = null ) {
 		$this->validate_field_value_type( $field, $values );
 
-		$value = $values['addressValues'] ?? $values['chainedSelectValues'] ?? $values['checkboxValues'] ?? $values['emailValues'] ?? $values['fileUploadValues'] ?? $values['listValues'] ?? $values['nameValues'] ?? $values['values'] ?? $values['value'] ?? null;
+		$value = $values['addressValues'] ?? $values['chainedSelectValues'] ?? $values['checkboxValues'] ?? $values['emailValues'] ?? $values['fileUploadValues'] ?? $values['listValues'] ?? $values['nameValues'] ?? $values['postImageValues'] ?? $values['values'] ?? $values['value'] ?? null;
 
 		$value = $this->prepare_field_value_by_type( $value, $field, $prev_value );
 
@@ -215,7 +215,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 		}
 
 		// Some fields are stored using their own array structure of subfields, so we're just adding it to to the values array as is.
-		if ( in_array( $field->type, [ 'address', 'chainedselect', 'checkbox', 'consent', 'name' ], true ) ) {
+		if ( in_array( $field->type, [ 'address', 'chainedselect', 'checkbox', 'consent', 'name', 'post_image' ], true ) ) {
 			return $values + $value_to_add;
 		}
 
@@ -306,6 +306,11 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			case 'post_tags':
 				if ( ! isset( $values['values'] ) ) {
 					$value_type_name = 'values';
+				}
+				break;
+			case 'post_image':
+				if ( ! isset( $values['postImageValues'] ) ) {
+					$value_type_name = 'postImageValues';
 				}
 				break;
 			default:
@@ -453,7 +458,11 @@ abstract class AbstractMutation implements Hookable, Mutation {
 		$files = [];
 		$urls  = [];
 		foreach ( $value as $single_value ) {
-			$single_value['error'] = ! empty( $single_value['error'] ) ? $single_value['error'] : 0;
+			// Initialize files, since GF_Field_FileUpload expects it.
+
+			if ( ! array_key_exists( 'error', $single_value ) || empty( $single_value['error'] ) ) {
+				$single_value['error'] = 0;
+			}
 
 			$is_uploaded = GFUtils::handle_file_upload( $single_value, $target );
 
@@ -482,6 +491,37 @@ abstract class AbstractMutation implements Hookable, Mutation {
 		GFFormsModel::$uploaded_files[ $field->formId ][ $input_name ] = $files;
 
 		return $_gf_uploaded_files[ $input_name ] ?: null;
+	}
+
+	/**
+	 * Saves post_image field value.
+	 *
+	 * @param array    $value .
+	 * @param GF_Field $field .
+	 * @param string   $prev_value the file upload encoded url.
+	 */
+	protected function prepare_post_image_field_value( array $value, GF_Field $field, $prev_value = null ) : array {
+		$prev_value = array_pad( explode( '|:|', (string) $prev_value ), 4, false );
+
+		$url         = array_key_exists( 'image', $value ) ? $this->prepare_file_upload_field_value( [ $value['image'] ], $field, $prev_value[0] ?? null ) : $prev_value[0] ?? null;
+		$title       = array_key_exists( 'title', $value ) ? wp_strip_all_tags( $value['title'] ) : $prev_value[1] ?? null;
+		$caption     = array_key_exists( 'caption', $value ) ? wp_strip_all_tags( $value['caption'] ) : $prev_value[1] ?? null;
+		$description = array_key_exists( 'description', $value ) ? wp_strip_all_tags( $value['description'] ) : $prev_value[3] ?? null;
+		$alt         = array_key_exists( 'altText', $value ) ? wp_strip_all_tags( $value['altText'] ) : $prev_value[4] ?? null;
+
+		$_POST[ 'input_' . $field->id . '_0' ] = $url;
+		$_POST[ 'input_' . $field->id . '_1' ] = $title;
+		$_POST[ 'input_' . $field->id . '_4' ] = $caption;
+		$_POST[ 'input_' . $field->id . '_7' ] = $description;
+		$_POST[ 'input_' . $field->id . '_2' ] = $alt;
+
+		return [
+			$field->id . '_0' => $url,
+			$field->id . '_1' => $title,
+			$field->id . '_2' => $alt,
+			$field->id . '_4' => $caption,
+			$field->id . '_7' => $description,
+		];
 	}
 
 	/**
@@ -778,6 +818,9 @@ abstract class AbstractMutation implements Hookable, Mutation {
 			case 'post_content':
 				$prepared_value = $this->prepare_post_content_field_value( $value );
 				break;
+			case 'post_image':
+				$prepared_value = $this->prepare_post_image_field_value( $value, $field, $prev_value );
+				break;
 			case 'signature':
 				$prepared_value = $this->prepare_signature_field_value( $value, $prev_value );
 
@@ -807,5 +850,23 @@ abstract class AbstractMutation implements Hookable, Mutation {
 		}
 
 		return $prepared_value;
+	}
+
+	/**
+	 * Initializes the $_FILES array with the fileupload `input_{id}`.
+	 * This prevents any notices about missing array keys.
+	 */
+	public function initialize_files() : void {
+		foreach ( $this->form['fields'] as $field ) {
+			if ( 'post_image' === $field->type || ( 'fileupload' === $field->type && ! $field->multipleFiles ) ) {
+				$_FILES[ 'input_' . $field->id ] = [
+					'name'     => null,
+					'type'     => null,
+					'size'     => null,
+					'tmp_name' => null,
+					'error'    => null,
+				];
+			}
+		}
 	}
 }
