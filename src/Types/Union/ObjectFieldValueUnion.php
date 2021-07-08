@@ -74,7 +74,7 @@ class ObjectFieldValueUnion implements Hookable {
 		 *
 		 * @since 0.7.0
 		 */
-		$fields = apply_filters_deprecated( 'wp_graphql_gf_field_value_instances', [ $fields ], '0.7.0', 'wp_graphql_gf_instances' );
+		$field_values = apply_filters_deprecated( 'wp_graphql_gf_field_value_instances', [ $field_values ], '0.7.0', 'wp_graphql_gf_instances' );
 
 		// Filter the array a second time to guarantee that any classes added are instances of FieldValue.
 		return array_filter( $field_values, $is_field_value_instance );
