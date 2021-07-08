@@ -37,6 +37,10 @@ class PostImageFieldValue extends AbstractObject implements FieldValue {
 	 */
 	public function get_type_fields() : array {
 		return [
+			'altText'     => [
+				'type'        => 'String',
+				'description' => __( 'The image alt text.', 'wp-graphql-gravity-forms' ),
+			],
 			'caption'     => [
 				'type'        => 'String',
 				'description' => __( 'The image caption.', 'wp-graphql-gravity-forms' ),
