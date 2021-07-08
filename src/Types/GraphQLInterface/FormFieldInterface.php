@@ -168,7 +168,7 @@ class FormFieldInterface implements Hookable, Type {
 		/**
 		 * Filter to add custom Gravity Forms field types to the GraphQL schema.
 		 *
-		 * @param array The field types.
+		 * @param array $type The field types.
 		 */
 		$types = apply_filters_deprecated( 'wp_graphql_gf_field_types', [ $types ], '0.7.0', 'wp_graphql_gf_instances', __( 'Please remove your code, and use `wp_graphql_gf_instances` hook to register your custom fields instead', 'wp-graphql-gravity-forms' ) );
 
