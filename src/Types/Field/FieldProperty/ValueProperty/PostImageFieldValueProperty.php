@@ -57,10 +57,11 @@ class PostImageFieldValueProperty extends AbstractValueProperty {
 		$value = array_pad( explode( '|:|', $entry[ $field->id ] ), 4, false );
 
 		return [
-			'url'         => $value[0] ?: null,
-			'title'       => $value[1] ?: null,
+			'altText'     => $value[4] ?: null,
 			'caption'     => $value[2] ?: null,
 			'description' => $value[3] ?: null,
+			'title'       => $value[1] ?: null,
+			'url'         => $value[0] ?: null,
 		];
 	}
 }

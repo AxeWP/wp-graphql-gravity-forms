@@ -160,6 +160,9 @@ class SubmitForm extends AbstractMutation {
 			$created_by    = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : null;
 			$source_url    = esc_url_raw( Utils::truncate( $_SERVER['HTTP_REFERER'] ?? '', 250 ) );
 
+			// Initialize $_FILES with fileupload inputs.
+			$this->initialize_files();
+
 			$field_values = $this->get_field_values( $input['fieldValues'] );
 
 			add_filter( 'gform_field_validation', [ $this, 'disable_validation_for_unsupported_fields' ], 10, 4 );
