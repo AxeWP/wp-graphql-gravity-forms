@@ -33,43 +33,46 @@ class FieldValuesInput extends AbstractInput {
 	 */
 	public function get_type_fields() : array {
 		$fields = [
-			'id'                  => [
+			'id'             => [
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'The field id.', 'wp-graphql-gravity-forms' ),
 			],
-			'addressValues'       => [
+			'addressValues'  => [
 				'type'        => AddressInput::$type,
 				'description' => __( 'The form field values for Address fields.', 'wp-graphql-gravity-forms' ),
 			],
-			'chainedSelectValues' => [
-				'type'        => [ 'list_of' => ChainedSelectInput::$type ],
-				'description' => __( 'The form field values for ChainedSelect fields', 'wp-graphql-gravity-forms' ),
-			],
-			'checkboxValues'      => [
+			'checkboxValues' => [
 				'type'        => [ 'list_of' => CheckboxInput::$type ],
 				'description' => __( 'The form field values for Checkbox fields', 'wp-graphql-gravity-forms' ),
 			],
-			'emailValues'         => [
+			'emailValues'    => [
 				'type'        => EmailInput::$type,
 				'description' => __( 'The form field values for Email fields.', 'wp-graphql-gravity-forms' ),
 			],
-			'listValues'          => [
+			'listValues'     => [
 				'type'        => [ 'list_of' => ListInput::$type ],
 				'description' => __( 'The form field values for List fields', 'wp-graphql-gravity-forms' ),
 			],
-			'nameValues'          => [
+			'nameValues'     => [
 				'type'        => NameInput::$type,
 				'description' => __( 'The form field values for Name fields', 'wp-graphql-gravity-forms' ),
 			],
-			'values'              => [
+			'values'         => [
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'The form field values for fields that accept multiple string values. Used by MultiSelect, Post Category, Post Custom, and Post Tags fields.', 'wp-graphql-gravity-forms' ),
 			],
-			'value'               => [
+			'value'          => [
 				'type'        => 'String',
 				'description' => __( 'The form field values for basic fields', 'wp-graphql-gravity-forms' ),
 			],
 		];
+
+		if ( class_exists( 'GFChainedSelects' ) ) {
+			$fields['chainedSelectValues'] = [
+				'type'        => [ 'list_of' => ChainedSelectInput::$type ],
+				'description' => __( 'The form field values for ChainedSelect fields', 'wp-graphql-gravity-forms' ),
+			];
+		}
 
 		if ( class_exists( 'WPGraphQL\Upload\Type\Upload' ) ) {
 			$fields['fileUploadValues'] = [
