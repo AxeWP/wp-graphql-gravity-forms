@@ -1,6 +1,6 @@
 # Submit a form by building a draft entry incremmentally.
 
-Another way to submit forms is to incrementally build a draft entry. **This process may be deprecated and removed in future versions of the plugin**.
+While it is recommended to [use the `submitGravityFormsForm` mutation for submissions](submitting-forms.md), another way to submit forms is to incrementally build a draft entry. **This process may be deprecated and removed in future versions of the plugin**.
 
 The submission process works like this:
 
@@ -32,7 +32,7 @@ mutation {
 
 ### Update an individual Draft Entry value.
 
-The example below shows `updateDraftEntryTextFieldValue`, which can be used for updating the value of a text field. Similar mutations exist for other field types, such as `updateDraftEntrySelectFieldValue`, `updateDraftEntryAddressFieldValue`, etc. The `value` shape is the same as used [in the `fieldValues` input of `submitGravityFormsForm`](#documentation-submit-gravity-forms-form).
+The example below shows `updateDraftEntryTextFieldValue`, which can be used for updating the value of a text field. Similar mutations exist for other field types, such as `updateDraftEntrySelectFieldValue`, `updateDraftEntryAddressFieldValue`, etc. The `value` shape is the same as used [in the `fieldValues` input of `submitGravityFormsForm`](submitting-forms.md).
 
 Use the `resumeToken` from the `createGravityFormsDraftEntry` mutation's response. It is this draft entry's unique identifier.
 

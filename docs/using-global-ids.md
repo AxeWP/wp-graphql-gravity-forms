@@ -1,6 +1,6 @@
 # Global IDs vs Database IDs
 
-The `id` input for Form and Entry queries accepts either the Gravity Forms ID (`idType: DATABASE_ID`) assigned to the database, or a Global (base-64 encoded) ID (`idType: ID`).
+The `id` input for Form and Entry queries accepts either the Gravity Forms ID (`idType: DATABASE_ID`) assigned to the WordPress database, or a global (base-64 encoded) ID (`idType: ID`).
 
 To generate global ID for an object, you encode the name of the GraphQL type, followed by the database ID. This can be done in JavaScript using the `btoa()` function like this, where `GravityFormsForm` is the GraphQL type and `1` is the form ID:
 

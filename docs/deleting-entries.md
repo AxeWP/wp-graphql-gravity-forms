@@ -1,8 +1,8 @@
-# Delete an Entry or Draft Entry.
+# Delete an Entry or Draft Entry
 
 ## Delete an Entry
 
-You can use the `deleteGravityFormsEntry` mutation to delete an entry. The `entryId` of the deleted entry will be in the response.
+You can use the `deleteGravityFormsEntry` mutation to delete a [Gravity Forms entry](https://docs.gravityforms.com/entry-object/). The `entryId` of the deleted entry will be in the response.
 
 ### Example Mutation
 
@@ -16,7 +16,7 @@ mutation {
 
 ## Delete a Draft Entry
 
-Similarly, you can use `deleteGravityFormsDraftEntry` to delete a draft entry. The `resumeToken` of the deleted draft entry will be in the response.
+Similarly, you can use `deleteGravityFormsDraftEntry` to delete a [Gravity Forms draft entry](https://docs.gravityforms.com/database-storage-structure-reference/#wp-gf-draft-submissions). The `resumeToken` of the deleted draft entry will be in the response.
 
 ### Example Mutation
 

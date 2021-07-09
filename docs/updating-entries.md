@@ -2,7 +2,7 @@
 
 ## Update an Entry
 
-You can update an entry with the `updateGravityFormsEntry` mutation. This mutation works similarly to [`submitGravityFormsForm`](#documentation-submit-gravity-forms-form).
+You can update a [Gravity Forms entry](https://docs.gravityforms.com/entry-object/) with the `updateGravityFormsEntry` mutation. This mutation works similarly to [`submitGravityFormsForm`](submitting-forms.md).
 
 ### Example Mutation
 
@@ -37,9 +37,9 @@ You can update an entry with the `updateGravityFormsEntry` mutation. This mutati
 }
 ```
 
-## Updating a Draft Entry
+## Update a Draft Entry
 
-Updating a draft entry using the `updateGravityFormsDraftEntry` mutation follows a similar pattern: :
+Updating a [Gravity Forms draft entry](https://docs.gravityforms.com/database-storage-structure-reference/#wp-gf-draft-submissions) using the `updateGravityFormsDraftEntry` mutation follows a similar pattern to [updating an entry](#update-an-entry) :
 
 ### Example Mutation
 

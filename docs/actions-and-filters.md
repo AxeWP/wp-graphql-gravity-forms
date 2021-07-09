@@ -2,6 +2,16 @@
 
 ## Filters
 
+- [`wp_graphql_gf_can_view_entries`](#wp_graphql_gf_can_view_entries)
+- [`wp_graphql_gf_connection_config`](#wp_graphql_gf_connection_config)
+- [`wp_graphql_gf_custom_properties`](#wp_graphql_gf_custom_properties)
+- [`wp_graphql_gf_field_value_type`](#wp_graphql_gf_field_value_type)
+- [`wp_graphql_gf_form_object`](#wp_graphql_gf_form_object)
+- [`wp_graphql_gf_instances`](#wp_graphql_gf_instances)
+- [`wp_graphql_gf_prepare_field_value`](#wp_graphql_gf_prepare_field_value)
+- [`wp_graphl_gf_type_config`](#wp_graphl_gf_type_config)
+- [`wp_graphql_gf_{$enumType}_values`](#wp_graphql_gf_enumtype_values)
+
 ### `wp_graphql_gf_can_view_entries`
 
 Filter for modifying whether the user can view the GF entries being queried.
@@ -10,7 +20,7 @@ Filter for modifying whether the user can view the GF entries being queried.
 apply_filters( 'wp_graphql_gf_can_view_entries', bool $can_view_entries, array $entry_ids );
 ```
 
-##### Parameters
+#### Parameters
 
 - **`$can_view_entries`** _(bool)_ : Whether the user has `gravityforms_view_entries` or `gform_full_access` permissions.
 - **`$entry_ids`** _(array)_ : An array of the GF entry ids being queried by GraphQL.
@@ -23,7 +33,7 @@ Filters the GraphQL connection `$config` array used to register the connection i
 apply_filters( 'wp_graphql_gf_connection_config', array $config, string $from_type, string $to_type );
 ```
 
-##### Parameters
+#### Parameters
 
 - **`$config`** _(array)_ : An array containing the [WPGraphQL connection `$config`](https://www.wpgraphql.com/functions/register_graphql_connection/#parameters).
 - **`$from_type`** _(string)_ : The `from` connection type.
@@ -37,7 +47,7 @@ Filter to register custom GraphQL fields to GF `formFields`.
 apply_filters( 'wp_graphql_gf_custom_properties', array $custom_properties, string $gf_type );
 ```
 
-Parameters:
+#### Parameters
 
 - **`$custom_properties`** _(array)_ : An array of [WPGraphQL field `$config`](https://www.wpgraphql.com/functions/register_graphql_field/#parameters) .
 - **`$gf_type`** _(string)_ : The gravity forms field type the GraphQL field should be associated with.
@@ -50,7 +60,7 @@ Filter to modify the list of accepted `fieldValues` input types. Can be used to 
 apply_filters( 'wp_graphql_gf_field_value_type', string $value_type_name, GF_Field $field, array $input_values );
 ```
 
-##### Parameters
+#### Parameters
 
 - **`$value_type_name`** _(string)_ : The GraphQL input type name that must be included in `fieldValues`.
 - **`$field`** _(GF_Field)_ : The Gravity Forms [field object](https://docs.gravityforms.com/field-object/).
@@ -64,7 +74,7 @@ Filter to modify the form data before it is sent to the client. This hook is som
 apply_filters( 'wp_graphql_gf_form_object', array $form );
 ```
 
-##### Parameters
+#### Parameters
 
 - **`$form`** _(array)_ : The GF [Form object](https://docs.gravityforms.com/form-object/).
 
@@ -76,7 +86,7 @@ Filter for modifying the plugin's class instances. Can be used to extend support
 apply_filters( 'wp_graphql_gf_instances', array $instances );
 ```
 
-##### Parameters
+#### Parameters
 
 - **`$instances`** _(array)_ : An array of `AbstractFormField` instances.
 
@@ -88,9 +98,9 @@ Filter to modify the field value submitted to GF.
 apply_filters( 'wp_graphql_gf_prepare_field_value', mixed $value, array $input_values, GF_Field $field, mixed $prev_value = null );
 ```
 
-##### Parameters
+#### Parameters
 
-- **`$value`** _(mixed)_ : The formatted value to be added to the GF submission object [link].
+- **`$value`** _(mixed)_ : The formatted value to be added to the [Gravity Forms submission object](https://docs.gravityforms.com/api-functions/#submit-form).
 - **`$input_values`** _(array)_ : The `fieldValues` input array submitted to the the GraphQL mutation.
 - **`$field`** _(GF_Field)_ : The Gravity Forms [field object](https://docs.gravityforms.com/field-object/).
 - **`$prev_value`** _( mixed)_ : The previous value saved to GF entry or draft entry., if it exists.
@@ -105,12 +115,12 @@ apply_filters( 'wp_graphql_gf_type_config', array $config, string $type );
 apply_filters( 'wp_graphql_gf_{$type}_type_config', array $config );
 ```
 
-##### Parameters
+#### Parameters
 
 - **`$config`** _(array)_ : The [`$config` array for the WPGraphQL type](https://www.wpgraphql.com/functions/register_graphql_object_type/#parameters).
 - **`$type`** _(string)_ : The GraphQL type to be registered.
 
-### `wp_graphql_gf_{$enumType}_values( $values )`.
+### `wp_graphql_gf_{$enumType}_values`.
 
 Filters registered values for an Enum.
 
@@ -118,6 +128,6 @@ Filters registered values for an Enum.
 apply_filters( 'wp_graphql_gf_{$enumType}_values, array $values );
 ```
 
-##### Parameters:
+#### Parameters:
 
 - **`$values`** _(array)_ : The values for the registered Enum type.
