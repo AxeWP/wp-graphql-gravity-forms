@@ -6,7 +6,7 @@
  * @see https://docs.gravityforms.com/gf_field/
  *
  * @package WPGraphQLGravityForms\Types\Field
- * @since   0.4.0
+ * @since   0.7.0
  */
 
 namespace WPGraphQLGravityForms\Types\Field;

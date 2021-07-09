@@ -68,6 +68,8 @@ class Utils {
 	 *
 	 * @param mixed $value the value to try to decode.
 	 *
+	 * @since 0.7.0
+	 *
 	 * @return array|false
 	 */
 	public static function maybe_decode_json( $value ) {

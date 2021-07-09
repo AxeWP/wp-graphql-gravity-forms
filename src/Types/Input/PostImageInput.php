@@ -4,7 +4,7 @@
  * Input fields for a single Post Image.
  *
  * @package WPGraphQLGravityForms\Types\Input
- * @since   0.0.1
+ * @since   0.7.0
  */
 
 namespace WPGraphQLGravityForms\Types\Input;

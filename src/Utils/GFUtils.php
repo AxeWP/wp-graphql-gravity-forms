@@ -338,6 +338,8 @@ class GFUtils {
 	 *
 	 * @see GFFormsModel::get_file_upload_path()
 	 *
+	 * @since 0.7.0
+	 *
 	 * @param int $form_id GF form ID.
 	 *
 	 * @return array     GF uploads dir config.

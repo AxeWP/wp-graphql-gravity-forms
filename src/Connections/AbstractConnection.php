@@ -3,6 +3,7 @@
  * Abstract GraphQL Connection
  *
  * @package WPGraphQLGravityForms\Connections;
+ * @since 0.7.0
  */
 
 namespace WPGraphQLGravityForms\Connections;
