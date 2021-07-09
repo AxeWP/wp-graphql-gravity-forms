@@ -1,5 +1,47 @@
 # Changelog
 
+## v0.7.0 - File Uploads 🚀🚀🚀
+** :warning: This release contains multiple breaking changes. **
+
+The big highlight in this release is _experimental<sup>[***](#uploadWarning)</sup>_ support for File Upload / Post Image submissions. We also added a feature that updates WordPress post meta when the corresponding Gravity Forms entry is updated.
+
+We added some new WordPress filters, and changed the way some of our PHP classes work, to make it easier for people to add support for their own custom Gravity Forms fields.
+We even gave the docs some love. We've added info about filters and using specific form field value inputs, and updated many of the example snippets. You can find the new documnetation in the repo's [/docs folder](/docs).
+
+Note: These changes did necessitate refactoring many of the plugin classes, so if you're extending any of them in your own projects, make sure to update your class methods!
+
+<a name="uploadWarning">***</a>: File Uploads and Post Image submissions currently require [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload) to be installed and activated. [Once WPGraphQL adds native support for multipart form requests](https://github.com/wp-graphql/wp-graphql/issues/311), it is likely that these GraphQL input values will change.
+
+### New Features
+- Added support for `FileUpload` and `PostImage` field value submissions. Ple
+- Updating Post field values in a Gravity Forms entry, now also updates the corresponding WordPress post. Not even native GF lets you do that!
+- New WordPress filters: `wp_graphql_gf_type_config`, `wp_graphql_gf_connection_config`.
+
+### Bugfixes
+- `chainedSelectValues` input is now only visible if the Chained Selects plugin is active.
+- The `Entry` GraphQL type now implements the `wp_graphql_gf_can_view_entries` filter.
+
+### Under the Hood
+- feat: add `altText` to `PostImage` field values.
+- feat: The `pageNumber` field is now available on _all_ `formFields`.
+- dev: `AbstractEnum::set_values()` has been deprecated in favor of `AbstractEnum::get_values()`.
+- dev: `Button`, `LastPageButton`, `ConditionalLogic`, `ConditionalLogicRule`, `Entry`, `EntryForm`, `EntryUser`, `FieldError`, `Form`, `FormComfirmation`, `FormNotification`, `FormNotificationRouting`, `FormPagination`, `SaveAndContinue`, now extend AbstractObject`. Their functions have changed accordingly.
+- dev: Added `GFUtils::get_gravity_forms_upload_dir()` and `GUtils::handle_file_upload()`.
+- dev: Added `Utils::maybe_decode_json()` and `Utils::apply_filters`.
+- dev: deprecated `wp_graphql_{$enumType}_values` filter, in favor of `wp_graphql_gf_{$enumType}_values`.
+- dev: deprecated `wp_graphql_gf_field_types` filter, as it no longer necessary to manually map GraphQL fields to GF `formFields`.
+- dev: deprecated `wp_graphql_gf_form_field_instances` and `wp_graphql_gf_field_value_instances` filters in favor of `wp_graphql_gf_instances`.
+- dev: Deprecated the `adminOnly`, `allowsPrepopulated` and `inputName` fields on `PostImageField`.
+- dev: Updated composer dependencies.
+- dev!: `scr/connections` now extend `AbstractConnection`
+- dev!: `src\Types\Input` now extend `AbstractInput`. Their functions have changed accordingly.
+- dev!: Class `AbstractField` has been deprecated in favor of `AbstractFormField`. Its functions have changed accordingly.
+- dev!: Classes `AbstractProperty`, `AbstractFieldValue` have been deprecated in favor of `AbstractObject`. Their functions have changed accordingly.
+- dev!: make plugin `$instances` static for easier access and extension.
+- dev!: The `Enum`, `InputType`, `ValueProperty` PHP interface has been deprecated. Please update your code.
+- dev!: The methods required by the `FieldValue`, `Type` PHP interface have changed. Please update your code.
+- tests: Removed `testGetEnabledFieldTypes` now that we are using `static $instances`.
+
 ## v0.6.3 - Unit Tests
 - Adds support for missing date formats (dmy_dash, dmy_dot, ymd_slash, ymd_dash, ymd_dot).
 - Fix: EmailInputProperty description updated.

@@ -5,7 +5,7 @@
  * Registers connection from GravityFormsForm to GravityFormsEntry.
  *
  * @package WPGraphQLGravityForms\Connections
- * @since 0.0.1
+ * @since 0.7.0
  */
 
 namespace WPGraphQLGravityForms\Connections;
