@@ -55,7 +55,6 @@ class ListField extends AbstractFormField {
 			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\LabelProperty::get(),
 			FieldProperty\LabelPlacementProperty::get(),
-			FieldProperty\PageNumberProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[

@@ -180,7 +180,6 @@ class ComposerStaticInit1d07b8283f09e5e28f18143f5cd7774a
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\MaxLengthProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/MaxLengthProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\NameInputProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/NameInputProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\NoDuplicatesProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/NoDuplicatesProperty.php',
-        'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\PageNumberProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/PageNumberProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\PasswordInputProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/PasswordInputProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\PlaceholderProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/PlaceholderProperty.php',
         'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ProductFieldProperty' => __DIR__ . '/../..' . '/src/Types/Field/FieldProperty/ProductFieldProperty.php',
