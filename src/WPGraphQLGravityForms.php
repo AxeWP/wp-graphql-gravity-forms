@@ -213,6 +213,7 @@ final class WPGraphQLGravityForms {
 		self::$instances['email_input']                = new Input\EmailInput();
 		self::$instances['list_input']                 = new Input\ListInput();
 		self::$instances['name_input']                 = new Input\NameInput();
+		self::$instances['post_image_input']           = new Input\PostImageInput();
 		self::$instances['entries_date_fiters_input']  = new Input\EntriesDateFiltersInput();
 		self::$instances['entries_field_fiters_input'] = new Input\EntriesFieldFiltersInput();
 		self::$instances['entries_sorting_input']      = new Input\EntriesSortingInput();

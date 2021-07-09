@@ -146,6 +146,8 @@ class UpdateEntry extends AbstractMutation {
 
 			$updated_entry_id = GFUtils::update_entry( $entry_data );
 
+			$this->update_post( $updated_entry_id );
+
 			return [
 				'entryId' => $updated_entry_id,
 			];
@@ -202,14 +204,21 @@ class UpdateEntry extends AbstractMutation {
 			$prev_value = $entry[ $values['id'] ] ?? null;
 
 			$value = $this->prepare_single_field_value( $values, $field, $prev_value );
+
 			// Signature field requires $_POST['input_{#}'] on update.
 			if ( 'signature' === $field->type ) {
 				$_POST[ 'input_' . $field->id ] = $value;
 			}
 
-			// Signature field requires $_POST['input_{#}'] on update.
-			if ( 'signature' === $field->type ) {
-				$_POST[ 'input_' . $field->id ] = $value;
+			if ( 'post_image' === $field->type ) {
+				// String follows pattern: `$url |:| $title |:| $caption |:|$description |:| $alt` .
+				$url         = $value[ $field->id . '_0' ];
+				$title       = $value[ $field->id . '_1' ];
+				$caption     = $value[ $field->id . '_4' ];
+				$description = $value[ $field->id . '_7' ];
+				$alt         = $value[ $field->id . '_2' ];
+
+				$formatted_values[ (string) $field->id ] = $url . '|:|' . $title . '|:|' . $caption . '|:|' . $description . '|:|' . $alt;
 			}
 
 			// Validate the field value.
@@ -259,5 +268,29 @@ class UpdateEntry extends AbstractMutation {
 		}
 
 		return $values;
+	}
+
+	/**
+	 * Updates the post associated with the entry.
+	 *
+	 * @param integer $entry_id .
+	 */
+	public function update_post( int $entry_id ) : void {
+		$entry = GFUtils::get_entry( $entry_id );
+		add_filter( 'gform_post_data', [ $this, 'set_post_id_for_update' ], 10, 3 );
+		GFFormsModel::create_post( $this->form, $entry );
+		remove_filter( 'gform_post_data', [ $this, 'set_post_id_for_update' ] );
+	}
+
+	/**
+	 * Sets the post id so GFFormsModel::create_post updates the post instead of creating a new one.
+	 *
+	 * @param array $post_data .
+	 * @param array $form .
+	 * @param array $entry .
+	 */
+	public function set_post_id_for_update( array $post_data, array $form, array $entry ): array {
+		$post_data['ID'] = $entry['post_id'];
+		return $post_data;
 	}
 }
