@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'dev-main',
-    'version' => 'dev-main',
+    'pretty_version' => 'dev-develop',
+    'version' => 'dev-develop',
     'aliases' => 
     array (
     ),
-    'reference' => '56c70d67bea2f57ab927602c2a75d267693897f6',
+    'reference' => 'c07cebb7dfeccae367cfcd6debf146ec2b9fcac7',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
@@ -232,12 +232,12 @@
     ),
     'harness-software/wp-graphql-gravity-forms' => 
     array (
-      'pretty_version' => 'dev-main',
-      'version' => 'dev-main',
+      'pretty_version' => 'dev-develop',
+      'version' => 'dev-develop',
       'aliases' => 
       array (
       ),
-      'reference' => '56c70d67bea2f57ab927602c2a75d267693897f6',
+      'reference' => 'c07cebb7dfeccae367cfcd6debf146ec2b9fcac7',
     ),
     'hautelook/phpass' => 
     array (
@@ -250,8 +250,8 @@
     ),
     'illuminate/collections' => 
     array (
-      'pretty_version' => 'v8.49.1',
-      'version' => '8.49.1.0',
+      'pretty_version' => 'v8.49.2',
+      'version' => '8.49.2.0',
       'aliases' => 
       array (
       ),
@@ -259,8 +259,8 @@
     ),
     'illuminate/contracts' => 
     array (
-      'pretty_version' => 'v8.49.1',
-      'version' => '8.49.1.0',
+      'pretty_version' => 'v8.49.2',
+      'version' => '8.49.2.0',
       'aliases' => 
       array (
       ),
@@ -268,8 +268,8 @@
     ),
     'illuminate/macroable' => 
     array (
-      'pretty_version' => 'v8.49.1',
-      'version' => '8.49.1.0',
+      'pretty_version' => 'v8.49.2',
+      'version' => '8.49.2.0',
       'aliases' => 
       array (
       ),
@@ -277,8 +277,8 @@
     ),
     'illuminate/support' => 
     array (
-      'pretty_version' => 'v8.49.1',
-      'version' => '8.49.1.0',
+      'pretty_version' => 'v8.49.2',
+      'version' => '8.49.2.0',
       'aliases' => 
       array (
       ),
