@@ -165,7 +165,6 @@ return array(
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\MaxLengthProperty' => $baseDir . '/src/Types/Field/FieldProperty/MaxLengthProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\NameInputProperty' => $baseDir . '/src/Types/Field/FieldProperty/NameInputProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\NoDuplicatesProperty' => $baseDir . '/src/Types/Field/FieldProperty/NoDuplicatesProperty.php',
-    'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\PageNumberProperty' => $baseDir . '/src/Types/Field/FieldProperty/PageNumberProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\PasswordInputProperty' => $baseDir . '/src/Types/Field/FieldProperty/PasswordInputProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\PlaceholderProperty' => $baseDir . '/src/Types/Field/FieldProperty/PlaceholderProperty.php',
     'WPGraphQLGravityForms\\Types\\Field\\FieldProperty\\ProductFieldProperty' => $baseDir . '/src/Types/Field/FieldProperty/ProductFieldProperty.php',
