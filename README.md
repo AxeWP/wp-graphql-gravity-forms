@@ -10,7 +10,6 @@
 A WordPress plugin that provides a GraphQL API for interacting with Gravity Forms.
 
 - [Join the WPGraphQL community on Slack.](https://join.slack.com/t/wp-graphql/shared_invite/zt-3vloo60z-PpJV2PFIwEathWDOxCTTLA)
-- [Supported Fields](#supported-fields)
 - [Documentation](#documentation)
 
 ## Overview
@@ -53,3 +52,14 @@ Our hope for this open source project is that it will enable more teams to lever
 - Ability to get the total count for a list of entries.
 - Ability to create, update, and delete an individual Gravity Form.
 - Create & update integration tests. [Github Issue](https://github.com/harness-software/wp-graphql-gravity-forms/issues/116).
+
+## Documentation
+
+- [Using Global IDs vs Database IDs](docs/using-global-ids.md)
+- [Querying forms](docs/querying-forms.md)
+- [Querying entries & draft entries ](docs/querying-entries.md)
+- [Querying `formFields` and their values](docs/querying-formfields.md)
+- [Submitting forms](docs/submitting-forms.md)
+- [Updating entries & draft entries](docs/updating-entries.md)
+- [Deleting entries & draft entries](docs/deleting=-entries.md)
+- [Actions & Filters](docs/actions-and-filters.md)

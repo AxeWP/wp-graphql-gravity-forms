@@ -1,4 +1,4 @@
-# Querying `formFields` and their values.
+# Querying `formFields` and their values
 
 Both Forms and Entries use the `formFields` GraphQL Interface to retrieve information about Gravity Forms fields, and their submission values.
 
