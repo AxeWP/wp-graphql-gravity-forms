@@ -10,6 +10,7 @@
 .vscode
 *.sql
 *.tar.gz
+.scannerwork
 *.zip
 build/
 composer.lock
@@ -18,10 +19,12 @@ node_modules/
 phpcs.xml
 phpunit.xml
 schema.graphql
+sonar-project.properties
+sonar-scanner
 tests/*.suite.yml
 Thumbs.db
+wp-cli.local.yml
 vendor/*
 !vendor/composer
 !vendor/composer/*
 !vendor/autoload.php
-wp-cli.local.yml
