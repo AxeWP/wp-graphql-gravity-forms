@@ -222,11 +222,11 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 		return array_reduce(
 			$field_filters,
 			function( $field_filters, $field_filter ) {
-				if ( empty( $field_filter['key'] ) ) {
+				if ( ! isset( $field_filter['key'] ) ) {
 					throw new UserError( __( 'Every field filter must have a key.', 'wp-graphql-gravity-forms' ) );
 				}
 
-				$key             = sanitize_text_field( $field_filter['key'] );
+				$key             = empty( $field_filter['key'] ) ? null : sanitize_text_field( $field_filter['key'] );
 				$operator        = $field_filter['operator'] ?? FieldFiltersOperatorInputEnum::IN; // Default to "in".
 				$value           = $this->get_field_filter_value( $field_filter, $operator );
 				$field_filters[] = compact( 'key', 'operator', 'value' );
