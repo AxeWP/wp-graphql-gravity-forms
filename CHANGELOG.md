@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.7.1 - Bugfix
+- Fixes error when filtering `gravityFormsEntries` by a value in any field (i.e. when `fieldFilters.key` is `"0"` ).
+
 ## v0.7.0 - File Uploads 🚀🚀🚀
 ** :warning: This release contains multiple breaking changes. **
 
