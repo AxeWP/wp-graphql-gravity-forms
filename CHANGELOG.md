@@ -1,30 +1,39 @@
 # Changelog
 
+## v0.7.2 - Bugfix
+
+- Fixes bug where unset `formFields` properties would cause a type error for `Enums`. (h/t @natac13)
+
 ## v0.7.1 - Bugfix
+
 - Fixes error when filtering `gravityFormsEntries` by a value in any field (i.e. when `fieldFilters.key` is `"0"` ).
 
 ## v0.7.0 - File Uploads 🚀🚀🚀
+
 ** :warning: This release contains multiple breaking changes. **
 
-The big highlight in this release is _experimental<sup>[***](#uploadWarning)</sup>_ support for File Upload / Post Image submissions. We also added a feature that updates WordPress post meta when the corresponding Gravity Forms entry is updated.
+The big highlight in this release is _experimental<sup>[\*\*\*](#uploadWarning)</sup>_ support for File Upload / Post Image submissions. We also added a feature that updates WordPress post meta when the corresponding Gravity Forms entry is updated.
 
 We added some new WordPress filters, and changed the way some of our PHP classes work, to make it easier for people to add support for their own custom Gravity Forms fields.
 We even gave the docs some love. We've added info about filters and using specific form field value inputs, and updated many of the example snippets. You can find the new documnetation in the repo's [/docs folder](/docs).
 
 Note: These changes did necessitate refactoring many of the plugin classes, so if you're extending any of them in your own projects, make sure to update your class methods!
 
-<a name="uploadWarning">***</a>: File Uploads and Post Image submissions currently require [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload) to be installed and activated. [Once WPGraphQL adds native support for multipart form requests](https://github.com/wp-graphql/wp-graphql/issues/311), it is likely that these GraphQL input values will change.
+<a name="uploadWarning">\*\*\*</a>: File Uploads and Post Image submissions currently require [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload) to be installed and activated. [Once WPGraphQL adds native support for multipart form requests](https://github.com/wp-graphql/wp-graphql/issues/311), it is likely that these GraphQL input values will change.
 
 ### New Features
+
 - Added support for `FileUpload` and `PostImage` field value submissions. Ple
 - Updating Post field values in a Gravity Forms entry, now also updates the corresponding WordPress post. Not even native GF lets you do that!
 - New WordPress filters: `wp_graphql_gf_type_config`, `wp_graphql_gf_connection_config`.
 
 ### Bugfixes
+
 - `chainedSelectValues` input is now only visible if the Chained Selects plugin is active.
 - The `Entry` GraphQL type now implements the `wp_graphql_gf_can_view_entries` filter.
 
 ### Under the Hood
+
 - feat: add `altText` to `PostImage` field values.
 - feat: The `pageNumber` field is now available on _all_ `formFields`.
 - dev: `AbstractEnum::set_values()` has been deprecated in favor of `AbstractEnum::get_values()`.
@@ -46,6 +55,7 @@ Note: These changes did necessitate refactoring many of the plugin classes, so i
 - tests: Removed `testGetEnabledFieldTypes` now that we are using `static $instances`.
 
 ## v0.6.3 - Unit Tests
+
 - Adds support for missing date formats (dmy_dash, dmy_dot, ymd_slash, ymd_dash, ymd_dot).
 - Fix: EmailInputProperty description updated.
 - Dev: autocompleteAttribute has been deprecated on EmailInputProperty.
@@ -53,12 +63,15 @@ Note: These changes did necessitate refactoring many of the plugin classes, so i
 - Tests: Add tests for CheckboxField, ConsentField, and DateField.
 
 ## v0.6.2.2 - Hotfix
+
 - Fixes `submitGravityFormsForm` not saving signature field value after v0.6.2.1.
 
 ## v0.6.2.1 - Hotfix
+
 - Fixes `updateGravityFormsEntry` not saving signature field value.
 
 ## v0.6.2 - Bugfixes
+
 - Fixes `updateGravityFormsEntry` mutation not propery saving complex field values (h/t @natac13 )
 - Fixes mutations not correctly deleting old `SignatureField` files from the server (h/t @natac13 )
 - Fixes `SignatureFieldValue`s failing Gravity Forms `isRequired` validation (h/t/ @natac13).
@@ -72,25 +85,30 @@ Note: These changes did necessitate refactoring many of the plugin classes, so i
 - Tests: Added unit tests for `ChainedSelect` fields and values.
 
 ## v0.6.1 - Bugfix
+
 - Fixes a fatal error when adding support for new fields with the `wp_graphql_gf_field_types` filter.
 
 ## v0.6.0 - Gravity Forms v2.5 Support
+
 This release adds support for all the new goodies in Gravity Forms v2.5, squashes a few bugs related to Captcha fields, and refactors the `InputProperty` on various form fields.
 
 ### New Features
-- Added `customRequiredIndicator`, `markupVersion`, `requiredIndicator`, `validationSummary` and `version` to `GravityFormsForm` object. 
+
+- Added `customRequiredIndicator`, `markupVersion`, `requiredIndicator`, `validationSummary` and `version` to `GravityFormsForm` object.
 - Added `layoutGridColumnSpan` and `layoutSpacerGridColumnSpan` to `formFields` interface.
 - Added `enableAutocomplete` and `autocompleteAttribute` to `AddressField`, `EmailField` ,`NameField`, `NumberField`, `PhoneField`, `SelectField`, and `TextField`.
-- Added `displayOnly` property to `CaptchaField`. 
+- Added `displayOnly` property to `CaptchaField`.
 - Added `allowedExtensions` and `displayAlt` property to `PostImageField`.
-- Added `sort` argument for filtering `RootQueryToGravityFormsFormConnection`. *Note*: Attempting to sort on GF < v2.5.0.0 will throw a `UserError`.
+- Added `sort` argument for filtering `RootQueryToGravityFormsFormConnection`. _Note_: Attempting to sort on GF < v2.5.0.0 will throw a `UserError`.
 
 ### Bugfixes
+
 - [Breaking]: Fixed the `captchaTheme` enum to use the correct possible values: `light` and `dark`.
 - `captchaTheme` and `captchaType` now correctly return `null` when not set by the field.
 - The `captchaType` enum now has a default value of `RECAPTCHA`.
 
 ### Under the hood
+
 - Refactor various `InputProperty` classes. `InputDefaultValueProperty`, `InputLabelProperty`, and `InputplaceholderProperty` have been removed for their `FieldProperty` cousins, and `EmailInputProperty` is now being used for `EmailField`.
 - Tests: Clear `GFFormDisplay::$submission` between individual tests.
 - Tests: Allow overriding the default field factories.
@@ -105,8 +123,10 @@ This release moves `entry.formField` values from `edges` to `nodes`, slimming do
 We also complete removed the form/entry `fields` property. All usage should be replaced with `formFields`.
 
 ### New features
+
 - [**Breaking**] Removed `fields` from `entry` and `form`. Please update your code to use `formFields` instead.
 - [**Breaking**] Added support for submitting email confirmation values by using a new input type `FieldValuesInput.emailValues`.
+
 ```diff
 {
   submitGravityFormsForm(
@@ -127,7 +147,9 @@ We also complete removed the form/entry `fields` property. All usage should be r
   )
 }
 ```
+
 - [**Breaking**] The `wp_graphql_gf_can_view_entries` filter now passes `entry_ids` instead of `field_ids`. This lets you do cool things like allowing authenticated users to edit _only their own_ entries:
+
 ```php
 add_filter(
   'wp_graphql_gf_can_view_entries',
@@ -151,7 +173,9 @@ add_filter(
   2
 );
 ```
-- Deprecated `formFields.edges.fieldValue` in favor of `formFields.nodes.{value|typeValues}`. Not just does this dramatically slim down the boilerplate needed for your queries, but it also works with `gatsby-source-wordpress`. 
+
+- Deprecated `formFields.edges.fieldValue` in favor of `formFields.nodes.{value|typeValues}`. Not just does this dramatically slim down the boilerplate needed for your queries, but it also works with `gatsby-source-wordpress`.
+
 ```diff
 {
   gravityFormsEntry(id: 2977, idType: DATABASE_ID) {
@@ -211,6 +235,7 @@ add_filter(
 - Added support for retrieving `PostImage` field values.
 
 ### Bugfixes
+
 - Fixed field `id`s missing from `UpdateDraftEntry{Type}FieldValue` `errors`.
 - Prevented PHP notices about missing `entry_id` when `submitGravityFormsDraftEntry fails.
 - Prevented `UpdateDraftEntry{Type}FieldValue` from deleting the previously stored `ip`.
@@ -218,10 +243,12 @@ add_filter(
 - Undeprecate `InputKeyProperty` on `name` and `address` fields. Although this is not part of the GF api, it is helpful to associate the `inputs` with their entry `values`.
 
 ### Under the hood
+
 - Added more unit tests for `TextField`, `TextAreaField`, and `AddressField`.
 - Refactored `FieldProperty` classes to use `AbstractProperty`.
 
 ## v0.4.1 - Bugfix
+
 - Uses `sanitize_text_field` to sanitize email values, so failing values can be validated by Gravity Forms. ( h/t @PudparK )
 
 ## v0.4.0 - A Simpler Form Submission Flow!
