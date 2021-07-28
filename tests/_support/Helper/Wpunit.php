@@ -630,10 +630,14 @@ class Wpunit extends \Codeception\Module {
 	 * Converts a string value to its Enum equivalent
 	 *
 	 * @param string $enumName Name of the Enum registered in GraphQL.
-	 * @param string $value .
-	 * @return string
+	 * @param string|null $value .
+	 * @return string|null
 	 */
-	public function get_enum_for_value( string $enumName, string $value ) : string {
+	public function get_enum_for_value( string $enumName, $value ) {
+		if( null === $value ){
+			return null;
+		}
+
 		$typeRegistry = \WPGraphQL::get_type_registry();
 		return $typeRegistry->get_type( $enumName )->serialize( $value );
 	}

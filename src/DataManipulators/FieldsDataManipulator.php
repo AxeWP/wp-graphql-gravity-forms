@@ -72,6 +72,15 @@ class FieldsDataManipulator implements DataManipulator {
 	private function convert_value_to_expected_type( GF_Field $field ) : GF_Field {
 		$field->layoutGridColumnSpan = ! empty( $field->layoutGridColumnSpan ) ? (int) $field->layoutGridColumnSpan : null;
 
+		// Set all empty strings to `null`.
+		$arr = (array) $field;
+		foreach ( $arr as $key => $value ) {
+			if ( '' !== $value ) {
+				continue;
+			}
+			$field->$key = null;
+		}
+
 		return $field;
 	}
 
