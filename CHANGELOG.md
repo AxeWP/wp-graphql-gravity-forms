@@ -1,6 +1,8 @@
 # Changelog
 
-## v0.7.2 - Bugfix
+## v0.7.2.1 - Bugfix
+
+- (Re-released, as the last one incorectly contained the old version.)
 
 - Fixes bug where unset `formFields` properties would cause a type error for `Enums`. (h/t @natac13)
 
