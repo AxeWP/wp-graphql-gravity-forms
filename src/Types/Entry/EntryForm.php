@@ -54,7 +54,7 @@ class EntryForm extends AbstractObject implements Field {
 	 */
 	public function register_hooks() : void {
 		parent::register_hooks();
-		add_action( 'graphql_register_types', [ $this, 'register_field' ] );
+		add_action( get_graphql_register_action(), [ $this, 'register_field' ] );
 	}
 
 	/**

@@ -207,11 +207,7 @@ class SubmitForm extends AbstractMutation {
 	 * @throws UserError .
 	 */
 	private function update_entry_properties( array $submission, string $ip, string $source_url, int $created_by = null ) : void {
-		if ( ! $submission['entry_id'] || empty( $submission['resume_token'] ) ) {
-			return;
-		}
-
-		if ( $submission['resume_token'] ) {
+		if ( ! empty( $submission['resume_token'] ) ) {
 			$draft_entry        = GFUtils::get_draft_entry( $submission['resume_token'] );
 			$decoded_submission = json_decode( $draft_entry['submission'], true );
 
@@ -224,23 +220,31 @@ class SubmitForm extends AbstractMutation {
 			return;
 		}
 
-		if ( ! empty( $ip ) ) {
+		if ( empty( $submission['entry_id'] ) ) {
+			return;
+		}
+
+		$entry = GFUtils::get_entry( $submission['entry_id'] );
+
+		if ( ! empty( $ip ) && $entry['ip'] !== $ip ) {
 			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'ip', $ip );
 			if ( ! $is_updated ) {
 				throw new UserError( __( 'Unable to update the entry IP address', 'wp-graphql-gravity-forms' ) );
 			}
 		}
 
-		if ( null !== $created_by ) {
+		if ( null !== $created_by && $entry['created_by'] !== $created_by ) {
 			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'created_by', $created_by );
 			if ( ! $is_updated ) {
 				throw new UserError( __( 'Unable to update the entry createdBy id.', 'wp-graphql-gravity-forms' ) );
 			}
 		}
 
-		$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'source_url', $source_url );
-		if ( ! $is_updated ) {
-			throw new UserError( __( 'Unable to update the entry source url', 'wp-graphql-gravity-forms' ) );
+		if ( ! empty( $source_url ) && $entry['source_url'] !== $source_url ) {
+			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'source_url', $source_url );
+			if ( ! $is_updated ) {
+				throw new UserError( __( 'Unable to update the entry source url', 'wp-graphql-gravity-forms' ) );
+			}
 		}
 	}
 

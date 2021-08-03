@@ -26,10 +26,17 @@ class ObjectFieldValueUnion implements Hookable {
 	public static $type = 'ObjectFieldValueUnion';
 
 	/**
+	 * {@inheritDoc}
+	 *
+	 * @var boolean
+	 */
+	public static $should_load_eagerly = true;
+
+	/**
 	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ], 11 );
+		add_action( get_graphql_register_action(), [ $this, 'register_type' ], 11 );
 	}
 
 	/**
@@ -42,10 +49,11 @@ class ObjectFieldValueUnion implements Hookable {
 			self::$type,
 			$this->get_type_config(
 				[
-					'typeNames'   => $this->get_field_value_type_names(),
-					'resolveType' => function( $object ) use ( $type_registry ) {
+					'typeNames'       => $this->get_field_value_type_names(),
+					'resolveType'     => function( $object ) use ( $type_registry ) {
 						return $type_registry->get_type( $object['value_class']::$type );
 					},
+					'eagerlyLoadType' => static::$should_load_eagerly,
 				]
 			)
 		);

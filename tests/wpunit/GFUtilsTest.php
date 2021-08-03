@@ -44,6 +44,8 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 			]
 		);
 		$this->draft_token       = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		\WPGraphQL::clear_schema();
+
 	}
 
 	/**
@@ -54,6 +56,8 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 		$this->factory->entry->delete( $this->entry_id );
 		$this->factory->draft->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
+		\WPGraphQL::clear_schema();
+
 		// Then...
 		parent::tearDown();
 	}

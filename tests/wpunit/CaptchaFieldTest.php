@@ -71,6 +71,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
+		\WPGraphQL::clear_schema();
 	}
 
 	/**
@@ -83,6 +84,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->factory->draft->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
 		GFFormsModel::set_current_lead( null );
+		\WPGraphQL::clear_schema();
 		// Then...
 		parent::tearDown();
 	}
@@ -153,7 +155,6 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			],
 		];
-		codecept_debug( $actual );
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Test form has error.' );
 		$this->assertEquals( $expected, $actual['data'], 'Test form is not equal.' );
 	}

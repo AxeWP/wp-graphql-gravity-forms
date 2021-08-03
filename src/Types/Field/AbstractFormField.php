@@ -25,6 +25,13 @@ abstract class AbstractFormField extends AbstractObject {
 	public static $gf_type;
 
 	/**
+	 * {@inheritDoc}
+	 *
+	 * @var boolean
+	 */
+	public static $should_load_eagerly = true;
+
+	/**
 	 * Register Object type to GraphQL schema.
 	 */
 	public function register_type() : void {
@@ -32,9 +39,11 @@ abstract class AbstractFormField extends AbstractObject {
 			static::$type,
 			$this->get_type_config(
 				[
-					'description' => $this->get_type_description(),
-					'interfaces'  => [ FormFieldInterface::$type ],
-					'fields'      => $this->prepare_fields(),
+					'description'     => $this->get_type_description(),
+					'interfaces'      => [ FormFieldInterface::$type ],
+					'fields'          => $this->prepare_fields(),
+					'eagerlyLoadType' => static::$should_load_eagerly,
+
 				]
 			)
 		);

@@ -14,7 +14,7 @@ class WPGraphQLGravityFormsTest extends \Codeception\TestCase\WPTestCase {
 	public function setUp(): void {
 		// Before...
 		parent::setUp();
-
+		\WPGraphQL::clear_schema();
 		$this->instance = new WPGraphQLGravityForms();
 	}
 
@@ -22,6 +22,8 @@ class WPGraphQLGravityFormsTest extends \Codeception\TestCase\WPTestCase {
 		// Your tear down methods here.
 
 		unset( $this->wPGraphQLGravityForms );
+		\WPGraphQL::clear_schema();
+
 		// Then...
 		parent::tearDown();
 	}

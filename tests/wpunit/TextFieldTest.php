@@ -72,6 +72,8 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
+		\WPGraphQL::clear_schema();
+
 	}
 
 	/**

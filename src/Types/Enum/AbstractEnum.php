@@ -29,8 +29,9 @@ abstract class AbstractEnum extends AbstractType {
 			static::$type,
 			$this->get_type_config(
 				[
-					'description' => $this->get_type_description(),
-					'values'      => $this->prepare_values(),
+					'description'     => $this->get_type_description(),
+					'values'          => $this->prepare_values(),
+					'eagerlyLoadType' => static::$should_load_eagerly,
 				]
 			)
 		);

@@ -23,10 +23,19 @@ abstract class AbstractType implements Hookable, Type {
 	public static $type;
 
 	/**
+	 * Whether the type should be loaded eagerly by WPGraphQL. Defaults to false.
+	 *
+	 * Eager load should only be necessary for types that are not referenced directly (e.g. in Unions, Interfaces ).
+	 *
+	 * @var boolean
+	 */
+	public static $should_load_eagerly = false;
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+		add_action( get_graphql_register_action(), [ $this, 'register_type' ] );
 	}
 
 	/**

@@ -42,6 +42,8 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 			2,
 			array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() )
 		);
+		\WPGraphQL::clear_schema();
+
 	}
 
 	/**
@@ -50,6 +52,8 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 	public function tearDown(): void {
 		// Your tear down methods here.
 		$this->factory->form->delete( $this->form_ids );
+		\WPGraphQL::clear_schema();
+
 		// Then...
 		parent::tearDown();
 	}

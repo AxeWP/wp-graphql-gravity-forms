@@ -22,8 +22,9 @@ abstract class AbstractInput extends AbstractType {
 			static::$type,
 			$this->get_type_config(
 				[
-					'description' => $this->get_type_description(),
-					'fields'      => $this->prepare_fields(),
+					'description'     => $this->get_type_description(),
+					'fields'          => $this->prepare_fields(),
+					'eagerlyLoadType' => static::$should_load_eagerly,
 				]
 			)
 		);

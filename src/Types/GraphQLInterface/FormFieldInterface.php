@@ -29,6 +29,13 @@ class FormFieldInterface implements Hookable, Type {
 	 * @var string
 	 */
 	public static $type = 'FormField';
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @var boolean
+	 */
+	public static $should_load_eagerly = false;
 	/**
 	 * WPGraphQL for Gravity Forms plugin's class instances.
 	 *
@@ -40,7 +47,7 @@ class FormFieldInterface implements Hookable, Type {
 	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ] );
+		add_action( get_graphql_register_action(), [ $this, 'register_type' ] );
 	}
 
 	/**
@@ -108,9 +115,9 @@ class FormFieldInterface implements Hookable, Type {
 			self::$type,
 			$this->get_type_config(
 				[
-					'description' => $this->get_type_description(),
-					'fields'      => self::get_type_fields(),
-					'resolveType' => function( $value ) use ( $type_registry ) {
+					'description'     => $this->get_type_description(),
+					'fields'          => self::get_type_fields(),
+					'resolveType'     => function( $value ) use ( $type_registry ) {
 						$possible_types = $this->get_registered_form_field_types();
 						if ( isset( $possible_types[ $value->type ] ) ) {
 							return $type_registry->get_type( $possible_types[ $value->type ] );
@@ -123,6 +130,7 @@ class FormFieldInterface implements Hookable, Type {
 							)
 						);
 					},
+					'eagerlyLoadType' => static::$should_load_eagerly,
 				]
 			)
 		);
