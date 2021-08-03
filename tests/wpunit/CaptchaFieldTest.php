@@ -155,7 +155,6 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			],
 		];
-		codecept_debug( $actual );
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Test form has error.' );
 		$this->assertEquals( $expected, $actual['data'], 'Test form is not equal.' );
 	}

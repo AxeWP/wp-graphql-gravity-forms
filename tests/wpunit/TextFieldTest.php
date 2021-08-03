@@ -206,7 +206,6 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		codecept_debug( $actual );
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Test draft entry has error.' );
 		$this->assertEquals( $expected, $actual['data'], 'Test draft entry is not equal.' );
 	}
