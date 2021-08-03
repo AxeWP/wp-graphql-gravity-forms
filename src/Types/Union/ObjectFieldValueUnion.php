@@ -36,7 +36,7 @@ class ObjectFieldValueUnion implements Hookable {
 	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
-		add_action( 'graphql_register_types', [ $this, 'register_type' ], 11 );
+		add_action( get_graphql_register_action(), [ $this, 'register_type' ], 11 );
 	}
 
 	/**
