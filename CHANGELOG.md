@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.7.3 - WPGraphQL v1.6.x Compatibility
+
+This release adds compatibility with WPGraphQL v1.6.x, [and its new lazy/eager type loading](https://github.com/wp-graphql/wp-graphql/releases/tag/v1.6.0).
+
+- fix: Add `eagerlyLoadType` property to WPGraphQL type registration.
+- fix: Hook type registration using `get_graphql_register_action()`.
+- fix: Fix typo in `addressField.copyValueOptionsLabel` type definition.
+- fix: Check entry values before (unnecessarily) updating them in SubmitGravityFormsForm mutation.
+- dev: Update composer dependencies.
+- tests: Clear WPGraphQL schema before/after each test.
+
 ## v0.7.2.1 - Bugfix
 
 - (Re-released, as the last one incorectly contained the old version.)
