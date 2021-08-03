@@ -25,6 +25,13 @@ abstract class AbstractValueProperty extends AbstractType {
 	public static $field_name;
 
 	/**
+	 * {@inheritDoc}
+	 *
+	 * @var boolean
+	 */
+	public static $should_load_eagerly = true;
+
+	/**
 	 * Register Object type to GraphQL schema.
 	 */
 	public function register_type() : void {
@@ -33,9 +40,9 @@ abstract class AbstractValueProperty extends AbstractType {
 			static::$field_name,
 			$this->get_type_config(
 				[
-					'type'        => $this->get_field_type(),
-					'description' => $this->get_type_description(),
-					'resolve'     => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+					'type'            => $this->get_field_type(),
+					'description'     => $this->get_type_description(),
+					'resolve'         => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
 						if ( ! isset( $root['source'] ) || ! is_array( $root['source'] ) ) {
 							return null;
 						}
@@ -43,6 +50,7 @@ abstract class AbstractValueProperty extends AbstractType {
 						$value = static::get( $root['source'], $root );
 						return $value;
 					},
+					'eagerlyLoadType' => static::$should_load_eagerly,
 				]
 			)
 		);
