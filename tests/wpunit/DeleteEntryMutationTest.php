@@ -52,6 +52,7 @@ class DeleteEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 			]
 		);
 		$this->client_mutation_id = 'someUniqueId';
+		\WPGraphQL::clear_schema();
 	}
 
 	/**
@@ -61,6 +62,8 @@ class DeleteEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 		// Your tear down methods here.
 		wp_delete_user( $this->admin->id );
 		$this->factory->form->delete( $this->form_id );
+		\WPGraphQL::clear_schema();
+
 		// Then...
 		parent::tearDown();
 	}

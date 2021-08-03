@@ -34,6 +34,7 @@ class CreateDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
 		$this->client_mutation_id = 'someUniqueId';
+		\WPGraphQL::clear_schema();
 	}
 
 	/**
@@ -42,6 +43,7 @@ class CreateDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 	public function tearDown(): void {
 		// Your tear down methods here.
 		$this->factory->form->delete( $this->form_id );
+		\WPGraphQL::clear_schema();
 
 		// Then...
 		parent::tearDown();

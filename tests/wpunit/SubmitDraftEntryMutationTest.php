@@ -47,6 +47,8 @@ class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 			]
 		);
 		$this->client_mutation_id = 'someUniqueId';
+		\WPGraphQL::clear_schema();
+
 	}
 
 	/**
@@ -56,6 +58,8 @@ class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 		// Your tear down methods here.
 		$this->factory->draft->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
+		\WPGraphQL::clear_schema();
+
 		// Then...
 		parent::tearDown();
 	}

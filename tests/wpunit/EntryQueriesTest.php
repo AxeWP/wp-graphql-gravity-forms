@@ -55,6 +55,8 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 				$this->fields[0]['id'] => 'This is a default Text entry.',
 			]
 		);
+		\WPGraphQL::clear_schema();
+
 	}
 
 	/**
@@ -65,6 +67,8 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 		wp_delete_user( $this->admin->id );
 		$this->factory->entry->delete( $this->entry_ids );
 		$this->factory->form->delete( $this->form_id );
+		\WPGraphQL::clear_schema();
+
 		// Then...
 		parent::tearDown();
 	}

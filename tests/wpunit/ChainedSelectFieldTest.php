@@ -95,6 +95,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				'fieldValues' => $this->property_helper->get_field_values( $this->value ),
 			]
 		);
+		\WPGraphQL::clear_schema();
 	}
 
 
@@ -108,6 +109,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->factory->draft->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
 		GFFormsModel::set_current_lead( null );
+		\WPGraphQL::clear_schema();
 		// Then...
 		parent::tearDown();
 	}
