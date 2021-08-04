@@ -83,6 +83,10 @@ class UpdateDraftEntry extends AbstractMutation {
 				'type'        => 'Integer',
 				'description' => __( 'ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
+			'sourceUrl'   => [
+				'type'        => 'String',
+				'description' => __( 'Optional. Used to overwrite the sourceUrl the form was submitted from.', 'wp-graphql-gravity-forms' ),
+			],
 		];
 	}
 
@@ -156,7 +160,7 @@ class UpdateDraftEntry extends AbstractMutation {
 				$this->submission['files'] ?? [],
 				$this->submission['gform_unique_id'] ?? null,
 				$this->submission['partial_entry']['ip'],
-				$this->submission['partial_entry']['source_url'] ?? '',
+				$input['source_url'] ?? $this->submission['partial_entry']['source_url'] ?? '',
 				$resume_token
 			);
 
