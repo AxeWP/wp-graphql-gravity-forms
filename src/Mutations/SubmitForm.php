@@ -87,6 +87,10 @@ class SubmitForm extends AbstractMutation {
 				'type'        => 'Integer',
 				'description' => __( 'Optional. Useful for multi-page forms to indicate which page of the form was just submitted.', 'wp-graphql-gravity-forms' ),
 			],
+			'sourceUrl'   => [
+				'type'        => 'String',
+				'description' => __( 'Optional. Used to overwrite the sourceUrl the form was submitted from.', 'wp-graphql-gravity-forms' ),
+			],
 			'targetPage'  => [
 				'type'        => 'Integer',
 				'description' => __( 'Optional. Useful for multi-page forms to indicate which page is to be loaded if the current page passes validation.', 'wp-graphql-gravity-forms' ),
@@ -158,7 +162,7 @@ class SubmitForm extends AbstractMutation {
 			$save_as_draft = $input['saveAsDraft'] ?? false;
 			$ip            = empty( $this->form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
 			$created_by    = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : null;
-			$source_url    = esc_url_raw( Utils::truncate( $_SERVER['HTTP_REFERER'] ?? '', 250 ) );
+			$source_url    = $input['sourceUrl'] ?? '';
 
 			// Initialize $_FILES with fileupload inputs.
 			$this->initialize_files();
@@ -213,6 +217,7 @@ class SubmitForm extends AbstractMutation {
 
 			$ip         = ! ! empty( $ip ) ? $ip : $decoded_submission['partial_entry']['ip'];
 			$created_by = $created_by ?? $decoded_submission['partial_entry']['created_by'];
+			$source_url = $source_url ?? $decoded_submission['partial_entry']['source_url'];
 			$is_updated = GFFormsModel::update_draft_submission( $submission['resume_token'], $this->form, $draft_entry['date_created'], $ip, $source_url, $draft_entry['submission'] );
 			if ( empty( $is_updated ) ) {
 				throw new UserError( __( 'Unable to update the draft entry properties.', 'wp-graphql-gravity-forms' ) );
@@ -224,25 +229,23 @@ class SubmitForm extends AbstractMutation {
 			return;
 		}
 
-		$entry = GFUtils::get_entry( $submission['entry_id'] );
-
-		if ( ! empty( $ip ) && $entry['ip'] !== $ip ) {
+		if ( ! empty( $ip ) ) {
 			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'ip', $ip );
-			if ( ! $is_updated ) {
+			if ( false === $is_updated ) {
 				throw new UserError( __( 'Unable to update the entry IP address', 'wp-graphql-gravity-forms' ) );
 			}
 		}
 
-		if ( null !== $created_by && $entry['created_by'] !== $created_by ) {
+		if ( null !== $created_by ) {
 			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'created_by', $created_by );
-			if ( ! $is_updated ) {
+			if ( false === $is_updated ) {
 				throw new UserError( __( 'Unable to update the entry createdBy id.', 'wp-graphql-gravity-forms' ) );
 			}
 		}
 
-		if ( ! empty( $source_url ) && $entry['source_url'] !== $source_url ) {
+		if ( ! empty( $source_url ) ) {
 			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'source_url', $source_url );
-			if ( ! $is_updated ) {
+			if ( false === $is_updated ) {
 				throw new UserError( __( 'Unable to update the entry source url', 'wp-graphql-gravity-forms' ) );
 			}
 		}
