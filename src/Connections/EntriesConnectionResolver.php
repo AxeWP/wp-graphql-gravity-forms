@@ -19,9 +19,9 @@ use WPGraphQLGravityForms\Types\Enum\FieldFiltersModeEnum;
 use WPGraphQLGravityForms\Types\Enum\FieldFiltersOperatorInputEnum;
 
 /**
- * Class - RootQueryEntriesConnectionResolver
+ * Class - EntriesConnectionResolver
  */
-class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
+class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Returns whether query should execute.
 	 *

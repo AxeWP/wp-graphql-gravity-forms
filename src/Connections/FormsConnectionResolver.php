@@ -21,9 +21,9 @@ use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
 use WPGraphQLGravityForms\Types\Enum\FormStatusEnum;
 
 /**
- * Class - RootQueryEntriesConnectionResolver
+ * Class - FormsConnectionResolver
  */
-class RootQueryFormsConnectionResolver {
+class FormsConnectionResolver {
 	/**
 	 * Resolves queries for forms.
 	 *

@@ -56,7 +56,7 @@ class RootQueryFormsConnection  extends AbstractConnection {
 				],
 			],
 			'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-				return ( new RootQueryFormsConnectionResolver() )->resolve( $root, $args, $context, $info );
+				return ( new FormsConnectionResolver() )->resolve( $root, $args, $context, $info );
 			},
 		];
 	}

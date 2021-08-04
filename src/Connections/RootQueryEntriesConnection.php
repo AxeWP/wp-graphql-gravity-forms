@@ -77,7 +77,7 @@ class RootQueryEntriesConnection extends AbstractConnection {
 				],
 			],
 			'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) : Deferred {
-				return ( new RootQueryEntriesConnectionResolver( $root, $args, $context, $info ) )->get_connection();
+				return ( new EntriesConnectionResolver( $root, $args, $context, $info ) )->get_connection();
 			},
 		];
 	}
