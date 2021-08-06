@@ -1,12 +1,12 @@
-# Querying Entries & Draft Entries.
+# Querying Entries & Draft Entries
 
-## Get a single entry.
+## Get a single entry
 
 [Gravity Forms entry objects](https://docs.gravityforms.com/entry-object/) can be queried with `gravityFormsEntry`. The example query below shows how you can get a single entry by ID, and [data about the fields and their values](querying-formfields.md).
 
 The `id` input accepts either the Gravity Forms Entry ID (`idType: DATABASE_ID`), or a [global ID](using-global-ids.md) (`idType: ID`). The `id` input can also accept the `resumeToken` for a draft entry when `idType` is set to `ID`.
 
-#### Example Query
+### Example Query
 
 ```graphql
 {
@@ -77,7 +77,9 @@ To query a Draft Entry, simply pass the `resumeToken` to the input `id` field, a
 
 The code comments in the example query below explain how you can get a filtered list of entries.
 
-The plugin supports first/after cursor-based [pagination](https://www.wpgraphql.com/docs/connections/#solution-for-pagination-naming-conventions-and-contextual-data), but does not yet support before/last pagination. It also does not yet support querying for a list of draft entries.
+The plugin supports `first, after` and `last, before` cursor-based [pagination](https://www.wpgraphql.com/docs/connections/#solution-for-pagination-naming-conventions-and-contextual-data), but does not support `first, before` or `last, after` pagination. It also does not yet support querying for a list of draft entries.
+
+By default, WPGraphQL sets the maximum query amount to 100. This can be overwritten using the [`graphql_connection_max_query_amount` filter](https://www.wpgraphql.com/filters/graphql_connection_max_query_amount/).
 
 ```graphql
 {
@@ -94,10 +96,12 @@ The plugin supports first/after cursor-based [pagination](https://www.wpgraphql.
       }
       fieldFiltersMode: ALL
       fieldFilters: [
+        # Return specific list of entries.
+        { key: "id", intValues: [5, 27, 350] }
         # Find entries created by user ID 1.
         { key: "created_by", intValues: [1], operator: IN }
         # Find entries where field 5 has a value of "somevalue".
-        { key: "5", stringValues: ["somevalue"], operator: IN }
+        { key: "5", stringValues: [ "somevalue" ], operator: IN }
       ]
       # Sort fields in ascending order by "date_created"
       sort: { direction: ASC, isNumeric: false, key: "date_created" }
@@ -135,6 +139,7 @@ The plugin supports first/after cursor-based [pagination](https://www.wpgraphql.
   }
 }
 ```
+
 ## Get a List of Draft Entries
 
 This is currently not supported by the plugin.
