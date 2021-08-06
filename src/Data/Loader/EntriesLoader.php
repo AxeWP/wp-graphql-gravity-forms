@@ -20,8 +20,10 @@ use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 class EntriesLoader extends AbstractDataLoader {
 	/**
 	 * Loader name.
+	 *
+	 * @var string
 	 */
-	const NAME = 'gravityFormsEntries';
+	public static string $name = 'gravityFormsEntries';
 
 	/**
 	 * Given array of keys, loads and returns a map consisting of keys from `keys` array and loaded
