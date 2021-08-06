@@ -224,11 +224,9 @@ final class WPGraphQLGravityForms {
 		self::$instances['object_field_value_union'] = new Union\ObjectFieldValueUnion();
 
 		// Connections.
-		self::$instances['entry_field_connection']        = new Connections\EntryFieldConnection();
-		self::$instances['form_field_connection']         = new Connections\FormFieldConnection();
-		self::$instances['form_entry_connection']         = new Connections\FormEntryConnection();
-		self::$instances['root_query_entries_connection'] = new Connections\RootQueryEntriesConnection();
-		self::$instances['root_query_forms_connection']   = new Connections\RootQueryFormsConnection();
+		self::$instances['entry_connections'] = new Connections\EntryConnections();
+		self::$instances['form_connections']  = new Connections\FormConnections();
+		self::$instances['field_connections'] = new Connections\FieldConnections();
 
 		// Enums.
 		self::$instances['address_type_enum']                   = new Enum\AddressTypeEnum();

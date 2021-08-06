@@ -33,7 +33,8 @@ class LoadersRegistrar implements Hookable {
 	 * @return array Data loaders, with new ones added.
 	 */
 	public function register_loaders( array $loaders, AppContext $context ) : array {
-		$loaders[ EntriesLoader::NAME ] = new EntriesLoader( $context );
+		$loaders[ EntriesLoader::$name ] = new EntriesLoader( $context );
+		$loaders[ FormsLoader::$name ]   = new FormsLoader( $context );
 
 		return $loaders;
 	}

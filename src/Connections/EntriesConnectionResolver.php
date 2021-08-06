@@ -24,9 +24,7 @@ use WPGraphQLGravityForms\Types\Enum\FieldFiltersOperatorInputEnum;
  */
 class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
-	 * Returns whether query should execute.
-	 *
-	 * @return bool
+	 * {@inheritDoc}
 	 *
 	 * @throws UserError .
 	 */
@@ -54,7 +52,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @return string
 	 */
 	public function get_loader_name() : string {
-		return EntriesLoader::NAME;
+		return EntriesLoader::$name;
 	}
 
 	/**
@@ -85,9 +83,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Returns query arguments.
-	 *
-	 * @return array
+	 * {@inheritDoc}
 	 */
 	public function get_query_args() : array {
 		$query_args = [
@@ -112,7 +108,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Returns query to use for data fetching.
+	 * {@inheritDoc}
 	 *
 	 * @return GF_Query
 	 */
@@ -128,11 +124,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Returns base-64 encoded cursor value.
-	 *
-	 * @param int $id Node ID.
-	 *
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	protected function get_cursor_for_node( $id ) : string {
 		$index = array_search( $id, array_keys( $this->nodes ), true );
@@ -140,14 +132,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Return an array of ids from the query
-	 *
-	 * Each Query class in WP and potential datasource handles this differently, so each connection
-	 * resolver should handle getting the items into a uniform array of items.
-	 *
-	 * @return array
-	 *
-	 * @throws UserError Pagination is not currently supported.
+	 * {@inheritDoc}
 	 */
 	public function get_ids() : array {
 		return $this->query->get_ids();
