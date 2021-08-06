@@ -13,7 +13,6 @@ namespace WPGraphQLGravityForms\Connections;
 use GFAPI;
 use GF_Query;
 use GraphQL\Error\UserError;
-use GraphQLRelay\Relay;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQLGravityForms\Data\Loader\EntriesLoader;
 use WPGraphQLGravityForms\Types\Enum\EntryStatusEnum;
@@ -38,9 +37,9 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		 * @since 0.5.0
 		 *
 		 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
-		 * @param array $entry_ids The entry IDs being queried.
+		 * @param array|int $form_ids The specific form IDs being queried. Returns `0` if querying entries from all forms.
 		 */
-		$can_user_view_entries = apply_filters( 'wp_graphql_gf_can_view_entries', current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ), 0 );
+		$can_user_view_entries = apply_filters( 'wp_graphql_gf_can_view_entries', current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ), $this->get_form_ids() );
 
 		if ( ! $can_user_view_entries ) {
 			throw new UserError( __( 'Sorry, you are not allowed to view Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );
@@ -108,7 +107,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		 * @param ResolveInfo $info       The ResolveInfo passed down the GraphQL tree
 		 */
 		$query_args = apply_filters( 'wp_graphql_gf_entries_connection_query_args', $query_args, $this->source, $this->args, $this->context, $this->info );
-		error_log( 'query_args' . print_r( $query_args, true ) );
+
 		return $query_args;
 	}
 
@@ -355,8 +354,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 			'offset'    => $offset,
 			'page_size' => $this->get_query_amount(),
 		];
-
-		error_log( 'paging' . print_r( $return, true ) );
 
 		return $return;
 	}
