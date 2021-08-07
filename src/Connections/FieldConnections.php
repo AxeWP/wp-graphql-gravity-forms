@@ -13,6 +13,7 @@ namespace WPGraphQLGravityForms\Connections;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
+use WPGraphQLGravityForms\WPGraphQLGravityForms;
 use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
 use WPGraphQLGravityForms\Types\Entry\Entry;
 use WPGraphQLGravityForms\Types\Form\Form;
@@ -60,6 +61,7 @@ class FieldConnections extends AbstractConnection {
 					'toType'         => FormFieldInterface::$type,
 					'fromFieldName'  => 'formFields',
 					'connectionArgs' => self::get_connection_args(),
+					'edgeFields'     => $this->get_edge_fields(),
 					'resolve'        => static function( $root, array $args, AppContext $context, ResolveInfo $info ) {
 						$form = GFUtils::get_form( $root['formId'], false );
 
@@ -118,7 +120,7 @@ class FieldConnections extends AbstractConnection {
 		 *
 		 * @return array
 		 */
-	public static function get_edge_fields() :array {
+	public function get_edge_fields() :array {
 		return [
 			'fieldValue' => [
 				'type'              => ObjectFieldValueUnion::$type,
