@@ -105,8 +105,8 @@ abstract class AbstractDraftEntryUpdater extends AbstractMutation {
 				'type'        => Entry::$type,
 				'description' => __( 'The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload ) : array {
-					$submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
-					return $this->draft_entry_data_manipulator->manipulate( $submission['partial_entry'], $payload['resumeToken'] );
+					$draft_submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
+					return $this->draft_entry_data_manipulator->manipulate( $draft_submission['partial_entry'], $payload['resumeToken'] );
 				},
 			],
 			'errors'      => [

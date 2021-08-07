@@ -118,9 +118,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		$sorting         = $this->query_args['sorting'];
 		$paging          = $this->query_args['paging'];
 
-		$query = new GF_Query( $form_ids, $search_criteria, $sorting, $paging );
-
-		return $query;
+		return new GF_Query( $form_ids, $search_criteria, $sorting, $paging );
 	}
 
 	/**
@@ -335,11 +333,9 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 
 		$offset = $this->get_offset();
 
-		$return = [
+		return [
 			'offset'    => $offset,
 			'page_size' => $this->get_query_amount(),
 		];
-
-		return $return;
 	}
 }

@@ -492,12 +492,10 @@ class GFUtils {
 		// Compute the URL.
 		$url = $target['url'] . "/{$filename}";
 
-		$upload = [
+		return [
 			'file' => $new_file,
 			'url'  => $url,
 			'type' => $type,
 		];
-
-		return $upload;
 	}
 }

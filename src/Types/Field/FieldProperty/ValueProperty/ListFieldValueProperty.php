@@ -76,9 +76,8 @@ class ListFieldValueProperty extends AbstractValueProperty {
 
 		// If columns are enabled, save each row-value pair.
 		if ( $field->enableColumns ) {
-
 			// Save each row-value pair.
-			$listValues = array_map(
+			return array_map(
 				function( $row ) {
 					$row_values = [];
 
@@ -93,11 +92,10 @@ class ListFieldValueProperty extends AbstractValueProperty {
 				},
 				$entry_values
 			);
-			return $listValues;
 		}
 
 		// If no columns, entry values can be mapped directly to 'value'.
-		$listValues = array_map(
+		return array_map(
 			function( $single_value ) {
 				return [
 					'values' => [ $single_value ], // $single_value must be Iteratable.
@@ -106,7 +104,5 @@ class ListFieldValueProperty extends AbstractValueProperty {
 			},
 			$entry_values
 		);
-
-		return $listValues;
 	}
 }

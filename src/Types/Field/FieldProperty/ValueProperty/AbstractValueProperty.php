@@ -47,8 +47,7 @@ abstract class AbstractValueProperty extends AbstractType {
 							return null;
 						}
 
-						$value = static::get( $root['source'], $root );
-						return $value;
+						return static::get( $root['source'], $root );
 					},
 					'eagerlyLoadType' => static::$should_load_eagerly,
 				]

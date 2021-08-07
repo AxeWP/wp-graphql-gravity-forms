@@ -108,8 +108,8 @@ class UpdateDraftEntry extends AbstractMutation {
 					if ( ! empty( $payload['errors'] ) || ! $payload['resumeToken'] ) {
 						return null;
 					}
-					$submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
-					return $this->draft_entry_data_manipulator->manipulate( $submission['partial_entry'], $payload['resumeToken'] );
+					$draft_submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
+					return $this->draft_entry_data_manipulator->manipulate( $draft_submission['partial_entry'], $payload['resumeToken'] );
 				},
 			],
 			'errors'      => [
