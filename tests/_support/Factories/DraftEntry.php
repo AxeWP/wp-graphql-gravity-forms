@@ -2,10 +2,10 @@
 /**
  * Factory for Gravity Forms draft entries.
  *
- * @package WPGraphQLGravityForms\Tests\Factories
+ * @package Tests\WPGraphQL\GravityForms\Factories
  */
 
-namespace WPGraphQLGravityForms\Tests\Factories;
+namespace Tests\WPGraphQL\GravityForms\Factories;
 
 use GFAPI;
 use GFFormsModel;

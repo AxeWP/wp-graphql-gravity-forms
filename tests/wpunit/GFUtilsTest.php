@@ -7,7 +7,7 @@
 
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Utils\GFUtils;
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\Factories;
 
 /**
  * Class - GFUtilsTest

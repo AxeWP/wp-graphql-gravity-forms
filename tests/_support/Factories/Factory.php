@@ -2,10 +2,10 @@
 /**
  * Gravity Forms Testing factory.
  *
- * @package WPGraphQLGravityForms\Tests\Factories
+ * @package Tests\WPGraphQL\GravityForms\Factories
  */
 
-namespace WPGraphQLGravityForms\Tests\Factories;
+namespace Tests\WPGraphQL\GravityForms\Factories;
 
 /**
  * Class - Factory

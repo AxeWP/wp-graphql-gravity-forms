@@ -6,7 +6,7 @@
  */
 
 use GraphQLRelay\Relay;
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\Factories;
 use WPGraphQLGravityForms\Types\Enum;
 
 /**

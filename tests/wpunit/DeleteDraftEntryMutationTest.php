@@ -5,7 +5,7 @@
  * @package .
  */
 
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\Factories;
 
 /**
  * Class - DeleteDraftEntryMutationTest

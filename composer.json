@@ -33,8 +33,9 @@
     "phpstan/phpstan": "^0.12",
     "szepeviktor/phpstan-wordpress": "^0.7",
     "phpstan/extension-installer": "^1.1",
-    "phpunit/phpunit": "^9.5",
-    "simpod/php-coveralls-mirror": "^3.0"
+    "phpunit/phpunit": "^8.5",
+    "simpod/php-coveralls-mirror": "^3.0",
+		"wp-graphql/wp-graphql-testcase": "~2.1"
   },
   "config": {
     "optimize-autoloader": true,
@@ -47,7 +48,7 @@
   },
 	"autoload-dev": {
 		"psr-4": {
-			"WPGraphQLGravityForms\\Tests\\": "tests/_support"
+			"Tests\\WPGraphQL\\GravityForms\\": "tests/_support/"
 		}
 	},
   "scripts": {

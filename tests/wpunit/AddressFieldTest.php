@@ -3,7 +3,7 @@
  * Test AddressField.
  */
 
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\Factories;
 
 /**
  * Class -AddressFieldTest

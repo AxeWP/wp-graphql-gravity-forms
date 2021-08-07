@@ -3,7 +3,7 @@
  * Test Date field type.
  */
 
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\Factories;
 
 /**
  * Class -DateFieldTest.
