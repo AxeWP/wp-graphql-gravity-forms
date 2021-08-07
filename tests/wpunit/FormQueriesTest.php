@@ -6,16 +6,13 @@
  */
 
 use GraphQLRelay\Relay;
-use Tests\WPGraphQL\GravityForms\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 use WPGraphQLGravityForms\Types\Enum;
 
 /**
  * Class - FormQueriesTest
  */
-class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
-	protected $tester;
-	protected $factory;
-	protected $helpers;
+class FormQueriesTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_ids;
 	private $text_field_helper;
@@ -29,8 +26,6 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 		parent::setUp();
 
 		// Your set up methods here.
-		$this->factory = new Factories\Factory();
-
 		// Text field.
 		$this->text_field_helper = $this->tester->getTextFieldHelper();
 		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
@@ -42,8 +37,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 			2,
 			array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() )
 		);
-		\WPGraphQL::clear_schema();
-
+		$this->clearSchema();
 	}
 
 	/**
@@ -52,7 +46,6 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 	public function tearDown(): void {
 		// Your tear down methods here.
 		$this->factory->form->delete( $this->form_ids );
-		\WPGraphQL::clear_schema();
 
 		// Then...
 		parent::tearDown();

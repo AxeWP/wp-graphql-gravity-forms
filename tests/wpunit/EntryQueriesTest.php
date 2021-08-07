@@ -6,20 +6,13 @@
  */
 
 use GraphQLRelay\Relay;
-use Tests\WPGraphQL\GravityForms\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 use WPGraphQLGravityForms\Types\Enum;
 
 /**
  * Class - EntryQueriesTest
  */
-class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
-
-	/**
-	 * @var \WpunitTesterActions
-	 */
-	protected $tester;
-	protected $factory;
-	private $admin;
+class EntryQueriesTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_id;
 	private $entry_ids;
@@ -32,16 +25,8 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 		// Before...
 		parent::setUp();
 
-		// Your set up methods here.
-		$this->admin = $this->factory()->user->create_and_get(
-			[
-				'role' => 'administrator',
-			]
-		);
-		$this->admin->add_cap( 'gravityforms_view_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory           = new Factories\Factory();
 		$this->text_field_helper = $this->tester->getTextFieldHelper();
 		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
 
@@ -55,8 +40,8 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 				$this->fields[0]['id'] => 'This is a default Text entry.',
 			]
 		);
-		\WPGraphQL::clear_schema();
 
+		$this->clearSchema();
 	}
 
 	/**
@@ -64,10 +49,8 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		wp_delete_user( $this->admin->id );
 		$this->factory->entry->delete( $this->entry_ids );
 		$this->factory->form->delete( $this->form_id );
-		\WPGraphQL::clear_schema();
 
 		// Then...
 		parent::tearDown();
@@ -235,7 +218,7 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 	 * Tests `gravityFormsEntry` with draft entry.
 	 */
 	public function testGravityFormsEntryQuery_draft() : void {
-		$draft_tokens = $this->factory->draft->create_many( 2, [ 'form_id' => $this->form_id ] );
+		$draft_tokens = $this->factory->draft_entry->create_many( 2, [ 'form_id' => $this->form_id ] );
 
 		$query = '
 			query( $id: ID! ) {
@@ -256,7 +239,7 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertEquals( $draft_tokens[0], $actual['data']['gravityFormsEntry']['resumeToken'] );
 
-		$this->factory->draft->delete( $draft_tokens );
+		$this->factory->draft_entry->delete( $draft_tokens );
 	}
 
 	/**

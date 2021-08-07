@@ -3,13 +3,11 @@
 use WPGraphQLGravityForms\WPGraphQLGravityForms;
 
 class WPGraphQLGravityFormsTest extends \Codeception\TestCase\WPTestCase {
-
 	/**
 	 * @var \WpunitTesterActions
 	 */
 	protected $tester;
-
-		public $instance;
+	public $instance;
 
 	public function setUp(): void {
 		// Before...

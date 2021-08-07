@@ -2,10 +2,10 @@
 /**
  * Factory for Gravity Forms draft entries.
  *
- * @package Tests\WPGraphQL\GravityForms\Factories
+ * @package Tests\WPGraphQL\GravityForms\Factory
  */
 
-namespace Tests\WPGraphQL\GravityForms\Factories;
+namespace Tests\WPGraphQL\GravityForms\Factory;
 
 use GFAPI;
 use GFFormsModel;
@@ -66,7 +66,7 @@ class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
 				$args['source_url'],
 				$args['resume_token'],
 			);
-		} while ( empty( $resume_token ) );
+		} while ( ! is_string( $resume_token ) );
 
 		return $resume_token;
 	}

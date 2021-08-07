@@ -5,17 +5,12 @@
  * @package .
  */
 
-use Tests\WPGraphQL\GravityForms\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 
 /**
  * Class - SubmitDraftEntryMutationTest
  */
-class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
-
-	/**
-	 * @var \WpunitTesterActions
-	 */
-	protected $tester;
+class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_id;
 	private $draft_token;
@@ -31,11 +26,10 @@ class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 		parent::setUp();
 
 		// Your set up methods here.
-		$this->factory            = new Factories\Factory();
 		$this->text_field_helper  = $this->tester->getTextFieldHelper();
 		$this->fields[]           = $this->factory->field->create( $this->text_field_helper->values );
 		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
-		$this->draft_token        = $this->factory->draft->create(
+		$this->draft_token        = $this->factory->draft_entry->create(
 			[
 				'form_id'      => $this->form_id,
 				'entry'        => [
@@ -47,8 +41,7 @@ class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 			]
 		);
 		$this->client_mutation_id = 'someUniqueId';
-		\WPGraphQL::clear_schema();
-
+		$this->clearSchema();
 	}
 
 	/**
@@ -56,9 +49,8 @@ class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		$this->factory->draft->delete( $this->draft_token );
+		$this->factory->draft_entry->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
-		\WPGraphQL::clear_schema();
 
 		// Then...
 		parent::tearDown();
@@ -86,7 +78,7 @@ class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 	 * @TODO .
 	 */
 	// public function testSubmitGravityFormsDraftEntry_badValue() : void {
-	// $draft_token = $this->factory->draft->create(
+	// $draft_token = $this->factory->draft_entry->create(
 	// [
 	// 'form_id'      => $this->form_id,
 	// 'entry'        => [
@@ -98,7 +90,7 @@ class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 	// ]
 	// );
 
-	// $entry = $this->factory->draft->get_object_by_id( $draft_token);
+	// $entry = $this->factory->draft_entry->get_object_by_id( $draft_token);
 	// codecept_debug($entry);
 	// $submission = json_decode($entry['submission'], true);
 	// codecept_debug($submission);
@@ -106,7 +98,7 @@ class SubmitDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 	// codecept_debug( $actual );
 	// $this->assertArrayNotHasKey( 'errors', $actual );
 
-	// $this->factory->draft->delete( $draft_token );
+	// $this->factory->draft_entry->delete( $draft_token );
 	// $this->factory->entry->delete( $actual['data']['submitGravityFormsDraftEntry']['entryId'] );
 	// }
 

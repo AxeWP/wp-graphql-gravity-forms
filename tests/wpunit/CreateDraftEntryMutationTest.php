@@ -5,16 +5,12 @@
  * @package .
  */
 
-use Tests\WPGraphQL\GravityForms\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 
 /**
  * Class - CreateDraftEntryMutationTest
  */
-class CreateDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
-	/**
-	 * @var \WpunitTesterActions
-	 */
-	protected $tester;
+class CreateDraftEntryMutationTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_id;
 	private $client_mutation_id;
@@ -28,13 +24,13 @@ class CreateDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 		parent::setUp();
 
 		// Your set up methods here.
-		$this->factory           = new Factories\Factory();
 		$this->text_field_helper = $this->tester->getTextFieldHelper();
 		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
 
 		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
 		$this->client_mutation_id = 'someUniqueId';
-		\WPGraphQL::clear_schema();
+
+		$this->clearSchema();
 	}
 
 	/**
@@ -43,7 +39,6 @@ class CreateDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 	public function tearDown(): void {
 		// Your tear down methods here.
 		$this->factory->form->delete( $this->form_id );
-		\WPGraphQL::clear_schema();
 
 		// Then...
 		parent::tearDown();
@@ -64,14 +59,14 @@ class CreateDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertIsString( $actual['data']['createGravityFormsDraftEntry']['resumeToken'] );
 
-		$actual_draft      = $this->factory->draft->get_object_by_id( $actual['data']['createGravityFormsDraftEntry']['resumeToken'] );
+		$actual_draft      = $this->factory->draft_entry->get_object_by_id( $actual['data']['createGravityFormsDraftEntry']['resumeToken'] );
 		$actual_submission = json_decode( $actual_draft['submission'], true );
 
 		$this->assertEquals( $this->form_id, $actual_draft['form_id'] );
 		$this->assertEquals( '192.168.0.1', $actual_submission['partial_entry']['ip'] );
 		$this->assertEquals( 2, $actual_submission['page_number'] );
 
-		$this->factory->draft->delete( $actual['data']['createGravityFormsDraftEntry']['resumeToken'] );
+		$this->factory->draft_entry->delete( $actual['data']['createGravityFormsDraftEntry']['resumeToken'] );
 	}
 
 	/**
@@ -97,13 +92,13 @@ class CreateDraftEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->assertArrayNotHasKey( 'errors', $actual );
 
-		$actual_draft = $this->factory->draft->get_object_by_id( $actual['data']['createGravityFormsDraftEntry']['resumeToken'] );
+		$actual_draft = $this->factory->draft_entry->get_object_by_id( $actual['data']['createGravityFormsDraftEntry']['resumeToken'] );
 
 		$actual_submission = json_decode( $actual_draft['submission'], true );
 
 		$this->assertEquals( 'This is a default text entry', $actual_submission['partial_entry'][ $this->fields[0]['id'] ] );
 
-		$this->factory->draft->delete( $actual['data']['createGravityFormsDraftEntry']['resumeToken'] );
+		$this->factory->draft_entry->delete( $actual['data']['createGravityFormsDraftEntry']['resumeToken'] );
 		$this->factory->entry->delete( $entry_id );
 	}
 

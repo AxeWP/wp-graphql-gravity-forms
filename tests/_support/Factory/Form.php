@@ -2,10 +2,10 @@
 /**
  * Factory for Gravity Forms forms.
  *
- * @package Tests\WPGraphQL\GravityForms\Factories
+ * @package Tests\WPGraphQL\GravityForms\Factory
  */
 
-namespace Tests\WPGraphQL\GravityForms\Factories;
+namespace Tests\WPGraphQL\GravityForms\Factory;
 
 use GFAPI;
 use GFFormsModel;

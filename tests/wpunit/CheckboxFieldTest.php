@@ -3,24 +3,17 @@
  * Test CheckboxField.
  */
 
-use Tests\WPGraphQL\GravityForms\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 
 /**
  * Class -CheckboxFieldTest
  */
-class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
-	/**
-	 * @var \WpunitTesterActions
-	 */
-	protected $tester;
-	protected $factory;
-	private $admin;
+class CheckboxFieldTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $field_value;
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
-	private $property_helper;
 	private $value;
 
 	/**
@@ -30,16 +23,8 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 		// Before...
 		parent::setUp();
 
-		// Your set up methods here.
-		$this->admin = $this->factory()->user->create_and_get(
-			[
-				'role' => 'administrator',
-			]
-		);
-		$this->admin->add_cap( 'gravityforms_view_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory         = new Factories\Factory();
 		$this->property_helper = $this->tester->getCheckboxFieldHelper();
 
 		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
@@ -80,7 +65,7 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 			)
 		);
 
-		$this->draft_token = $this->factory->draft->create(
+		$this->draft_token = $this->factory->draft_entry->create(
 			[
 				'form_id'     => $this->form_id,
 				'entry'       => array_merge(
@@ -92,7 +77,8 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 				'fieldValues' => $this->property_helper->get_field_values( $this->value ),
 			]
 		);
-		\WPGraphQL::clear_schema();
+
+		$this->clearSchema();
 	}
 
 	/**
@@ -100,12 +86,10 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		wp_delete_user( $this->admin->id );
 		$this->factory->entry->delete( $this->entry_id );
-		$this->factory->draft->delete( $this->draft_token );
+		$this->factory->draft_entry->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
 		GFFormsModel::set_current_lead( null );
-		\WPGraphQL::clear_schema();
 		// Then...
 		parent::tearDown();
 	}
@@ -277,7 +261,7 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 		];
 		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
-		$this->factory->draft->delete( $resume_token );
+		$this->factory->draft_entry->delete( $resume_token );
 	}
 
 	/**
@@ -432,7 +416,7 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function testUpdateDraftEntry() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 
 		$field_value = [
 			[
@@ -517,7 +501,7 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
 		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
 
-		$this->factory->draft->delete( $resume_token );
+		$this->factory->draft_entry->delete( $resume_token );
 	}
 
 	/**
@@ -525,7 +509,7 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function testUpdateDraftEntryFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 
 		// Test draft entry.
 		$query = '
@@ -712,5 +696,33 @@ class CheckboxFieldTest extends \Codeception\TestCase\WPTestCase {
 				}
 			}
 		';
+	}
+
+	public function get_expected_mutation_response( string $mutationName, $value ) : array {
+		return [
+			$this->expectedObject(
+				$mutationName,
+				[
+					$this->expectedObject(
+						'entry',
+						[
+							$this->expectedObject(
+								'formFields',
+								[
+									$this->expectedEdge(
+										'fieldValue',
+										$this->get_expected_fields( $value ),
+									),
+									$this->expectedNode(
+										'addressValues',
+										$this->get_expected_fields( $value ),
+									),
+								]
+							),
+						]
+					),
+				]
+			),
+		];
 	}
 }

@@ -52,6 +52,7 @@
 		}
 	},
   "scripts": {
+		"install-test-env": "bash bin/install-test-env.sh",
     "lint": "vendor/bin/phpcs",
     "phpcs-i": [
       "php ./vendor/bin/phpcs -i"
