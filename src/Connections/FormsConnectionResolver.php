@@ -141,13 +141,13 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 
 		if ( isset( $this->args['after'] ) ) {
 			$key           = array_search( (string) $this->get_offset(), $ids_to_return, true );
-			$ids_to_return = array_slice( $ids_to_return, $key + 1, null, true );
+			$ids_to_return = array_slice( $ids_to_return, (int) $key + 1, null, true );
 		}
 
 		if ( isset( $this->args['before'] ) ) {
 			$ids_to_return = array_reverse( $ids_to_return );
 			$key           = array_search( (string) $this->get_offset(), $ids_to_return, true );
-			$ids_to_return = array_slice( $ids_to_return, $key + 1, null, true );
+			$ids_to_return = array_slice( $ids_to_return, (int) $key + 1, null, true );
 			$ids_to_return = array_reverse( $ids_to_return );
 		}
 
