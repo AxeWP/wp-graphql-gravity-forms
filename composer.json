@@ -8,16 +8,17 @@
       "name": "Kellen Mace",
       "email": "kellen@harnessup.com"
     },
-		{
-			"name": "Dovid Levine"
-		}
+    {
+      "name": "Dovid Levine"
+    }
   ],
   "require": {
     "php": ">=7.4"
   },
   "require-dev": {
     "lucatume/wp-browser": "^3.0",
-		"codeception/lib-innerbrowser": "^1.0",
+    "codeception/lib-innerbrowser": "^1.0",
+    "codeception/phpunit-wrapper": "^8.1",
     "codeception/module-asserts": "^1.1",
     "codeception/module-cli": "^1.0",
     "codeception/module-db": "^1.0",
@@ -35,7 +36,7 @@
     "phpstan/extension-installer": "^1.1",
     "phpunit/phpunit": "^8.5",
     "simpod/php-coveralls-mirror": "^3.0",
-		"wp-graphql/wp-graphql-testcase": "~2.1"
+    "wp-graphql/wp-graphql-testcase": "~2.1"
   },
   "config": {
     "optimize-autoloader": true,
@@ -46,13 +47,13 @@
       "WPGraphQLGravityForms\\": "src/"
     }
   },
-	"autoload-dev": {
-		"psr-4": {
-			"Tests\\WPGraphQL\\GravityForms\\": "tests/_support/"
-		}
-	},
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\WPGraphQL\\GravityForms\\": "tests/_support/"
+    }
+  },
   "scripts": {
-		"install-test-env": "bash bin/install-test-env.sh",
+    "install-test-env": "bash bin/install-test-env.sh",
     "lint": "vendor/bin/phpcs",
     "phpcs-i": [
       "php ./vendor/bin/phpcs -i"
