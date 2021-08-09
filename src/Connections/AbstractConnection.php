@@ -39,8 +39,11 @@ abstract class AbstractConnection implements Hookable {
 	 * @param array $config The individual config values.
 	 */
 	protected function prepare_connection_config( array $config ) : array {
+		//phpcs:disable
 		// Deprecate types from filter arguments.
 		// add_filter( 'wp_graphql_gf_connection_config', [ $this, 'deprecate_filter_args' ], 10, 3 );
+		//phpcs:enable
+
 		/**
 		 * Filter for modifying the GraphQL connection $config array used to register the connection in WPGraphQL.
 		 *
@@ -49,7 +52,9 @@ abstract class AbstractConnection implements Hookable {
 		 */
 		$config = apply_filters( 'wp_graphql_gf_connection_config', $config, $config['fromType'], $config['toType'] );
 
+		//phpcs:disable
 		// remove_filter( 'wp_graphql_gf_connection_config', [ $this, 'deprecate_filter_args' ] );
+		//phpcs:enable
 
 		return $config;
 	}
