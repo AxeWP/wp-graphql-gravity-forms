@@ -10,9 +10,7 @@
 
 namespace WPGraphQLGravityForms\Data\Loader;
 
-use GF_Query;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
-use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
 use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
 use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
 use WPGraphQLGravityForms\Utils\GFUtils;

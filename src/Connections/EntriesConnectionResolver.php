@@ -13,6 +13,7 @@ namespace WPGraphQLGravityForms\Connections;
 use GFAPI;
 use GF_Query;
 use GraphQL\Error\UserError;
+use GraphQLRelay\Connection\ArrayConnection;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQLGravityForms\Data\Loader\EntriesLoader;
 use WPGraphQLGravityForms\Types\Enum\EntryStatusEnum;
@@ -120,12 +121,36 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 
 		return new GF_Query( $form_ids, $search_criteria, $sorting, $paging );
 	}
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_offset() {
+
+		/**
+		 * Defaults
+		 */
+		$offset = 0;
+
+		/**
+		 * Get the $after offset
+		 */
+		if ( ! empty( $this->args['after'] ) ) {
+			$offset = ArrayConnection::cursorToOffset( $this->args['after'] ) + 1;
+		} elseif ( ! empty( $this->args['before'] ) ) {
+			$offset = ArrayConnection::cursorToOffset( $this->args['before'] ) + 1;
+		}
+
+		/**
+		 * Return the higher of the two values
+		 */
+		return max( 0, $offset );
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	protected function get_cursor_for_node( $id ) : string {
-		$index = array_search( $id, array_keys( $this->nodes ), true );
+		$index = $this->get_offset() + array_search( $id, array_keys( $this->nodes ), true );
 		return base64_encode( 'arrayconnection:' . $index );  // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 	}
 

@@ -11,7 +11,6 @@
 namespace WPGraphQLGravityForms\Connections;
 
 use GFAPI;
-use GFForms;
 use GFFormsModel;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Error\UserError;
@@ -137,23 +136,45 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 		$sort_column = $this->query_args['sort']['key'];
 		$sort_dir    = $this->query_args['sort']['direction'];
 
-		$ids_to_return = ! empty( $form_ids ) ? $form_ids : GFFormsModel::get_form_ids( $active, $trash, $sort_column, $sort_dir );
+		return ! empty( $form_ids ) ? $form_ids : GFFormsModel::get_form_ids( $active, $trash, $sort_column, $sort_dir );
+	}
 
-		if ( isset( $this->args['after'] ) ) {
-			$key           = array_search( (string) $this->get_offset(), $ids_to_return, true );
-			$ids_to_return = array_slice( $ids_to_return, (int) $key + 1, null, true );
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_nodes() : array {
+		$ids = $this->get_ids();
+		$ids = $ids ?: [];
+
+		$nodes = [];
+
+		$ids = $this->ids;
+
+		if ( ! empty( $this->get_offset() ) ) {
+			// Determine if the offset is in the array.
+			$key = array_search( (string) $this->get_offset(), $ids, true );
+			// If the offset is in the array.
+			if ( false !== $key ) {
+				$key = absint( $key );
+				$ids = array_slice( $ids, $key + 1, null, true );
+			}
 		}
 
-		if ( isset( $this->args['before'] ) ) {
-			$ids_to_return = array_reverse( $ids_to_return );
-			$key           = array_search( (string) $this->get_offset(), $ids_to_return, true );
-			$ids_to_return = array_slice( $ids_to_return, (int) $key + 1, null, true );
-			$ids_to_return = array_reverse( $ids_to_return );
+		$ids = array_slice( $ids, 0, $this->query_amount, true );
+
+				// Flip the direction on `last` query.
+		if ( ! empty( $this->args['last'] ) ) {
+			$ids = array_reverse( $ids, true );
 		}
 
-		$ids_to_return = array_slice( $ids_to_return, 0, $this->query_amount, true );
+		foreach ( $ids as $id ) {
+			$model = $this->get_node_by_id( $id );
+			if ( true === $this->is_valid_model( $model ) ) {
+				$nodes[ $id ] = $model;
+			}
+		}
 
-		return $ids_to_return;
+		return $nodes;
 	}
 
 	/**
@@ -219,16 +240,6 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 		];
 
 		if ( ! empty( $this->args['where']['sort'] ) && is_array( $this->args['where']['sort'] ) ) {
-			if ( version_compare( '2.5.0', GFForms::$version, '>' ) ) {
-				throw new UserError(
-					sprintf(
-						// translators: Gravity Forms version.
-						__( 'The `RootQueryToGravityFormsFormConnection.sort` argument requires Gravity Forms v2.5.0+. Version installed: %1$s', 'wp-graphql-gravity-forms' ),
-						GFForms::$version
-					)
-				);
-			}
-
 			$sort = [
 				'key'       => $this->args['where']['sort']['key'] ?? '',
 				'direction' => $this->args['where']['sort']['direction'] ?? 'ASC',
