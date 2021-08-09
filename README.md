@@ -28,7 +28,7 @@ Our hope for this open source project is that it will enable more teams to lever
 
 - PHP 7.4+
 - WPGraphQL 1.0.0+
-- Gravity Forms 2.4+
+- Gravity Forms 2.5+
 - WordPress 5.4.1+
 
 ## Quick Install
