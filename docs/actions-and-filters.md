@@ -17,13 +17,13 @@
 Filter for modifying whether the user can view the GF entries being queried.
 
 ```php
-apply_filters( 'wp_graphql_gf_can_view_entries', bool $can_view_entries, array $entry_ids );
+apply_filters( 'wp_graphql_gf_can_view_entries', bool $can_view_entries, array|int $form_ids );
 ```
 
 #### Parameters
 
 - **`$can_view_entries`** _(bool)_ : Whether the user has `gravityforms_view_entries` or `gform_full_access` permissions.
-- **`$entry_ids`** _(array)_ : An array of the GF entry ids being queried by GraphQL.
+- **`$form_ids`** _(array|int)_ : An array of the GF form ids being queried by GraphQL. `0` if all forms are being queried for entries.
 
 ### `wp_graphql_gf_connection_config`
 

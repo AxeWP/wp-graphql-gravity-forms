@@ -6,16 +6,13 @@
  */
 
 use GraphQLRelay\Relay;
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 use WPGraphQLGravityForms\Types\Enum;
 
 /**
  * Class - FormQueriesTest
  */
-class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
-	protected $tester;
-	protected $factory;
-	protected $helpers;
+class FormQueriesTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_ids;
 	private $text_field_helper;
@@ -29,8 +26,6 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 		parent::setUp();
 
 		// Your set up methods here.
-		$this->factory = new Factories\Factory();
-
 		// Text field.
 		$this->text_field_helper = $this->tester->getTextFieldHelper();
 		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
@@ -39,11 +34,10 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 		$this->fields[]               = $this->factory->field->create( $this->text_area_field_helper->values );
 		// Form.
 		$this->form_ids = $this->factory->form->create_many(
-			2,
+			6,
 			array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() )
 		);
-		\WPGraphQL::clear_schema();
-
+		$this->clearSchema();
 	}
 
 	/**
@@ -52,7 +46,6 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 	public function tearDown(): void {
 		// Your tear down methods here.
 		$this->factory->form->delete( $this->form_ids );
-		\WPGraphQL::clear_schema();
 
 		// Then...
 		parent::tearDown();
@@ -61,7 +54,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Tests `gravityFormsForm`.
 	 */
-	public function testGravityFormsFormQuery() : void {
+	public function testFormQuery() : void {
 		$form_id   = $this->form_ids[0];
 		$global_id = Relay::toGlobalId( 'GravityFormsForm', $form_id );
 		$form      = GFAPI::get_form( $form_id );
@@ -252,22 +245,19 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test `gravityFormsForm` with no setup variables.
 	 */
-	public function testGravityFormsFormQuery_empty() : void {
+	public function testFormQuery_empty() : void {
 		$form_id          = $this->factory->form->create( [ 'fields' => [] ] );
 		$global_id        = Relay::toGlobalId( 'GravityFormsForm', $form_id );
 		$form             = GFAPI::get_form( $form_id );
 		$confirmation_key = key( $form['confirmations'] );
-		$query            = $this->get_form_query();
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'id'     => $form_id,
-					'idType' => 'DATABASE_ID',
-				],
-			]
-		);
+		$query     = $this->get_form_query();
+		$variables = [
+			'id'     => $form_id,
+			'idType' => 'DATABASE_ID',
+		];
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$expected =
 			[
@@ -293,7 +283,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					'enableAnimation'            => null,
 					'enableHoneypot'             => null,
 					'formFields'                 => [
-						'nodes' => [],
+						'nodes' => null,
 					],
 					'firstPageCssClass'          => null,
 					'formId'                     => $form['id'],
@@ -341,8 +331,8 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 				],
 			];
 
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $response );
+		$this->assertEquals( $expected, $response['data'] );
 
 		$this->factory->form->delete( $form_id );
 	}
@@ -350,7 +340,7 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test `gravityFormsForms`.
 	 */
-	public function testGravityFormsFormsQuery() : void {
+	public function testFormsQuery() : void {
 		$query = '
 			query {
 				gravityFormsForms {
@@ -361,20 +351,18 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql( [ 'query' => $query ] );
+		$response = $this->graphql( compact( 'query' ) );
 
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( 2, count( $actual['data']['gravityFormsForms']['nodes'] ) );
+		$this->assertArrayNotHasKey( 'errors', $response );
+		$this->assertCount( 6, $response['data']['gravityFormsForms']['nodes'] );
 	}
 
 	/**
 	 * Test `gravityFormsForms` with query args.
 	 */
-	public function testGravityFormsForms_queryArgs() {
-		$form_ids = $this->factory->form->create_many(
-			20,
-			[ 'fields' => [] ]
-		);
+	public function testForms_queryArgs() {
+		// Get form ids in DESC order.
+		$form_ids = array_reverse( $this->form_ids );
 
 		$query = '
 			query( $first: Int, $after: String, $last:Int, $before: String ) {
@@ -387,6 +375,9 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 					}
 					edges {
 						cursor
+						node {
+							formId
+						}
 					}
 					nodes {
 						formId
@@ -395,77 +386,78 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'first'  => 10,
-					'after'  => null,
-					'last'   => null,
-					'before' => null,
-				],
-			]
-		);
-		// Check `first` argument.
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( 10, count( $actual['data']['gravityFormsForms']['nodes'] ) );
+		$variables = [
+			'first'  => 2,
+			'after'  => null,
+			'last'   => null,
+			'before' => null,
+		];
 
-		$cursor_after  = $actual['data']['gravityFormsForms']['edges'][2]['cursor'];
-		$cursor_before = $actual['data']['gravityFormsForms']['edges'][8]['cursor'];
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		// Check `first` argument.
+		$this->assertArrayNotHasKey( 'errors', $response, 'First array has errors.' );
+		$this->assertCount( 2, $response['data']['gravityFormsForms']['nodes'], 'First does not return correct amount.' );
+
+		$this->assertSame( $form_ids[0], $response['data']['gravityFormsForms']['nodes'][0]['formId'], 'First - node 0 is not same.' );
+		$this->assertSame( $form_ids[1], $response['data']['gravityFormsForms']['nodes'][1]['formId'], 'First - node 1 is not same' );
 
 		// Check `after` argument.
-		$expected_ids = wp_list_pluck( $actual['data']['gravityFormsForms']['nodes'], 'formId' );
-		$actual       = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'first'  => 5,
-					'after'  => $cursor_after,
-					'last'   => null,
-					'before' => null,
-				],
-			]
-		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$actual_ids = wp_list_pluck( $actual['data']['gravityFormsForms']['nodes'], 'formId' );
-		$this->assertSame( array_slice( $expected_ids, 3, 5 ), $actual_ids );
+		$variables = [
+			'first'  => 2,
+			'after'  => $response['data']['gravityFormsForms']['pageInfo']['endCursor'],
+			'last'   => null,
+			'before' => null,
+		];
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'first'  => null,
-					'after'  => null,
-					'last'   => 5,
-					'before' => $cursor_before,
-				],
-			]
-		);
-		// Check `last` argument.
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( 5, count( $actual['data']['gravityFormsForms']['nodes'] ) );
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertCount( 2, $response['data']['gravityFormsForms']['nodes'], 'First/after #1 does not return correct amount.' );
+		$this->assertSame( $form_ids[2], $response['data']['gravityFormsForms']['nodes'][0]['formId'], 'First/after #1 - node 0 is not same.' );
+		$this->assertSame( $form_ids[3], $response['data']['gravityFormsForms']['nodes'][1]['formId'], 'First/after #1- node 1 is not same.' );
+
+		$variables = [
+			'first'  => 2,
+			'after'  => $response['data']['gravityFormsForms']['pageInfo']['endCursor'],
+			'last'   => null,
+			'before' => null,
+		];
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertCount( 2, $response['data']['gravityFormsForms']['nodes'], 'First/after #2 does not return correct amount.' );
+		$this->assertSame( $form_ids[4], $response['data']['gravityFormsForms']['nodes'][0]['formId'], 'First/after #2 - node 0 is not same' );
+		$this->assertSame( $form_ids[5], $response['data']['gravityFormsForms']['nodes'][1]['formId'], 'First/after #2 - node 1 is not same.' );
+
+		// Check last argument.
+		$variables = [
+			'first'  => null,
+			'after'  => null,
+			'last'   => 2,
+			'before' => null,
+		];
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertCount( 2, $response['data']['gravityFormsForms']['nodes'], 'Last does not return correct amount.' );
+		$this->assertSame( $form_ids[4], $response['data']['gravityFormsForms']['nodes'][0]['formId'], 'Last - node 0 is not same' );
+		$this->assertSame( $form_ids[5], $response['data']['gravityFormsForms']['nodes'][1]['formId'], 'Last - node 1 is not same.' );
 
 		// Check `before` argument.
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$actual_ids = wp_list_pluck( $actual['data']['gravityFormsForms']['nodes'], 'formId' );
-		$this->assertSame( array_slice( $expected_ids, 3, 5 ), $actual_ids );
+		$variables = [
+			'first'  => null,
+			'after'  => null,
+			'last'   => 2,
+			'before' => $response['data']['gravityFormsForms']['pageInfo']['startCursor'],
+		];
 
-		// Check between.
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'first'  => 10,
-					'after'  => $cursor_after,
-					'last'   => null,
-					'before' => $cursor_before,
-				],
-			]
-		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$actual_ids = wp_list_pluck( $actual['data']['gravityFormsForms']['nodes'], 'formId' );
-		$this->assertEquals( 5, count( $actual['data']['gravityFormsForms']['nodes'] ) );
-		$this->assertSame( array_slice( $expected_ids, 3, 5 ), $actual_ids );
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertArrayNotHasKey( 'errors', $response, 'Last array has errors.' );
+
+		$this->assertCount( 2, $response['data']['gravityFormsForms']['nodes'], 'last/befoe does not return correct amount.' );
+		$this->assertSame( $form_ids[2], $response['data']['gravityFormsForms']['nodes'][0]['formId'], 'last/before - node 0 is not same' );
+		$this->assertSame( $form_ids[3], $response['data']['gravityFormsForms']['nodes'][1]['formId'], 'last/before - node 1 is not same' );
 
 		// Check `where.status` argument.
 
@@ -517,26 +509,26 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql( [ 'query' => $query ] );
+		$response = $this->graphql( compact( 'query' ) );
 
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertArrayNotHasKey( 'errors', $response, 'Status query has errors.' );
 		// Test inactive.
-		$this->assertEquals( 2, count( $actual['data']['inactive']['nodes'] ) );
-		$this->assertFalse( $actual['data']['inactive']['nodes'][0]['isActive'] );
-		$this->assertFalse( $actual['data']['inactive']['nodes'][0]['isTrash'] );
+		$this->assertCount( 2, $response['data']['inactive']['nodes'] );
+		$this->assertFalse( $response['data']['inactive']['nodes'][0]['isActive'] );
+		$this->assertFalse( $response['data']['inactive']['nodes'][0]['isTrash'] );
 		// Test trashed.
-		$this->assertEquals( 2, count( $actual['data']['trashed']['nodes'] ) );
-		$this->assertTrue( $actual['data']['trashed']['nodes'][0]['isActive'] );
-		$this->assertTrue( $actual['data']['trashed']['nodes'][0]['isTrash'] );
+		$this->assertCount( 2, $response['data']['trashed']['nodes'] );
+		$this->assertTrue( $response['data']['trashed']['nodes'][0]['isActive'] );
+		$this->assertTrue( $response['data']['trashed']['nodes'][0]['isTrash'] );
 		// Test inactive_trashed.
-		$this->assertEquals( 2, count( $actual['data']['inactive_trashed']['nodes'] ) );
-		$this->assertFalse( $actual['data']['inactive_trashed']['nodes'][0]['isActive'] );
-		$this->assertTrue( $actual['data']['inactive_trashed']['nodes'][0]['isTrash'] );
+		$this->assertCount( 2, $response['data']['inactive_trashed']['nodes'] );
+		$this->assertFalse( $response['data']['inactive_trashed']['nodes'][0]['isActive'] );
+		$this->assertTrue( $response['data']['inactive_trashed']['nodes'][0]['isTrash'] );
 
 		// Test where.sort argument.
 		$query = '
 			query {
-				gravityFormsForms( where: { sort: { key: "id", direction: DESC } } ) {
+				gravityFormsForms( where: { sort: { key: "id", direction: DESC }, status:INACTIVE_TRASHED } ) {
 					nodes {
 						formId
 					}
@@ -544,16 +536,10 @@ class FormQueriesTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql( [ 'query' => $query ] );
+		$response = $this->graphql( compact( 'query' ) );
 
-		if ( version_compare( '2.5.0', \GFForms::$version, '>' ) ) {
-			$this->assertArrayHasKey( 'errors', $actual );
-		} else {
-			$this->assertArrayNotHasKey( 'errors', $actual );
-			$this->assertGreaterThan( $actual['data']['gravityFormsForms']['nodes'][1]['formId'], $actual['data']['gravityFormsForms']['nodes'][0]['formId'] );
-		}
-
-		$this->factory->form->delete( $form_ids );
+		$this->assertArrayNotHasKey( 'errors', $response );
+		$this->assertGreaterThan( $response['data']['gravityFormsForms']['nodes'][1]['formId'], $response['data']['gravityFormsForms']['nodes'][0]['formId'] );
 	}
 
 	/**

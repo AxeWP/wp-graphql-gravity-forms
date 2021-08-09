@@ -7,18 +7,12 @@
 
 use GraphQL\Error\UserError;
 use WPGraphQLGravityForms\Utils\GFUtils;
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 
 /**
  * Class - GFUtilsTest
  */
-class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
-
-	/**
-	 * @var \WpunitTesterActions
-	 */
-	protected $tester;
-	protected $factory;
+class GFUtilsTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_id;
 	private $entry_id;
@@ -33,7 +27,6 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 		parent::setUp();
 
 		// Your set up methods here.
-		$this->factory           = new Factories\Factory();
 		$this->text_field_helper = $this->tester->getTextFieldHelper();
 		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
 		$this->form_id           = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
@@ -43,9 +36,7 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 				$this->fields[0]['id'] => 'This is a default Text Entry',
 			]
 		);
-		$this->draft_token       = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
-		\WPGraphQL::clear_schema();
-
+		$this->draft_token       = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 	}
 
 	/**
@@ -54,9 +45,8 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 	public function tearDown(): void {
 		// Your tear down methods here.
 		$this->factory->entry->delete( $this->entry_id );
-		$this->factory->draft->delete( $this->draft_token );
+		$this->factory->draft_entry->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
-		\WPGraphQL::clear_schema();
 
 		// Then...
 		parent::tearDown();
@@ -186,7 +176,7 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 	 * Tests GFUtils::get_draft_entry().
 	 */
 	public function testGetDraftEntry() : void {
-		$expected = $this->factory->draft->get_object_by_id( $this->draft_token );
+		$expected = $this->factory->draft_entry->get_object_by_id( $this->draft_token );
 		$actual   = GFUtils::get_draft_entry( $this->draft_token );
 		$this->assertEquals( $expected, $actual );
 
@@ -200,7 +190,7 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 	 * Tests GFUtils::get_draft_submission().
 	 */
 	public function testGetDraftSubmission() : void {
-		$expected_entry = $this->factory->draft->get_object_by_id( $this->draft_token );
+		$expected_entry = $this->factory->draft_entry->get_object_by_id( $this->draft_token );
 		$expected       = json_decode( $expected_entry['submission'], true );
 
 		$actual = GFUtils::get_draft_submission( $this->draft_token );
@@ -225,7 +215,7 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function testSaveDraftSubmission() : void {
 		$form       = $this->factory->form->get_object_by_id( $this->form_id );
-		$entry_data = $this->factory->draft->get_object_by_id( $this->draft_token );
+		$entry_data = $this->factory->draft_entry->get_object_by_id( $this->draft_token );
 		$submission = json_decode( $entry_data['submission'], true );
 
 		// Test new submission.
@@ -251,7 +241,7 @@ class GFUtilsTest extends \Codeception\TestCase\WPTestCase {
 		$this->expectException( UserError::class );
 		$this->expectExceptionMessage( 'An error occured while trying to save the draft entry. Database Error:' );
 		$actual = GFUtils::save_draft_submission( $form, $entry_data );
-		$this->factory->draft->delete( $actual );
+		$this->factory->draft_entry->delete( $actual );
 	}
 
 	/**

@@ -1,8 +1,8 @@
 <?php
 /**
- * DataLoader - Entries
+ * DataLoader - Forms
  *
- * Loads Models for Gravity Forms Entries.
+ * Loads Models for Gravity Forms Forms.
  *
  * @package WPGraphQLGravityForms\Data\Loader
  * @since 0.0.1
@@ -10,20 +10,21 @@
 
 namespace WPGraphQLGravityForms\Data\Loader;
 
-use GF_Query;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
-use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
+use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
+use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
+use WPGraphQLGravityForms\Utils\GFUtils;
 
 /**
- * Class - EntriesLoader
+ * Class - FormsLoader
  */
-class EntriesLoader extends AbstractDataLoader {
+class FormsLoader extends AbstractDataLoader {
 	/**
 	 * Loader name.
 	 *
 	 * @var string
 	 */
-	public static string $name = 'gravityFormsEntries';
+	public static string $name = 'gravityFormsForms';
 
 	/**
 	 * Given array of keys, loads and returns a map consisting of keys from `keys` array and loaded
@@ -45,12 +46,11 @@ class EntriesLoader extends AbstractDataLoader {
 			return $keys;
 		}
 
-		$gf_query               = new GF_Query();
-		$entries_from_db        = $gf_query->get_entries( $keys );
-		$entry_data_manipulator = new EntryDataManipulator();
+		$forms_from_db         = GFUtils::get_forms( $keys );
+		$form_data_manipulator = new FormDataManipulator( new FieldsDataManipulator() );
 
-		$entries = array_map( fn( array $entry ) => $entry_data_manipulator->manipulate( $entry ), $entries_from_db );
+		$forms = array_map( fn( $form ) => $form_data_manipulator->manipulate( $form ), $forms_from_db );
 
-		return array_combine( $keys, $entries );
+		return array_combine( $keys, $forms );
 	}
 }

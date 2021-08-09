@@ -63,6 +63,36 @@ class GFUtils {
 
 		return $form;
 	}
+	/**
+	 * Returns all the form objects.
+	 *
+	 * Based on GFAPI::get_forms.
+	 *
+	 * @see https://docs.gravityforms.com/api-functions/#get-forms
+	 *
+	 * @param array  $ids         Array of form ids to limit results. Empty if all.
+	 * @param bool   $active      True if active forms are returned. False to get inactive forms. Defaults to true.
+	 * @param bool   $trash       True if trashed forms are returned. False to exclude trash. Defaults to false.
+	 * @param string $sort_column The column to sort the results on.
+	 * @param string $sort_dir    The sort direction, ASC or DESC.
+	 *
+	 * @return array The array of Form Objects.
+	 */
+	public static function get_forms( array $ids = [], bool $active = true, bool $trash = false, string $sort_column = 'id', string $sort_dir = 'ASC' ) : array {
+		$form_ids = ! empty( $ids ) ? $ids : GFFormsModel::get_form_ids( $active, $trash, $sort_column, $sort_dir );
+
+		if ( empty( $form_ids ) ) {
+			return [];
+		}
+
+		$forms = [];
+
+		foreach ( $form_ids as $form_id ) {
+			$forms[] = GFAPI::get_form( $form_id );
+		}
+
+		return $forms;
+	}
 
 	/**
 	 * Gets the last page of the form. Useful for form submissions.
@@ -462,12 +492,10 @@ class GFUtils {
 		// Compute the URL.
 		$url = $target['url'] . "/{$filename}";
 
-		$upload = [
+		return [
 			'file' => $new_file,
 			'url'  => $url,
 			'type' => $type,
 		];
-
-		return $upload;
 	}
 }

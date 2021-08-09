@@ -3,23 +3,17 @@
  * Test CaptchaField.
  */
 
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 
 /**
  * Class -CaptchaFieldTest
  */
-class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
-	/**
-	 * @var \WpunitTesterActions
-	 */
-	protected $tester;
-	protected $factory;
-	private $admin;
+class CaptchaFieldTest extends GFGraphQLTestCase {
+
 	private $fields = [];
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
-	private $property_helper;
 	private $value;
 
 	/**
@@ -29,22 +23,15 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 		// Before...
 		parent::setUp();
 
-		// Your set up methods here.
-		$this->admin = $this->factory()->user->create_and_get(
-			[
-				'role' => 'administrator',
-			]
-		);
-		$this->admin->add_cap( 'gravityforms_view_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory           = new Factories\Factory();
 		$this->property_helper   = $this->tester->getCaptchaFieldHelper();
 		$this->text_field_helper = $this->tester->getTextFieldHelper( [ 'id' => 2 ] );
-		$this->value             = $this->property_helper->dummy->words( 1, 5 );
 
 		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
 		$this->fields[] = $this->factory->field->create( $this->text_field_helper->values );
+
+		$this->value = $this->property_helper->dummy->words( 1, 5 );
 
 		$this->form_id = $this->factory->form->create(
 			array_merge(
@@ -60,7 +47,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 			]
 		);
 
-		$this->draft_token = $this->factory->draft->create(
+		$this->draft_token = $this->factory->draft_entry->create(
 			[
 				'form_id'     => $this->form_id,
 				'entry'       => [
@@ -71,7 +58,8 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		\WPGraphQL::clear_schema();
+
+		$this->clearSchema();
 	}
 
 	/**
@@ -79,12 +67,10 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		wp_delete_user( $this->admin->id );
 		$this->factory->entry->delete( $this->entry_id );
-		$this->factory->draft->delete( $this->draft_token );
+		$this->factory->draft_entry->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
 		GFFormsModel::set_current_lead( null );
-		\WPGraphQL::clear_schema();
 		// Then...
 		parent::tearDown();
 	}
@@ -134,29 +120,32 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				}
 			}
 		';
-		// Test entry.
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'id'     => $this->form_id,
-					'idType' => 'DATABASE_ID',
-				],
-			]
-		);
+
+		$variables = [
+			'id'     => $this->form_id,
+			'idType' => 'DATABASE_ID',
+		];
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$expected = [
-			'gravityFormsForm' => [
-				'formFields' => [
-					'nodes' => [
-						$this->property_helper->getAllActualValues( $form['fields'][0] ),
-						new stdClass(),
-					],
-				],
-			],
+			$this->expectedObject(
+				'gravityFormsForm',
+				[
+					$this->expectedObject(
+						'formFields',
+						[
+							$this->expectedNode(
+								'0',
+								$this->property_helper->getAllActualValues( $form['fields'][0] )
+							),
+						]
+					),
+				]
+			),
 		];
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Test form has error.' );
-		$this->assertEquals( $expected, $actual['data'], 'Test form is not equal.' );
+
+		$this->assertQuerySuccessful( $response, $expected );
 	}
 
 	/**
@@ -166,53 +155,23 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 		$value = $this->property_helper->dummy->words( 1, 5 );
 
-		$actual = graphql(
-			[
-				'query'     => $this->get_submit_form_query(),
-				'variables' => [
-					'draft'   => true,
-					'formId'  => $this->form_id,
-					'fieldId' => $form['fields'][1]->id,
-					'value'   => $value,
-				],
-			]
-		);
+		$query = $this->get_submit_form_query();
 
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
-
-		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
-		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
-
-		$expected = [
-			'submitGravityFormsForm' => [
-				'errors'      => null,
-				'entryId'     => $entry_id,
-				'resumeToken' => $resume_token,
-				'entry'       => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => null,
-							],
-							[
-								'fieldValue' => [
-									'value' => $value,
-								],
-							],
-						],
-						'nodes' => [
-							new stdClass(),
-							[
-								'value' => $value,
-							],
-						],
-					],
-				],
-			],
+		$variables = [
+			'draft'   => true,
+			'formId'  => $this->form_id,
+			'fieldId' => $form['fields'][1]->id,
+			'value'   => $value,
 		];
-		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
-		$this->factory->draft->delete( $resume_token );
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$expected = $this->get_expected_mutation_response( 'submitGravityFormsForm', $value );
+
+		$this->assertQuerySuccessful( $response, $expected );
+		$resume_token = $response['data']['submitGravityFormsForm']['resumeToken'];
+
+		$this->factory->draft_entry->delete( $resume_token );
 	}
 
 	/**
@@ -222,51 +181,21 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 		$form  = $this->factory->form->get_object_by_id( $this->form_id );
 		$value = $this->property_helper->dummy->words( 1, 5 );
 
-		// Test entry.
-		$actual = graphql(
-			[
-				'query'     => $this->get_submit_form_query(),
-				'variables' => [
-					'draft'   => false,
-					'formId'  => $this->form_id,
-					'fieldId' => $form['fields'][1]->id,
-					'value'   => $value,
-				],
-			]
-		);
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
-
-		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
-		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
-		$expected     = [
-			'submitGravityFormsForm' => [
-				'errors'      => null,
-				'entryId'     => $entry_id,
-				'resumeToken' => $resume_token,
-				'entry'       => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => null,
-							],
-							[
-								'fieldValue' => [
-									'value' => $value,
-								],
-							],
-						],
-						'nodes' => [
-							new stdClass(),
-							[
-								'value' => $value,
-							],
-						],
-					],
-				],
-			],
+		$query     = $this->get_submit_form_query();
+		$variables = [
+			'draft'   => false,
+			'formId'  => $this->form_id,
+			'fieldId' => $form['fields'][1]->id,
+			'value'   => $value,
 		];
+		// Test entry.
+		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
+		$expected = $this->get_expected_mutation_response( 'submitGravityFormsForm', $value );
+
+		$this->assertQuerySuccessful( $response, $expected );
+
+		$entry_id = $response['data']['submitGravityFormsForm']['entryId'];
 
 		$this->factory->entry->delete( $entry_id );
 	}
@@ -305,44 +234,17 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'entryId' => $this->entry_id,
-					'fieldId' => $form['fields'][1]->id,
-					'value'   => $value,
-				],
-			]
-		);
-
-		$expected = [
-			'updateGravityFormsEntry' => [
-				'errors' => null,
-				'entry'  => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => null,
-							],
-							[
-								'fieldValue' => [
-									'value' => $value,
-								],
-							],
-						],
-						'nodes' => [
-							new stdClass(),
-							[
-								'value' => $value,
-							],
-						],
-					],
-				],
-			],
+		$variables = [
+			'entryId' => $this->entry_id,
+			'fieldId' => $form['fields'][1]->id,
+			'value'   => $value,
 		];
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
-		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$expected = $this->get_expected_mutation_response( 'updateGravityFormsEntry', $value );
+
+		$this->assertQuerySuccessful( $response, $expected );
 	}
 
 	/**
@@ -350,7 +252,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function testUpdateDraftEntry() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 		$value        = $this->property_helper->dummy->words( 1, 5 );
 
 		$query = '
@@ -380,47 +282,21 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'resumeToken' => $resume_token,
-					'fieldId'     => $form['fields'][1]->id,
-					'value'       => $value,
-				],
-			]
-		);
-
-		$expected = [
-			'updateGravityFormsDraftEntry' => [
-				'errors' => null,
-				'entry'  => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => null,
-							],
-							[
-								'fieldValue' => [
-									'value' => $value,
-								],
-							],
-						],
-						'nodes' => [
-							new stdClass(),
-							[
-								'value' => $value,
-							],
-						],
-					],
-				],
-			],
+		$variables = [
+			'resumeToken' => $resume_token,
+			'fieldId'     => $form['fields'][1]->id,
+			'value'       => $value,
 		];
 
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
-		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$this->factory->draft->delete( $resume_token );
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$expected = $this->get_expected_mutation_response( 'updateGravityFormsDraftEntry', $value );
+
+		$this->assertQuerySuccessful( $response, $expected );
+
+		$this->factory->draft_entry->delete( $resume_token );
 	}
 
 	/**
@@ -428,7 +304,7 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function testUpdateDraftEntryFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 		$value        = $this->property_helper->dummy->words( 1, 5 );
 
 		// Test draft entry.
@@ -459,44 +335,17 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'fieldId'     => $form['fields'][1]->id,
-					'resumeToken' => $resume_token,
-					'value'       => $value,
-				],
-			]
-		);
-
-		$expected = [
-			'updateDraftEntryTextFieldValue' => [
-				'errors' => null,
-				'entry'  => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => null,
-							],
-							[
-								'fieldValue' => [
-									'value' => $value,
-								],
-							],
-						],
-						'nodes' => [
-							new stdClass(),
-							[
-								'value' => $value,
-							],
-						],
-					],
-				],
-			],
+		$variables = [
+			'fieldId'     => $form['fields'][1]->id,
+			'resumeToken' => $resume_token,
+			'value'       => $value,
 		];
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
-		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$expected = $this->get_expected_mutation_response( 'updateDraftEntryTextFieldValue', $value );
+
+		$this->assertQuerySuccessful( $response, $expected );
 
 		// Test submitted query.
 		$query = '
@@ -527,45 +376,17 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'resumeToken' => $resume_token,
-				],
-			]
-		);
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
-
-		$entry_id = $actual['data']['submitGravityFormsDraftEntry']['entryId'];
-
-		$expected = [
-			'submitGravityFormsDraftEntry' => [
-				'errors'  => null,
-				'entryId' => $entry_id,
-				'entry'   => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => null,
-							],
-							[
-								'fieldValue' => [
-									'value' => $value,
-								],
-							],
-						],
-						'nodes' => [
-							new stdClass(),
-							[
-								'value' => $value,
-							],
-						],
-					],
-				],
-			],
+		$variables = [
+			'resumeToken' => $resume_token,
 		];
-		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equals' );
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$expected = $this->get_expected_mutation_response( 'submitGravityFormsDraftEntry', $value );
+
+		$this->assertQuerySuccessful( $response, $expected );
+
+		$entry_id = $response['data']['submitGravityFormsDraftEntry']['entryId'];
 
 		$this->factory->entry->delete( $entry_id );
 	}
@@ -604,5 +425,33 @@ class CaptchaFieldTest extends \Codeception\TestCase\WPTestCase {
 				}
 			}
 		';
+	}
+
+	public function get_expected_mutation_response( string $mutationName, $value ) : array {
+		return [
+			$this->expectedObject(
+				$mutationName,
+				[
+					$this->expectedObject(
+						'entry',
+						[
+							$this->expectedObject(
+								'formFields',
+								[
+									$this->expectedEdge(
+										'1.fieldValue',
+										$this->expectedField( 'value', $value ),
+									),
+									$this->expectedNode(
+										'1',
+										$this->expectedField( 'value', $value ),
+									),
+								]
+							),
+						]
+					),
+				]
+			),
+		];
 	}
 }

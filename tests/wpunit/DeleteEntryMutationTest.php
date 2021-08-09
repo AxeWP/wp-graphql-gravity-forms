@@ -5,18 +5,12 @@
  * @package .
  */
 
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 
 /**
  * Class - DeleteEntryMutationTest
  */
-class DeleteEntryMutationTest extends \Codeception\TestCase\WPTestCase {
-
-	/**
-	 * @var \WpunitTesterActions
-	 */
-	protected $tester;
-	private $admin;
+class DeleteEntryMutationTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_id;
 	private $entry_id;
@@ -32,15 +26,8 @@ class DeleteEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 		parent::setUp();
 
 		// Your set up methods here.
-		$this->admin = $this->factory()->user->create_and_get(
-			[
-				'role' => 'administrator',
-			]
-		);
-		$this->admin->add_cap( 'gravityforms_delete_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory            = new Factories\Factory();
 		$this->text_field_helper  = $this->tester->getTextFieldHelper();
 		$this->fields[]           = $this->factory->field->create( $this->text_field_helper->values );
 		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
@@ -52,7 +39,8 @@ class DeleteEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 			]
 		);
 		$this->client_mutation_id = 'someUniqueId';
-		\WPGraphQL::clear_schema();
+
+		$this->clearSchema();
 	}
 
 	/**
@@ -60,9 +48,7 @@ class DeleteEntryMutationTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		wp_delete_user( $this->admin->id );
 		$this->factory->form->delete( $this->form_id );
-		\WPGraphQL::clear_schema();
 
 		// Then...
 		parent::tearDown();

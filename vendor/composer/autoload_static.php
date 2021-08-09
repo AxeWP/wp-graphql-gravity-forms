@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1d07b8283f09e5e28f18143f5cd7774a
+class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -23,18 +23,17 @@ class ComposerStaticInit1d07b8283f09e5e28f18143f5cd7774a
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'WPGraphQLGravityForms\\Connections\\AbstractConnection' => __DIR__ . '/../..' . '/src/Connections/AbstractConnection.php',
-        'WPGraphQLGravityForms\\Connections\\EntryFieldConnection' => __DIR__ . '/../..' . '/src/Connections/EntryFieldConnection.php',
-        'WPGraphQLGravityForms\\Connections\\FormEntryConnection' => __DIR__ . '/../..' . '/src/Connections/FormEntryConnection.php',
-        'WPGraphQLGravityForms\\Connections\\FormFieldConnection' => __DIR__ . '/../..' . '/src/Connections/FormFieldConnection.php',
-        'WPGraphQLGravityForms\\Connections\\RootQueryEntriesConnection' => __DIR__ . '/../..' . '/src/Connections/RootQueryEntriesConnection.php',
-        'WPGraphQLGravityForms\\Connections\\RootQueryEntriesConnectionResolver' => __DIR__ . '/../..' . '/src/Connections/RootQueryEntriesConnectionResolver.php',
-        'WPGraphQLGravityForms\\Connections\\RootQueryFormsConnection' => __DIR__ . '/../..' . '/src/Connections/RootQueryFormsConnection.php',
-        'WPGraphQLGravityForms\\Connections\\RootQueryFormsConnectionResolver' => __DIR__ . '/../..' . '/src/Connections/RootQueryFormsConnectionResolver.php',
+        'WPGraphQLGravityForms\\Connections\\EntriesConnectionResolver' => __DIR__ . '/../..' . '/src/Connections/EntriesConnectionResolver.php',
+        'WPGraphQLGravityForms\\Connections\\EntryConnections' => __DIR__ . '/../..' . '/src/Connections/EntryConnections.php',
+        'WPGraphQLGravityForms\\Connections\\FieldConnections' => __DIR__ . '/../..' . '/src/Connections/FieldConnections.php',
+        'WPGraphQLGravityForms\\Connections\\FormConnections' => __DIR__ . '/../..' . '/src/Connections/FormConnections.php',
+        'WPGraphQLGravityForms\\Connections\\FormsConnectionResolver' => __DIR__ . '/../..' . '/src/Connections/FormsConnectionResolver.php',
         'WPGraphQLGravityForms\\DataManipulators\\DraftEntryDataManipulator' => __DIR__ . '/../..' . '/src/DataManipulators/DraftEntryDataManipulator.php',
         'WPGraphQLGravityForms\\DataManipulators\\EntryDataManipulator' => __DIR__ . '/../..' . '/src/DataManipulators/EntryDataManipulator.php',
         'WPGraphQLGravityForms\\DataManipulators\\FieldsDataManipulator' => __DIR__ . '/../..' . '/src/DataManipulators/FieldsDataManipulator.php',
         'WPGraphQLGravityForms\\DataManipulators\\FormDataManipulator' => __DIR__ . '/../..' . '/src/DataManipulators/FormDataManipulator.php',
         'WPGraphQLGravityForms\\Data\\Loader\\EntriesLoader' => __DIR__ . '/../..' . '/src/Data/Loader/EntriesLoader.php',
+        'WPGraphQLGravityForms\\Data\\Loader\\FormsLoader' => __DIR__ . '/../..' . '/src/Data/Loader/FormsLoader.php',
         'WPGraphQLGravityForms\\Data\\Loader\\LoadersRegistrar' => __DIR__ . '/../..' . '/src/Data/Loader/LoadersRegistrar.php',
         'WPGraphQLGravityForms\\Interfaces\\Connection' => __DIR__ . '/../..' . '/src/Interfaces/Connection.php',
         'WPGraphQLGravityForms\\Interfaces\\DataManipulator' => __DIR__ . '/../..' . '/src/Interfaces/DataManipulator.php',
@@ -305,9 +304,9 @@ class ComposerStaticInit1d07b8283f09e5e28f18143f5cd7774a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1d07b8283f09e5e28f18143f5cd7774a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1d07b8283f09e5e28f18143f5cd7774a::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit1d07b8283f09e5e28f18143f5cd7774a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4041e9042c6b9fdddfadea4e48957371::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4041e9042c6b9fdddfadea4e48957371::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit4041e9042c6b9fdddfadea4e48957371::$classMap;
 
         }, null, ClassLoader::class);
     }

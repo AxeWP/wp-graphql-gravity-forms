@@ -11,7 +11,9 @@
 namespace WPGraphQLGravityForms\Connections;
 
 use GFAPI;
+use GF_Query;
 use GraphQL\Error\UserError;
+use GraphQLRelay\Connection\ArrayConnection;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQLGravityForms\Data\Loader\EntriesLoader;
 use WPGraphQLGravityForms\Types\Enum\EntryStatusEnum;
@@ -19,13 +21,11 @@ use WPGraphQLGravityForms\Types\Enum\FieldFiltersModeEnum;
 use WPGraphQLGravityForms\Types\Enum\FieldFiltersOperatorInputEnum;
 
 /**
- * Class - RootQueryEntriesConnectionResolver
+ * Class - EntriesConnectionResolver
  */
-class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
+class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
-	 * Returns whether query should execute.
-	 *
-	 * @return bool
+	 * {@inheritDoc}
 	 *
 	 * @throws UserError .
 	 */
@@ -36,9 +36,9 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 		 * @since 0.5.0
 		 *
 		 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
-		 * @param array $entry_ids The entry IDs being queried.
+		 * @param array|int $form_ids The specific form IDs being queried. Returns `0` if querying entries from all forms.
 		 */
-		$can_user_view_entries = apply_filters( 'wp_graphql_gf_can_view_entries', current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ), $this->get_ids() );
+		$can_user_view_entries = apply_filters( 'wp_graphql_gf_can_view_entries', current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ), $this->get_form_ids() );
 
 		if ( ! $can_user_view_entries ) {
 			throw new UserError( __( 'Sorry, you are not allowed to view Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );
@@ -53,7 +53,7 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @return string
 	 */
 	public function get_loader_name() : string {
-		return EntriesLoader::NAME;
+		return EntriesLoader::$name;
 	}
 
 	/**
@@ -66,7 +66,7 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @return bool Whether the offset is valid.
 	 */
 	public function is_valid_offset( $offset ) {
-		return true;
+		return GFAPI::entry_exists( $offset );
 	}
 
 	/**
@@ -84,75 +84,83 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Returns query arguments.
-	 *
-	 * @return array
+	 * {@inheritDoc}
 	 */
 	public function get_query_args() : array {
-		return [];
-	}
-
-	/**
-	 * Returns query to use for data fetching.
-	 *
-	 * @return array
-	 */
-	public function get_query() : array {
-		return [];
-	}
-
-	/**
-	 * Returns base-64 encoded cursor value.
-	 *
-	 * @param int $id Node ID.
-	 *
-	 * @return string
-	 */
-	protected function get_cursor_for_node( $id ) : string {
-		$first        = $this->args['first'] ?? 20;
-		$after_cursor = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
-		$index        = array_search( $id, array_keys( $this->nodes ), true );
-
-		/**
-		 * @ TODO:
-		 * $last  = $this->args['last'] ?? 20;
-		 * $before_cursor = ! empty( $this->args['before'] ) ? json_decode( base64_decode( $this->args['before'] ), true ) : null;
-		 */
-
-		$cursor = [
-			'offset' => $after_cursor ? $after_cursor['offset'] + $after_cursor['index'] + 1 : 0,
-			'index'  => $index,
+		$query_args = [
+			'form_ids'        => $this->get_form_ids(),
+			'search_criteria' => $this->get_search_criteria(),
+			'sorting'         => $this->get_sort(),
+			'paging'          => $this->get_paging(),
 		];
 
-		$json_cursor = wp_json_encode( $cursor );
+		/**
+		 * Filter the $query args to allow folks to customize queries programmatically
+		 *
+		 * @param array       $query_args The args that will be passed to the WP_Query
+		 * @param mixed       $source     The source that's passed down the GraphQL queries
+		 * @param array       $args       The inputArgs on the field
+		 * @param AppContext  $context    The AppContext passed down the GraphQL tree
+		 * @param ResolveInfo $info       The ResolveInfo passed down the GraphQL tree
+		 */
+		$query_args = apply_filters( 'wp_graphql_gf_entries_connection_query_args', $query_args, $this->source, $this->args, $this->context, $this->info );
 
-		return $json_cursor ? base64_encode( $json_cursor ) : ''; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+		return $query_args;
 	}
 
 	/**
-	 * Return an array of ids from the query
+	 * {@inheritDoc}
 	 *
-	 * Each Query class in WP and potential datasource handles this differently, so each connection
-	 * resolver should handle getting the items into a uniform array of items.
-	 *
-	 * @return array
-	 *
-	 * @throws UserError Pagination is not currently supported.
+	 * @return GF_Query
 	 */
-	public function get_ids() : array {
-		if ( isset( $this->args['last'] ) || isset( $this->args['before'] ) ) {
-			throw new UserError( __( 'Sorry, last/before pagination is currently not supported.', 'wp-graphql-gravity-forms' ) );
+	public function get_query() : GF_Query {
+		$form_ids        = $this->query_args['form_ids'];
+		$search_criteria = $this->query_args['search_criteria'];
+		$sorting         = $this->query_args['sorting'];
+		$paging          = $this->query_args['paging'];
+
+		return new GF_Query( $form_ids, $search_criteria, $sorting, $paging );
+	}
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_offset() {
+
+		/**
+		 * Defaults
+		 */
+		$offset = 0;
+
+		/**
+		 * Get the $after offset
+		 */
+		if ( ! empty( $this->args['after'] ) ) {
+			$offset = ArrayConnection::cursorToOffset( $this->args['after'] ) + 1;
+		} elseif ( ! empty( $this->args['before'] ) ) {
+			$offset = ArrayConnection::cursorToOffset( $this->args['before'] ) + 1;
 		}
 
-		$entry_ids = GFAPI::get_entry_ids(
-			$this->get_form_ids(),
-			$this->get_search_criteria(),
-			$this->get_sort(),
-			$this->get_paging(),
-		);
-
-		return array_map( 'absint', $entry_ids );
+		/**
+		 * Return the higher of the two values
+		 */
+		return max( 0, $offset );
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function get_cursor_for_node( $id ) : string {
+		$index = $this->get_offset() + array_search( $id, array_keys( $this->nodes ), true );
+		return base64_encode( 'arrayconnection:' . $index );  // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_ids() : array {
+		return $this->query->get_ids();
+	}
+
 
 	/**
 	 * Returns form ids.
@@ -226,7 +234,7 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 					throw new UserError( __( 'Every field filter must have a key.', 'wp-graphql-gravity-forms' ) );
 				}
 
-				$key             = empty( $field_filter['key'] ) ? null : sanitize_text_field( $field_filter['key'] );
+				$key             = empty( $field_filter['key'] ) ? 0 : sanitize_text_field( $field_filter['key'] );
 				$operator        = $field_filter['operator'] ?? FieldFiltersOperatorInputEnum::IN; // Default to "in".
 				$value           = $this->get_field_filter_value( $field_filter, $operator );
 				$field_filters[] = compact( 'key', 'operator', 'value' );
@@ -302,35 +310,57 @@ class RootQueryEntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @return array
 	 */
 	private function get_sort() : array {
+		// Set default sort direction.
+		$sort = [
+			'direction' => 'DESC',
+		];
+
 		if ( ! empty( $this->args['where']['sort'] ) && is_array( $this->args['where']['sort'] ) ) {
-			return [
+			$sort = [
 				'key'        => $this->args['where']['sort']['key'] ?? '',
 				'direction'  => $this->args['where']['sort']['direction'] ?? 'ASC',
 				'is_numeric' => $this->args['where']['sort']['isNumeric'] ?? false,
 			];
 		}
 
-		return [];
+		// Flip the direction on `last` query.
+		if ( ! empty( $this->args['last'] ) ) {
+			$sort['direction'] = 'ASC' === $sort['direction'] ? 'DESC' : 'ASC';
+		}
+
+		return $sort;
 	}
 
 	/**
 	 * Get paging arguments for entry ID query.
 	 *
 	 * @return array
+	 * @throws UserError When using unsupported pagination.
 	 */
 	private function get_paging() : array {
-		$first        = absint( $this->args['first'] ?? 20 );
-		$after_cursor = ! empty( $this->args['after'] ) ? json_decode( base64_decode( $this->args['after'] ), true ) : null; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
+		/**
+		 * Throw error if querying by first + before.
+		 *
+		 * @todo support `first` + `before`.
+		 */
+		if ( ! empty( $this->args['first'] ) && ! empty( $this->args['before'] ) ) {
+				throw new UserError( __( 'Sorry, `before` pagination is currently not supported when `first` is set.', 'wp-graphql-gravity-forms' ) );
+		}
 
 		/**
-		 * @ TODO:
-		 * $last  = absint( $this->args['last'] ?? 20 );
-		 * $before_cursor = ! empty( $this->args['before'] ) ? json_decode( base64_decode( $this->args['before'] ), true ) : null;
+		 * Throw error if querying by last + after.
+		 *
+		 * @todo support `last` + `after`
 		 */
+		if ( ! empty( $this->args['last'] ) && ! empty( $this->args['after'] ) ) {
+				throw new UserError( __( 'Sorry, `last` pagination is currently not supported when `after` is set.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		$offset = $this->get_offset();
 
 		return [
-			'offset'    => $after_cursor ? $after_cursor['offset'] + $after_cursor['index'] + 1 : 0,
-			'page_size' => $first + 1, // Fetch one more to determine if there is a next page.
+			'offset'    => $offset,
+			'page_size' => $this->get_query_amount(),
 		];
 	}
 }

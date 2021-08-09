@@ -6,20 +6,13 @@
  */
 
 use GraphQLRelay\Relay;
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 use WPGraphQLGravityForms\Types\Enum;
 
 /**
  * Class - EntryQueriesTest
  */
-class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
-
-	/**
-	 * @var \WpunitTesterActions
-	 */
-	protected $tester;
-	protected $factory;
-	private $admin;
+class EntryQueriesTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_id;
 	private $entry_ids;
@@ -32,31 +25,23 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 		// Before...
 		parent::setUp();
 
-		// Your set up methods here.
-		$this->admin = $this->factory()->user->create_and_get(
-			[
-				'role' => 'administrator',
-			]
-		);
-		$this->admin->add_cap( 'gravityforms_view_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory           = new Factories\Factory();
 		$this->text_field_helper = $this->tester->getTextFieldHelper();
 		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
 
 		$this->form_id = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
 
 		$this->entry_ids = $this->factory->entry->create_many(
-			2,
+			6,
 			[
 				'form_id'              => $this->form_id,
 				'created_by'           => $this->admin->ID,
 				$this->fields[0]['id'] => 'This is a default Text entry.',
 			]
 		);
-		\WPGraphQL::clear_schema();
 
+		$this->clearSchema();
 	}
 
 	/**
@@ -64,10 +49,8 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		wp_delete_user( $this->admin->id );
 		$this->factory->entry->delete( $this->entry_ids );
 		$this->factory->form->delete( $this->form_id );
-		\WPGraphQL::clear_schema();
 
 		// Then...
 		parent::tearDown();
@@ -235,7 +218,7 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 	 * Tests `gravityFormsEntry` with draft entry.
 	 */
 	public function testGravityFormsEntryQuery_draft() : void {
-		$draft_tokens = $this->factory->draft->create_many( 2, [ 'form_id' => $this->form_id ] );
+		$draft_tokens = $this->factory->draft_entry->create_many( 2, [ 'form_id' => $this->form_id ] );
 
 		$query = '
 			query( $id: ID! ) {
@@ -256,13 +239,13 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertEquals( $draft_tokens[0], $actual['data']['gravityFormsEntry']['resumeToken'] );
 
-		$this->factory->draft->delete( $draft_tokens );
+		$this->factory->draft_entry->delete( $draft_tokens );
 	}
 
 	/**
 	 * Tests `gravityFormsEntries`.
 	 */
-	public function testGravityFormsEntriesQuery() : void {
+	public function testEntriesQuery() : void {
 		$query = '
 			query {
 				gravityFormsEntries {
@@ -275,20 +258,14 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 
 		$actual = graphql( [ 'query' => $query ] );
 		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( 2, count( $actual['data']['gravityFormsEntries']['nodes'] ) );
+		$this->assertCount( 6, $actual['data']['gravityFormsEntries']['nodes'] );
 	}
 
 	/**
 	 * Tests `gravityFormsEntries` with query args .
 	 */
-	public function testGravityFormsEntriesQueryArgs() {
-		$entry_ids = $this->factory->entry->create_many(
-			20,
-			[
-				'form_id'              => $this->form_id,
-				$this->fields[0]['id'] => 'This is a default Text entry.',
-			]
-		);
+	public function testEntriesQueryArgs() {
+		$entry_ids = array_reverse( $this->entry_ids );
 
 		$query = '
 				query( $first: Int, $after: String, $last:Int, $before: String ) {
@@ -309,42 +286,77 @@ class EntryQueriesTest extends \Codeception\TestCase\WPTestCase {
 				}
 		';
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'first'  => 10,
-					'after'  => null,
-					'last'   => null,
-					'before' => null,
-				],
-			]
-		);
+		$variables = [
+			'first'  => 2,
+			'after'  => null,
+			'last'   => null,
+			'before' => null,
+		];
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		// Check `first` argument.
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( 10, count( $actual['data']['gravityFormsEntries']['nodes'] ) );
+		$this->assertArrayNotHasKey( 'errors', $response, 'First array has errors.' );
+
+		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'First does not return correct amount.' );
+		$this->assertSame( $entry_ids[0], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'First - node 0 is not same.' );
+		$this->assertSame( $entry_ids[1], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'First - node 1 is not same' );
 
 		// Check `after` argument.
-		$expected_ids = wp_list_pluck( $actual['data']['gravityFormsEntries']['nodes'], 'entryId' );
+		$variables = [
+			'first'  => 2,
+			'after'  => $response['data']['gravityFormsEntries']['pageInfo']['endCursor'],
+			'last'   => null,
+			'before' => null,
+		];
 
-		$cursor = $actual['data']['gravityFormsEntries']['edges'][4]['cursor'];
+		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$actual     = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'first' => 5,
-					'after' => $cursor,
-				],
-			]
-		);
-		$actual_ids = wp_list_pluck( $actual['data']['gravityFormsEntries']['nodes'], 'entryId' );
+		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'First/after #1 does not return correct amount.' );
+		$this->assertSame( $entry_ids[2], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'First/after #1- node 0 is not same.' );
+		$this->assertSame( $entry_ids[3], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'First/after #1 - node 1 is not same' );
 
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertSame( array_slice( $expected_ids, 5, 5 ), $actual_ids );
+		$variables = [
+			'first'  => 2,
+			'after'  => $response['data']['gravityFormsEntries']['pageInfo']['endCursor'],
+			'last'   => null,
+			'before' => null,
+		];
 
-		$this->factory->entry->delete( $entry_ids );
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'First/after #2 does not return correct amount.' );
+		$this->assertSame( $entry_ids[4], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'First/after #2 - node 0 is not same' );
+		$this->assertSame( $entry_ids[5], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'First/after #2 - node 1 is not same.' );
+
+		// Check last argument.
+		$variables = [
+			'first'  => null,
+			'after'  => null,
+			'last'   => 2,
+			'before' => null,
+		];
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'Last does not return correct amount.' );
+		$this->assertSame( $entry_ids[4], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'Last - node 0 is not same' );
+		$this->assertSame( $entry_ids[5], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'Last - node 1 is not same.' );
+
+		// Check `before` argument.
+		$variables = [
+			'first'  => null,
+			'after'  => null,
+			'last'   => 2,
+			'before' => $response['data']['gravityFormsEntries']['pageInfo']['endCursor'],
+		];
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertArrayNotHasKey( 'errors', $response, 'Last array has errors.' );
+		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'last/befoe does not return correct amount.' );
+		$this->assertSame( $entry_ids[2], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'last/before - node 0 is not same' );
+		$this->assertSame( $entry_ids[3], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'last/before - node 1 is not same' );
 	}
 
 	/**

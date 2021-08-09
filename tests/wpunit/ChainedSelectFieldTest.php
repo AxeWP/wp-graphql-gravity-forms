@@ -3,25 +3,18 @@
  * Test ChainedSelectField.
  */
 
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 
 /**
  * Class -ChainedSelectFieldTest
  */
-class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
-	/**
-	 * @var \WpunitTesterActions
-	 */
-	protected $tester;
-	protected $factory;
-	private $admin;
+class ChainedSelectFieldTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $field_value;
 	private $field_value_input;
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
-	private $property_helper;
 	private $value;
 
 	/**
@@ -31,16 +24,8 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 		// Before...
 		parent::setUp();
 
-		// Your set up methods here.
-		$this->admin = $this->factory()->user->create_and_get(
-			[
-				'role' => 'administrator',
-			]
-		);
-		$this->admin->add_cap( 'gravityforms_view_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory         = new Factories\Factory();
 		$this->property_helper = $this->tester->getChainedSelectFieldHelper();
 
 		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
@@ -83,7 +68,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			)
 		);
 
-		$this->draft_token = $this->factory->draft->create(
+		$this->draft_token = $this->factory->draft_entry->create(
 			[
 				'form_id'     => $this->form_id,
 				'entry'       => array_merge(
@@ -95,7 +80,8 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				'fieldValues' => $this->property_helper->get_field_values( $this->value ),
 			]
 		);
-		\WPGraphQL::clear_schema();
+
+		$this->clearSchema();
 	}
 
 
@@ -104,12 +90,10 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		wp_delete_user( $this->admin->id );
 		$this->factory->entry->delete( $this->entry_id );
-		$this->factory->draft->delete( $this->draft_token );
+		$this->factory->draft_entry->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
 		GFFormsModel::set_current_lead( null );
-		\WPGraphQL::clear_schema();
 		// Then...
 		parent::tearDown();
 	}
@@ -189,52 +173,50 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				}
 			}
 		';
-		// Test entry.
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'id'     => $this->entry_id,
-					'idType' => 'DATABASE_ID',
-				],
-			]
-		);
+
+		$variables = [
+			'id'     => $this->entry_id,
+			'idType' => 'DATABASE_ID',
+		];
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$expected = [
-			'gravityFormsEntry' => [
-				'formFields' => [
-					'nodes' => [
-						array_merge_recursive(
-							$this->property_helper->getAllActualValues( $form['fields'][0] ),
-							[ 'values' => $this->field_value ],
-						),
-					],
-					'edges' => [
+			$this->expectedObject(
+				'gravityFormsEntry',
+				[
+					$this->expectedObject(
+						'formFields',
 						[
-							'fieldValue' => [
-								'values' => $this->field_value,
-							],
-						],
-					],
-				],
-			],
+							$this->expectedNode(
+								'nodes',
+								array_merge_recursive(
+									$this->property_helper->getAllActualValues( $form['fields'][0] ),
+									[ 'values' => $this->field_value ],
+								)
+							),
+							$this->expectedEdge(
+								'fieldValue',
+								[
+									$this->expectedField( 'values', $this->field_value ),
+								]
+							),
+						]
+					),
+				]
+			),
 		];
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Test entry has error.' );
-		$this->assertEquals( $expected, $actual['data'], 'Test entry is not equal' );
+
+		$this->assertQuerySuccessful( $response, $expected );
 
 		// Test Draft entry.
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'id'     => $this->draft_token,
-					'idType' => 'ID',
-				],
-			]
-		);
+		$variables = [
+			'id'     => $this->draft_token,
+			'idType' => 'ID',
+		];
+		$response  = $this->graphql( compact( 'query', 'variables' ) );
 
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Test draft entry has error.' );
-		$this->assertEquals( $expected, $actual['data'], 'Test draft entry is not equal.' );
+		$this->assertQuerySuccessful( $response, $expected );
 	}
 
 	/**
@@ -243,48 +225,24 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	public function testSubmit_draft() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
-		$actual = graphql(
-			[
-				'query'     => $this->get_submit_form_query(),
-				'variables' => [
-					'draft'   => true,
-					'formId'  => $this->form_id,
-					'fieldId' => $form['fields'][0]->id,
-					'value'   => $this->field_value_input,
-				],
-			]
-		);
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
+		$query = $this->get_submit_form_query();
 
-		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
-		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
-
-		$expected = [
-			'submitGravityFormsForm' => [
-				'errors'      => null,
-				'entryId'     => $entry_id,
-				'resumeToken' => $resume_token,
-				'entry'       => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => [
-									'values' => $this->field_value,
-								],
-							],
-						],
-						'nodes' => [
-							[
-								'values' => $this->field_value,
-							],
-						],
-					],
-				],
-			],
+		$variables = [
+			'draft'   => true,
+			'formId'  => $this->form_id,
+			'fieldId' => $form['fields'][0]->id,
+			'value'   => $this->field_value_input,
 		];
-		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
-		$this->factory->draft->delete( $resume_token );
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$expected = $this->get_expected_mutation_response( 'submitGravityFormsForm', $this->field_value );
+
+		$this->assertQuerySuccessful( $response, $expected );
+
+		$resume_token = $response['data']['submitGravityFormsForm']['resumeToken'];
+
+		$this->factory->draft_entry->delete( $resume_token );
 	}
 
 	/**
@@ -293,47 +251,22 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	public function testSubmit() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
-		// Test entry.
-		$actual = graphql(
-			[
-				'query'     => $this->get_submit_form_query(),
-				'variables' => [
-					'draft'   => false,
-					'formId'  => $this->form_id,
-					'fieldId' => $form['fields'][0]->id,
-					'value'   => $this->field_value_input,
-				],
-			]
-		);
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
-
-		$entry_id     = $actual['data']['submitGravityFormsForm']['entryId'];
-		$resume_token = $actual['data']['submitGravityFormsForm']['resumeToken'];
-		$expected     = [
-			'submitGravityFormsForm' => [
-				'errors'      => null,
-				'entryId'     => $entry_id,
-				'resumeToken' => $resume_token,
-				'entry'       => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => [
-									'values' => $this->field_value,
-								],
-							],
-						],
-						'nodes' => [
-							[
-								'values' => $this->field_value,
-							],
-						],
-					],
-				],
-			],
+		$query     = $this->get_submit_form_query();
+		$variables = [
+			'draft'   => false,
+			'formId'  => $this->form_id,
+			'fieldId' => $form['fields'][0]->id,
+			'value'   => $this->field_value_input,
 		];
 
-		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
+		// Test entry.
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$expected = $this->get_expected_mutation_response( 'submitGravityFormsForm', $this->field_value );
+
+		$this->assertQuerySuccessful( $response, $expected );
+
+		$entry_id = $response['data']['submitGravityFormsForm']['entryId'];
 
 		$actualEntry = GFAPI::get_entry( $entry_id );
 
@@ -393,40 +326,17 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'entryId' => $this->entry_id,
-					'fieldId' => $form['fields'][0]->id,
-					'value'   => $field_value_input,
-				],
-			]
-		);
-
-		$expected = [
-			'updateGravityFormsEntry' => [
-				'errors' => null,
-				'entry'  => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => [
-									'values' => $field_value,
-								],
-							],
-						],
-						'nodes' => [
-							[
-								'values' => $field_value,
-							],
-						],
-					],
-				],
-			],
+		$variables = [
+			'entryId' => $this->entry_id,
+			'fieldId' => $form['fields'][0]->id,
+			'value'   => $field_value_input,
 		];
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
-		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$expected = $this->get_expected_mutation_response( 'updateGravityFormsEntry', $field_value );
+
+		$this->assertQuerySuccessful( $response, $expected );
 	}
 
 	/**
@@ -434,7 +344,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function testUpdateDraftEntry() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 
 		$field_value       = [ '2016', 'Acura', 'ILX' ];
 		$field_value_input = [
@@ -479,42 +389,19 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'resumeToken' => $resume_token,
-					'fieldId'     => $form['fields'][0]->id,
-					'value'       => $field_value_input,
-				],
-			]
-		);
-
-		$expected = [
-			'updateGravityFormsDraftEntry' => [
-				'errors' => null,
-				'entry'  => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => [
-									'values' => $field_value,
-								],
-							],
-						],
-						'nodes' => [
-							[
-								'values' => $field_value,
-							],
-						],
-					],
-				],
-			],
+		$variables = [
+			'resumeToken' => $resume_token,
+			'fieldId'     => $form['fields'][0]->id,
+			'value'       => $field_value_input,
 		];
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
-		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
 
-		$this->factory->draft->delete( $resume_token );
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$expected = $this->get_expected_mutation_response( 'updateGravityFormsDraftEntry', $field_value );
+
+		$this->assertQuerySuccessful( $response, $expected );
+
+		$this->factory->draft_entry->delete( $resume_token );
 	}
 
 	/**
@@ -522,7 +409,7 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function testUpdateDraftEntryFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 
 		// Test draft entry.
 		$query = '
@@ -552,41 +439,16 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'fieldId'     => $form['fields'][0]->id,
-					'resumeToken' => $resume_token,
-					'value'       => $this->field_value_input,
-				],
-			]
-		);
-
-		$expected = [
-			'updateDraftEntryChainedSelectFieldValue' => [
-				'errors' => null,
-				'entry'  => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => [
-									'values' => $this->field_value,
-								],
-							],
-						],
-						'nodes' => [
-							[
-								'values' => $this->field_value,
-							],
-						],
-					],
-				],
-			],
+		$variables = [
+			'fieldId'     => $form['fields'][0]->id,
+			'resumeToken' => $resume_token,
+			'value'       => $this->field_value_input,
 		];
+		$response  = $this->graphql( compact( 'query', 'variables' ) );
 
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
-		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
+		$expected = $this->get_expected_mutation_response( 'updateDraftEntryAddressFieldValue', $this->field_value );
+
+		$this->assertQuerySuccessful( $response, $expected );
 
 		// Test submitted query.
 		$query = '
@@ -617,42 +479,17 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 			}
 		';
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'resumeToken' => $resume_token,
-				],
-			]
-		);
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Submit mutation has errors' );
-
-		$entry_id = $actual['data']['submitGravityFormsDraftEntry']['entryId'];
-
-		$expected = [
-			'submitGravityFormsDraftEntry' => [
-				'errors'  => null,
-				'entryId' => $entry_id,
-				'entry'   => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => [
-									'values' => $this->field_value,
-								],
-							],
-						],
-						'nodes' => [
-							[
-								'values' => $this->field_value,
-							],
-						],
-					],
-				],
-			],
+		$variables = [
+			'resumeToken' => $resume_token,
 		];
 
-		$this->assertEquals( $expected, $actual['data'], 'Submit isnt equals.' );
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$expected = $this->get_expected_mutation_response( 'submitGravityFormsDraftEntry', $this->field_value );
+
+		$this->assertQuerySuccessful( $response, $expected );
+
+		$entry_id = $response['data']['submitGravityFormsDraftEntry']['entryId'];
 
 		$this->factory->entry->delete( $entry_id );
 	}
@@ -691,5 +528,33 @@ class ChainedSelectFieldTest extends \Codeception\TestCase\WPTestCase {
 				}
 			}
 		';
+	}
+
+	public function get_expected_mutation_response( string $mutationName, $value ) : array {
+		return [
+			$this->expectedObject(
+				$mutationName,
+				[
+					$this->expectedObject(
+						'entry',
+						[
+							$this->expectedObject(
+								'formFields',
+								[
+									$this->expectedEdge(
+										'fieldValue',
+										$this->expectedField( 'values', $value ),
+									),
+									$this->expectedNode(
+										'0',
+										$this->expectedField( 'value', $value ),
+									),
+								]
+							),
+						]
+					),
+				]
+			),
+		];
 	}
 }

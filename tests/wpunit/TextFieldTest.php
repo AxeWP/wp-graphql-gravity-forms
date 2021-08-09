@@ -3,23 +3,16 @@
  * Test TextField.
  */
 
-use WPGraphQLGravityForms\Tests\Factories;
+use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
 
 /**
  * Class -TextFieldTest
  */
-class TextFieldTest extends \Codeception\TestCase\WPTestCase {
-	/**
-	 * @var \WpunitTesterActions
-	 */
-	protected $tester;
-	protected $factory;
-	private $admin;
+class TextFieldTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_id;
 	private $entry_id;
 	private $draft_token;
-	private $property_helper;
 	private $value;
 
 	/**
@@ -29,16 +22,8 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 		// Before...
 		parent::setUp();
 
-		// Your set up methods here.
-		$this->admin = $this->factory()->user->create_and_get(
-			[
-				'role' => 'administrator',
-			]
-		);
-		$this->admin->add_cap( 'gravityforms_view_entries' );
 		wp_set_current_user( $this->admin->ID );
 
-		$this->factory         = new Factories\Factory();
 		$this->property_helper = $this->tester->getTextFieldHelper();
 		$this->value           = $this->property_helper->dummy->words( 1, 5 );
 
@@ -58,7 +43,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 			]
 		);
 
-		$this->draft_token = $this->factory->draft->create(
+		$this->draft_token = $this->factory->draft_entry->create(
 			[
 				'form_id'     => $this->form_id,
 				'entry'       => [
@@ -72,8 +57,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		);
-		\WPGraphQL::clear_schema();
-
+		$this->clearSchema();
 	}
 
 	/**
@@ -81,9 +65,8 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		wp_delete_user( $this->admin->id );
 		$this->factory->entry->delete( $this->entry_id );
-		$this->factory->draft->delete( $this->draft_token );
+		$this->factory->draft_entry->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
 		GFFormsModel::set_current_lead( null );
 		// Then...
@@ -184,7 +167,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 
 		// Ensures draft token is set.
 		if ( empty( $this->draft_token ) ) {
-			$this->draft_token = $this->factory->draft->create(
+			$this->draft_token = $this->factory->draft_entry->create(
 				[
 					'form_id'     => $this->form_id,
 					'entry'       => [
@@ -259,7 +242,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 		];
 		$this->assertEquals( $expected, $actual['data'], 'Submit mutation not equal' );
 
-		$this->factory->draft->delete( $resume_token );
+		$this->factory->draft_entry->delete( $resume_token );
 	}
 
 	/**
@@ -393,7 +376,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function testUpdateDraftEntry() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 		$value        = $this->property_helper->dummy->words( 1, 5 );
 
 		$query = '
@@ -459,7 +442,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
 		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
 
-		$this->factory->draft->delete( $resume_token );
+		$this->factory->draft_entry->delete( $resume_token );
 	}
 
 	/**
@@ -467,7 +450,7 @@ class TextFieldTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function testUpdateDraftEntryFieldValue() : void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft->create( [ 'form_id' => $this->form_id ] );
+		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 		$value        = $this->property_helper->dummy->words( 1, 5 );
 
 		// Test draft entry.
