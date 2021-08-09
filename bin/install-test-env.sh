@@ -154,21 +154,40 @@ configure_wordpress() {
 }
 
 install_gravityforms() {
-		if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityforms ]; then
+	if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityforms ]; then
 		echo "Cloning Gravity Forms"
-		git clone https://github.com/wp-premium/gravityforms.git $WP_CORE_DIR/wp-content/plugins/gravityforms
+		if [ -n "$GIT_USER" ] && [ -n "$GIT_TOKEN" ] && [ -n "$GF_REPO" ]; then
+		git clone https://$GIT_USER:$GIT_TOKEN@$GF_REPO $WP_CORE_DIR/wp-content/plugins/gravityforms
+		else
+			git clone https://github.com/wp-premium/gravityforms.git $WP_CORE_DIR/wp-content/plugins/gravityforms
+		fi
 	fi
 	echo "Cloning Gravity Forms"
 	wp plugin activate gravityforms
 }
 
 install_gravityforms_signature() {
-		if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityformssignature ]; then
-		echo "Cloning Gravity Forms"
-		git clone https://github.com/wp-premium/gravityformssignature.git $WP_CORE_DIR/wp-content/plugins/gravityformssignature
+	if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityformssignature ]; then
+		echo "Cloning Gravity Forms Signature"
+			if [ -n "$GIT_USER" ] && [ -n "$GIT_TOKEN" ] && [ -n "$GF_SIGNATURE_REPO" ]; then
+		git clone https://$GIT_USER:$GIT_TOKEN@$GF_SIGNATURE_REPO $WP_CORE_DIR/wp-content/plugins/gravityformssignature
+		else
+			git clone https://github.com/wp-premium/gravityformssignature.git $WP_CORE_DIR/wp-content/plugins/gravityformssignature
+		fi
 	fi
-	echo "Cloning Gravity Forms"
 	wp plugin activate gravityformssignature
+}
+
+install_gravityforms_chainedselects() {
+	if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityformschainedselects ]; then
+		echo "Cloning Gravity Forms Signature"
+			if [ -n "$GIT_USER" ] && [ -n "$GIT_TOKEN" ] && [ -n "$GF_CHAINEDSELECTS_REPO" ]; then
+		git clone https://$GIT_USER:$GIT_TOKEN@$GF_CHAINEDSELECTS_REPO $WP_CORE_DIR/wp-content/plugins/gravityformschainedselects
+		else
+			echo "To test Chained Selects, please manually install the plugin in your dev environment."
+		fi
+	fi
+	wp plugin activate gravityformschainedselects
 }
 
 setup_plugin() {
@@ -211,4 +230,5 @@ install_db
 configure_wordpress
 install_gravityforms
 install_gravityforms_signature
+install_gravityforms_chainedselects
 setup_plugin
