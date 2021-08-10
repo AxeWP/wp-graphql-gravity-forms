@@ -158,15 +158,22 @@ class FieldConnections extends AbstractConnection {
 	 */
 	private static function filter_form_fields_by_connection_args( $fields, $args ) : array {
 		if ( isset( $args['where']['ids'] ) ) {
+			if ( ! is_array( $args['where']['ids'] ) ) {
+				$args['where']['ids'] = [ $args['where']['ids'] ];
+			}
 			$ids = array_map( 'absint', $args['where']['ids'] );
 
-			$fields = array_filter( $fields, fn( $field) => in_array( (int) $field['id'], $ids, true ) );
+			$fields = array_filter( $fields, fn( $field ) => in_array( (int) $field['id'], $ids, true ) );
 		}
 
 		if ( isset( $args['where']['adminLabels'] ) ) {
+			if ( ! is_array( $args['where']['adminLabels'] ) ) {
+				$args['where']['adminLabels'] = [ $args['where']['adminLabels'] ];
+			}
+
 			$admin_labels = array_map( 'sanitize_text_field', $args['where']['adminLabels'] );
 
-			$fields = array_filter( $fields, fn( $field) => in_array( $field['adminLabel'], $admin_labels, true ) );
+			$fields = array_filter( $fields, fn( $field)  => in_array( $field['adminLabel'], $admin_labels, true ) );
 		}
 
 		return $fields;
