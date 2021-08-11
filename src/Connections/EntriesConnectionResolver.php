@@ -270,15 +270,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 				);
 			}
 
-			//phpcs:disable
-			// if ( empty( $field_filter['key'] ) ) {
-			// 	throw new UserError(
-			// 		// translators: FieldFiltersOperatorInputEnum.
-			// 		sprintf( __( '`%s` operators are not currently supported when no key is set.', 'wp-graphql-gravity-forms' ), $operator )
-			// 	);
-			// }
-			//phpcs:enable
-
 			return $field_filter_values[0] ?? '';
 		}
 
