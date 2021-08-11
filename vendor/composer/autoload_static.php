@@ -106,6 +106,7 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
         'WPGraphQLGravityForms\\Types\\Enum\\FieldFiltersModeEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FieldFiltersModeEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\FieldFiltersOperatorInputEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FieldFiltersOperatorInputEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\FormDescriptionPlacementEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FormDescriptionPlacementEnum.php',
+        'WPGraphQLGravityForms\\Types\\Enum\\FormFieldsEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FormFieldsEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\FormLabelPlacementEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FormLabelPlacementEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\FormLimitEntriesPeriodEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FormLimitEntriesPeriodEnum.php',
         'WPGraphQLGravityForms\\Types\\Enum\\FormStatusEnum' => __DIR__ . '/../..' . '/src/Types/Enum/FormStatusEnum.php',

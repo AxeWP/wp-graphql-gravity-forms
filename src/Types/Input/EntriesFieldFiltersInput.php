@@ -36,7 +36,7 @@ class EntriesFieldFiltersInput extends AbstractInput {
 		return [
 			'key'          => [
 				'type'        => 'String',
-				'description' => __( 'The ID of the field to filter by. Use "0" to search all keys. You can also use the names of the columns in Gravity Forms\' database table for entries, such as "date_created", "is_read, "created_by", etc.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Optional. The entry meta key to filter by. You can use the ID of the form field, or the names of any of the columns in Gravity Form\'s database table for entries, such as "date_created", "is_read, "created_by", etc. If omitted, the value will be checked against all meta keys. ', 'wp-graphql-gravity-forms' ),
 			],
 			'operator'     => [
 				'type'        => FieldFiltersOperatorInputEnum::$type,

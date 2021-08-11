@@ -21,6 +21,7 @@ use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
 use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
 use WPGraphQLGravityForms\Interfaces\FieldValue as FieldValueInterface;
 use WPGraphQLGravityForms\Types\AbstractObject;
+use WPGraphQLGravityForms\Types\Enum\FormFieldsEnum;
 use WPGraphQLGravityForms\Types\Field\AbstractFormField;
 use WPGraphQLGravityForms\Utils\GFUtils;
 
@@ -112,6 +113,10 @@ class FieldConnections extends AbstractConnection {
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'Array of form field adminLabels to return.', 'wp-graphql-gravity-forms' ),
 			],
+			'types'       => [
+				'type'        => [ 'list_of' => FormFieldsEnum::$type ],
+				'description' => __( 'Array of Gravity Forms Field types to return.', 'wp-graphql-gravity-forms' ),
+			],
 		];
 	}
 
@@ -158,15 +163,30 @@ class FieldConnections extends AbstractConnection {
 	 */
 	private static function filter_form_fields_by_connection_args( $fields, $args ) : array {
 		if ( isset( $args['where']['ids'] ) ) {
+			if ( ! is_array( $args['where']['ids'] ) ) {
+				$args['where']['ids'] = [ $args['where']['ids'] ];
+			}
 			$ids = array_map( 'absint', $args['where']['ids'] );
 
-			$fields = array_filter( $fields, fn( $field) => in_array( (int) $field['id'], $ids, true ) );
+			$fields = array_filter( $fields, fn( $field ) => in_array( (int) $field['id'], $ids, true ) );
 		}
 
 		if ( isset( $args['where']['adminLabels'] ) ) {
+			if ( ! is_array( $args['where']['adminLabels'] ) ) {
+				$args['where']['adminLabels'] = [ $args['where']['adminLabels'] ];
+			}
+
 			$admin_labels = array_map( 'sanitize_text_field', $args['where']['adminLabels'] );
 
-			$fields = array_filter( $fields, fn( $field) => in_array( $field['adminLabel'], $admin_labels, true ) );
+			$fields = array_filter( $fields, fn( $field)  => in_array( $field['adminLabel'], $admin_labels, true ) );
+		}
+
+		if ( isset( $args['where']['types'] ) ) {
+			if ( ! is_array( $args['where']['types'] ) ) {
+				$args['where']['types'] = [ $args['where']['types'] ];
+			}
+
+			$fields = array_filter( $fields, fn( $field ) => in_array( $field['type'], $args['where']['types'], true ) );
 		}
 
 		return $fields;

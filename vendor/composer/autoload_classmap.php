@@ -91,6 +91,7 @@ return array(
     'WPGraphQLGravityForms\\Types\\Enum\\FieldFiltersModeEnum' => $baseDir . '/src/Types/Enum/FieldFiltersModeEnum.php',
     'WPGraphQLGravityForms\\Types\\Enum\\FieldFiltersOperatorInputEnum' => $baseDir . '/src/Types/Enum/FieldFiltersOperatorInputEnum.php',
     'WPGraphQLGravityForms\\Types\\Enum\\FormDescriptionPlacementEnum' => $baseDir . '/src/Types/Enum/FormDescriptionPlacementEnum.php',
+    'WPGraphQLGravityForms\\Types\\Enum\\FormFieldsEnum' => $baseDir . '/src/Types/Enum/FormFieldsEnum.php',
     'WPGraphQLGravityForms\\Types\\Enum\\FormLabelPlacementEnum' => $baseDir . '/src/Types/Enum/FormLabelPlacementEnum.php',
     'WPGraphQLGravityForms\\Types\\Enum\\FormLimitEntriesPeriodEnum' => $baseDir . '/src/Types/Enum/FormLimitEntriesPeriodEnum.php',
     'WPGraphQLGravityForms\\Types\\Enum\\FormStatusEnum' => $baseDir . '/src/Types/Enum/FormStatusEnum.php',

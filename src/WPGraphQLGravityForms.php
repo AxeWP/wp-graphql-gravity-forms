@@ -245,6 +245,7 @@ final class WPGraphQLGravityForms {
 		self::$instances['field_filters_mode_enum']             = new Enum\FieldFiltersModeEnum();
 		self::$instances['field_filters_operator_input_enum']   = new Enum\FieldFiltersOperatorInputEnum();
 		self::$instances['form_description_placement_enum']     = new Enum\FormDescriptionPlacementEnum();
+		self::$instances['form_fields_enum']                    = new Enum\FormFieldsEnum();
 		self::$instances['form_label_placement_enum']           = new Enum\FormLabelPlacementEnum();
 		self::$instances['form_limit_entries_period_enum']      = new Enum\FormLimitEntriesPeriodEnum();
 		self::$instances['form_status_enum']                    = new Enum\FormStatusEnum();

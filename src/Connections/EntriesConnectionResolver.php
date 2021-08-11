@@ -230,14 +230,12 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		return array_reduce(
 			$field_filters,
 			function( $field_filters, $field_filter ) {
-				if ( ! isset( $field_filter['key'] ) ) {
-					throw new UserError( __( 'Every field filter must have a key.', 'wp-graphql-gravity-forms' ) );
-				}
+				$key      = empty( $field_filter['key'] ) ? 0 : sanitize_text_field( $field_filter['key'] );
+				$operator = $field_filter['operator'] ?? FieldFiltersOperatorInputEnum::IN; // Default to "in".
+				$value    = $this->get_field_filter_value( $field_filter, $operator );
 
-				$key             = empty( $field_filter['key'] ) ? 0 : sanitize_text_field( $field_filter['key'] );
-				$operator        = $field_filter['operator'] ?? FieldFiltersOperatorInputEnum::IN; // Default to "in".
-				$value           = $this->get_field_filter_value( $field_filter, $operator );
-				$field_filters[] = compact( 'key', 'operator', 'value' );
+				// Key should be omitted when searching all of them.
+				$field_filters[] = 0 === $key ? compact( 'operator', 'value' ) : compact( 'key', 'operator', 'value' );
 
 				return $field_filters;
 			},
@@ -265,7 +263,21 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		$field_filter_values = array_map( 'sanitize_text_field', $field_filter[ $value_fields[0] ] );
 
 		if ( $this->should_field_filter_be_limited_to_single_value( $operator ) ) {
-			return $field_filter_values[0] ?? '';
+			if ( 1 !== count( $field_filter_values ) ) {
+				throw new UserError(
+					// translators: FieldFiltersOperatorInputEnum.
+					sprintf( __( '%s requires passing only a single value. Array passed.', 'wp-graphql-gravity-forms' ), $operator )
+				);
+			}
+
+			if ( empty( $field_filter['key'] ) ) {
+				throw new UserError(
+					// translators: FieldFiltersOperatorInputEnum.
+					sprintf( __( '`%s` operators are not currently supported when no key is set.', 'wp-graphql-gravity-forms' ), $operator )
+				);
+			}
+
+			$field_filter_values = $field_filter_values[0];
 		}
 
 		return $field_filter_values;
@@ -280,8 +292,9 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	private function should_field_filter_be_limited_to_single_value( string $operator ) : bool {
 		$operators_to_limit = [
 			FieldFiltersOperatorInputEnum::CONTAINS,
-			FieldFiltersOperatorInputEnum::GREATER_THAN,
-			FieldFiltersOperatorInputEnum::LESS_THAN,
+			FieldFiltersOperatorInputEnum::IS,
+			FieldFiltersOperatorInputEnum::IS_NOT,
+			FieldFiltersOperatorInputEnum::LIKE,
 		];
 
 		return in_array( $operator, $operators_to_limit, true );

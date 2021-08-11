@@ -20,11 +20,12 @@ class FieldFiltersOperatorInputEnum extends AbstractEnum {
 	public static $type = 'FieldFiltersOperatorInputEnum';
 
 	// Individual elements.
-	const IN           = 'in';
-	const NOT_IN       = 'not in';
-	const CONTAINS     = 'contains';
-	const GREATER_THAN = '>';
-	const LESS_THAN    = '<';
+	const CONTAINS = 'contains';
+	const IN       = 'in';
+	const IS       = 'is';
+	const IS_NOT   = 'is not';
+	const LIKE     = 'like';
+	const NOT_IN   = 'not in';
 
 	/**
 	 * Sets the Enum type description.
@@ -42,25 +43,29 @@ class FieldFiltersOperatorInputEnum extends AbstractEnum {
 	 */
 	public function get_values() : array {
 		return [
-			'IN'           => [
-				'description' => __( 'Find field values that match those in the values array (default).', 'wp-graphql-gravity-forms' ),
-				'value'       => self::IN,
-			],
-			'NOT_IN'       => [
-				'description' => __( 'Find field values that do NOT match those in the values array.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::NOT_IN,
-			],
-			'CONTAINS'     => [
-				'description' => __( 'Find field values that contain the value in the values array. Only the first value in the values array will be used; any others will be disregarded.', 'wp-graphql-gravity-forms' ),
+			'CONTAINS' => [
+				'description' => __( 'Find field values that contain the passed value. Only one value may be passed when using this operator. SQL Equivalent: `LIKE %value%`.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::CONTAINS,
 			],
-			'GREATER_THAN' => [
-				'description' => __( 'Find field values that are greater than the value in the values array. Only the first value in the values array will be used; any others will be disregarded.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::GREATER_THAN,
+			'IN'       => [
+				'description' => __( 'Default. Find field values that are equal to one of the values in the passed array. Default', 'wp-graphql-gravity-forms' ),
+				'value'       => self::IN,
 			],
-			'LESS_THAN'    => [
-				'description' => __( 'Find field values that are less than the value in the values array. Only the first value in the values array will be used; any others will be disregarded.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::LESS_THAN,
+			'IS'       => [
+				'description' => __( 'Find field values that are an exact match for the passed value. Only one value may be passed when using this operator. SQL Equivalent: `=`.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::IS,
+			],
+			'IS_NOT'   => [
+				'description' => __( 'Find field values that are NOT an exact match for the passed value. Only one value may be passed when using this operator. SQL Equivalent: `NOT`.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::IS_NOT,
+			],
+			'LIKE'     => [
+				'description' => __( 'Find field values that are an exact match for the passed value. SQL wildcards are supported. Only one value may be passed when using this operator. SQL Equivalent: `LIKE`.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::LIKE,
+			],
+			'NOT_IN'   => [
+				'description' => __( 'Find field values that do NOT match those in the values array.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::NOT_IN,
 			],
 		];
 	}
