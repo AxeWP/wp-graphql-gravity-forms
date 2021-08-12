@@ -1,5 +1,35 @@
 # Changelog
 
+## v0.8.0 - Revamped GraphQL Connections
+
+** :warning: This release requires Gravity Forms v2.5.0 or higher. **
+
+This release reworks all GraphQL connections, implementing data loaders, optimizing database queries, and adding support for more where args in more situations.
+
+### New Features
+- `gravityFormsForms` can now be filtered by a list of form IDs.
+- `FormEntry` connections now have access to the following `where` args: `status`, `dateFilters`, `fieldFilters`, `fieldFiltersMode`.
+- `formField` can now be filtered by a list of field IDs, `adminLabels`, and the field type.
+- [Breaking] Full pagination support has been added to `Forms` and `Entries`. **Note**: cursor generation has changed, so if you are manually generating form or entry cursors, you will need to update your code.
+- [Breaking] `FieldFiltersOperatorInputEnum` now supports all remaining Gravity Forms entry search operators, such as `LIKE`, `IS`, `IS_NOT`. The `GREATER_THAN` and `LESS_THAN` operators have been removed, as they are not supported by Gravity Forms.
+
+### Bugfixes
+- Correctly handle `sourceUrl` changes in `submitGravityFormsForm` and `updateGravityFormsDraftEntry` mutations.
+- `wp_graphql_gf_can_view_entries` filter now correctly passes `$form_ids` instead of non-existent `$entry_ids`.
+- `fieldFilters` now correctly search through `array` entry values.
+- `EntriesFieldFiltersInput.key` is now optional.
+
+### Under the Hood
+- [Breaking] Bumped minimum GF version to v2.5.x.
+- [Breaking] Connections have been completely refactored. The new classes are `EntryConnections`, `FieldConnections` and `FormConnections`.
+- [Breaking] `RootQueryEntriesConnectionResolver` and `RootQueryFormsConnectionResolver` classes were renamed to `EntriesConnectionsResolver` and `FormConnectionResolver`. They now properly extend `AbstractConnectionResolver`.
+- Form connections now implement a `DataLoader`.
+- Added `GFUtils::get_forms()` for speedy requests from $wpdb.
+- Fixed various code smells.
+- docs: Updated information about queries to reflect pagination and new `where` args.
+- tests: WPUnit tests now extend `GFGraphQLTestCase`.
+- tests: [Breaking] `WPGraphQLGravityForms\Tests` namespace has been renamed to `Tests\WPGraphQL\GravityForms`.
+
 ## v0.7.3 - WPGraphQL v1.6.x Compatibility
 
 This release adds compatibility with WPGraphQL v1.6.x, [and its new lazy/eager type loading](https://github.com/wp-graphql/wp-graphql/releases/tag/v1.6.0).
