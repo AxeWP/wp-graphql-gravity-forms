@@ -44,7 +44,7 @@ class FormFieldsEnum extends AbstractEnum {
 		$values = [];
 
 		foreach ( $fields as $field ) {
-			$values[ WPEnumType::get_safe_name( $field::$type ) ] = [
+			$values[ WPEnumType::get_safe_name( $field::$gf_type ) ] = [
 				'value'       => $field::$gf_type,
 				// translators: GF Field type.
 				'description' => sprintf( __( 'FormField enum %s.', 'wp-graphql-gravity-forms' ), $field::$gf_type ),
