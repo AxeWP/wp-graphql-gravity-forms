@@ -31,7 +31,6 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
   submitGravityFormsForm(
     input: {
       formId: 50
-      clientMutationId: "123abc"
       createdBy: 1 # The user ID.
       fieldValues: [
         {
