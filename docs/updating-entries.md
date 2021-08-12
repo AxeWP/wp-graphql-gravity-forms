@@ -10,7 +10,6 @@ You can update a [Gravity Forms entry](https://docs.gravityforms.com/entry-objec
 {
   updateGravityFormsEntry(
     input: {
-      clientMutationId: "123abc"
       entryId: 1
       isRead: false # Optional. Used to mark the entry as read.
       isStarred: false # Optional. Used to mark the entry as 'starred'.
@@ -47,7 +46,6 @@ Updating a [Gravity Forms draft entry](https://docs.gravityforms.com/database-st
 {
   updateGravityFormsEntry(
     input: {
-      clientMutationId: "123abc"
       resumeToken: "f82a5d986f4d4f199893f751adee98e9"
       fieldValues: [
         {

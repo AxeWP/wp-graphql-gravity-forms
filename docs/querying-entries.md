@@ -75,17 +75,18 @@ To query a Draft Entry, simply pass the `resumeToken` to the input `id` field, a
 
 ## Get a List of Entries
 
-The code comments in the example query below explain how you can get a filtered list of entries.
+The code comments in the example query below shows how you can fetch and filter data for multiple entries at once.
 
-The plugin supports `first, after` and `last, before` cursor-based [pagination](https://www.wpgraphql.com/docs/connections/#solution-for-pagination-naming-conventions-and-contextual-data), but does not support `first, before` or `last, after` pagination. It also does not yet support querying for a list of draft entries.
+[Cursor-based pagination](https://www.wpgraphql.com/docs/connections/#solution-for-pagination-naming-conventions-and-contextual-data) is supported. You can use the `first`, `last`, `before` and `after` fields, along with the data inside of `pageInfo` and the cursors returned by the API to get each page of forms data.
 
 By default, WPGraphQL sets the maximum query amount to 100. This can be overwritten using the [`graphql_connection_max_query_amount` filter](https://www.wpgraphql.com/filters/graphql_connection_max_query_amount/).
+
 
 ```graphql
 {
   gravityFormsEntries(
     first: 20
-    after: "eyJvZmZzZXQiOjAsImluZGV4Ijo0fQ==" # Or pass null to start from the beginning.
+    after: "YXJyYXljb25uZWN0aW9uOjk=" # Or pass null to start from the beginning.
     where: {
       # List of all the form IDs to include.
       formIds: [1]
@@ -102,6 +103,8 @@ By default, WPGraphQL sets the maximum query amount to 100. This can be overwrit
         { key: "created_by", intValues: [1], operator: IN }
         # Find entries where field 5 has a value of "somevalue".
         { key: "5", stringValues: [ "somevalue" ], operator: IN }
+				# Search all entry meta fields for a value.
+				{ stringValues: "somevalue", operator: CONTAINS }
       ]
       # Sort fields in ascending order by "date_created"
       sort: { direction: ASC, isNumeric: false, key: "date_created" }
