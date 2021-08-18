@@ -3320,6 +3320,44 @@
             "install-path": "../phpunit/phpunit"
         },
         {
+            "name": "poolshark/wp-graphql-stubs",
+            "version": "v0.0.2",
+            "version_normalized": "0.0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Poolshark/wp-graphql-stubs.git",
+                "reference": "66ba54188d04788849abd07bfc9fff511839cdb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Poolshark/wp-graphql-stubs/zipball/66ba54188d04788849abd07bfc9fff511839cdb3",
+                "reference": "66ba54188d04788849abd07bfc9fff511839cdb3",
+                "shasum": ""
+            },
+            "require-dev": {
+                "php": "^7.4"
+            },
+            "time": "2021-03-20T07:43:55+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Flo Ragossnig",
+                    "email": "florian@webleaders.at"
+                }
+            ],
+            "description": "WP GraphQL Stubs for VS Code and others.",
+            "support": {
+                "issues": "https://github.com/Poolshark/wp-graphql-stubs/issues",
+                "source": "https://github.com/Poolshark/wp-graphql-stubs/tree/v0.0.2"
+            },
+            "install-path": "../poolshark/wp-graphql-stubs"
+        },
+        {
             "name": "psr/container",
             "version": "1.1.1",
             "version_normalized": "1.1.1.0",
@@ -7502,6 +7540,7 @@
         "phpunit/php-timer",
         "phpunit/php-token-stream",
         "phpunit/phpunit",
+        "poolshark/wp-graphql-stubs",
         "psr/container",
         "psr/event-dispatcher",
         "psr/http-message",

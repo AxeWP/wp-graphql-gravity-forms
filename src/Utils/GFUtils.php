@@ -54,6 +54,13 @@ class GFUtils {
 			);
 		}
 
+		/**
+		 * Filters form object before use.
+		 *
+		 * @see https://docs.gravityforms.com/gform_pre_render/
+		 */
+		$form = gf_apply_filters( [ 'gform_pre_render', $form_id ], $form );
+
 		if ( $active_only && ( ! $form['is_active'] || $form['is_trash'] ) ) {
 			throw new UserError(
 				// translators: Gravity Forms form id.
