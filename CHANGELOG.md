@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.8.1 - `gform_pre_render` Support.
+
+This minor applies the [`gform_pre_render`](https://docs.gravityforms.com/gform_pre_render/) filter to `GFUtils::get_form()`.
+
+- feat: filter `GFUtils::get_form()` by `gform_pre_render` (h/t @travislopes ).
+- dev: add `wp-graphql-stubs` to composer `devDependencies`.
+
 ## v0.8.0 - Revamped GraphQL Connections
 
 ** :warning: This release requires Gravity Forms v2.5.0 or higher. **
