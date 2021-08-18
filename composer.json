@@ -36,7 +36,8 @@
     "phpstan/extension-installer": "^1.1",
     "phpunit/phpunit": "^8.5",
     "simpod/php-coveralls-mirror": "^3.0",
-    "wp-graphql/wp-graphql-testcase": "~2.1"
+    "wp-graphql/wp-graphql-testcase": "~2.1",
+    "poolshark/wp-graphql-stubs": "^0.0.2"
   },
   "config": {
     "optimize-autoloader": true,
