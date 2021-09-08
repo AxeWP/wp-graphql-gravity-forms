@@ -13,7 +13,8 @@ namespace WPGraphQLGravityForms\Connections;
 use GFAPI;
 use GF_Query;
 use GraphQL\Error\UserError;
-use GraphQLRelay\Connection\ArrayConnection;
+use GraphQL\Type\Definition\ResolveInfo;
+use WPGraphQL\AppContext;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQLGravityForms\Data\Loader\EntriesLoader;
 use WPGraphQLGravityForms\Types\Enum\EntryStatusEnum;
@@ -24,6 +25,20 @@ use WPGraphQLGravityForms\Types\Enum\FieldFiltersOperatorInputEnum;
  * Class - EntriesConnectionResolver
  */
 class EntriesConnectionResolver extends AbstractConnectionResolver {
+	/**
+	 * Offset index.
+	 *
+	 * @var integer
+	 */
+	public int $offset_index = 0;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function __construct( $source, array $args, AppContext $context, ResolveInfo $info ) {
+		parent::__construct( $source, $args, $context, $info );
+		$this->offset_index = $this->get_offset_index();
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -125,19 +140,23 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * {@inheritDoc}
 	 */
 	public function get_offset() {
-
 		/**
 		 * Defaults
 		 */
 		$offset = 0;
 
 		/**
-		 * Get the $after offset
+		 * Get the $after offset.
 		 */
 		if ( ! empty( $this->args['after'] ) ) {
-			$offset = ArrayConnection::cursorToOffset( $this->args['after'] ) + 1;
+			$current_loc = $this->get_current_loc_from_cursor( $this->args['after'] );
 		} elseif ( ! empty( $this->args['before'] ) ) {
-			$offset = ArrayConnection::cursorToOffset( $this->args['before'] ) + 1;
+			$current_loc = $this->get_current_loc_from_cursor( $this->args['before'] );
+		}
+
+		// Add 1 since we're overfetching.
+		if ( isset( $current_loc ) ) {
+			$offset = $current_loc['offset'] + 1;
 		}
 
 		/**
@@ -147,11 +166,48 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
+	 * Gets the array index for offsetting GF_Query.
+	 *
+	 * @return integer
+	 */
+	protected function get_offset_index() : int {
+		$offset_index = 0;
+
+		if ( ! empty( $this->args['after'] ) ) {
+			$current_loc = $this->get_current_loc_from_cursor( $this->args['after'] );
+		} elseif ( ! empty( $this->args['before'] ) ) {
+			$current_loc = $this->get_current_loc_from_cursor( $this->args['before'] );
+		}
+
+		if ( isset( $current_loc ) ) {
+			$offset_index = $current_loc['index'] + 1;
+		}
+
+		return $offset_index;
+	}
+
+	/**
+	 * Gets index (array offset) and offset (entry id) from decoded cursor.
+	 *
+	 * @param string $cursor .
+	 * @return array
+	 */
+	protected function get_current_loc_from_cursor( string $cursor ) : array {
+		$decoded     = base64_decode( $cursor ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
+		$current_loc = explode( ':', $decoded );
+
+		return [
+			'index'  => absint( $current_loc[1] ),
+			'offset' => absint( $current_loc[2] ),
+		];
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	protected function get_cursor_for_node( $id ) : string {
-		$index = $this->get_offset() + array_search( $id, array_keys( $this->nodes ), true );
-		return base64_encode( 'arrayconnection:' . $index );  // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+		$index = $this->offset_index + array_search( $id, array_keys( $this->nodes ), true );
+		return base64_encode( 'arrayconnection:' . $index . ':' . $id );  // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 	}
 
 	/**
@@ -362,11 +418,9 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 				throw new UserError( __( 'Sorry, `last` pagination is currently not supported when `after` is set.', 'wp-graphql-gravity-forms' ) );
 		}
 
-		$offset = $this->get_offset();
-
 		return [
-			'offset'    => $offset,
-			'page_size' => $this->get_query_amount(),
+			'offset'    => $this->get_offset_index(),
+			'page_size' => $this->get_query_amount() + 1, // overfetch for prev/next.
 		];
 	}
 }
