@@ -1,8 +1,17 @@
 # Changelog
 
+## v0.8.2 - Bugfix
+
+This minor release fixes `hasNextPage` and `hasPreviousPage` checks on Entry connections.
+
+- fix: use `entryIds` in cursor for `hasNextPage` and `havePreviousPage` checks in the Entries resolver.
+- tests: add tests for `has{Next|Previous}Page` on Form and Entry Connections.
+- tests: add tests for `HiddenField`, and `NumberField`.
+- dev: update Composer dependencies.
+
 ## v0.8.1 - `gform_pre_render` Support.
 
-This minor applies the [`gform_pre_render`](https://docs.gravityforms.com/gform_pre_render/) filter to `GFUtils::get_form()`.
+This minor release applies the [`gform_pre_render`](https://docs.gravityforms.com/gform_pre_render/) filter to `GFUtils::get_form()`.
 
 - feat: filter `GFUtils::get_form()` by `gform_pre_render` (h/t @travislopes ).
 - dev: add `wp-graphql-stubs` to composer `devDependencies`.
