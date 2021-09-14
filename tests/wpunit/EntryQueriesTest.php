@@ -300,7 +300,9 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'First does not return correct amount.' );
 		$this->assertSame( $entry_ids[0], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'First - node 0 is not same.' );
-		$this->assertSame( $entry_ids[1], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'First - node 1 is not same' );
+		$this->assertSame( $entry_ids[1], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'First - node 1 is not same.' );
+		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'First does not have next page.' );
+		$this->assertFalse( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'First has previous page.' );
 
 		// Check `after` argument.
 		$variables = [
@@ -312,9 +314,12 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
+		$this->assertArrayNotHasKey( 'errors', $response, 'First/after #1 array has errors.' );
 		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'First/after #1 does not return correct amount.' );
 		$this->assertSame( $entry_ids[2], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'First/after #1- node 0 is not same.' );
 		$this->assertSame( $entry_ids[3], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'First/after #1 - node 1 is not same' );
+		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'First/after #1 does not have next page.' );
+		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'First/after #1 does not have previous page.' );
 
 		$variables = [
 			'first'  => 2,
@@ -325,9 +330,12 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
+		$this->assertArrayNotHasKey( 'errors', $response, 'First/after #2 array has errors.' );
 		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'First/after #2 does not return correct amount.' );
 		$this->assertSame( $entry_ids[4], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'First/after #2 - node 0 is not same' );
 		$this->assertSame( $entry_ids[5], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'First/after #2 - node 1 is not same.' );
+		$this->assertFalse( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'First/after #2 has next page.' );
+		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'First/after #2 does not have previous page.' );
 
 		// Check last argument.
 		$variables = [
@@ -339,9 +347,12 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
+		$this->assertArrayNotHasKey( 'errors', $response, 'Last array has errors.' );
 		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'Last does not return correct amount.' );
 		$this->assertSame( $entry_ids[4], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'Last - node 0 is not same' );
 		$this->assertSame( $entry_ids[5], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'Last - node 1 is not same.' );
+		$this->assertFalse( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'Last has next page.' );
+		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'Last does not have previous page.' );
 
 		// Check `before` argument.
 		$variables = [
@@ -353,10 +364,27 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$this->assertArrayNotHasKey( 'errors', $response, 'Last array has errors.' );
-		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'last/befoe does not return correct amount.' );
-		$this->assertSame( $entry_ids[2], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'last/before - node 0 is not same' );
-		$this->assertSame( $entry_ids[3], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'last/before - node 1 is not same' );
+		$this->assertArrayNotHasKey( 'errors', $response, 'Last/before #1 array has errors.' );
+		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'last/before does not return correct amount.' );
+		$this->assertSame( $entry_ids[2], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'last/before #1 - node 0 is not same' );
+		$this->assertSame( $entry_ids[3], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'last/before #1 - node 1 is not same' );
+		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'Last/before #1 does not have next page.' );
+		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'Last/before #1 does not have previous page.' );
+
+		$variables = [
+			'first'  => null,
+			'after'  => null,
+			'last'   => 2,
+			'before' => $response['data']['gravityFormsEntries']['pageInfo']['endCursor'],
+		];
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertArrayNotHasKey( 'errors', $response, 'Last/before #2 array has errors.' );
+		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'last/before does not return correct amount.' );
+		$this->assertSame( $entry_ids[0], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'last/before #2 - node 0 is not same' );
+		$this->assertSame( $entry_ids[1], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'last/before #2 - node 1 is not same' );
+		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'Last/before #2 does not have next page.' );
+		$this->assertFalse( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'Last/before #2 has previous page.' );
 	}
 
 	/**

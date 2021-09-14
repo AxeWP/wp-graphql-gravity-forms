@@ -144,6 +144,11 @@ abstract class GFHelpers {
 			case 'maxLength':
 				$value = (int) $object->$key;
 				break;
+			case 'numberFormat':
+				// @todo: rename classes.
+				$string = 'NumberFieldFormatEnum';
+				$value  = $this->get_enum_for_value( $string, $object->$key );
+				break;
 			default:
 				$value = isset( $object->$key ) ? $object->$key : null;
 				break;

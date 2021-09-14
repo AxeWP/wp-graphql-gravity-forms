@@ -58,6 +58,37 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a hidden field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getHiddenFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				['cssClass' => null],
+				['adminLabel' => null],
+				['adminOnly' => null],
+				['isRequired' => null],
+				['noDuplicates' => null],
+				['size' => null],
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'defaultValue',
+				'formId',
+				[ 'id' => 1 ],
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				[ 'type' => 'hidden' ],
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
 	 * Get the default args for a textarea field.
 	 *
 	 * @param array $args .
@@ -88,6 +119,50 @@ class Wpunit extends \Codeception\Module {
 				'size',
 				[ 'type' => 'textarea' ],
 				'useRichTextEditor',
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
+	 * Get the default args for a number field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getNumberFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'autocompleteAttribute',
+				'calculationFormula',
+				'calculationRounding',
+				'cssClass',
+				'defaultValue',
+				'description',
+				'descriptionPlacement',
+				'enableAutocomplete',
+				'enableCalculation',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'numberFormat',
+				'placeholder',
+				'rangeMax',
+				'rangeMin',
+				'size',
+				[ 'type' => 'number' ],
 				'visibility',
 			],
 			$args
