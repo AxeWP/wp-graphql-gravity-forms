@@ -221,6 +221,9 @@ class PropertyHelper extends GFHelpers {
 	public function noDuplicates( $value = null ) {
 		return isset( $value ) ? $value : false;
 	}
+	public function numberFormat( $value = null ) {
+		return isset( $value ) ? $value : 'decimal_comma';
+	}
 
 	public function pageNumber( $value = null ) {
 		return isset( $value ) ? $value : 1;
@@ -232,6 +235,14 @@ class PropertyHelper extends GFHelpers {
 
 	public function productField( $value = null ) {
 		return isset( $value ) ? $value : '';
+	}
+
+	public function rangeMin( $value = null ){
+		return isset( $value) ? $value : null;
+	}
+
+	public function rangeMax( $value = null ){
+		return isset( $value) ? $value : null;
 	}
 
 	public function simpleCaptchaBackgroundColor( $value = null ) {
