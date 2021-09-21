@@ -28,13 +28,6 @@ abstract class AbstractDraftEntryUpdater extends AbstractMutation {
 	protected static $gf_type;
 
 	/**
-	 * DraftEntryDataManipulator instance.
-	 *
-	 * @var DraftEntryDataManipulator
-	 */
-	private $draft_entry_data_manipulator;
-
-	/**
 	 * The draft submission.
 	 *
 	 * @var array
@@ -54,15 +47,6 @@ abstract class AbstractDraftEntryUpdater extends AbstractMutation {
 	 * @var mixed
 	 */
 	private $value = null;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param DraftEntryDataManipulator $draft_entry_data_manipulator .
-	 */
-	public function __construct( DraftEntryDataManipulator $draft_entry_data_manipulator ) {
-		$this->draft_entry_data_manipulator = $draft_entry_data_manipulator;
-	}
 
 	/**
 	 * Defines the input field configuration.
@@ -106,7 +90,7 @@ abstract class AbstractDraftEntryUpdater extends AbstractMutation {
 				'description' => __( 'The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload ) : array {
 					$draft_submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
-					return $this->draft_entry_data_manipulator->manipulate( $draft_submission['partial_entry'], $payload['resumeToken'] );
+					return DraftEntryDataManipulator::manipulate( $draft_submission['partial_entry'], $payload['resumeToken'] );
 				},
 			],
 			'errors'      => [

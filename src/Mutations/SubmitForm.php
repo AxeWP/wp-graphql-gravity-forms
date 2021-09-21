@@ -36,29 +36,6 @@ class SubmitForm extends AbstractMutation {
 	public static $name = 'submitGravityFormsForm';
 
 	/**
-	 * EntryDataManipulator instance.
-	 *
-	 * @var EntryDataManipulator
-	 */
-	private $entry_data_manipulator;
-	/**
-	 * DraftEntryDataManipulator instance.
-	 *
-	 * @var DraftEntryDataManipulator
-	 */
-	private $draft_entry_data_manipulator;
-
-
-	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		$instances                          = WPGraphQLGravityForms::instances();
-		$this->entry_data_manipulator       = $instances['entry_data_manipulator'];
-		$this->draft_entry_data_manipulator = $instances['draft_entry_data_manipulator'];
-	}
-
-	/**
 	 * Defines the input field configuration.
 	 */
 	public function get_input_fields() : array {
@@ -119,13 +96,13 @@ class SubmitForm extends AbstractMutation {
 					if ( $payload['resumeToken'] ) {
 						$submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
 
-						return $this->draft_entry_data_manipulator->manipulate( $submission['partial_entry'], $payload['resumeToken'] );
+						return DraftEntryDataManipulator::manipulate( $submission['partial_entry'], $payload['resumeToken'] );
 					}
 
 					if ( $payload['entryId'] ) {
 						$entry = GFUtils::get_entry( $payload['entryId'] );
 
-						return $this->entry_data_manipulator->manipulate( $entry );
+						return EntryDataManipulator::manipulate( $entry );
 					}
 				},
 			],

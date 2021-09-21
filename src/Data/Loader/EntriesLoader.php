@@ -45,11 +45,10 @@ class EntriesLoader extends AbstractDataLoader {
 			return $keys;
 		}
 
-		$gf_query               = new GF_Query();
-		$entries_from_db        = $gf_query->get_entries( $keys );
-		$entry_data_manipulator = new EntryDataManipulator();
+		$gf_query        = new GF_Query();
+		$entries_from_db = $gf_query->get_entries( $keys );
 
-		$entries = array_map( fn( array $entry ) => $entry_data_manipulator->manipulate( $entry ), $entries_from_db );
+		$entries = array_map( fn( array $entry ) => EntryDataManipulator::manipulate( $entry ), $entries_from_db );
 
 		return array_combine( $keys, $entries );
 	}

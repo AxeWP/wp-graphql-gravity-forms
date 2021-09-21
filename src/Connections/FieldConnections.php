@@ -44,7 +44,7 @@ class FieldConnections extends AbstractConnection {
 					'connectionArgs' => self::get_connection_args(),
 					'resolve'        => static function( $root, array $args, AppContext $context, ResolveInfo $info ) {
 							$fields              = static::filter_form_fields_by_connection_args( $root['fields'], $args );
-							$fields              = ( new FieldsDataManipulator() )->manipulate( $fields );
+							$fields              = FieldsDataManipulator::manipulate( $fields );
 							$connection          = Relay::connectionFromArray( $fields, $args );
 							$nodes               = array_map( fn( $edge ) => $edge['node'] ?? null, $connection['edges'] );
 							$connection['nodes'] = $nodes ?: null;
@@ -68,7 +68,7 @@ class FieldConnections extends AbstractConnection {
 
 						$fields = self::filter_form_fields_by_connection_args( $form['fields'], $args );
 
-						$fields = ( new FieldsDataManipulator() )->manipulate( $fields );
+						$fields = FieldsDataManipulator::manipulate( $fields );
 
 						$connection = Relay::connectionFromArray( $fields, $args );
 

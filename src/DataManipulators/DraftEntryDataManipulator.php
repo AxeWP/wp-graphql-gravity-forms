@@ -15,22 +15,6 @@ namespace WPGraphQLGravityForms\DataManipulators;
  */
 class DraftEntryDataManipulator {
 	/**
-	 * EntryDataManipulator instance.
-	 *
-	 * @var EntryDataManipulator
-	 */
-	private $entry_data_manipulator;
-
-	/**
-	 * Constructor
-	 *
-	 * @param EntryDataManipulator $entry_data_manipulator .
-	 */
-	public function __construct( EntryDataManipulator $entry_data_manipulator ) {
-		$this->entry_data_manipulator = $entry_data_manipulator;
-	}
-
-	/**
 	 * Manipulate draft entry data.
 	 *
 	 * @param array  $draft_entry  The draft entry data to be manipulated.
@@ -38,10 +22,10 @@ class DraftEntryDataManipulator {
 	 *
 	 * @return array Manipulated entry data.
 	 */
-	public function manipulate( array $draft_entry, string $resume_token ) : array {
-		$draft_entry = $this->set_resume_token_value( $draft_entry, $resume_token );
+	public static function manipulate( array $draft_entry, string $resume_token ) : array {
+		$draft_entry = self::set_resume_token_value( $draft_entry, $resume_token );
 
-		return $this->entry_data_manipulator->manipulate( $draft_entry );
+		return EntryDataManipulator::manipulate( $draft_entry );
 	}
 
 	/**
@@ -52,7 +36,7 @@ class DraftEntryDataManipulator {
 	 *
 	 * @return array Manipulated entry data.
 	 */
-	private function set_resume_token_value( array $draft_entry, string $resume_token ) : array {
+	private static function set_resume_token_value( array $draft_entry, string $resume_token ) : array {
 		$draft_entry['resumeToken'] = $resume_token;
 		return $draft_entry;
 	}

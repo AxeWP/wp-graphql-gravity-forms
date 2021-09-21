@@ -21,12 +21,12 @@ class FieldsDataManipulator implements DataManipulator {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function manipulate( array $data ) : array {
-		$data = array_map( [ $this, 'set_all_field_values' ], $data );
-		$data = $this->set_is_hidden_values( $data );
-		$data = $this->set_list_choice_empty_values( $data );
-		$data = $this->add_keys_to_inputs( $data, 'address' );
-		$data = $this->add_keys_to_inputs( $data, 'name' );
+	public static function manipulate( array $data ) : array {
+		$data = array_map( [ __CLASS__, 'set_all_field_values' ], $data );
+		$data = self::set_is_hidden_values( $data );
+		$data = self::set_list_choice_empty_values( $data );
+		$data = self::add_keys_to_inputs( $data, 'address' );
+		$data = self::add_keys_to_inputs( $data, 'name' );
 
 		return $data;
 	}
@@ -37,9 +37,9 @@ class FieldsDataManipulator implements DataManipulator {
 	 * @param GF_Field $field .
 	 * @return GF_Field
 	 */
-	private function set_all_field_values( GF_Field $field ) : GF_Field {
-		$field = $this->set_css_class_list_for_field( $field );
-		$field = $this->convert_value_to_expected_type( $field );
+	private static function set_all_field_values( GF_Field $field ) : GF_Field {
+		$field = self::set_css_class_list_for_field( $field );
+		$field = self::convert_value_to_expected_type( $field );
 
 		return $field;
 	}
@@ -51,7 +51,7 @@ class FieldsDataManipulator implements DataManipulator {
 	 *
 	 * @return GF_Field
 	 */
-	private function set_css_class_list_for_field( GF_Field $field ) : GF_Field {
+	private static function set_css_class_list_for_field( GF_Field $field ) : GF_Field {
 		$field->cssClassList = array_filter(
 			explode( ' ', $field->cssClass ),
 			function( $css_class ) {
@@ -69,7 +69,7 @@ class FieldsDataManipulator implements DataManipulator {
 	 *
 	 * @return GF_Field
 	 */
-	private function convert_value_to_expected_type( GF_Field $field ) : GF_Field {
+	private static function convert_value_to_expected_type( GF_Field $field ) : GF_Field {
 		$field->layoutGridColumnSpan = ! empty( $field->layoutGridColumnSpan ) ? (int) $field->layoutGridColumnSpan : null;
 
 		foreach ( $field as $key => $value ) {
@@ -90,7 +90,7 @@ class FieldsDataManipulator implements DataManipulator {
 	 *
 	 * @return array $fields Form fields with address 'isHidden' values coerced to booleans.
 	 */
-	private function set_is_hidden_values( array $fields ) : array {
+	private static function set_is_hidden_values( array $fields ) : array {
 		$fields_to_modify = array_filter(
 			$fields,
 			function( $field ) {
@@ -124,7 +124,7 @@ class FieldsDataManipulator implements DataManipulator {
 	 *
 	 * @return array $fields Form fields with the list `choices` values defined.
 	 */
-	private function set_list_choice_empty_values( array $fields ) {
+	private static function set_list_choice_empty_values( array $fields ) {
 		$empty_choices = [
 			'text'       => null,
 			'value'      => null,
@@ -154,8 +154,8 @@ class FieldsDataManipulator implements DataManipulator {
 	 * @param string $type .
 	 * @return array
 	 */
-	private function add_keys_to_inputs( array $fields, string $type ) : array {
-		$input_keys = $this->get_input_keys( $type );
+	private static function add_keys_to_inputs( array $fields, string $type ) : array {
+		$input_keys = self::get_input_keys( $type );
 
 		$fields_to_modify = array_filter(
 			$fields,
@@ -188,12 +188,12 @@ class FieldsDataManipulator implements DataManipulator {
 	 * @param string $type .
 	 * @return array
 	 */
-	private function get_input_keys( string $type ) : array {
+	private static function get_input_keys( string $type ) : array {
 		if ( 'address' === $type ) {
-			return $this->get_address_input_keys();
+			return self::get_address_input_keys();
 		}
 
-		return $this->get_name_input_keys();
+		return self::get_name_input_keys();
 	}
 
 	/**
@@ -201,7 +201,7 @@ class FieldsDataManipulator implements DataManipulator {
 	 *
 	 * @return array
 	 */
-	private function get_address_input_keys() {
+	private static function get_address_input_keys() {
 		return [
 			'street',
 			'lineTwo',
@@ -217,7 +217,7 @@ class FieldsDataManipulator implements DataManipulator {
 	 *
 	 * @return array
 	 */
-	private function get_name_input_keys() {
+	private static function get_name_input_keys() {
 		return [
 			'prefix',
 			'first',

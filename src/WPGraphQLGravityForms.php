@@ -59,12 +59,6 @@ final class WPGraphQLGravityForms {
 		// Settings.
 		self::$instances['wpgraphql_settings'] = new Settings\WPGraphQLSettings();
 
-		// Data manipulators.
-		self::$instances['fields_data_manipulator']      = new DataManipulators\FieldsDataManipulator();
-		self::$instances['form_data_manipulator']        = new DataManipulators\FormDataManipulator( self::$instances['fields_data_manipulator'] );
-		self::$instances['entry_data_manipulator']       = new DataManipulators\EntryDataManipulator();
-		self::$instances['draft_entry_data_manipulator'] = new DataManipulators\DraftEntryDataManipulator( self::$instances['entry_data_manipulator'] );
-
 		// Data loaders.
 		self::$instances['loader_registrar'] = new Data\Loader\LoadersRegistrar();
 
@@ -82,7 +76,7 @@ final class WPGraphQLGravityForms {
 		self::$instances['form_notification']         = new Form\FormNotification();
 		self::$instances['form_confirmation']         = new Form\FormConfirmation();
 		self::$instances['form_pagination']           = new Form\FormPagination();
-		self::$instances['form']                      = new Form\Form( self::$instances['form_data_manipulator'] );
+		self::$instances['form']                      = new Form\Form();
 
 		// Field Properties.
 		self::$instances['address_input_property']         = new FieldProperty\AddressInputProperty();
@@ -202,8 +196,8 @@ final class WPGraphQLGravityForms {
 		self::$instances['website_field_value_property']        = new ValueProperty\WebsiteFieldValueProperty();
 
 		// Entries.
-		self::$instances['entry']      = new Entry\Entry( self::$instances['entry_data_manipulator'], self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['entry_form'] = new Entry\EntryForm( self::$instances['form_data_manipulator'] );
+		self::$instances['entry']      = new Entry\Entry();
+		self::$instances['entry_form'] = new Entry\EntryForm();
 		self::$instances['entry_user'] = new Entry\EntryUser();
 
 		// Input.
@@ -274,35 +268,35 @@ final class WPGraphQLGravityForms {
 		self::$instances['create_draft_entry']                            = new Mutations\CreateDraftEntry();
 		self::$instances['delete_draft_entry']                            = new Mutations\DeleteDraftEntry();
 		self::$instances['delete_entry']                                  = new Mutations\DeleteEntry();
-		self::$instances['submit_draft_entry']                            = new Mutations\SubmitDraftEntry( self::$instances['entry_data_manipulator'] );
+		self::$instances['submit_draft_entry']                            = new Mutations\SubmitDraftEntry();
 		self::$instances['submit_form']                                   = new Mutations\SubmitForm();
-		self::$instances['update_draft_entry_address_field_value']        = new Mutations\UpdateDraftEntryAddressFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_chained_select_field_value'] = new Mutations\UpdateDraftEntryChainedSelectFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_checkbox_field_value']       = new Mutations\UpdateDraftEntryCheckboxFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_consent_field_value']        = new Mutations\UpdateDraftEntryConsentFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_date_field_value']           = new Mutations\UpdateDraftEntryDateFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_email_field_value']          = new Mutations\UpdateDraftEntryEmailFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_hidden_field_value']         = new Mutations\UpdateDraftEntryHiddenFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_list_field_value']           = new Mutations\UpdateDraftEntryListFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_multi_select_field_value']   = new Mutations\UpdateDraftEntryMultiSelectFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_name_field_value']           = new Mutations\UpdateDraftEntryNameFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_number_field_value']         = new Mutations\UpdateDraftEntryNumberFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_phone_field_value']          = new Mutations\UpdateDraftEntryPhoneFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_post_category_field_value']  = new Mutations\UpdateDraftEntryPostCategoryFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_post_content_field_value']   = new Mutations\UpdateDraftEntryPostContentFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_post_custom_field_value']    = new Mutations\UpdateDraftEntryPostCustomFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_post_excerpt_field_value']   = new Mutations\UpdateDraftEntryPostExcerptFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_post_tags_field_value']      = new Mutations\UpdateDraftEntryPostTagsFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_post_title_field_value']     = new Mutations\UpdateDraftEntryPostTitleFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_radio_field_value']          = new Mutations\UpdateDraftEntryRadioFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_select_field_value']         = new Mutations\UpdateDraftEntrySelectFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_signature_field_value']      = new Mutations\UpdateDraftEntrySignatureFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_text_area_field_value']      = new Mutations\UpdateDraftEntryTextAreaFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_text_field_value']           = new Mutations\UpdateDraftEntryTextFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_time_field_value']           = new Mutations\UpdateDraftEntryTimeFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry_website_field_value']        = new Mutations\UpdateDraftEntryWebsiteFieldValue( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_draft_entry']                            = new Mutations\UpdateDraftEntry( self::$instances['draft_entry_data_manipulator'] );
-		self::$instances['update_entry']                                  = new Mutations\UpdateEntry( self::$instances['entry_data_manipulator'] );
+		self::$instances['update_draft_entry_address_field_value']        = new Mutations\UpdateDraftEntryAddressFieldValue();
+		self::$instances['update_draft_entry_chained_select_field_value'] = new Mutations\UpdateDraftEntryChainedSelectFieldValue();
+		self::$instances['update_draft_entry_checkbox_field_value']       = new Mutations\UpdateDraftEntryCheckboxFieldValue();
+		self::$instances['update_draft_entry_consent_field_value']        = new Mutations\UpdateDraftEntryConsentFieldValue();
+		self::$instances['update_draft_entry_date_field_value']           = new Mutations\UpdateDraftEntryDateFieldValue();
+		self::$instances['update_draft_entry_email_field_value']          = new Mutations\UpdateDraftEntryEmailFieldValue();
+		self::$instances['update_draft_entry_hidden_field_value']         = new Mutations\UpdateDraftEntryHiddenFieldValue();
+		self::$instances['update_draft_entry_list_field_value']           = new Mutations\UpdateDraftEntryListFieldValue();
+		self::$instances['update_draft_entry_multi_select_field_value']   = new Mutations\UpdateDraftEntryMultiSelectFieldValue();
+		self::$instances['update_draft_entry_name_field_value']           = new Mutations\UpdateDraftEntryNameFieldValue();
+		self::$instances['update_draft_entry_number_field_value']         = new Mutations\UpdateDraftEntryNumberFieldValue();
+		self::$instances['update_draft_entry_phone_field_value']          = new Mutations\UpdateDraftEntryPhoneFieldValue();
+		self::$instances['update_draft_entry_post_category_field_value']  = new Mutations\UpdateDraftEntryPostCategoryFieldValue();
+		self::$instances['update_draft_entry_post_content_field_value']   = new Mutations\UpdateDraftEntryPostContentFieldValue();
+		self::$instances['update_draft_entry_post_custom_field_value']    = new Mutations\UpdateDraftEntryPostCustomFieldValue();
+		self::$instances['update_draft_entry_post_excerpt_field_value']   = new Mutations\UpdateDraftEntryPostExcerptFieldValue();
+		self::$instances['update_draft_entry_post_tags_field_value']      = new Mutations\UpdateDraftEntryPostTagsFieldValue();
+		self::$instances['update_draft_entry_post_title_field_value']     = new Mutations\UpdateDraftEntryPostTitleFieldValue();
+		self::$instances['update_draft_entry_radio_field_value']          = new Mutations\UpdateDraftEntryRadioFieldValue();
+		self::$instances['update_draft_entry_select_field_value']         = new Mutations\UpdateDraftEntrySelectFieldValue();
+		self::$instances['update_draft_entry_signature_field_value']      = new Mutations\UpdateDraftEntrySignatureFieldValue();
+		self::$instances['update_draft_entry_text_area_field_value']      = new Mutations\UpdateDraftEntryTextAreaFieldValue();
+		self::$instances['update_draft_entry_text_field_value']           = new Mutations\UpdateDraftEntryTextFieldValue();
+		self::$instances['update_draft_entry_time_field_value']           = new Mutations\UpdateDraftEntryTimeFieldValue();
+		self::$instances['update_draft_entry_website_field_value']        = new Mutations\UpdateDraftEntryWebsiteFieldValue();
+		self::$instances['update_draft_entry']                            = new Mutations\UpdateDraftEntry();
+		self::$instances['update_entry']                                  = new Mutations\UpdateEntry();
 
 		/**
 		 * Filter for instantiating custom WPGraphQLGF class instances.

@@ -19,5 +19,5 @@ interface DataManipulator {
 	 *
 	 * @return array Manipulated data.
 	 */
-	public function manipulate( array $data ) : array;
+	public static function manipulate( array $data ) : array;
 }
