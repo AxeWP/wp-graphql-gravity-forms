@@ -42,34 +42,6 @@ class Entry extends AbstractObject implements Field {
 	public static $field_name = 'gravityFormsEntry';
 
 	/**
-	 * EntryDataManipulator instance.
-	 *
-	 * @var EntryDataManipulator
-	 */
-	private $entry_data_manipulator;
-
-	/**
-	 * DraftEntryDataManipulator instance.
-	 *
-	 * @var DraftEntryDataManipulator
-	 */
-	private $draft_entry_data_manipulator;
-
-	/**
-	 * Constructor
-	 *
-	 * @param EntryDataManipulator      $entry_data_manipulator .
-	 * @param DraftEntryDataManipulator $draft_entry_data_manipulator .
-	 */
-	public function __construct(
-		EntryDataManipulator $entry_data_manipulator,
-		DraftEntryDataManipulator $draft_entry_data_manipulator
-	) {
-		$this->entry_data_manipulator       = $entry_data_manipulator;
-		$this->draft_entry_data_manipulator = $draft_entry_data_manipulator;
-	}
-
-	/**
 	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
@@ -211,7 +183,7 @@ class Entry extends AbstractObject implements Field {
 						$entry = GFAPI::get_entry( $id );
 
 						if ( ! is_wp_error( $entry ) ) {
-							return $this->entry_data_manipulator->manipulate( $entry );
+							return EntryDataManipulator::manipulate( $entry );
 						}
 					}
 
@@ -219,7 +191,7 @@ class Entry extends AbstractObject implements Field {
 					$submission = GFUtils::get_draft_submission( (string) $id );
 
 					// @TODO: Evaluate if resume_token is actually needed.
-					return $this->draft_entry_data_manipulator->manipulate( $submission['partial_entry'], (string) $id );
+					return DraftEntryDataManipulator::manipulate( $submission['partial_entry'], (string) $id );
 				},
 			]
 		);

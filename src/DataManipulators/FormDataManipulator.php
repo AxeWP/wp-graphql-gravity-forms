@@ -20,31 +20,15 @@ use WPGraphQLGravityForms\Types\Form\Form;
  */
 class FormDataManipulator implements DataManipulator {
 	/**
-	 * FieldsDataManipulator instance.
-	 *
-	 * @var FieldsDataManipulator
-	 */
-	private $fields_data_manipulator;
-
-	/**
-	 * Constructor
-	 *
-	 * @param FieldsDataManipulator $fields_data_manipulator .
-	 */
-	public function __construct( FieldsDataManipulator $fields_data_manipulator ) {
-		$this->fields_data_manipulator = $fields_data_manipulator;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
-	public function manipulate( array $data ) : array {
-		$data = $this->set_global_and_form_ids( $data );
-		$data = $this->set_css_class_list( $data );
-		$data = $this->convert_form_keys_to_camelcase( $data );
-		$data = $this->prevent_missing_values( $data );
+	public static function manipulate( array $data ) : array {
+		$data = self::set_global_and_form_ids( $data );
+		$data = self::set_css_class_list( $data );
+		$data = self::convert_form_keys_to_camelcase( $data );
+		$data = self::prevent_missing_values( $data );
 
-		$data['fields'] = $this->fields_data_manipulator->manipulate( $data['fields'] );
+		$data['fields'] = FieldsDataManipulator::manipulate( $data['fields'] );
 
 		return $data;
 	}
@@ -56,7 +40,7 @@ class FormDataManipulator implements DataManipulator {
 	 *
 	 * @return array $form Form meta array with the form ID and global Relay ID set.
 	 */
-	private function set_global_and_form_ids( array $form ) : array {
+	private static function set_global_and_form_ids( array $form ) : array {
 		$form['formId'] = $form['id'];
 		$form['id']     = Relay::toGlobalId( Form::$type, $form['formId'] );
 
@@ -70,7 +54,7 @@ class FormDataManipulator implements DataManipulator {
 	 *
 	 * @return array
 	 */
-	private function set_css_class_list( array $form ) : array {
+	private static function set_css_class_list( array $form ) : array {
 		if ( empty( $form['cssClass'] ) ) {
 			$form['cssClassList'] = null;
 			return $form;
@@ -95,7 +79,7 @@ class FormDataManipulator implements DataManipulator {
 	 *
 	 * @return array $form Form meta array with some values converted to null.
 	 */
-	private function prevent_missing_values( array $form ) : array {
+	private static function prevent_missing_values( array $form ) : array {
 		$form['limitEntriesCount']   = isset( $form['limitEntriesCount'] ) ? (int) $form['limitEntriesCount'] : false;
 		$form['scheduleStartHour']   = isset( $form['scheduleStartHour'] ) ? (int) $form['scheduleStartHour'] : null;
 		$form['scheduleStartMinute'] = isset( $form['scheduleStartMinute'] ) ? (int) $form['scheduleStartMinute'] : null;
@@ -103,7 +87,7 @@ class FormDataManipulator implements DataManipulator {
 		$form['scheduleEndMinute']   = isset( $form['scheduleEndMinute'] ) ? (int) $form['scheduleEndMinute'] : null;
 
 		if ( ! empty( $form['confirmations'] ) ) {
-			$form['confirmations'] = $this->nullify_confirmation_page_id_empty_strings( $form['confirmations'] );
+			$form['confirmations'] = static::nullify_confirmation_page_id_empty_strings( $form['confirmations'] );
 		}
 
 		return $form;
@@ -116,7 +100,7 @@ class FormDataManipulator implements DataManipulator {
 	 *
 	 * @return array Form confirmations with empty string pageId values converted to null.
 	 */
-	private function nullify_confirmation_page_id_empty_strings( array $confirmations ) : array {
+	private static function nullify_confirmation_page_id_empty_strings( array $confirmations ) : array {
 		return array_map(
 			function( $confirmation ) {
 				$confirmation['pageId'] = $confirmation['pageId'] ?: null;
@@ -133,7 +117,7 @@ class FormDataManipulator implements DataManipulator {
 	 *
 	 * @return array
 	 */
-	private function convert_form_keys_to_camelcase( array $form ) : array {
+	private static function convert_form_keys_to_camelcase( array $form ) : array {
 		$form['isActive']    = $form['is_active'];
 		$form['dateCreated'] = $form['date_created'];
 		$form['isTrash']     = $form['is_trash'];

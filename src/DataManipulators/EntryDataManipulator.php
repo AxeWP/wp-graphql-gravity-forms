@@ -21,11 +21,11 @@ class EntryDataManipulator implements DataManipulator {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function manipulate( array $data ) : array {
-		$data = $this->set_is_draft_value( $data );
-		$data = $this->set_global_and_entry_ids( $data );
+	public static function manipulate( array $data ) : array {
+		$data = self::set_is_draft_value( $data );
+		$data = self::set_global_and_entry_ids( $data );
 
-		return $this->convert_keys_to_camelcase( $data );
+		return self::convert_keys_to_camelcase( $data );
 	}
 
 	/**
@@ -35,7 +35,7 @@ class EntryDataManipulator implements DataManipulator {
 	 *
 	 * @return array $entry Entry data, with the isDraft value set.
 	 */
-	private function set_is_draft_value( array $entry ) : array {
+	private static function set_is_draft_value( array $entry ) : array {
 		$entry['isDraft'] = ! empty( $entry['resumeToken'] );
 		return $entry;
 	}
@@ -47,9 +47,9 @@ class EntryDataManipulator implements DataManipulator {
 	 *
 	 * @return array
 	 */
-	private function set_global_and_entry_ids( array $entry ) : array {
+	private static function set_global_and_entry_ids( array $entry ) : array {
 		$entry['entryId'] = $entry['id'];
-		$entry['id']      = Relay::toGlobalId( Entry::$type, $this->get_id_for_global_id_generation( $entry ) );
+		$entry['id']      = Relay::toGlobalId( Entry::$type, self::get_id_for_global_id_generation( $entry ) );
 
 		return $entry;
 	}
@@ -61,7 +61,7 @@ class EntryDataManipulator implements DataManipulator {
 	 *
 	 * @return string
 	 */
-	private function get_id_for_global_id_generation( array $entry ) : string {
+	private static function get_id_for_global_id_generation( array $entry ) : string {
 		return $entry['isDraft'] ? $entry['resumeToken'] : $entry['entryId'];
 	}
 
@@ -72,8 +72,8 @@ class EntryDataManipulator implements DataManipulator {
 	 *
 	 * @return array
 	 */
-	private function convert_keys_to_camelcase( array $entry ) : array {
-		foreach ( $this->get_key_mappings() as $snake_case_key => $camel_case_key ) {
+	private static function convert_keys_to_camelcase( array $entry ) : array {
+		foreach ( self::get_key_mappings() as $snake_case_key => $camel_case_key ) {
 			if ( ! isset( $entry[ $snake_case_key ] ) ) {
 				continue;
 			}
@@ -90,7 +90,7 @@ class EntryDataManipulator implements DataManipulator {
 	 *
 	 * @return array
 	 */
-	private function get_key_mappings() : array {
+	private static function get_key_mappings() : array {
 		return [
 			'form_id'          => 'formId',
 			'post_id'          => 'postId',

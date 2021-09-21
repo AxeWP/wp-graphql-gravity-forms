@@ -39,22 +39,6 @@ class Form extends AbstractObject implements Field {
 	public static $field_name = 'gravityFormsForm';
 
 	/**
-	 * FormDataManipulator instance.
-	 *
-	 * @var FormDataManipulator
-	 */
-	private $form_data_manipulator;
-
-	/**
-	 * Constructor
-	 *
-	 * @param FormDataManipulator $form_data_manipulator .
-	 */
-	public function __construct( FormDataManipulator $form_data_manipulator ) {
-		$this->form_data_manipulator = $form_data_manipulator;
-	}
-
-	/**
 	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
@@ -331,7 +315,7 @@ class Form extends AbstractObject implements Field {
 
 					$form_raw = GFUtils::get_form( $id, false );
 
-					$form = $this->form_data_manipulator->manipulate( $form_raw );
+					$form = FormDataManipulator::manipulate( $form_raw );
 
 					/**
 					 * "wp_graphql_gf_form_object" filter

@@ -11,7 +11,6 @@
 namespace WPGraphQLGravityForms\Data\Loader;
 
 use WPGraphQL\Data\Loader\AbstractDataLoader;
-use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
 use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
 use WPGraphQLGravityForms\Utils\GFUtils;
 
@@ -46,10 +45,9 @@ class FormsLoader extends AbstractDataLoader {
 			return $keys;
 		}
 
-		$forms_from_db         = GFUtils::get_forms( $keys );
-		$form_data_manipulator = new FormDataManipulator( new FieldsDataManipulator() );
+		$forms_from_db = GFUtils::get_forms( $keys );
 
-		$forms = array_map( fn( $form ) => $form_data_manipulator->manipulate( $form ), $forms_from_db );
+		$forms = array_map( fn( $form ) => FormDataManipulator::manipulate( $form ), $forms_from_db );
 
 		return array_combine( $keys, $forms );
 	}

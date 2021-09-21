@@ -34,22 +34,6 @@ class EntryForm extends AbstractObject implements Field {
 	public static $field_name = 'form';
 
 	/**
-	 * FormDataManipulator instance.
-	 *
-	 * @var FormDataManipulator
-	 */
-	private $form_data_manipulator;
-
-	/**
-	 * Constructor
-	 *
-	 * @param FormDataManipulator $form_data_manipulator .
-	 */
-	public function __construct( FormDataManipulator $form_data_manipulator ) {
-		$this->form_data_manipulator = $form_data_manipulator;
-	}
-
-	/**
 	 * {@inheritDoc}.
 	 */
 	public function register_hooks() : void {
@@ -92,7 +76,7 @@ class EntryForm extends AbstractObject implements Field {
 					$form = GFUtils::get_form( $entry['formId'], false );
 
 					return [
-						'node' => $this->form_data_manipulator->manipulate( $form ),
+						'node' => FormDataManipulator::manipulate( $form ),
 					];
 				},
 			]

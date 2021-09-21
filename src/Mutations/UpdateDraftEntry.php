@@ -31,13 +31,6 @@ class UpdateDraftEntry extends AbstractMutation {
 	public static $name = 'updateGravityFormsDraftEntry';
 
 	/**
-	 * DraftEntryDataManipulator instance.
-	 *
-	 * @var DraftEntryDataManipulator
-	 */
-	private $draft_entry_data_manipulator;
-
-	/**
 	 * The draft submission.
 	 *
 	 * @var array
@@ -50,15 +43,6 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * @var array
 	 */
 	protected $errors = [];
-
-	/**
-	 * Constructor.
-	 *
-	 * @param DraftEntryDataManipulator $draft_entry_data_manipulator .
-	 */
-	public function __construct( DraftEntryDataManipulator $draft_entry_data_manipulator ) {
-		$this->draft_entry_data_manipulator = $draft_entry_data_manipulator;
-	}
 
 	/**
 	 * Defines the input field configuration.
@@ -109,7 +93,7 @@ class UpdateDraftEntry extends AbstractMutation {
 						return null;
 					}
 					$draft_submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
-					return $this->draft_entry_data_manipulator->manipulate( $draft_submission['partial_entry'], $payload['resumeToken'] );
+					return DraftEntryDataManipulator::manipulate( $draft_submission['partial_entry'], $payload['resumeToken'] );
 				},
 			],
 			'errors'      => [

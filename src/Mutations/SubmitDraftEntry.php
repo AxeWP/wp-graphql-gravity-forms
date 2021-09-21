@@ -32,22 +32,6 @@ class SubmitDraftEntry extends AbstractMutation {
 	public static $name = 'submitGravityFormsDraftEntry';
 
 	/**
-	 * EntryDataManipulator instance.
-	 *
-	 * @var EntryDataManipulator
-	 */
-	private $entry_data_manipulator;
-
-	/**
-	 * Constructor
-	 *
-	 * @param EntryDataManipulator $entry_data_manipulator .
-	 */
-	public function __construct( EntryDataManipulator $entry_data_manipulator ) {
-		$this->entry_data_manipulator = $entry_data_manipulator;
-	}
-
-	/**
 	 * Defines the input field configuration.
 	 *
 	 * @return array
@@ -82,7 +66,7 @@ class SubmitDraftEntry extends AbstractMutation {
 
 					$entry = GFUtils::get_entry( $payload['entryId'] );
 
-					return $this->entry_data_manipulator->manipulate( $entry );
+					return EntryDataManipulator::manipulate( $entry );
 				},
 			],
 			'errors'  => [
