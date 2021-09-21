@@ -95,7 +95,7 @@ class GFUtils {
 		$forms = [];
 
 		foreach ( $form_ids as $form_id ) {
-			$forms[] = GFAPI::get_form( $form_id );
+			$forms[] = self::get_form( $form_id );
 		}
 
 		return $forms;
