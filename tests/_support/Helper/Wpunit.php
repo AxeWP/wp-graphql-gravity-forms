@@ -741,6 +741,35 @@ class Wpunit extends \Codeception\Module {
 		];
 	}
 
+	public function getWebsiteFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'defaultValue',
+				'description',
+				'descriptionPlacement',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'placeholder',
+				'size',
+				[ 'type' => 'website' ],
+				'visibility',
+			],
+			$args,
+		);
+		return new PropertyHelper( $keys );
+	}
+
 	/**
 	 * Converts a string value to its Enum equivalent
 	 *
