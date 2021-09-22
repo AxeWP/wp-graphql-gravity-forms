@@ -66,12 +66,12 @@ class Wpunit extends \Codeception\Module {
 	public function getHiddenFieldHelper( array $args = [] ) : PropertyHelper {
 		$keys = $this->merge_default_args(
 			[
-				['cssClass' => null],
-				['adminLabel' => null],
-				['adminOnly' => null],
-				['isRequired' => null],
-				['noDuplicates' => null],
-				['size' => null],
+				[ 'cssClass' => null ],
+				[ 'adminLabel' => null ],
+				[ 'adminOnly' => null ],
+				[ 'isRequired' => null ],
+				[ 'noDuplicates' => null ],
+				[ 'size' => null ],
 				'allowsPrepopulate',
 				[ 'conditionalLogic' => null ],
 				'defaultValue',
@@ -592,6 +592,28 @@ class Wpunit extends \Codeception\Module {
 		return new PropertyHelper( $keys );
 	}
 
+	public function getSectionFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'displayOnly',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'size',
+				[ 'type' => 'section' ],
+				'visibility',
+			],
+			$args,
+		);
+		return new PropertyHelper( $keys );
+	}
 
 	public function getHtmlFieldHelper( array $args = [] ) : PropertyHelper {
 		$keys = $this->merge_default_args(
@@ -798,12 +820,12 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Converts a string value to its Enum equivalent
 	 *
-	 * @param string $enumName Name of the Enum registered in GraphQL.
+	 * @param string      $enumName Name of the Enum registered in GraphQL.
 	 * @param string|null $value .
 	 * @return string|null
 	 */
 	public function get_enum_for_value( string $enumName, $value ) {
-		if( null === $value ){
+		if ( null === $value ) {
 			return null;
 		}
 
