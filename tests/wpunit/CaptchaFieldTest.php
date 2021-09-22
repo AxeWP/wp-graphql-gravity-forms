@@ -1,87 +1,98 @@
 <?php
 /**
  * Test CaptchaField.
+ *
+ * @package Tests\WPGraphQL\GravityForms
  */
 
-use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
+use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCase;
+use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
 
 /**
  * Class -CaptchaFieldTest
  */
-class CaptchaFieldTest extends GFGraphQLTestCase {
-
-	private $fields = [];
-	private $form_id;
-	private $entry_id;
-	private $draft_token;
-	private $value;
+class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+	protected $test_draft = false;
+	protected $captcha_field_helper;
 
 	/**
-	 * Run before each test.
+	 * Tests the field properties and values.
 	 */
-	public function setUp(): void {
-		// Before...
-		parent::setUp();
-
-		wp_set_current_user( $this->admin->ID );
-
-		$this->property_helper   = $this->tester->getCaptchaFieldHelper();
-		$this->text_field_helper = $this->tester->getTextFieldHelper( [ 'id' => 2 ] );
-
-		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
-		$this->fields[] = $this->factory->field->create( $this->text_field_helper->values );
-
-		$this->value = $this->property_helper->dummy->words( 1, 5 );
-
-		$this->form_id = $this->factory->form->create(
-			array_merge(
-				[ 'fields' => $this->fields ],
-				$this->tester->getFormDefaultArgs()
-			)
-		);
-
-		$this->entry_id = $this->factory->entry->create(
-			[
-				'form_id'              => $this->form_id,
-				$this->fields[1]['id'] => $this->value,
-			]
-		);
-
-		$this->draft_token = $this->factory->draft_entry->create(
-			[
-				'form_id'     => $this->form_id,
-				'entry'       => [
-					$this->fields[1]['id'] => $this->value,
-				],
-				'fieldValues' => [
-					'input_' . $this->fields[1]['id'] => $this->value,
-				],
-			]
-		);
-
-		$this->clearSchema();
+	public function testField(): void {
+		$this->runTestField();
+	}
+	/**
+	 * Tests submitting the field values as a draft entry with submitGravityFormsForm.
+	 */
+	public function testSubmitDraft(): void {
+		$this->runTestSubmitDraft();
+	}
+	/**
+	 * Tests submitting the field values as an entry with submitGravityFormsForm.
+	 */
+	public function testSubmit(): void {
+		$this->runTestSubmit();
+	}
+	/**
+	 * Tests updating the field value with updateGravityFormsEntry.
+	 */
+	public function testUpdate(): void {
+		$this->runTestUpdate();
+	}
+	/**
+	 * Tests updating the draft field value with updateGravityFormsEntry.
+	 */
+	public function testUpdateDraft():void {
+		$this->runTestUpdateDraft();
 	}
 
 	/**
-	 * Run after each test.
+	 * Sets the correct Field Helper.
 	 */
-	public function tearDown(): void {
-		// Your tear down methods here.
-		$this->factory->entry->delete( $this->entry_id );
-		$this->factory->draft_entry->delete( $this->draft_token );
-		$this->factory->form->delete( $this->form_id );
-		GFFormsModel::set_current_lead( null );
-		// Then...
-		parent::tearDown();
+	public function field_helper() {
+		$this->captcha_field_helper = $this->tester->getCaptchaFieldHelper();
+		return $this->tester->getTextFieldHelper( [ 'id' => 2 ] );
 	}
 
 	/**
-	 * Tests CaptchaField properties and values.
+	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function testField() : void {
-		$form = $this->factory->form->get_object_by_id( $this->form_id );
+	public function generate_fields() : array {
+		return [
+			$this->factory->field->create( $this->property_helper->values ),
+			$this->factory->field->create( $this->captcha_field_helper->values ),
+		];
+	}
 
-		$query = '
+	/**
+	 * Sets the value as expected by Gravity Forms.
+	 */
+	public function field_value() {
+		return $this->property_helper->dummy->words( 1, 5 );
+	}
+
+
+	/**
+	 * The value as expected in GraphQL when updating from field_value().
+	 */
+	public function updated_field_value() {
+		return $this->property_helper->dummy->words( 1, 5 );
+	}
+
+	/**
+	 * The value as expected in GraphQL.
+	 */
+	public function value() {
+		return [ $this->fields[0]['id'] => $this->field_value ];
+	}
+
+	/**
+	 * The GraphQL query string.
+	 *
+	 * @return string
+	 */
+	public function field_query() : string {
+		return '
 			query getFormField($id: ID!, $idType: IdTypeEnum) {
 				gravityFormsForm(id: $id, idType: $idType ) {
 					formFields {
@@ -120,275 +131,6 @@ class CaptchaFieldTest extends GFGraphQLTestCase {
 				}
 			}
 		';
-
-		$variables = [
-			'id'     => $this->form_id,
-			'idType' => 'DATABASE_ID',
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = [
-			$this->expectedObject(
-				'gravityFormsForm',
-				[
-					$this->expectedObject(
-						'formFields',
-						[
-							$this->expectedNode(
-								'0',
-								$this->property_helper->getAllActualValues( $form['fields'][0] )
-							),
-						]
-					),
-				]
-			),
-		];
-
-		$this->assertQuerySuccessful( $response, $expected );
-	}
-
-	/**
-	 * Test submitting CaptchaField asa draft entry with submitGravityFormsForm.
-	 */
-	public function testSubmit_draft() : void {
-		$form  = $this->factory->form->get_object_by_id( $this->form_id );
-		$value = $this->property_helper->dummy->words( 1, 5 );
-
-		$query = $this->get_submit_form_query();
-
-		$variables = [
-			'draft'   => true,
-			'formId'  => $this->form_id,
-			'fieldId' => $form['fields'][1]->id,
-			'value'   => $value,
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->get_expected_mutation_response( 'submitGravityFormsForm', $value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-		$resume_token = $response['data']['submitGravityFormsForm']['resumeToken'];
-
-		$this->factory->draft_entry->delete( $resume_token );
-	}
-
-	/**
-	 * Test submitting CaptchaField with submitGravityFormsForm.
-	 */
-	public function testSubmit() : void {
-		$form  = $this->factory->form->get_object_by_id( $this->form_id );
-		$value = $this->property_helper->dummy->words( 1, 5 );
-
-		$query     = $this->get_submit_form_query();
-		$variables = [
-			'draft'   => false,
-			'formId'  => $this->form_id,
-			'fieldId' => $form['fields'][1]->id,
-			'value'   => $value,
-		];
-		// Test entry.
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->get_expected_mutation_response( 'submitGravityFormsForm', $value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		$entry_id = $response['data']['submitGravityFormsForm']['entryId'];
-
-		$this->factory->entry->delete( $entry_id );
-	}
-
-	/**
-	 * Test submitting CaptchaField with updateGravityFormsEntry.
-	 */
-	public function testUpdateEntry() : void {
-		$form  = $this->factory->form->get_object_by_id( $this->form_id );
-		$value = $this->property_helper->dummy->words( 1, 5 );
-
-		$query = '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
-				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
-					errors {
-						id
-						message
-					}
-					entry {
-						formFields {
-							edges {
-								fieldValue {
-									... on TextFieldValue {
-										value
-									}
-								}
-							}
-							nodes {
-								... on TextField {
-									value
-								}
-							}
-						}
-					}
-				}
-			}
-		';
-
-		$variables = [
-			'entryId' => $this->entry_id,
-			'fieldId' => $form['fields'][1]->id,
-			'value'   => $value,
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->get_expected_mutation_response( 'updateGravityFormsEntry', $value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-	}
-
-	/**
-	 * Test submitting CaptchaField with updateGravityFormsEntry.
-	 */
-	public function testUpdateDraftEntry() : void {
-		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
-		$value        = $this->property_helper->dummy->words( 1, 5 );
-
-		$query = '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
-				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
-					errors {
-						id
-						message
-					}
-					entry {
-						formFields {
-							edges {
-								fieldValue {
-									... on TextFieldValue {
-										value
-									}
-								}
-							}
-							nodes {
-								... on TextField {
-									value
-								}
-							}
-						}
-					}
-				}
-			}
-		';
-
-		$variables = [
-			'resumeToken' => $resume_token,
-			'fieldId'     => $form['fields'][1]->id,
-			'value'       => $value,
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->get_expected_mutation_response( 'updateGravityFormsDraftEntry', $value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		$this->factory->draft_entry->delete( $resume_token );
-	}
-
-	/**
-	 * Test submitting CaptchaField with updateDraftEntryTextFieldValue.
-	 */
-	public function testUpdateDraftEntryFieldValue() : void {
-		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
-		$value        = $this->property_helper->dummy->words( 1, 5 );
-
-		// Test draft entry.
-		$query = '
-			mutation updateDraftEntryTextFieldValue( $fieldId: Int!, $resumeToken: String!, $value: String! ){
-				updateDraftEntryTextFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
-					errors {
-						id
-						message
-					}
-					entry {
-						formFields {
-							edges {
-								fieldValue {
-									... on TextFieldValue {
-										value
-									}
-								}
-							}
-							nodes {
-								... on TextField {
-									value
-								}
-							}
-						}
-					}
-				}
-			}
-		';
-
-		$variables = [
-			'fieldId'     => $form['fields'][1]->id,
-			'resumeToken' => $resume_token,
-			'value'       => $value,
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->get_expected_mutation_response( 'updateDraftEntryTextFieldValue', $value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		// Test submitted query.
-		$query = '
-			mutation( $resumeToken: String!) {
-				submitGravityFormsDraftEntry(input: {clientMutationId: "123abc", resumeToken: $resumeToken}) {
-					errors {
-						id
-						message
-					}
-					entryId
-					entry {
-						formFields {
-							edges {
-								fieldValue {
-									... on TextFieldValue {
-										value
-									}
-								}
-							}
-							nodes {
-								... on TextField {
-									value
-								}
-							}
-						}
-					}
-				}
-			}
-		';
-
-		$variables = [
-			'resumeToken' => $resume_token,
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->get_expected_mutation_response( 'submitGravityFormsDraftEntry', $value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		$entry_id = $response['data']['submitGravityFormsDraftEntry']['entryId'];
-
-		$this->factory->entry->delete( $entry_id );
 	}
 
 	/**
@@ -396,7 +138,7 @@ class CaptchaFieldTest extends GFGraphQLTestCase {
 	 *
 	 * @return string
 	 */
-	public function get_submit_form_query() : string {
+	public function submit_form_mutation() : string {
 		return '
 			mutation ($formId: Int!, $fieldId: Int!, $value: String!, $draft: Boolean) {
 				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
@@ -427,7 +169,101 @@ class CaptchaFieldTest extends GFGraphQLTestCase {
 		';
 	}
 
-	public function get_expected_mutation_response( string $mutationName, $value ) : array {
+	/**
+	 * Returns the UpdateEntry mutation string.
+	 */
+	public function update_entry_mutation(): string {
+		return '
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on TextFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on TextField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+	}
+
+	/**
+	 * Returns the UpdateDraftEntry mutation string.
+	 */
+	public function update_draft_entry_mutation(): string {
+		return '
+			mutation updateDraftEntryTextFieldValue( $fieldId: Int!, $resumeToken: String!, $value: String! ){
+				updateDraftEntryTextFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
+					errors {
+						id
+						message
+					}
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on TextFieldValue {
+										value
+									}
+								}
+							}
+							nodes {
+								... on TextField {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+	}
+	/**
+	 * The expected WPGraphQL field response.
+	 *
+	 * @param array $form the current form instance.
+	 * @return array
+	 */
+	public function expected_field_response( array $form ) : array {
+		return [
+			$this->expectedObject(
+				'gravityFormsForm',
+				[
+					$this->expectedObject(
+						'formFields',
+						[
+							$this->expectedNode(
+								'0',
+								$this->property_helper->getAllActualValues( $form['fields'][1] )
+							),
+						]
+					),
+				]
+			),
+		];
+	}
+	/**
+	 * The expected WPGraphQL mutation response.
+	 *
+	 * @param string $mutationName .
+	 * @param mixed  $value .
+	 * @return array
+	 */
+	public function expected_mutation_response( string $mutationName, $value ) : array {
 		return [
 			$this->expectedObject(
 				$mutationName,
@@ -454,4 +290,12 @@ class CaptchaFieldTest extends GFGraphQLTestCase {
 			),
 		];
 	}
+
+	/**
+	 * Checks if values submitted by GraphQL are the same as whats stored on the server.
+	 *
+	 * @param array $actual_entry .
+	 * @param array $form .
+	 */
+	public function check_saved_values( $actual_entry, $form ): void {}
 }

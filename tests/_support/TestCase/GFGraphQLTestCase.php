@@ -7,8 +7,12 @@
  * @since 0.8.0
  * @package Tests\WPGraphQL\TestCase
  */
+
 namespace Tests\WPGraphQL\GravityForms\TestCase;
 
+/**
+ * Class - GraphQLTestCase
+ */
 class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	/**
 	 * Holds the User ID of a user whith the "admin" role. For use through the tests for the purpose of testing user access levels.
@@ -19,6 +23,8 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 
 	/**
 	 * Holds a helper class to easily get default properties.
+	 *
+	 * @var object .
 	 */
 	protected $property_helper;
 
@@ -47,6 +53,9 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 		$this->admin->add_cap( 'gravityforms_delete_entries' );
 	}
 
+	/**
+	 * Post test tear down.
+	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
 		wp_delete_user( $this->admin->id );
@@ -55,6 +64,12 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 		parent::tearDown();
 	}
 
+	/**
+	 * Programmatically generate an expectedField array for assertions.
+	 *
+	 * @param array $value_array .
+	 * @return array
+	 */
 	protected function get_expected_fields( $value_array ): array {
 		$expected = [];
 		foreach ( $value_array as $key => $value ) {

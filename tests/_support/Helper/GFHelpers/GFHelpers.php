@@ -190,6 +190,10 @@ abstract class GFHelpers {
 	}
 
 	public function get_field_values( $values ) {
+		if( is_array( $values) ){
+			$values = [$values];
+		}
+
 		return array_map(
 			function( $key, $value ) {
 				return [ 'input_' . $key => $value ];
