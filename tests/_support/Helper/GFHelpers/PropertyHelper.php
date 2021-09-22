@@ -229,6 +229,10 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : 1;
 	}
 
+	public function phoneFormat( $value = null ) {
+		return isset( $value ) ? $value : 'standard';
+	}
+
 	public function placeholder( $value = null ) {
 		return isset( $value ) ? $value : ( $this->dummy->words( 2 ) );
 	}
@@ -237,12 +241,12 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : '';
 	}
 
-	public function rangeMin( $value = null ){
-		return isset( $value) ? $value : null;
+	public function rangeMin( $value = null ) {
+		return isset( $value ) ? $value : null;
 	}
 
-	public function rangeMax( $value = null ){
-		return isset( $value) ? $value : null;
+	public function rangeMax( $value = null ) {
+		return isset( $value ) ? $value : null;
 	}
 
 	public function simpleCaptchaBackgroundColor( $value = null ) {

@@ -171,6 +171,46 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a number field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getPhoneFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'autocompleteAttribute',
+				'cssClass',
+				'defaultValue',
+				'description',
+				'descriptionPlacement',
+				'enableAutocomplete',
+				'enableCalculation',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'placeholder',
+				'phoneFormat',
+				'size',
+				[ 'type' => 'phone' ],
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
 	 * Get the default args for an address field.
 	 *
 	 * @param array $args .
