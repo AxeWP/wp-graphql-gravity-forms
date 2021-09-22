@@ -66,12 +66,12 @@ class Wpunit extends \Codeception\Module {
 	public function getHiddenFieldHelper( array $args = [] ) : PropertyHelper {
 		$keys = $this->merge_default_args(
 			[
-				['cssClass' => null],
-				['adminLabel' => null],
-				['adminOnly' => null],
-				['isRequired' => null],
-				['noDuplicates' => null],
-				['size' => null],
+				[ 'cssClass' => null ],
+				[ 'adminLabel' => null ],
+				[ 'adminOnly' => null ],
+				[ 'isRequired' => null ],
+				[ 'noDuplicates' => null ],
+				[ 'size' => null ],
 				'allowsPrepopulate',
 				[ 'conditionalLogic' => null ],
 				'defaultValue',
@@ -163,6 +163,46 @@ class Wpunit extends \Codeception\Module {
 				'rangeMin',
 				'size',
 				[ 'type' => 'number' ],
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
+	 * Get the default args for a number field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getPhoneFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'autocompleteAttribute',
+				'cssClass',
+				'defaultValue',
+				'description',
+				'descriptionPlacement',
+				'enableAutocomplete',
+				'enableCalculation',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'placeholder',
+				'phoneFormat',
+				'size',
+				[ 'type' => 'phone' ],
 				'visibility',
 			],
 			$args
@@ -552,6 +592,53 @@ class Wpunit extends \Codeception\Module {
 		return new PropertyHelper( $keys );
 	}
 
+	public function getSectionFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'displayOnly',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'size',
+				[ 'type' => 'section' ],
+				'visibility',
+			],
+			$args,
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	public function getHtmlFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'content',
+				'disableMargins',
+				'displayOnly',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'size',
+				[ 'type' => 'html' ],
+				'visibility',
+			],
+			$args,
+		);
+		return new PropertyHelper( $keys );
+	}
+
 	/**
 	 * Get the default args for a form.
 	 *
@@ -701,15 +788,44 @@ class Wpunit extends \Codeception\Module {
 		];
 	}
 
+	public function getWebsiteFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'defaultValue',
+				'description',
+				'descriptionPlacement',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'placeholder',
+				'size',
+				[ 'type' => 'website' ],
+				'visibility',
+			],
+			$args,
+		);
+		return new PropertyHelper( $keys );
+	}
+
 	/**
 	 * Converts a string value to its Enum equivalent
 	 *
-	 * @param string $enumName Name of the Enum registered in GraphQL.
+	 * @param string      $enumName Name of the Enum registered in GraphQL.
 	 * @param string|null $value .
 	 * @return string|null
 	 */
 	public function get_enum_for_value( string $enumName, $value ) {
-		if( null === $value ){
+		if ( null === $value ) {
 			return null;
 		}
 

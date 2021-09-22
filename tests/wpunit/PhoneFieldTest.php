@@ -1,16 +1,17 @@
 <?php
 /**
- * Test CheckboxField.
+ * Test Phone type.
  *
  * @package Tests\WPGraphQL\GravityForms
  */
 
 use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
+
 /**
- * Class -CheckboxFieldTest
+ * Class -PhoneFieldTest.
  */
-class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -46,7 +47,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getCheckboxFieldHelper();
+		return $this->tester->getPhoneFieldHelper();
 	}
 
 	/**
@@ -60,40 +61,14 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return [
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
-				'value'   => $this->fields[0]['choices'][0]['value'],
-			],
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
-				'value'   => null,
-			],
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
-				'value'   => $this->fields[0]['choices'][2]['value'],
-			],
-		];
+		return (string) $this->property_helper->dummy->telephone();
 	}
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return [
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
-				'value'   => null,
-			],
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
-				'value'   => $this->fields[0]['choices'][1]['value'],
-			],
-			[
-				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
-				'value'   => $this->fields[0]['choices'][2]['value'],
-			],
-		];
+		return (string) $this->property_helper->dummy->telephone();
 	}
 
 
@@ -101,19 +76,15 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 * Thehe value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [
-			(string) $this->field_value[0]['inputId'] => $this->field_value[0]['value'],
-			(string) $this->field_value[2]['inputId'] => $this->field_value[2]['value'],
-		];
+		return [ 'input_' . $this->fields[0]['id'] => $this->field_value ];
 	}
-
 
 	/**
 	 * The GraphQL query string.
 	 *
 	 * @return string
 	 */
-	public function field_query():string {
+	public function field_query() : string {
 		return '
 			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
 				gravityFormsEntry(id: $id, idType: $idType ) {
@@ -134,45 +105,31 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 									value
 								}
 							}
-							... on CheckboxField {
+							... on PhoneField {
 								adminLabel
 								adminOnly
 								allowsPrepopulate
+								autocompleteAttribute
+								defaultValue
 								description
 								descriptionPlacement
-								enablePrice
-								enableChoiceValue
-								enableSelectAll
+								enableAutocomplete
 								errorMessage
 								inputName
 								isRequired
 								label
+								noDuplicates
+								pageNumber
+								phoneFormat
+								placeholder
 								size
-								type
 								visibility
-								checkboxValues {
-									inputId
-									value
-								}
-								inputs {
-									id
-									label
-									name
-								}
-								choices {
-									isSelected
-									text
-									value
-								}
 							}
 						}
 						edges {
 							fieldValue {
-								... on CheckboxFieldValue {
-									checkboxValues {
-										inputId
-										value
-									}
+								... on PhoneFieldValue {
+									value
 								}
 							}
 						}
@@ -185,10 +142,10 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	/**
 	 * SubmitForm mutation string.
 	 */
-	public function submit_form_mutation(): string {
+	public function submit_form_mutation() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: [CheckboxInput]!, $draft: Boolean) {
-				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, checkboxValues: $value}}) {
+			mutation ($formId: Int!, $fieldId: Int!, $value: String!, $draft: Boolean) {
+				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
 					errors {
 						id
 						message
@@ -199,20 +156,14 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 						formFields {
 							edges {
 								fieldValue {
-									... on CheckboxFieldValue {
-										checkboxValues {
-											inputId
-											value
-										}
+									... on PhoneFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on CheckboxField {
-									checkboxValues {
-										inputId
-										value
-									}
+								... on PhoneField {
+									value
 								}
 							}
 						}
@@ -225,10 +176,10 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	/**
 	 * Returns the UpdateEntry mutation string.
 	 */
-	public function update_entry_mutation(): string {
+	public function update_entry_mutation() : string {
 		return '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [CheckboxInput]! ){
-				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
 						message
@@ -237,20 +188,14 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 						formFields {
 							edges {
 								fieldValue {
-									... on CheckboxFieldValue {
-									checkboxValues {
-											inputId
-											value
-										}
+									... on PhoneFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on CheckboxField {
-									checkboxValues {
-										inputId
-										value
-									}
+								... on PhoneField {
+									value
 								}
 							}
 						}
@@ -263,10 +208,10 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	/**
 	 * Returns the UpdateDraftEntry mutation string.
 	 */
-	public function update_draft_entry_mutation(): string {
+	public function update_draft_entry_mutation() : string {
 		return '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [CheckboxInput]! ){
-				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
 						message
@@ -275,20 +220,14 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 						formFields {
 							edges {
 								fieldValue {
-									... on CheckboxFieldValue {
-										checkboxValues {
-											inputId
-											value
-										}
+									... on PhoneFieldValue {
+										value
 									}
 								}
 							}
 							nodes {
-								... on CheckboxField {
-									checkboxValues {
-										inputId
-										value
-									}
+								... on PhoneField {
+									value
 								}
 							}
 						}
@@ -303,7 +242,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 *
 	 * @param array $form the current form instance.
 	 */
-	public function expected_field_response( array $form ): array {
+	public function expected_field_response( array $form ) : array {
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -312,13 +251,16 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 						'formFields',
 						[
 							$this->expectedNode(
-								'nodes',
+								'0',
 								array_merge_recursive(
 									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'checkboxValues' => $this->field_value ],
+									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge( 'fieldValue', $this->get_expected_fields( $this->field_value ) ),
+							$this->expectedEdge(
+								'fieldValue',
+								$this->expectedField( 'value', $this->field_value ),
+							),
 						]
 					),
 				]
@@ -333,7 +275,8 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 * @param mixed  $value .
 	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ):array {
+	public function expected_mutation_response( string $mutationName, $value ) : array {
+		codecept_debug( $value );
 		return [
 			$this->expectedObject(
 				$mutationName,
@@ -346,11 +289,11 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 								[
 									$this->expectedEdge(
 										'fieldValue',
-										$this->get_expected_fields( $value ),
+										$this->expectedField( 'value', $value ),
 									),
 									$this->expectedNode(
-										'checkboxValues',
-										$this->get_expected_fields( $value ),
+										'0',
+										$this->expectedField( 'value', $value ),
 									),
 								]
 							),
@@ -367,9 +310,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 * @param array $actual_entry .
 	 * @param array $form .
 	 */
-	public function check_saved_values( $actual_entry, $form ): void {
-		$this->assertEquals( $this->field_value[0]['value'], $actual_entry[ $form['fields'][0]['inputs'][0]['id'] ] );
-		$this->assertEquals( $this->field_value[1]['value'], $actual_entry[ $form['fields'][0]['inputs'][1]['id'] ] );
-		$this->assertEquals( $this->field_value[2]['value'], $actual_entry[ $form['fields'][0]['inputs'][2]['id'] ] );
+	public function check_saved_values( $actual_entry, $form ) : void {
+		$this->assertEquals( $this->field_value, $actual_entry[ $form['fields'][0]->id ], 'Submit mutation entry value not equal' );
 	}
 }

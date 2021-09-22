@@ -303,6 +303,6 @@ class Dummy {
 	}
 
 	public function telephone() {
-		return( rand( 123, 876 ) . '-' . rand( 123, 987 ) . '-' . rand( 1234, 9876 ) );
+		return( '(' . rand( 123, 876 ) . ') ' . rand( 123, 987 ) . '-' . rand( 1234, 9876 ) );
 	}
 }

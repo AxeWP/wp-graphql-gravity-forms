@@ -115,12 +115,16 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : false;
 	}
 
+	public function disableMargins( $value = null ) {
+		return isset( $value ) ? $value : false;
+	}
+
 	public function displayAllCategories( $value = null ) {
 		return isset( $value ) ? $value : false;
 	}
 
-	public function displayOnly( $value = null ) {
-		return isset( $value ) ? $value : '';
+	public function displayOnly( $value = null ) :bool {
+		return isset( $value ) ? $value : true;
 	}
 
 	public function enableAutocomplete( $value = null ) {
@@ -229,6 +233,10 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : 1;
 	}
 
+	public function phoneFormat( $value = null ) {
+		return isset( $value ) ? $value : 'standard';
+	}
+
 	public function placeholder( $value = null ) {
 		return isset( $value ) ? $value : ( $this->dummy->words( 2 ) );
 	}
@@ -237,12 +245,12 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : '';
 	}
 
-	public function rangeMin( $value = null ){
-		return isset( $value) ? $value : null;
+	public function rangeMin( $value = null ) {
+		return isset( $value ) ? $value : null;
 	}
 
-	public function rangeMax( $value = null ){
-		return isset( $value) ? $value : null;
+	public function rangeMax( $value = null ) {
+		return isset( $value ) ? $value : null;
 	}
 
 	public function simpleCaptchaBackgroundColor( $value = null ) {
@@ -287,6 +295,10 @@ class PropertyHelper extends GFHelpers {
 
 	public function conditionalLogic( $value = null ) {
 		return isset( $value ) ? $value : null;
+	}
+
+	public function content( $value = null ) {
+		return isset( $value ) ? $value : '<div>' . $this->text( 140, 600 ) . '</div>';
 	}
 
 	public function streetInput( array $keys ) {

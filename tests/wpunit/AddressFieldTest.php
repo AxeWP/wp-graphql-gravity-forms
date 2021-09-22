@@ -1,35 +1,66 @@
 <?php
 /**
  * Test AddressField.
+ *
+ * @package Tests\WPGraphQL\GravityForms
  */
 
-use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
-
+use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCase;
+use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
 /**
  * Class -AddressFieldTest
  */
-class AddressFieldTest extends GFGraphQLTestCase {
-	private $fields = [];
-	private $field_value;
-	private $form_id;
-	private $entry_id;
-	private $draft_token;
-	private $value;
+class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+	/**
+	 * Tests the field properties and values.
+	 */
+	public function testField(): void {
+		$this->runTestField();
+	}
+	/**
+	 * Tests submitting the field values as a draft entry with submitGravityFormsForm.
+	 */
+	public function testSubmitDraft(): void {
+		$this->runTestSubmitDraft();
+	}
+	/**
+	 * Tests submitting the field values as an entry with submitGravityFormsForm.
+	 */
+	public function testSubmit(): void {
+		$this->runTestSubmit();
+	}
+	/**
+	 * Tests updating the field value with updateGravityFormsEntry.
+	 */
+	public function testUpdate(): void {
+		$this->runTestUpdate();
+	}
+	/**
+	 * Tests updating the draft field value with updateGravityFormsEntry.
+	 */
+	public function testUpdateDraft():void {
+		$this->runTestUpdateDraft();
+	}
 
 	/**
-	 * Run before each test.
+	 * Sets the correct Field Helper.
 	 */
-	public function setUp(): void {
-		// Before...
-		parent::setUp();
+	public function field_helper() {
+		return $this->tester->getAddressFieldHelper();
+	}
 
-		wp_set_current_user( $this->admin->ID );
+	/**
+	 * Generates the form fields from factory. Must be wrappend in an array.
+	 */
+	public function generate_fields() : array {
+		return [ $this->factory->field->create( $this->property_helper->values ) ];
+	}
 
-		$this->property_helper = $this->tester->getAddressFieldHelper();
-
-		$this->fields[] = $this->factory->field->create( $this->property_helper->values );
-
-		$this->field_value = [
+	/**
+	 * The value as expected in GraphQL.
+	 */
+	public function field_value() {
+		return [
 			'street'  => '123 Main St.',
 			'lineTwo' => 'Apt. 456',
 			'city'    => 'Rochester Hills',
@@ -37,7 +68,20 @@ class AddressFieldTest extends GFGraphQLTestCase {
 			'zip'     => '48306',
 			'country' => 'USA',
 		];
-		$this->value       = [
+	}
+
+	/**
+	 * The graphql field value input.
+	 */
+	public function field_value_input() {
+		return $this->field_value;
+	}
+
+	/**
+	 * Sets the value as expected by Gravity Forms.
+	 */
+	public function value() {
+		return [
 			$this->fields[0]['inputs'][0]['id'] => $this->field_value['street'],
 			$this->fields[0]['inputs'][1]['id'] => $this->field_value['lineTwo'],
 			$this->fields[0]['inputs'][2]['id'] => $this->field_value['city'],
@@ -45,57 +89,29 @@ class AddressFieldTest extends GFGraphQLTestCase {
 			$this->fields[0]['inputs'][4]['id'] => $this->field_value['zip'],
 			$this->fields[0]['inputs'][5]['id'] => $this->field_value['country'],
 		];
-
-		$this->form_id = $this->factory->form->create(
-			array_merge(
-				[ 'fields' => $this->fields ],
-				$this->tester->getFormDefaultArgs()
-			)
-		);
-
-		$this->entry_id = $this->factory->entry->create(
-			array_merge(
-				[ 'form_id' => $this->form_id ],
-				$this->value
-			)
-		);
-
-		$this->draft_token = $this->factory->draft_entry->create(
-			[
-				'form_id'     => $this->form_id,
-				'entry'       => array_merge(
-					$this->value,
-					[
-						'fieldValues' => $this->property_helper->get_field_values( $this->value ),
-					]
-				),
-				'fieldValues' => $this->property_helper->get_field_values( $this->value ),
-			]
-		);
-
-		$this->clearSchema();
 	}
 
 	/**
-	 * Run after each test.
+	 * The value as expected in GraphQL when updating from field_value().
 	 */
-	public function tearDown(): void {
-		// Your tear down methods here.
-		$this->factory->entry->delete( $this->entry_id );
-		$this->factory->draft_entry->delete( $this->draft_token );
-		$this->factory->form->delete( $this->form_id );
-		GFFormsModel::set_current_lead( null );
-		// Then...
-		parent::tearDown();
+	public function updated_field_value() {
+		return [
+			'street'  => '234 Main St.',
+			'lineTwo' => 'Apt. 456',
+			'city'    => 'Rochester Hills',
+			'state'   => 'Michigan',
+			'zip'     => '48306',
+			'country' => 'USA',
+		];
 	}
 
 	/**
-	 * Tests AddressField properties and values.
+	 * The GraphQL query string.
+	 *
+	 * @return string
 	 */
-	public function testField() :void {
-		$form = $this->factory->form->get_object_by_id( $this->form_id );
-
-		$query = '
+	public function field_query() : string {
+		return '
 			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
 				gravityFormsEntry(id: $id, idType: $idType ) {
 					formFields {
@@ -174,124 +190,63 @@ class AddressFieldTest extends GFGraphQLTestCase {
 				}
 			}
 		';
-
-		$variables = [
-			'id'     => $this->entry_id,
-			'idType' => 'DATABASE_ID',
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = [
-			$this->expectedObject(
-				'gravityFormsEntry',
-				[
-					$this->expectedObject(
-						'formFields',
-						[
-							$this->expectedNode(
-								'nodes',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'addressValues' => $this->field_value ],
-								)
-							),
-							$this->expectedEdge( 'fieldValue', $this->get_expected_fields( $this->field_value ) ),
-						]
-					),
-				]
-			),
-		];
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		// Test Draft entry.
-		$variables = [
-			'id'     => $this->draft_token,
-			'idType' => 'ID',
-		];
-		$response  = $this->graphql( compact( 'query', 'variables' ) );
-
-		$this->assertQuerySuccessful( $response, $expected );
-	}
-
-
-	/**
-	 * Test submitting AddressField asa draft entry with submitGravityFormsForm.
-	 */
-	public function testSubmit_draft() : void {
-		$form = $this->factory->form->get_object_by_id( $this->form_id );
-
-		$query = $this->get_submit_form_query();
-
-		$variables = [
-			'draft'   => true,
-			'formId'  => $this->form_id,
-			'fieldId' => $form['fields'][0]->id,
-			'value'   => $this->field_value,
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->get_expected_mutation_response( 'submitGravityFormsForm', $this->field_value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		$resume_token = $response['data']['submitGravityFormsForm']['resumeToken'];
-
-		$this->factory->draft_entry->delete( $resume_token );
 	}
 
 	/**
-	 * Test submitting AddressField with submitGravityFormsForm.
+	 * SubmitForm mutation string.
+	 *
+	 * @return string
 	 */
-	public function testSubmit() : void {
-		$form = $this->factory->form->get_object_by_id( $this->form_id );
-
-		$query     = $this->get_submit_form_query();
-		$variables = [
-			'draft'   => false,
-			'formId'  => $this->form_id,
-			'fieldId' => $form['fields'][0]->id,
-			'value'   => $this->field_value,
-		];
-		// Test entry.
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->get_expected_mutation_response( 'submitGravityFormsForm', $this->field_value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		$entry_id = $response['data']['submitGravityFormsForm']['entryId'];
-
-		$actualEntry = GFAPI::get_entry( $entry_id );
-
-		$this->assertEquals( $this->field_value['street'], $actualEntry[ $form['fields'][0]['inputs'][0]['id'] ], 'Submit mutation entry value 1 not equal' );
-		$this->assertEquals( $this->field_value['lineTwo'], $actualEntry[ $form['fields'][0]['inputs'][1]['id'] ], 'Submit mutation entry value 2 not equal' );
-		$this->assertEquals( $this->field_value['city'], $actualEntry[ $form['fields'][0]['inputs'][2]['id'] ], 'Submit mutation entry value 3 not equal' );
-		$this->assertEquals( $this->field_value['state'], $actualEntry[ $form['fields'][0]['inputs'][3]['id'] ], 'Submit mutation entry value 4 not equal' );
-		$this->assertEquals( $this->field_value['zip'], $actualEntry[ $form['fields'][0]['inputs'][4]['id'] ], 'Submit mutation entry value 5 not equal' );
-		$this->assertEquals( $this->field_value['country'], $actualEntry[ $form['fields'][0]['inputs'][5]['id'] ], 'Submit mutation entry value 6 not equal' );
-
-		$this->factory->entry->delete( $entry_id );
+	public function submit_form_mutation() : string {
+		return '
+			mutation ($formId: Int!, $fieldId: Int!, $value: AddressInput!, $draft: Boolean) {
+				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, addressValues: $value}}) {
+					errors {
+						id
+						message
+					}
+					entryId
+					resumeToken
+					entry {
+						formFields {
+							edges {
+								fieldValue {
+									... on AddressFieldValue {
+										street
+										lineTwo
+										city
+										state
+										zip
+										country
+									}
+								}
+							}
+							nodes {
+								... on AddressField {
+									addressValues {
+										street
+										lineTwo
+										city
+										state
+										zip
+										country
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		';
 	}
 
 	/**
-	 * Test submitting AddressField with updateGravityFormsEntry.
+	 * Returns the UpdateEntry mutation string.
+	 *
+	 * @return string
 	 */
-	public function testUpdateEntry() : void {
-		$form = $this->factory->form->get_object_by_id( $this->form_id );
-
-		$field_value = [
-			'street'  => '234 Main St.',
-			'lineTwo' => 'Apt. 456',
-			'city'    => 'Rochester Hills',
-			'state'   => 'Michigan',
-			'zip'     => '48306',
-			'country' => 'USA',
-		];
-
-		$query     = '
+	public function update_entry_mutation(): string {
+		return '
 			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: AddressInput! ){
 				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, addressValues: $value} }) {
 					errors {
@@ -329,37 +284,15 @@ class AddressFieldTest extends GFGraphQLTestCase {
 				}
 			}
 		';
-
-		$variables = [
-			'entryId' => $this->entry_id,
-			'fieldId' => $form['fields'][0]->id,
-			'value'   => $field_value,
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->get_expected_mutation_response( 'updateGravityFormsEntry', $field_value );
-
-		$this->assertQuerySuccessful( $response, $expected );
 	}
 
 	/**
-	 * Test submitting AddressField with updateGravityFormsEntry.
+	 * Returns the UpdateDraftEntry mutation string.
+	 *
+	 * @return string
 	 */
-	public function testUpdateDraftEntry() : void {
-		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
-
-		$field_value = [
-			'street'  => '234 Main St.',
-			'lineTwo' => 'Apt. 456',
-			'city'    => 'Rochester Hills',
-			'state'   => 'Michigan',
-			'zip'     => '48306',
-			'country' => 'USA',
-		];
-
-		$query     = '
+	public function update_draft_entry_mutation(): string {
+		return '
 			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: AddressInput! ){
 				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, addressValues: $value} }) {
 					errors {
@@ -397,19 +330,84 @@ class AddressFieldTest extends GFGraphQLTestCase {
 				}
 			}
 		';
-		$variables = [
-			'resumeToken' => $resume_token,
-			'fieldId'     => $form['fields'][0]->id,
-			'value'       => $field_value,
+	}
+	/**
+	 * The expected WPGraphQL field response.
+	 *
+	 * @param array $form the current form instance.
+	 * @return array
+	 */
+	public function expected_field_response( array $form ) : array {
+		return [
+			$this->expectedObject(
+				'gravityFormsEntry',
+				[
+					$this->expectedObject(
+						'formFields',
+						[
+							$this->expectedNode(
+								'nodes',
+								array_merge_recursive(
+									$this->property_helper->getAllActualValues( $form['fields'][0] ),
+									[ 'addressValues' => $this->field_value ],
+								)
+							),
+							$this->expectedEdge( 'fieldValue', $this->get_expected_fields( $this->field_value ) ),
+						]
+					),
+				]
+			),
 		];
+	}
 
-		$response = $this->graphql( compact( 'query', 'variables' ) );
+	/**
+	 * The expected WPGraphQL mutation response.
+	 *
+	 * @param string $mutationName .
+	 * @param mixed  $value .
+	 * @return array
+	 */
+	public function expected_mutation_response( string $mutationName, $value ) : array {
+		return [
+			$this->expectedObject(
+				$mutationName,
+				[
+					$this->expectedObject(
+						'entry',
+						[
+							$this->expectedObject(
+								'formFields',
+								[
+									$this->expectedEdge(
+										'fieldValue',
+										$this->get_expected_fields( $value ),
+									),
+									$this->expectedNode(
+										'addressValues',
+										$this->get_expected_fields( $value ),
+									),
+								]
+							),
+						]
+					),
+				]
+			),
+		];
+	}
 
-		$expected = $this->get_expected_mutation_response( 'updateGravityFormsDraftEntry', $field_value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		$this->factory->draft_entry->delete( $resume_token );
+	/**
+	 * Checks if values submitted by GraphQL are the same as whats stored on the server.
+	 *
+	 * @param array $actual_entry .
+	 * @param array $form .
+	 */
+	public function check_saved_values( $actual_entry, $form ): void {
+		$this->assertEquals( $this->field_value['street'], $actual_entry[ $form['fields'][0]['inputs'][0]['id'] ], 'Submit mutation entry value 1 not equal' );
+		$this->assertEquals( $this->field_value['lineTwo'], $actual_entry[ $form['fields'][0]['inputs'][1]['id'] ], 'Submit mutation entry value 2 not equal' );
+		$this->assertEquals( $this->field_value['city'], $actual_entry[ $form['fields'][0]['inputs'][2]['id'] ], 'Submit mutation entry value 3 not equal' );
+		$this->assertEquals( $this->field_value['state'], $actual_entry[ $form['fields'][0]['inputs'][3]['id'] ], 'Submit mutation entry value 4 not equal' );
+		$this->assertEquals( $this->field_value['zip'], $actual_entry[ $form['fields'][0]['inputs'][4]['id'] ], 'Submit mutation entry value 5 not equal' );
+		$this->assertEquals( $this->field_value['country'], $actual_entry[ $form['fields'][0]['inputs'][5]['id'] ], 'Submit mutation entry value 6 not equal' );
 	}
 
 	/**
@@ -420,7 +418,7 @@ class AddressFieldTest extends GFGraphQLTestCase {
 		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 
 		// Test draft entry.
-		$query     = '
+		$query = '
 			mutation updateDraftEntryAddressFieldValue( $fieldId: Int!, $resumeToken: String!, $value: AddressInput! ){
 				updateDraftEntryAddressFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
 					errors {
@@ -466,7 +464,7 @@ class AddressFieldTest extends GFGraphQLTestCase {
 		];
 		$response  = $this->graphql( compact( 'query', 'variables' ) );
 
-		$expected = $this->get_expected_mutation_response( 'updateDraftEntryAddressFieldValue', $this->field_value );
+		$expected = $this->expected_mutation_response( 'updateDraftEntryAddressFieldValue', $this->field_value );
 
 		$this->assertQuerySuccessful( $response, $expected );
 
@@ -517,7 +515,7 @@ class AddressFieldTest extends GFGraphQLTestCase {
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$expected = $this->get_expected_mutation_response( 'submitGravityFormsDraftEntry', $this->field_value );
+		$expected = $this->expected_mutation_response( 'submitGravityFormsDraftEntry', $this->field_value );
 
 		$this->assertQuerySuccessful( $response, $expected );
 
@@ -526,79 +524,5 @@ class AddressFieldTest extends GFGraphQLTestCase {
 		$this->factory->entry->delete( $entry_id );
 	}
 
-	/**
-	 * Returns the SubmitForm graphQL query.
-	 *
-	 * @return string
-	 */
-	public function get_submit_form_query() : string {
-		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: AddressInput!, $draft: Boolean) {
-				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, addressValues: $value}}) {
-					errors {
-						id
-						message
-					}
-					entryId
-					resumeToken
-					entry {
-						formFields {
-							edges {
-								fieldValue {
-									... on AddressFieldValue {
-										street
-										lineTwo
-										city
-										state
-										zip
-										country
-									}
-								}
-							}
-							nodes {
-								... on AddressField {
-									addressValues {
-										street
-										lineTwo
-										city
-										state
-										zip
-										country
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		';
-	}
 
-	public function get_expected_mutation_response( string $mutationName, $value ) : array {
-		return [
-			$this->expectedObject(
-				$mutationName,
-				[
-					$this->expectedObject(
-						'entry',
-						[
-							$this->expectedObject(
-								'formFields',
-								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->get_expected_fields( $value ),
-									),
-									$this->expectedNode(
-										'addressValues',
-										$this->get_expected_fields( $value ),
-									),
-								]
-							),
-						]
-					),
-				]
-			),
-		];
-	}
 }
