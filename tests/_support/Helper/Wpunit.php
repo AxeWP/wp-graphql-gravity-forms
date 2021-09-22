@@ -592,6 +592,31 @@ class Wpunit extends \Codeception\Module {
 		return new PropertyHelper( $keys );
 	}
 
+
+	public function getHtmlFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'content',
+				'disableMargins',
+				'displayOnly',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'size',
+				[ 'type' => 'html' ],
+				'visibility',
+			],
+			$args,
+		);
+		return new PropertyHelper( $keys );
+	}
+
 	/**
 	 * Get the default args for a form.
 	 *

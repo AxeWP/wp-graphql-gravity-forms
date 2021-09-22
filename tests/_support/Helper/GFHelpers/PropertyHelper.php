@@ -115,12 +115,16 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : false;
 	}
 
+	public function disableMargins( $value = null ) {
+		return isset( $value ) ? $value : false;
+	}
+
 	public function displayAllCategories( $value = null ) {
 		return isset( $value ) ? $value : false;
 	}
 
-	public function displayOnly( $value = null ) {
-		return isset( $value ) ? $value : '';
+	public function displayOnly( $value = null ) :bool {
+		return isset( $value ) ? $value : true;
 	}
 
 	public function enableAutocomplete( $value = null ) {
@@ -291,6 +295,10 @@ class PropertyHelper extends GFHelpers {
 
 	public function conditionalLogic( $value = null ) {
 		return isset( $value ) ? $value : null;
+	}
+
+	public function content( $value = null ) {
+		return isset( $value ) ? $value : '<div>' . $this->text( 140, 600 ) . '</div>';
 	}
 
 	public function streetInput( array $keys ) {
