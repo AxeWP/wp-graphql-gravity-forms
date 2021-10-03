@@ -91,6 +91,9 @@ class Entry extends \WP_UnitTest_Factory_For_Thing {
 	 * @param array|string $entry_ids .
 	 */
 	public function delete( $entry_ids ) {
+		if ( empty( $entry_ids ) ) {
+			return;
+		}
 		if ( ! is_array( $entry_ids ) ) {
 			$entry_ids = [ $entry_ids ];
 		}
