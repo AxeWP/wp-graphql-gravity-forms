@@ -162,6 +162,10 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : null;
 	}
 
+	public function enableOtherChoice( $value = null ) {
+		return isset( $value ) ? $value : $this->dummy->yesno();
+	}
+
 	public function enablePasswordInput( $value = null ) {
 		return isset( $value ) ? $value : '';
 	}
