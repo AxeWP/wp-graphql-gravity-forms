@@ -615,6 +615,31 @@ class Wpunit extends \Codeception\Module {
 		return new PropertyHelper( $keys );
 	}
 
+	public function getPageFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'displayOnly',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'label',
+				'nextButton',
+				'previousButton',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'size',
+				[ 'type' => 'page' ],
+				'visibility',
+			],
+			$args,
+		);
+		return new PropertyHelper( $keys );
+	}
+
 	public function getHtmlFieldHelper( array $args = [] ) : PropertyHelper {
 		$keys = $this->merge_default_args(
 			[

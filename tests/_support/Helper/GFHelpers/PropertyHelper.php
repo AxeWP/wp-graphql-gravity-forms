@@ -16,6 +16,21 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : null;
 	}
 
+	public function nextButton( $value = null ) {
+		return isset( $value ) ? $value : [
+			'type'     => 'text',
+			'text'     => $this->dummy->words( 2 ),
+			'imageUrl' => null,
+		];
+	}
+	public function previousButton( $value = null ) {
+		return isset( $value ) ? $value : [
+			'type'     => 'text',
+			'text'     => null,
+			'imageUrl' => '/path/to/image.jpg',
+		];
+	}
+
 	public function allowsPrepopulate( $value = null ) {
 		return isset( $value ) ? $value : $this->dummy->yesno();
 	}
