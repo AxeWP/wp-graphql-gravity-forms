@@ -158,6 +158,10 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : '';
 	}
 
+	public function enableEnhancedUI( $value = null ) {
+		return isset( $value ) ? $value : '';
+	}
+
 	public function enablePrice( $value = null ) {
 		return isset( $value ) ? $value : null;
 	}
