@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.9.0 - Conditional Logic Support on Confirmations
+
+This minor release adds the `conditionalLogic` GraphQL fiel to `gravityFormsForm.confirmations`. We also squashed a few bugs and implemented some more WPUnit tests.
+
+*Note*: This release technically contains breaking changes for developers making use of `DataManipulator` class methods in their own code.
+
+- fix: consistently apply Gravity Forms filters and WPGraphQL error checking to `GFUtils::get_forms()`.
+- feat: add `conditionalLogic` GraphQL field to `gravityFormsForm.confirmations`.
+- dev!: makes `DataManipulator` methods static. If you are using any DataManipulator methods in your custom code, please update accordingly.
+- tests: Refactor formField tests to extend `FormFieldTestCase`.
+- tests: add WPUnit tests for `HtmlField`, `PageField`, `PhoneField`, `SectionField`, `SelectField`, `RadioField`, and `WebsiteField`.
+- chore: update Composer deps.
+
 ## v0.8.2 - Bugfix
 
 This minor release fixes `hasNextPage` and `hasPreviousPage` checks on Entry connections.

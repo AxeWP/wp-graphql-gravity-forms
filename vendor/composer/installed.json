@@ -1345,17 +1345,17 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.8.2",
-            "version_normalized": "1.8.2.0",
+            "version": "1.8.3",
+            "version_normalized": "1.8.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "dc960a912984efb74d0a90222870c72c87f10c91"
+                "reference": "1afdd860a2566ed3c2b0b4a3de6e23434a79ec85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/dc960a912984efb74d0a90222870c72c87f10c91",
-                "reference": "dc960a912984efb74d0a90222870c72c87f10c91",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/1afdd860a2566ed3c2b0b4a3de6e23434a79ec85",
+                "reference": "1afdd860a2566ed3c2b0b4a3de6e23434a79ec85",
                 "shasum": ""
             },
             "require": {
@@ -1373,7 +1373,7 @@
             "suggest": {
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
             },
-            "time": "2021-04-26T09:17:50+00:00",
+            "time": "2021-10-05T13:56:00+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1395,12 +1395,33 @@
             ],
             "authors": [
                 {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                },
+                {
                     "name": "Michael Dowling",
                     "email": "mtdowling@gmail.com",
                     "homepage": "https://github.com/mtdowling"
                 },
                 {
+                    "name": "George Mponos",
+                    "email": "gmponos@gmail.com",
+                    "homepage": "https://github.com/gmponos"
+                },
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com",
+                    "homepage": "https://github.com/Nyholm"
+                },
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com",
+                    "homepage": "https://github.com/sagikazarmark"
+                },
+                {
                     "name": "Tobias Schultze",
+                    "email": "webmaster@tubo-world.de",
                     "homepage": "https://github.com/Tobion"
                 }
             ],
@@ -1417,23 +1438,37 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/1.8.2"
+                "source": "https://github.com/guzzle/psr7/tree/1.8.3"
             },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/Nyholm",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/guzzlehttp/psr7",
+                    "type": "tidelift"
+                }
+            ],
             "install-path": "../guzzlehttp/psr7"
         },
         {
             "name": "illuminate/collections",
-            "version": "v8.60.0",
-            "version_normalized": "8.60.0.0",
+            "version": "v8.63.0",
+            "version_normalized": "8.63.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "18fa841df912ec56849351dd6ca8928e8a98b69d"
+                "reference": "8e6c29c49f28b90e9de0cac1c14290feb99202c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/18fa841df912ec56849351dd6ca8928e8a98b69d",
-                "reference": "18fa841df912ec56849351dd6ca8928e8a98b69d",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/8e6c29c49f28b90e9de0cac1c14290feb99202c5",
+                "reference": "8e6c29c49f28b90e9de0cac1c14290feb99202c5",
                 "shasum": ""
             },
             "require": {
@@ -1444,7 +1479,7 @@
             "suggest": {
                 "symfony/var-dumper": "Required to use the dump method (^5.1.4)."
             },
-            "time": "2021-09-08T12:48:16+00:00",
+            "time": "2021-09-30T15:04:19+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1480,8 +1515,8 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v8.60.0",
-            "version_normalized": "8.60.0.0",
+            "version": "v8.63.0",
+            "version_normalized": "8.63.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1531,8 +1566,8 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v8.60.0",
-            "version_normalized": "8.60.0.0",
+            "version": "v8.62.0",
+            "version_normalized": "8.62.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -1580,17 +1615,17 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v8.60.0",
-            "version_normalized": "8.60.0.0",
+            "version": "v8.63.0",
+            "version_normalized": "8.63.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "c0fbc05c4362de423a7a4da137098e9d1affaf54"
+                "reference": "259993e2119e99be17c10486f66c5a13b7fe4a70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/c0fbc05c4362de423a7a4da137098e9d1affaf54",
-                "reference": "c0fbc05c4362de423a7a4da137098e9d1affaf54",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/259993e2119e99be17c10486f66c5a13b7fe4a70",
+                "reference": "259993e2119e99be17c10486f66c5a13b7fe4a70",
                 "shasum": ""
             },
             "require": {
@@ -1609,13 +1644,13 @@
             },
             "suggest": {
                 "illuminate/filesystem": "Required to use the composer class (^8.0).",
-                "league/commonmark": "Required to use Str::markdown() and Stringable::markdown() (^1.3|^2.0).",
-                "ramsey/uuid": "Required to use Str::uuid() (^4.0).",
+                "league/commonmark": "Required to use Str::markdown() and Stringable::markdown() (^1.3|^2.0.2).",
+                "ramsey/uuid": "Required to use Str::uuid() (^4.2.2).",
                 "symfony/process": "Required to use the composer class (^5.1.4).",
                 "symfony/var-dumper": "Required to use the dd function (^5.1.4).",
                 "vlucas/phpdotenv": "Required to use the Env class and env helper (^5.2)."
             },
-            "time": "2021-09-08T12:48:16+00:00",
+            "time": "2021-10-04T13:02:25+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1724,17 +1759,17 @@
         },
         {
             "name": "lucatume/wp-browser",
-            "version": "3.0.10",
-            "version_normalized": "3.0.10.0",
+            "version": "3.0.11",
+            "version_normalized": "3.0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucatume/wp-browser.git",
-                "reference": "0754da8955c97762976379a9b2ab7175594ff815"
+                "reference": "c215ae0aff4a4ea58e2172e7014a2a7b0c160e25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/0754da8955c97762976379a9b2ab7175594ff815",
-                "reference": "0754da8955c97762976379a9b2ab7175594ff815",
+                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/c215ae0aff4a4ea58e2172e7014a2a7b0c160e25",
+                "reference": "c215ae0aff4a4ea58e2172e7014a2a7b0c160e25",
                 "shasum": ""
             },
             "require": {
@@ -1773,7 +1808,7 @@
                 "gumlet/php-image-resize": "To handle runtime image modification in the WPDb::haveAttachmentInDatabase method.",
                 "vlucas/phpdotenv:^4.0": "To manage more complex environment file based configuration of the suites."
             },
-            "time": "2021-09-13T18:16:58+00:00",
+            "time": "2021-09-20T17:00:45+00:00",
             "type": "library",
             "extra": {
                 "_hash": "484f861f69198089cab0e642f27e5653"
@@ -1809,7 +1844,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lucatume/wp-browser/issues",
-                "source": "https://github.com/lucatume/wp-browser/tree/3.0.10"
+                "source": "https://github.com/lucatume/wp-browser/tree/3.0.11"
             },
             "funding": [
                 {
@@ -1870,21 +1905,21 @@
         },
         {
             "name": "mikemclin/laravel-wp-password",
-            "version": "2.0.1",
-            "version_normalized": "2.0.1.0",
+            "version": "2.0.3",
+            "version_normalized": "2.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mikemclin/laravel-wp-password.git",
-                "reference": "84ff1113ff6866cdb0350c176dc3c843383e4819"
+                "reference": "5225c95f75aa0a5ad4040ec2074d1c8d7f10b5f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikemclin/laravel-wp-password/zipball/84ff1113ff6866cdb0350c176dc3c843383e4819",
-                "reference": "84ff1113ff6866cdb0350c176dc3c843383e4819",
+                "url": "https://api.github.com/repos/mikemclin/laravel-wp-password/zipball/5225c95f75aa0a5ad4040ec2074d1c8d7f10b5f4",
+                "reference": "5225c95f75aa0a5ad4040ec2074d1c8d7f10b5f4",
                 "shasum": ""
             },
             "require": {
-                "hautelook/phpass": "0.3.*",
+                "bordoni/phpass": "0.3.*",
                 "illuminate/support": ">=4.0.0",
                 "php": ">=5.3.0"
             },
@@ -1894,9 +1929,9 @@
             "require-dev": {
                 "mockery/mockery": "~0.9",
                 "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "dev-master"
+                "satooshi/php-coveralls": "^2.2"
             },
-            "time": "2018-01-11T14:12:02+00:00",
+            "time": "2021-09-30T13:48:57+00:00",
             "type": "laravel-package",
             "extra": {
                 "laravel": {
@@ -1935,7 +1970,7 @@
             ],
             "support": {
                 "issues": "https://github.com/mikemclin/laravel-wp-password/issues",
-                "source": "https://github.com/mikemclin/laravel-wp-password/tree/2.0.1"
+                "source": "https://github.com/mikemclin/laravel-wp-password/tree/2.0.3"
             },
             "install-path": "../mikemclin/laravel-wp-password"
         },
@@ -2681,17 +2716,17 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.4.0",
-            "version_normalized": "1.4.0.0",
+            "version": "1.5.1",
+            "version_normalized": "1.5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0"
+                "reference": "a12f7e301eb7258bb68acd89d4aefa05c2906cae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
-                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/a12f7e301eb7258bb68acd89d4aefa05c2906cae",
+                "reference": "a12f7e301eb7258bb68acd89d4aefa05c2906cae",
                 "shasum": ""
             },
             "require": {
@@ -2699,9 +2734,10 @@
                 "phpdocumentor/reflection-common": "^2.0"
             },
             "require-dev": {
-                "ext-tokenizer": "*"
+                "ext-tokenizer": "*",
+                "psalm/phar": "^4.8"
             },
-            "time": "2020-09-17T18:55:26+00:00",
+            "time": "2021-10-02T14:08:47+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2727,7 +2763,7 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.4.0"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.5.1"
             },
             "install-path": "../phpdocumentor/type-resolver"
         },
@@ -3230,17 +3266,17 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.5.20",
-            "version_normalized": "8.5.20.0",
+            "version": "8.5.21",
+            "version_normalized": "8.5.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "9deefba183198398a09b927a6ac6bc1feb0b7b70"
+                "reference": "50a58a60b85947b0bee4c8ecfe0f4bbdcf20e984"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9deefba183198398a09b927a6ac6bc1feb0b7b70",
-                "reference": "9deefba183198398a09b927a6ac6bc1feb0b7b70",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/50a58a60b85947b0bee4c8ecfe0f4bbdcf20e984",
+                "reference": "50a58a60b85947b0bee4c8ecfe0f4bbdcf20e984",
                 "shasum": ""
             },
             "require": {
@@ -3278,7 +3314,7 @@
                 "ext-xdebug": "*",
                 "phpunit/php-invoker": "^2.0.0"
             },
-            "time": "2021-08-31T06:44:38+00:00",
+            "time": "2021-09-25T07:37:20+00:00",
             "bin": [
                 "phpunit"
             ],
@@ -3314,7 +3350,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/8.5.20"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/8.5.21"
             },
             "funding": [
                 {
@@ -6556,17 +6592,17 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v5.3.7",
-            "version_normalized": "5.3.7.0",
+            "version": "v5.3.9",
+            "version_normalized": "5.3.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "4d595a6d15fd3a2c67f6f31d14d15d3b7356d7a6"
+                "reference": "6e69f3551c1a3356cf6ea8d019bf039a0f8b6886"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/4d595a6d15fd3a2c67f6f31d14d15d3b7356d7a6",
-                "reference": "4d595a6d15fd3a2c67f6f31d14d15d3b7356d7a6",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/6e69f3551c1a3356cf6ea8d019bf039a0f8b6886",
+                "reference": "6e69f3551c1a3356cf6ea8d019bf039a0f8b6886",
                 "shasum": ""
             },
             "require": {
@@ -6634,7 +6670,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v5.3.7"
+                "source": "https://github.com/symfony/translation/tree/v5.3.9"
             },
             "funding": [
                 {

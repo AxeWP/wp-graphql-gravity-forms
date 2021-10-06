@@ -58,6 +58,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$form_id   = $this->form_ids[0];
 		$global_id = Relay::toGlobalId( 'GravityFormsForm', $form_id );
 		$form      = GFAPI::get_form( $form_id );
+		$confirmation_key = key( $form['confirmations'] );
+
 
 		$query = $this->get_form_query();
 
@@ -91,27 +93,27 @@ class FormQueriesTest extends GFGraphQLTestCase {
 				],
 				'confirmations'              => [
 					[
-						'id'               => $form['confirmations']['5cfec9464e7d7']['id'],
-						'isDefault'        => $form['confirmations']['5cfec9464e7d7']['isDefault'],
-						'message'          => $form['confirmations']['5cfec9464e7d7']['message'],
-						'name'             => $form['confirmations']['5cfec9464e7d7']['name'],
-						'pageId'           => $form['confirmations']['5cfec9464e7d7']['pageId'],
-						'queryString'      => $form['confirmations']['5cfec9464e7d7']['queryString'],
-						'type'             => $this->tester->get_enum_for_value( Enum\ConfirmationTypeEnum::$type, $form['confirmations']['5cfec9464e7d7']['type'] ),
-						'url'              => $form['confirmations']['5cfec9464e7d7']['url'],
+						'id'               => $form['confirmations'][ $confirmation_key ]['id'],
+						'isDefault'        => $form['confirmations'][ $confirmation_key ]['isDefault'],
+						'message'          => $form['confirmations'][ $confirmation_key ]['message'],
+						'name'             => $form['confirmations'][ $confirmation_key ]['name'],
+						'pageId'           => $form['confirmations'][ $confirmation_key ]['pageId'],
+						'queryString'      => $form['confirmations'][ $confirmation_key ]['queryString'],
+						'type'             => $this->tester->get_enum_for_value( Enum\ConfirmationTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['type'] ),
+						'url'              => $form['confirmations'][ $confirmation_key ]['url'],
 						'conditionalLogic' => [
-							'actionType' => $this->tester->get_enum_for_value( Enum\ConditionalLogicActionTypeEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['actionType'] ),
-							'logicType'  => $this->tester->get_enum_for_value( Enum\ConditionalLogicLogicTypeEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['logicType'] ),
+							'actionType' => $this->tester->get_enum_for_value( Enum\ConditionalLogicActionTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['conditionalLogic']['actionType'] ),
+							'logicType'  => $this->tester->get_enum_for_value( Enum\ConditionalLogicLogicTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['conditionalLogic']['logicType'] ),
 							'rules'      => [
 								[
-									'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['fieldId'],
-									'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['operator'] ),
-									'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['value'],
+									'fieldId'  => $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][0]['fieldId'],
+									'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][0]['operator'] ),
+									'value'    => $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][0]['value'],
 								],
 								[
-									'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['fieldId'],
-									'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['operator'] ),
-									'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['value'],
+									'fieldId'  => $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][1]['fieldId'],
+									'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][1]['operator'] ),
+									'value'    => $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][1]['value'],
 								],
 							],
 						],
@@ -275,6 +277,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
+		codecept_debug( $form['confirmations'] );
+
 		$expected =
 			[
 				'gravityFormsForm' => [
@@ -289,22 +293,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 							'queryString'      => $form['confirmations'][ $confirmation_key ]['queryString'],
 							'type'             => $this->tester->get_enum_for_value( Enum\ConfirmationTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['type'] ),
 							'url'              => $form['confirmations'][ $confirmation_key ]['url'],
-							'conditionalLogic' => [
-								'actionType' => $this->tester->get_enum_for_value( Enum\ConditionalLogicActionTypeEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['actionType'] ),
-								'logicType'  => $this->tester->get_enum_for_value( Enum\ConditionalLogicLogicTypeEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['logicType'] ),
-								'rules'      => [
-									[
-										'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['fieldId'],
-										'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['operator'] ),
-										'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['value'],
-									],
-									[
-										'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['fieldId'],
-										'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['operator'] ),
-										'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['value'],
-									],
-								],
-							],
+							'conditionalLogic' => null,
 						],
 					],
 					'cssClass'                   => null,
