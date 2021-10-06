@@ -804,14 +804,30 @@ class Wpunit extends \Codeception\Module {
 			],
 			'confirmations'              => [
 				'5cfec9464e7d7' => [
-					'id'          => '5cfec9464e7d7',
-					'isDefault'   => true,
-					'message'     => 'Thanks for contacting us! We will get in touch with you shortly.',
-					'name'        => 'Default Confirmation',
-					'pageId'      => 1,
-					'queryString' => 'text={Single Line Text:1}&textarea={Text Area:2}',
-					'type'        => 'message',
-					'url'         => 'https://example.com/',
+					'id'               => '5cfec9464e7d7',
+					'isDefault'        => true,
+					'message'          => 'Thanks for contacting us! We will get in touch with you shortly.',
+					'name'             => 'Default Confirmation',
+					'pageId'           => null,
+					'queryString'      => 'text={Single Line Text:1}&textarea={Text Area:2}',
+					'type'             => 'message',
+					'url'              => 'https://example.com/',
+					'conditionalLogic' => [
+						'actionType' => 'show',
+						'logicType'  => 'any',
+						'rules'      => [
+							[
+								'fieldId'  => 1,
+								'operator' => 'is',
+								'value'    => 'value1',
+							],
+							[
+								'fieldId'  => 1,
+								'operator' => 'is',
+								'value'    => 'value2',
+							],
+						],
+					],
 				],
 			],
 			'cssClass'                   => 'css-class-1 css-class-2',

@@ -91,14 +91,30 @@ class FormQueriesTest extends GFGraphQLTestCase {
 				],
 				'confirmations'              => [
 					[
-						'id'          => $form['confirmations']['5cfec9464e7d7']['id'],
-						'isDefault'   => $form['confirmations']['5cfec9464e7d7']['isDefault'],
-						'message'     => $form['confirmations']['5cfec9464e7d7']['message'],
-						'name'        => $form['confirmations']['5cfec9464e7d7']['name'],
-						'pageId'      => $form['confirmations']['5cfec9464e7d7']['pageId'],
-						'queryString' => $form['confirmations']['5cfec9464e7d7']['queryString'],
-						'type'        => $this->tester->get_enum_for_value( Enum\ConfirmationTypeEnum::$type, $form['confirmations']['5cfec9464e7d7']['type'] ),
-						'url'         => $form['confirmations']['5cfec9464e7d7']['url'],
+						'id'               => $form['confirmations']['5cfec9464e7d7']['id'],
+						'isDefault'        => $form['confirmations']['5cfec9464e7d7']['isDefault'],
+						'message'          => $form['confirmations']['5cfec9464e7d7']['message'],
+						'name'             => $form['confirmations']['5cfec9464e7d7']['name'],
+						'pageId'           => $form['confirmations']['5cfec9464e7d7']['pageId'],
+						'queryString'      => $form['confirmations']['5cfec9464e7d7']['queryString'],
+						'type'             => $this->tester->get_enum_for_value( Enum\ConfirmationTypeEnum::$type, $form['confirmations']['5cfec9464e7d7']['type'] ),
+						'url'              => $form['confirmations']['5cfec9464e7d7']['url'],
+						'conditionalLogic' => [
+							'actionType' => $this->tester->get_enum_for_value( Enum\ConditionalLogicActionTypeEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['actionType'] ),
+							'logicType'  => $this->tester->get_enum_for_value( Enum\ConditionalLogicLogicTypeEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['logicType'] ),
+							'rules'      => [
+								[
+									'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['fieldId'],
+									'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['operator'] ),
+									'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['value'],
+								],
+								[
+									'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['fieldId'],
+									'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['operator'] ),
+									'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['value'],
+								],
+							],
+						],
 					],
 				],
 				'cssClass'                   => $form['cssClass'],
@@ -265,14 +281,30 @@ class FormQueriesTest extends GFGraphQLTestCase {
 					'button'                     => null,
 					'confirmations'              => [
 						[
-							'id'          => $form['confirmations'][ $confirmation_key ]['id'],
-							'isDefault'   => $form['confirmations'][ $confirmation_key ]['isDefault'],
-							'message'     => $form['confirmations'][ $confirmation_key ]['message'],
-							'name'        => $form['confirmations'][ $confirmation_key ]['name'],
-							'pageId'      => $form['confirmations'][ $confirmation_key ]['pageId'],
-							'queryString' => $form['confirmations'][ $confirmation_key ]['queryString'],
-							'type'        => $this->tester->get_enum_for_value( Enum\ConfirmationTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['type'] ),
-							'url'         => $form['confirmations'][ $confirmation_key ]['url'],
+							'id'               => $form['confirmations'][ $confirmation_key ]['id'],
+							'isDefault'        => $form['confirmations'][ $confirmation_key ]['isDefault'],
+							'message'          => $form['confirmations'][ $confirmation_key ]['message'],
+							'name'             => $form['confirmations'][ $confirmation_key ]['name'],
+							'pageId'           => $form['confirmations'][ $confirmation_key ]['pageId'],
+							'queryString'      => $form['confirmations'][ $confirmation_key ]['queryString'],
+							'type'             => $this->tester->get_enum_for_value( Enum\ConfirmationTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['type'] ),
+							'url'              => $form['confirmations'][ $confirmation_key ]['url'],
+							'conditionalLogic' => [
+								'actionType' => $this->tester->get_enum_for_value( Enum\ConditionalLogicActionTypeEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['actionType'] ),
+								'logicType'  => $this->tester->get_enum_for_value( Enum\ConditionalLogicLogicTypeEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['logicType'] ),
+								'rules'      => [
+									[
+										'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['fieldId'],
+										'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['operator'] ),
+										'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['value'],
+									],
+									[
+										'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['fieldId'],
+										'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['operator'] ),
+										'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['value'],
+									],
+								],
+							],
 						],
 					],
 					'cssClass'                   => null,
@@ -489,7 +521,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 			'last'   => 2,
 			'before' => $response['data']['gravityFormsForms']['pageInfo']['endCursor'],
 		];
-		$response = $this->graphql( compact( 'query', 'variables' ) );
+		$response  = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response, 'Last/before #2 array has errors.' );
 		$this->assertCount( 2, $response['data']['gravityFormsForms']['nodes'], 'last/before does not return correct amount.' );
@@ -611,6 +643,15 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						queryString
 						type
 						url
+						conditionalLogic {
+							actionType
+							logicType
+							rules {
+								fieldId
+								operator
+								value
+							}
+						}
 					}
 					cssClass
 					customRequiredIndicator
