@@ -32,7 +32,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'f9751ae99297bd26b3966a39003faa70cfee7355',
+    'reference' => '2a61ee9e338aa45939335316ca996d8d4f95dd5b',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
@@ -258,12 +258,12 @@ private static $installed = array (
     ),
     'guzzlehttp/psr7' => 
     array (
-      'pretty_version' => '1.8.2',
-      'version' => '1.8.2.0',
+      'pretty_version' => '1.8.3',
+      'version' => '1.8.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'dc960a912984efb74d0a90222870c72c87f10c91',
+      'reference' => '1afdd860a2566ed3c2b0b4a3de6e23434a79ec85',
     ),
     'harness-software/wp-graphql-gravity-forms' => 
     array (
@@ -272,7 +272,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'f9751ae99297bd26b3966a39003faa70cfee7355',
+      'reference' => '2a61ee9e338aa45939335316ca996d8d4f95dd5b',
     ),
     'hautelook/phpass' => 
     array (
@@ -283,17 +283,17 @@ private static $installed = array (
     ),
     'illuminate/collections' => 
     array (
-      'pretty_version' => 'v8.60.0',
-      'version' => '8.60.0.0',
+      'pretty_version' => 'v8.63.0',
+      'version' => '8.63.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '18fa841df912ec56849351dd6ca8928e8a98b69d',
+      'reference' => '8e6c29c49f28b90e9de0cac1c14290feb99202c5',
     ),
     'illuminate/contracts' => 
     array (
-      'pretty_version' => 'v8.60.0',
-      'version' => '8.60.0.0',
+      'pretty_version' => 'v8.63.0',
+      'version' => '8.63.0.0',
       'aliases' => 
       array (
       ),
@@ -301,8 +301,8 @@ private static $installed = array (
     ),
     'illuminate/macroable' => 
     array (
-      'pretty_version' => 'v8.60.0',
-      'version' => '8.60.0.0',
+      'pretty_version' => 'v8.62.0',
+      'version' => '8.62.0.0',
       'aliases' => 
       array (
       ),
@@ -310,12 +310,12 @@ private static $installed = array (
     ),
     'illuminate/support' => 
     array (
-      'pretty_version' => 'v8.60.0',
-      'version' => '8.60.0.0',
+      'pretty_version' => 'v8.63.0',
+      'version' => '8.63.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c0fbc05c4362de423a7a4da137098e9d1affaf54',
+      'reference' => '259993e2119e99be17c10486f66c5a13b7fe4a70',
     ),
     'justinrainbow/json-schema' => 
     array (
@@ -328,12 +328,12 @@ private static $installed = array (
     ),
     'lucatume/wp-browser' => 
     array (
-      'pretty_version' => '3.0.10',
-      'version' => '3.0.10.0',
+      'pretty_version' => '3.0.11',
+      'version' => '3.0.11.0',
       'aliases' => 
       array (
       ),
-      'reference' => '0754da8955c97762976379a9b2ab7175594ff815',
+      'reference' => 'c215ae0aff4a4ea58e2172e7014a2a7b0c160e25',
     ),
     'mikehaertl/php-shellcommand' => 
     array (
@@ -346,15 +346,15 @@ private static $installed = array (
     ),
     'mikemclin/laravel-wp-password' => 
     array (
-      'pretty_version' => '2.0.1',
-      'version' => '2.0.1.0',
+      'pretty_version' => '2.0.3',
+      'version' => '2.0.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => '84ff1113ff6866cdb0350c176dc3c843383e4819',
+      'reference' => '5225c95f75aa0a5ad4040ec2074d1c8d7f10b5f4',
       'replaced' => 
       array (
-        0 => '2.0.1',
+        0 => '2.0.3',
       ),
     ),
     'mustache/mustache' => 
@@ -471,12 +471,12 @@ private static $installed = array (
     ),
     'phpdocumentor/type-resolver' => 
     array (
-      'pretty_version' => '1.4.0',
-      'version' => '1.4.0.0',
+      'pretty_version' => '1.5.1',
+      'version' => '1.5.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0',
+      'reference' => 'a12f7e301eb7258bb68acd89d4aefa05c2906cae',
     ),
     'phpspec/prophecy' => 
     array (
@@ -552,12 +552,12 @@ private static $installed = array (
     ),
     'phpunit/phpunit' => 
     array (
-      'pretty_version' => '8.5.20',
-      'version' => '8.5.20.0',
+      'pretty_version' => '8.5.21',
+      'version' => '8.5.21.0',
       'aliases' => 
       array (
       ),
-      'reference' => '9deefba183198398a09b927a6ac6bc1feb0b7b70',
+      'reference' => '50a58a60b85947b0bee4c8ecfe0f4bbdcf20e984',
     ),
     'poolshark/wp-graphql-stubs' => 
     array (
@@ -1003,12 +1003,12 @@ private static $installed = array (
     ),
     'symfony/translation' => 
     array (
-      'pretty_version' => 'v5.3.7',
-      'version' => '5.3.7.0',
+      'pretty_version' => 'v5.3.9',
+      'version' => '5.3.9.0',
       'aliases' => 
       array (
       ),
-      'reference' => '4d595a6d15fd3a2c67f6f31d14d15d3b7356d7a6',
+      'reference' => '6e69f3551c1a3356cf6ea8d019bf039a0f8b6886',
     ),
     'symfony/translation-contracts' => 
     array (
