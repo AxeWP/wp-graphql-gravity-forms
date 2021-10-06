@@ -125,6 +125,121 @@ class Wpunit extends \Codeception\Module {
 		);
 		return new PropertyHelper( $keys );
 	}
+	/**
+	 * Get the default args for a radio field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getRadioFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				[
+					'choices' => [
+						[
+							'text'       => 'First Choice',
+							'value'      => 'first',
+							'isSelected' => true,
+						],
+						[
+							'text'       => 'Second Choice',
+							'value'      => 'second',
+							'isSelected' => true,
+						],
+						[
+							'text'       => 'Third Choice',
+							'value'      => 'third',
+							'isSelected' => false,
+						],
+					],
+				],
+				'description',
+				'descriptionPlacement',
+				'enableChoiceValue',
+				'enableOtherChoice',
+				'enablePrice',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'size',
+				[ 'type' => 'radio' ],
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
+	 * Get the default args for a radio field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getSelectFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				'autocompleteAttribute',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				[
+					'choices' => [
+						[
+							'text'       => 'First Choice',
+							'value'      => 'first',
+							'isSelected' => true,
+						],
+						[
+							'text'       => 'Second Choice',
+							'value'      => 'second',
+							'isSelected' => false,
+						],
+						[
+							'text'       => 'Third Choice',
+							'value'      => 'third',
+							'isSelected' => false,
+						],
+					],
+				],
+				'defaultValue',
+				'description',
+				'descriptionPlacement',
+				'enableAutocomplete',
+				'enableChoiceValue',
+				'enableEnhancedUI',
+				'enablePrice',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'pageNumber',
+				'size',
+				[ 'type' => 'select' ],
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
 
 	/**
 	 * Get the default args for a number field.
@@ -470,7 +585,7 @@ class Wpunit extends \Codeception\Module {
 						[
 							'text'       => 'Second Choice',
 							'value'      => 'second',
-							'isSelected' => true,
+							'isSelected' => false,
 						],
 						[
 							'text'       => 'Third Choice',
@@ -608,6 +723,31 @@ class Wpunit extends \Codeception\Module {
 				'layoutSpacerGridColumnSpan',
 				'size',
 				[ 'type' => 'section' ],
+				'visibility',
+			],
+			$args,
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	public function getPageFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'displayOnly',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'label',
+				'nextButton',
+				'previousButton',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'size',
+				[ 'type' => 'page' ],
 				'visibility',
 			],
 			$args,

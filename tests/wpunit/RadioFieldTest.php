@@ -1,6 +1,6 @@
 <?php
 /**
- * Test TextArea type.
+ * Test Radio type.
  *
  * @package Tests\WPGraphQL\GravityForms
  */
@@ -10,9 +10,9 @@ use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
 
 
 /**
- * Class -TextAreaFieldTest.
+ * Class -RadioFieldTest.
  */
-class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInterface {
+class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -47,7 +47,7 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getTextAreaFieldHelper();
+		return $this->tester->getRadioFieldHelper();
 	}
 
 	/**
@@ -61,14 +61,14 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return $this->property_helper->dummy->words( 1, 5 );
+		return '2015';
 	}
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return $this->property_helper->dummy->words( 1, 5 );
+		return '2016';
 	}
 
 
@@ -105,29 +105,35 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 									value
 								}
 							}
-							... on TextAreaField {
+							... on RadioField {
 								adminLabel
 								adminOnly
 								allowsPrepopulate
-								defaultValue
+								choices {
+									isOtherChoice
+									isSelected
+									text
+									value
+								}
 								description
 								descriptionPlacement
+								enableChoiceValue
+								enableOtherChoice
+								enablePrice
 								errorMessage
-								isRequired
 								inputName
+								isRequired
 								label
-								maxLength
 								noDuplicates
-								placeholder
+								pageNumber
 								size
-								useRichTextEditor
 								value
 								visibility
 							}
 						}
 						edges {
 							fieldValue {
-								... on TextAreaFieldValue {
+								... on RadioFieldValue {
 									value
 								}
 							}
@@ -155,13 +161,13 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 						formFields {
 							edges {
 								fieldValue {
-									... on TextAreaFieldValue {
+									... on RadioFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on TextAreaField {
+								... on RadioField {
 									value
 								}
 							}
@@ -187,13 +193,13 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 						formFields {
 							edges {
 								fieldValue {
-									... on TextAreaFieldValue {
+									... on RadioFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on TextAreaField {
+								... on RadioField {
 									value
 								}
 							}
@@ -219,13 +225,13 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 						formFields {
 							edges {
 								fieldValue {
-									... on TextAreaFieldValue {
+									... on RadioFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on TextAreaField {
+								... on RadioField {
 									value
 								}
 							}

@@ -8,7 +8,6 @@
 namespace Helper\GFHelpers;
 
 use Dummy;
-use WPGraphQLGravityForms\Types\Enum;
 
 /**
  * Abstract Class - GFHelpers.
@@ -176,12 +175,12 @@ abstract class GFHelpers {
 	/**
 	 * Converts a string value to its Enum equivalent
 	 *
-	 * @param string $enumName Name of the Enum registered in GraphQL.
+	 * @param string      $enumName Name of the Enum registered in GraphQL.
 	 * @param string|null $value .
 	 * @return string|null
 	 */
-	public function get_enum_for_value( string $enumName, $value )  {
-		if( null === $value ){
+	public function get_enum_for_value( string $enumName, $value ) {
+		if ( null === $value ) {
 			return null;
 		}
 
@@ -190,8 +189,8 @@ abstract class GFHelpers {
 	}
 
 	public function get_field_values( $values ) {
-		if( is_array( $values) ){
-			$values = [$values];
+		if ( is_array( $values ) ) {
+			$values = [ $values ];
 		}
 
 		return array_map(

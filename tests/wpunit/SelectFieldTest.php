@@ -1,6 +1,6 @@
 <?php
 /**
- * Test TextArea type.
+ * Test Select type.
  *
  * @package Tests\WPGraphQL\GravityForms
  */
@@ -10,9 +10,9 @@ use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
 
 
 /**
- * Class -TextAreaFieldTest.
+ * Class -SelectFieldTest.
  */
-class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInterface {
+class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -47,7 +47,7 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getTextAreaFieldHelper();
+		return $this->tester->getSelectFieldHelper();
 	}
 
 	/**
@@ -61,14 +61,14 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return $this->property_helper->dummy->words( 1, 5 );
+		return 'third';
 	}
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return $this->property_helper->dummy->words( 1, 5 );
+		return 'second';
 	}
 
 
@@ -105,29 +105,38 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 									value
 								}
 							}
-							... on TextAreaField {
+							... on SelectField {
 								adminLabel
 								adminOnly
 								allowsPrepopulate
+								autocompleteAttribute
+								choices {
+									isSelected
+									text
+									value
+								}
 								defaultValue
 								description
 								descriptionPlacement
+								enableAutocomplete
+								enableChoiceValue
+								enableEnhancedUI
+								enablePrice
 								errorMessage
-								isRequired
 								inputName
+								isRequired
 								label
-								maxLength
 								noDuplicates
+								pageNumber
 								placeholder
 								size
-								useRichTextEditor
 								value
 								visibility
 							}
 						}
 						edges {
 							fieldValue {
-								... on TextAreaFieldValue {
+								... on SelectFieldValue {
 									value
 								}
 							}
@@ -155,13 +164,13 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 						formFields {
 							edges {
 								fieldValue {
-									... on TextAreaFieldValue {
+									... on SelectFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on TextAreaField {
+								... on SelectField {
 									value
 								}
 							}
@@ -187,13 +196,13 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 						formFields {
 							edges {
 								fieldValue {
-									... on TextAreaFieldValue {
+									... on SelectFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on TextAreaField {
+								... on SelectField {
 									value
 								}
 							}
@@ -219,13 +228,13 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 						formFields {
 							edges {
 								fieldValue {
-									... on TextAreaFieldValue {
+									... on SelectFieldValue {
 										value
 									}
 								}
 							}
 							nodes {
-								... on TextAreaField {
+								... on SelectField {
 									value
 								}
 							}

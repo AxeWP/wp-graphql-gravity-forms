@@ -128,9 +128,6 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$expected = $this->expected_field_response( $form );
 
-		codecept_debug( $expected );
-		codecept_debug( $response );
-
 		$this->assertQuerySuccessful( $response, $expected );
 
 		// Test Draft entry.
@@ -186,12 +183,8 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 			'value'   => $this->field_value_input,
 		];
 
-		codecept_debug( $variables );
-
 		// Test entry.
 		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		codecept_debug( $response );
 
 		$expected = $this->expected_mutation_response( 'submitGravityFormsForm', $this->field_value );
 		$this->assertQuerySuccessful( $response, $expected );

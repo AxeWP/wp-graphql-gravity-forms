@@ -276,7 +276,6 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 	 * @return array
 	 */
 	public function expected_mutation_response( string $mutationName, $value ) : array {
-		codecept_debug( $value );
 		return [
 			$this->expectedObject(
 				$mutationName,

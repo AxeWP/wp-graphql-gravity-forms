@@ -281,7 +281,6 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 	 * @return array
 	 */
 	public function expected_mutation_response( string $mutationName, $value ) : array {
-		codecept_debug( $value );
 		return [
 			$this->expectedObject(
 				$mutationName,
