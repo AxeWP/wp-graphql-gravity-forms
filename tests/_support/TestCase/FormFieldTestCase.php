@@ -188,10 +188,13 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$expected = $this->expected_mutation_response( 'submitGravityFormsForm', $this->field_value );
 		$this->assertQuerySuccessful( $response, $expected );
+		$this->assertEquals( $response['data']['submitGravityFormsForm']['errors'], null);
 
 		$entry_id = $response['data']['submitGravityFormsForm']['entryId'];
 
 		$actual_entry = GFAPI::get_entry( $entry_id );
+
+		$this->assertNotWPError($actual_entry);
 
 		$this->check_saved_values( $actual_entry, $form );
 

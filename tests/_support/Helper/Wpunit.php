@@ -242,6 +242,69 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a radio field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getEmailFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				'autocompleteAttribute',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'defaultValue',
+				'description',
+				'descriptionPlacement',
+				'emailConfirmEnabled',
+				'enableAutocomplete',
+				'enableEnhancedUI',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				[
+					'inputs' => [
+						[
+							'autocompleteAttribute' => 'email',
+							'customLabel' => 'enter email',
+							'defaultValue' => 'user@someemail.com',
+							'id' => 1,
+							'label' => 'Enter Email',
+							'name' => null,
+							'placeholder' => 'place',
+						],
+						[
+							'autocompleteAttribute' => 'email',
+							'customLabel' => 'confirm email',
+							'defaultValue' => 'user@someemail.com',
+							'id' => '1.2',
+							'label' => 'Confirm Email',
+							'name' => null,
+							'placeholder' => 'holder',
+						]
+					],
+				],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'placeholder',
+				'pageNumber',
+				'size',
+				[ 'type' => 'email' ],
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
 	 * Get the default args for a number field.
 	 *
 	 * @param array $args .
@@ -575,6 +638,59 @@ class Wpunit extends \Codeception\Module {
 						'keys'    => [ 'label', 'name' ],
 					],
 				],
+				[
+					'choices' => [
+						[
+							'text'       => 'First Choice',
+							'value'      => 'first',
+							'isSelected' => true,
+						],
+						[
+							'text'       => 'Second Choice',
+							'value'      => 'second',
+							'isSelected' => false,
+						],
+						[
+							'text'       => 'Third Choice',
+							'value'      => 'third',
+							'isSelected' => false,
+						],
+					],
+				],
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+	/**
+	 * Get the default args for a MultiSelect field
+	 *
+	 * @param array $args .
+	 * @return array
+	 */
+	public function getMultiSelectFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'description',
+				'descriptionPlacement',
+				'enableChoiceValue',
+				'enableEnhancedUI',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'size',
+				[ 'type' => 'multiselect' ],
+				'visibility',
 				[
 					'choices' => [
 						[

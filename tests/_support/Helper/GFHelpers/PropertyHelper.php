@@ -142,6 +142,10 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : true;
 	}
 
+	public function emailConfirmEnabled( $value = null) :bool {
+		return isset( $value ) ? $value : true;
+	}
+
 	public function enableAutocomplete( $value = null ) {
 		return isset( $value ) ? $value : $this->dummy->yesno();
 	}
