@@ -277,8 +277,6 @@ class FormQueriesTest extends GFGraphQLTestCase {
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		codecept_debug( $form['confirmations'] );
-
 		$expected =
 			[
 				'gravityFormsForm' => [

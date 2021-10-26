@@ -27,12 +27,12 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => 'dev-develop',
-    'version' => 'dev-develop',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => '2a61ee9e338aa45939335316ca996d8d4f95dd5b',
+    'reference' => 'e28558d0cb0fe49f72422ec57090cd46e15bc3cb',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
@@ -267,12 +267,12 @@ private static $installed = array (
     ),
     'harness-software/wp-graphql-gravity-forms' => 
     array (
-      'pretty_version' => 'dev-develop',
-      'version' => 'dev-develop',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => '2a61ee9e338aa45939335316ca996d8d4f95dd5b',
+      'reference' => 'e28558d0cb0fe49f72422ec57090cd46e15bc3cb',
     ),
     'hautelook/phpass' => 
     array (
