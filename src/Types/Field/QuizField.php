@@ -10,6 +10,7 @@
 
 namespace WPGraphQLGravityForms\Types\Field;
 
+use WPGraphQLGravityForms\Types\Enum\QuizInputTypeEnum;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
@@ -48,22 +49,64 @@ class QuizField extends AbstractFormField {
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\AutocompleteAttributeProperty::get(),
-			FieldProperty\ChoicesProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
-			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnableEnhancedUiProperty::get(),
-			FieldProperty\EnablePriceProperty::get(),
+			FieldProperty\EnableSelectAllProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\LabelProperty::get(),
-			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
+			[
+				'answerExplanation'          => [
+					'type'        => 'String',
+					'description' => __( 'The explanation for the correct answer and/or incorrect answers.', 'wp-graphql-gravity-forms' ),
+					'resolve'     => static function( $root ) : ?string {
+						return $root['gquizAnswerExplanation'] ?? null;
+					},
+				],
+				'choices'                    => [
+					'type'        => [ 'list_of' => FieldProperty\QuizChoiceProperty::$type ],
+					'description' => __( 'Choices used to populate the dropdown field. These can be nested multiple levels deep.', 'wp-graphql-gravity-forms' ),
+				],
+				'enableRandomizeQuizChoices' => [
+					'type'        => 'Boolean',
+					'description' => __( 'Whether to randomize the order in which the answers are displayed to the user.', 'wp-graphql-gravity-forms' ),
+					'resolve'     => static function( $root ) : bool {
+						return (bool) $root['gquizEnableRandomizeQuizChoices'];
+					},
+				],
+				'enableWeightedScore'        => [
+					'type'        => 'Boolean',
+					'description' => __( 'If this setting is disabled then the response will be awarded a score of 1 if correct and 0 if incorrect.', 'wp-graphql-gravity-forms' ),
+					'resolve'     => static function( $root ) : bool {
+						return (bool) $root['gquizWeightedScoreEnabled'];
+					},
+				],
+				'inputs'                     => [
+					'type'        => [ 'list_of' => FieldProperty\CheckboxInputProperty::$type ],
+					'description' => __( 'List of inputs. Checkboxes are treated as multi-input fields, since each checkbox item is stored separately.', 'wp-graphql-gravity-forms' ),
+				],
+				'quizFieldType'              => [
+					'type'        => QuizInputTypeEnum::$type,
+					'description' => __( 'The Gravity Forms field type used by the Quiz Field.', 'wp-graphql-gravity-forms' ),
+					'resolve'     => static function( $root ) : string {
+						return $root['gquizFieldType'];
+					},
+				],
+				'showAnswerExplanation'      => [
+					'type'        => 'Boolean',
+					'description' => __( 'Whether to show an answer explanation.', 'wp-graphql-gravity-forms' ),
+					'resolve'     => static function( $root ) : bool {
+						return (bool) $root['gquizShowAnswerExplanation'];
+					},
+				],
+			],
 		);
 	}
 }

@@ -93,6 +93,7 @@ final class WPGraphQLGravityForms {
 		self::$instances['name_input_property']            = new FieldProperty\NameInputProperty();
 		self::$instances['password_input_property']        = new FieldProperty\PasswordInputProperty();
 		self::$instances['radio_choice_property']          = new FieldProperty\RadioChoiceProperty();
+		self::$instances['quiz_choice_property']           = new FieldProperty\QuizChoiceProperty();
 
 		// Interfaces.
 		self::$instances['field_interface'] = new GraphQLInterface\FormFieldInterface();
@@ -256,6 +257,7 @@ final class WPGraphQLGravityForms {
 		self::$instances['page_progress_type_enum']             = new Enum\PageProgressTypeEnum();
 		self::$instances['phone_field_format_enum']             = new Enum\PhoneFieldFormatEnum();
 		self::$instances['quiz_grading_type_enum']              = new Enum\QuizGradingTypeEnum();
+		self::$instances['quiz_input_type_enum']                = new Enum\QuizInputTypeEnum();
 		self::$instances['required_indicator_enum']             = new Enum\RequiredIndicatorEnum();
 		self::$instances['rule_operator_enum']                  = new Enum\RuleOperatorEnum();
 		self::$instances['signature_border_style_enum']         = new Enum\SignatureBorderStyleEnum();
