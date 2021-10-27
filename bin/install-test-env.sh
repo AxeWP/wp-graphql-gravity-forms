@@ -190,6 +190,18 @@ install_gravityforms_chainedselects() {
 	wp plugin activate gravityformschainedselects
 }
 
+install_gravityforms_quiz() {
+	if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityformsquiz ]; then
+		echo "Cloning Gravity Forms Signature"
+			if [ -n "$GIT_USER" ] && [ -n "$GIT_TOKEN" ] && [ -n "$GF_CHAINEDSELECTS_REPO" ]; then
+		git clone https://$GIT_USER:$GIT_TOKEN@$GF_QUIZ_REPO $WP_CORE_DIR/wp-content/plugins/gravityformsquiz
+		else
+			echo "To test Chained Selects, please manually install the plugin in your dev environment."
+		fi
+	fi
+	wp plugin activate gravityformsquiz
+}
+
 setup_plugin() {
 
 	# Add this repo as a plugin to the repo
@@ -231,4 +243,5 @@ configure_wordpress
 install_gravityforms
 install_gravityforms_signature
 install_gravityforms_chainedselects
+install_gravityforms_quiz
 setup_plugin
