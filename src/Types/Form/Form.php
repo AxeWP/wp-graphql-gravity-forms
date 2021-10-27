@@ -193,6 +193,13 @@ class Form extends AbstractObject implements Field {
 				'type'        => 'Boolean',
 				'description' => __( 'Determines if the post title template functionality is enabled. When enabled, the post title will be created based on the template specified by postTitleTemplate.', 'wp-graphql-gravity-forms' ),
 			],
+			'quizSettings'               => [
+				'type'        => QuizSettings::$type,
+				'description' => __( 'Quiz-specific settings that will affect ALL Quiz fields in the form. Requires Gravity Forms Quiz addon.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function( $root ) : ?array {
+					return $root['gravityformsquiz'] ?? null;
+				},
+			],
 			'requiredIndicator'          => [
 				'type'        => Enum\RequiredIndicatorEnum::$type,
 				'description' => __( 'Type of indicator to use when field is required.', 'wp-graphql-gravity-forms' ),

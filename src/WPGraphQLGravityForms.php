@@ -76,6 +76,8 @@ final class WPGraphQLGravityForms {
 		self::$instances['form_notification']         = new Form\FormNotification();
 		self::$instances['form_confirmation']         = new Form\FormConfirmation();
 		self::$instances['form_pagination']           = new Form\FormPagination();
+		self::$instances['quiz_grades']               = new Form\QuizGrades();
+		self::$instances['quiz_settings']             = new Form\QuizSettings();
 		self::$instances['form']                      = new Form\Form();
 
 		// Field Properties.
@@ -120,6 +122,7 @@ final class WPGraphQLGravityForms {
 		self::$instances['post_image_field']     = new Field\PostImageField();
 		self::$instances['post_tags_field']      = new Field\PostTagsField();
 		self::$instances['post_title_field']     = new Field\PostTitleField();
+		self::$instances['quiz_field']           = new Field\QuizField();
 		self::$instances['radio_field']          = new Field\RadioField();
 		self::$instances['section_field']        = new Field\SectionField();
 		self::$instances['select_field']         = new Field\SelectField();
@@ -252,6 +255,7 @@ final class WPGraphQLGravityForms {
 		self::$instances['page_progress_style_enum']            = new Enum\PageProgressStyleEnum();
 		self::$instances['page_progress_type_enum']             = new Enum\PageProgressTypeEnum();
 		self::$instances['phone_field_format_enum']             = new Enum\PhoneFieldFormatEnum();
+		self::$instances['quiz_grading_type_enum']              = new Enum\QuizGradingTypeEnum();
 		self::$instances['required_indicator_enum']             = new Enum\RequiredIndicatorEnum();
 		self::$instances['rule_operator_enum']                  = new Enum\RuleOperatorEnum();
 		self::$instances['signature_border_style_enum']         = new Enum\SignatureBorderStyleEnum();
