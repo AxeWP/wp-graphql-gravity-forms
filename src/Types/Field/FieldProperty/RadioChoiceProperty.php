@@ -27,7 +27,7 @@ class RadioChoiceProperty extends AbstractObject {
 	 * Sets the field type description.
 	 */
 	public function get_type_description() : string {
-		return __( 'Gravity Forms Chained Select field choice property.', 'wp-graphql-gravity-forms' );
+		return __( 'Gravity Forms Radio field choice property.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**

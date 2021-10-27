@@ -26,7 +26,7 @@ class NoDuplicatesProperty implements FieldProperty {
 		return [
 			'noDuplicates' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Determines if the field allows duplicate submissions. 1 to prevent users from submitting the same value more than once, 0 to allow duplicate values.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Determines if the field allows duplicate submissions.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
