@@ -197,7 +197,12 @@ class Form extends AbstractObject implements Field {
 				'type'        => QuizSettings::$type,
 				'description' => __( 'Quiz-specific settings that will affect ALL Quiz fields in the form. Requires Gravity Forms Quiz addon.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function( $root ) : ?array {
-					return $root['gravityformsquiz'] ?? null;
+					/**
+					 * Entire form object is required for 'maxScore'.
+					 *
+					 * @todo find way to access parent field values from child field.
+					 */
+					return $root['gravityformsquiz'] + [ 'form' => $root ] ?? null;
 				},
 			],
 			'requiredIndicator'          => [

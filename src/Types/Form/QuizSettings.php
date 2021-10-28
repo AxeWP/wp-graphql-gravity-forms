@@ -90,6 +90,17 @@ class QuizSettings extends AbstractObject {
 				'type'        => 'Boolean',
 				'description' => __( 'Whether to disable autoformatting for the Letter confirmation message', 'wp-graphql-gravity-forms' ),
 			],
+			'maxScore'                            => [
+				'type'        => 'Float',
+				'description' => __( 'The maximum score for this form.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function ( $root, array $args ) : ?float {
+					if ( ! class_exists( 'GFQuiz' ) ) {
+						return null;
+					}
+
+					return ( \GFQuiz::get_instance() )->get_max_score( $root['form'] ) ?? null;
+				},
+			],
 		];
 	}
 }
