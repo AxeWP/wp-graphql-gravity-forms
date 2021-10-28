@@ -73,6 +73,18 @@ class QuizField extends AbstractFormField {
 				'choices'                    => [
 					'type'        => [ 'list_of' => FieldProperty\QuizChoiceProperty::$type ],
 					'description' => __( 'Choices used to populate the dropdown field. These can be nested multiple levels deep.', 'wp-graphql-gravity-forms' ),
+					'resolve'     => static function( $root ) {
+						if ( ! $root['gquizWeightedScoreEnabled'] ) {
+							return array_map(
+								function( array $choice ) : array {
+									$choice['gquizWeight'] = (float) $choice['gquizIsCorrect'];
+									return $choice;
+								},
+								$root['choices']
+							);
+						}
+						return $root['choices'];
+					},
 				],
 				'enableRandomizeQuizChoices' => [
 					'type'        => 'Boolean',

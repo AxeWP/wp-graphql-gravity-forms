@@ -9,6 +9,8 @@
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
 
+use GraphQL\Type\Definition\ResolveInfo;
+use WPGraphQL\AppContext;
 use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ChoiceProperty;
 
@@ -49,7 +51,7 @@ class QuizChoiceProperty extends AbstractObject {
 					'type'        => 'Float',
 					'description' => __( 'The weighted score awarded for the choice.', 'wp-graphql-gravity-forms' ),
 					'resolve'     => static function( $root ) : ?float {
-						return $root['gquizWeight'] ?? null;
+							return $root['gquizWeight'] ?? null;
 					},
 				],
 			],
