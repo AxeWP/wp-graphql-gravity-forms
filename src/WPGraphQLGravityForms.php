@@ -191,6 +191,7 @@ final class WPGraphQLGravityForms {
 		self::$instances['post_image_field_value_property']     = new ValueProperty\PostImageFieldValueProperty();
 		self::$instances['post_tags_field_value_property']      = new ValueProperty\PostTagsFieldValueProperty();
 		self::$instances['post_title_field_value_property']     = new ValueProperty\PostTitleFieldValueProperty();
+		self::$instances['quiz_field_value_property']           = new ValueProperty\QuizFieldValueProperty();
 		self::$instances['radio_field_value_property']          = new ValueProperty\RadioFieldValueProperty();
 		self::$instances['select_field_value_property']         = new ValueProperty\SelectFieldValueProperty();
 		self::$instances['signature_field_value_property']      = new ValueProperty\SignatureFieldValueProperty();
@@ -200,9 +201,10 @@ final class WPGraphQLGravityForms {
 		self::$instances['website_field_value_property']        = new ValueProperty\WebsiteFieldValueProperty();
 
 		// Entries.
-		self::$instances['entry']      = new Entry\Entry();
-		self::$instances['entry_form'] = new Entry\EntryForm();
-		self::$instances['entry_user'] = new Entry\EntryUser();
+		self::$instances['entry_quiz_results'] = new Entry\EntryQuizResults();
+		self::$instances['entry']              = new Entry\Entry();
+		self::$instances['entry_form']         = new Entry\EntryForm();
+		self::$instances['entry_user']         = new Entry\EntryUser();
 
 		// Input.
 		self::$instances['address_input']              = new Input\AddressInput();
