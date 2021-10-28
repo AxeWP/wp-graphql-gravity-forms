@@ -46,9 +46,9 @@ class QuizChoiceProperty extends AbstractObject {
 					},
 				],
 				'weight'    => [
-					'type'        => 'Integer',
+					'type'        => 'Float',
 					'description' => __( 'The weighted score awarded for the choice.', 'wp-graphql-gravity-forms' ),
-					'resolve'     => static function( $root ) : ?int {
+					'resolve'     => static function( $root ) : ?float {
 						return $root['gquizWeight'] ?? null;
 					},
 				],
