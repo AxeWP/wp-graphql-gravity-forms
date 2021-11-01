@@ -112,6 +112,7 @@ abstract class GFHelpers {
 	 * @param mixed  $object .
 	 */
 	public function getActualValue( string $key, $object ) {
+		codecept_debug( $key );
 		switch ( $key ) {
 			case 'addressType':
 			case 'captchaType':
@@ -134,6 +135,10 @@ abstract class GFHelpers {
 				$string = 'DateFieldFormatEnum';
 				$value  = $this->get_enum_for_value( $string, $object->$key );
 				break;
+			case 'gquizFieldType':
+				$string = 'QuizFieldTypeEnum';
+				$value  = $this->get_enum_for_value( $string, $object->$key );
+				break;
 			case 'copyValuesOptionDefault':
 			case 'displayOnly':
 			case 'enableCopyValuesOption':
@@ -148,11 +153,15 @@ abstract class GFHelpers {
 				$string = 'NumberFieldFormatEnum';
 				$value  = $this->get_enum_for_value( $string, $object->$key );
 				break;
+			case 'inputType':
+				return [];
 			default:
 				$value = isset( $object->$key ) ? $object->$key : null;
 				break;
 		}
-		return [ $key => $value ];
+		$return = [ $key => $value ];
+		codecept_debug( $return );
+		return $return;
 	}
 
 	/**
@@ -162,7 +171,6 @@ abstract class GFHelpers {
 	 */
 	public function getAllActualValues( $object, array $exclude = null ) {
 		$return_values = [];
-
 		foreach ( $this->keys as $key ) {
 			if ( ! empty( $exclude ) && in_array( $key, $exclude, true ) ) {
 				continue;

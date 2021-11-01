@@ -16,23 +16,12 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : null;
 	}
 
-	public function nextButton( $value = null ) {
-		return isset( $value ) ? $value : [
-			'type'     => 'text',
-			'text'     => $this->dummy->words( 2 ),
-			'imageUrl' => null,
-		];
-	}
-	public function previousButton( $value = null ) {
-		return isset( $value ) ? $value : [
-			'type'     => 'text',
-			'text'     => null,
-			'imageUrl' => '/path/to/image.jpg',
-		];
-	}
-
 	public function allowsPrepopulate( $value = null ) {
 		return isset( $value ) ? $value : $this->dummy->yesno();
+	}
+
+	public function gquizAnswerExplanation( string $value = null) : ?string {
+		return $value ?? $this->dummy->sentence(1,3);
 	}
 
 	public function autocompleteAttribute( $value = null ) {
@@ -166,20 +155,28 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : '';
 	}
 
-	public function enablePrice( $value = null ) {
-		return isset( $value ) ? $value : null;
-	}
-
 	public function enableOtherChoice( $value = null ) {
 		return isset( $value ) ? $value : $this->dummy->yesno();
+	}
+
+	public function enablePrice( $value = null ) {
+		return isset( $value ) ? $value : null;
 	}
 
 	public function enablePasswordInput( $value = null ) {
 		return isset( $value ) ? $value : '';
 	}
 
+	public function gquizEnableRandomizeQuizChoices( bool $value = null ) : ?bool {
+		return $value ?? $this->dummy->yesno();
+	}
+
 	public function enableSelectAll( $value = null ) {
 		return isset( $value ) ? $value : $this->dummy->yesno();
+	}
+
+	public function gquizWeightedScoreEnabled( bool $value = null ) : ?bool {
+		return $value ?? true;
 	}
 
 	public function errorMessage( $value = null ) {
@@ -207,16 +204,21 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function inputs( $value = null ) {
-		return isset( $value ) ? $value : '';
+		return isset( $value ) ? $value : null;
 	}
 
 	public function inputType( $value = null ) {
 		return isset( $value ) ? $value : '';
 	}
 
+	public function gquizIsCorrect( bool $value = null ) : ?bool {
+		return $value ?? $this->dummy-yesno();
+	}
+
 	public function isRequired( $value = null ) {
 		return isset( $value ) ? $value : $this->dummy->yesno();
 	}
+
 	public function isSelected( $value = null ) {
 		return isset( $value ) ? $value : $this->dummy->yesno();
 	}
@@ -249,6 +251,14 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : false;
 	}
 
+	public function nextButton( $value = null ) {
+		return isset( $value ) ? $value : [
+			'type'     => 'text',
+			'text'     => $this->dummy->words( 2 ),
+			'imageUrl' => null,
+		];
+	}
+
 	public function noDuplicates( $value = null ) {
 		return isset( $value ) ? $value : false;
 	}
@@ -267,9 +277,21 @@ class PropertyHelper extends GFHelpers {
 	public function placeholder( $value = null ) {
 		return isset( $value ) ? $value : ( $this->dummy->words( 2 ) );
 	}
+	
+	public function previousButton( $value = null ) {
+		return isset( $value ) ? $value : [
+			'type'     => 'text',
+			'text'     => null,
+			'imageUrl' => '/path/to/image.jpg',
+		];
+	}
 
 	public function productField( $value = null ) {
 		return isset( $value ) ? $value : '';
+	}
+
+	public function gquizFieldType( string $value = null ) : string {
+		return $value ?? 'CHECKBOX';
 	}
 
 	public function rangeMin( $value = null ) {
@@ -278,6 +300,10 @@ class PropertyHelper extends GFHelpers {
 
 	public function rangeMax( $value = null ) {
 		return isset( $value ) ? $value : null;
+	}
+
+	public function gquizShowAnswerExplanation( bool $value = null): ?bool {
+		return $value ?? $this->dummy->yesno();
 	}
 
 	public function simpleCaptchaBackgroundColor( $value = null ) {
@@ -339,8 +365,13 @@ class PropertyHelper extends GFHelpers {
 	public function isHidden( $value = null ) {
 		return isset( $value ) ? $value : $this->dummy->yesno();
 	}
+
 	public function name( $value = null ) {
 		return isset( $value ) ? $value : ( $this->dummy->text( 1, 8, true ) ?? '' );
+	}
+
+	public function gquizWeight( $value = null) {
+		return $value ?? $this->dummy->number(0,5);
 	}
 
 }

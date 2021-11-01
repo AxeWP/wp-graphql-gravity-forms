@@ -53,19 +53,19 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$this->field_value_input = $this->field_value_input();
 		$this->value             = $this->value();
 
+		$this->form_args = $this->generate_form_args();
+
 		$this->form_id = $this->factory->form->create(
 			array_merge(
 				[ 'fields' => $this->fields ],
-				$this->tester->getFormDefaultArgs()
+				$this->form_args,
 			)
 		);
 
 		$this->entry_id = $this->factory->entry->create(
-			array_merge(
-				[ 'form_id' => $this->form_id ],
-				$this->value
-			)
+				[ 'form_id' => $this->form_id ] + $this->value
 		);
+		
 
 		if ( $this->test_draft ) {
 			$this->draft_token = $this->factory->draft_entry->create(
@@ -99,6 +99,13 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	}
 
 	/**
+	 * The default form args.
+	 */
+	public function generate_form_args() {
+		return $this->tester->getFormDefaultArgs();
+	}
+
+	/**
 	 * The graphql field value input.
 	 */
 	public function field_value_input() {
@@ -125,6 +132,8 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		];
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
+		$this->assertArrayNotHasKey( 'errors', $response );
+
 
 		$expected = $this->expected_field_response( $form );
 

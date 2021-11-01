@@ -55,11 +55,10 @@ class FormQueriesTest extends GFGraphQLTestCase {
 	 * Tests `gravityFormsForm`.
 	 */
 	public function testFormQuery() : void {
-		$form_id   = $this->form_ids[0];
-		$global_id = Relay::toGlobalId( 'GravityFormsForm', $form_id );
-		$form      = GFAPI::get_form( $form_id );
+		$form_id          = $this->form_ids[0];
+		$global_id        = Relay::toGlobalId( 'GravityFormsForm', $form_id );
+		$form             = GFAPI::get_form( $form_id );
 		$confirmation_key = key( $form['confirmations'] );
-
 
 		$query = $this->get_form_query();
 
