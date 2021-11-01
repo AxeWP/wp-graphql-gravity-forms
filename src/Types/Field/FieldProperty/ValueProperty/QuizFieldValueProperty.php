@@ -53,9 +53,19 @@ class QuizFieldValueProperty extends AbstractValueProperty {
 	 */
 	public static function get( array $entry, GF_Field $field ) : ?array {
 		// Checkbox values are stored by each individual choice.
-		$values = ( 'checkbox' === $field->inputType ? array_column( CheckboxFieldValueProperty::get( $entry, $field ), 'value' ) : $entry[ $field->id ] ) ?: null;
+		switch ( $field->get_input_type() ) {
+			case 'checkbox':
+				$values = array_column( CheckboxFieldValueProperty::get( $entry, $field ), 'value' ) ?? null;
+				break;
+			case 'radio':
+				$values = RadioFieldValueProperty::get( $entry, $field ) ?? null;
+				break;
+			case 'select':
+				$values = SelectFieldValueProperty::get( $entry, $field ) ?? null;
+				break;
+		}
 
-		if ( null === $values || ! class_exists( 'GFQuiz' ) ) {
+		if ( empty( $values ) || ! class_exists( 'GFQuiz' ) ) {
 			return null;
 		}
 
