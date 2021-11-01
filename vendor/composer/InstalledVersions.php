@@ -27,33 +27,33 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => 'dev-main',
-    'version' => 'dev-main',
+    'pretty_version' => 'dev-develop',
+    'version' => 'dev-develop',
     'aliases' => 
     array (
     ),
-    'reference' => 'e28558d0cb0fe49f72422ec57090cd46e15bc3cb',
+    'reference' => 'baaa4b26c96fd969a5204ad2d5ffcfc882d58169',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
   array (
     'antecedent/patchwork' => 
     array (
-      'pretty_version' => '2.1.15',
-      'version' => '2.1.15.0',
+      'pretty_version' => '2.1.17',
+      'version' => '2.1.17.0',
       'aliases' => 
       array (
       ),
-      'reference' => '0430ceaac7f447f1778c199ec19d7e4362a6f961',
+      'reference' => 'df5aba175a44c2996ced4edf8ec9f9081b5348c0',
     ),
     'behat/gherkin' => 
     array (
-      'pretty_version' => 'v4.8.0',
-      'version' => '4.8.0.0',
+      'pretty_version' => 'v4.9.0',
+      'version' => '4.9.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '2391482cd003dfdc36b679b27e9f5326bd656acd',
+      'reference' => '0bc8d1e30e96183e4f36db9dc79caead300beff4',
     ),
     'bordoni/phpass' => 
     array (
@@ -138,12 +138,12 @@ private static $installed = array (
     ),
     'codeception/module-rest' => 
     array (
-      'pretty_version' => '1.3.1',
-      'version' => '1.3.1.0',
+      'pretty_version' => '1.3.2',
+      'version' => '1.3.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '293a0103d5257b7c884ef276147a9a06914e878f',
+      'reference' => '2f35e75d4a5a7fd1fe77d7f5bd56a9123c453e3b',
     ),
     'codeception/module-webdriver' => 
     array (
@@ -201,12 +201,12 @@ private static $installed = array (
     ),
     'doctrine/inflector' => 
     array (
-      'pretty_version' => '2.0.3',
-      'version' => '2.0.3.0',
+      'pretty_version' => '2.0.4',
+      'version' => '2.0.4.0',
       'aliases' => 
       array (
       ),
-      'reference' => '9cf661f4eb38f7c881cac67c75ea9b00bf97b210',
+      'reference' => '8b7ff3e4b7de6b2c84da85637b59fd2880ecaa89',
     ),
     'doctrine/instantiator' => 
     array (
@@ -249,12 +249,12 @@ private static $installed = array (
     ),
     'guzzlehttp/promises' => 
     array (
-      'pretty_version' => '1.4.1',
-      'version' => '1.4.1.0',
+      'pretty_version' => '1.5.1',
+      'version' => '1.5.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8e7d04f1f6450fef59366c399cfad4b9383aa30d',
+      'reference' => 'fe752aedc9fd8fcca3fe7ad05d419d32998a06da',
     ),
     'guzzlehttp/psr7' => 
     array (
@@ -267,12 +267,12 @@ private static $installed = array (
     ),
     'harness-software/wp-graphql-gravity-forms' => 
     array (
-      'pretty_version' => 'dev-main',
-      'version' => 'dev-main',
+      'pretty_version' => 'dev-develop',
+      'version' => 'dev-develop',
       'aliases' => 
       array (
       ),
-      'reference' => 'e28558d0cb0fe49f72422ec57090cd46e15bc3cb',
+      'reference' => 'baaa4b26c96fd969a5204ad2d5ffcfc882d58169',
     ),
     'hautelook/phpass' => 
     array (
@@ -283,26 +283,26 @@ private static $installed = array (
     ),
     'illuminate/collections' => 
     array (
-      'pretty_version' => 'v8.63.0',
-      'version' => '8.63.0.0',
+      'pretty_version' => 'v8.68.0',
+      'version' => '8.68.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8e6c29c49f28b90e9de0cac1c14290feb99202c5',
+      'reference' => '05f286ec5fd2dd286e8384577047efc375c8954c',
     ),
     'illuminate/contracts' => 
     array (
-      'pretty_version' => 'v8.63.0',
-      'version' => '8.63.0.0',
+      'pretty_version' => 'v8.68.0',
+      'version' => '8.68.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'ab4bb4ec3b36905ccf972c84f9aaa2bdd1153913',
+      'reference' => 'e76f4bce73a2a1656add24bd5210ebc4b8af49c0',
     ),
     'illuminate/macroable' => 
     array (
-      'pretty_version' => 'v8.62.0',
-      'version' => '8.62.0.0',
+      'pretty_version' => 'v8.68.0',
+      'version' => '8.68.0.0',
       'aliases' => 
       array (
       ),
@@ -310,12 +310,12 @@ private static $installed = array (
     ),
     'illuminate/support' => 
     array (
-      'pretty_version' => 'v8.63.0',
-      'version' => '8.63.0.0',
+      'pretty_version' => 'v8.68.0',
+      'version' => '8.68.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '259993e2119e99be17c10486f66c5a13b7fe4a70',
+      'reference' => 'f0a1ffbfd93a24758f39cc76821ce5a408e20b53',
     ),
     'justinrainbow/json-schema' => 
     array (
@@ -408,21 +408,21 @@ private static $installed = array (
     ),
     'php-stubs/wordpress-stubs' => 
     array (
-      'pretty_version' => 'v5.8.0',
-      'version' => '5.8.0.0',
+      'pretty_version' => 'v5.8.1',
+      'version' => '5.8.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '794e6eedfd5f2a334d581214c007fc398be588fe',
+      'reference' => '8b333464d3183bccde2fdbb814e3cae592434943',
     ),
     'php-webdriver/webdriver' => 
     array (
-      'pretty_version' => '1.11.1',
-      'version' => '1.11.1.0',
+      'pretty_version' => '1.12.0',
+      'version' => '1.12.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'da16e39968f8dd5cfb7d07eef91dc2b731c69880',
+      'reference' => '99d4856ed7dffcdf6a52eccd6551e83d8d557ceb',
     ),
     'phpcompatibility/php-compatibility' => 
     array (
@@ -462,12 +462,12 @@ private static $installed = array (
     ),
     'phpdocumentor/reflection-docblock' => 
     array (
-      'pretty_version' => '5.2.2',
-      'version' => '5.2.2.0',
+      'pretty_version' => '5.3.0',
+      'version' => '5.3.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '069a785b2141f5bcf49f3e353548dc1cce6df556',
+      'reference' => '622548b623e81ca6d78b721c5e029f4ce664f170',
     ),
     'phpdocumentor/type-resolver' => 
     array (
@@ -780,12 +780,12 @@ private static $installed = array (
     ),
     'squizlabs/php_codesniffer' => 
     array (
-      'pretty_version' => '3.6.0',
-      'version' => '3.6.0.0',
+      'pretty_version' => '3.6.1',
+      'version' => '3.6.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'ffced0d2c8fa8e6cdc4d695a743271fab6c38625',
+      'reference' => 'f268ca40d54617c6e06757f83f699775c9b3ff2e',
     ),
     'symfony/browser-kit' => 
     array (

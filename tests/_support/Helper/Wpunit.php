@@ -9,8 +9,6 @@ namespace Helper;
 
 use Helper\GFHelpers\PropertyHelper;
 
-use function PHPSTORM_META\map;
-
 /**
  * Class - Wpunit
  * All public methods declared in helper class will be available in $I
@@ -662,6 +660,72 @@ class Wpunit extends \Codeception\Module {
 		);
 		return new PropertyHelper( $keys );
 	}
+	/**
+	 * Get the default args for a Checkbox field
+	 *
+	 * @param array $args .
+	 * @return array
+	 */
+	public function getQuizFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'allowsPrepopulate',
+				'gquizAnswerExplanation',
+				'autocompleteAttribute',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'defaultValue',
+				'description',
+				'enableAutocomplete',
+				'enableEnhancedUI',
+				'enableSelectAll',
+				'errorMessage',
+				'formId',
+				'gquizWeightedScoreEnabled',
+				'gquizEnableRandomizeQuizChoices',
+				[ 'id' => 1 ],
+				'inputName',
+				['inputType' => 'checkbox' ],
+				[ 'inputs' => null ],
+				['gquizFieldType'=>'checkbox'],
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'placeholder',
+				'gquizShowAnswerExplanation',
+				'size',
+				[ 'type' => 'quiz' ],
+				'visibility',
+				[
+					'choices' => [
+						[
+							'text'       => 'First Choice',
+							'value'      => 'gquiz4dd0fdac5',
+							'gquizIsCorrect'  => true,
+							'gquizWeight'     => null,
+						],
+						[
+							'text'       => 'Second Choice',
+							'value'      => 'gquiz4dd0fdac4',
+							'gquizIsCorrect' => false,
+							'gquizWeight'     => 1.4,
+						],
+						[
+							'text'       => 'Third Choice',
+							'value'      => 'gquiz4dd0fdac3',
+							'gquizIsCorrect' => false,
+							'gquizWeight'    => 3,
+						],
+					],
+				],
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
 	/**
 	 * Get the default args for a MultiSelect field
 	 *

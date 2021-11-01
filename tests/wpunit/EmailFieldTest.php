@@ -69,7 +69,7 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	public function field_value_input() {
 		$value = $this->field_value;
 		return [
-			'value' => $value,
+			'value'             => $value,
 			'confirmationValue' => $value,
 		];
 	}
@@ -84,10 +84,10 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	/**
 	 * The graphql field value input.
 	 */
-	public function updated_field_value_input(){
+	public function updated_field_value_input() {
 		$value = $this->updated_field_value();
 		return [
-			'value' => $value,
+			'value'             => $value,
 			'confirmationValue' => $value,
 		];
 	}
@@ -343,7 +343,6 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ) : void {
-		
 		$this->assertEquals( $this->field_value, $actual_entry[ $form['fields'][0]->id ], 'Submit mutation entry value not equal' );
 	}
 }

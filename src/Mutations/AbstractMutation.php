@@ -91,16 +91,17 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	 * @return array
 	 */
 	protected function flatten_field_values( GF_Field $field, $value ) : array {
-		$array = [];
+		$field_input_type = $field->get_input_type();
+		$array            = [];
 
 		// For an array of sub-values, add each to the partial entry individually.
-		if ( is_array( $value ) && ! in_array( $field->type, [ 'email', 'list', 'multiselect', 'post_category', 'post_custom', 'post_tags' ], true ) ) {
+		if ( is_array( $value ) && ! in_array( $field_input_type, [ 'email', 'list', 'multiselect', 'post_category', 'post_custom', 'post_tags' ], true ) ) {
 			foreach ( $value as $key => $single_value ) {
 				$array[ $key ] = $single_value;
 			}
 			return $array;
 		}
-		if ( 'email' === $field->type ) {
+		if ( 'email' === $field_input_type ) {
 			$array[ $field->id ]              = $value[0];
 			$array[ $field->inputs[1]['id'] ] = $value[1];
 
@@ -159,7 +160,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	 * @return array
 	 */
 	public function disable_validation_for_unsupported_fields( array $result, $value, array $form, GF_Field $field ) : array {
-		if ( in_array( $field->type, [ 'captcha' ], true ) ) {
+		if ( in_array( $field->get_input_type(), [ 'captcha' ], true ) ) {
 			$result = [
 				'is_valid' => true,
 				'message'  => __( 'This field type is not (yet) supported.', 'wp-graphql-gravity-forms' ),
@@ -205,8 +206,10 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	 * @return array
 	 */
 	public function add_value_to_array( array $values, GF_Field $field, $value_to_add ) : array {
+		$field_input_type = $field->get_input_type();
+
 		// Normal email fields are stored under their field id, but confirmation values are stored in a subfield.
-		if ( 'email' === $field->type ) {
+		if ( 'email' === $field_input_type ) {
 			$values[ $field->id ] = $value_to_add[0];
 			if ( isset( $value_to_add[1] ) ) {
 				$values[ $field->inputs[1]['id'] ] = $value_to_add[1];
@@ -215,7 +218,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 		}
 
 		// Some fields are stored using their own array structure of subfields, so we're just adding it to to the values array as is.
-		if ( in_array( $field->type, [ 'address', 'chainedselect', 'checkbox', 'consent', 'name', 'post_image' ], true ) ) {
+		if ( in_array( $field_input_type, [ 'address', 'chainedselect', 'checkbox', 'consent', 'name', 'post_image' ], true ) ) {
 			return $values + $value_to_add;
 		}
 
@@ -264,7 +267,7 @@ abstract class AbstractMutation implements Hookable, Mutation {
 		// Stores the name of the necessary field value type if it is missing from the mutation.
 		$value_type_name = false;
 
-		switch ( $field->type ) {
+		switch ( $field->get_input_type() ) {
 			case 'address':
 				if ( ! isset( $values['addressValues'] ) ) {
 					$value_type_name = 'addressValues';
@@ -786,7 +789,9 @@ abstract class AbstractMutation implements Hookable, Mutation {
 	public function prepare_field_value_by_type( $value, GF_Field $field, $prev_value = null ) {
 		$prepared_value = null;
 
-		switch ( $field->type ) {
+		$field_type = $field->get_input_type();
+
+		switch ( $field_type ) {
 			case 'address':
 				$prepared_value = $this->prepare_address_field_value( $value, $field );
 				break;

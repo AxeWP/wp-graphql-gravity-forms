@@ -377,7 +377,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 			'last'   => 2,
 			'before' => $response['data']['gravityFormsEntries']['pageInfo']['endCursor'],
 		];
-		$response = $this->graphql( compact( 'query', 'variables' ) );
+		$response  = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response, 'Last/before #2 array has errors.' );
 		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'last/before does not return correct amount.' );

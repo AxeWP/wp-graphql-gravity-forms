@@ -124,6 +124,13 @@ class Entry extends AbstractObject implements Field {
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the entry is a draft.', 'wp-graphql-gravity-forms' ),
 			],
+			'quizResults' => [
+				'type'        => EntryQuizResults::$type,
+				'description' => __( 'The quiz results for the entry. Requires Gravity Forms Quiz to be enabled.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function( $root ) {
+					return class_exists( 'GFQuiz' ) ? $root : null;
+				},
+			],
 			'resumeToken' => [
 				'type'        => 'String',
 				'description' => __( 'The resume token. Only applies to draft entries.', 'wp-graphql-gravity-forms' ),
