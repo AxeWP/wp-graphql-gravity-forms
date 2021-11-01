@@ -1,6 +1,6 @@
 # Submit a form by building a draft entry incremmentally.
 
-While it is recommended to [use the `submitGravityFormsForm` mutation for submissions](submitting-forms.md), another way to submit forms is to incrementally build a draft entry. **This process may be deprecated and removed in future versions of the plugin**.
+While it is recommended to [use the `submitGravityFormsForm` mutation for submissions](submitting-forms.md), another way to submit forms is to incrementally build a draft entry. **This process is deprecated and will be removed in future versions of the plugin**.
 
 The submission process works like this:
 
