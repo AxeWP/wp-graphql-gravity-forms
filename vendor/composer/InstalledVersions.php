@@ -32,7 +32,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'baaa4b26c96fd969a5204ad2d5ffcfc882d58169',
+    'reference' => '4a2ecf0948965c51cf91b78d2093b9f94662feae',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
@@ -272,7 +272,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'baaa4b26c96fd969a5204ad2d5ffcfc882d58169',
+      'reference' => '4a2ecf0948965c51cf91b78d2093b9f94662feae',
     ),
     'hautelook/phpass' => 
     array (
@@ -283,8 +283,8 @@ private static $installed = array (
     ),
     'illuminate/collections' => 
     array (
-      'pretty_version' => 'v8.68.0',
-      'version' => '8.68.0.0',
+      'pretty_version' => 'v8.68.1',
+      'version' => '8.68.1.0',
       'aliases' => 
       array (
       ),
@@ -292,8 +292,8 @@ private static $installed = array (
     ),
     'illuminate/contracts' => 
     array (
-      'pretty_version' => 'v8.68.0',
-      'version' => '8.68.0.0',
+      'pretty_version' => 'v8.68.1',
+      'version' => '8.68.1.0',
       'aliases' => 
       array (
       ),
@@ -301,8 +301,8 @@ private static $installed = array (
     ),
     'illuminate/macroable' => 
     array (
-      'pretty_version' => 'v8.68.0',
-      'version' => '8.68.0.0',
+      'pretty_version' => 'v8.68.1',
+      'version' => '8.68.1.0',
       'aliases' => 
       array (
       ),
@@ -310,8 +310,8 @@ private static $installed = array (
     ),
     'illuminate/support' => 
     array (
-      'pretty_version' => 'v8.68.0',
-      'version' => '8.68.0.0',
+      'pretty_version' => 'v8.68.1',
+      'version' => '8.68.1.0',
       'aliases' => 
       array (
       ),
@@ -328,12 +328,12 @@ private static $installed = array (
     ),
     'lucatume/wp-browser' => 
     array (
-      'pretty_version' => '3.0.11',
-      'version' => '3.0.11.0',
+      'pretty_version' => '3.0.12',
+      'version' => '3.0.12.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c215ae0aff4a4ea58e2172e7014a2a7b0c160e25',
+      'reference' => 'f6e8d3b38e2b457057262d414a1a69270521dcbd',
     ),
     'mikehaertl/php-shellcommand' => 
     array (
@@ -798,21 +798,21 @@ private static $installed = array (
     ),
     'symfony/config' => 
     array (
-      'pretty_version' => 'v5.3.4',
-      'version' => '5.3.4.0',
+      'pretty_version' => 'v5.3.10',
+      'version' => '5.3.10.0',
       'aliases' => 
       array (
       ),
-      'reference' => '4268f3059c904c61636275182707f81645517a37',
+      'reference' => 'ac23c2f24d5634966d665d836c3933d54347e5d4',
     ),
     'symfony/console' => 
     array (
-      'pretty_version' => 'v5.3.7',
-      'version' => '5.3.7.0',
+      'pretty_version' => 'v5.3.10',
+      'version' => '5.3.10.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8b1008344647462ae6ec57559da166c2bfa5e16a',
+      'reference' => 'd4e409d9fbcfbf71af0e5a940abb7b0b4bad0bd3',
     ),
     'symfony/css-selector' => 
     array (
@@ -994,21 +994,21 @@ private static $installed = array (
     ),
     'symfony/string' => 
     array (
-      'pretty_version' => 'v5.3.7',
-      'version' => '5.3.7.0',
+      'pretty_version' => 'v5.3.10',
+      'version' => '5.3.10.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8d224396e28d30f81969f083a58763b8b9ceb0a5',
+      'reference' => 'd70c35bb20bbca71fc4ab7921e3c6bda1a82a60c',
     ),
     'symfony/translation' => 
     array (
-      'pretty_version' => 'v5.3.9',
-      'version' => '5.3.9.0',
+      'pretty_version' => 'v5.3.10',
+      'version' => '5.3.10.0',
       'aliases' => 
       array (
       ),
-      'reference' => '6e69f3551c1a3356cf6ea8d019bf039a0f8b6886',
+      'reference' => '6ef197aea2ac8b9cd63e0da7522b3771714035aa',
     ),
     'symfony/translation-contracts' => 
     array (
