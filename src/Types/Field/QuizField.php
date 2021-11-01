@@ -10,7 +10,7 @@
 
 namespace WPGraphQLGravityForms\Types\Field;
 
-use WPGraphQLGravityForms\Types\Enum\QuizInputTypeEnum;
+use WPGraphQLGravityForms\Types\Enum\QuizFieldTypeEnum;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
 
 /**
@@ -105,7 +105,7 @@ class QuizField extends AbstractFormField {
 					'description' => __( 'List of inputs. Checkboxes are treated as multi-input fields, since each checkbox item is stored separately.', 'wp-graphql-gravity-forms' ),
 				],
 				'quizFieldType'              => [
-					'type'        => QuizInputTypeEnum::$type,
+					'type'        => QuizFieldTypeEnum::$type,
 					'description' => __( 'The Gravity Forms field type used by the Quiz Field.', 'wp-graphql-gravity-forms' ),
 					'resolve'     => static function( $root ) : string {
 						return $root['gquizFieldType'];

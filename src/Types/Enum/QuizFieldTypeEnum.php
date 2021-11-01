@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - QuizInputTypeEnum
+ * Enum Type - QuizFieldTypeEnum
  *
  * @package WPGraphQLGravityForms\Types\Enum,
  * @since   0.9.0
@@ -9,15 +9,15 @@
 namespace WPGraphQLGravityForms\Types\Enum;
 
 /**
- * Class - QuizInputTypeEnum
+ * Class - QuizFieldTypeEnum
  */
-class QuizInputTypeEnum extends AbstractEnum {
+class QuizFieldTypeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static $type = 'QuizInputTypeEnum';
+	public static $type = 'QuizFieldTypeEnum';
 
 	// Individual elements.
 	const CHECKBOX = 'checkbox';
