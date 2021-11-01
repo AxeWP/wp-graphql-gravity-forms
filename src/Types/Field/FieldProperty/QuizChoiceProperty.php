@@ -4,7 +4,7 @@
  * An individual property for the 'choices' Quiz field property.
  *
  * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
- * @since   0.9.0
+ * @since   0.9.1
  */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty;

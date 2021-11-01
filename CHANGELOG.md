@@ -1,8 +1,18 @@
 # Changelog
 
+## v0.9.1 - Gravity Forms Quiz Support
+This minor release adds support for Gravity Forms Quiz fields.
+
+- feat: Add support for GF Quiz fields.
+- fix: Fixed the type descriptions for `NoDuplicatesProperty` and `RadioChoiceProperty`.
+- dev: Use `GF_Field::get_input_type()` when choosing how to handle input values. This will allow for better support of composite type fields in the future.
+- docs: Update language regarding `UpdateDraftEntryFieldValue`'s upcoming deprecation.
+- docs: Fix link to Deleting Entries doc.
+- tests: Add WPUnit tests for `EmailField`.
+
 ## v0.9.0 - Conditional Logic Support on Confirmations
 
-This minor release adds the `conditionalLogic` GraphQL fiel to `gravityFormsForm.confirmations`. We also squashed a few bugs and implemented some more WPUnit tests.
+This minor release adds the `conditionalLogic` GraphQL field to `gravityFormsForm.confirmations`. We also squashed a few bugs and implemented some more WPUnit tests.
 
 *Note*: This release technically contains breaking changes for developers making use of `DataManipulator` class methods in their own code.
 

@@ -5,7 +5,7 @@
  * @see https://docs.gravityforms.com/quiz-field/
  *
  * @package WPGraphQLGravityForms\Types\Field
- * @since   0.9.0
+ * @since   0.9.1
  */
 
 namespace WPGraphQLGravityForms\Types\Field;
