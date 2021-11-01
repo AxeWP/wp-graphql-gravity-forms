@@ -22,6 +22,9 @@ parameters:
 			-
 				message: '#Call to function is_array\(\) with string will always evaluate to false.$#'
 				path: src/Types/Field/FieldProperty/ValueProperty/QuizFieldValueProperty.php
+			-
+				message: '#Parameter \#1 \$value of method GFQuiz::maybe_format_field_values\(\) expects string, array\|string given.$#'
+				path: src/Types/Field/FieldProperty/ValueProperty/QuizFieldValueProperty.php
 			- '#^Function apply_filters(_ref_array)? invoked with ([1-9]|1[0-2]) parameters, 2 required\.$#'
 			- '#^Function gf_apply_filters(_ref_array)? invoked with ([1-9]|1[0-2]) parameters, 2 required\.$#'
 			- '#^Argument of an invalid type GF_Field supplied for foreach, only iterables are supported.$#'
