@@ -5,7 +5,7 @@
  * @see https://docs.gravityforms.com/configure-quiz-settings/
  *
  * @package WPGraphQLGravityForms\Types\Form
- * @since   0.9.0
+ * @since   0.9.1
  */
 
 namespace WPGraphQLGravityForms\Types\Form;

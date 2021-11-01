@@ -3,7 +3,7 @@
  * Enum Type - QuizFieldTypeEnum
  *
  * @package WPGraphQLGravityForms\Types\Enum,
- * @since   0.9.0
+ * @since   0.9.1
  */
 
 namespace WPGraphQLGravityForms\Types\Enum;

@@ -4,7 +4,7 @@
  * Values for an individual Quiz field.
  *
  * @package WPGraphQLGravityForms\Types\Field\FieldProperties\ValueProperty
- * @since   0.9.0
+ * @since   0.9.1
  */
 
 namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
