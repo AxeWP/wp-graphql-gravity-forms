@@ -12,7 +12,7 @@ use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
 /**
  * Class -ListFieldTest.
  */
-class ListFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInterface {
+class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -82,7 +82,7 @@ class ListFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 	 * Thehe value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ $this->fields[0]['id'] => wp_json_encode( [ 'first', 'second' ] ) ];
+		return [ 'input_' . $this->fields[0]['id'] => serialize( [ 'first', 'second' ] ) ];
 	}
 
 	/**
