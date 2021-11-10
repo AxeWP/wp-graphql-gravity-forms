@@ -96,7 +96,7 @@ class Settings implements Hookable {
 
 		/**
 		 * Filter for overriding the list of enabled actions.
-		 * Possible array values: `add_form`, `update`, `delete_form`.
+		 * Possible array values: `create_form`, `update_form`, `delete_form`, `create_entry`, `update_entry`.
 		 *
 		 * @param array $enabled_actions. An array of enabled actions.
 		 */
