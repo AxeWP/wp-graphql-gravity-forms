@@ -340,6 +340,9 @@ class PropertyHelper extends GFHelpers {
 	public function size( $value = null ) {
 		return isset( $value ) ? $value : 'medium';
 	}
+	public function storageType( $value = null ) {
+		return isset( $value ) ? $value : 'json';
+	}
 
 	public function subLabelPlacement( $value = null ) {
 		return isset( $value ) ? $value : '';

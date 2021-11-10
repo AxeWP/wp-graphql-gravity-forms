@@ -809,22 +809,23 @@ class Wpunit extends \Codeception\Module {
 				'layoutGridColumnSpan',
 				'layoutSpacerGridColumnSpan',
 				'size',
+				'storageType',
 				[ 'type' => 'multiselect' ],
 				'visibility',
 				[
 					'choices' => [
 						[
-							'text'       => 'First Choice',
+							'text'       => 'first',
 							'value'      => 'first',
 							'isSelected' => true,
 						],
 						[
-							'text'       => 'Second Choice',
+							'text'       => 'second',
 							'value'      => 'second',
 							'isSelected' => false,
 						],
 						[
-							'text'       => 'Third Choice',
+							'text'       => 'third',
 							'value'      => 'third',
 							'isSelected' => false,
 						],
@@ -1020,7 +1021,7 @@ class Wpunit extends \Codeception\Module {
 	 *
 	 * @return array
 	 */
-	public function getFormDefaultArgs( ?array $args ) : array {
+	public function getFormDefaultArgs( $args = [] ) : array {
 		return array_merge(
 			[
 				'button'                     => [
