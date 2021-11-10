@@ -8,6 +8,7 @@
 
 namespace WPGraphQLGravityForms;
 
+use WPGraphQLGravityForms\Extensions\WPGatsby;
 use WPGraphQLGravityForms\Interfaces\Hookable;
 use WPGraphQLGravityForms\Types\Button\Button;
 use WPGraphQLGravityForms\Types\Button\LastPageButton;
@@ -305,6 +306,16 @@ final class WPGraphQLGravityForms {
 		self::$instances['update_draft_entry_website_field_value']        = new Mutations\UpdateDraftEntryWebsiteFieldValue();
 		self::$instances['update_draft_entry']                            = new Mutations\UpdateDraftEntry();
 		self::$instances['update_entry']                                  = new Mutations\UpdateEntry();
+
+		/**
+		 * Support for 3rd-party extensions.
+		 */
+
+		// WPGatsby support.
+		if ( class_exists( 'WPGatsby' ) ) {
+			self::$instances['wpgatsby_settings'] = new WPGatsby\Settings();
+			self::$instances['wpgatsby_monitors'] = new WPGatsby\ActionMonitors();
+		}
 
 		/**
 		 * Filter for instantiating custom WPGraphQLGF class instances.

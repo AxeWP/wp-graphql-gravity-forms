@@ -15,6 +15,7 @@ parameters:
 			- ../gravityformssignature/
 			- ../gravityformschainedselects/
 			- ../gravityformsquiz/
+			- ../wp-gatsby/
 		ignoreErrors:
 			-
 				message: '#Anonymous function never returns float so it can be removed from the return typehint.$#'
