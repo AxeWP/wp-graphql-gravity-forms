@@ -112,7 +112,6 @@ abstract class GFHelpers {
 	 * @param mixed  $object .
 	 */
 	public function getActualValue( string $key, $object ) {
-		codecept_debug( $key );
 		switch ( $key ) {
 			case 'addressType':
 			case 'captchaType':
@@ -160,7 +159,6 @@ abstract class GFHelpers {
 				break;
 		}
 		$return = [ $key => $value ];
-		codecept_debug( $return );
 		return $return;
 	}
 

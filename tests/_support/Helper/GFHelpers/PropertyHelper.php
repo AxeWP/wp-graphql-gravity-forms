@@ -4,6 +4,10 @@ namespace Helper\GFHelpers;
 
 class PropertyHelper extends GFHelpers {
 
+	public function addIconUrl( $value = null ) {
+		return isset( $value ) ? $value : 'someurl.test';
+	}
+
 	public function addressType( $value = null ) {
 		return isset( $value ) ? $value : 'international';
 	}
@@ -20,9 +24,6 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : $this->dummy->yesno();
 	}
 
-	public function gquizAnswerExplanation( string $value = null) : ?string {
-		return $value ?? $this->dummy->sentence(1,3);
-	}
 
 	public function autocompleteAttribute( $value = null ) {
 		return isset( $value ) ? $value : ( $this->dummy->text( 0, 8, true ) ?? null );
@@ -107,6 +108,10 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : ( $this->dummy->text( 0, 8, true ) ?? null );
 	}
 
+	public function deleteIconUrl( $value = null ) {
+		return isset( $value ) ? $value : 'someurl.test';
+	}
+
 	public function description( $value = null ) {
 		return isset( $value ) ? $value : $this->dummy->text();
 	}
@@ -131,7 +136,7 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : true;
 	}
 
-	public function emailConfirmEnabled( $value = null) :bool {
+	public function emailConfirmEnabled( $value = null ) :bool {
 		return isset( $value ) ? $value : true;
 	}
 
@@ -174,6 +179,9 @@ class PropertyHelper extends GFHelpers {
 	public function enableSelectAll( $value = null ) {
 		return isset( $value ) ? $value : $this->dummy->yesno();
 	}
+	public function enableColumns( $value = null ) {
+		return isset( $value ) ? $value : false;
+	}
 
 	public function gquizWeightedScoreEnabled( bool $value = null ) : ?bool {
 		return $value ?? true;
@@ -211,8 +219,12 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : '';
 	}
 
+	public function gquizAnswerExplanation( string $value = null ) : ?string {
+		return $value ?? $this->dummy->sentence( 1, 3 );
+	}
+
 	public function gquizIsCorrect( bool $value = null ) : ?bool {
-		return $value ?? $this->dummy-yesno();
+		return $value ?? $this->dummy - yesno();
 	}
 
 	public function isRequired( $value = null ) {
@@ -239,12 +251,19 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : ( rand( 0, 12 ) ?: null );
 	}
 
+	public function listValues( $value = null ) {
+		return isset( $value ) ? $value : null;
+	}
+
 	public function maxFiles( $value = null ) {
 		return isset( $value ) ? $value : '';
 	}
 
 	public function maxLength( $value = null ) {
 		return isset( $value ) ? $value : ( rand( 0, 150 ) ?: null );
+	}
+	public function maxRows( $value = null ) {
+		return isset( $value ) ? $value : ( rand( 3, 10 ) ?: null );
 	}
 
 	public function multipleFiles( $value = null ) {
@@ -277,7 +296,7 @@ class PropertyHelper extends GFHelpers {
 	public function placeholder( $value = null ) {
 		return isset( $value ) ? $value : ( $this->dummy->words( 2 ) );
 	}
-	
+
 	public function previousButton( $value = null ) {
 		return isset( $value ) ? $value : [
 			'type'     => 'text',
@@ -302,7 +321,7 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : null;
 	}
 
-	public function gquizShowAnswerExplanation( bool $value = null): ?bool {
+	public function gquizShowAnswerExplanation( bool $value = null ): ?bool {
 		return $value ?? $this->dummy->yesno();
 	}
 
@@ -370,8 +389,8 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : ( $this->dummy->text( 1, 8, true ) ?? '' );
 	}
 
-	public function gquizWeight( $value = null) {
-		return $value ?? $this->dummy->number(0,5);
+	public function gquizWeight( $value = null ) {
+		return $value ?? $this->dummy->number( 0, 5 );
 	}
 
 }
