@@ -2,15 +2,29 @@
 
 ## Filters
 
+- [`wp_graphql_gf_{$enumType}_values`](#wp_graphql_gf_enumtype_values)
 - [`wp_graphql_gf_can_view_entries`](#wp_graphql_gf_can_view_entries)
 - [`wp_graphql_gf_connection_config`](#wp_graphql_gf_connection_config)
 - [`wp_graphql_gf_custom_properties`](#wp_graphql_gf_custom_properties)
 - [`wp_graphql_gf_field_value_type`](#wp_graphql_gf_field_value_type)
 - [`wp_graphql_gf_form_object`](#wp_graphql_gf_form_object)
+- [`wp_graphql_gf_gatsby_enabled_actions`](#wp_graphql_gf_gatsby_enabled_actions)
 - [`wp_graphql_gf_instances`](#wp_graphql_gf_instances)
 - [`wp_graphql_gf_prepare_field_value`](#wp_graphql_gf_prepare_field_value)
-- [`wp_graphl_gf_type_config`](#wp_graphl_gf_type_config)
-- [`wp_graphql_gf_{$enumType}_values`](#wp_graphql_gf_enumtype_values)
+- [`wp_graphql_gf_type_config`](#wp_graphl_gf_type_config)
+
+
+### `wp_graphql_gf_{$enumType}_values`.
+
+Filters registered values for an Enum.
+
+```php
+apply_filters( 'wp_graphql_gf_{$enumType}_values, array $values );
+```
+
+#### Parameters:
+
+- **`$values`** _(array)_ : The values for the registered Enum type.
 
 ### `wp_graphql_gf_can_view_entries`
 
@@ -78,6 +92,18 @@ apply_filters( 'wp_graphql_gf_form_object', array $form );
 
 - **`$form`** _(array)_ : The GF [Form object](https://docs.gravityforms.com/form-object/).
 
+### `wp_graphql_gf_gatsby_enabled_actions`
+
+Filter for overriding the list of Gravity Form actions that are logged by WPGatsby's Action Monitor. 
+
+```php
+apply_filters( 'wp_graphql_gf_gatsby_enabled_actions', array $enabled_actions );
+```
+
+#### Parameters
+
+- **`$enabled_actions`** _(array)_ : An array of enabled actions. Possible array values: `create_form`, `update_form`, `delete_form`, `create_entry`, `update_entry`.
+
 ### `wp_graphql_gf_instances`
 
 Filter for modifying the plugin's class instances. Can be used to extend supported functionality, such as mutations, custom form fields, etc.
@@ -120,14 +146,3 @@ apply_filters( 'wp_graphql_gf_{$type}_type_config', array $config );
 - **`$config`** _(array)_ : The [`$config` array for the WPGraphQL type](https://www.wpgraphql.com/functions/register_graphql_object_type/#parameters).
 - **`$type`** _(string)_ : The GraphQL type to be registered.
 
-### `wp_graphql_gf_{$enumType}_values`.
-
-Filters registered values for an Enum.
-
-```php
-apply_filters( 'wp_graphql_gf_{$enumType}_values, array $values );
-```
-
-#### Parameters:
-
-- **`$values`** _(array)_ : The values for the registered Enum type.
