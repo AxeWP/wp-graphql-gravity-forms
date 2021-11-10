@@ -63,9 +63,8 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		);
 
 		$this->entry_id = $this->factory->entry->create(
-				[ 'form_id' => $this->form_id ] + $this->value
+			[ 'form_id' => $this->form_id ] + $this->value
 		);
-		
 
 		if ( $this->test_draft ) {
 			$this->draft_token = $this->factory->draft_entry->create(
@@ -134,7 +133,6 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 		$this->assertArrayNotHasKey( 'errors', $response );
 
-
 		$expected = $this->expected_field_response( $form );
 
 		$this->assertQuerySuccessful( $response, $expected );
@@ -197,13 +195,13 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$expected = $this->expected_mutation_response( 'submitGravityFormsForm', $this->field_value );
 		$this->assertQuerySuccessful( $response, $expected );
-		$this->assertEquals( $response['data']['submitGravityFormsForm']['errors'], null);
+		$this->assertEquals( $response['data']['submitGravityFormsForm']['errors'], null );
 
 		$entry_id = $response['data']['submitGravityFormsForm']['entryId'];
 
 		$actual_entry = GFAPI::get_entry( $entry_id );
 
-		$this->assertNotWPError($actual_entry);
+		$this->assertNotWPError( $actual_entry );
 
 		$this->check_saved_values( $actual_entry, $form );
 

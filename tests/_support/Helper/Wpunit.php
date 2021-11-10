@@ -123,6 +123,7 @@ class Wpunit extends \Codeception\Module {
 		);
 		return new PropertyHelper( $keys );
 	}
+
 	/**
 	 * Get the default args for a radio field.
 	 *
@@ -172,6 +173,61 @@ class Wpunit extends \Codeception\Module {
 				'noDuplicates',
 				'size',
 				[ 'type' => 'radio' ],
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
+	 * Get the default args for a list field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getListFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'addIconUrl',
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				[
+					'choices' => [
+						[
+							'text'  => 'First Choice',
+							'value' => 'first',
+						],
+						[
+							'text'  => 'Second Choice',
+							'value' => 'second',
+						],
+						[
+							'text'  => 'Third Choice',
+							'value' => 'third',
+						],
+					],
+				],
+				'deleteIconUrl',
+				'description',
+				'descriptionPlacement',
+				'enableColumns',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'labelPlacement',
+				'listValues',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'maxRows',
+				'size',
+				[ 'type' => 'list' ],
 				'visibility',
 			],
 			$args
@@ -267,22 +323,22 @@ class Wpunit extends \Codeception\Module {
 					'inputs' => [
 						[
 							'autocompleteAttribute' => 'email',
-							'customLabel' => 'enter email',
-							'defaultValue' => 'user@someemail.com',
-							'id' => 1,
-							'label' => 'Enter Email',
-							'name' => null,
-							'placeholder' => 'place',
+							'customLabel'           => 'enter email',
+							'defaultValue'          => 'user@someemail.com',
+							'id'                    => 1,
+							'label'                 => 'Enter Email',
+							'name'                  => null,
+							'placeholder'           => 'place',
 						],
 						[
 							'autocompleteAttribute' => 'email',
-							'customLabel' => 'confirm email',
-							'defaultValue' => 'user@someemail.com',
-							'id' => '1.2',
-							'label' => 'Confirm Email',
-							'name' => null,
-							'placeholder' => 'holder',
-						]
+							'customLabel'           => 'confirm email',
+							'defaultValue'          => 'user@someemail.com',
+							'id'                    => '1.2',
+							'label'                 => 'Confirm Email',
+							'name'                  => null,
+							'placeholder'           => 'holder',
+						],
 					],
 				],
 				'inputName',
@@ -686,9 +742,9 @@ class Wpunit extends \Codeception\Module {
 				'gquizEnableRandomizeQuizChoices',
 				[ 'id' => 1 ],
 				'inputName',
-				['inputType' => 'checkbox' ],
+				[ 'inputType' => 'checkbox' ],
 				[ 'inputs' => null ],
-				['gquizFieldType'=>'checkbox'],
+				[ 'gquizFieldType' => 'checkbox' ],
 				'isRequired',
 				'label',
 				'layoutGridColumnSpan',
@@ -701,20 +757,20 @@ class Wpunit extends \Codeception\Module {
 				[
 					'choices' => [
 						[
-							'text'       => 'First Choice',
-							'value'      => 'gquiz4dd0fdac5',
-							'gquizIsCorrect'  => true,
-							'gquizWeight'     => null,
+							'text'           => 'First Choice',
+							'value'          => 'gquiz4dd0fdac5',
+							'gquizIsCorrect' => true,
+							'gquizWeight'    => null,
 						],
 						[
-							'text'       => 'Second Choice',
-							'value'      => 'gquiz4dd0fdac4',
+							'text'           => 'Second Choice',
+							'value'          => 'gquiz4dd0fdac4',
 							'gquizIsCorrect' => false,
-							'gquizWeight'     => 1.4,
+							'gquizWeight'    => 1.4,
 						],
 						[
-							'text'       => 'Third Choice',
-							'value'      => 'gquiz4dd0fdac3',
+							'text'           => 'Third Choice',
+							'value'          => 'gquiz4dd0fdac3',
 							'gquizIsCorrect' => false,
 							'gquizWeight'    => 3,
 						],
@@ -964,43 +1020,14 @@ class Wpunit extends \Codeception\Module {
 	 *
 	 * @return array
 	 */
-	public function getFormDefaultArgs() : array {
-		return [
-			'button'                     => [
-				'conditionalLogic' => [
-					'actionType' => 'hide',
-					'logicType'  => 'any',
-					'rules'      => [
-						[
-							'fieldId'  => 1,
-							'operator' => 'is',
-							'value'    => 'value2',
-						],
-					],
-				],
-				'imageUrl'         => 'https://example.com',
-				'text'             => 'Submit',
-				'type'             => 'text',
-			],
-			'confirmations'              => [
-				'5cfec9464e7d7' => [
-					'id'               => '5cfec9464e7d7',
-					'isDefault'        => true,
-					'message'          => 'Thanks for contacting us! We will get in touch with you shortly.',
-					'name'             => 'Default Confirmation',
-					'pageId'           => null,
-					'queryString'      => 'text={Single Line Text:1}&textarea={Text Area:2}',
-					'type'             => 'message',
-					'url'              => 'https://example.com/',
+	public function getFormDefaultArgs( ?array $args ) : array {
+		return array_merge(
+			[
+				'button'                     => [
 					'conditionalLogic' => [
-						'actionType' => 'show',
+						'actionType' => 'hide',
 						'logicType'  => 'any',
 						'rules'      => [
-							[
-								'fieldId'  => 1,
-								'operator' => 'is',
-								'value'    => 'value1',
-							],
 							[
 								'fieldId'  => 1,
 								'operator' => 'is',
@@ -1008,120 +1035,152 @@ class Wpunit extends \Codeception\Module {
 							],
 						],
 					],
+					'imageUrl'         => 'https://example.com',
+					'text'             => 'Submit',
+					'type'             => 'text',
 				],
-			],
-			'cssClass'                   => 'css-class-1 css-class-2',
-			'customRequiredIndicator'    => '(Required)',
-			'date_created'               => '2019-06-10 21:19:02', // This is disregarded by GFAPI::add_form().
-			'descriptionPlacement'       => 'below',
-			'enableAnimation'            => false,
-			'enableHoneypot'             => false,
-			'firstPageCssClass'          => 'first-page-css-class',
-			'is_active'                  => true,
-			'is_trash'                   => false,
-			'labelPlacement'             => 'top_label',
-			'lastPageButton'             => [
-				'imageUrl' => 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
-				'text'     => 'Previous',
-				'type'     => 'text',
-			],
-			'limitEntries'               => true,
-			'limitEntriesCount'          => 100,
-			'limitEntriesMessage'        => 'Only 100 entries are permitted.',
-			'limitEntriesPeriod'         => 'year',
-			'markupVersion'              => 2,
-			'nextFieldId'                => 3,
-			'notifications'              => [
-				'5cfec9464e529' => [
-					'bcc'               => 'bcc-email@example.com',
-					'conditionalLogic'  => [
-						'actionType' => 'show',
-						'logicType'  => 'any',
-						'rules'      => [
+				'confirmations'              => [
+					'5cfec9464e7d7' => [
+						'id'               => '5cfec9464e7d7',
+						'isDefault'        => true,
+						'message'          => 'Thanks for contacting us! We will get in touch with you shortly.',
+						'name'             => 'Default Confirmation',
+						'pageId'           => null,
+						'queryString'      => 'text={Single Line Text:1}&textarea={Text Area:2}',
+						'type'             => 'message',
+						'url'              => 'https://example.com/',
+						'conditionalLogic' => [
+							'actionType' => 'show',
+							'logicType'  => 'any',
+							'rules'      => [
+								[
+									'fieldId'  => 1,
+									'operator' => 'is',
+									'value'    => 'value1',
+								],
+								[
+									'fieldId'  => 1,
+									'operator' => 'is',
+									'value'    => 'value2',
+								],
+							],
+						],
+					],
+				],
+				'cssClass'                   => 'css-class-1 css-class-2',
+				'customRequiredIndicator'    => '(Required)',
+				'date_created'               => '2019-06-10 21:19:02', // This is disregarded by GFAPI::add_form().
+				'descriptionPlacement'       => 'below',
+				'enableAnimation'            => false,
+				'enableHoneypot'             => false,
+				'firstPageCssClass'          => 'first-page-css-class',
+				'is_active'                  => true,
+				'is_trash'                   => false,
+				'labelPlacement'             => 'top_label',
+				'lastPageButton'             => [
+					'imageUrl' => 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+					'text'     => 'Previous',
+					'type'     => 'text',
+				],
+				'limitEntries'               => true,
+				'limitEntriesCount'          => 100,
+				'limitEntriesMessage'        => 'Only 100 entries are permitted.',
+				'limitEntriesPeriod'         => 'year',
+				'markupVersion'              => 2,
+				'nextFieldId'                => 3,
+				'notifications'              => [
+					'5cfec9464e529' => [
+						'bcc'               => 'bcc-email@example.com',
+						'conditionalLogic'  => [
+							'actionType' => 'show',
+							'logicType'  => 'any',
+							'rules'      => [
+								[
+									'fieldId'  => 1,
+									'operator' => 'is',
+									'value'    => 'value1',
+								],
+								[
+									'fieldId'  => 1,
+									'operator' => 'is',
+									'value'    => 'value2',
+								],
+							],
+						],
+						'disableAutoformat' => false,
+						'enableAttachments' => false,
+						'event'             => 'form_submission',
+						'from'              => 'from-email@example.com',
+						'fromName'          => 'WordPress',
+						'id'                => '5cfec9464e529',
+						'isActive'          => true,
+						'message'           => '{all_fields}',
+						'name'              => 'Admin Notification',
+						'replyTo'           => 'replyto-email@example.com',
+						'routing'           => [
 							[
 								'fieldId'  => 1,
 								'operator' => 'is',
 								'value'    => 'value1',
+								'email'    => 'email1@example.com',
 							],
 							[
 								'fieldId'  => 1,
 								'operator' => 'is',
 								'value'    => 'value2',
+								'email'    => 'email2@example.com',
 							],
 						],
+						'service'           => 'wordpress',
+						'subject'           => 'New submission from {form_title}',
+						'to'                => '{admin_email}',
+						'toType'            => 'email',
 					],
-					'disableAutoformat' => false,
-					'enableAttachments' => false,
-					'event'             => 'form_submission',
-					'from'              => 'from-email@example.com',
-					'fromName'          => 'WordPress',
-					'id'                => '5cfec9464e529',
-					'isActive'          => true,
-					'message'           => '{all_fields}',
-					'name'              => 'Admin Notification',
-					'replyTo'           => 'replyto-email@example.com',
-					'routing'           => [
-						[
-							'fieldId'  => 1,
-							'operator' => 'is',
-							'value'    => 'value1',
-							'email'    => 'email1@example.com',
-						],
-						[
-							'fieldId'  => 1,
-							'operator' => 'is',
-							'value'    => 'value2',
-							'email'    => 'email2@example.com',
-						],
+				],
+				'pagination'                 => [
+					'backgroundColor'                     => '#c6df9c',
+					'color'                               => '#197b30',
+					'display_progressbar_on_confirmation' => true,
+					'pages'                               => [ 'page-1-name', 'page-2-name' ],
+					'progressbar_completion_text'         => 'Completed!',
+					'style'                               => 'custom',
+					'type'                                => 'percentage',
+				],
+				'postAuthor'                 => 1,
+				'postCategory'               => 1,
+				'postContentTemplate'        => 'Post content template',
+				'postContentTemplateEnabled' => false,
+				'postFormat'                 => '0',
+				'postStatus'                 => 'publish',
+				'postTitleTemplate'          => 'Post title template',
+				'postTitleTemplateEnabled'   => false,
+				'requireLogin'               => false,
+				'requireLoginMessage'        => 'You must be logged in to submit this form.',
+				'requiredIndicator'          => 'asterisk',
+				'save'                       => [
+					'button'  => [
+						'text' => 'Save and Continue Later',
 					],
-					'service'           => 'wordpress',
-					'subject'           => 'New submission from {form_title}',
-					'to'                => '{admin_email}',
-					'toType'            => 'email',
+					'enabled' => true,
 				],
+				'scheduleEnd'                => '01/01/2030',
+				'scheduleEndAmpm'            => 'pm',
+				'scheduleEndHour'            => 10,
+				'scheduleEndMinute'          => 45,
+				'scheduleForm'               => true,
+				'scheduleMessage'            => 'Schedule message.',
+				'schedulePendingMessage'     => 'Schedule pending message.',
+				'scheduleStart'              => '01/01/2020',
+				'scheduleStartAmpm'          => 'am',
+				'scheduleStartHour'          => 9,
+				'scheduleStartMinute'        => 30,
+				'subLabelPlacement'          => 'below',
+				'useCurrentUserAsAuthor'     => true,
+				'validationSummary'          => true,
+				'version'                    => '2.5.0.1',
 			],
-			'pagination'                 => [
-				'backgroundColor'                     => '#c6df9c',
-				'color'                               => '#197b30',
-				'display_progressbar_on_confirmation' => true,
-				'pages'                               => [ 'page-1-name', 'page-2-name' ],
-				'progressbar_completion_text'         => 'Completed!',
-				'style'                               => 'custom',
-				'type'                                => 'percentage',
-			],
-			'postAuthor'                 => 1,
-			'postCategory'               => 1,
-			'postContentTemplate'        => 'Post content template',
-			'postContentTemplateEnabled' => false,
-			'postFormat'                 => '0',
-			'postStatus'                 => 'publish',
-			'postTitleTemplate'          => 'Post title template',
-			'postTitleTemplateEnabled'   => false,
-			'requireLogin'               => false,
-			'requireLoginMessage'        => 'You must be logged in to submit this form.',
-			'requiredIndicator'          => 'asterisk',
-			'save'                       => [
-				'button'  => [
-					'text' => 'Save and Continue Later',
-				],
-				'enabled' => true,
-			],
-			'scheduleEnd'                => '01/01/2030',
-			'scheduleEndAmpm'            => 'pm',
-			'scheduleEndHour'            => 10,
-			'scheduleEndMinute'          => 45,
-			'scheduleForm'               => true,
-			'scheduleMessage'            => 'Schedule message.',
-			'schedulePendingMessage'     => 'Schedule pending message.',
-			'scheduleStart'              => '01/01/2020',
-			'scheduleStartAmpm'          => 'am',
-			'scheduleStartHour'          => 9,
-			'scheduleStartMinute'        => 30,
-			'subLabelPlacement'          => 'below',
-			'useCurrentUserAsAuthor'     => true,
-			'validationSummary'          => true,
-			'version'                    => '2.5.0.1',
-		];
+			$args
+		);
 	}
 
 	public function getWebsiteFieldHelper( array $args = [] ) : PropertyHelper {
