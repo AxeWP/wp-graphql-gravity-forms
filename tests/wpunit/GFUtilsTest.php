@@ -77,11 +77,13 @@ class GFUtilsTest extends GFGraphQLTestCase {
 		$actual = GFUtils::get_form( $this->form_id );
 		$this->assertEquals( $expected, $actual );
 
+		// Test Exception.
 		$this->expectException( UserError::class );
 		$this->expectExceptionMessage( 'Unable to retrieve the form for the given ID' );
-
 		$actual = GFUtils::get_form( $this->form_id + 1 );
 	}
+
+
 
 	/**
 	 * Tests GFUtils::get_form() for trashed forms.
@@ -101,6 +103,16 @@ class GFUtilsTest extends GFGraphQLTestCase {
 		$actual = GFUtils::get_form( $form_id );
 
 		$this->factory->form->delete( $form_id );
+	}
+
+	/**
+	 * Tests GFUtils::get_forms().
+	 */
+	public function testGetForms() : void {
+		$expected = $this->factory->form->get_object_by_id( $this->form_id );
+
+		$actual = GFUtils::get_forms( [ $this->form_id ] );
+		$this->assertEquals( [ $expected ], $actual );
 	}
 
 	/**
@@ -276,6 +288,4 @@ class GFUtilsTest extends GFGraphQLTestCase {
 		$this->assertIsArray( $actual );
 		$this->factory->entry->delete( $actual['entry_id'] );
 	}
-
-
 }
