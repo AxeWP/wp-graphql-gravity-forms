@@ -13,13 +13,12 @@ class WPGraphQLGravityFormsTest extends \Codeception\TestCase\WPTestCase {
 		// Before...
 		parent::setUp();
 		\WPGraphQL::clear_schema();
-		$this->instance = new WPGraphQLGravityForms();
 	}
 
 	public function tearDown(): void {
 		// Your tear down methods here.
 
-		unset( $this->wPGraphQLGravityForms );
+		unset( $this->instance );
 		\WPGraphQL::clear_schema();
 
 		// Then...
@@ -28,10 +27,19 @@ class WPGraphQLGravityFormsTest extends \Codeception\TestCase\WPTestCase {
 
 	// Tests
 	public function testInstance() {
+		$this->instance = new WPGraphQLGravityForms();
+
 		$this->assertTrue( $this->instance instanceof WPGraphQLGravityForms );
 	}
 
+	public function testInstanceBeforeInstantiation() {
+		$instances = WPGraphQLGravityForms::instances();
+		codecept_debug( $instances );
+		$this->assertNotEmpty( $instances );
+	}
+
 	public function testRun() {
+		$this->instance = new WPGraphQLGravityForms();
 		$this->instance->run();
 
 		$this->assertTrue( true );
