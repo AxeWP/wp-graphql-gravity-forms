@@ -47,6 +47,7 @@ class PostContentField extends AbstractFormField {
 			$this->get_custom_properties(),
 			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
+			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\DescriptionProperty::get(),
