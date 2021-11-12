@@ -181,6 +181,64 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a time field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getTimeFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'description',
+				'descriptionPlacement',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				[
+					'inputs' => [
+						[
+							'id'           => '2.1',
+							'label'        => 'Hour',
+							'customLabel'  => 'hr',
+							'placeholder'  => 'hh',
+							'defaultValue' => 12,
+						],
+						[
+							'id'           => '2.2',
+							'label'        => 'Minute',
+							'customLabel'  => 'min',
+							'placeholder'  => 'mm',
+							'defaultValue' => 20,
+						],
+						[
+							'id'           => '2.3',
+							'label'        => 'AM/PM',
+							'defaultValue' => 20,
+						],
+					],
+				],
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'size',
+				'subLabelPlacement',
+				[ 'type' => 'time' ],
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
 	 * Get the default args for a list field.
 	 *
 	 * @param array $args .
