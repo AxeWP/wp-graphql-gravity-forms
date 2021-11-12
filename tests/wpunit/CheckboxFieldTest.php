@@ -63,15 +63,38 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 		return [
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
+				'text'    => $this->fields[0]['choices'][0]['text'],
 				'value'   => $this->fields[0]['choices'][0]['value'],
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
+				'text'   => $this->fields[0]['choices'][1]['text'],
 				'value'   => null,
+
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
 				'value'   => $this->fields[0]['choices'][2]['value'],
+				'text'    => $this->fields[0]['choices'][2]['text'],
+			],
+		];
+	}
+
+	public function field_value_input()
+	{
+		$field_value = $this->field_value();
+		return [
+			[
+				'inputId' => $field_value[0]['inputId'],
+				'value'   => $field_value[0]['value'],
+			],
+			[
+				'inputId' => $field_value[1]['inputId'],
+				'value'   => $field_value[1]['value'],
+			],
+			[
+				'inputId' => $field_value[2]['inputId'],
+				'value'   => $field_value[2]['value'],
 			],
 		];
 	}
@@ -84,14 +107,36 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
 				'value'   => null,
+				'text'    => $this->fields[0]['choices'][0]['text'],
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
+				'text'    => $this->fields[0]['choices'][1]['text'],
 				'value'   => $this->fields[0]['choices'][1]['value'],
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
+				'text'    => $this->fields[0]['choices'][2]['text'],
 				'value'   => $this->fields[0]['choices'][2]['value'],
+			],
+		];
+	}
+
+	public function updated_field_value_input()
+	{
+		$field_value = $this->updated_field_value();
+		return [
+			[
+				'inputId' => $field_value[0]['inputId'],
+				'value'   => $field_value[0]['value'],
+			],
+			[
+				'inputId' => $field_value[1]['inputId'],
+				'value'   => $field_value[1]['value'],
+			],
+			[
+				'inputId' => $field_value[2]['inputId'],
+				'value'   => $field_value[2]['value'],
 			],
 		];
 	}
@@ -153,6 +198,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 								checkboxValues {
 									inputId
 									value
+									text
 								}
 								inputs {
 									id
@@ -172,6 +218,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 									checkboxValues {
 										inputId
 										value
+										text
 									}
 								}
 							}
@@ -203,6 +250,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 										checkboxValues {
 											inputId
 											value
+											text
 										}
 									}
 								}
@@ -212,6 +260,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 									checkboxValues {
 										inputId
 										value
+										text
 									}
 								}
 							}
@@ -241,6 +290,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 									checkboxValues {
 											inputId
 											value
+											text
 										}
 									}
 								}
@@ -250,6 +300,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 									checkboxValues {
 										inputId
 										value
+										text
 									}
 								}
 							}
@@ -279,6 +330,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 										checkboxValues {
 											inputId
 											value
+											text
 										}
 									}
 								}
@@ -288,6 +340,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 									checkboxValues {
 										inputId
 										value
+										text
 									}
 								}
 							}

@@ -42,7 +42,11 @@ class CheckboxValueProperty extends AbstractObject {
 			],
 			'value'   => [
 				'type'        => 'String',
-				'description' => __( 'Input value', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Input value.', 'wp-graphql-gravity-forms' ),
+			],
+			'text'    => [
+				'type'        => 'String',
+				'description' => __( 'Input text.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
