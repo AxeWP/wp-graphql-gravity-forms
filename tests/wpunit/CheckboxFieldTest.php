@@ -46,7 +46,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getCheckboxFieldHelper();
+		return $this->tester->getPropertyHelper( 'CheckboxField' );
 	}
 
 	/**
@@ -115,68 +115,35 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 */
 	public function field_query():string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on CheckboxField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								description
-								descriptionPlacement
-								enablePrice
-								enableChoiceValue
-								enableSelectAll
-								errorMessage
-								inputName
-								isRequired
-								label
-								size
-								type
-								visibility
-								checkboxValues {
-									inputId
-									value
-								}
-								inputs {
-									id
-									label
-									name
-								}
-								choices {
-									isSelected
-									text
-									value
-								}
-							}
-						}
-						edges {
-							fieldValue {
-								... on CheckboxFieldValue {
-									checkboxValues {
-										inputId
-										value
-									}
-								}
-							}
-						}
-					}
+			... on CheckboxField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				description
+				descriptionPlacement
+				enablePrice
+				enableChoiceValue
+				enableSelectAll
+				errorMessage
+				inputName
+				isRequired
+				label
+				size
+				type
+				visibility
+				checkboxValues {
+					inputId
+					value
+				}
+				inputs {
+					id
+					label
+					name
+				}
+				choices {
+					isSelected
+					text
+					value
 				}
 			}
 		';
@@ -197,16 +164,6 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on CheckboxFieldValue {
-										checkboxValues {
-											inputId
-											value
-										}
-									}
-								}
-							}
 							nodes {
 								... on CheckboxField {
 									checkboxValues {
@@ -235,16 +192,6 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on CheckboxFieldValue {
-									checkboxValues {
-											inputId
-											value
-										}
-									}
-								}
-							}
 							nodes {
 								... on CheckboxField {
 									checkboxValues {
@@ -273,16 +220,6 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on CheckboxFieldValue {
-										checkboxValues {
-											inputId
-											value
-										}
-									}
-								}
-							}
 							nodes {
 								... on CheckboxField {
 									checkboxValues {
@@ -318,7 +255,6 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 									[ 'checkboxValues' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge( 'fieldValue', $this->get_expected_fields( $this->field_value ) ),
 						]
 					),
 				]
@@ -344,10 +280,6 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->get_expected_fields( $value ),
-									),
 									$this->expectedNode(
 										'checkboxValues',
 										$this->get_expected_fields( $value ),

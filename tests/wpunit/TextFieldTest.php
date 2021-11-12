@@ -46,7 +46,7 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getTextFieldHelper();
+		return $this->tester->getPropertyHelper( 'TextField' );
 	}
 
 	/**
@@ -85,55 +85,25 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on TextField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								autocompleteAttribute
-								defaultValue
-								description
-								descriptionPlacement
-								enablePasswordInput
-								errorMessage
-								inputName
-								isRequired
-								label
-								maxLength
-								noDuplicates
-								placeholder
-								size
-								value
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on TextFieldValue {
-									value
-								}
-							}
-						}
-					}
-				}
+			... on TextField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				autocompleteAttribute
+				defaultValue
+				description
+				descriptionPlacement
+				enablePasswordInput
+				errorMessage
+				inputName
+				isRequired
+				label
+				maxLength
+				noDuplicates
+				placeholder
+				size
+				value
+				visibility
 			}
 		';
 	}
@@ -153,13 +123,6 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on TextFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on TextField {
 									value
@@ -185,13 +148,6 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on TextFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on TextField {
 									value
@@ -217,13 +173,6 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on TextFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on TextField {
 									value
@@ -256,10 +205,6 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->expectedField( 'value', $this->field_value ),
-							),
 						]
 					),
 				]
@@ -285,10 +230,6 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

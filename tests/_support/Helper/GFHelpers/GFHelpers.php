@@ -145,8 +145,10 @@ abstract class GFHelpers {
 				$value = (bool) $object->$key;
 				break;
 			case 'inputs':
-				foreach ( $object->$key as $k => $val ) {
-					$object->$key[ $k ]['id'] = (float) $object->$key[ $k ]['id'];
+				if ( ! empty( $object->$key ) ) {
+					foreach ( $object->$key as $k => $val ) {
+						$object->$key[ $k ]['id'] = (float) $object->$key[ $k ]['id'];
+					}
 				}
 				$value = $object->$key;
 				break;

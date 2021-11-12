@@ -47,7 +47,7 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getPhoneFieldHelper();
+		return $this->tester->getPropertyHelper( 'PhoneField' );
 	}
 
 	/**
@@ -86,55 +86,25 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on PhoneField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								autocompleteAttribute
-								defaultValue
-								description
-								descriptionPlacement
-								enableAutocomplete
-								errorMessage
-								inputName
-								isRequired
-								label
-								noDuplicates
-								pageNumber
-								phoneFormat
-								placeholder
-								size
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on PhoneFieldValue {
-									value
-								}
-							}
-						}
-					}
-				}
+			... on PhoneField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				autocompleteAttribute
+				defaultValue
+				description
+				descriptionPlacement
+				enableAutocomplete
+				errorMessage
+				inputName
+				isRequired
+				label
+				noDuplicates
+				pageNumber
+				phoneFormat
+				placeholder
+				size
+				visibility
 			}
 		';
 	}
@@ -154,13 +124,6 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on PhoneFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on PhoneField {
 									value
@@ -186,13 +149,6 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on PhoneFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on PhoneField {
 									value
@@ -218,13 +174,6 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on PhoneFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on PhoneField {
 									value
@@ -257,10 +206,6 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->expectedField( 'value', $this->field_value ),
-							),
 						]
 					),
 				]
@@ -286,10 +231,6 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

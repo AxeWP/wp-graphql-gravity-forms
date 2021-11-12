@@ -27,7 +27,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		wp_set_current_user( $this->admin->ID );
 
-		$this->text_field_helper = $this->tester->getTextFieldHelper();
+		$this->text_field_helper = $this->tester->getPropertyHelper( 'TextField' );
 		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
 
 		$this->form_id = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
