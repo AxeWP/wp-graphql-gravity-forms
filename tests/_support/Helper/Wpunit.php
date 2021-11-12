@@ -161,6 +161,41 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a textarea field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getPostContentFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'defaultValue',
+				'description',
+				'descriptionPlacement',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'placeholder',
+				'size',
+				[ 'type' => 'post_content' ],
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
 	 * Get the default args for a radio field.
 	 *
 	 * @param array $args .
