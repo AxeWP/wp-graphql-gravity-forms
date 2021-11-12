@@ -186,6 +186,7 @@ class Wpunit extends \Codeception\Module {
 				'layoutGridColumnSpan',
 				'layoutSpacerGridColumnSpan',
 				'placeholder',
+				'maxLength',
 				'size',
 				[ 'type' => 'post_content' ],
 				'visibility',
