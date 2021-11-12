@@ -46,7 +46,7 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getEmailFieldHelper();
+		return $this->tester->getPropertyHelper( 'EmailField' );
 	}
 
 	/**
@@ -107,67 +107,37 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on EmailField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								autocompleteAttribute
-								description
-								descriptionPlacement
-								emailConfirmEnabled
-								enableAutocomplete
-								errorMessage
-								inputName
-								inputs {
-									autocompleteAttribute
-									customLabel
-									defaultValue
-									id
-									isHidden
-									key
-									label
-									name
-									placeholder
-								}
-								isRequired
-								label
-								noDuplicates
-								pageNumber
-								placeholder
-								size
-								subLabelPlacement
-								value
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on EmailFieldValue {
-									value
-								}
-							}
-						}
-					}
+			... on EmailField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				autocompleteAttribute
+				description
+				descriptionPlacement
+				emailConfirmEnabled
+				enableAutocomplete
+				errorMessage
+				inputName
+				inputs {
+					autocompleteAttribute
+					customLabel
+					defaultValue
+					id
+					isHidden
+					key
+					label
+					name
+					placeholder
 				}
+				isRequired
+				label
+				noDuplicates
+				pageNumber
+				placeholder
+				size
+				subLabelPlacement
+				value
+				visibility
 			}
 		';
 	}
@@ -187,13 +157,6 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on EmailFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on EmailField {
 									value
@@ -219,13 +182,6 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on EmailFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on EmailField {
 									value
@@ -251,13 +207,6 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on EmailFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on EmailField {
 									value
@@ -290,10 +239,6 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->expectedField( 'value', $this->field_value ),
-							),
 						]
 					),
 				]
@@ -319,10 +264,6 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

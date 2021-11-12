@@ -46,7 +46,7 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getWebsiteFieldHelper();
+		return $this->tester->getPropertyHelper( 'WebsiteField' );
 	}
 
 	/**
@@ -85,51 +85,21 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on WebsiteField {
-								adminLabel
-								adminOnly
-								defaultValue
-								description
-								descriptionPlacement
-								inputName
-								errorMessage
-								isRequired
-								label
-								noDuplicates
-								placeholder
-								size
-								value
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on WebsiteFieldValue {
-									value
-								}
-							}
-						}
-					}
-				}
+			... on WebsiteField {
+				adminLabel
+				adminOnly
+				defaultValue
+				description
+				descriptionPlacement
+				inputName
+				errorMessage
+				isRequired
+				label
+				noDuplicates
+				placeholder
+				size
+				value
+				visibility
 			}
 		';
 	}
@@ -149,13 +119,6 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on WebsiteFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on WebsiteField {
 									value
@@ -181,13 +144,6 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on WebsiteFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on WebsiteField {
 									value
@@ -213,13 +169,6 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on WebsiteFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on WebsiteField {
 									value
@@ -252,10 +201,6 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->expectedField( 'value', $this->field_value ),
-							),
 						]
 					),
 				]
@@ -281,10 +226,6 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

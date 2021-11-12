@@ -52,6 +52,8 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$this->field_value       = $this->field_value();
 		$this->field_value_input = $this->field_value_input();
 		$this->value             = $this->value();
+		$this->field_query       = $this->field_query();
+		$this->entry_query       = $this->entry_query();
 
 		$this->form_args = $this->generate_form_args();
 
@@ -110,6 +112,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	public function field_value_input() {
 		return $this->field_value;
 	}
+
 	/**
 	 * The graphql field value input.
 	 */
@@ -118,12 +121,45 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	}
 
 	/**
+	 * The entire GraphQL query with the form field values added.
+	 */
+	protected function entry_query() : string {
+		return "
+			query getFieldValue(\$id: ID!, \$idType: IdTypeEnum) {
+				gravityFormsEntry(id: \$id, idType: \$idType ) {
+					formFields {
+						nodes {
+							cssClass
+							formId
+							id
+							layoutGridColumnSpan
+							layoutSpacerGridColumnSpan
+							pageNumber
+							type
+							conditionalLogic {
+								actionType
+								logicType
+								rules {
+									fieldId
+									operator
+									value
+								}
+							}
+							{$this->field_query}
+						}
+					}
+				}
+			}
+		";
+	}
+
+	/**
 	 * Tests the field properties and values.
 	 */
 	protected function runTestField(): void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
-		$query = $this->field_query();
+		$query = $this->entry_query;
 
 		$variables = [
 			'id'     => $this->entry_id,

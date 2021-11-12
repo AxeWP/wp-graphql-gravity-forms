@@ -26,7 +26,7 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 		parent::setUp();
 
 		// Your set up methods here.
-		$this->text_field_helper  = $this->tester->getTextFieldHelper();
+		$this->text_field_helper  = $this->tester->getPropertyHelper( 'TextField' );
 		$this->fields[]           = $this->factory->field->create( $this->text_field_helper->values );
 		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
 		$this->draft_token        = $this->factory->draft_entry->create(
@@ -61,14 +61,14 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	 */
 	public function testSubmitGravityFormsDraftEntry() : void {
 		$actual = $this->createMutation();
+		codecept_debug( $actual );
 		$this->assertArrayNotHasKey( 'errors', $actual );
 
 		$actual_entry = $this->factory->entry->get_object_by_id( $actual['data']['submitGravityFormsDraftEntry']['entryId'] );
 
 		$this->assertEquals( $actual_entry['id'], $actual['data']['submitGravityFormsDraftEntry']['entryId'] );
 
-		$this->assertEquals( 'value1', $actual['data']['submitGravityFormsDraftEntry']['entry']['formFields']['edges'][0]['fieldValue']['value'] );
-
+		$this->assertEquals( 'value1', $actual['data']['submitGravityFormsDraftEntry']['entry']['formFields']['nodes'][0]['value'] );
 		$this->factory->entry->delete( $actual['data']['submitGravityFormsDraftEntry']['entryId'] );
 	}
 
@@ -122,11 +122,9 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 					entryId
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on TextFieldValue {
-										value
-									}
+							nodes {
+								... on TextField {
+									value
 								}
 							}
 						}

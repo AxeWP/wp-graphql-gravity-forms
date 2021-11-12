@@ -46,7 +46,7 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getQuizFieldHelper();
+		return $this->tester->getPropertyHelper( 'QuizField' );
 	}
 
 	/**
@@ -145,61 +145,37 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 	 * @return string
 	 */
 	public function field_query():string {
-		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on QuizField {
-								adminLabel
-								allowsPrepopulate
-								gquizAnswerExplanation: answerExplanation
-								autocompleteAttribute
-								defaultValue
-								description
-								enableAutocomplete
-								enableEnhancedUI
-								gquizEnableRandomizeQuizChoices: enableRandomizeQuizChoices
-								enableSelectAll
-								gquizWeightedScoreEnabled: enableWeightedScore
-								errorMessage
-								inputName
-								inputs {
-									id
-								}
-								isRequired
-								label
-								placeholder
-								gquizFieldType: quizFieldType
-								gquizShowAnswerExplanation: showAnswerExplanation
-								size
-								type
-								values
-								visibility
-								choices {
-									gquizIsCorrect: isCorrect
-									text
-									value
-									gquizWeight: weight
-								}
-							}
-						}
-					}
+		return '... on QuizField {
+				adminLabel
+				allowsPrepopulate
+				gquizAnswerExplanation: answerExplanation
+				autocompleteAttribute
+				defaultValue
+				description
+				enableAutocomplete
+				enableEnhancedUI
+				gquizEnableRandomizeQuizChoices: enableRandomizeQuizChoices
+				enableSelectAll
+				gquizWeightedScoreEnabled: enableWeightedScore
+				errorMessage
+				inputName
+				inputs {
+					id
+				}
+				isRequired
+				label
+				placeholder
+				gquizFieldType: quizFieldType
+				gquizShowAnswerExplanation: showAnswerExplanation
+				size
+				type
+				values
+				visibility
+				choices {
+					gquizIsCorrect: isCorrect
+					text
+					value
+					gquizWeight: weight
 				}
 			}
 		';
@@ -302,7 +278,6 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 									[ 'values' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge( 'fieldValue', $this->get_expected_fields( $this->field_value ) ),
 						]
 					),
 				]
@@ -328,10 +303,6 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->get_expected_fields( $value ),
-									),
 									$this->expectedNode(
 										'values',
 										$this->get_expected_fields( $value ),

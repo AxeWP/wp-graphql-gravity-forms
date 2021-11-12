@@ -22,7 +22,7 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getSectionFieldHelper();
+		return $this->tester->getPropertyHelper( 'SectionField' );
 	}
 
 	/**
@@ -58,38 +58,15 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on SectionField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								description
-								displayOnly
-								label
-								size
-								visibility
-							}
-						}
-					}
-				}
+			... on SectionField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				description
+				displayOnly
+				label
+				size
+				visibility
 			}
 		';
 	}

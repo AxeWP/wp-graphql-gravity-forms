@@ -47,7 +47,7 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getPostTitleFieldHelper();
+		return $this->tester->getPropertyHelper( 'PostTitleField' );
 	}
 
 	/**
@@ -86,52 +86,22 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on PostTitleField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								defaultValue
-								description
-								descriptionPlacement
-								errorMessage
-								inputName
-								isRequired
-								label
-								placeholder
-								size
-								type
-								visibility
-								value
-							}
-						}
-						edges {
-							fieldValue {
-								... on PostTitleFieldValue {
-									value
-								}
-							}
-						}
-					}
-				}
+			... on PostTitleField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				defaultValue
+				description
+				descriptionPlacement
+				errorMessage
+				inputName
+				isRequired
+				label
+				placeholder
+				size
+				type
+				visibility
+				value
 			}
 		';
 	}
@@ -151,13 +121,6 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on PostTitleFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on PostTitleField {
 									value
@@ -183,13 +146,6 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on PostTitleFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on PostTitleField {
 									value
@@ -215,13 +171,6 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on PostTitleFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on PostTitleField {
 									value
@@ -254,10 +203,6 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->expectedField( 'value', $this->field_value ),
-							),
 						]
 					),
 				]
@@ -283,10 +228,6 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

@@ -47,7 +47,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getChainedSelectFieldHelper();
+		return $this->tester->getPropertyHelper( 'ChainedSelectField' );
 	}
 
 	/**
@@ -132,71 +132,41 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 */
 	public function field_query():string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on ChainedSelectField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								chainedSelectsAlignment
-								chainedSelectsHideInactive
-								description
-								descriptionPlacement
-								errorMessage
-								isRequired
-								label
-								noDuplicates
-								size
-								subLabelPlacement
-								values
-								visibility
-								inputs {
-									id
-									label
-									name
-								}
-								choices {
-									choices {
-										choices {
-											isSelected
-											text
-											value
-										}
-										isSelected
-										text
-										value
-									}
-									isSelected
-									text
-									value
-								}
-							}
+			... on ChainedSelectField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				chainedSelectsAlignment
+				chainedSelectsHideInactive
+				description
+				descriptionPlacement
+				errorMessage
+				isRequired
+				label
+				noDuplicates
+				size
+				subLabelPlacement
+				values
+				visibility
+				inputs {
+					id
+					label
+					name
+				}
+				choices {
+					choices {
+						choices {
+							isSelected
+							text
+							value
 						}
-						edges {
-							fieldValue {
-								... on ChainedSelectFieldValue {
-									values
-								}
-							}
-						}
+						isSelected
+						text
+						value
 					}
+					isSelected
+					text
+					value
 				}
 			}
 		';
@@ -216,13 +186,6 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on ChainedSelectFieldValue {
-										values
-									}
-								}
-							}
 							nodes {
 								... on ChainedSelectField {
 									values
@@ -248,13 +211,6 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on ChainedSelectFieldValue {
-										values
-									}
-								}
-							}
 							nodes {
 								... on ChainedSelectField {
 									values
@@ -280,13 +236,6 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on ChainedSelectFieldValue {
-										values
-									}
-								}
-							}
 							nodes {
 								... on ChainedSelectField {
 									values
@@ -319,12 +268,6 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 									[ 'values' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								[
-									$this->expectedField( 'values', $this->field_value ),
-								]
-							),
 						]
 					),
 				]
@@ -350,10 +293,6 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'values', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),
@@ -377,95 +316,5 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 		$this->assertEquals( $this->field_value[0], $actual_entry[ $form['fields'][0]['inputs'][0]['id'] ], 'Submit mutation entry value 1 not equal.' );
 		$this->assertEquals( $this->field_value[1], $actual_entry[ $form['fields'][0]['inputs'][1]['id'] ], 'Submit mutation entry value 2 not equal.' );
 		$this->assertEquals( $this->field_value[2], $actual_entry[ $form['fields'][0]['inputs'][2]['id'] ], 'Submit mutation entry value 3 not equal.' );
-	}
-
-	/**
-	 * Test submitting ChainedSelectField with updateDraftEntryChainedSelectFieldValue.
-	 */
-	public function testUpdateDraftEntryFieldValue() : void {
-		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
-
-		// Test draft entry.
-		$query = '
-			mutation updateDraftEntryChainedSelectFieldValue( $fieldId: Int!, $resumeToken: String!, $value: [ChainedSelectInput]! ){
-				updateDraftEntryChainedSelectFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
-					errors {
-						id
-						message
-					}
-					entry {
-						formFields {
-							edges {
-								fieldValue {
-									... on ChainedSelectFieldValue {
-									values
-									}
-								}
-							}
-							nodes {
-								... on ChainedSelectField {
-									values
-								}
-							}
-						}
-					}
-				}
-			}
-		';
-
-		$variables = [
-			'fieldId'     => $form['fields'][0]->id,
-			'resumeToken' => $resume_token,
-			'value'       => $this->field_value_input,
-		];
-		$response  = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->expected_mutation_response( 'updateDraftEntryAddressFieldValue', $this->field_value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		// Test submitted query.
-		$query = '
-			mutation( $resumeToken: String!) {
-				submitGravityFormsDraftEntry(input: {clientMutationId: "123abc", resumeToken: $resumeToken}) {
-					errors {
-						id
-						message
-					}
-					entryId
-					entry {
-						formFields {
-							edges {
-								fieldValue {
-									... on ChainedSelectFieldValue {
-									values
-									}
-								}
-							}
-							nodes {
-								... on ChainedSelectField {
-									values
-								}
-							}
-						}
-					}
-				}
-			}
-		';
-
-		$variables = [
-			'resumeToken' => $resume_token,
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->expected_mutation_response( 'submitGravityFormsDraftEntry', $this->field_value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		$entry_id = $response['data']['submitGravityFormsDraftEntry']['entryId'];
-
-		$this->factory->entry->delete( $entry_id );
 	}
 }

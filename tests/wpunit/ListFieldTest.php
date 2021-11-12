@@ -47,7 +47,7 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getListFieldHelper();
+		return $this->tester->getPropertyHelper( 'ListField' );
 	}
 
 	/**
@@ -92,62 +92,30 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on ListField {
-								addIconUrl
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								choices {
-									text
-									value
-								}
-								deleteIconUrl
-								description
-								descriptionPlacement
-								enableColumns
-								errorMessage
-								isRequired
-								inputName
-								label
-								labelPlacement
-								listValues {
-									values
-								}
-								maxRows
-								size
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on ListFieldValue {
-									listValues {
-										values
-									}
-								}
-							}
-						}
-					}
+			... on ListField {
+				addIconUrl
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				choices {
+					text
+					value
 				}
+				deleteIconUrl
+				description
+				descriptionPlacement
+				enableColumns
+				errorMessage
+				isRequired
+				inputName
+				label
+				labelPlacement
+				listValues {
+					values
+				}
+				maxRows
+				size
+				visibility
 			}
 		';
 	}
@@ -167,15 +135,6 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-								... on ListFieldValue {
-									listValues {
-										values
-									}
-								}
-							}
-							}
 							nodes {
 								... on ListField {
 									listValues {
@@ -203,15 +162,6 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-								... on ListFieldValue {
-									listValues {
-										values
-									}
-								}
-							}
-							}
 							nodes {
 								... on ListField {
 									listValues {
@@ -239,15 +189,6 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-								... on ListFieldValue {
-									listValues {
-										values
-									}
-								}
-							}
-							}
 							nodes {
 								... on ListField {
 									listValues {
@@ -282,10 +223,6 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 									[ 'listValues' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->get_expected_fields( $this->field_value ),
-							),
 						]
 					),
 				]
@@ -311,10 +248,6 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

@@ -27,10 +27,10 @@ class FormQueriesTest extends GFGraphQLTestCase {
 
 		// Your set up methods here.
 		// Text field.
-		$this->text_field_helper = $this->tester->getTextFieldHelper();
+		$this->text_field_helper = $this->tester->getPropertyHelper( 'TextField' );
 		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
 		// TextAreaField.
-		$this->text_area_field_helper = $this->tester->getTextAreaFieldHelper( [ 'id' => 2 ] );
+		$this->text_area_field_helper = $this->tester->getPropertyHelper( 'TextField', [ 'id' => 2 ] );
 		$this->fields[]               = $this->factory->field->create( $this->text_area_field_helper->values );
 		// Form.
 		$this->form_ids = $this->factory->form->create_many(
