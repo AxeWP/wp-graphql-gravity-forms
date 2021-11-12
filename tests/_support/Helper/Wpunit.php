@@ -181,6 +181,64 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a time field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getTimeFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'description',
+				'descriptionPlacement',
+				'errorMessage',
+				'formId',
+				[ 'id' => 1 ],
+				'inputName',
+				[
+					'inputs' => [
+						[
+							'id'           => '2.1',
+							'label'        => 'Hour',
+							'customLabel'  => 'hr',
+							'placeholder'  => 'hh',
+							'defaultValue' => 12,
+						],
+						[
+							'id'           => '2.2',
+							'label'        => 'Minute',
+							'customLabel'  => 'min',
+							'placeholder'  => 'mm',
+							'defaultValue' => 20,
+						],
+						[
+							'id'           => '2.3',
+							'label'        => 'AM/PM',
+							'defaultValue' => 20,
+						],
+					],
+				],
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'noDuplicates',
+				'size',
+				'subLabelPlacement',
+				[ 'type' => 'time' ],
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
 	 * Get the default args for a list field.
 	 *
 	 * @param array $args .
@@ -484,6 +542,113 @@ class Wpunit extends \Codeception\Module {
 					],
 				],
 				[ 'type' => 'address' ],
+				'visibility',
+			],
+			$args
+		);
+		return new PropertyHelper( $keys );
+	}
+
+	/**
+	 * Get the default args for a name field.
+	 *
+	 * @param array $args .
+	 * @return PropertyHelper
+	 */
+	public function getNameFieldHelper( array $args = [] ) : PropertyHelper {
+		$keys = $this->merge_default_args(
+			[
+				'adminLabel',
+				'adminOnly',
+				'allowsPrepopulate',
+				[ 'conditionalLogic' => null ],
+				'cssClass',
+				'description',
+				'descriptionPlacement',
+				'enableAutocomplete',
+				'errorMessage',
+				'inputName',
+				'formId',
+				[ 'id' => 1 ],
+				'isRequired',
+				'label',
+				'layoutGridColumnSpan',
+				'layoutSpacerGridColumnSpan',
+				'nameFormat',
+				'size',
+				'subLabelPlacement',
+				[
+					'inputs' => [
+						[
+							'autocompleteAttribute' => 'honorific-prefix',
+							'customLabel'           => null,
+							'defaultValue'          => 'some_default',
+							'id'                    => '1.2',
+							'isHidden'              => false,
+							'key'                   => 'prefix',
+							'label'                 => 'Prefix',
+							'choices'               => [
+								[
+									'isSelected' => true,
+									'text'       => 'Dr.',
+									'value'      => 'Dr.',
+								],
+								[
+									'isSelected' => null,
+									'text'       => 'Prof.',
+									'value'      => 'Prof.',
+								],
+							],
+							'placeholder'           => 'pre',
+						],
+						[
+							'autocompleteAttribute' => 'given-name',
+							'choices'               => null,
+							'customLabel'           => null,
+							'defaultValue'          => 'some_default',
+							'id'                    => '1.3',
+							'isHidden'              => false,
+							'key'                   => 'first',
+							'label'                 => 'First',
+							'placeholder'           => 'f',
+						],
+						[
+							'autocompleteAttribute' => 'additional-name',
+							'choices'               => null,
+							'customLabel'           => null,
+							'defaultValue'          => 'some_default',
+							'id'                    => '1.4',
+							'isHidden'              => false,
+							'key'                   => 'middle',
+							'label'                 => 'Middle',
+							'placeholder'           => 'f',
+						],
+						[
+							'autocompleteAttribute' => 'family-name',
+							'choices'               => null,
+							'customLabel'           => null,
+							'defaultValue'          => 'some_default',
+							'id'                    => '1.6',
+							'isHidden'              => false,
+							'key'                   => 'last',
+							'label'                 => 'Last',
+							'placeholder'           => 'm',
+						],
+						[
+							'autocompleteAttribute' => 'honorific-suffix',
+							'choices'               => null,
+							'customLabel'           => null,
+							'defaultValue'          => 'some_default',
+							'id'                    => '1.8',
+							'isHidden'              => false,
+							'key'                   => 'suffix',
+							'label'                 => 'Suffix',
+							'isHidden'              => false,
+							'placeholder'           => 's',
+						],
+					],
+				],
+				[ 'type' => 'name' ],
 				'visibility',
 			],
 			$args

@@ -81,7 +81,7 @@ class Utils {
 			return false;
 		}
 
-		$value_array = json_decode( $value );
+		$value_array = json_decode( $value, true );
 
 		// If the value isnt JSON, then convert it to an array.
 		if ( 0 !== json_last_error() ) {
