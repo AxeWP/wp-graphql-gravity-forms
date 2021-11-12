@@ -144,6 +144,12 @@ abstract class GFHelpers {
 			case 'enablePasswordInput':
 				$value = (bool) $object->$key;
 				break;
+			case 'inputs':
+				foreach ( $object->$key as $k => $val ) {
+					$object->$key[ $k ]['id'] = (float) $object->$key[ $k ]['id'];
+				}
+				$value = $object->$key;
+				break;
 			case 'maxLength':
 				$value = (int) $object->$key;
 				break;

@@ -278,6 +278,10 @@ class PropertyHelper extends GFHelpers {
 		];
 	}
 
+	public function nameFormat( $value = null ) {
+		return isset( $value ) ? $value : 'advanced';
+	}
+
 	public function noDuplicates( $value = null ) {
 		return isset( $value ) ? $value : false;
 	}
