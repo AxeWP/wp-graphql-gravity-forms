@@ -45,7 +45,7 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getDateFieldHelper();
+		return $this->tester->getPropertyHelper( 'DateField' );
 	}
 
 	/**
@@ -84,63 +84,33 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on DateField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								calendarIconType
-								calendarIconUrl
-								dateFormat
-								dateType
-								defaultValue
-								description
-								descriptionPlacement
-								errorMessage
-								inputName
-								isRequired
-								label
-								noDuplicates
-								placeholder
-								size
-								subLabelPlacement
-								value
-								visibility
-								inputs {
-									customLabel
-									defaultValue
-									id
-									label
-									placeholder
-								}
-							}
-						}
-						edges {
-							fieldValue {
-								... on DateFieldValue {
-									value
-								}
-							}
-						}
-					}
+			... on DateField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				calendarIconType
+				calendarIconUrl
+				dateFormat
+				dateType
+				defaultValue
+				description
+				descriptionPlacement
+				errorMessage
+				inputName
+				isRequired
+				label
+				noDuplicates
+				placeholder
+				size
+				subLabelPlacement
+				value
+				visibility
+				inputs {
+					customLabel
+					defaultValue
+					id
+					label
+					placeholder
 				}
 			}
 		';
@@ -161,13 +131,6 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on DateFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on DateField {
 									value
@@ -193,13 +156,6 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on DateFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on DateField {
 									value
@@ -225,13 +181,6 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on DateFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on DateField {
 									value
@@ -264,10 +213,6 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->expectedField( 'value', $this->field_value ),
-							),
 						]
 					),
 				]
@@ -293,10 +238,6 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

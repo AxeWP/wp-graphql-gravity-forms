@@ -47,7 +47,7 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getMultiSelectFieldHelper();
+		return $this->tester->getPropertyHelper( 'MultiSelectField' );
 	}
 
 	/**
@@ -93,56 +93,26 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 */
 	public function field_query():string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on MultiSelectField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								choices {
-									isSelected
-									text
-									value
-								}
-								description
-								descriptionPlacement
-								enableChoiceValue
-								enableEnhancedUI
-								errorMessage
-								inputName
-								isRequired
-								label
-								size
-								values
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on MultiSelectFieldValue {
-									values
-								}
-							}
-						}
-					}
+			... on MultiSelectField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				choices {
+					isSelected
+					text
+					value
 				}
+				description
+				descriptionPlacement
+				enableChoiceValue
+				enableEnhancedUI
+				errorMessage
+				inputName
+				isRequired
+				label
+				size
+				values
+				visibility
 			}
 		';
 	}
@@ -161,13 +131,6 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on MultiSelectFieldValue {
-										values
-									}
-								}
-							}
 							nodes {
 								... on MultiSelectField {
 									values
@@ -193,13 +156,6 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on MultiSelectFieldValue {
-										values
-									}
-								}
-							}
 							nodes {
 								... on MultiSelectField {
 									values
@@ -225,13 +181,6 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on MultiSelectFieldValue {
-										values
-									}
-								}
-							}
 							nodes {
 								... on MultiSelectField {
 									values
@@ -264,12 +213,6 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 									[ 'values' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								[
-									$this->expectedField( 'values', $this->field_value ),
-								]
-							),
 						]
 					),
 				]
@@ -295,10 +238,6 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'values', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

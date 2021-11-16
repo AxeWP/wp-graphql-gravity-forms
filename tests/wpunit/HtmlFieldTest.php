@@ -22,7 +22,7 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getHtmlFieldHelper();
+		return $this->tester->getPropertyHelper( 'HtmlField' );
 	}
 
 	/**
@@ -58,40 +58,17 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on HtmlField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								content
-								disableMargins
-								displayOnly
-								inputName
-								label
-								size
-								visibility
-							}
-						}
-					}
-				}
+			... on HtmlField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				content
+				disableMargins
+				displayOnly
+				inputName
+				label
+				size
+				visibility
 			}
 		';
 	}

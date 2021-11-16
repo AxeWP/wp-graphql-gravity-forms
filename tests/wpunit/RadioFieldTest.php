@@ -47,7 +47,7 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getRadioFieldHelper();
+		return $this->tester->getPropertyHelper( 'RadioField' );
 	}
 
 	/**
@@ -85,61 +85,30 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 * @return string
 	 */
 	public function field_query() : string {
-		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on RadioField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								choices {
-									isOtherChoice
-									isSelected
-									text
-									value
-								}
-								description
-								descriptionPlacement
-								enableChoiceValue
-								enableOtherChoice
-								enablePrice
-								errorMessage
-								inputName
-								isRequired
-								label
-								noDuplicates
-								pageNumber
-								size
-								value
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on RadioFieldValue {
-									value
-								}
-							}
-						}
-					}
+		return '... on RadioField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				choices {
+					isOtherChoice
+					isSelected
+					text
+					value
 				}
+				description
+				descriptionPlacement
+				enableChoiceValue
+				enableOtherChoice
+				enablePrice
+				errorMessage
+				inputName
+				isRequired
+				label
+				noDuplicates
+				pageNumber
+				size
+				value
+				visibility
 			}
 		';
 	}
@@ -159,13 +128,6 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on RadioFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on RadioField {
 									value
@@ -191,13 +153,6 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on RadioFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on RadioField {
 									value
@@ -223,13 +178,6 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on RadioFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on RadioField {
 									value
@@ -262,10 +210,6 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->expectedField( 'value', $this->field_value ),
-							),
 						]
 					),
 				]
@@ -291,10 +235,6 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

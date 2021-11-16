@@ -47,7 +47,7 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getTimeFieldHelper();
+		return $this->tester->getPropertyHelper( 'TimeField' );
 	}
 
 	/**
@@ -104,72 +104,39 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on TimeField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								cssClass
-								description
-								descriptionPlacement
-								errorMessage
-								inputName
-								inputs {
-									autocompleteAttribute
-									customLabel
-									defaultValue
-									id
-									isHidden
-									key
-									label
-									name
-									placeholder
-								}
-								isRequired
-								label
-								noDuplicates
-								size
-								subLabelPlacement
-								timeFormat
-								timeValues {
-									amPm
-									displayValue
-									hours
-									minutes
-								}
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on TimeFieldValue {
-									amPm
-									displayValue
-									hours
-									minutes
-								}
-							}
-						}
-					}
+			... on TimeField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				cssClass
+				description
+				descriptionPlacement
+				errorMessage
+				inputName
+				inputs {
+					autocompleteAttribute
+					customLabel
+					defaultValue
+					id
+					isHidden
+					key
+					label
+					name
+					placeholder
 				}
+				isRequired
+				label
+				noDuplicates
+				size
+				subLabelPlacement
+				timeFormat
+				timeValues {
+					amPm
+					displayValue
+					hours
+					minutes
+				}
+				visibility
 			}
 		';
 	}
@@ -189,16 +156,6 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on TimeFieldValue {
-										amPm
-										displayValue
-										hours
-										minutes
-									}
-								}
-							}
 							nodes {
 								... on TimeField {
 									timeValues {
@@ -229,16 +186,6 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on TimeFieldValue {
-										amPm
-										displayValue
-										hours
-										minutes
-									}
-								}
-							}
 							nodes {
 								... on TimeField {
 									timeValues {
@@ -269,16 +216,6 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on TimeFieldValue {
-										amPm
-										displayValue
-										hours
-										minutes
-									}
-								}
-							}
 							nodes {
 								... on TimeField {
 									timeValues {
@@ -316,10 +253,6 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->expectedField( 'value', $this->field_value ),
-							),
 						]
 					),
 				]
@@ -345,10 +278,6 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

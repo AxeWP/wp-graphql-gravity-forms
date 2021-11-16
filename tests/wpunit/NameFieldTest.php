@@ -46,7 +46,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getNameFieldHelper();
+		return $this->tester->getPropertyHelper( 'NameField' );
 	}
 
 	/**
@@ -109,77 +109,43 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on NameField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								description
-								descriptionPlacement
-								enableAutocomplete
-								errorMessage
-								inputName
-								inputs {
-									autocompleteAttribute
-									choices {
-										isSelected
-										text
-										value
-									}
-									customLabel
-									defaultValue
-									id
-									isHidden
-									key
-									label
-									placeholder
-								}
-								isRequired
-								label
-								nameFormat
-								size
-								subLabelPlacement
-								type
-								visibility
-								nameValues {
-									first
-									last
-									middle
-									prefix
-									suffix
-								}
-							}
-						}
-						edges {
-							fieldValue {
-								... on NameFieldValue {
-									first
-									last
-									middle
-									prefix
-									suffix
-								}
-							}
-						}
+			... on NameField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				description
+				descriptionPlacement
+				enableAutocomplete
+				errorMessage
+				inputName
+				inputs {
+					autocompleteAttribute
+					choices {
+						isSelected
+						text
+						value
 					}
+					customLabel
+					defaultValue
+					id
+					isHidden
+					key
+					label
+					placeholder
+				}
+				isRequired
+				label
+				nameFormat
+				size
+				subLabelPlacement
+				type
+				visibility
+				nameValues {
+					first
+					last
+					middle
+					prefix
+					suffix
 				}
 			}
 		';
@@ -202,17 +168,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on NameFieldValue {
-										first
-										last
-										middle
-										prefix
-										suffix
-									}
-								}
-							}
 							nodes {
 								... on NameField {
 									nameValues {
@@ -246,17 +201,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on NameFieldValue {
-										first
-										last
-										middle
-										prefix
-										suffix
-									}
-								}
-							}
 							nodes {
 								... on NameField {
 									nameValues {
@@ -290,17 +234,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on NameFieldValue {
-										first
-										last
-										middle
-										prefix
-										suffix
-									}
-								}
-							}
 							nodes {
 								... on NameField {
 									nameValues {
@@ -339,7 +272,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 									[ 'nameValues' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge( 'fieldValue', $this->get_expected_fields( $this->field_value ) ),
 						]
 					),
 				]
@@ -365,10 +297,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->get_expected_fields( $value ),
-									),
 									$this->expectedNode(
 										'nameValues',
 										$this->get_expected_fields( $value ),

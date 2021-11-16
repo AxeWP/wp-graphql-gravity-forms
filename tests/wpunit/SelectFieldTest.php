@@ -47,7 +47,7 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getSelectFieldHelper();
+		return $this->tester->getPropertyHelper( 'SelectField' );
 	}
 
 	/**
@@ -86,63 +86,33 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on SelectField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								autocompleteAttribute
-								choices {
-									isSelected
-									text
-									value
-								}
-								defaultValue
-								description
-								descriptionPlacement
-								enableAutocomplete
-								enableChoiceValue
-								enableEnhancedUI
-								enablePrice
-								errorMessage
-								inputName
-								isRequired
-								label
-								noDuplicates
-								pageNumber
-								placeholder
-								size
-								value
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on SelectFieldValue {
-									value
-								}
-							}
-						}
-					}
+			... on SelectField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				autocompleteAttribute
+				choices {
+					isSelected
+					text
+					value
 				}
+				defaultValue
+				description
+				descriptionPlacement
+				enableAutocomplete
+				enableChoiceValue
+				enableEnhancedUI
+				enablePrice
+				errorMessage
+				inputName
+				isRequired
+				label
+				noDuplicates
+				pageNumber
+				placeholder
+				size
+				value
+				visibility
 			}
 		';
 	}
@@ -162,13 +132,6 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on SelectFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on SelectField {
 									value
@@ -194,13 +157,6 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on SelectFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on SelectField {
 									value
@@ -226,13 +182,6 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on SelectFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on SelectField {
 									value
@@ -265,10 +214,6 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->expectedField( 'value', $this->field_value ),
-							),
 						]
 					),
 				]
@@ -294,10 +239,6 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

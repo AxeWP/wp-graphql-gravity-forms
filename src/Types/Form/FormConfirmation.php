@@ -60,7 +60,7 @@ class FormConfirmation extends AbstractObject {
 				'description' => __( 'The confirmation name.', 'wp-graphql-gravity-forms' ),
 			],
 			'pageId'           => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to "PAGE".', 'wp-graphql-gravity-forms' ),
 			],
 			'queryString'      => [

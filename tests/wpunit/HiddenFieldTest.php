@@ -47,7 +47,7 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getHiddenFieldHelper();
+		return $this->tester->getPropertyHelper( 'HiddenField' );
 	}
 
 	/**
@@ -83,47 +83,17 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on HiddenField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								defaultValue
-								isRequired
-								label
-								noDuplicates
-								size
-								value
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on HiddenFieldValue {
-									value
-								}
-							}
-						}
-					}
-				}
+			... on HiddenField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				defaultValue
+				isRequired
+				label
+				noDuplicates
+				size
+				value
+				visibility
 			}
 		';
 	}
@@ -143,13 +113,6 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on HiddenFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on HiddenField {
 									value
@@ -175,13 +138,6 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on HiddenFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on HiddenField {
 									value
@@ -207,13 +163,6 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on HiddenFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on HiddenField {
 									value
@@ -246,10 +195,6 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->expectedField( 'value', $this->field_value ),
-							),
 						]
 					),
 				]
@@ -275,10 +220,6 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'0',
 										$this->expectedField( 'value', $value ),

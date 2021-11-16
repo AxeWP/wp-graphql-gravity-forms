@@ -55,7 +55,7 @@ class QuizSettings extends AbstractObject {
 				'description' => __( 'The letter grades to be assigned based on the percentage score achieved. Only used if `grading` is set to `LETTER`.', 'wp-graphql-gravity-forms' ),
 			],
 			'passPercent'                         => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( "The percentage score the user must equal or exceed to be considered to have 'passed.' Only used if `grading` is set to `PASSFAIL`.", 'wp-graphql-gravity-forms' ),
 			],
 			'passfailDisplayConfirmation'         => [

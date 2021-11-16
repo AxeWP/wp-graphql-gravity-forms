@@ -46,7 +46,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getAddressFieldHelper();
+		return $this->tester->getPropertyHelper( 'AddressField' );
 	}
 
 	/**
@@ -112,82 +112,47 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on AddressField {
-								addressType
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								copyValuesOptionDefault
-								copyValuesOptionField
-								defaultCountry
-								defaultProvince
-								defaultState
-								description
-								descriptionPlacement
-								enableAutocomplete
-								enableCopyValuesOption
-								errorMessage
-								inputs {
-									customLabel
-									defaultValue
-									id
-									isHidden
-									key
-									label
-									name
-									placeholder
-									autocompleteAttribute
-								}
-								isRequired
-								label
-								labelPlacement
-								size
-								subLabelPlacement
-								type
-								addressValues {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
-								}
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on AddressFieldValue {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
-								}
-							}
-						}
-					}
+			... on AddressField {
+				addressType
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				copyValuesOptionDefault
+				copyValuesOptionField
+				defaultCountry
+				defaultProvince
+				defaultState
+				description
+				descriptionPlacement
+				enableAutocomplete
+				enableCopyValuesOption
+				errorMessage
+				inputs {
+					customLabel
+					defaultValue
+					id
+					isHidden
+					key
+					label
+					name
+					placeholder
+					autocompleteAttribute
 				}
+				isRequired
+				label
+				labelPlacement
+				size
+				subLabelPlacement
+				type
+				addressValues {
+					street
+					lineTwo
+					city
+					state
+					zip
+					country
+				}
+				visibility
 			}
 		';
 	}
@@ -255,18 +220,6 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on AddressFieldValue {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
-									}
-								}
-							}
 							nodes {
 								... on AddressField {
 									addressValues {
@@ -301,18 +254,6 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on AddressFieldValue {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
-									}
-								}
-							}
 							nodes {
 								... on AddressField {
 									addressValues {
@@ -352,7 +293,6 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 									[ 'addressValues' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge( 'fieldValue', $this->get_expected_fields( $this->field_value ) ),
 						]
 					),
 				]
@@ -378,10 +318,6 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->get_expected_fields( $value ),
-									),
 									$this->expectedNode(
 										'addressValues',
 										$this->get_expected_fields( $value ),
@@ -409,120 +345,4 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 		$this->assertEquals( $this->field_value['zip'], $actual_entry[ $form['fields'][0]['inputs'][4]['id'] ], 'Submit mutation entry value 5 not equal' );
 		$this->assertEquals( $this->field_value['country'], $actual_entry[ $form['fields'][0]['inputs'][5]['id'] ], 'Submit mutation entry value 6 not equal' );
 	}
-
-	/**
-	 * Test submitting AddressField with updateDraftEntryAddressFieldValue.
-	 */
-	public function testUpdateDraftEntryFieldValue() : void {
-		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
-
-		// Test draft entry.
-		$query = '
-			mutation updateDraftEntryAddressFieldValue( $fieldId: Int!, $resumeToken: String!, $value: AddressInput! ){
-				updateDraftEntryAddressFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
-					errors {
-						id
-						message
-					}
-					entry {
-						formFields {
-							edges {
-								fieldValue {
-									... on AddressFieldValue {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
-									}
-								}
-							}
-							nodes {
-								... on AddressField {
-									addressValues {
-										street
-										lineTwo
-										city
-										state
-										zip
-										country
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		';
-
-		$variables = [
-			'fieldId'     => $form['fields'][0]->id,
-			'resumeToken' => $resume_token,
-			'value'       => $this->field_value,
-		];
-		$response  = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->expected_mutation_response( 'updateDraftEntryAddressFieldValue', $this->field_value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		// Test submitted query.
-		$query = '
-			mutation( $resumeToken: String!) {
-				submitGravityFormsDraftEntry(input: {clientMutationId: "123abc", resumeToken: $resumeToken}) {
-					errors {
-						id
-						message
-					}
-					entryId
-					entry {
-						formFields {
-							edges {
-								fieldValue {
-									... on AddressFieldValue {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
-									}
-								}
-							}
-							nodes {
-								... on AddressField {
-									addressValues {
-									street
-									lineTwo
-									city
-									state
-									zip
-									country
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		';
-
-		$variables = [
-			'resumeToken' => $resume_token,
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$expected = $this->expected_mutation_response( 'submitGravityFormsDraftEntry', $this->field_value );
-
-		$this->assertQuerySuccessful( $response, $expected );
-
-		$entry_id = $response['data']['submitGravityFormsDraftEntry']['entryId'];
-
-		$this->factory->entry->delete( $entry_id );
-	}
-
-
 }

@@ -41,7 +41,7 @@ class SubmitForm extends AbstractMutation {
 	public function get_input_fields() : array {
 		return [
 			'createdBy'   => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'Optional. ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
@@ -49,7 +49,7 @@ class SubmitForm extends AbstractMutation {
 				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
 			],
 			'formId'      => [
-				'type'        => [ 'non_null' => 'Integer' ],
+				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'The form ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'ip'          => [
@@ -61,7 +61,7 @@ class SubmitForm extends AbstractMutation {
 				'description' => __( 'Optional. Set to `true` if submitting a draft entry.', 'wp-graphql-gravity-forms' ),
 			],
 			'sourcePage'  => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'Optional. Useful for multi-page forms to indicate which page of the form was just submitted.', 'wp-graphql-gravity-forms' ),
 			],
 			'sourceUrl'   => [
@@ -69,7 +69,7 @@ class SubmitForm extends AbstractMutation {
 				'description' => __( 'Optional. Used to overwrite the sourceUrl the form was submitted from.', 'wp-graphql-gravity-forms' ),
 			],
 			'targetPage'  => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'Optional. Useful for multi-page forms to indicate which page is to be loaded if the current page passes validation.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -83,7 +83,7 @@ class SubmitForm extends AbstractMutation {
 	public function get_output_fields() : array {
 		return [
 			'entryId'     => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'The ID of the entry that was created. Null if the entry was only partially submitted or submitted as a draft.', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'       => [

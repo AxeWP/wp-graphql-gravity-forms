@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.9.2 - Bugfix and Test
+This minor release addresses an issue where `PostImageInput` would be registered to the schema even if WPGraphQL Upload wasn't enabled, breaking gqty and Gatsby schema generation. We also fixed a few other bugs and some overlooked items in the docs, and added some more WPUnit tests.
+
+- chore: define WPGraphQL types with `Int` instead of `Integer` for code consistency.
+- docs: Add `TimeField` to list of formFields that take a value input.
+- docs: add expected object values for `FileUploadValues`.
+- fix: add missing `allowsPrepopulate` property to `PostContentField`.
+- fix: `Utils::maybe_decode_json()` support for multidimensional arrays.
+- fix: Check for WPGraphQL Upload before registering `PostImageInput` to the schema.
+- tests: add WPUnit tests for `ListField`, `MultiSelectField`, `NameField`, `TimeField`,`PostContentField`, `PostTitleField`, `PostExcerptField`, `GFUtils::get_forms()`, `Utils::maybe_decode_json()`, and `WPGraphQLGravityForms::instances()`
+- tests: remove tests for `{fieldType}FieldValue` edges since they're deprecated anyway.
+
+**Note** As part of the road to v1.0, [the next release will](https://github.com/harness-software/wp-graphql-gravity-forms/issues?q=is%3Aopen+is%3Aissue+milestone%3Av0.10) contain numerous breaking changes to the codebase AND schema, including the removal of deprecated code (such as FieldValue edges). Please prepare accordingly.
+
 ## v0.9.1 - Gravity Forms Quiz Support
 This minor release adds support for Gravity Forms Quiz fields.
 

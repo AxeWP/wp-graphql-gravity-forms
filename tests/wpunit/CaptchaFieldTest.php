@@ -50,8 +50,8 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		$this->captcha_field_helper = $this->tester->getCaptchaFieldHelper();
-		return $this->tester->getTextFieldHelper( [ 'id' => 2 ] );
+		$this->captcha_field_helper = $this->tester->getPropertyHelper( 'CaptchaField' );
+		return $this->tester->getPropertyHelper( 'TextField', [ 'id' => 2 ] );
 	}
 
 	/**
@@ -93,42 +93,19 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function field_query() : string {
 		return '
-			query getFormField($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsForm(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							... on CaptchaField {
-								conditionalLogic {
-									actionType
-									logicType
-									rules {
-										fieldId
-										operator
-										value
-									}
-								}
-								cssClass
-								formId
-								id
-								layoutGridColumnSpan
-								layoutSpacerGridColumnSpan
-								type
-								captchaLanguage
-								captchaType
-								captchaTheme
-								description
-								descriptionPlacement
-								displayOnly
-								errorMessage
-								label
-								simpleCaptchaBackgroundColor
-								simpleCaptchaSize
-								simpleCaptchaFontColor
-								size
-							}
-						}
-					}
-				}
+			... on CaptchaField {
+				captchaLanguage
+				captchaType
+				captchaTheme
+				description
+				descriptionPlacement
+				displayOnly
+				errorMessage
+				label
+				simpleCaptchaBackgroundColor
+				simpleCaptchaSize
+				simpleCaptchaFontColor
+				size
 			}
 		';
 	}
@@ -150,13 +127,6 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on TextFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on TextField {
 									value
@@ -182,13 +152,6 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on TextFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on TextField {
 									value
@@ -214,13 +177,6 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on TextFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on TextField {
 									value
@@ -274,10 +230,6 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'1.fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'1',
 										$this->expectedField( 'value', $value ),

@@ -75,7 +75,7 @@ class ListField extends AbstractFormField {
 					'description' => __( 'Determines if the field should use multiple columns. Default is false.', 'wp-graphql-gravity-forms' ),
 				],
 				'maxRows'       => [
-					'type'        => 'Integer',
+					'type'        => 'Int',
 					'description' => __( 'The maximum number of rows the user can add to the field.', 'wp-graphql-gravity-forms' ),
 				],
 			]

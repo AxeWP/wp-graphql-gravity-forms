@@ -34,14 +34,14 @@ class EntryQuizResults extends AbstractObject {
 	public function get_type_fields() : array {
 		return [
 			'score'   => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'The raw quiz score.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function( $root ) : ?int {
 					return $root['gquiz_score'] ?? null;
 				},
 			],
 			'percent' => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'The quiz score as a percent.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function( $root ) : ?int {
 					return $root['gquiz_percent'] ?? null;

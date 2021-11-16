@@ -24,7 +24,7 @@ class ProductFieldProperty implements FieldProperty {
 	public static function get() : array {
 		return [
 			'productField' => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'The id of the product field to which the field is associated.', 'wp-graphql-gravity-forms' ),
 			],
 		];

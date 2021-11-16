@@ -47,7 +47,7 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getConsentFieldHelper();
+		return $this->tester->getPropertyHelper( 'ConsentField' );
 	}
 
 	/**
@@ -89,49 +89,19 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function field_query():string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on ConsentField {
-								adminLabel
-								adminOnly
-								checkboxLabel
-								description
-								descriptionPlacement
-								errorMessage
-								formId
-								inputName
-								isRequired
-								label
-								value
-								visibility
-							}
-						}
-						edges {
-							fieldValue {
-								... on ConsentFieldValue {
-									value
-								}
-							}
-						}
-					}
-				}
+			... on ConsentField {
+				adminLabel
+				adminOnly
+				checkboxLabel
+				description
+				descriptionPlacement
+				errorMessage
+				formId
+				inputName
+				isRequired
+				label
+				value
+				visibility
 			}
 		';
 	}
@@ -151,13 +121,6 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on ConsentFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on ConsentField {
 									value
@@ -183,13 +146,6 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on ConsentFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on ConsentField {
 									value
@@ -215,13 +171,6 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on ConsentFieldValue {
-										value
-									}
-								}
-							}
 							nodes {
 								... on ConsentField {
 									value
@@ -254,10 +203,6 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 									[ 'value' => $this->field_value ],
 								)
 							),
-							$this->expectedEdge(
-								'fieldValue',
-								$this->expectedField( 'value', $this->field_value ),
-							),
 						]
 					),
 				]
@@ -283,10 +228,6 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedEdge(
-										'fieldValue',
-										$this->expectedField( 'value', $value ),
-									),
 									$this->expectedNode(
 										'value',
 										$this->expectedField( 'value', $value ),
@@ -308,149 +249,5 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
 		$this->assertEquals( $this->field_value_input, $actual_entry[ $form['fields'][0]->inputs[1]['id'] ], 'Submit mutation entry value not equal' );
-	}
-
-	/**
-	 * Test submitting AddressField with updateGravityFormsEntry.
-	 */
-	public function testUpdateEntry() : void {
-		$form  = $this->factory->form->get_object_by_id( $this->form_id );
-		$value = $this->field_value_input;
-
-		$query = '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
-				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
-					errors {
-						id
-						message
-					}
-					entry {
-						formFields {
-							edges {
-								fieldValue {
-									... on ConsentFieldValue {
-										value
-									}
-								}
-							}
-							nodes {
-								... on ConsentField {
-									value
-								}
-							}
-						}
-					}
-				}
-			}
-		';
-
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'entryId' => $this->entry_id,
-					'fieldId' => $form['fields'][0]->id,
-					'value'   => $value,
-				],
-			]
-		);
-
-		$expected = [
-			'updateGravityFormsEntry' => [
-				'errors' => null,
-				'entry'  => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => [
-									'value' => $value,
-								],
-							],
-						],
-						'nodes' => [
-							[
-								'value' => $value,
-							],
-						],
-					],
-				],
-			],
-		];
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
-		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
-	}
-
-	/**
-	 * Test submitting AddressField with updateGravityFormsEntry.
-	 */
-	public function testUpdateDraftEntry() : void {
-		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
-		$value        = $this->field_value_input;
-
-		$query = '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
-				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
-					errors {
-						id
-						message
-					}
-					entry {
-						formFields {
-							edges {
-								fieldValue {
-									... on ConsentFieldValue {
-										value
-									}
-								}
-							}
-							nodes {
-								... on ConsentField {
-									value
-								}
-							}
-						}
-					}
-				}
-			}
-		';
-
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'resumeToken' => $resume_token,
-					'fieldId'     => $form['fields'][0]->id,
-					'value'       => $value,
-				],
-			]
-		);
-
-		$expected = [
-			'updateGravityFormsDraftEntry' => [
-				'errors' => null,
-				'entry'  => [
-					'formFields' => [
-						'edges' => [
-							[
-								'fieldValue' => [
-									'value' => $value,
-								],
-							],
-						],
-						'nodes' => [
-							[
-								'value' => $value,
-							],
-						],
-					],
-				],
-			],
-		];
-
-		$this->assertArrayNotHasKey( 'errors', $actual, 'Update mutation has errors' );
-		$this->assertEquals( $expected, $actual['data'], 'Update mutation not equal' );
-
-		$this->factory->draft_entry->delete( $resume_token );
 	}
 }

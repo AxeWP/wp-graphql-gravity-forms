@@ -24,7 +24,7 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getPageFieldHelper();
+		return $this->tester->getPropertyHelper( 'PageField' );
 	}
 
 	/**
@@ -60,60 +60,24 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function field_query() : string {
 		return '
-			query getFieldValue($id: ID!, $idType: IdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType ) {
-					form {
-						node {
-							pagination {
-								backgroundColor
-								color
-								displayProgressbarOnConfirmation
-								pages
-								progressbarCompletionText
-								style
-								type
-							}
-						}
-					}
-					formFields {
-						nodes {
-							cssClass
-							formId
-							id
-							layoutGridColumnSpan
-							layoutSpacerGridColumnSpan
-							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
-							... on PageField {
-								adminLabel
-								adminOnly
-								allowsPrepopulate
-								displayOnly
-								label
-								nextButton {
-									imageUrl
-									text
-									type
-								}
-								previousButton {
-									imageUrl
-									text
-									type
-								}
-								size
-								visibility
-							}
-						}
-					}
+			... on PageField {
+				adminLabel
+				adminOnly
+				allowsPrepopulate
+				displayOnly
+				label
+				nextButton {
+					imageUrl
+					text
+					type
 				}
+				previousButton {
+					imageUrl
+					text
+					type
+				}
+				size
+				visibility
 			}
 		';
 	}

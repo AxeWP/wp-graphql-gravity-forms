@@ -56,7 +56,7 @@ class PageField extends AbstractFormField {
 				],
 				// Although the property name is the same, this field is different than FieldProperty\PageNumberProperty.
 				'pageNumber'     => [
-					'type'        => 'Integer',
+					'type'        => 'Int',
 					'description' => __( 'The page number of the current page.', 'wp-graphql-gravity-forms' ),
 				],
 				'previousButton' => [

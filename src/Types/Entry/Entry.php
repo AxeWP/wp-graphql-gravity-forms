@@ -68,16 +68,16 @@ class Entry extends AbstractObject implements Field {
 				'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
 			],
 			'entryId'     => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
 			],
 			'formId'      => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'The ID of the form that was submitted to generate this entry.', 'wp-graphql-gravity-forms' ),
 			],
 			// @TODO: Add field to get post data.
 			'postId'      => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'For forms with Post fields, this property contains the Id of the Post that was created.', 'wp-graphql-gravity-forms' ),
 			],
 			// @TODO: Gravity Forms stores and returns the dateCreated and dateUpdated in UTC time.
@@ -113,7 +113,7 @@ class Entry extends AbstractObject implements Field {
 			],
 			// @TODO: Add field to get user data.
 			'createdById' => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
 			'status'      => [

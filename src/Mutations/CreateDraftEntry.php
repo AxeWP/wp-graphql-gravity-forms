@@ -40,11 +40,11 @@ class CreateDraftEntry extends AbstractMutation {
 				'description' => __( 'The form ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'fromEntryId' => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'Optional. If set, a new draft entry will be created from the existing Entry. ', 'wp-graphql-gravity-forms' ),
 			],
 			'pageNumber'  => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'Optional. The page number where the user left off. Default is 1.', 'wp-graphql-gravity-forms' ),
 			],
 			'ip'          => [

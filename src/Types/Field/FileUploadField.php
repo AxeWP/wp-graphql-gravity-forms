@@ -62,7 +62,7 @@ class FileUploadField extends AbstractFormField {
 					'description' => __( 'When the field is set to allow multiple files to be uploaded, this property is available to set a limit on how many may be uploaded.', 'wp-graphql-gravity-forms' ),
 				],
 				'maxFileSize'   => [
-					'type'        => 'Integer',
+					'type'        => 'Int',
 					'description' => __( 'The maximum size (in MB) an uploaded file may be .', 'wp-graphql-gravity-forms' ),
 				],
 				'multipleFiles' => [

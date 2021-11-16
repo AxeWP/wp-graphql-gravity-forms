@@ -42,7 +42,7 @@ class QuizGrades extends AbstractObject {
 				'description' => __( 'The grade label.', 'wp-graphql-gravity-forms' ),
 			],
 			'value' => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'The minimum percentage score required to achieve this grade.', 'wp-graphql-gravity-forms' ),
 			],
 		];
