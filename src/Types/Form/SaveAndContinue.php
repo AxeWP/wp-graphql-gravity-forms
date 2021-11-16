@@ -2,13 +2,13 @@
 /**
  * GraphQL Object Type - Gravity Forms 'Save and Continue' data.
  *
- * @package WPGraphQLGravityForms\Types\Form
+ * @package WPGraphQL\GF\Types\Form
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Form;
+namespace WPGraphQL\GF\Types\Form;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
+use WPGraphQL\GF\Types\AbstractObject;
 
 /**
  * Class - SaveAndContinue

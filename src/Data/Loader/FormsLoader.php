@@ -4,15 +4,15 @@
  *
  * Loads Models for Gravity Forms Forms.
  *
- * @package WPGraphQLGravityForms\Data\Loader
+ * @package WPGraphQL\GF\Data\Loader
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Data\Loader;
+namespace WPGraphQL\GF\Data\Loader;
 
 use WPGraphQL\Data\Loader\AbstractDataLoader;
-use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
-use WPGraphQLGravityForms\Utils\GFUtils;
+use WPGraphQL\GF\DataManipulators\FormDataManipulator;
+use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - FormsLoader

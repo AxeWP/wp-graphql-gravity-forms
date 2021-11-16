@@ -3,15 +3,15 @@
  * GraphQL Object Type - InputProperty
  * An individual input for the 'inputs' field property.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @package WPGraphQL\GF\Types\Field\FieldProperty;
  * @since   0.0.1
  * @since   0.2.0 Add missing properties, and deprecate unused ones.
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Utils\Utils;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - InputProperty

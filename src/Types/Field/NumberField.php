@@ -4,16 +4,16 @@
  *
  * @see https://docs.gravityforms.com/gf_field_number/
  *
- * @package WPGraphQLGravityForms\Types\Field
+ * @package WPGraphQL\GF\Types\Field
  * @since   0.0.1
  * @since   0.2.0 Add missing properties.
  */
 
-namespace WPGraphQLGravityForms\Types\Field;
+namespace WPGraphQL\GF\Types\Field;
 
 use GF_Field_Number;
-use WPGraphQLGravityForms\Types\Enum\NumberFieldFormatEnum;
-use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQL\GF\Types\Enum\NumberFieldFormatEnum;
+use WPGraphQL\GF\Types\Field\FieldProperty;
 
 /**
  * Class - NumberField

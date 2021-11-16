@@ -18,7 +18,7 @@
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  *
- * @package WPGraphQLGravityForms
+ * @package WPGraphQL\GF
  * @author harnessup
  * @license GPL-3
  */
@@ -59,6 +59,6 @@ add_action(
 
 		require_once $autoload;
 
-		WPGraphQLGravityForms\WPGraphQLGravityForms::run();
+		WPGraphQL\GF\GF::run();
 	}
 );

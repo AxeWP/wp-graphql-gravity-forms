@@ -2,11 +2,11 @@
 /**
  * Interface for Gravity Forms entry value property.
  *
- * @package WPGraphQLGravityForms\Interfaces
+ * @package WPGraphQL\GF\Interfaces
  * @since 0.5.0
  */
 
-namespace WPGraphQLGravityForms\Interfaces;
+namespace WPGraphQL\GF\Interfaces;
 
 use GF_Field;
 

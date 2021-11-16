@@ -5,13 +5,13 @@
  *
  * @see https://docs.gravityforms.com/gf_field_list/#highlighter_635805
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @package WPGraphQL\GF\Types\Field\FieldProperty;
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
+use WPGraphQL\GF\Types\AbstractObject;
 
 /**
  * Class - ListChoiceProperty

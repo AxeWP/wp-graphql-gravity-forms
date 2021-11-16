@@ -3,16 +3,16 @@
  * GraphQL Union Type - ObjectFieldValueUnion
  * Union between an object and a Gravity Forms field value.
  *
- * @package WPGraphQLGravityForms\Types\Union
+ * @package WPGraphQL\GF\Types\Union
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Union;
+namespace WPGraphQL\GF\Types\Union;
 
 use WPGraphQL\Registry\TypeRegistry;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\WPGraphQLGravityForms;
+use WPGraphQL\GF\Interfaces\Hookable;
+use WPGraphQL\GF\Interfaces\FieldValue;
+use WPGraphQL\GF\GF;
 
 /**
  * Class - ObjectFieldValueUnion
@@ -75,7 +75,7 @@ class ObjectFieldValueUnion implements Hookable {
 	 */
 	private function get_field_value_classes() : array {
 		$is_field_value_instance = fn( $instance ) => $instance instanceof FieldValue;
-		$field_values            = array_filter( WPGraphQLGravityForms::instances(), $is_field_value_instance );
+		$field_values            = array_filter( GF::instances(), $is_field_value_instance );
 
 		/**
 		 * Deprecated filter for modifying the instances.

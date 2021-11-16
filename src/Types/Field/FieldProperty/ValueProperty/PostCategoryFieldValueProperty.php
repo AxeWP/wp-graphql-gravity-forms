@@ -3,11 +3,11 @@
  * GraphQL Field - PostCategoryFieldValueProperty
  * Values for an individual PostCategory field.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperties\ValueProperty
+ * @package WPGraphQL\GF\Types\Field\FieldProperties\ValueProperty
  * @since   0.5.0
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty;
 
 use GF_Field;
 

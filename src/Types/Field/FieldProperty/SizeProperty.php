@@ -2,14 +2,14 @@
 /**
  * Size field property.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @package WPGraphQL\GF\Types\Field\FieldProperty;
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Interfaces\FieldProperty;
-use WPGraphQLGravityForms\Types\Enum\SizePropertyEnum;
+use WPGraphQL\GF\Interfaces\FieldProperty;
+use WPGraphQL\GF\Types\Enum\SizePropertyEnum;
 
 /**
  * Class - SizeProperty

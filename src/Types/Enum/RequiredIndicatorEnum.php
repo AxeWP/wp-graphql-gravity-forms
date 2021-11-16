@@ -2,11 +2,11 @@
 /**
  * Enum Type - RequiredIndicatorEnum
  *
- * @package WPGraphQLGravityForms\Types\Enum,
+ * @package WPGraphQL\GF\Types\Enum,
  * @since   0.6.0
  */
 
-namespace WPGraphQLGravityForms\Types\Enum;
+namespace WPGraphQL\GF\Types\Enum;
 
 /**
  * Class - RequiredIndicatorEnum

@@ -2,14 +2,14 @@
 /**
  * GraphQL Object Type - Field error.
  *
- * @package WPGraphQLGravityForms\Types\FieldError
+ * @package WPGraphQL\GF\Types\FieldError
  * @since   0.0.1
  * @since   0.4.0 add `id` property.
  */
 
-namespace WPGraphQLGravityForms\Types\FieldError;
+namespace WPGraphQL\GF\Types\FieldError;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
+use WPGraphQL\GF\Types\AbstractObject;
 
 /**
  * Class - FieldError

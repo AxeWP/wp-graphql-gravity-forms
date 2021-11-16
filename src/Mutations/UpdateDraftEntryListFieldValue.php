@@ -4,14 +4,14 @@
  *
  * Registers mutation to update a Gravity Forms draft entry list field value.
  *
- * @package WPGraphQLGravityForms\Mutation
+ * @package WPGraphQL\GF\Mutation
  * @since 0.0.1
  * @since 0.3.0 Deprecate `values` in favor of `rowValues`.
  */
 
-namespace WPGraphQLGravityForms\Mutations;
+namespace WPGraphQL\GF\Mutations;
 
-use WPGraphQLGravityForms\Types\Input\ListInput;
+use WPGraphQL\GF\Types\Input\ListInput;
 
 
 /**

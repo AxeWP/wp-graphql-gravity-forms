@@ -4,13 +4,13 @@
  *
  * Registers mutation to update a Gravity Forms draft entry name field value.
  *
- * @package WPGraphQLGravityForms\Mutation
+ * @package WPGraphQL\GF\Mutation
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Mutations;
+namespace WPGraphQL\GF\Mutations;
 
-use WPGraphQLGravityForms\Types\Input\NameInput;
+use WPGraphQL\GF\Types\Input\NameInput;
 
 /**
  * Class - UpdateDraftEntryNameFieldValue

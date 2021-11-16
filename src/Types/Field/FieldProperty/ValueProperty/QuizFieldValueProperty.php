@@ -3,11 +3,11 @@
  * GraphQL Field - QuizFieldValueProperty
  * Values for an individual Quiz field.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperties\ValueProperty
+ * @package WPGraphQL\GF\Types\Field\FieldProperties\ValueProperty
  * @since   0.9.1
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty;
 
 use GF_Field;
 

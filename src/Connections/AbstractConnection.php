@@ -2,13 +2,13 @@
 /**
  * Abstract GraphQL Connection
  *
- * @package WPGraphQLGravityForms\Connections;
+ * @package WPGraphQL\GF\Connections;
  * @since 0.7.0
  */
 
-namespace WPGraphQLGravityForms\Connections;
+namespace WPGraphQL\GF\Connections;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQL\GF\Interfaces\Hookable;
 
 /**
  * Class - AbstractConnection

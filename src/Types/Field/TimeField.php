@@ -4,15 +4,15 @@
  *
  * @see https://docs.gravityforms.com/gf_field_time/
  *
- * @package WPGraphQLGravityForms\Types\Field
+ * @package WPGraphQL\GF\Types\Field
  * @since   0.0.1
  * @since   0.2.0 Add missing properties.
  */
 
-namespace WPGraphQLGravityForms\Types\Field;
+namespace WPGraphQL\GF\Types\Field;
 
-use WPGraphQLGravityForms\Types\Enum\TimeFieldFormatEnum;
-use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQL\GF\Types\Enum\TimeFieldFormatEnum;
+use WPGraphQL\GF\Types\Field\FieldProperty;
 
 /**
  * Class - TimeField

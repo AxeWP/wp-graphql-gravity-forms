@@ -4,15 +4,15 @@
  *
  * @see https://docs.gravityforms.com/notifications-object/
  *
- * @package WPGraphQLGravityForms\Types\Form
+ * @package WPGraphQL\GF\Types\Form
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Form;
+namespace WPGraphQL\GF\Types\Form;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
-use WPGraphQLGravityForms\Types\Enum\NotificationToTypeEnum;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\ConditionalLogic\ConditionalLogic;
+use WPGraphQL\GF\Types\Enum\NotificationToTypeEnum;
 
 /**
  * Class - FormNotification

@@ -2,11 +2,11 @@
 /**
  * Enum Type - FieldFiltersOperatorInputEnum
  *
- * @package WPGraphQLGravityForms\Types\Enum,
+ * @package WPGraphQL\GF\Types\Enum,
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Enum;
+namespace WPGraphQL\GF\Types\Enum;
 
 /**
  * Class - FieldFiltersOperatorInputEnum

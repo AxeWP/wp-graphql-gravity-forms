@@ -2,12 +2,12 @@
 /**
  * Test PageField.
  *
- * @package Tests\WPGraphQL\GravityForms
+ * @package Tests\WPGraphQL\GF
  */
 
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCase;
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
-use WPGraphQLGravityForms\Types\Enum;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
+use WPGraphQL\GF\Types\Enum;
 
 /**
  * Class -PageFieldTest

@@ -4,15 +4,15 @@
  *
  * Manipulates Fields data.
  *
- * @package WPGraphQLGravityForms\DataManipulators
+ * @package WPGraphQL\GF\DataManipulators
  * @since 0.0.1
  * @since 0.3.0 Set default choices for listField.
  */
 
-namespace WPGraphQLGravityForms\DataManipulators;
+namespace WPGraphQL\GF\DataManipulators;
 
 use GF_Field;
-use WPGraphQLGravityForms\Interfaces\DataManipulator;
+use WPGraphQL\GF\Interfaces\DataManipulator;
 
 /**
  * Class - FieldsDataManipulator

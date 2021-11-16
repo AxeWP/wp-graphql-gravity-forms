@@ -1,8 +1,8 @@
 <?php
 
-use WPGraphQLGravityForms\WPGraphQLGravityForms;
+use WPGraphQL\GF\GF;
 
-class WPGraphQLGravityFormsTest extends \Codeception\TestCase\WPTestCase {
+class GFTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \WpunitTesterActions
 	 */
@@ -27,19 +27,19 @@ class WPGraphQLGravityFormsTest extends \Codeception\TestCase\WPTestCase {
 
 	// Tests
 	public function testInstance() {
-		$this->instance = new WPGraphQLGravityForms();
+		$this->instance = new GF();
 
-		$this->assertTrue( $this->instance instanceof WPGraphQLGravityForms );
+		$this->assertTrue( $this->instance instanceof GF );
 	}
 
 	public function testInstanceBeforeInstantiation() {
-		$instances = WPGraphQLGravityForms::instances();
+		$instances = GF::instances();
 		codecept_debug( $instances );
 		$this->assertNotEmpty( $instances );
 	}
 
 	public function testRun() {
-		$this->instance = new WPGraphQLGravityForms();
+		$this->instance = new GF();
 		$this->instance->run();
 
 		$this->assertTrue( true );

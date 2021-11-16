@@ -2,10 +2,10 @@
 /**
  * Factory for Gravity Forms fields.
  *
- * @package Tests\WPGraphQL\GravityForms\Factory
+ * @package Tests\WPGraphQL\GF\Factory
  */
 
-namespace Tests\WPGraphQL\GravityForms\Factory;
+namespace Tests\WPGraphQL\GF\Factory;
 
 use GF_Field;
 use GF_Fields;

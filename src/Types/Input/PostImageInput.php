@@ -3,11 +3,11 @@
  * GraphQL Input Type - PostImageInput
  * Input fields for a single Post Image.
  *
- * @package WPGraphQLGravityForms\Types\Input
+ * @package WPGraphQL\GF\Types\Input
  * @since   0.7.0
  */
 
-namespace WPGraphQLGravityForms\Types\Input;
+namespace WPGraphQL\GF\Types\Input;
 
 /**
  * Class - PostImageInput

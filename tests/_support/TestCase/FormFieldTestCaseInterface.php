@@ -2,10 +2,10 @@
 /**
  * Interface for FormFieldTestCase.
  *
- * @package Tests\WPGraphQL\Gravity\GravityForms
+ * @package Tests\WPGraphQL\GF\TestCase
  */
 
-namespace Tests\WPGraphQL\GravityForms\TestCase;
+namespace Tests\WPGraphQL\GF\TestCase;
 
 interface FormFieldTestCaseInterface {
 	/**

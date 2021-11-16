@@ -4,24 +4,24 @@
  *
  * @see https://docs.gravityforms.com/entry-object/
  *
- * @package WPGraphQLGravityForms\Types\Entry
+ * @package WPGraphQL\GF\Types\Entry
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Entry;
+namespace WPGraphQL\GF\Types\Entry;
 
 use GFAPI;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\DataManipulators\DraftEntryDataManipulator;
-use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
-use WPGraphQLGravityForms\Interfaces\Field;
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Enum\EntryStatusEnum;
-use WPGraphQLGravityForms\Types\Enum\IdTypeEnum;
-use WPGraphQLGravityForms\Utils\GFUtils;
+use WPGraphQL\GF\DataManipulators\DraftEntryDataManipulator;
+use WPGraphQL\GF\DataManipulators\EntryDataManipulator;
+use WPGraphQL\GF\Interfaces\Field;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Enum\EntryStatusEnum;
+use WPGraphQL\GF\Types\Enum\IdTypeEnum;
+use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - Entry

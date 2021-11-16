@@ -4,13 +4,13 @@
  *
  * Registers mutation to update a Gravity Forms draft entry checkbox field value.
  *
- * @package WPGraphQLGravityForms\Mutation
+ * @package WPGraphQL\GF\Mutation
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Mutations;
+namespace WPGraphQL\GF\Mutations;
 
-use WPGraphQLGravityForms\Types\Input\CheckboxInput;
+use WPGraphQL\GF\Types\Input\CheckboxInput;
 
 /**
  * Class - UpdateDraftEntryCheckboxFieldValue

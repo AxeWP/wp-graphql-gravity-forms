@@ -4,13 +4,13 @@
  *
  * @see https://docs.gravityforms.com/gf_field_consent/
  *
- * @package WPGraphQLGravityForms\Types\Field
+ * @package WPGraphQL\GF\Types\Field
  * @since   0.3.0
  */
 
-namespace WPGraphQLGravityForms\Types\Field;
+namespace WPGraphQL\GF\Types\Field;
 
-use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQL\GF\Types\Field\FieldProperty;
 
 /**
  * Class - ConsentField

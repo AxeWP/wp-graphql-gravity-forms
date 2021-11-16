@@ -5,7 +5,7 @@
  * @package .
  */
 
-use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
+use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 
 /**
  * Class - DeleteDraftEntryMutationTest

@@ -2,14 +2,14 @@
 /**
  * Abstract GraphQL Type.
  *
- * @package WPGraphQLGravityForms\Types
+ * @package WPGraphQL\GF\Types
  * @since 0.7.0
  */
 
-namespace WPGraphQLGravityForms\Types;
+namespace WPGraphQL\GF\Types;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
+use WPGraphQL\GF\Interfaces\Hookable;
+use WPGraphQL\GF\Interfaces\Type;
 
 /**
  * Class - AbstractType

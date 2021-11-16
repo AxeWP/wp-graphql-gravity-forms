@@ -4,15 +4,15 @@
  *
  * Manipulates entry data.
  *
- * @package WPGraphQLGravityForms\DataManipulators
+ * @package WPGraphQL\GF\DataManipulators
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\DataManipulators;
+namespace WPGraphQL\GF\DataManipulators;
 
 use GraphQLRelay\Relay;
-use WPGraphQLGravityForms\Interfaces\DataManipulator;
-use WPGraphQLGravityForms\Types\Entry\Entry;
+use WPGraphQL\GF\Interfaces\DataManipulator;
+use WPGraphQL\GF\Types\Entry\Entry;
 
 /**
  * Class - EntryDataManipulator

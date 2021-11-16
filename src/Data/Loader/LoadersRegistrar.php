@@ -4,14 +4,14 @@
  *
  * Adds data loaders to AppContext.
  *
- * @package WPGraphQLGravityForms\Data\Loader
+ * @package WPGraphQL\GF\Data\Loader
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Data\Loader;
+namespace WPGraphQL\GF\Data\Loader;
 
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQL\GF\Interfaces\Hookable;
 
 /**
  * Class - LoadersRegistrar

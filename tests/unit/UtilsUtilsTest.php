@@ -5,7 +5,7 @@
  * @package .
  */
 
-use WPGraphQLGravityForms\Utils\Utils;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - UtilsUtilsTest

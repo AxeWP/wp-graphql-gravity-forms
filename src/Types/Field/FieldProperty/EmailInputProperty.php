@@ -5,15 +5,15 @@
  *
  * @see https://docs.gravityforms.com/gf_field_email/
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @package WPGraphQL\GF\Types\Field\FieldProperty;
  * @since   0.6.0
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
-use WPGraphQLGravityForms\Utils\Utils;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Field\FieldProperty\InputProperty;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - EmailInputProperty

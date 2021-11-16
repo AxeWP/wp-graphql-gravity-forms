@@ -4,21 +4,21 @@
  *
  * Registers mutation to submit a Gravity Forms draft entry so that it becomes a permanent entry.
  *
- * @package WPGraphQLGravityForms\Mutation
+ * @package WPGraphQL\GF\Mutation
  * @since 0.0.1
  * @since 0.3.0 Support post creation.
  */
 
-namespace WPGraphQLGravityForms\Mutations;
+namespace WPGraphQL\GF\Mutations;
 
 use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
-use WPGraphQLGravityForms\Types\Entry\Entry;
-use WPGraphQLGravityForms\Types\FieldError\FieldError;
-use WPGraphQLGravityForms\Utils\GFUtils;
+use WPGraphQL\GF\DataManipulators\EntryDataManipulator;
+use WPGraphQL\GF\Types\Entry\Entry;
+use WPGraphQL\GF\Types\FieldError\FieldError;
+use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - SubmitDraftEntry

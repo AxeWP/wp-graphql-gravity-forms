@@ -5,15 +5,15 @@
  * @see https://www.gravityforms.com/add-ons/chained-selects/
  * @see https://docs.gravityforms.com/category/add-ons-gravity-forms/chained-selects/
  *
- * @package WPGraphQLGravityForms\Types\Field
+ * @package WPGraphQL\GF\Types\Field
  * @since   0.0.1
  * @since   0.2.0 Add missing properties.
  */
 
-namespace WPGraphQLGravityForms\Types\Field;
+namespace WPGraphQL\GF\Types\Field;
 
-use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\Enum\ChainedSelectsAlignmentEnum;
+use WPGraphQL\GF\Types\Field\FieldProperty;
+use WPGraphQL\GF\Types\Enum\ChainedSelectsAlignmentEnum;
 
 /**
  * Class - ChainedSelectField

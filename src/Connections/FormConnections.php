@@ -3,17 +3,17 @@
  * Connection - RootQueryForms
  * Registers all connections TO Gravity Forms Form.
  *
- * @package WPGraphQLGravityForms\Connections
+ * @package WPGraphQL\GF\Connections
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Connections;
+namespace WPGraphQL\GF\Connections;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\Types\Form\Form;
-use WPGraphQLGravityForms\Types\Enum\FormStatusEnum;
-use WPGraphQLGravityForms\Types\Input\FormsSortingInput;
+use WPGraphQL\GF\Types\Form\Form;
+use WPGraphQL\GF\Types\Enum\FormStatusEnum;
+use WPGraphQL\GF\Types\Input\FormsSortingInput;
 
 /**
  * Class - FormConnections

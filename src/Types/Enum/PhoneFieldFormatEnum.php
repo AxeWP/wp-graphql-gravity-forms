@@ -2,11 +2,11 @@
 /**
  * Enum Type - PhoneFieldFormatEnum
  *
- * @package WPGraphQLGravityForms\Types\Enum,
+ * @package WPGraphQL\GF\Types\Enum,
  * @since   0.4.0
  */
 
-namespace WPGraphQLGravityForms\Types\Enum;
+namespace WPGraphQL\GF\Types\Enum;
 
 /**
  * Class - PhoneFieldFormatEnum

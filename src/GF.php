@@ -1,32 +1,32 @@
 <?php
 /**
- * Initializes a singleton instance of WPGraphQLGravityForms.
+ * Initializes a singleton instance of WPGraphQL\GF.
  *
- * @package WPGraphQLGravityForms
+ * @package WPGraphQL\GF
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms;
+namespace WPGraphQL\GF;
 
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Types\Button\Button;
-use WPGraphQLGravityForms\Types\Button\LastPageButton;
-use WPGraphQLGravityForms\Types\ConditionalLogic;
-use WPGraphQLGravityForms\Types\Enum;
-use WPGraphQLGravityForms\Types\Form;
-use WPGraphQLGravityForms\Types\Field;
-use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
-use WPGraphQLGravityForms\Types\Field\FieldValue;
-use WPGraphQLGravityForms\Types\FieldError\FieldError;
-use WPGraphQLGravityForms\Types\Union;
-use WPGraphQLGravityForms\Types\Entry;
-use WPGraphQLGravityForms\Types\Input;
-use WPGraphQLGravityForms\Types\GraphQLInterface;
+use WPGraphQL\GF\Interfaces\Hookable;
+use WPGraphQL\GF\Types\Button\Button;
+use WPGraphQL\GF\Types\Button\LastPageButton;
+use WPGraphQL\GF\Types\ConditionalLogic;
+use WPGraphQL\GF\Types\Enum;
+use WPGraphQL\GF\Types\Form;
+use WPGraphQL\GF\Types\Field;
+use WPGraphQL\GF\Types\Field\FieldProperty;
+use WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty;
+use WPGraphQL\GF\Types\Field\FieldValue;
+use WPGraphQL\GF\Types\FieldError\FieldError;
+use WPGraphQL\GF\Types\Union;
+use WPGraphQL\GF\Types\Entry;
+use WPGraphQL\GF\Types\Input;
+use WPGraphQL\GF\Types\GraphQLInterface;
 /**
  * Main plugin class.
  */
-final class WPGraphQLGravityForms {
+final class GF {
 	/**
 	 * Class instances.
 	 *

@@ -3,17 +3,17 @@
  * GraphQL Edge Type - EntryForm
  * Creates a 1:1 relationship between an Entry and the Form associated with it.
  *
- * @package WPGraphQLGravityForms\Types\Entry
+ * @package WPGraphQL\GF\Types\Entry
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Entry;
+namespace WPGraphQL\GF\Types\Entry;
 
-use WPGraphQLGravityForms\Interfaces\Field;
-use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Form\Form;
-use WPGraphQLGravityForms\Utils\GFUtils;
+use WPGraphQL\GF\Interfaces\Field;
+use WPGraphQL\GF\DataManipulators\FormDataManipulator;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Form\Form;
+use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Creates a 1:1 relationship between an Entry and the Form associated with it.

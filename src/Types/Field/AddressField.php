@@ -4,16 +4,16 @@
  *
  * @see https://docs.gravityforms.com/gf_field_address/
  *
- * @package WPGraphQLGravityForms\Types\Field
+ * @package WPGraphQL\GF\Types\Field
  * @since   0.0.1
  * @since   0.2.0 Add missing properties, and deprecate unused ones.
  */
 
-namespace WPGraphQLGravityForms\Types\Field;
+namespace WPGraphQL\GF\Types\Field;
 
-use WPGraphQLGravityForms\Types\Enum\AddressTypeEnum;
-use WPGraphQLGravityForms\Types\Field\FieldProperty;
-use WPGraphQLGravityForms\Utils\Utils;
+use WPGraphQL\GF\Types\Enum\AddressTypeEnum;
+use WPGraphQL\GF\Types\Field\FieldProperty;
+use WPGraphQL\GF\Utils\Utils;
 
 
 /**

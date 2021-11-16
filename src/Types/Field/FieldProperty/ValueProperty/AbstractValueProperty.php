@@ -3,15 +3,15 @@
  * Abstract ValueProperty type.
  *
  * @since 0.5.0
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty
+ * @package WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty;
 
 use GF_Field;
 use WPGraphQL\AppContext;
 use GraphQL\Type\Definition\ResolveInfo;
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQL\GF\Types\AbstractType;
 
 /**
  * Class - AbstractValueProperty

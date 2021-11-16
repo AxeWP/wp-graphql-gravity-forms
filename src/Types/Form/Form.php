@@ -4,21 +4,21 @@
  *
  * @see https://docs.gravityforms.com/form-object/
  *
- * @package WPGraphQLGravityForms\Types\Form
+ * @package WPGraphQL\GF\Types\Form
  * @since   0.0.1
  * @since   0.4.0 Accept database Ids in query.
  */
 
-namespace WPGraphQLGravityForms\Types\Form;
+namespace WPGraphQL\GF\Types\Form;
 
 use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
-use WPGraphQLGravityForms\Interfaces\Field;
-use WPGraphQLGravityForms\DataManipulators\FormDataManipulator;
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Button;
-use WPGraphQLGravityForms\Types\Enum;
-use WPGraphQLGravityForms\Utils\GFUtils;
+use WPGraphQL\GF\Interfaces\Field;
+use WPGraphQL\GF\DataManipulators\FormDataManipulator;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Button;
+use WPGraphQL\GF\Types\Enum;
+use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - Form

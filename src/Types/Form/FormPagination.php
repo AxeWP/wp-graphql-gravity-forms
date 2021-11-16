@@ -4,15 +4,15 @@
  *
  * @see https://docs.gravityforms.com/page-break/
  *
- * @package WPGraphQLGravityForms\Types\Form
+ * @package WPGraphQL\GF\Types\Form
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Form;
+namespace WPGraphQL\GF\Types\Form;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Enum\PageProgressStyleEnum;
-use WPGraphQLGravityForms\Types\Enum\PageProgressTypeEnum;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Enum\PageProgressStyleEnum;
+use WPGraphQL\GF\Types\Enum\PageProgressTypeEnum;
 
 /**
  * Class - FormPagination

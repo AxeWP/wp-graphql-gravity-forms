@@ -3,17 +3,17 @@
  * GraphQL Object Type - SignatureFieldValue
  * Values for an individual Signature field.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldValue
+ * @package WPGraphQL\GF\Types\Field\FieldValue
  * @since   0.0.1
  * @since   0.3.0 use $field->get_value_url() to retrieve signature url.
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldValue;
+namespace WPGraphQL\GF\Types\Field\FieldValue;
 
 use GF_Field;
-use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\SignatureFieldValueProperty;
+use WPGraphQL\GF\Interfaces\FieldValue;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty\SignatureFieldValueProperty;
 
 /**
  * Class - SignatureFieldValue

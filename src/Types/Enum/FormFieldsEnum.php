@@ -2,15 +2,15 @@
 /**
  * Enum Type - FormFieldsEnum
  *
- * @package WPGraphQLGravityForms\Types\Enum,
+ * @package WPGraphQL\GF\Types\Enum,
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Enum;
+namespace WPGraphQL\GF\Types\Enum;
 
 use WPGraphQL\Type\WPEnumType;
-use WPGraphQLGravityForms\Types\Field\AbstractFormField;
-use WPGraphQLGravityForms\WPGraphQLGravityForms;
+use WPGraphQL\GF\Types\Field\AbstractFormField;
+use WPGraphQL\GF\GF;
 
 /**
  * Class - FormFieldsEnum
@@ -39,7 +39,7 @@ class FormFieldsEnum extends AbstractEnum {
 	 * @return array
 	 */
 	public function get_values() : array {
-		$fields = array_filter( WPGraphQLGravityForms::instances(), fn( $instance ) => $instance instanceof AbstractFormField );
+		$fields = array_filter( GF::instances(), fn( $instance ) => $instance instanceof AbstractFormField );
 
 		$values = [];
 

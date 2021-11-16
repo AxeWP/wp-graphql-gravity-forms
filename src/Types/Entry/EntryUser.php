@@ -3,18 +3,18 @@
  * GraphQL Edge Type - EntryUser
  * Creates a 1:1 relationship between an Entry and the User who created it.
  *
- * @package WPGraphQLGravityForms\Types\Entry
+ * @package WPGraphQL\GF\Types\Entry
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Entry;
+namespace WPGraphQL\GF\Types\Entry;
 
 use WP_User;
 use WPGraphQL\Model\User;
 use GraphQL\Error\UserError;
-use WPGraphQLGravityForms\Interfaces\Field;
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Entry\Entry;
+use WPGraphQL\GF\Interfaces\Field;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Entry\Entry;
 
 /**
  * Creates a 1:1 relationship between an Entry and the User who created it.

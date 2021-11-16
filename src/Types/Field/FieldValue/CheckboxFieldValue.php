@@ -3,17 +3,17 @@
  * GraphQL Object Type - CheckboxFieldValue
  * Value for a checkbox field.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldValue
+ * @package WPGraphQL\GF\Types\Field\FieldValue
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldValue;
+namespace WPGraphQL\GF\Types\Field\FieldValue;
 
 use GF_Field;
-use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\CheckboxFieldValueProperty;
-use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\CheckboxValueProperty;
+use WPGraphQL\GF\Interfaces\FieldValue;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty\CheckboxFieldValueProperty;
+use WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty\CheckboxValueProperty;
 
 /**
  * Value for a checkbox field.

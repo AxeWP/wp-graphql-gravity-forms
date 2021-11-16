@@ -4,14 +4,14 @@
  *
  * @see https://docs.gravityforms.com/gf_field_select/
  *
- * @package WPGraphQLGravityForms\Types\Field
+ * @package WPGraphQL\GF\Types\Field
  * @since   0.0.1
  * @since   0.2.0 Add missing properties.
  */
 
-namespace WPGraphQLGravityForms\Types\Field;
+namespace WPGraphQL\GF\Types\Field;
 
-use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQL\GF\Types\Field\FieldProperty;
 
 /**
  * Class - SelectField

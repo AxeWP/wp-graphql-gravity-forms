@@ -2,11 +2,11 @@
 /**
  * Abstract GraphQL Object Type.
  *
- * @package WPGraphQLGravityForms\Types
+ * @package WPGraphQL\GF\Types
  * @since 0.7.0
  */
 
-namespace WPGraphQLGravityForms\Types;
+namespace WPGraphQL\GF\Types;
 
 /**
  * Class - AbstractType

@@ -2,14 +2,14 @@
 /**
  * Abstract Enum Type
  *
- * @package WPGraphQLGravityForms\Types\Enum
+ * @package WPGraphQL\GF\Types\Enum
  * @since 0.4.0
  */
 
-namespace WPGraphQLGravityForms\Types\Enum;
+namespace WPGraphQL\GF\Types\Enum;
 
-use WPGraphQLGravityForms\Types\AbstractType;
-use WPGraphQLGravityForms\Utils\Utils;
+use WPGraphQL\GF\Types\AbstractType;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Abstract Class - Abstract Enum

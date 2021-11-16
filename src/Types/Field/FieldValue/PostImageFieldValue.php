@@ -3,16 +3,16 @@
  * GraphQL Object Type - PostImageFieldValue
  * Values for an individual Post title field.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldValue
+ * @package WPGraphQL\GF\Types\Field\FieldValue
  * @since   0.5.0
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldValue;
+namespace WPGraphQL\GF\Types\Field\FieldValue;
 
 use GF_Field;
-use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\PostImageFieldValueProperty;
+use WPGraphQL\GF\Interfaces\FieldValue;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty\PostImageFieldValueProperty;
 
 /**
  * Class - PostImageFieldValue

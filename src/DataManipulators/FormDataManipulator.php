@@ -4,16 +4,16 @@
  *
  * Manipulates Form data.
  *
- * @package WPGraphQLGravityForms\DataManipulators
+ * @package WPGraphQL\GF\DataManipulators
  * @since 0.0.1
  * @since 0.3.1 `limitEntriesCount`, `scheduleEndHour` and `scheduleEndMinute` correctly return as type `Int`.
  */
 
-namespace WPGraphQLGravityForms\DataManipulators;
+namespace WPGraphQL\GF\DataManipulators;
 
 use GraphQLRelay\Relay;
-use WPGraphQLGravityForms\Interfaces\DataManipulator;
-use WPGraphQLGravityForms\Types\Form\Form;
+use WPGraphQL\GF\Interfaces\DataManipulator;
+use WPGraphQL\GF\Types\Form\Form;
 
 /**
  * Class - FormDataManipulator

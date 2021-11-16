@@ -6,8 +6,8 @@
  */
 
 use GraphQL\Error\UserError;
-use WPGraphQLGravityForms\Utils\GFUtils;
-use Tests\WPGraphQL\GravityForms\TestCase\GFGraphQLTestCase;
+use WPGraphQL\GF\Utils\GFUtils;
+use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 
 /**
  * Class - GFUtilsTest

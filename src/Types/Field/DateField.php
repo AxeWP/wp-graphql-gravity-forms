@@ -4,17 +4,17 @@
  *
  * @see https://docs.gravityforms.com/gf_field_date/
  *
- * @package WPGraphQLGravityForms\Types\Field
+ * @package WPGraphQL\GF\Types\Field
  * @since   0.0.1
  * @since   0.2.0 Add missing properties.
  */
 
-namespace WPGraphQLGravityForms\Types\Field;
+namespace WPGraphQL\GF\Types\Field;
 
-use WPGraphQLGravityForms\Types\Enum\CalendarIconTypeEnum;
-use WPGraphQLGravityForms\Types\Enum\DateFieldFormatEnum;
-use WPGraphQLGravityForms\Types\Enum\DateTypeEnum;
-use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQL\GF\Types\Enum\CalendarIconTypeEnum;
+use WPGraphQL\GF\Types\Enum\DateFieldFormatEnum;
+use WPGraphQL\GF\Types\Enum\DateTypeEnum;
+use WPGraphQL\GF\Types\Field\FieldProperty;
 
 /**
  * Class - DateField

@@ -3,13 +3,13 @@
  * GraphQL Input Type - EntriesSortingInput
  * Sorting input type for Entries queries.
  *
- * @package WPGraphQLGravityForms\Types\Input
+ * @package WPGraphQL\GF\Types\Input
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Input;
+namespace WPGraphQL\GF\Types\Input;
 
-use WPGraphQLGravityForms\Types\Enum\SortingInputEnum;
+use WPGraphQL\GF\Types\Enum\SortingInputEnum;
 
 /**
  * Class - EntriesSortingInput

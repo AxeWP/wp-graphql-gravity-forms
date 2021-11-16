@@ -4,19 +4,19 @@
  *
  * Registers all connections TO Gravity Forms Entry.
  *
- * @package WPGraphQLGravityForms\Connections
+ * @package WPGraphQL\GF\Connections
  * @since 0.8.0
  */
 
-namespace WPGraphQLGravityForms\Connections;
+namespace WPGraphQL\GF\Connections;
 
-use WPGraphQLGravityForms\Types\Entry\Entry;
-use WPGraphQLGravityForms\Types\Form\Form;
-use WPGraphQLGravityForms\Types\Enum\EntryStatusEnum;
-use WPGraphQLGravityForms\Types\Enum\FieldFiltersModeEnum;
-use WPGraphQLGravityForms\Types\Input\EntriesDateFiltersInput;
-use WPGraphQLGravityForms\Types\Input\EntriesFieldFiltersInput;
-use WPGraphQLGravityForms\Types\Input\EntriesSortingInput;
+use WPGraphQL\GF\Types\Entry\Entry;
+use WPGraphQL\GF\Types\Form\Form;
+use WPGraphQL\GF\Types\Enum\EntryStatusEnum;
+use WPGraphQL\GF\Types\Enum\FieldFiltersModeEnum;
+use WPGraphQL\GF\Types\Input\EntriesDateFiltersInput;
+use WPGraphQL\GF\Types\Input\EntriesFieldFiltersInput;
+use WPGraphQL\GF\Types\Input\EntriesSortingInput;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 

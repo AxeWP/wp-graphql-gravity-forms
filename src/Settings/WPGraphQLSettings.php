@@ -2,15 +2,15 @@
 /**
  * Settings - WPGraphQL Settings
  *
- * @package WPGraphQLGravityForms\Settings
+ * @package WPGraphQL\GF\Settings
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Settings;
+namespace WPGraphQL\GF\Settings;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\Interfaces\Hookable;
+use WPGraphQL\GF\Interfaces\Hookable;
 /**
  * WPGraphQL Settings.
  */

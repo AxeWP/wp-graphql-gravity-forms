@@ -3,16 +3,16 @@
  * GraphQL Object Type - QuizChoiceProperty
  * An individual property for the 'choices' Quiz field property.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @package WPGraphQL\GF\Types\Field\FieldProperty;
  * @since   0.9.1
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Field\FieldProperty\ChoiceProperty;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Field\FieldProperty\ChoiceProperty;
 
 /**
  * Class - QuizChoiceProperty

@@ -2,13 +2,13 @@
 /**
  * Abstract Input Type
  *
- * @package WPGraphQLGravityForms\Types\Input;
+ * @package WPGraphQL\GF\Types\Input;
  * @since 0.7.0
  */
 
-namespace WPGraphQLGravityForms\Types\Input;
+namespace WPGraphQL\GF\Types\Input;
 
-use WPGraphQLGravityForms\Types\AbstractType;
+use WPGraphQL\GF\Types\AbstractType;
 
 /**
  * Class - AbstractInput

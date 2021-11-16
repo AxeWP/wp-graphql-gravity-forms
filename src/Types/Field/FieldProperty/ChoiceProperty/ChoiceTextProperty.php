@@ -2,13 +2,13 @@
 /**
  * Allows text subproperty on Choice property.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty\ChoiceProperty;
+ * @package WPGraphQL\GF\Types\Field\FieldProperty\ChoiceProperty;
  * @since   0.2.0
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ChoiceProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty\ChoiceProperty;
 
-use WPGraphQLGravityForms\Interfaces\FieldProperty;
+use WPGraphQL\GF\Interfaces\FieldProperty;
 
 /**
  * Class - ChoiceTextProperty

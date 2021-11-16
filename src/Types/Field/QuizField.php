@@ -4,14 +4,14 @@
  *
  * @see https://docs.gravityforms.com/quiz-field/
  *
- * @package WPGraphQLGravityForms\Types\Field
+ * @package WPGraphQL\GF\Types\Field
  * @since   0.9.1
  */
 
-namespace WPGraphQLGravityForms\Types\Field;
+namespace WPGraphQL\GF\Types\Field;
 
-use WPGraphQLGravityForms\Types\Enum\QuizFieldTypeEnum;
-use WPGraphQLGravityForms\Types\Field\FieldProperty;
+use WPGraphQL\GF\Types\Enum\QuizFieldTypeEnum;
+use WPGraphQL\GF\Types\Field\FieldProperty;
 
 /**
  * Class - QuizField

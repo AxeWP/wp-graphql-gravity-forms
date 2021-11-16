@@ -4,14 +4,14 @@
  * An individual property for the 'choices' field property.
  *
  * @see https://docs.gravityforms.com/field-object/#basic-properties
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @package WPGraphQL\GF\Types\Field\FieldProperty;
  * @since   0.0.1
  * @since   0.2.0 Refactor ChoiceProperty for reuse.
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
+use WPGraphQL\GF\Types\AbstractObject;
 
 /**
  * Class - ChoiceProperty

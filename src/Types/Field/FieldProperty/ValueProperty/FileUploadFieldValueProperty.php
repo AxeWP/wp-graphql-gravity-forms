@@ -3,14 +3,14 @@
  * GraphQL Field - FileUploadFieldValueProperty
  * Values for an individual FileUpload field.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperties\ValueProperty
+ * @package WPGraphQL\GF\Types\Field\FieldProperties\ValueProperty
  * @since   0.5.0
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty;
 
 use GF_Field;
-use WPGraphQLGravityForms\Utils\Utils;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - FileUploadFieldValueProperty

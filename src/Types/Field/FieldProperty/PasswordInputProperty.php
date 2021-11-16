@@ -5,16 +5,16 @@
  *
  * @see https://docs.gravityforms.com/gf_field_password/
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @package WPGraphQL\GF\Types\Field\FieldProperty;
  * @since   0.0.1
  * @since   0.2.0 Use InputProperty classes.
  * @since   0.3.0 Add isHidden property.
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Field\FieldProperty\InputProperty;
 
 /**
  * Class - PasswordInputProperty

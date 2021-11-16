@@ -4,26 +4,26 @@
  *
  * Registers all connections TO Gravity Forms Field.
  *
- * @package WPGraphQLGravityForms\Connections
+ * @package WPGraphQL\GF\Connections
  * @since 0.8.0
  */
 
-namespace WPGraphQLGravityForms\Connections;
+namespace WPGraphQL\GF\Connections;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\WPGraphQLGravityForms;
-use WPGraphQLGravityForms\DataManipulators\FieldsDataManipulator;
-use WPGraphQLGravityForms\Types\Entry\Entry;
-use WPGraphQLGravityForms\Types\Form\Form;
-use WPGraphQLGravityForms\Types\GraphQLInterface\FormFieldInterface;
-use WPGraphQLGravityForms\Types\Union\ObjectFieldValueUnion;
-use WPGraphQLGravityForms\Interfaces\FieldValue as FieldValueInterface;
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Enum\FormFieldsEnum;
-use WPGraphQLGravityForms\Types\Field\AbstractFormField;
-use WPGraphQLGravityForms\Utils\GFUtils;
+use WPGraphQL\GF\GF;
+use WPGraphQL\GF\DataManipulators\FieldsDataManipulator;
+use WPGraphQL\GF\Types\Entry\Entry;
+use WPGraphQL\GF\Types\Form\Form;
+use WPGraphQL\GF\Types\GraphQLInterface\FormFieldInterface;
+use WPGraphQL\GF\Types\Union\ObjectFieldValueUnion;
+use WPGraphQL\GF\Interfaces\FieldValue as FieldValueInterface;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Enum\FormFieldsEnum;
+use WPGraphQL\GF\Types\Field\AbstractFormField;
+use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - EntryConnections
@@ -200,7 +200,7 @@ class FieldConnections extends AbstractConnection {
 		 * @return AbstractFormField|null The corresponding WPGraphQL field, or null if not found.
 		 */
 	private function get_field_by_gf_field_type( string $gf_field_type ) {
-		$fields = array_filter( WPGraphQLGravityForms::instances(), fn( $instance ) => $instance instanceof AbstractFormField );
+		$fields = array_filter( GF::instances(), fn( $instance ) => $instance instanceof AbstractFormField );
 
 		/**
 		 * Deprecated filter for modifying the instances.
@@ -227,7 +227,7 @@ class FieldConnections extends AbstractConnection {
 		 * @return FieldValueInterface|null The field value class or null if not found.
 		 */
 	private function get_field_value_class( AbstractFormField $field ) {
-		$field_values = array_filter( WPGraphQLGravityForms::instances(), fn( $instance ) => $instance instanceof FieldValueInterface );
+		$field_values = array_filter( GF::instances(), fn( $instance ) => $instance instanceof FieldValueInterface );
 
 		$value_class_array = array_filter(
 			$field_values,

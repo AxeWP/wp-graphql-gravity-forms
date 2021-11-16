@@ -5,19 +5,19 @@
  * @see https://docs.gravityforms.com/field-object/
  * @see https://docs.gravityforms.com/gf_field/
  *
- * @package WPGraphQLGravityForms\Types\Interface
+ * @package WPGraphQL\GF\Types\Interface
  * @since   0.4.0
  */
 
-namespace WPGraphQLGravityForms\Types\GraphQLInterface;
+namespace WPGraphQL\GF\Types\GraphQLInterface;
 
 use WPGraphQL\Registry\TypeRegistry;
 use GraphQL\Error\UserError;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Type;
-use WPGraphQLGravityForms\WPGraphQLGravityForms;
-use WPGraphQLGravityForms\Types\ConditionalLogic\ConditionalLogic;
-use WPGraphQLGravityForms\Types\Field\AbstractFormField;
+use WPGraphQL\GF\Interfaces\Hookable;
+use WPGraphQL\GF\Interfaces\Type;
+use WPGraphQL\GF\GF;
+use WPGraphQL\GF\Types\ConditionalLogic\ConditionalLogic;
+use WPGraphQL\GF\Types\Field\AbstractFormField;
 
 /**
  * Class - FormFieldInterface
@@ -169,7 +169,7 @@ class FormFieldInterface implements Hookable, Type {
 	 * @return array field types.
 	 */
 	public function get_registered_form_field_types() : array {
-		$fields = array_filter( WPGraphQLGravityForms::instances(), fn( $instance ) => $instance instanceof AbstractFormField );
+		$fields = array_filter( GF::instances(), fn( $instance ) => $instance instanceof AbstractFormField );
 
 		$types = [];
 

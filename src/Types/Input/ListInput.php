@@ -3,12 +3,12 @@
  * GraphQL Input Type - ListInput
  * Input fields for a single List field item.
  *
- * @package WPGraphQLGravityForms\Types\Input
+ * @package WPGraphQL\GF\Types\Input
  * @since   0.0.1
  * @since   0.3.0 Deprecate `values` in favor of `rowValues`.
  */
 
-namespace WPGraphQLGravityForms\Types\Input;
+namespace WPGraphQL\GF\Types\Input;
 
 /**
  * Class - ListInput

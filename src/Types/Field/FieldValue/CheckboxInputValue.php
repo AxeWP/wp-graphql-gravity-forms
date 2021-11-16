@@ -3,13 +3,13 @@
  * GraphQL Object Type - CheckboxInputValue
  * Value for a single input within a checkbox field.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldValue
+ * @package WPGraphQL\GF\Types\Field\FieldValue
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldValue;
+namespace WPGraphQL\GF\Types\Field\FieldValue;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
+use WPGraphQL\GF\Types\AbstractObject;
 
 /**
  * Class - CheckboxInputValue

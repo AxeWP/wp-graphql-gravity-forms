@@ -2,20 +2,20 @@
 /**
  * Abstract class for Mutations
  *
- * @package WPGraphQLGravityForms\Mutation
+ * @package WPGraphQL\GF\Mutation
  * @since 0.4.0
  */
 
-namespace WPGraphQLGravityForms\Mutations;
+namespace WPGraphQL\GF\Mutations;
 
 use GF_Field;
 use GFCommon;
 use GFSignature;
 use GFFormsModel;
 use GraphQL\Error\UserError;
-use WPGraphQLGravityForms\Interfaces\Hookable;
-use WPGraphQLGravityForms\Interfaces\Mutation;
-use WPGraphQLGravityForms\Utils\GFUtils;
+use WPGraphQL\GF\Interfaces\Hookable;
+use WPGraphQL\GF\Interfaces\Mutation;
+use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - DraftEntryUpdator

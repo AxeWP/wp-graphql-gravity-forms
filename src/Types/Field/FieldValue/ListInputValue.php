@@ -3,14 +3,14 @@
  * GraphQL Object Type - ListInputValue
  * Value for a single input within a List field.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldValue
+ * @package WPGraphQL\GF\Types\Field\FieldValue
  * @since   0.0.1
  * @since   0.3.0 Deprecate `value` in favor of `values`.
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldValue;
+namespace WPGraphQL\GF\Types\Field\FieldValue;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
+use WPGraphQL\GF\Types\AbstractObject;
 
 /**
  * Class - ListInputValue

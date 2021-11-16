@@ -4,11 +4,11 @@
  *
  * Common utility functions
  *
- * @package WPGraphQLGravityForms\Utils
+ * @package WPGraphQL\GF\Utils
  * @since 0.2.0
  */
 
-namespace WPGraphQLGravityForms\Utils;
+namespace WPGraphQL\GF\Utils;
 
 /**
  * Class - Utils

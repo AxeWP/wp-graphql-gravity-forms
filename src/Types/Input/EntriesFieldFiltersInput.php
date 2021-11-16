@@ -3,13 +3,13 @@
  * GraphQL Input Type - EntriesFieldFiltersInput
  * Field Filters input type for Entries queries.
  *
- * @package WPGraphQLGravityForms\Types\Input
+ * @package WPGraphQL\GF\Types\Input
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Input;
+namespace WPGraphQL\GF\Types\Input;
 
-use WPGraphQLGravityForms\Types\Enum\FieldFiltersOperatorInputEnum;
+use WPGraphQL\GF\Types\Enum\FieldFiltersOperatorInputEnum;
 
 /**
  * Class - EntriesFieldFiltersInput

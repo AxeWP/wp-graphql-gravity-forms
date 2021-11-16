@@ -4,14 +4,14 @@
  *
  * @see https://docs.gravityforms.com/button/
  *
- * @package WPGraphQLGravityForms\Types\LastPageButton
+ * @package WPGraphQL\GF\Types\LastPageButton
  * @since   0.4.0
  */
 
-namespace WPGraphQLGravityForms\Types\Button;
+namespace WPGraphQL\GF\Types\Button;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Enum\ButtonTypeEnum;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Enum\ButtonTypeEnum;
 
 /**
  * Class - LastPageButton

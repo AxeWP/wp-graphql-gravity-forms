@@ -3,11 +3,11 @@
  * GraphQL Input Type - NameInput
  * Input fields for name field.
  *
- * @package WPGraphQLGravityForms\Types\Input
+ * @package WPGraphQL\GF\Types\Input
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Input;
+namespace WPGraphQL\GF\Types\Input;
 
 /**
  * Class - NameInput

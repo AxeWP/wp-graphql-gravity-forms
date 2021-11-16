@@ -2,20 +2,20 @@
 /**
  * Abstract class for updating a draft Gravity Forms entry with a new value
  *
- * @package WPGraphQLGravityForms\Mutation
+ * @package WPGraphQL\GF\Mutation
  * @since 0.4.0
  */
 
-namespace WPGraphQLGravityForms\Mutations;
+namespace WPGraphQL\GF\Mutations;
 
 use GF_Field;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\Types\FieldError\FieldError;
-use WPGraphQLGravityForms\Types\Entry\Entry;
-use WPGraphQLGravityForms\DataManipulators\DraftEntryDataManipulator;
-use WPGraphQLGravityForms\Utils\GFUtils;
+use WPGraphQL\GF\Types\FieldError\FieldError;
+use WPGraphQL\GF\Types\Entry\Entry;
+use WPGraphQL\GF\DataManipulators\DraftEntryDataManipulator;
+use WPGraphQL\GF\Utils\GFUtils;
 /**
  * Class - AbstractDraftEntryUpdater
  */

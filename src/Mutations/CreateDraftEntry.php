@@ -4,18 +4,18 @@
  *
  * Registers mutation to create a Gravity Forms draft entry.
  *
- * @package WPGraphQLGravityForms\Mutation
+ * @package WPGraphQL\GF\Mutation
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Mutations;
+namespace WPGraphQL\GF\Mutations;
 
 use GFCommon;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\Utils\GFUtils;
-use WPGraphQLGravityForms\Utils\Utils;
+use WPGraphQL\GF\Utils\GFUtils;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - CreateDraftEntry

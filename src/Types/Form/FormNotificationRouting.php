@@ -4,15 +4,15 @@
  *
  * @see https://docs.gravityforms.com/notifications-object/#routing-rule-properties
  *
- * @package WPGraphQLGravityForms\Types\Form
+ * @package WPGraphQL\GF\Types\Form
  * @since   0.0.1
  * @since   0.3.1 `fieldId` changed to type `Int`.
  */
 
-namespace WPGraphQLGravityForms\Types\Form;
+namespace WPGraphQL\GF\Types\Form;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Enum\RuleOperatorEnum;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Enum\RuleOperatorEnum;
 
 /**
  * Class - FormNotificationRouting

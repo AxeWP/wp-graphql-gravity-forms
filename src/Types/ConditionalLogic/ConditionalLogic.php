@@ -4,15 +4,15 @@
  *
  * @see https://docs.gravityforms.com/conditional-logic/
  *
- * @package WPGraphQLGravityForms\Types\ConditionalLogic
+ * @package WPGraphQL\GF\Types\ConditionalLogic
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\ConditionalLogic;
+namespace WPGraphQL\GF\Types\ConditionalLogic;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Enum\ConditionalLogicActionTypeEnum;
-use WPGraphQLGravityForms\Types\Enum\ConditionalLogicLogicTypeEnum;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Enum\ConditionalLogicActionTypeEnum;
+use WPGraphQL\GF\Types\Enum\ConditionalLogicLogicTypeEnum;
 
 /**
  * Class - ConditionalLogic

@@ -3,16 +3,16 @@
  * GraphQL Object Type - AddressFieldValue
  * Values for an individual Address field.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldValue
+ * @package WPGraphQL\GF\Types\Field\FieldValue
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldValue;
+namespace WPGraphQL\GF\Types\Field\FieldValue;
 
 use GF_Field;
-use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\AddressFieldValueProperty;
+use WPGraphQL\GF\Interfaces\FieldValue;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty\AddressFieldValueProperty;
 
 /**
  * Class - AddressFieldValue

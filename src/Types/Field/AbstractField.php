@@ -5,11 +5,11 @@
  * @see https://docs.gravityforms.com/field-object/
  * @see https://docs.gravityforms.com/gf_field/
  *
- * @package WPGraphQLGravityForms\Types\Field
+ * @package WPGraphQL\GF\Types\Field
  * @since   0.4.0
  */
 
-namespace WPGraphQLGravityForms\Types\Field;
+namespace WPGraphQL\GF\Types\Field;
 
 /**
  * Class - AbstractField

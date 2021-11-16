@@ -4,11 +4,11 @@
  *
  * Registers mutation to update a Gravity Forms draft entry multi-select field value.
  *
- * @package WPGraphQLGravityForms\Mutation
+ * @package WPGraphQL\GF\Mutation
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Mutations;
+namespace WPGraphQL\GF\Mutations;
 
 /**
  * Class - UpdateDraftEntryMultiSelectFieldValue

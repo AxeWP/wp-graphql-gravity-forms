@@ -4,12 +4,12 @@
  *
  * Registers mutation to update a Gravity Forms draft entry signature field value.
  *
- * @package WPGraphQLGravityForms\Mutation
+ * @package WPGraphQL\GF\Mutation
  * @since 0.0.1
  * @since 0.3.0 use $this->field['id'] to correctly delete signature image.
  */
 
-namespace WPGraphQLGravityForms\Mutations;
+namespace WPGraphQL\GF\Mutations;
 
 /**
  * Class - UpdateDraftEntrySignatureFieldValue

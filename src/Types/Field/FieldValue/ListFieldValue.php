@@ -3,18 +3,18 @@
  * GraphQL Object Type - ListFieldValue
  * Values for an individual List field.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldValue
+ * @package WPGraphQL\GF\Types\Field\FieldValue
  * @since   0.0.1
  * @since   0.3.0 Return early if value is null or empty.
  * @since   0.3.0 Fix array structure and deprecate `value` in favor of `values`.
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldValue;
+namespace WPGraphQL\GF\Types\Field\FieldValue;
 
 use GF_Field;
-use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\ListFieldValueProperty;
+use WPGraphQL\GF\Interfaces\FieldValue;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Field\FieldProperty\ValueProperty\ListFieldValueProperty;
 
 /**
  * Class - ListFieldValue

@@ -4,25 +4,25 @@
  *
  * Submits a Gravity Forms form.
  *
- * @package WPGraphQLGravityForms\Mutation
+ * @package WPGraphQL\GF\Mutation
  * @since 0.4.0
  */
 
-namespace WPGraphQLGravityForms\Mutations;
+namespace WPGraphQL\GF\Mutations;
 
 use GFAPI;
 use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
-use WPGraphQLGravityForms\DataManipulators\DraftEntryDataManipulator;
-use WPGraphQLGravityForms\Types\Entry\Entry;
-use WPGraphQLGravityForms\Types\FieldError\FieldError;
-use WPGraphQLGravityForms\Types\Input\FieldValuesInput;
-use WPGraphQLGravityForms\Utils\GFUtils;
-use WPGraphQLGravityForms\Utils\Utils;
-use WPGraphQLGravityForms\WPGraphQLGravityForms;
+use WPGraphQL\GF\DataManipulators\EntryDataManipulator;
+use WPGraphQL\GF\DataManipulators\DraftEntryDataManipulator;
+use WPGraphQL\GF\Types\Entry\Entry;
+use WPGraphQL\GF\Types\FieldError\FieldError;
+use WPGraphQL\GF\Types\Input\FieldValuesInput;
+use WPGraphQL\GF\Utils\GFUtils;
+use WPGraphQL\GF\Utils\Utils;
+use WPGraphQL\GF\GF;
 
 /**
  * Class - SubmitForm

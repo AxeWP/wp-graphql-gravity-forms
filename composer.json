@@ -45,12 +45,12 @@
   },
   "autoload": {
     "psr-4": {
-      "WPGraphQLGravityForms\\": "src/"
+      "WPGraphQL\\GF\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\WPGraphQL\\GravityForms\\": "tests/_support/"
+      "Tests\\WPGraphQL\\GF\\": "tests/_support/"
     }
   },
   "scripts": {

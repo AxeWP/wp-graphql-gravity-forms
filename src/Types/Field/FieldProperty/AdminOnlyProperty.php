@@ -2,13 +2,13 @@
 /**
  * Admin only field property.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @package WPGraphQL\GF\Types\Field\FieldProperty;
  * @since   0.2.0
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Interfaces\FieldProperty;
+use WPGraphQL\GF\Interfaces\FieldProperty;
 
 /**
  * Class - AdminOnlyProperty

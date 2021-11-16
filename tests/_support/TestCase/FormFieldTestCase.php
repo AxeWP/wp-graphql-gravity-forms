@@ -5,10 +5,10 @@
  * For testing WPGraphQL responses.
  *
  * @since 0.9.0
- * @package Tests\WPGraphQL\Gravity\GravityForms
+ * @package Tests\WPGraphQL\GF\TestCase;
  */
 
-namespace Tests\WPGraphQL\GravityForms\TestCase;
+namespace Tests\WPGraphQL\GF\TestCase;
 
 use GFFormsModel;
 use GFAPI;

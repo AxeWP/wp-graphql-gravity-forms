@@ -4,14 +4,14 @@
  *
  * @see https://docs.gravityforms.com/conditional-logic/#rule-properties
  *
- * @package WPGraphQLGravityForms\Types\ConditionalLogic
+ * @package WPGraphQL\GF\Types\ConditionalLogic
  * @since   0.0.1
  */
 
-namespace WPGraphQLGravityForms\Types\ConditionalLogic;
+namespace WPGraphQL\GF\Types\ConditionalLogic;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Enum\RuleOperatorEnum;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Enum\RuleOperatorEnum;
 
 /**
  * Class - ConditionalLogicRule

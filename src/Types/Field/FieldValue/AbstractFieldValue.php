@@ -2,14 +2,14 @@
 /**
  * Abstract FieldValue Type
  *
- * @package WPGraphQLGravityForms\Types\FieldValue
+ * @package WPGraphQL\GF\Types\FieldValue
  * @since 0.4.0
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldValue;
+namespace WPGraphQL\GF\Types\Field\FieldValue;
 
-use WPGraphQLGravityForms\Interfaces\FieldValue;
-use WPGraphQLGravityForms\Types\AbstractObject;
+use WPGraphQL\GF\Interfaces\FieldValue;
+use WPGraphQL\GF\Types\AbstractObject;
 
 /**
  * Class - AbstractFieldValue

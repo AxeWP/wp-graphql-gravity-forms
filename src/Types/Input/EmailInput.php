@@ -3,11 +3,11 @@
  * GraphQL Input Type - EmailInput
  * Input fields for a single checkbox.
  *
- * @package WPGraphQLGravityForms\Types\Input
+ * @package WPGraphQL\GF\Types\Input
  * @since   0.5.0
  */
 
-namespace WPGraphQLGravityForms\Types\Input;
+namespace WPGraphQL\GF\Types\Input;
 
 /**
  * Class - EmailInput

@@ -3,15 +3,15 @@
  * GraphQL Object Type - ChainedSelectInputProperty
  * An individual property for the 'input' Chained Select field property.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty;
+ * @package WPGraphQL\GF\Types\Field\FieldProperty;
  * @since   0.2.0
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
-use WPGraphQLGravityForms\Utils\Utils;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Field\FieldProperty\InputProperty;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - ChainedSelectInputProperty

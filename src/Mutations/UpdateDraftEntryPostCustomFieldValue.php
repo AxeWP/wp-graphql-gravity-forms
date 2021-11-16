@@ -4,11 +4,11 @@
  *
  * Registers mutation to update a Gravity Forms draft entry post custom field value.
  *
- * @package WPGraphQLGravityForms\Mutation
+ * @package WPGraphQL\GF\Mutation
  * @since 0.3.0
  */
 
-namespace WPGraphQLGravityForms\Mutations;
+namespace WPGraphQL\GF\Mutations;
 
 /**
  * Class - UpdateDraftEntryPostCustomFieldValue

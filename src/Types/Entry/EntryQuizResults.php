@@ -2,13 +2,13 @@
 /**
  * GraphQL Object Type - EntryQuizResults
  *
- * @package WPGraphQLGravityForms\Types\EntryQuizResults
+ * @package WPGraphQL\GF\Types\EntryQuizResults
  * @since   0.9.1
  */
 
-namespace WPGraphQLGravityForms\Types\Entry;
+namespace WPGraphQL\GF\Types\Entry;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
+use WPGraphQL\GF\Types\AbstractObject;
 
 /**
  * Class - EntryQuizResults

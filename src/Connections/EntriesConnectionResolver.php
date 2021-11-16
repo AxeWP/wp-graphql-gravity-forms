@@ -4,11 +4,11 @@
  *
  * Resolves connections to Entries.
  *
- * @package WPGraphQLGravityForms\Connections
+ * @package WPGraphQL\GF\Connections
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Connections;
+namespace WPGraphQL\GF\Connections;
 
 use GFAPI;
 use GF_Query;
@@ -16,10 +16,10 @@ use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
-use WPGraphQLGravityForms\Data\Loader\EntriesLoader;
-use WPGraphQLGravityForms\Types\Enum\EntryStatusEnum;
-use WPGraphQLGravityForms\Types\Enum\FieldFiltersModeEnum;
-use WPGraphQLGravityForms\Types\Enum\FieldFiltersOperatorInputEnum;
+use WPGraphQL\GF\Data\Loader\EntriesLoader;
+use WPGraphQL\GF\Types\Enum\EntryStatusEnum;
+use WPGraphQL\GF\Types\Enum\FieldFiltersModeEnum;
+use WPGraphQL\GF\Types\Enum\FieldFiltersOperatorInputEnum;
 
 /**
  * Class - EntriesConnectionResolver

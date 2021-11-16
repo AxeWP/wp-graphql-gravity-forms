@@ -4,14 +4,14 @@
  *
  * @see https://docs.gravityforms.com/configure-quiz-settings/
  *
- * @package WPGraphQLGravityForms\Types\Form
+ * @package WPGraphQL\GF\Types\Form
  * @since   0.9.1
  */
 
-namespace WPGraphQLGravityForms\Types\Form;
+namespace WPGraphQL\GF\Types\Form;
 
-use WPGraphQLGravityForms\Types\AbstractObject;
-use WPGraphQLGravityForms\Types\Enum\QuizGradingTypeEnum;
+use WPGraphQL\GF\Types\AbstractObject;
+use WPGraphQL\GF\Types\Enum\QuizGradingTypeEnum;
 
 /**
  * Class - FormConfirmation

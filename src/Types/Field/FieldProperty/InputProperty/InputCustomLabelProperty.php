@@ -2,13 +2,13 @@
 /**
  * Allows customLabel subproperty on input property.
  *
- * @package WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
+ * @package WPGraphQL\GF\Types\Field\FieldProperty\InputProperty;
  * @since   0.2.0
  */
 
-namespace WPGraphQLGravityForms\Types\Field\FieldProperty\InputProperty;
+namespace WPGraphQL\GF\Types\Field\FieldProperty\InputProperty;
 
-use WPGraphQLGravityForms\Interfaces\FieldProperty;
+use WPGraphQL\GF\Interfaces\FieldProperty;
 
 /**
  * Class - InputCustomLabelProperty
