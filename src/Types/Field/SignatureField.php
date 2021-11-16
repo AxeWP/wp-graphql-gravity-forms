@@ -59,11 +59,11 @@ class SignatureField extends AbstractFormField {
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'penSize'         => [
-					'type'        => 'Integer',
+					'type'        => 'Int',
 					'description' => __( 'Size of the pen cursor.', 'wp-graphql-gravity-forms' ),
 				],
 				'boxWidth'        => [
-					'type'        => 'Integer',
+					'type'        => 'Int',
 					'description' => __( 'Width of the signature field in pixels.', 'wp-graphql-gravity-forms' ),
 				],
 				'borderWidth'     => [

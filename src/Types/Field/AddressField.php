@@ -71,7 +71,7 @@ class AddressField extends AbstractFormField {
 					'description' => __( 'Determines whether the option to copy values is turned on or off by default.', 'wp-graphql-gravity-forms' ),
 				],
 				'copyValuesOptionField'   => [
-					'type'        => 'Integer',
+					'type'        => 'Int',
 					'description' => __( 'The field id of the field being used as the copy source.', 'wp-graphql-gravity-forms' ),
 				],
 				'copyValuesOptionLabel'   => [

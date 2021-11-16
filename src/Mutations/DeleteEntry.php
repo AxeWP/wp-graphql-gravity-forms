@@ -48,7 +48,7 @@ class DeleteEntry extends AbstractMutation {
 	public function get_output_fields() : array {
 		return [
 			'entryId' => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'The ID of the entry that was deleted.', 'wp-graphql-gravity-forms' ),
 			],
 		];

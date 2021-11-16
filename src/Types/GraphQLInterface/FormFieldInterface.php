@@ -94,7 +94,7 @@ class FormFieldInterface implements Hookable, Type {
 				'description' => __( 'The number of CSS grid columns the spacer field following this one should span.', 'wp-graphql-gravity-forms' ),
 			],
 			'pageNumber'                 => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'The form page this field is located on. Default is 1.', 'wp-graphql-gravity-forms' ),
 			],
 			'type'                       => [

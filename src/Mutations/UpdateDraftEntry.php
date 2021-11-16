@@ -64,7 +64,7 @@ class UpdateDraftEntry extends AbstractMutation {
 				'description' => __( 'Client IP of user who submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
 			'createdBy'   => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
 			'sourceUrl'   => [

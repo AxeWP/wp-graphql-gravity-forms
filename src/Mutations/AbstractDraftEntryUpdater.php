@@ -60,7 +60,7 @@ abstract class AbstractDraftEntryUpdater extends AbstractMutation {
 				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldId'     => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'Field ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'value'       => $this->get_value_input_field(),

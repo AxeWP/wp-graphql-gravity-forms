@@ -53,7 +53,7 @@ class SubmitDraftEntry extends AbstractMutation {
 	public function get_output_fields() : array {
 		return [
 			'entryId' => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'The ID of the entry that was created.', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'   => [

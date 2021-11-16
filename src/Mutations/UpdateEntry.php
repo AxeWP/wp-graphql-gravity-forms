@@ -47,7 +47,7 @@ class UpdateEntry extends AbstractMutation {
 	public function get_input_fields() : array {
 		return [
 			'entryId'     => [
-				'type'        => [ 'non_null' => 'Integer' ],
+				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'The Gravity Forms entry id.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
@@ -67,7 +67,7 @@ class UpdateEntry extends AbstractMutation {
 				'description' => __( 'Client IP of user who submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
 			'createdBy'   => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
 			'status'      => [
@@ -85,7 +85,7 @@ class UpdateEntry extends AbstractMutation {
 	public function get_output_fields() : array {
 		return [
 			'entryId' => [
-				'type'        => 'Integer',
+				'type'        => 'Int',
 				'description' => __( 'The ID of the entry that was created. Null if the entry was only partially submitted or submitted as a draft.', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'   => [
