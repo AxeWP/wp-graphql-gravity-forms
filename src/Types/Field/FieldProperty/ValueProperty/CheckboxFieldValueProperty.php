@@ -58,9 +58,15 @@ class CheckboxFieldValueProperty extends AbstractValueProperty {
 		$checkboxValues  = [];
 
 		foreach ( $field_input_ids as $input_id ) {
+			$input_key = array_search( $input_id, array_column( $field->inputs, 'id' ), true );
+
+			$value = ! empty( $entry[ $input_id ] ) ? $entry[ $input_id ] : null;
+			$text  = $field->choices[ $input_key ]['text'] ?: $value;
+
 			$checkboxValues[] = [
 				'inputId' => $input_id,
-				'value'   => ! empty( $entry[ $input_id ] ) ? $entry[ $input_id ] : null,
+				'value'   => $value,
+				'text'    => $text,
 			];
 		}
 

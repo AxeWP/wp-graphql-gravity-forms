@@ -13,6 +13,7 @@ use GF_Field;
 use WPGraphQLGravityForms\Interfaces\FieldValue;
 use WPGraphQLGravityForms\Types\AbstractObject;
 use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\CheckboxFieldValueProperty;
+use WPGraphQLGravityForms\Types\Field\FieldProperty\ValueProperty\CheckboxValueProperty;
 
 /**
  * Value for a checkbox field.
@@ -43,7 +44,7 @@ class CheckboxFieldValue extends AbstractObject implements FieldValue {
 	public function get_type_fields() : array {
 		return [
 			'checkboxValues' => [
-				'type'        => [ 'list_of' => CheckboxInputValue::$type ],
+				'type'        => [ 'list_of' => CheckboxValueProperty::$type ],
 				'description' => __( 'Values.', 'wp-graphql-gravity-forms' ),
 			],
 		];
