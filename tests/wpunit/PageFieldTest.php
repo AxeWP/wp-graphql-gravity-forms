@@ -7,7 +7,7 @@
 
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
-use WPGraphQL\GF\Types\Enum;
+use WPGraphQL\GF\Type\Enum;
 
 /**
  * Class -PageFieldTest

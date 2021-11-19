@@ -7,7 +7,7 @@
 
 use GraphQLRelay\Relay;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
-use WPGraphQL\GF\Types\Enum;
+use WPGraphQL\GF\Type\Enum;
 
 /**
  * Class - FormQueriesTest

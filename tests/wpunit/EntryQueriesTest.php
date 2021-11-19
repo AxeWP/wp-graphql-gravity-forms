@@ -7,7 +7,7 @@
 
 use GraphQLRelay\Relay;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
-use WPGraphQL\GF\Types\Enum;
+use WPGraphQL\GF\Type\Enum;
 
 /**
  * Class - EntryQueriesTest
@@ -88,16 +88,6 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 				'dateUpdated' => $entry['date_updated'],
 				'entryId'     => (int) $entry['id'],
 				'formFields'  => [
-					'edges' => [
-						[
-							'fieldValue' => [
-								'value' => $entry[ $form['fields'][0]['id'] ],
-							],
-							'node'       => [
-								'id' => $form['fields'][0]['id'],
-							],
-						],
-					],
 					'nodes' => [
 						[
 							'id' => $form['fields'][0]['id'],
@@ -174,16 +164,6 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 				'dateUpdated' => $entry['date_updated'],
 				'entryId'     => (int) $entry['id'],
 				'formFields'  => [
-					'edges' => [
-						[
-							'fieldValue' => [
-								'value' => null,
-							],
-							'node'       => [
-								'id' => $form['fields'][0]['id'],
-							],
-						],
-					],
 					'nodes' => [
 						[
 							'id' => $form['fields'][0]['id'],
@@ -406,16 +386,6 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 					dateUpdated
 					entryId
 					formFields {
-						edges {
-							fieldValue {
-								... on TextFieldValue {
-									value
-								}
-							}
-							node {
-								id
-							}
-						}
 						nodes {
 							id
 						}

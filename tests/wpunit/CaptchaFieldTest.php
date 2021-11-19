@@ -169,8 +169,8 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
-			mutation updateDraftEntryTextFieldValue( $fieldId: Int!, $resumeToken: String!, $value: String! ){
-				updateDraftEntryTextFieldValue(input: {clientMutationId: "abc123", fieldId: $fieldId, resumeToken: $resumeToken, value: $value}) {
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
+				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
 						message

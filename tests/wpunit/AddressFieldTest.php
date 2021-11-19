@@ -174,18 +174,6 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					resumeToken
 					entry {
 						formFields {
-							edges {
-								fieldValue {
-									... on AddressFieldValue {
-										street
-										lineTwo
-										city
-										state
-										zip
-										country
-									}
-								}
-							}
 							nodes {
 								... on AddressField {
 									addressValues {

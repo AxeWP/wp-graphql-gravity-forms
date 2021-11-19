@@ -33,15 +33,8 @@ class GFTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	public function testInstanceBeforeInstantiation() {
-		$instances = GF::instances();
+		$instances = GF::instance();
 		codecept_debug( $instances );
 		$this->assertNotEmpty( $instances );
-	}
-
-	public function testRun() {
-		$this->instance = new GF();
-		$this->instance->run();
-
-		$this->assertTrue( true );
 	}
 }

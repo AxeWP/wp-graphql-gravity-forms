@@ -16,9 +16,9 @@ interface Type {
 	 * Register type in GraphQL schema.
 	 */
 	// TODO: Determine best way to re-implement this
-	// now that Types\Union\ObjectFieldUnion::register_type()
+	// now that Types\Union\ObjectFieldUnion::register()
 	// requires an argument.
-	// public function register_type(); .
+	// public function register(); .
 
 	/**
 	 * Gets the Field type description.
@@ -34,5 +34,5 @@ interface Type {
 	 *
 	 * @return array
 	 */
-	public function get_type_config( array $config ) : array;
+	public function get_config( array $config ) : array;
 }

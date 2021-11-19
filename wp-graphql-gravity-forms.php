@@ -23,42 +23,90 @@
  * @license GPL-3
  */
 
-add_action(
-	'plugins_loaded',
-	function() {
-		$autoload = plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
-
-		$dependencies = [
-			'Composer autoload files' => is_readable( $autoload ),
-			'WPGraphQL plugin'        => class_exists( 'WPGraphQL' ),
-			'Gravity Forms plugin'    => class_exists( 'GFAPI' ),
-		];
-
-		$missing_dependencies = array_keys( array_diff( $dependencies, array_filter( $dependencies ) ) );
-
-		$display_admin_notice = function() use ( $missing_dependencies ) {
-			?>
-		<div class="notice notice-error">
-			<p><?php esc_html_e( 'The WPGraphQL for Gravity Forms plugin can\'t be loaded because these dependencies are missing:', 'wp-graphql-gravity-forms' ); ?></p>
-			<ul>
-				<?php foreach ( $missing_dependencies as $missing_dependency ) : ?>
-					<li><?php echo esc_html( $missing_dependency ); ?></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-			<?php
-		};
-
-		// If dependencies are missing, display admin notice and return early.
-		if ( $missing_dependencies ) {
-			add_action( 'network_admin_notices', $display_admin_notice );
-			add_action( 'admin_notices', $display_admin_notice );
-
-			return;
-		}
-
-		require_once $autoload;
-
-		WPGraphQL\GF\GF::run();
+/**
+ * Define plugin constants.
+ */
+function gf_graphql_constants() : void {
+	// Plugin version.
+	if ( ! defined( 'WPGRAPHQL_TEC_VERSION' ) ) {
+		define( 'WPGRAPHQL_GF_VERSION', '0.10.0' );
 	}
-);
+
+			// Plugin Folder Path.
+	if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_DIR' ) ) {
+		define( 'WPGRAPHQL_GF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+	}
+
+			// Plugin Folder URL.
+	if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_URL' ) ) {
+		define( 'WPGRAPHQL_GF_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+	}
+
+			// Plugin Root File.
+	if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_FILE' ) ) {
+		define( 'WPGRAPHQL_GF_PLUGIN_FILE', __FILE__ );
+	}
+
+			// Whether to autoload the files or not.
+	if ( ! defined( 'WPGRAPHQL_GF_AUTOLOAD' ) ) {
+		define( 'WPGRAPHQL_GF_AUTOLOAD', true );
+	}
+}
+
+/**
+ * Checks if all the the required plugins are installed and activated.
+ */
+function gf_graphql_dependencies_not_ready() : array {
+	$deps = [];
+
+	if ( ! class_exists( '\WPGraphQL' ) ) {
+		$deps[] = 'WPGraphQL';
+	}
+
+	if ( ! class_exists( 'GFAPI' ) ) {
+		$deps[] = 'Gravity Forms';
+	}
+
+	return $deps;
+}
+
+/**
+ * Initializes WPGraphQL for GF.
+ *
+ * @return \WPGraphQL\GF\GF|false
+ */
+function gf_graphql_init() {
+	gf_graphql_constants();
+
+	$not_ready = gf_graphql_dependencies_not_ready();
+
+	if ( empty( $not_ready ) && defined( 'WPGRAPHQL_GF_PLUGIN_DIR' ) ) {
+		require_once WPGRAPHQL_GF_PLUGIN_DIR . 'src/GF.php';
+		return \WPGraphQL\GF\GF::instance();
+	}
+
+	foreach ( $not_ready as $dep ) {
+		add_action(
+			'admin_notices',
+			function() use ( $dep ) {
+				?>
+				<div class="error notice">
+					<p>
+						<?php
+							printf(
+								/* translators: dependency not ready error message */
+								esc_html__( '%1$s must be active for WPGraphQL for Gravity Forms to work', 'wp-graphql-gravity-forms' ),
+								esc_html( $dep )
+							);
+						?>
+					</p>
+				</div>
+				<?php
+			}
+		);
+	}
+
+	return false;
+}
+
+add_action( 'graphql_init', 'gf_graphql_init' );

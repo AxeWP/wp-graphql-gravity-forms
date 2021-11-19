@@ -12,7 +12,7 @@ namespace WPGraphQL\GF\DataManipulators;
 
 use GraphQLRelay\Relay;
 use WPGraphQL\GF\Interfaces\DataManipulator;
-use WPGraphQL\GF\Types\Entry\Entry;
+use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 
 /**
  * Class - EntryDataManipulator

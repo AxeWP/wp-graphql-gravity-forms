@@ -10,6 +10,9 @@
 
 namespace WPGraphQL\GF\Utils;
 
+use WPGraphQL\GF\TypeRegistry;
+use WPGraphQL\GF\Type\WPObject\FormField\AbstractFormField;
+
 /**
  * Class - Utils
  */
@@ -121,5 +124,30 @@ class Utils {
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Returns whether WPGraphQL Upload is enabled.
+	 *
+	 * @return boolean
+	 */
+	public static function is_graphql_upload_enabled() : bool {
+		return class_exists( 'WPGraphQL\Upload\Type\Upload' );
+	}
+
+	/**
+	 * Gets an array of all GF type names paired with their GraphQL type names.
+	 *
+	 * E.g. `[ 'text' => 'TextField' ]`.
+	 */
+	public static function get_registered_form_field_types() : array {
+		$fields = array_filter( TypeRegistry::get_registered_types(), fn( $class ) => is_a( $class, AbstractFormField::class, true ) );
+
+		$types = [];
+		foreach ( $fields as $field ) {
+			$types[ $field::$gf_type ] = $field::$type;
+		}
+
+		return $types;
 	}
 }

@@ -13,7 +13,7 @@ namespace WPGraphQL\GF\DataManipulators;
 
 use GraphQLRelay\Relay;
 use WPGraphQL\GF\Interfaces\DataManipulator;
-use WPGraphQL\GF\Types\Form\Form;
+use WPGraphQL\GF\Type\WPObject\Form\Form;
 
 /**
  * Class - FormDataManipulator
