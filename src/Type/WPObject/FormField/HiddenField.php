@@ -46,8 +46,6 @@ class HiddenField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			static::get_global_properties(),
-			static::get_custom_properties(),
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\InputNameProperty::get(),

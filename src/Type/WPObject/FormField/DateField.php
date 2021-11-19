@@ -46,8 +46,6 @@ class DateField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			static::get_global_properties(),
-			static::get_custom_properties(),
 			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AllowsPrepopulateProperty::get(),

@@ -50,25 +50,4 @@ abstract class AbstractFormField extends AbstractObject {
 			)
 		);
 	}
-
-
-	/**
-	 * Get the global properties that apply to all GF field types.
-	 */
-	protected static function get_global_properties() : array {
-		return FormField::get_fields();
-	}
-
-	/**
-	 * Get the custom properties.
-	 */
-	protected static function get_custom_properties() : array {
-		/**
-		 * Add GraphQL fields for custom field properties.
-		 *
-		 * @param array Additional GraphQL field definitions.
-		 * @param array The type of Gravity Forms field.
-		 */
-		return apply_filters( 'wp_graphql_gf_custom_properties', [], static::$gf_type );
-	}
 }

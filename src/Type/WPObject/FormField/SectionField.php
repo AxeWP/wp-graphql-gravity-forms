@@ -43,8 +43,6 @@ class SectionField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			static::get_global_properties(),
-			static::get_custom_properties(),
 			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\DisplayOnlyProperty::get(),
 			FieldProperty\LabelProperty::get(),
