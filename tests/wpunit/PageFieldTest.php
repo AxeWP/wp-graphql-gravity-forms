@@ -61,11 +61,7 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function field_query() : string {
 		return '
 			... on PageField {
-				adminLabel
-				adminOnly
-				allowsPrepopulate
 				displayOnly
-				label
 				nextButton {
 					imageUrl
 					text
@@ -77,7 +73,6 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					type
 				}
 				size
-				visibility
 			}
 		';
 	}

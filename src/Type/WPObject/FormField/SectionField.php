@@ -50,18 +50,6 @@ class SectionField extends AbstractFormField {
 			FieldProperty\LabelProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			FieldProperty\SizeProperty::get(),
-			/**
-			 * Deprecated field properties.
-			 *
-			 * @since 0.2.0
-			 */
-
-			// translators: Gravity Forms Field type.
-			Utils::deprecate_property( FieldProperty\AdminLabelProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
-			// translators: Gravity Forms Field type.
-			Utils::deprecate_property( FieldProperty\AdminOnlyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
-			// translators: Gravity Forms Field type.
-			Utils::deprecate_property( FieldProperty\AllowsPrepopulateProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
 		);
 	}
 }

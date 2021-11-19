@@ -118,10 +118,7 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 					customLabel
 					defaultValue
 					id
-					isHidden
-					key
 					label
-					name
 					placeholder
 				}
 				isRequired

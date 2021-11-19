@@ -117,7 +117,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				descriptionPlacement
 				enableAutocomplete
 				errorMessage
-				inputName
 				inputs {
 					autocompleteAttribute
 					choices {

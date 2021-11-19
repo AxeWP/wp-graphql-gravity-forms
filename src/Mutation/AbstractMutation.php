@@ -224,19 +224,10 @@ abstract class AbstractMutation implements Mutation {
 	 *
 	 * @param GF_Field $field .
 	 * @param mixed    $value .
-	 * @param mixed    $deprecated As of 0.6.2.
 	 *
 	 * @return mixed
 	 */
-	protected function validate_field_value( $field, $value, $deprecated = null ) {
-		if ( ! empty( $deprecated ) ) {
-			_doing_it_wrong( __FUNCTION__, 'This function no longer takes $form as its first argument.', '0.6.2' );
-
-			// Reassign variables to match expected syntax.
-			$field = $value;
-			$value = $deprecated;
-		}
-
+	protected function validate_field_value( $field, $value ) {
 		$field->validate( $value, $this->form );
 		if ( $field->failed_validation ) {
 			$this->errors[] = [

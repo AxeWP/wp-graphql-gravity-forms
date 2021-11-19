@@ -59,16 +59,11 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function field_query() : string {
 		return '
 			... on HtmlField {
-				adminLabel
-				adminOnly
-				allowsPrepopulate
 				content
 				disableMargins
 				displayOnly
-				inputName
 				label
 				size
-				visibility
 			}
 		';
 	}

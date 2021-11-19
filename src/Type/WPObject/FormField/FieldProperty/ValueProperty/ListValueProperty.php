@@ -39,11 +39,6 @@ class ListValueProperty extends AbstractObject {
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'Input values', 'wp-graphql-gravity-forms' ),
 			],
-			'value'  => [
-				'type'              => [ 'list_of' => 'String' ],
-				'description'       => __( 'Input value', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Please use `values` instead.', 'wp-graphql-gravity-forms' ),
-			],
 		];
 	}
 }

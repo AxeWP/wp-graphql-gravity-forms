@@ -84,16 +84,11 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function field_query() : string {
 		return '
 			... on HiddenField {
-				adminLabel
-				adminOnly
 				allowsPrepopulate
 				defaultValue
-				isRequired
 				label
-				noDuplicates
 				size
 				value
-				visibility
 			}
 		';
 	}

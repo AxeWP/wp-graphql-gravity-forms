@@ -99,14 +99,6 @@ class AddressField extends AbstractFormField {
 					'description' => __( 'An array containing the the individual properties for each element of the address field.', 'wp-graphql-gravity-forms' ),
 				],
 			],
-			/**
-			 * Deprecated field properties.
-			 *
-			 * @since 0.2.0
-			 */
-
-			// translators: Gravity Forms Field type.
-			Utils::deprecate_property( FieldProperty\InputNameProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type. Please use `inputs { name }` instead.', 'wp-graphql-gravity-forms' ), self::$type ) ),
 		);
 	}
 }

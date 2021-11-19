@@ -123,8 +123,6 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 					customLabel
 					defaultValue
 					id
-					isHidden
-					key
 					label
 					name
 					placeholder

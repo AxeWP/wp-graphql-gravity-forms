@@ -36,11 +36,7 @@ class ListInputValue extends AbstractObject {
 	 */
 	public static function get_fields() : array {
 		return [
-			'value'  => [
-				'type'              => [ 'list_of' => 'String' ],
-				'description'       => __( 'Input value', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Please use `values` instead.', 'wp-graphql-gravity-forms' ),
-			],
+
 			'values' => [
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'Input values', 'wp-graphql-gravity-forms' ),

@@ -529,7 +529,6 @@ class Wpunit extends \Codeception\Module {
 			'descriptionPlacement',
 			'enableAutocomplete',
 			'errorMessage',
-			'inputName',
 			'isRequired',
 			'label',
 			'nameFormat',

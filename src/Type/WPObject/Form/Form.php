@@ -82,11 +82,6 @@ class Form extends AbstractObject implements Field {
 				'type'        => 'String',
 				'description' => __( 'String containing the custom CSS classes to be added to the <form> tag.', 'wp-graphql-gravity-forms' ),
 			],
-			'cssClassList'               => [
-				'type'              => [ 'list_of' => 'String' ],
-				'description'       => __( 'Array of the custom CSS classes to be added to the <form> tag.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Please use `cssClass` instead.', 'wp-graphql-gravity-forms' ),
-			],
 			'customRequiredIndicator'    => [
 				'type'        => 'String',
 				'description' => __( 'The custom text to use to indicate a field is required.', 'wp-graphql-gravity-forms' ),

@@ -45,20 +45,6 @@ class DateInputProperty extends AbstractObject {
 			PlaceholderProperty::get(),
 			InputProperty\InputCustomLabelProperty::get(),
 			InputProperty\InputIdProperty::get(),
-			/**
-			 * Deprecated field properties.
-			 *
-			 * @since 0.6.0
-			 */
-			// translators: Gravity Forms Field input property.
-			Utils::deprecate_property( AutocompleteAttributeProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
-			// @since 0.2.0 .
-			// translators: Gravity Forms Field input property.
-			Utils::deprecate_property( InputProperty\InputIsHiddenProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
-			// translators: Gravity Forms Field input property.
-			Utils::deprecate_property( InputProperty\InputKeyProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
-			// translators: Gravity Forms Field input property.
-			Utils::deprecate_property( InputProperty\InputNameProperty::get(), sprintf( __( 'This property is not associated with the Gravity Forms %s type.', 'wp-graphql-gravity-forms' ), self::$type ) ),
 		);
 	}
 }

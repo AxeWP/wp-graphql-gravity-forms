@@ -38,29 +38,11 @@ class FieldsDataManipulator implements DataManipulator {
 	 * @return GF_Field
 	 */
 	private static function set_all_field_values( GF_Field $field ) : GF_Field {
-		$field = self::set_css_class_list_for_field( $field );
 		$field = self::convert_value_to_expected_type( $field );
 
 		return $field;
 	}
 
-	/**
-	 * Returns Form field with its cssClassList value set.
-	 *
-	 * @param GF_Field $field Form field.
-	 *
-	 * @return GF_Field
-	 */
-	private static function set_css_class_list_for_field( GF_Field $field ) : GF_Field {
-		$field->cssClassList = array_filter(
-			explode( ' ', $field->cssClass ),
-			function( $css_class ) {
-				return '' !== $css_class;
-			}
-		);
-
-		return $field;
-	}
 
 	/**
 	 * Returns Form Field with fixed value types.

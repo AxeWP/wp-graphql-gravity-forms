@@ -43,16 +43,6 @@ class SignatureFieldValue extends AbstractObject implements FieldValue {
 				'type'        => 'String',
 				'description' => __( 'The URL to the signature image.', 'wp-graphql-gravity-forms' ),
 			],
-			/**
-			 * Deprecated properties.
-			 *
-			 * @since 0.4.0
-			 */
-			'url'   => [
-				'type'              => 'String',
-				'description'       => __( 'URL to the  file.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Please use `value` instead.', 'wp-graphql-gravity-forms' ),
-			],
 		];
 	}
 
@@ -68,7 +58,6 @@ class SignatureFieldValue extends AbstractObject implements FieldValue {
 		$value = SignatureFieldValueProperty::get( $entry, $field );
 		return [
 			'value' => $value,
-			'url'   => $value, // Deprecated @since 0.4.0 .
 		];
 	}
 }

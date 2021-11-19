@@ -33,11 +33,6 @@ class ListInput extends AbstractInput {
 	 */
 	public static function get_fields() : array {
 		return [
-			'values'    => [
-				'type'              => [ 'list_of' => 'String' ],
-				'description'       => __( 'Input value. Deprecated - please use `rowValues` instead.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Please use `rowValues` instead.', 'wp-graphql-gravity-forms' ),
-			],
 			'rowValues' => [
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'Input values for the specific listField row.', 'wp-graphql-gravity-forms' ),

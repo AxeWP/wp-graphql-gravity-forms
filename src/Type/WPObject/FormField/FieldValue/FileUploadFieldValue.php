@@ -42,21 +42,6 @@ class FileUploadFieldValue extends AbstractObject implements FieldValue {
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'URL to the uploaded file.', 'wp-graphql-gravity-forms' ),
 			],
-			/**
-			 * Deprecated properties.
-			 *
-			 * @since 0.7.0
-			 */
-			'value'  => [
-				'type'              => 'String',
-				'description'       => __( 'URL to the uploaded file.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Please use `values` instead.', 'wp-graphql-gravity-forms' ),
-			],
-			'url'    => [
-				'type'              => 'String',
-				'description'       => __( 'URL to the uploaded file.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Please use `values` instead.', 'wp-graphql-gravity-forms' ),
-			],
 		];
 	}
 
@@ -73,8 +58,6 @@ class FileUploadFieldValue extends AbstractObject implements FieldValue {
 
 		return [
 			'values' => $value[0] ?? null,
-			'value'  => $value[0] ?? null, // Deprecated @since 0.7.0 .
-			'url'    => $value[0] ?? null, // Deprecated @since 0.4.0 .
 		];
 	}
 }

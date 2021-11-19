@@ -84,7 +84,6 @@ class ListFieldValueProperty extends AbstractValueProperty {
 					}
 
 					return [
-						'value'  => $row_values, // Deprecated @since 0.3.0.
 						'values' => $row_values,
 					];
 				},
@@ -97,7 +96,6 @@ class ListFieldValueProperty extends AbstractValueProperty {
 			function( $single_value ) {
 				return [
 					'values' => [ $single_value ], // $single_value must be Iteratable.
-					'value'  => [ $single_value ], // Deprecated @since 0.3.0.
 				];
 			},
 			$entry_values

@@ -93,11 +93,6 @@ class FormField extends AbstractType {
 				'type'        => 'String',
 				'description' => __( 'String containing the custom CSS classes to be added to the <li> tag that contains the field. Useful for applying custom formatting to specific fields.', 'wp-graphql-gravity-forms' ),
 			],
-			'cssClassList'               => [
-				'type'              => [ 'list_of' => 'String' ],
-				'description'       => __( 'Array of the custom CSS classes to be added to the <li> tag that contains the field. Useful for applying custom formatting to specific fields.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Please use `cssClass` instead.', 'wp-graphql-gravity-forms' ),
-			],
 			'formId'                     => [
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'The ID of the form this field belongs to.', 'wp-graphql-gravity-forms' ),

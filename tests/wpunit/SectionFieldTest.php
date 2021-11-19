@@ -59,9 +59,6 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function field_query() : string {
 		return '
 			... on SectionField {
-				adminLabel
-				adminOnly
-				allowsPrepopulate
 				description
 				displayOnly
 				label
