@@ -2,39 +2,29 @@
 /**
  * Interface for a GraphQL Mutation.
  *
- * @package WPGraphQLGravityForms\Interfaces
+ * @package WPGraphQL\GF\Interfaces
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Interfaces;
+namespace WPGraphQL\GF\Interfaces;
 
 /**
  * Interface - Mutation.
  */
 interface Mutation {
-
-	/**
-	 * Register mutation in GraphQL schema.
-	 */
-	public function register_mutation() : void;
-
 	/**
 	 * Defines the input field configuration.
 	 *
 	 * @since 0.4.0
-	 *
-	 * @return array
 	 */
-	public function get_input_fields() : array;
+	public static function get_input_fields() : array;
 
 	/**
 	 * Defines the output field configuration.
 	 *
 	 * @since 0.4.0
-	 *
-	 * @return array
 	 */
-	public function get_output_fields() : array;
+	public static function get_output_fields() : array;
 
 
 	/**
@@ -44,6 +34,6 @@ interface Mutation {
 	 *
 	 * @return callable
 	 */
-	public function mutate_and_get_payload() : callable;
+	public static function mutate_and_get_payload() : callable;
 
 }

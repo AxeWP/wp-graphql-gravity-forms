@@ -4,15 +4,15 @@
  *
  * Loads Models for Gravity Forms Entries.
  *
- * @package WPGraphQLGravityForms\Data\Loader
+ * @package WPGraphQL\GF\Data\Loader
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Data\Loader;
+namespace WPGraphQL\GF\Data\Loader;
 
 use GF_Query;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
-use WPGraphQLGravityForms\DataManipulators\EntryDataManipulator;
+use WPGraphQL\GF\DataManipulators\EntryDataManipulator;
 
 /**
  * Class - EntriesLoader

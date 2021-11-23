@@ -1,0 +1,30 @@
+<?php
+/**
+ * Placeholder field property.
+ *
+ * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
+ * @since   0.0.1
+ */
+
+namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
+
+use WPGraphQL\GF\Interfaces\FieldProperty;
+
+/**
+ * Class - PlaceholderProperty
+ */
+class PlaceholderProperty implements FieldProperty {
+	/**
+	 * Get 'placeholder' property.
+	 *
+	 * @return array
+	 */
+	public static function get() : array {
+		return [
+			'placeholder' => [
+				'type'        => 'String',
+				'description' => __( 'Placeholder text to give the user a hint on how to fill out the field. This is not submitted with the form.', 'wp-graphql-gravity-forms' ),
+			],
+		];
+	}
+}

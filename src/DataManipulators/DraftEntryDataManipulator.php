@@ -4,11 +4,11 @@
  *
  * Manipulates draft entry data.
  *
- * @package WPGraphQLGravityForms\DataManipulators
+ * @package WPGraphQL\GF\DataManipulators
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\DataManipulators;
+namespace WPGraphQL\GF\DataManipulators;
 
 /**
  * Class - DraftEntryDataManipulator

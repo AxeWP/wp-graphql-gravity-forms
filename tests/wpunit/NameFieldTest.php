@@ -2,11 +2,11 @@
 /**
  * Test NameField.
  *
- * @package Tests\WPGraphQL\GravityForms
+ * @package Tests\WPGraphQL\GF
  */
 
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCase;
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 /**
  * Class -NameFieldTest
  */
@@ -117,7 +117,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				descriptionPlacement
 				enableAutocomplete
 				errorMessage
-				inputName
 				inputs {
 					autocompleteAttribute
 					choices {

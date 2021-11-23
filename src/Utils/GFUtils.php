@@ -4,11 +4,11 @@
  *
  * Wrappers for common Gravity Forms functions.
  *
- * @package WPGraphQLGravityForms\Utils
+ * @package WPGraphQL\GF\Utils
  * @since 0.4.0
  */
 
-namespace WPGraphQLGravityForms\Utils;
+namespace WPGraphQL\GF\Utils;
 
 use GF_Field;
 use GFAPI;

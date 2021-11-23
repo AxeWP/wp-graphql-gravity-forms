@@ -4,16 +4,16 @@
  *
  * Manipulates Form data.
  *
- * @package WPGraphQLGravityForms\DataManipulators
+ * @package WPGraphQL\GF\DataManipulators
  * @since 0.0.1
  * @since 0.3.1 `limitEntriesCount`, `scheduleEndHour` and `scheduleEndMinute` correctly return as type `Int`.
  */
 
-namespace WPGraphQLGravityForms\DataManipulators;
+namespace WPGraphQL\GF\DataManipulators;
 
 use GraphQLRelay\Relay;
-use WPGraphQLGravityForms\Interfaces\DataManipulator;
-use WPGraphQLGravityForms\Types\Form\Form;
+use WPGraphQL\GF\Interfaces\DataManipulator;
+use WPGraphQL\GF\Type\WPObject\Form\Form;
 
 /**
  * Class - FormDataManipulator
@@ -24,7 +24,6 @@ class FormDataManipulator implements DataManipulator {
 	 */
 	public static function manipulate( array $data ) : array {
 		$data = self::set_global_and_form_ids( $data );
-		$data = self::set_css_class_list( $data );
 		$data = self::convert_form_keys_to_camelcase( $data );
 		$data = self::prevent_missing_values( $data );
 
@@ -43,29 +42,6 @@ class FormDataManipulator implements DataManipulator {
 	private static function set_global_and_form_ids( array $form ) : array {
 		$form['formId'] = $form['id'];
 		$form['id']     = Relay::toGlobalId( Form::$type, $form['formId'] );
-
-		return $form;
-	}
-
-	/**
-	 * Returns form meta array with the cssClassList value set.
-	 *
-	 * @param array $form Form meta array.
-	 *
-	 * @return array
-	 */
-	private static function set_css_class_list( array $form ) : array {
-		if ( empty( $form['cssClass'] ) ) {
-			$form['cssClassList'] = null;
-			return $form;
-		}
-
-		$form['cssClassList'] = array_filter(
-			explode( ' ', $form['cssClass'] ),
-			function( $css_class ) {
-				return '' !== $css_class;
-			}
-		);
 
 		return $form;
 	}

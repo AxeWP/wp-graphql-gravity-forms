@@ -2,11 +2,11 @@
 /**
  * Test Hidden type.
  *
- * @package Tests\WPGraphQL\GravityForms
+ * @package Tests\WPGraphQL\GF
  */
 
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCase;
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 
 /**
  * Class -HiddenFieldTest.
@@ -84,16 +84,11 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function field_query() : string {
 		return '
 			... on HiddenField {
-				adminLabel
-				adminOnly
 				allowsPrepopulate
 				defaultValue
-				isRequired
 				label
-				noDuplicates
 				size
 				value
-				visibility
 			}
 		';
 	}

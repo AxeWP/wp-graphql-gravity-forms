@@ -2,12 +2,12 @@
 /**
  * Test PageField.
  *
- * @package Tests\WPGraphQL\GravityForms
+ * @package Tests\WPGraphQL\GF
  */
 
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCase;
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
-use WPGraphQLGravityForms\Types\Enum;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
+use WPGraphQL\GF\Type\Enum;
 
 /**
  * Class -PageFieldTest
@@ -61,11 +61,7 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function field_query() : string {
 		return '
 			... on PageField {
-				adminLabel
-				adminOnly
-				allowsPrepopulate
 				displayOnly
-				label
 				nextButton {
 					imageUrl
 					text
@@ -77,7 +73,6 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					type
 				}
 				size
-				visibility
 			}
 		';
 	}

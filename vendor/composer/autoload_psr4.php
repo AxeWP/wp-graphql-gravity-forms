@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'WPGraphQLGravityForms\\' => array($baseDir . '/src'),
+    'WPGraphQL\\GF\\' => array($baseDir . '/src'),
 );

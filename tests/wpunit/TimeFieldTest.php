@@ -2,11 +2,11 @@
 /**
  * Test Time type.
  *
- * @package Tests\WPGraphQL\GravityForms
+ * @package Tests\WPGraphQL\GF
  */
 
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCase;
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 
 
 /**
@@ -118,10 +118,7 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 					customLabel
 					defaultValue
 					id
-					isHidden
-					key
 					label
-					name
 					placeholder
 				}
 				isRequired

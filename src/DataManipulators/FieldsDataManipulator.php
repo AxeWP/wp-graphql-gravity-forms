@@ -4,15 +4,15 @@
  *
  * Manipulates Fields data.
  *
- * @package WPGraphQLGravityForms\DataManipulators
+ * @package WPGraphQL\GF\DataManipulators
  * @since 0.0.1
  * @since 0.3.0 Set default choices for listField.
  */
 
-namespace WPGraphQLGravityForms\DataManipulators;
+namespace WPGraphQL\GF\DataManipulators;
 
 use GF_Field;
-use WPGraphQLGravityForms\Interfaces\DataManipulator;
+use WPGraphQL\GF\Interfaces\DataManipulator;
 
 /**
  * Class - FieldsDataManipulator
@@ -38,29 +38,11 @@ class FieldsDataManipulator implements DataManipulator {
 	 * @return GF_Field
 	 */
 	private static function set_all_field_values( GF_Field $field ) : GF_Field {
-		$field = self::set_css_class_list_for_field( $field );
 		$field = self::convert_value_to_expected_type( $field );
 
 		return $field;
 	}
 
-	/**
-	 * Returns Form field with its cssClassList value set.
-	 *
-	 * @param GF_Field $field Form field.
-	 *
-	 * @return GF_Field
-	 */
-	private static function set_css_class_list_for_field( GF_Field $field ) : GF_Field {
-		$field->cssClassList = array_filter(
-			explode( ' ', $field->cssClass ),
-			function( $css_class ) {
-				return '' !== $css_class;
-			}
-		);
-
-		return $field;
-	}
 
 	/**
 	 * Returns Form Field with fixed value types.
@@ -72,7 +54,7 @@ class FieldsDataManipulator implements DataManipulator {
 	private static function convert_value_to_expected_type( GF_Field $field ) : GF_Field {
 		$field->layoutGridColumnSpan = ! empty( $field->layoutGridColumnSpan ) ? (int) $field->layoutGridColumnSpan : null;
 
-		foreach ( $field as $key => $value ) {
+		foreach ( get_object_vars( $field ) as $key => $value ) {
 			if ( '' !== $value ) {
 				continue;
 			}

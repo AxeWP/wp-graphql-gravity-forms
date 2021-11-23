@@ -2,11 +2,11 @@
 /**
  * Interface for classes that perform data manipulation.
  *
- * @package WPGraphQLGravityForms\Interfaces
+ * @package WPGraphQL\GF\Interfaces
  * @since 0.0.1
  */
 
-namespace WPGraphQLGravityForms\Interfaces;
+namespace WPGraphQL\GF\Interfaces;
 
 /**
  * Interface - DataManipulator

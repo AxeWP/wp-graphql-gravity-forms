@@ -8,7 +8,7 @@
  * @package Tests\WPGraphQL\TestCase
  */
 
-namespace Tests\WPGraphQL\GravityForms\TestCase;
+namespace Tests\WPGraphQL\GF\TestCase;
 
 /**
  * Class - GraphQLTestCase
@@ -44,7 +44,7 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 
 		foreach ( $factories as $factory ) {
 			$factory_name                   = strtolower( preg_replace( '/\B([A-Z])/', '_$1', $factory ) );
-			$factory_class                  = '\\Tests\\WPGraphQL\\GravityForms\\Factory\\' . $factory;
+			$factory_class                  = '\\Tests\\WPGraphQL\\GF\\Factory\\' . $factory;
 			$this->factory->{$factory_name} = new $factory_class( $this->factory );
 		}
 

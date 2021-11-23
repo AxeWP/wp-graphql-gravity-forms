@@ -2,11 +2,11 @@
 /**
  * Test SectionField.
  *
- * @package Tests\WPGraphQL\GravityForms
+ * @package Tests\WPGraphQL\GF
  */
 
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCase;
-use Tests\WPGraphQL\GravityForms\TestCase\FormFieldTestCaseInterface;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
+use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 /**
  * Class -SectionFieldTest
  */
@@ -59,9 +59,6 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function field_query() : string {
 		return '
 			... on SectionField {
-				adminLabel
-				adminOnly
-				allowsPrepopulate
 				description
 				displayOnly
 				label
