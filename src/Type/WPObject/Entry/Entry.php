@@ -15,6 +15,7 @@ use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\DataManipulators\DraftEntryDataManipulator;
 use WPGraphQL\GF\DataManipulators\EntryDataManipulator;
 use WPGraphQL\GF\Interfaces\Field;
@@ -22,6 +23,7 @@ use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Enum\IdTypeEnum;
+use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -80,6 +82,11 @@ class Entry extends AbstractObject implements Field {
 			'entryId'     => [
 				'type'        => 'Int',
 				'description' => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
+			],
+			'form'        => [
+				'type'        => Form::$type,
+				'description' => __( 'The form used to generate this entry.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source, array $args, AppContext $context ) => Factory::resolve_form( (int) $source['formId'], $context ),
 			],
 			'formId'      => [
 				'type'        => 'Int',
@@ -182,7 +189,6 @@ class Entry extends AbstractObject implements Field {
 					/**
 					 * If global id is used, get the (int) id.
 					 */
-
 					if ( 'database_id' === $idType ) {
 						$id = (int) sanitize_text_field( $args['id'] );
 					} else {

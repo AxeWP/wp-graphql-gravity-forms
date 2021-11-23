@@ -209,7 +209,6 @@ class TypeRegistry {
 			WPObject\ConditionalLogic\ConditionalLogicRule::class,
 			// Entries.
 			WPObject\Entry\Entry::class,
-			WPObject\Entry\EntryForm::class,
 			WPObject\Entry\EntryQuizResults::class,
 			WPObject\Entry\EntryUser::class,
 			// Forms.

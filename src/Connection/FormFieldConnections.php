@@ -13,12 +13,10 @@ namespace WPGraphQL\GF\Connection;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\GF;
 use WPGraphQL\GF\DataManipulators\FieldsDataManipulator;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\GF\Type\WPInterface\FormField;
-
 use WPGraphQL\GF\Type\Enum\FormFieldsEnum;
 use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\Registry\TypeRegistry;
@@ -40,12 +38,17 @@ class FormFieldConnections extends AbstractConnection {
 					'fromFieldName'  => 'formFields',
 					'connectionArgs' => self::get_connection_args(),
 					'resolve'        => static function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-							$fields              = static::filter_form_fields_by_connection_args( $root['fields'], $args );
-							$fields              = FieldsDataManipulator::manipulate( $fields );
-							$connection          = Relay::connectionFromArray( $fields, $args );
-							$nodes               = array_map( fn( $edge ) => $edge['node'] ?? null, $connection['edges'] );
-							$connection['nodes'] = $nodes ?: null;
-							return $connection;
+						if ( empty( $root->formFields ) ) {
+							return null;
+						}
+
+						$fields = static::filter_form_fields_by_connection_args( $root->formFields, $args );
+
+						$fields              = FieldsDataManipulator::manipulate( $fields );
+						$connection          = Relay::connectionFromArray( $fields, $args );
+						$nodes               = array_map( fn( $edge ) => $edge['node'] ?? null, $connection['edges'] );
+						$connection['nodes'] = $nodes ?: null;
+						return $connection;
 					},
 				]
 			)

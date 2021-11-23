@@ -8,7 +8,7 @@
  * @since 0.0.1
  */
 
-namespace WPGraphQL\GF\Connection;
+namespace WPGraphQL\GF\Data\Connection;
 
 use GFAPI;
 use GF_Query;

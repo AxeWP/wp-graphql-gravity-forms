@@ -19,6 +19,7 @@ use WPGraphQL\GF\Type\Input\EntriesFieldFiltersInput;
 use WPGraphQL\GF\Type\Input\EntriesSortingInput;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Data\Connection\EntriesConnectionResolver;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
