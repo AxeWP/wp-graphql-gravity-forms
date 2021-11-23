@@ -8,13 +8,14 @@
 
 namespace WPGraphQL\GF\Type\WPObject;
 
+use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - AbstractType
  */
-abstract class AbstractObject extends AbstractType {
+abstract class AbstractObject extends AbstractType implements TypeWithFields {
 	/**
 	 * Register Object type to GraphQL schema.
 	 *
@@ -32,9 +33,4 @@ abstract class AbstractObject extends AbstractType {
 			)
 		);
 	}
-
-	/**
-	 * Gets the properties for the type.
-	 */
-	abstract public static function get_fields() : array;
 }

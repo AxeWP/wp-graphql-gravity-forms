@@ -8,14 +8,14 @@
 
 namespace WPGraphQL\GF\Type\Enum;
 
+use WPGraphQL\GF\Interfaces\Enum;
 use WPGraphQL\GF\Type\AbstractType;
-use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Abstract Class - Abstract Enum
  */
-abstract class AbstractEnum extends AbstractType {
+abstract class AbstractEnum extends AbstractType implements Enum {
 	/**
 	 * {@inheritDoc}
 	 */
@@ -31,9 +31,4 @@ abstract class AbstractEnum extends AbstractType {
 			)
 		);
 	}
-
-	/**
-	 * Gets the Enum type values.
-	 */
-	abstract public static function get_values() : array;
 }

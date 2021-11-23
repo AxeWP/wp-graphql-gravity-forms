@@ -13,26 +13,14 @@ namespace WPGraphQL\GF\Interfaces;
  */
 interface Type {
 	/**
-	 * Register type in GraphQL schema.
-	 */
-	// TODO: Determine best way to re-implement this
-	// now that Types\Union\ObjectFieldUnion::register()
-	// requires an argument.
-	// public function register(); .
-
-	/**
 	 * Gets the Field type description.
-	 *
-	 * @return string
 	 */
-	public function get_type_description() : string;
+	public static function get_description() : string;
 
 	/**
 	 * Gets the filterable $config array for the GraphQL type.
 	 *
 	 * @param array $config The individual config values.
-	 *
-	 * @return array
 	 */
-	public function get_config( array $config ) : array;
+	public static function prepare_config( array $config ) : array;
 }

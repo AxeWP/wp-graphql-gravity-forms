@@ -13,6 +13,7 @@ namespace WPGraphQL\GF\Type\WPInterface;
 
 use WPGraphQL\Registry\TypeRegistry;
 use GraphQL\Error\UserError;
+use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
 use WPGraphQL\GF\Utils\Utils;
@@ -20,7 +21,7 @@ use WPGraphQL\GF\Utils\Utils;
 /**
  * Class - FormField
  */
-class FormField extends AbstractType {
+class FormField extends AbstractType implements TypeWithFields {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

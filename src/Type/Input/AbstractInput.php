@@ -8,13 +8,14 @@
 
 namespace WPGraphQL\GF\Type\Input;
 
+use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - AbstractInput
  */
-abstract class AbstractInput extends AbstractType {
+abstract class AbstractInput extends AbstractType implements TypeWithFields {
 	/**
 	 * {@inheritDoc}
 	 */
@@ -30,9 +31,4 @@ abstract class AbstractInput extends AbstractType {
 			)
 		);
 	}
-
-	/**
-	 * Gets the properties for the type.
-	 */
-	abstract public static function get_fields() : array;
 }

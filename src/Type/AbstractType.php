@@ -9,10 +9,12 @@
 namespace WPGraphQL\GF\Type;
 
 use WPGraphQL\GF\Interfaces\Registrable;
+use WPGraphQL\GF\Interfaces\Type;
+
 /**
  * Class - AbstractType
  */
-abstract class AbstractType implements Registrable {
+abstract class AbstractType implements Registrable, Type {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -48,10 +50,4 @@ abstract class AbstractType implements Registrable {
 
 		return $config;
 	}
-
-
-	/**
-	 * Get the description for the type.
-	 */
-	abstract public static function get_description() : string;
 }
