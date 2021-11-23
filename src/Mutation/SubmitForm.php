@@ -21,8 +21,6 @@ use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Type\Input\FieldValuesInput;
 use WPGraphQL\GF\Utils\GFUtils;
-use WPGraphQL\GF\Utils\Utils;
-use WPGraphQL\GF\GF;
 
 /**
  * Class - SubmitForm
@@ -36,9 +34,9 @@ class SubmitForm extends AbstractMutation {
 	public static $name = 'submitGravityFormsForm';
 
 	/**
-	 * Defines the input field configuration.
+	 * {@inheritDoc}
 	 */
-	public function get_input_fields() : array {
+	public static function get_input_fields() : array {
 		return [
 			'createdBy'   => [
 				'type'        => 'Int',
@@ -76,11 +74,9 @@ class SubmitForm extends AbstractMutation {
 	}
 
 	/**
-	 * Defines the output field configuration.
-	 *
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function get_output_fields() : array {
+	public static function get_output_fields() : array {
 		return [
 			'entryId'     => [
 				'type'        => 'Int',
@@ -122,72 +118,96 @@ class SubmitForm extends AbstractMutation {
 	}
 
 	/**
-	 * Defines the data modification closure.
-	 *
-	 * @return callable
+	 * {@inheritDoc}
 	 */
-	public function mutate_and_get_payload() : callable {
+	public static function mutate_and_get_payload() : callable {
 		return function( $input, AppContext $context, ResolveInfo $info ) : array {
 			// Check for required fields.
-			$this->check_required_inputs( $input );
+			static::check_required_inputs( $input );
 
-			$this->form = GFUtils::get_form( $input['formId'] );
+			$form = GFUtils::get_form( $input['formId'] );
 
 			// Set default values.
 			$target_page   = $input['targetPage'] ?? 0;
 			$source_page   = $input['sourcePage'] ?? 0;
 			$save_as_draft = $input['saveAsDraft'] ?? false;
-			$ip            = empty( $this->form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
+			$ip            = empty( $form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
 			$created_by    = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : null;
 			$source_url    = $input['sourceUrl'] ?? '';
 
 			// Initialize $_FILES with fileupload inputs.
-			$this->initialize_files();
+			self::initialize_files( $form );
 
-			$field_values = $this->get_field_values( $input['fieldValues'] );
+			$field_values = self::prepare_field_values( $input['fieldValues'], $form );
 
-			add_filter( 'gform_field_validation', [ $this, 'disable_validation_for_unsupported_fields' ], 10, 4 );
+			add_filter( 'gform_field_validation', [ FormSubmissionHelper::class, 'disable_validation_for_unsupported_fields' ], 10, 4 );
 			$submission = GFUtils::submit_form(
 				$input['formId'],
-				$this->get_input_values( $save_as_draft, $field_values, GFFormsModel::$uploaded_files[ $input['formId'] ] ?? [] ),
+				self::get_input_values( $save_as_draft, $field_values, GFFormsModel::$uploaded_files[ $input['formId'] ] ?? [] ),
 				$field_values,
 				$target_page,
 				$source_page,
 			);
-			remove_filter( 'gform_field_validation', [ $this, 'disable_validation_for_unsupported_fields' ] );
+			remove_filter( 'gform_field_validation', [ FormSubmissionHelper::class, 'disable_validation_for_unsupported_fields' ] );
 
 			if ( $submission['is_valid'] ) {
-				$this->update_entry_properties( $submission, $ip, $source_url, $created_by );
+				self::update_entry_properties( $form, $submission, $ip, $source_url, $created_by );
 			}
 
 			return [
 				'entryId'     => ! empty( $submission['entry_id'] ) ? absint( $submission['entry_id'] ) : null,
 				'resumeToken' => $submission['resume_token'] ?? null,
-				'resumeUrl'   => isset( $submission['resume_token'] ) ? GFUtils::get_resume_url( $source_url, $submission['resume_token'], $this->form ) : null,
-				'errors'      => isset( $submission['validation_messages'] ) ? $this->get_submission_errors( $submission['validation_messages'] ) : null,
+				'resumeUrl'   => isset( $submission['resume_token'] ) ? GFUtils::get_resume_url( $source_url, $submission['resume_token'], $form ) : null,
+				'errors'      => isset( $submission['validation_messages'] ) ? FormSubmissionHelper::get_submission_errors( $submission['validation_messages'] ) : null,
 			];
 		};
 	}
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws UserError .
 	 */
-	private function get_field_values( array $field_values ) : array {
-		$field_values = $this->prepare_field_values( $field_values );
+	protected static function check_required_inputs( $input = null ) : void {
+		parent::check_required_inputs( $input );
+		if ( ! isset( $input['formId'] ) ) {
+			throw new UserError( __( 'Mutation not processed. Form ID not provided.', 'wp-graphql-gravity-forms' ) );
+		}
+		if ( empty( $input['fieldValues'] ) ) {
+			throw new UserError( __( 'Mutation not processed. Field values not provided.', 'wp-graphql-gravity-forms' ) );
+		}
+	}
 
-		return $this->rename_keys_for_field_values( $field_values );
+	/**
+	 * {@inheritDoc}
+	 */
+	private static function prepare_field_values( array $field_values, array $form ) : array {
+		$formatted_values = [];
+
+		// Prepares field values to a format GF can understand.
+		foreach ( $field_values as $values ) {
+			$field = GFUtils::get_field_by_id( $form, $values['id'] );
+
+			$value = FormSubmissionHelper::prepare_single_field_value( $values, $field );
+
+			// Add values to array based on field type.
+			$formatted_values = FormSubmissionHelper::add_value_to_array( $formatted_values, $field, $value );
+		}
+
+		return FormSubmissionHelper::rename_keys_for_field_values( $formatted_values );
 	}
 
 	/**
 	 * Updates entry properties that cannot be set with GFAPI::submit_form().
 	 *
+	 * @param array   $form .
 	 * @param array   $submission The Gravity Forms submission result array.
 	 * @param string  $ip .
 	 * @param string  $source_url .
 	 * @param integer $created_by .
 	 * @throws UserError .
 	 */
-	private function update_entry_properties( array $submission, string $ip, string $source_url, int $created_by = null ) : void {
+	private static function update_entry_properties( array $form, array $submission, string $ip, string $source_url, int $created_by = null ) : void {
 		if ( ! empty( $submission['resume_token'] ) ) {
 			$draft_entry        = GFUtils::get_draft_entry( $submission['resume_token'] );
 			$decoded_submission = json_decode( $draft_entry['submission'], true );
@@ -195,7 +215,7 @@ class SubmitForm extends AbstractMutation {
 			$ip         = (bool) empty( $ip ) ? $ip : $decoded_submission['partial_entry']['ip'];
 			$created_by = $created_by ?? $decoded_submission['partial_entry']['created_by'];
 			$source_url = $source_url ?? $decoded_submission['partial_entry']['source_url'];
-			$is_updated = GFFormsModel::update_draft_submission( $submission['resume_token'], $this->form, $draft_entry['date_created'], $ip, $source_url, $draft_entry['submission'] );
+			$is_updated = GFFormsModel::update_draft_submission( $submission['resume_token'], $form, $draft_entry['date_created'], $ip, $source_url, $draft_entry['submission'] );
 			if ( empty( $is_updated ) ) {
 				throw new UserError( __( 'Unable to update the draft entry properties.', 'wp-graphql-gravity-forms' ) );
 			}
@@ -236,47 +256,31 @@ class SubmitForm extends AbstractMutation {
 	 * @param array   $file_upload_values .
 	 * @return array
 	 */
-	private function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ) : array {
+	private static function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ) : array {
 		return [
 			'gform_save'           => $is_draft,
 			'gform_uploaded_files' => wp_json_encode( $file_upload_values ),
 		] + $field_values;
 	}
 
-	/**
-	 * Converts the provided field values into a format that Gravity Forms can understand.
-	 *
-	 * @param array $field_values .
-	 * @return array
-	 */
-	private function prepare_field_values( array $field_values ) : array {
-		$formatted_values = [];
-
-		foreach ( $field_values as $values ) {
-			$field = GFUtils::get_field_by_id( $this->form, $values['id'] );
-
-			$value = $this->prepare_single_field_value( $values, $field );
-
-			// Add values to array based on field type.
-			$formatted_values = $this->add_value_to_array( $formatted_values, $field, $value );
-		}
-
-		return $formatted_values;
-	}
 
 	/**
-	 * Ensures required input fields are set.
+	 * Initializes the $_FILES array with the fileupload `input_{id}`.
+	 * This prevents any notices about missing array keys.
 	 *
-	 * @param mixed $input .
-	 * @throws UserError .
+	 * @param array $form .
 	 */
-	protected function check_required_inputs( $input = null ) : void {
-		parent::check_required_inputs( $input );
-		if ( ! isset( $input['formId'] ) ) {
-			throw new UserError( __( 'Mutation not processed. Form ID not provided.', 'wp-graphql-gravity-forms' ) );
-		}
-		if ( empty( $input['fieldValues'] ) ) {
-			throw new UserError( __( 'Mutation not processed. Field values not provided.', 'wp-graphql-gravity-forms' ) );
+	private static function initialize_files( $form ) : void {
+		foreach ( $form['fields'] as $field ) {
+			if ( 'post_image' === $field->type || ( 'fileupload' === $field->type && ! $field->multipleFiles ) ) {
+				$_FILES[ 'input_' . $field->id ] = [
+					'name'     => null,
+					'type'     => null,
+					'size'     => null,
+					'tmp_name' => null,
+					'error'    => null,
+				];
+			}
 		}
 	}
 }

@@ -37,14 +37,12 @@ class UpdateEntry extends AbstractMutation {
 	 *
 	 * @var array
 	 */
-	protected $errors = [];
+	protected static array $errors = [];
 
 	/**
-	 * Defines the input field configuration.
-	 *
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function get_input_fields() : array {
+	public static function get_input_fields() : array {
 		return [
 			'entryId'     => [
 				'type'        => [ 'non_null' => 'Int' ],
@@ -78,11 +76,9 @@ class UpdateEntry extends AbstractMutation {
 	}
 
 	/**
-	 * Defines the output field configuration.
-	 *
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function get_output_fields() : array {
+	public static function get_output_fields() : array {
 		return [
 			'entryId' => [
 				'type'        => 'Int',
@@ -109,28 +105,26 @@ class UpdateEntry extends AbstractMutation {
 	}
 
 	/**
-	 * Defines the data modification closure.
-	 *
-	 * @return callable
+	 * {@inheritDoc}
 	 */
-	public function mutate_and_get_payload() : callable {
+	public static function mutate_and_get_payload() : callable {
 		return function( $input, AppContext $context, ResolveInfo $info ) : array {
 			// Check for required fields.
-			$this->check_required_inputs( $input );
+			static::check_required_inputs( $input );
 
 			// Set default values.
-			$entry      = GFUtils::get_entry( (int) $input['entryId'] );
-			$this->form = GFUtils::get_form( $entry['form_id'] );
+			$entry = GFUtils::get_entry( (int) $input['entryId'] );
+			$form  = GFUtils::get_form( $entry['form_id'] );
 
-			$entry_data = $this->prepare_entry_data( $input, $entry );
+			$entry_data = self::prepare_entry_data( $input, $entry, $form );
 
-			if ( ! empty( $this->errors ) ) {
-				return [ 'errors' => $this->errors ];
+			if ( ! empty( self::$errors ) ) {
+				return [ 'errors' => self::$errors ];
 			}
 
 			$updated_entry_id = GFUtils::update_entry( $entry_data );
 
-			$this->update_post( $updated_entry_id );
+			self::update_post( $updated_entry_id, $form );
 
 			return [
 				'entryId' => $updated_entry_id,
@@ -139,16 +133,34 @@ class UpdateEntry extends AbstractMutation {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 *
+	 * @throws UserError .
+	 */
+	protected static function check_required_inputs( $input = null ) : void {
+		parent::check_required_inputs( $input );
+
+		if ( ! isset( $input['entryId'] ) ) {
+			throw new UserError( __( 'Mutation not processed. Entry ID not provided.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		if ( empty( $input['fieldValues'] ) ) {
+			throw new UserError( __( 'Mutation not processed. Field values not provided.', 'wp-graphql-gravity-forms' ) );
+		}
+	}
+
+	/**
 	 * Prepares entry object for update.
 	 *
 	 * @param array $input .
 	 * @param array $entry .
+	 * @param array $form .
 	 * @return array
 	 */
-	private function prepare_entry_data( array $input, array $entry ) : array {
+	private static function prepare_entry_data( array $input, array $entry, array $form ) : array {
 			$is_starred = $input['isStarred'] ?? null;
 			$is_read    = $input['isRead'] ?? null;
-			$ip         = empty( $this->form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
+			$ip         = empty( $form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
 			$created_by = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : null;
 			$status     = $input['status'] ?? null;
 
@@ -163,7 +175,7 @@ class UpdateEntry extends AbstractMutation {
 				fn( $property ) => (bool) strlen( $property )
 			);
 
-			$field_values = $this->prepare_field_values( $input['fieldValues'], $entry );
+			$field_values = self::prepare_field_values( $input['fieldValues'], $entry, $form );
 
 			return array_replace(
 				$entry,
@@ -177,17 +189,17 @@ class UpdateEntry extends AbstractMutation {
 	 *
 	 * @param array $field_values .
 	 * @param array $entry .
-	 * @return array
+	 * @param array $form .
 	 */
-	private function prepare_field_values( array $field_values, array $entry ) : array {
+	private static function prepare_field_values( array $field_values, array $entry, array $form ) : array {
 		$formatted_values = [];
 
 		foreach ( $field_values as $values ) {
-			$field = GFUtils::get_field_by_id( $this->form, $values['id'] );
+			$field = GFUtils::get_field_by_id( $form, $values['id'] );
 
 			$prev_value = $entry[ $values['id'] ] ?? null;
 
-			$value = $this->prepare_single_field_value( $values, $field, $prev_value );
+			$value = FormSubmissionHelper::prepare_single_field_value( $values, $field, $prev_value );
 
 			// Signature field requires $_POST['input_{#}'] on update.
 			if ( 'signature' === $field->type ) {
@@ -206,33 +218,15 @@ class UpdateEntry extends AbstractMutation {
 			}
 
 			// Validate the field value.
-			$this->validate_field_value( $field, $value );
+			FormSubmissionHelper::validate_field_value( $value, $field, $form, self::$errors );
 
 			// Add values to array based on field type.
-			$formatted_values = $this->add_value_to_array( $formatted_values, $field, $value );
+			$formatted_values = FormSubmissionHelper::add_value_to_array( $formatted_values, $field, $value );
 		}
 
-		$formatted_values = $this->prepare_field_values_for_save( $formatted_values, $entry );
+		$formatted_values = self::prepare_field_values_for_save( $formatted_values, $entry, $form );
 
 		return $formatted_values;
-	}
-
-	/**
-	 * Ensures required input fields are set.
-	 *
-	 * @param mixed $input .
-	 * @throws UserError .
-	 */
-	protected function check_required_inputs( $input = null ) : void {
-		parent::check_required_inputs( $input );
-
-		if ( ! isset( $input['entryId'] ) ) {
-			throw new UserError( __( 'Mutation not processed. Entry ID not provided.', 'wp-graphql-gravity-forms' ) );
-		}
-
-		if ( empty( $input['fieldValues'] ) ) {
-			throw new UserError( __( 'Mutation not processed. Field values not provided.', 'wp-graphql-gravity-forms' ) );
-		}
 	}
 
 	/**
@@ -240,30 +234,32 @@ class UpdateEntry extends AbstractMutation {
 	 *
 	 * @param array $values the entry values.
 	 * @param array $entry the existing entry.
-	 * @return array
+	 * @param array $form the existing form.
 	 */
-	public function prepare_field_values_for_save( array $values, array $entry ) : array {
+	public static function prepare_field_values_for_save( array $values, array $entry, array $form ) : array {
 		foreach ( $values as $id => &$value ) {
 			$input_name = 'input_' . str_replace( '.', '_', $id );
 			$field_id   = strtok( $id, '.' );
-			$field      = GFUtils::get_field_by_id( $this->form, (int) $field_id );
+			$field      = GFUtils::get_field_by_id( $form, (int) $field_id );
 
-			$value = GFFormsModel::prepare_value( $this->form, $field, $value, $input_name, $entry['id'], $entry );
+			$value = GFFormsModel::prepare_value( $form, $field, $value, $input_name, $entry['id'], $entry );
 		}
 
 		return $values;
 	}
 
 	/**
-	 * Updates the post associated with the entry.
+	 * Grabs the updated entry, and then updates the post.
 	 *
 	 * @param integer $entry_id .
+	 * @param array   $form .
 	 */
-	public function update_post( int $entry_id ) : void {
+	public static function update_post( int $entry_id, array $form ) : void {
 		$entry = GFUtils::get_entry( $entry_id );
-		add_filter( 'gform_post_data', [ $this, 'set_post_id_for_update' ], 10, 3 );
-		GFFormsModel::create_post( $this->form, $entry );
-		remove_filter( 'gform_post_data', [ $this, 'set_post_id_for_update' ] );
+
+		add_filter( 'gform_post_data', [ __CLASS__, 'set_post_id_for_update' ], 10, 3 );
+		GFFormsModel::create_post( $form, $entry );
+		remove_filter( 'gform_post_data', [ __CLASS__, 'set_post_id_for_update' ] );
 	}
 
 	/**
@@ -273,7 +269,7 @@ class UpdateEntry extends AbstractMutation {
 	 * @param array $form .
 	 * @param array $entry .
 	 */
-	public function set_post_id_for_update( array $post_data, array $form, array $entry ): array {
+	public static function set_post_id_for_update( array $post_data, array $form, array $entry ): array {
 		$post_data['ID'] = $entry['post_id'];
 		return $post_data;
 	}

@@ -31,25 +31,16 @@ class UpdateDraftEntry extends AbstractMutation {
 	public static $name = 'updateGravityFormsDraftEntry';
 
 	/**
-	 * The draft submission.
-	 *
-	 * @var array
-	 */
-	private $submission = [];
-
-	/**
 	 * Gravity Forms field validation errors.
 	 *
 	 * @var array
 	 */
-	protected $errors = [];
+	protected static array $errors = [];
 
 	/**
-	 * Defines the input field configuration.
-	 *
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function get_input_fields() : array {
+	public static function get_input_fields() : array {
 		return [
 			'resumeToken' => [
 				'type'        => [ 'non_null' => 'String' ],
@@ -75,11 +66,9 @@ class UpdateDraftEntry extends AbstractMutation {
 	}
 
 	/**
-	 * Defines the output field configuration.
-	 *
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function get_output_fields() : array {
+	public static function get_output_fields() : array {
 		return [
 			'resumeToken' => [
 				'type'        => 'String',
@@ -108,49 +97,45 @@ class UpdateDraftEntry extends AbstractMutation {
 	}
 
 	/**
-	 * Defines the data modification closure.
-	 *
-	 * @return callable
+	 * {@inheritDoc}
 	 */
-	public function mutate_and_get_payload() : callable {
+	public static function mutate_and_get_payload() : callable {
 		return function( $input, AppContext $context, ResolveInfo $info ) : array {
 			// Check for required fields.
-			$this->check_required_inputs( $input );
+			static::check_required_inputs( $input );
 
 			$resume_token = sanitize_text_field( $input['resumeToken'] );
+			$submission   = GFUtils::get_draft_submission( $resume_token );
+			$form         = GFUtils::get_form( $submission['partial_entry']['form_id'] );
 
-			$this->submission = GFUtils::get_draft_submission( $resume_token );
-
-			$this->form = GFUtils::get_form( $this->submission['partial_entry']['form_id'] );
-
-			$values = $this->prepare_field_values( $input['fieldValues'], $this->submission['partial_entry'] );
-			if ( ! empty( $this->errors ) ) {
-				return [ 'errors' => $this->errors ];
+			$values = self::prepare_field_values( $input['fieldValues'], $form, $submission['partial_entry'], $submission );
+			if ( ! empty( self::$errors ) ) {
+				return [ 'errors' => self::$errors ];
 			}
 
-			$this->submission['partial_entry'] = array_replace( $this->submission['partial_entry'], $values );
-			$this->submission['field_values']  = array_replace( $this->submission['field_values'] ?? [], $this->rename_keys_for_field_values( $values ) );
+			$submission['partial_entry'] = array_replace( $submission['partial_entry'], $values );
+			$submission['field_values']  = array_replace( $submission['field_values'] ?? [], FormSubmissionHelper::rename_keys_for_field_values( $values ) );
 
-			$ip                                      = empty( $this->form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
-			$this->submission['partial_entry']['ip'] = ! empty( $ip ) ? $ip : $this->submission['partial_entry']['ip'];
+			$ip                                = empty( $form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
+			$submission['partial_entry']['ip'] = ! empty( $ip ) ? $ip : $submission['partial_entry']['ip'];
 
-			$this->submission['partial_entry']['created_by'] = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : $this->submission['partial_entry']['created_by'];
+			$submission['partial_entry']['created_by'] = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : $submission['partial_entry']['created_by'];
 
 			$resume_token = GFUtils::save_draft_submission(
-				$this->form,
-				$this->submission['partial_entry'],
-				$this->submission['field_values'],
-				$this->submission['page_number'] ?? 1, // @TODO: Maybe get from request.
-				$this->submission['files'] ?? [],
-				$this->submission['gform_unique_id'] ?? null,
-				$this->submission['partial_entry']['ip'],
-				$input['source_url'] ?? $this->submission['partial_entry']['source_url'] ?? '',
+				$form,
+				$submission['partial_entry'],
+				$submission['field_values'],
+				$submission['page_number'] ?? 1, // @TODO: Maybe get from request.
+				$submission['files'] ?? [],
+				$submission['gform_unique_id'] ?? null,
+				$submission['partial_entry']['ip'],
+				$input['source_url'] ?? $submission['partial_entry']['source_url'] ?? '',
 				$resume_token
 			);
 
 			return [
 				'resumeToken' => $resume_token,
-				'resumeUrl'   => GFUtils::get_resume_url( $this->submission['partial_entry']['source_url'], $resume_token, $this->form ),
+				'resumeUrl'   => GFUtils::get_resume_url( $submission['partial_entry']['source_url'], $resume_token, $form ),
 			];
 		};
 	}
@@ -159,39 +144,39 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * Converts the provided field values into a format that Gravity Forms can understand.
 	 *
 	 * @param array $field_values .
+	 * @param array $form .
 	 * @param array $entry .
-	 * @return array
+	 * @param array $submission .
 	 */
-	private function prepare_field_values( array $field_values, array $entry ) : array {
+	private static function prepare_field_values( array $field_values, array $form, array $entry, array &$submission ) : array {
 		$formatted_values = [];
 
 		foreach ( $field_values as $values ) {
-			$field = GFUtils::get_field_by_id( $this->form, $values['id'] );
+			$field = GFUtils::get_field_by_id( $form, $values['id'] );
 
 			$prev_value = $entry[ $values['id'] ] ?? null;
 
-			$value = $this->prepare_single_field_value( $values, $field, $prev_value );
+			$value = FormSubmissionHelper::prepare_single_field_value( $values, $field, $prev_value );
 
 			// Validate the field value.
-			$this->validate_field_value( $field, $value );
+			FormSubmissionHelper::validate_field_value( $value, $field, $form, self::$errors );
 
 			// Add field values to submitted values.
-			$this->submission['submitted_values'][ $field->id ] = $value;
+			$submission['submitted_values'][ $field->id ] = $value;
 
 			// Add values to array based on field type.
-			$formatted_values = $this->add_value_to_array( $formatted_values, $field, $value );
+			$formatted_values = FormSubmissionHelper::add_value_to_array( $formatted_values, $field, $value );
 		}
 
 		return $formatted_values;
 	}
 
 	/**
-	 * Ensures required input fields are set.
+	 * {@inheritDoc}
 	 *
-	 * @param mixed $input .
 	 * @throws UserError .
 	 */
-	protected function check_required_inputs( $input = null ) : void {
+	protected static function check_required_inputs( $input = null ) : void {
 		parent::check_required_inputs( $input );
 
 		if ( ! isset( $input['resumeToken'] ) ) {

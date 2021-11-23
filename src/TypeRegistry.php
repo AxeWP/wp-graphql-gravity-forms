@@ -79,12 +79,10 @@ class TypeRegistry {
 			self::objects(),
 			self::fields(),
 			self::connections(),
+			self::mutations(),
 		);
 
 		self::register_types( $classes_to_register, $type_registry );
-
-		// @todo convert to mutations to static.
-		self::mutations();
 	}
 
 
@@ -393,9 +391,8 @@ class TypeRegistry {
 	 *
 	 * @todo convert mutations to a static class, and this to a list of Registrable classes.
 	 */
-	public static function mutations() : void {
+	public static function mutations() : array {
 		$classes_to_register = [
-			Mutation\CreateDraftEntry::class,
 			Mutation\DeleteDraftEntry::class,
 			Mutation\DeleteEntry::class,
 			Mutation\SubmitDraftEntry::class,
@@ -411,11 +408,9 @@ class TypeRegistry {
 		 *
 		 * @param array           $classes_to_register = Array of classes to be registered to the schema.
 		 */
-		$classes_to_register = apply_filters( 'graphql_gf_connections_to_register', $classes_to_register );
+		$classes_to_register = apply_filters( 'graphql_gf_mutations_to_register', $classes_to_register );
 
-		foreach ( $classes_to_register as $class ) {
-			( new $class() )->register_mutation();
-		}
+		return $classes_to_register;
 	}
 
 	/**

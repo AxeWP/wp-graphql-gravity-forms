@@ -136,6 +136,15 @@ class Utils {
 	}
 
 	/**
+	 * Returns whether Gravity Forms Signature is enabled.
+	 *
+	 * @return boolean
+	 */
+	public static function is_gf_signature_enabled() : bool {
+		return class_exists( 'GFSignature' );
+	}
+
+	/**
 	 * Gets an array of all GF type names paired with their GraphQL type names.
 	 *
 	 * E.g. `[ 'text' => 'TextField' ]`.
