@@ -85,7 +85,7 @@ class GFUtils {
 	 *
 	 * @return array The array of Form Objects.
 	 */
-	public static function get_forms( array $ids = [], bool $active = true, bool $trash = false, string $sort_column = 'id', string $sort_dir = 'ASC' ) : array {
+	public static function get_forms( array $ids = [], bool $active = true, bool $trash = false, string $sort_column = 'id', string $sort_dir = 'DESC' ) : array {
 		$form_ids = ! empty( $ids ) ? $ids : GFFormsModel::get_form_ids( $active, $trash, $sort_column, $sort_dir );
 
 		if ( empty( $form_ids ) ) {
@@ -95,7 +95,7 @@ class GFUtils {
 		$forms = [];
 
 		foreach ( $form_ids as $form_id ) {
-			$forms[] = self::get_form( $form_id );
+			$forms[] = self::get_form( $form_id, false );
 		}
 
 		return $forms;
