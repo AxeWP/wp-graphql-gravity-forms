@@ -15,6 +15,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Connection\EntriesConnectionResolver;
 use WPGraphQL\GF\Data\Connection\FormsConnectionResolver;
+use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
 
@@ -31,8 +32,9 @@ class Factory {
 	 * @return array Data loaders, with new ones added.
 	 */
 	public static function register_loaders( array $loaders, AppContext $context ) : array {
-		$loaders[ EntriesLoader::$name ] = new EntriesLoader( $context );
-		$loaders[ FormsLoader::$name ]   = new FormsLoader( $context );
+		$loaders[ DraftEntriesLoader::$name ] = new DraftEntriesLoader( $context );
+		$loaders[ EntriesLoader::$name ]      = new EntriesLoader( $context );
+		$loaders[ FormsLoader::$name ]        = new FormsLoader( $context );
 
 		return $loaders;
 	}
@@ -79,6 +81,16 @@ class Factory {
 		$resolver = new FormsConnectionResolver( $source, $args, $context, $info );
 
 		return $resolver->get_connection();
+	}
+
+	/**
+	 * Resolves the entry object for the entry ID specified.
+	 *
+	 * @param string     $id .
+	 * @param AppContext $context .
+	 */
+	public static function resolve_draft_entry( $id, AppContext $context ) : ?Deferred {
+		return $context->get_loader( DraftEntriesLoader::$name )->load_deferred( $id );
 	}
 
 	/**

@@ -205,6 +205,8 @@ class GFUtilsTest extends GFGraphQLTestCase {
 		$expected_entry = $this->factory->draft_entry->get_object_by_id( $this->draft_token );
 		$expected       = json_decode( $expected_entry['submission'], true );
 
+		$expected['partial_entry']['resumeToken'] = $this->draft_token;
+
 		$actual = GFUtils::get_draft_submission( $this->draft_token );
 		$this->assertEquals( $expected, $actual );
 	}

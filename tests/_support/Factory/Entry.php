@@ -79,9 +79,8 @@ class Entry extends \WP_UnitTest_Factory_For_Thing {
 	 * Gets the entry object from an object id.
 	 *
 	 * @param int $entry_id .
-	 * @return array
 	 */
-	public function get_object_by_id( $entry_id ) : array {
+	public function get_object_by_id( $entry_id ) {
 		return GFAPI::get_entry( $entry_id );
 	}
 

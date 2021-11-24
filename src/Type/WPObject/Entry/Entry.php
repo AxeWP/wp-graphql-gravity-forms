@@ -10,20 +10,17 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Entry;
 
-use GFAPI;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
 use WPGraphQL\Data\DataSource;
 use WPGraphQL\GF\Data\Factory;
-use WPGraphQL\GF\DataManipulators\DraftEntryDataManipulator;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Enum\IdTypeEnum;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
-use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -81,7 +78,7 @@ class Entry extends AbstractObject implements Field {
 			'entryId'     => [
 				'type'        => 'Int',
 				'description' => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source) => $source->databaseId,
+				'resolve'     => fn( $source ) => $source->databaseId ?? null,
 			],
 			'form'        => [
 				'type'        => Form::$type,
@@ -217,10 +214,7 @@ class Entry extends AbstractObject implements Field {
 					}
 
 					// TODO: Test if draft entry actually gets returned.
-					$submission = GFUtils::get_draft_submission( (string) $id );
-
-					// @TODO: Evaluate if resume_token is actually needed.
-					return DraftEntryDataManipulator::manipulate( $submission['partial_entry'], (string) $id );
+					return Factory::resolve_draft_entry( $id, $context );
 				},
 			]
 		);

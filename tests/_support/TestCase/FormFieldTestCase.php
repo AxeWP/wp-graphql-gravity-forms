@@ -228,7 +228,6 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 			'value'   => $this->field_value_input,
 		];
 
-		codecept_debug( $variables );
 		// Test entry.
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
