@@ -15,12 +15,11 @@ use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
+use WPGraphQL\Data\DataSource;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\DataManipulators\DraftEntryDataManipulator;
-use WPGraphQL\GF\DataManipulators\EntryDataManipulator;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Enum\IdTypeEnum;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
@@ -82,11 +81,12 @@ class Entry extends AbstractObject implements Field {
 			'entryId'     => [
 				'type'        => 'Int',
 				'description' => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source) => $source->databaseId,
 			],
 			'form'        => [
 				'type'        => Form::$type,
 				'description' => __( 'The form used to generate this entry.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source, array $args, AppContext $context ) => Factory::resolve_form( (int) $source['formId'], $context ),
+				'resolve'     => fn( $source, array $args, AppContext $context ) => Factory::resolve_form( $source->formId, $context ),
 			],
 			'formId'      => [
 				'type'        => 'Int',
@@ -128,7 +128,17 @@ class Entry extends AbstractObject implements Field {
 				'type'        => 'String',
 				'description' => __( 'Provides the name and version of both the browser and operating system from which the entry was submitted.', 'wp-graphql-gravity-forms' ),
 			],
-			// @TODO: Add field to get user data.
+			'createdBy'   => [
+				'type'        => 'User',
+				'description' => __( 'The user who created the entry.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $source, array $args, AppContext $context ) {
+					if ( empty( $source->createdById ) ) {
+						return null;
+					}
+
+					return DataSource::resolve_user( $source->createdById, $context );
+				},
+			],
 			'createdById' => [
 				'type'        => 'Int',
 				'description' => __( 'ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
@@ -203,11 +213,7 @@ class Entry extends AbstractObject implements Field {
 					}
 
 					if ( is_int( $id ) ) {
-						$entry = GFAPI::get_entry( $id );
-
-						if ( ! is_wp_error( $entry ) ) {
-							return EntryDataManipulator::manipulate( $entry );
-						}
+						return Factory::resolve_entry( $id, $context );
 					}
 
 					// TODO: Test if draft entry actually gets returned.

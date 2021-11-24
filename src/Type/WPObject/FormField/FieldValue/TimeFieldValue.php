@@ -45,12 +45,7 @@ class TimeFieldValue extends AbstractFieldValue {
 	}
 
 	/**
-	 * Get the field value.
-	 *
-	 * @param array    $entry Gravity Forms entry.
-	 * @param GF_Field $field Gravity Forms field.
-	 *
-	 * @return array Entry field value.
+	 * {@inheritDoc}
 	 */
 	public static function get( array $entry, GF_Field $field ) : array {
 		if ( ! isset( $entry [ $field->id ] ) ) {

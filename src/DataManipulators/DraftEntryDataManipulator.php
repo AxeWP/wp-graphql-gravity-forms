@@ -10,6 +10,8 @@
 
 namespace WPGraphQL\GF\DataManipulators;
 
+use WPGraphQL\GF\Model\Entry;
+
 /**
  * Class - DraftEntryDataManipulator
  */
@@ -19,13 +21,11 @@ class DraftEntryDataManipulator {
 	 *
 	 * @param array  $draft_entry  The draft entry data to be manipulated.
 	 * @param string $resume_token The resume token for the draft entry.
-	 *
-	 * @return array Manipulated entry data.
 	 */
-	public static function manipulate( array $draft_entry, string $resume_token ) : array {
+	public static function manipulate( array $draft_entry, string $resume_token ) : Entry {
 		$draft_entry = self::set_resume_token_value( $draft_entry, $resume_token );
 
-		return EntryDataManipulator::manipulate( $draft_entry );
+		return new Entry( $draft_entry );
 	}
 
 	/**

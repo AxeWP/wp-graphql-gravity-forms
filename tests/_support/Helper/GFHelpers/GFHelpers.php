@@ -142,7 +142,7 @@ abstract class GFHelpers {
 			case 'displayOnly':
 			case 'enableCopyValuesOption':
 			case 'enablePasswordInput':
-				$value = (bool) $object->$key;
+				$value = ! empty( $object->$key ) ? (bool) $object->$key : null;
 				break;
 			case 'inputs':
 				if ( ! empty( $object->$key ) ) {

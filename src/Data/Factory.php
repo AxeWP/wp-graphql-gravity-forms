@@ -13,6 +13,7 @@ namespace WPGraphQL\GF\Data;
 use GraphQL\Deferred;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Data\Connection\EntriesConnectionResolver;
 use WPGraphQL\GF\Data\Connection\FormsConnectionResolver;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
@@ -60,7 +61,7 @@ class Factory {
 	 * @param int        $id .
 	 * @param AppContext $context .
 	 */
-	public static function resolve_form( $id, AppContext $context ) : Deferred {
+	public static function resolve_form( $id, AppContext $context ) : ?Deferred {
 		return $context->get_loader( FormsLoader::$name )->load_deferred( $id );
 	}
 
@@ -75,8 +76,34 @@ class Factory {
 	 * @return mixed|array|Deferred
 	 */
 	public static function resolve_forms_connection( $source, array $args, AppContext $context, ResolveInfo $info ) {
-			$resolver = new FormsConnectionResolver( $source, $args, $context, $info );
+		$resolver = new FormsConnectionResolver( $source, $args, $context, $info );
 
-			return $resolver->get_connection();
+		return $resolver->get_connection();
+	}
+
+	/**
+	 * Resolves the entry object for the entry ID specified.
+	 *
+	 * @param int        $id .
+	 * @param AppContext $context .
+	 */
+	public static function resolve_entry( $id, AppContext $context ) : ?Deferred {
+		return $context->get_loader( EntriesLoader::$name )->load_deferred( $id );
+	}
+
+	/**
+	 * Wrapper for the EntriesConnectionResolver::resolve method.
+	 *
+	 * @param mixed       $source  The object the connection is coming from.
+	 * @param array       $args    Array of args to be passed down to the resolve method.
+	 * @param AppContext  $context The AppContext object to be passed down.
+	 * @param ResolveInfo $info    The ResolveInfo object.
+	 *
+	 * @return mixed|array|Deferred
+	 */
+	public static function resolve_entries_connection( $source, array $args, AppContext $context, ResolveInfo $info ) {
+		$resolver = new EntriesConnectionResolver( $source, $args, $context, $info );
+
+		return $resolver->get_connection();
 	}
 }

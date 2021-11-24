@@ -8,6 +8,7 @@
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue;
 
+use GF_Field;
 use WPGraphQL\AppContext;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\GF\Interfaces\FieldValue;
@@ -44,11 +45,11 @@ abstract class AbstractFieldValue extends AbstractType implements FieldValue {
 					'type'            => static::get_field_type(),
 					'description'     => static::get_description(),
 					'resolve'         => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						if ( ! isset( $root['source'] ) || ! is_array( $root['source'] ) ) {
+						if ( ! $root instanceof GF_Field || ! isset( $root->source->entry ) || ! is_array( $root->source->entry ) ) {
 							return null;
 						}
 
-						return static::get( $root['source'], $root );
+						return static::get( $root->source->entry, $root );
 					},
 					'eagerlyLoadType' => static::$should_load_eagerly,
 				]

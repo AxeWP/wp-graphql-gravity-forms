@@ -191,6 +191,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	 */
 	protected function runTestSubmitDraft() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
+		wp_set_current_user( $this->admin->ID );
 
 		$query = $this->submit_form_mutation();
 
@@ -217,6 +218,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	 */
 	protected function runTestSubmit() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
+		wp_set_current_user( $this->admin->ID );
 
 		$query     = $this->submit_form_mutation();
 		$variables = [
@@ -249,6 +251,8 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	 * Tests updating the field value with updateGravityFormsEntry.
 	 */
 	protected function runTestUpdate() : void {
+		wp_set_current_user( $this->admin->ID );
+
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$field_value       = $this->updated_field_value();
@@ -273,6 +277,8 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	 * Tests updating the draft field value with updateGravityFormsEntry.
 	 */
 	protected function runTestUpdateDraft() : void {
+		wp_set_current_user( $this->admin->ID );
+
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 

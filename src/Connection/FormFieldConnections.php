@@ -37,12 +37,12 @@ class FormFieldConnections extends AbstractConnection {
 					'toType'         => FormField::$type,
 					'fromFieldName'  => 'formFields',
 					'connectionArgs' => self::get_connection_args(),
-					'resolve'        => static function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						if ( empty( $root->formFields ) ) {
+					'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+						if ( empty( $source->formFields ) ) {
 							return null;
 						}
 
-						$fields = static::filter_form_fields_by_connection_args( $root->formFields, $args );
+						$fields = static::filter_form_fields_by_connection_args( $source->formFields, $args );
 
 						$fields              = FieldsDataManipulator::manipulate( $fields );
 						$connection          = Relay::connectionFromArray( $fields, $args );
@@ -62,8 +62,8 @@ class FormFieldConnections extends AbstractConnection {
 					'toType'         => FormField::$type,
 					'fromFieldName'  => 'formFields',
 					'connectionArgs' => self::get_connection_args(),
-					'resolve'        => static function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						$form = GFUtils::get_form( $root['formId'], false );
+					'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+						$form = GFUtils::get_form( $source->formId, false );
 
 						$fields = self::filter_form_fields_by_connection_args( $form['fields'], $args );
 
@@ -74,8 +74,8 @@ class FormFieldConnections extends AbstractConnection {
 						// Add the entry to each edge with a key of 'source'. This is needed so that
 						// the fieldValue edge field resolver has has access to the form entry.
 						$connection['edges'] = array_map(
-							function( $edge ) use ( $root ) {
-								$edge['source'] = $root;
+							function( $edge ) use ( $source ) {
+								$edge['source'] = $source;
 								return $edge;
 							},
 							$connection['edges']

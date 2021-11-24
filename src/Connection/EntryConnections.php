@@ -20,6 +20,7 @@ use WPGraphQL\GF\Type\Input\EntriesSortingInput;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Connection\EntriesConnectionResolver;
+use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -39,9 +40,7 @@ class EntryConnections extends AbstractConnection {
 					'fromFieldName'  => 'gravityFormsEntries',
 					'connectionArgs' => self::get_filtered_connection_args(),
 					'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						$resolver = new EntriesConnectionResolver( $root, $args, $context, $info );
-
-						return $resolver->get_connection();
+						return Factory::resolve_entries_connection( $root, $args, $context, $info );
 					},
 				]
 			)
@@ -55,10 +54,9 @@ class EntryConnections extends AbstractConnection {
 					'toType'         => Entry::$type,
 					'fromFieldName'  => 'entries',
 					'connectionArgs' => self::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'sort' ] ),
-					'resolve'        => static function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						$resolver = new EntriesConnectionResolver( $root, $args, $context, $info );
-
-						return $resolver->set_query_arg( 'form_ids', $root['formId'] )->get_connection();
+					'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+						$args['where']['formIds'] = $source->formId ?? null;
+						return Factory::resolve_entries_connection( $source, $args, $context, $info );
 					},
 				]
 			),

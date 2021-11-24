@@ -60,6 +60,7 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	 * Tests `submitGravityFormsDraftEntry`.
 	 */
 	public function testSubmitGravityFormsDraftEntry() : void {
+		wp_set_current_user( $this->admin->ID );
 		$actual = $this->createMutation();
 		codecept_debug( $actual );
 		$this->assertArrayNotHasKey( 'errors', $actual );

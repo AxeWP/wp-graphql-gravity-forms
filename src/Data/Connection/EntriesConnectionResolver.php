@@ -53,11 +53,11 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
 		 * @param array|int $form_ids The specific form IDs being queried. Returns `0` if querying entries from all forms.
 		 */
-		$can_user_view_entries = apply_filters( 'wp_graphql_gf_can_view_entries', current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ), $this->get_form_ids() );
-
-		if ( ! $can_user_view_entries ) {
-			throw new UserError( __( 'Sorry, you are not allowed to view Gravity Forms entries.', 'wp-graphql-gravity-forms' ) );
-		}
+		$can_user_view_entries = apply_filters(
+			'wp_graphql_gf_can_view_entries',
+			current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ) || get_current_user_id() === $this->source['createdById'],
+			$this->get_form_ids()
+		);
 
 		return $can_user_view_entries;
 	}
@@ -90,12 +90,12 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * If model isn't a class with a `fields` member, this function with have be overridden in
 	 * the Connection class.
 	 *
-	 * @param array $model model.
+	 * @param mixed $model model.
 	 *
 	 * @return bool
 	 */
 	protected function is_valid_model( $model ) {
-		return true;
+		return isset( $model->databaseId ) || empty( $model->resumeToken );
 	}
 
 	/**

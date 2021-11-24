@@ -60,9 +60,7 @@ class FormsLoader extends AbstractDataLoader {
 			$loaded_forms [ $form['id'] ] = $form;
 		}
 
-		// Order the form by the provided keys.
-		$loaded_forms = array_replace( array_flip( $keys ), $loaded_forms );
-
-		return $loaded_forms;
+		// Order the forms by the provided keys.
+		return array_replace( array_flip( $keys ), $loaded_forms );
 	}
 }

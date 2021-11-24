@@ -15,7 +15,7 @@ use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\DataManipulators\EntryDataManipulator;
+use WPGraphQL\GF\Model\Entry as EntryModel;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Utils\GFUtils;
@@ -62,7 +62,7 @@ class SubmitDraftEntry extends AbstractMutation {
 
 					$entry = GFUtils::get_entry( $payload['entryId'] );
 
-					return EntryDataManipulator::manipulate( $entry );
+					return new EntryModel( $entry );
 				},
 			],
 			'errors'  => [

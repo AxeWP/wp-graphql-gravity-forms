@@ -210,7 +210,6 @@ class TypeRegistry {
 			// Entries.
 			WPObject\Entry\Entry::class,
 			WPObject\Entry\EntryQuizResults::class,
-			WPObject\Entry\EntryUser::class,
 			// Forms.
 			WPObject\Form\Form::class,
 			WPObject\Form\FormConfirmation::class,
