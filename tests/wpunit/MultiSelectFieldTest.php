@@ -79,7 +79,6 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		codecept_debug( $this->field_value );
 		return [
 			(string) $this->fields[0]['id'] => json_encode( $this->field_value() ),
 		];
@@ -258,7 +257,6 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
-		codecept_debug( $actual_entry );
 		$this->assertEquals( $this->field_value, json_decode( $actual_entry[ $form['fields'][0]['id'] ] ), 'Submit mutation entry value not equal.' );
 	}
 }

@@ -16,7 +16,6 @@ use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
-use WPGraphQL\GF\DataManipulators\DraftEntryDataManipulator;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Type\Input\FieldValuesInput;
@@ -89,13 +88,11 @@ class SubmitForm extends AbstractMutation {
 					if ( ! empty( $payload['errors'] ) || ( ! $payload['entryId'] && ! $payload['resumeToken'] ) ) {
 						return null;
 					}
-					if ( $payload['resumeToken'] ) {
-						$submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
-
-						return DraftEntryDataManipulator::manipulate( $submission['partial_entry'], $payload['resumeToken'] );
+					if ( ! empty( $payload['resumeToken'] ) ) {
+						return Factory::resolve_draft_entry( $payload['resumeToken'], $context );
 					}
 
-					if ( $payload['entryId'] ) {
+					if ( ! empty( $payload['entryId'] ) ) {
 						return Factory::resolve_entry( $payload['entryId'], $context );
 					}
 				},

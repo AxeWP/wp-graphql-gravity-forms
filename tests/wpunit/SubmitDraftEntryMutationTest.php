@@ -62,7 +62,6 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	public function testSubmitGravityFormsDraftEntry() : void {
 		wp_set_current_user( $this->admin->ID );
 		$actual = $this->createMutation();
-		codecept_debug( $actual );
 		$this->assertArrayNotHasKey( 'errors', $actual );
 
 		$actual_entry = $this->factory->entry->get_object_by_id( $actual['data']['submitGravityFormsDraftEntry']['entryId'] );
@@ -139,7 +138,7 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 			'clientMutationId' => $this->client_mutation_id,
 		];
 
-		return graphql(
+		return $this->graphql(
 			[
 				'query'     => $mutation,
 				'variables' => $variables,
