@@ -30,7 +30,12 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		$this->text_field_helper = $this->tester->getPropertyHelper( 'TextField' );
 		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
 
-		$this->form_id = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
+		$this->form_id = $this->factory->form->create(
+			array_merge(
+				[ 'fields' => $this->fields ],
+				$this->tester->getFormDefaultArgs()
+			)
+		);
 
 		$this->entry_ids = $this->factory->entry->create_many(
 			6,
@@ -60,29 +65,26 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	 * Tests `gravityFormsEntry`.
 	 */
 	public function testGravityFormsEntryQuery() : void {
+		wp_set_current_user( $this->admin->ID );
+
 		$global_id = Relay::toGlobalId( 'GravityFormsEntry', $this->entry_ids[0] );
-		$entry     = GFAPI::get_entry( $this->entry_ids[0] );
-		$form      = GFAPI::get_form( $this->form_id );
+		$entry     = $this->factory->entry->get_object_by_id( $this->entry_ids[0] );
+		$form      = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$query = $this->get_entry_query();
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'id'     => $this->entry_ids[0],
-					'idType' => 'DATABASE_ID',
-				],
-			]
-		);
+		$variables = [
+			'id'     => $this->entry_ids[0],
+			'idType' => 'DATABASE_ID',
+		];
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$expected = [
 			'gravityFormsEntry' => [
 				'createdById' => (int) $entry['created_by'],
 				'createdBy'   => [
-					'node' => [
 						'databaseId' => (int) $entry['created_by'],
-					],
 				],
 				'dateCreated' => $entry['date_created'],
 				'dateUpdated' => $entry['date_updated'],
@@ -95,15 +97,13 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 					],
 				],
 				'form'        => [
-					'node' => [
-						'formId' => $form['id'],
-					],
+					'databaseId' => $form['id'],
 				],
-				'formId'      => $form['id'],
+				'formId'  => $form['id'],
 				'id'          => $global_id,
 				'ip'          => $entry['ip'],
 				'isDraft'     => (bool) null,
-				'isRead'      => (bool) $entry['is_read'],
+				'isRead'      => ! empty( $entry['is_read'] ),
 				'isStarred'   => (bool) $entry['is_starred'],
 				'postId'      => $entry['post_id'],
 				'resumeToken' => null,
@@ -113,52 +113,48 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 			],
 		];
 		// Test with Database Id.
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $response );
+		$this->assertEquals( $expected, $response['data'] );
 
 		// Test with Global Id.
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'id'     => $global_id,
-					'idType' => 'ID',
-				],
-			],
-		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$variables = [
+			'id'     => $global_id,
+			'idType' => 'ID',
+		];
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+
+		$this->assertArrayNotHasKey( 'errors', $response );
+		$this->assertEquals( $expected, $response['data'] );
 	}
 
 	/**
 	 * Tests `gravityFormsEntry` with no setup variables.
 	 */
 	public function testGravityFormsEntryQuery_empty() {
+		wp_set_current_user( $this->admin->ID );
+
 		$entry_id  = $this->factory->entry->create(
 			[ 'form_id' => $this->form_id ]
 		);
 		$global_id = Relay::toGlobalId( 'GravityFormsEntry', $entry_id );
-		$entry     = GFAPI::get_entry( $entry_id );
-		$form      = GFAPI::get_form( $this->form_id );
+		$entry     = $this->factory->entry->get_object_by_id( $entry_id );
+		$form      = $this->factory->form->get_object_by_id(  $this->form_id );
+
 		$query     = $this->get_entry_query();
 
-		$actual = graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'id'     => $entry_id,
-					'idType' => 'DATABASE_ID',
-				],
-			]
-		);
+		$variables = [
+			'id'     => $entry_id,
+			'idType' => 'DATABASE_ID',
+		];
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
 
 		$expected = [
 			'gravityFormsEntry' => [
 				'createdById' => (int) $entry['created_by'],
 				'createdBy'   => [
-					'node' => [
 						'databaseId' => (int) $entry['created_by'],
-					],
 				],
 				'dateCreated' => $entry['date_created'],
 				'dateUpdated' => $entry['date_updated'],
@@ -171,9 +167,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 					],
 				],
 				'form'        => [
-					'node' => [
-						'formId' => $form['id'],
-					],
+					'databaseId' => $form['id'],
 				],
 				'formId'      => $form['id'],
 				'id'          => $global_id,
@@ -188,8 +182,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 				'userAgent'   => $entry['user_agent'],
 			],
 		];
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $expected, $actual['data'] );
+		$this->assertArrayNotHasKey( 'errors', $response );
+		$this->assertEquals( $expected, $response['data'] );
 
 		$this->factory->entry->delete( $entry_id );
 	}
@@ -198,6 +192,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	 * Tests `gravityFormsEntry` with draft entry.
 	 */
 	public function testGravityFormsEntryQuery_draft() : void {
+		wp_set_current_user( $this->admin->ID );
+
 		$draft_tokens = $this->factory->draft_entry->create_many( 2, [ 'form_id' => $this->form_id ] );
 
 		$query = '
@@ -208,11 +204,12 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 			}
 		';
 
-		$actual = graphql(
+		$actual = $this->graphql(
 			[
 				'query'     => $query,
 				'variables' => [
 					'id' => $draft_tokens[0],
+					'idType' => 'ID',
 				],
 			]
 		);
@@ -226,6 +223,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	 * Tests `gravityFormsEntries`.
 	 */
 	public function testEntriesQuery() : void {
+		wp_set_current_user( $this->admin->ID );
+
 		$query = '
 			query {
 				gravityFormsEntries {
@@ -236,7 +235,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 			}
 		';
 
-		$actual = graphql( [ 'query' => $query ] );
+		$actual = $this->graphql( [ 'query' => $query ] );
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertCount( 6, $actual['data']['gravityFormsEntries']['nodes'] );
 	}
@@ -245,6 +244,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	 * Tests `gravityFormsEntries` with query args .
 	 */
 	public function testEntriesQueryArgs() {
+		wp_set_current_user( $this->admin->ID );
+
 		$entry_ids = array_reverse( $this->entry_ids );
 
 		$query = '
@@ -378,9 +379,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 				gravityFormsEntry(id: $id, idType: $idType) {
 					createdById
 					createdBy {
-						node {
-							databaseId
-						}
+						databaseId
 					}
 					dateCreated
 					dateUpdated
@@ -391,9 +390,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 						}
 					}
 					form {
-						node {
-							formId
-						}
+						databaseId
 					}
 					formId
 					id

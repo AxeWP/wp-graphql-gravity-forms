@@ -1,8 +1,8 @@
 <?php
 /**
- * DataLoader - Entries
+ * DataLoader - DraftEntries
  *
- * Loads Models for Gravity Forms Entries.
+ * Loads Models for Gravity Forms DraftEntries.
  *
  * @package WPGraphQL\GF\Data\Loader
  * @since 0.0.1
@@ -10,26 +10,28 @@
 
 namespace WPGraphQL\GF\Data\Loader;
 
-use GF_Query;
+use Exception;
+use GraphQL\Deferred;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
-use WPGraphQL\GF\Model\Entry;
+use WPGraphQL\GF\Model\DraftEntry;
+use WPGraphQL\GF\Utils\GFUtils;
 
 /**
- * Class - EntriesLoader
+ * Class - DraftEntriesLoader
  */
-class EntriesLoader extends AbstractDataLoader {
+class DraftEntriesLoader extends AbstractDataLoader {
 	/**
 	 * Loader name.
 	 *
 	 * @var string
 	 */
-	public static string $name = 'gravityFormsEntries';
+	public static string $name = 'gravityFormsDraftEntries';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_model( $entry, $key ) : Entry {
-		return new Entry( $entry );
+	protected function get_model( $entry, $key ) : DraftEntry {
+		return new DraftEntry( $entry, $key );
 	}
 
 	/**
@@ -52,14 +54,33 @@ class EntriesLoader extends AbstractDataLoader {
 			return $keys;
 		}
 
-		$gf_query        = new GF_Query();
-		$entries_from_db = $gf_query->get_entries( $keys );
 		// GF doesn't cache form queries so we're going to use the fetched array.
 		$loaded_entries = [];
-		foreach ( $entries_from_db as $entry ) {
-			$loaded_entries [ $entry['id'] ] = $entry;
+		foreach ( $keys as $key ) {
+			$loaded_entries[ $key ] = GFUtils::get_draft_entry( $key );
 		}
 
-		return array_combine( $keys, $loaded_entries );
+		return $loaded_entries;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @throws Exception .
+	 */
+	public function load_deferred( $database_id ) {
+		if ( empty( $database_id ) ) {
+			return null;
+		}
+
+		$database_id = sanitize_text_field( $database_id );
+
+		$this->buffer( [ $database_id ] );
+
+		return new Deferred(
+			function () use ( $database_id ) {
+				return $this->load( $database_id );
+			}
+		);
 	}
 }

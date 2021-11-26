@@ -45,20 +45,15 @@ class NameFieldValue extends AbstractFieldValue {
 	}
 
 	/**
-	 * Get the field value.
-	 *
-	 * @param array    $entry Gravity Forms entry.
-	 * @param GF_Field $field Gravity Forms field.
-	 *
-	 * @return array Entry field value.
+	 * {@inheritDoc}
 	 */
-	public static function get( array $entry, GF_Field $field ) : array {
+	public static function get( array $entry_values, GF_Field $field ) : array {
 		return [
-			'prefix' => ! empty( $entry[ $field->inputs[0]['id'] ] ) ? $entry[ $field->inputs[0]['id'] ] : null,
-			'first'  => ! empty( $entry[ $field->inputs[1]['id'] ] ) ? $entry[ $field->inputs[1]['id'] ] : null,
-			'middle' => ! empty( $entry[ $field->inputs[2]['id'] ] ) ? $entry[ $field->inputs[2]['id'] ] : null,
-			'last'   => ! empty( $entry[ $field->inputs[3]['id'] ] ) ? $entry[ $field->inputs[3]['id'] ] : null,
-			'suffix' => ! empty( $entry[ $field->inputs[4]['id'] ] ) ? $entry[ $field->inputs[4]['id'] ] : null,
+			'prefix' => ! empty( $entry_values[ $field->inputs[0]['id'] ] ) ? $entry_values[ $field->inputs[0]['id'] ] : null,
+			'first'  => ! empty( $entry_values[ $field->inputs[1]['id'] ] ) ? $entry_values[ $field->inputs[1]['id'] ] : null,
+			'middle' => ! empty( $entry_values[ $field->inputs[2]['id'] ] ) ? $entry_values[ $field->inputs[2]['id'] ] : null,
+			'last'   => ! empty( $entry_values[ $field->inputs[3]['id'] ] ) ? $entry_values[ $field->inputs[3]['id'] ] : null,
+			'suffix' => ! empty( $entry_values[ $field->inputs[4]['id'] ] ) ? $entry_values[ $field->inputs[4]['id'] ] : null,
 		];
 	}
 }

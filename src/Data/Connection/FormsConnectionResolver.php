@@ -1,14 +1,14 @@
 <?php
 /**
- * ConnectionResolver - RootQueryEntry
+ * ConnectionResolver - Forms
  *
- * Resolves connections to Entries.
+ * Resolves connections to Forms.
  *
- * @package WPGraphQL\GF\Connection
+ * @package WPGraphQL\GF\Data\Connection
  * @since 0.0.1
  */
 
-namespace WPGraphQL\GF\Connection;
+namespace WPGraphQL\GF\Data\Connection;
 
 use GFAPI;
 use GFFormsModel;
@@ -17,6 +17,7 @@ use GraphQL\Error\UserError;
 use WPGraphQL\AppContext;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
+use WPGraphQL\GF\Model\Form;
 use WPGraphQL\GF\Type\Enum\FormStatusEnum;
 use WPGraphQL\GF\Utils\GFUtils;
 
@@ -51,12 +52,12 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 * If model isn't a class with a `fields` member, this function with have be overridden in
 	 * the Connection class.
 	 *
-	 * @param array $model model.
+	 * @param mixed $model model.
 	 *
 	 * @return bool
 	 */
 	protected function is_valid_model( $model ) {
-		return true;
+		return isset( $model->databaseId ) && ! empty( $model->databaseId );
 	}
 
 	/**

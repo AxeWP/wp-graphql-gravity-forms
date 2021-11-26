@@ -45,15 +45,10 @@ class TimeFieldValue extends AbstractFieldValue {
 	}
 
 	/**
-	 * Get the field value.
-	 *
-	 * @param array    $entry Gravity Forms entry.
-	 * @param GF_Field $field Gravity Forms field.
-	 *
-	 * @return array Entry field value.
+	 * {@inheritDoc}
 	 */
-	public static function get( array $entry, GF_Field $field ) : array {
-		if ( ! isset( $entry [ $field->id ] ) ) {
+	public static function get( array $entry_values, GF_Field $field ) : array {
+		if ( ! isset( $entry_values [ $field->id ] ) ) {
 			return [
 				'displayValue' => null,
 				'hours'        => null,
@@ -62,7 +57,7 @@ class TimeFieldValue extends AbstractFieldValue {
 			];
 		}
 
-		$display_value  = $entry[ $field->id ];
+		$display_value  = $entry_values[ $field->id ];
 		$parts_by_colon = explode( ':', $display_value );
 		$hours          = $parts_by_colon[0] ?? '';
 		$parts_by_space = explode( ' ', $display_value );

@@ -15,8 +15,7 @@ use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\DataManipulators\EntryDataManipulator;
-use WPGraphQL\GF\DataManipulators\DraftEntryDataManipulator;
+use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Type\Input\FieldValuesInput;
@@ -85,20 +84,16 @@ class SubmitForm extends AbstractMutation {
 			'entry'       => [
 				'type'        => Entry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( array $payload ) {
+				'resolve'     => function( array $payload, array $args, AppContext $context ) {
 					if ( ! empty( $payload['errors'] ) || ( ! $payload['entryId'] && ! $payload['resumeToken'] ) ) {
 						return null;
 					}
-					if ( $payload['resumeToken'] ) {
-						$submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
-
-						return DraftEntryDataManipulator::manipulate( $submission['partial_entry'], $payload['resumeToken'] );
+					if ( ! empty( $payload['resumeToken'] ) ) {
+						return Factory::resolve_draft_entry( $payload['resumeToken'], $context );
 					}
 
-					if ( $payload['entryId'] ) {
-						$entry = GFUtils::get_entry( $payload['entryId'] );
-
-						return EntryDataManipulator::manipulate( $entry );
+					if ( ! empty( $payload['entryId'] ) ) {
+						return Factory::resolve_entry( $payload['entryId'], $context );
 					}
 				},
 			],

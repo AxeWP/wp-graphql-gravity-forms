@@ -44,17 +44,12 @@ class ChainedSelectFieldValue extends AbstractFieldValue {
 	}
 
 	/**
-	 * Get the field value.
-	 *
-	 * @param array    $entry Gravity Forms entry.
-	 * @param GF_Field $field Gravity Forms field.
-	 *
-	 * @return array Entry field value.
+	 * {@inheritDoc}
 	 */
-	public static function get( array $entry, GF_Field $field ) : array {
+	public static function get( array $entry_values, GF_Field $field ) : array {
 		return array_map(
-			function( $input ) use ( $entry ) {
-				return $entry[ $input['id'] ] ?: null;
+			function( $input ) use ( $entry_values ) {
+				return $entry_values[ $input['id'] ] ?: null;
 			},
 			$field->inputs
 		);

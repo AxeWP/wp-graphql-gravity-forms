@@ -13,13 +13,12 @@ namespace WPGraphQL\GF\Type\WPObject\Form;
 
 use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
+use WPGraphQL\AppContext;
+use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
-use WPGraphQL\GF\DataManipulators\FormDataManipulator;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-
 use WPGraphQL\GF\Type\WPObject\Button;
 use WPGraphQL\GF\Type\Enum;
-use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -86,6 +85,10 @@ class Form extends AbstractObject implements Field {
 				'type'        => 'String',
 				'description' => __( 'The custom text to use to indicate a field is required.', 'wp-graphql-gravity-forms' ),
 			],
+			'databaseId'                 => [
+				'type'        => 'Int',
+				'description' => __( 'The form database ID.', 'wp-graphql-gravity-forms' ),
+			],
 			'dateCreated'                => [
 				'type'        => 'String',
 				'description' => __( 'The date the form was created in this format: YYYY-MM-DD HH:mm:ss.', 'wp-graphql-gravity-forms' ),
@@ -111,8 +114,10 @@ class Form extends AbstractObject implements Field {
 				'description' => __( 'CSS class for the first page.', 'wp-graphql-gravity-forms' ),
 			],
 			'formId'                     => [
-				'type'        => 'Int',
-				'description' => __( 'Form ID.', 'wp-graphql-gravity-forms' ),
+				'type'              => 'Int',
+				'description'       => __( 'Form ID.', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Deprecated in favor of the databaseId field', 'wp-graphql-gravity-forms' ),
+				'resolve'           => fn( $source ) => $source->databaseId,
 			],
 			'id'                         => [
 				'type'        => [ 'non_null' => 'ID' ],
@@ -207,7 +212,7 @@ class Form extends AbstractObject implements Field {
 					 *
 					 * @todo find way to access parent field values from child field.
 					 */
-					return $root['gravityformsquiz'] + [ 'form' => $root ] ?? null;
+					return $root['quizSettings'] + [ 'form' => $root ] ?? null;
 				},
 			],
 			'requiredIndicator'          => [
@@ -238,13 +243,13 @@ class Form extends AbstractObject implements Field {
 				'type'        => 'Int',
 				'description' => __( 'Hour (1 to 12) that the form will become inactive/hidden.', 'wp-graphql-gravity-forms' ),
 			],
-			'scheduleForm'               => [
-				'type'        => 'Boolean',
-				'description' => __( 'Specifies if this form is scheduled to be displayed only during a certain configured date/time.', 'wp-graphql-gravity-forms' ),
-			],
 			'scheduleEndMinute'          => [
 				'type'        => 'Int',
 				'description' => __( 'Minute that the form will become inactive/hidden.', 'wp-graphql-gravity-forms' ),
+			],
+			'scheduleForm'               => [
+				'type'        => 'Boolean',
+				'description' => __( 'Specifies if this form is scheduled to be displayed only during a certain configured date/time.', 'wp-graphql-gravity-forms' ),
 			],
 			'scheduleMessage'            => [
 				'type'        => 'String',
@@ -313,7 +318,7 @@ class Form extends AbstractObject implements Field {
 						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID', 'wp-graphql-gravity-forms' ),
 					],
 				],
-				'resolve'     => function( $root, array $args ) : array {
+				'resolve'     => function( $root, array $args, AppContext $context ) {
 					$idType = $args['idType'] ?? 'global_id';
 
 					/**
@@ -330,20 +335,7 @@ class Form extends AbstractObject implements Field {
 						$id = (int) sanitize_text_field( $args['id'] );
 					}
 
-					$form_raw = GFUtils::get_form( $id, false );
-
-					$form = FormDataManipulator::manipulate( $form_raw );
-
-					/**
-					 * "wp_graphql_gf_form_object" filter
-					 *
-					 * Provides the ability to manipulate the form data before it is sent to the
-					 * client. This hook is somewhat similar to Gravity Forms' gform_pre_render hook
-					 * and can be used for dynamic field input population, among other things.
-					 *
-					 * @param array $form Form meta array.
-					 */
-					return apply_filters( 'wp_graphql_gf_form_object', $form );
+					return Factory::resolve_form( $id, $context );
 				},
 			]
 		);

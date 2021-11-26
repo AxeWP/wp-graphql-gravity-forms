@@ -256,6 +256,9 @@ class GFUtils {
 			);
 		}
 
+		// Sets resume token to partial_entry.
+		$submission['partial_entry']['resumeToken'] = $resume_token;
+
 		return $submission;
 	}
 

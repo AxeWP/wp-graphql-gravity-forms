@@ -47,30 +47,25 @@ class ListFieldValue extends AbstractFieldValue {
 	}
 
 	/**
-	 * Get the field value.
-	 *
-	 * @param array    $entry Gravity Forms entry.
-	 * @param GF_Field $field Gravity Forms field.
-	 *
-	 * @return array Entry field value.
+	 * {@inheritDoc}
 	 *
 	 * @throws UserError .
 	 */
-	public static function get( array $entry, GF_Field $field ) : array {
+	public static function get( array $entry_values, GF_Field $field ) : array {
 		if ( ! $field instanceof GF_Field_List ) {
 			throw new UserError( __( 'Error! Trying to use a non ListField as a ListField!', 'wp-graphql-gravity-forms' ) );
 		}
 
-		$entry_values = $entry[ $field->id ] ?: null;
+		$field_values = $entry_values[ $field->id ] ?: null;
 
-		if ( empty( $entry_values ) ) {
+		if ( empty( $field_values ) ) {
 			return [];
 		}
 
-		if ( is_string( $entry_values ) ) {
-			$entry_values = maybe_unserialize( $entry_values );
+		if ( is_string( $field_values ) ) {
+			$field_values = maybe_unserialize( $field_values );
 		} else {
-			$entry_values = $field->create_list_array_recursive( $entry_values );
+			$field_values = $field->create_list_array_recursive( $field_values );
 		}
 
 		// If columns are enabled, save each row-value pair.
@@ -88,7 +83,7 @@ class ListFieldValue extends AbstractFieldValue {
 						'values' => $row_values,
 					];
 				},
-				$entry_values
+				$field_values
 			);
 		}
 
@@ -99,7 +94,7 @@ class ListFieldValue extends AbstractFieldValue {
 					'values' => [ $single_value ], // $single_value must be Iteratable.
 				];
 			},
-			$entry_values
+			$field_values
 		);
 	}
 }

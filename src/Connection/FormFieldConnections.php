@@ -11,14 +11,12 @@
 namespace WPGraphQL\GF\Connection;
 
 use GraphQL\Type\Definition\ResolveInfo;
-use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\GF;
-use WPGraphQL\GF\DataManipulators\FieldsDataManipulator;
+use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
+use WPGraphQL\GF\Model\Form as FormModel;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\GF\Type\WPInterface\FormField;
-
 use WPGraphQL\GF\Type\Enum\FormFieldsEnum;
 use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\Registry\TypeRegistry;
@@ -39,13 +37,14 @@ class FormFieldConnections extends AbstractConnection {
 					'toType'         => FormField::$type,
 					'fromFieldName'  => 'formFields',
 					'connectionArgs' => self::get_connection_args(),
-					'resolve'        => static function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-							$fields              = static::filter_form_fields_by_connection_args( $root['fields'], $args );
-							$fields              = FieldsDataManipulator::manipulate( $fields );
-							$connection          = Relay::connectionFromArray( $fields, $args );
-							$nodes               = array_map( fn( $edge ) => $edge['node'] ?? null, $connection['edges'] );
-							$connection['nodes'] = $nodes ?: null;
-							return $connection;
+					'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+						if ( empty( $source->formFields ) ) {
+							return null;
+						}
+
+						$fields = static::filter_form_fields_by_connection_args( $source->formFields, $args );
+
+						return FormFieldsConnectionResolver::resolve( $fields, $args, $context, $info );
 					},
 				]
 			)
@@ -59,35 +58,16 @@ class FormFieldConnections extends AbstractConnection {
 					'toType'         => FormField::$type,
 					'fromFieldName'  => 'formFields',
 					'connectionArgs' => self::get_connection_args(),
-					'resolve'        => static function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						$form = GFUtils::get_form( $root['formId'], false );
+					'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+						if ( empty( $context->gfForm ) ) {
+							$context->gfForm = new FormModel( GFUtils::get_form( $source->formId, false ) );
+						}
 
-						$fields = self::filter_form_fields_by_connection_args( $form['fields'], $args );
+						$context->gfEntry = $source;
 
-						$fields = FieldsDataManipulator::manipulate( $fields );
+						$fields = self::filter_form_fields_by_connection_args( $context->gfForm->formFields, $args );
 
-						$connection = Relay::connectionFromArray( $fields, $args );
-
-						// Add the entry to each edge with a key of 'source'. This is needed so that
-						// the fieldValue edge field resolver has has access to the form entry.
-						$connection['edges'] = array_map(
-							function( $edge ) use ( $root ) {
-								$edge['source'] = $root;
-								return $edge;
-							},
-							$connection['edges']
-						);
-
-						$nodes               = array_map(
-							function( $edge ) {
-								$edge['node']           = $edge['node'] ?? null;
-								$edge['node']['source'] = $edge['source'];
-								return $edge['node'];
-							},
-							$connection['edges']
-						);
-						$connection['nodes'] = $nodes ?: null;
-						return $connection;
+						return FormFieldsConnectionResolver::resolve( $fields, $args, $context, $info );
 					},
 				]
 			),

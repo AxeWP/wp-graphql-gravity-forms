@@ -11,6 +11,7 @@ namespace WPGraphQL\GF\Connection;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\GF\Type\Enum\FormStatusEnum;
 use WPGraphQL\GF\Type\Input\FormsSortingInput;
@@ -40,9 +41,7 @@ class FormConnections extends AbstractConnection {
 					'fromFieldName'  => 'gravityFormsForms',
 					'connectionArgs' => self::get_connection_args(),
 					'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						$resolver = new FormsConnectionResolver( $root, $args, $context, $info );
-
-						return $resolver->get_connection();
+						return Factory::resolve_forms_connection( $root, $args, $context, $info );
 					},
 				]
 			)

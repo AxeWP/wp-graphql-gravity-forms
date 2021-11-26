@@ -45,18 +45,13 @@ class SignatureFieldValue extends AbstractFieldValue {
 	}
 
 	/**
-	 * Get the field value.
-	 *
-	 * @param array    $entry Gravity Forms entry.
-	 * @param GF_Field $field Gravity Forms field.
-	 *
-	 * @return string|null Entry field value.
+	 * {@inheritDoc}
 	 */
-	public static function get( array $entry, GF_Field $field ) {
-		if ( ! class_exists( 'GF_Field_Signature' ) || ! $field instanceof GF_Field_Signature || ! array_key_exists( $field->id, $entry ) ) {
+	public static function get( array $entry_values, GF_Field $field ) {
+		if ( ! class_exists( 'GF_Field_Signature' ) || ! $field instanceof GF_Field_Signature || ! array_key_exists( $field->id, $entry_values ) ) {
 			return null;
 		}
 
-		return $field->get_value_url( $entry[ $field->id ] ) ?: null;
+		return $field->get_value_url( $entry_values[ $field->id ] ) ?: null;
 	}
 }

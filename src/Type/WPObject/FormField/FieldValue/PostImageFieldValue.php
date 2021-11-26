@@ -45,15 +45,10 @@ class PostImageFieldValue extends AbstractFieldValue {
 	}
 
 	/**
-	 * Get the field value.
-	 *
-	 * @param array    $entry Gravity Forms entry.
-	 * @param GF_Field $field Gravity Forms field.
-	 *
-	 * @return array Entry field value.
+	 * {@inheritDoc}
 	 */
-	public static function get( array $entry, GF_Field $field ) : array {
-		$value = array_pad( explode( '|:|', $entry[ $field->id ] ), 4, false );
+	public static function get( array $entry_values, GF_Field $field ) : array {
+		$value = array_pad( explode( '|:|', $entry_values[ $field->id ] ), 4, false );
 
 		return [
 			'altText'     => $value[4] ?: null,

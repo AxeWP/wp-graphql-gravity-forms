@@ -46,20 +46,20 @@ class QuizFieldValue extends AbstractFieldValue {
 	/**
 	 * Get the field value.
 	 *
-	 * @param array    $entry Gravity Forms entry.
+	 * @param array    $entry_values Gravity Forms entry.
 	 * @param GF_Field $field Gravity Forms field.
 	 */
-	public static function get( array $entry, GF_Field $field ) : ?array {
+	public static function get( array $entry_values, GF_Field $field ) : ?array {
 		// Checkbox values are stored by each individual choice.
 		switch ( $field->get_input_type() ) {
 			case 'checkbox':
-				$values = array_column( CheckboxFieldValue::get( $entry, $field ), 'value' ) ?? null;
+				$values = array_column( CheckboxFieldValue::get( $entry_values, $field ), 'value' ) ?? null;
 				break;
 			case 'radio':
-				$values = RadioFieldValue::get( $entry, $field ) ?? null;
+				$values = RadioFieldValue::get( $entry_values, $field ) ?? null;
 				break;
 			case 'select':
-				$values = SelectFieldValue::get( $entry, $field ) ?? null;
+				$values = SelectFieldValue::get( $entry_values, $field ) ?? null;
 				break;
 		}
 

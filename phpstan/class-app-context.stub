@@ -1,0 +1,8 @@
+<?php
+
+namespace WPGraphQL;
+/**
+ * @property mixed $gfForm
+ * @property mixed $gfEntry
+ */
+class AppContext {}

@@ -11,7 +11,7 @@
 namespace WPGraphQL\GF\Data\Loader;
 
 use WPGraphQL\Data\Loader\AbstractDataLoader;
-use WPGraphQL\GF\DataManipulators\FormDataManipulator;
+use WPGraphQL\GF\Model\Form;
 use WPGraphQL\GF\Utils\GFUtils;
 
 /**
@@ -24,6 +24,13 @@ class FormsLoader extends AbstractDataLoader {
 	 * @var string
 	 */
 	public static string $name = 'gravityFormsForms';
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function get_model( $entry, $key ) : Form {
+		return new Form( $entry );
+	}
 
 	/**
 	 * Given array of keys, loads and returns a map consisting of keys from `keys` array and loaded
@@ -45,10 +52,15 @@ class FormsLoader extends AbstractDataLoader {
 			return $keys;
 		}
 
-		$forms_from_db = GFUtils::get_forms( $keys );
+		$forms_from_db = GFUtils::get_forms( $keys, false );
 
-		$forms = array_map( fn( $form ) => FormDataManipulator::manipulate( $form ), $forms_from_db );
+		$loaded_forms = [];
+		// GF doesn't cache form queries so we're going to use the fetched array.
+		foreach ( $forms_from_db as $form ) {
+			$loaded_forms [ $form['id'] ] = $form;
+		}
 
-		return array_combine( $keys, $forms );
+		// Order the forms by the provided keys.
+		return array_replace( array_flip( $keys ), $loaded_forms );
 	}
 }

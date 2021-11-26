@@ -12,7 +12,6 @@ use Exception;
 use WPGraphQL\GF\Connection;
 use WPGraphQL\GF\Mutation;
 use WPGraphQL\GF\Interfaces\Registrable;
-use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\GF\Type\Enum;
 use WPGraphQL\GF\Type\Input;
 use WPGraphQL\GF\Type\WPInterface;
@@ -33,6 +32,13 @@ class TypeRegistry {
 	public static array $registry = [];
 
 	/**
+	 * The list of registered classes.
+	 *
+	 * @var array
+	 */
+	public static array $registered_classes;
+
+	/**
 	 * Gets an array of all the registered GraphQL types along with their class name.
 	 */
 	public static function get_registered_types() : array {
@@ -41,6 +47,17 @@ class TypeRegistry {
 		}
 
 		return self::$registry;
+	}
+
+	/**
+	 * Gets an array of all the registered GraphQL types along with their class name.
+	 */
+	public static function get_registered_classes() : array {
+		if ( empty( self::$registered_classes ) ) {
+			self::initialize_registry();
+		}
+
+		return self::$registered_classes;
 	}
 
 	/**
@@ -82,7 +99,9 @@ class TypeRegistry {
 			self::mutations(),
 		);
 
-		self::register_types( $classes_to_register, $type_registry );
+		self::$registered_classes = $classes_to_register;
+
+		self::register_types( self::$registered_classes, $type_registry );
 	}
 
 
@@ -209,9 +228,7 @@ class TypeRegistry {
 			WPObject\ConditionalLogic\ConditionalLogicRule::class,
 			// Entries.
 			WPObject\Entry\Entry::class,
-			WPObject\Entry\EntryForm::class,
 			WPObject\Entry\EntryQuizResults::class,
-			WPObject\Entry\EntryUser::class,
 			// Forms.
 			WPObject\Form\Form::class,
 			WPObject\Form\FormConfirmation::class,

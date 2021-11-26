@@ -150,7 +150,13 @@ class Utils {
 	 * E.g. `[ 'text' => 'TextField' ]`.
 	 */
 	public static function get_registered_form_field_types() : array {
-		$fields = array_filter( TypeRegistry::get_registered_types(), fn( $class ) => is_a( $class, AbstractFormField::class, true ) );
+		$fields = array_filter(
+			TypeRegistry::get_registered_classes(),
+			function( $class ) {
+				$return = is_a( $class, AbstractFormField::class, true );
+				return $return;
+			}
+		);
 
 		$types = [];
 		foreach ( $fields as $field ) {

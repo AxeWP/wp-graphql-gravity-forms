@@ -13,7 +13,7 @@ namespace WPGraphQL\GF\Mutation;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\DataManipulators\DraftEntryDataManipulator;
+use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Type\Input\FieldValuesInput;
@@ -77,12 +77,11 @@ class UpdateDraftEntry extends AbstractMutation {
 			'entry'       => [
 				'type'        => Entry::$type,
 				'description' => __( 'The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( array $payload ) {
+				'resolve'     => function( array $payload, array $args, AppContext $context ) {
 					if ( ! empty( $payload['errors'] ) || ! $payload['resumeToken'] ) {
 						return null;
 					}
-					$draft_submission = GFUtils::get_draft_submission( $payload['resumeToken'] );
-					return DraftEntryDataManipulator::manipulate( $draft_submission['partial_entry'], $payload['resumeToken'] );
+					return Factory::resolve_draft_entry( $payload['resumeToken'], $context );
 				},
 			],
 			'errors'      => [

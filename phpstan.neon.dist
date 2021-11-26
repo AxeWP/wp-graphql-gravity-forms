@@ -6,6 +6,7 @@ parameters:
 			disableRuntimeReflectionProvider: true
 		stubFiles:
 			# Simulate added properties
+			- phpstan/class-app-context.stub
 			- phpstan/class-gf-quiz.stub
 		bootstrapFiles:
 			- phpstan/constants.php

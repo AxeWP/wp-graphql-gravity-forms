@@ -46,13 +46,13 @@ class PostTagsFieldValue extends AbstractFieldValue {
 	/**
 	 * Get the field value.
 	 *
-	 * @param array    $entry Gravity Forms entry.
+	 * @param array    $entry_values Gravity Forms entry.
 	 * @param GF_Field $field Gravity Forms field.
 	 *
 	 * @return array|null Entry field value.
 	 */
-	public static function get( array $entry, GF_Field $field ) {
-		$values      = $entry[ $field->id ] ?: null;
+	public static function get( array $entry_values, GF_Field $field ) {
+		$values      = $entry_values[ $field->id ] ?: null;
 		$value_array = null;
 
 		if ( null === $values ) {
