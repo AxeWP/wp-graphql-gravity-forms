@@ -1,8 +1,8 @@
 <?php
 /**
- * ConnectionResolver - RootQueryEntry
+ * ConnectionResolver - Forms
  *
- * Resolves connections to Entries.
+ * Resolves connections to Forms.
  *
  * @package WPGraphQL\GF\Data\Connection
  * @since 0.0.1

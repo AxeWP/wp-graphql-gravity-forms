@@ -44,14 +44,9 @@ class ConsentFieldValue extends AbstractFieldValue {
 	}
 
 	/**
-	 * Get the field value.
-	 *
-	 * @param array    $entry Gravity Forms entry.
-	 * @param GF_Field $field Gravity Forms field.
-	 *
-	 * @return string|null Entry field value.
+	 * {@inheritDoc}
 	 */
-	public static function get( array $entry, GF_Field $field ) {
-		return $entry[ $field->inputs[1]['id'] ] ?: null;
+	public static function get( array $entry_values, GF_Field $field ) {
+		return $entry_values[ $field->inputs[1]['id'] ] ?: null;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * ConnectionResolver - RootQueryEntry
+ * ConnectionResolver - Entries
  *
  * Resolves connections to Entries.
  *

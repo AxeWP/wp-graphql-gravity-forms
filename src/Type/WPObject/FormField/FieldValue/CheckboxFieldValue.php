@@ -47,14 +47,14 @@ class CheckboxFieldValue extends AbstractFieldValue {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get( array $entry, GF_Field $field ) : array {
+	public static function get( array $entry_values, GF_Field $field ) : array {
 		$field_input_ids = wp_list_pluck( $field->inputs, 'id' );
 		$checkboxValues  = [];
 
 		foreach ( $field_input_ids as $input_id ) {
 			$input_key = array_search( $input_id, array_column( $field->inputs, 'id' ), true );
 
-			$value = ! empty( $entry[ $input_id ] ) ? $entry[ $input_id ] : null;
+			$value = ! empty( $entry_values[ $input_id ] ) ? $entry_values[ $input_id ] : null;
 			$text  = $field->choices[ $input_key ]['text'] ?: $value;
 
 			$checkboxValues[] = [

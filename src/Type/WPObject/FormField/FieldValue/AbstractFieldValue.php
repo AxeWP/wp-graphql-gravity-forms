@@ -13,6 +13,7 @@ use WPGraphQL\AppContext;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\GF\Interfaces\FieldValue;
 use WPGraphQL\GF\Type\AbstractType;
+use WPGraphQL\GF\Model\Entry;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -45,11 +46,14 @@ abstract class AbstractFieldValue extends AbstractType implements FieldValue {
 					'type'            => static::get_field_type(),
 					'description'     => static::get_description(),
 					'resolve'         => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						if ( ! $root instanceof GF_Field || ! isset( $root->source->entry ) || ! is_array( $root->source->entry ) ) {
+						if ( ! $root instanceof GF_Field || ! isset( $context->gfEntry ) || ! $context->gfEntry instanceof Entry ) {
+							return null;
+						}
+						if ( ! isset( $context->gfEntry->entryValues ) ) {
 							return null;
 						}
 
-						return static::get( $root->source->entry, $root );
+						return static::get( $context->gfEntry->entryValues, $root );
 					},
 					'eagerlyLoadType' => static::$should_load_eagerly,
 				]

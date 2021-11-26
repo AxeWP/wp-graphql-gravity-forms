@@ -65,6 +65,7 @@ class Entry extends Model {
 				'dateCreated'     => fn() : ?string => ! empty( $this->data['date_created'] ) ? $this->data['date_created'] : null,
 				'dateUpdated'     => fn() : ?string => ! empty( $this->data['date_updated'] ) ? $this->data['date_updated'] : null,
 				'entry'           => fn() : array => $this->data,
+				'entryValues'     => fn() : ?array => array_filter( $this->data, fn( $key ) => is_numeric( $key ), ARRAY_FILTER_USE_KEY ) ?: null,
 				'formId'          => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
 				'id'              => fn() : string => Relay::toGlobalId( GraphQLEntry::$type, $this->data['resumeToken'] ?? (string) $this->data['id'] ),
 				'ip'              => fn() : ?string => ! empty( $this->data['ip'] ) ? $this->data['ip'] : null,

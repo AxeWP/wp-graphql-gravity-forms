@@ -46,10 +46,10 @@ class ChainedSelectFieldValue extends AbstractFieldValue {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get( array $entry, GF_Field $field ) : array {
+	public static function get( array $entry_values, GF_Field $field ) : array {
 		return array_map(
-			function( $input ) use ( $entry ) {
-				return $entry[ $input['id'] ] ?: null;
+			function( $input ) use ( $entry_values ) {
+				return $entry_values[ $input['id'] ] ?: null;
 			},
 			$field->inputs
 		);

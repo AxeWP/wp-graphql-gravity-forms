@@ -19,7 +19,6 @@ use WPGraphQL\GF\Type\Input\EntriesFieldFiltersInput;
 use WPGraphQL\GF\Type\Input\EntriesSortingInput;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Data\Connection\EntriesConnectionResolver;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -55,6 +54,8 @@ class EntryConnections extends AbstractConnection {
 					'fromFieldName'  => 'entries',
 					'connectionArgs' => self::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'sort' ] ),
 					'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+						$context->gfForm = $source;
+
 						$args['where']['formIds'] = $source->formId ?? null;
 						return Factory::resolve_entries_connection( $source, $args, $context, $info );
 					},
