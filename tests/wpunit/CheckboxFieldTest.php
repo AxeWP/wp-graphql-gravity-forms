@@ -183,6 +183,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 				inputName
 				isRequired
 				label
+				labelPlacement
 				size
 				type
 				visibility

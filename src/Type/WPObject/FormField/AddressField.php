@@ -52,7 +52,6 @@ class AddressField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelPlacementProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
 			FieldProperty\VisibilityProperty::get(),

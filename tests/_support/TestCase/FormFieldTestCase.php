@@ -161,6 +161,8 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$expected = $this->expected_field_response( $form );
 
+		codecept_debug( $response );
+
 		$this->assertQuerySuccessful( $response, $expected );
 
 		// Test Draft entry.

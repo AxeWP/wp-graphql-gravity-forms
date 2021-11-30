@@ -59,6 +59,7 @@ class QuizField extends AbstractFormField {
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\LabelProperty::get(),
+			FieldProperty\LabelPlacementProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),

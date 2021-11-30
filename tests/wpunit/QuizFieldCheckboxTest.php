@@ -221,6 +221,7 @@ class QuizFieldCheckboxTest extends FormFieldTestCase implements FormFieldTestCa
 				inputName
 				isRequired
 				label
+				labelPlacement
 				placeholder
 				gquizFieldType: quizFieldType
 				gquizShowAnswerExplanation: showAnswerExplanation

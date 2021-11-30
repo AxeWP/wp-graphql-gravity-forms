@@ -174,6 +174,7 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 				}
 				isRequired
 				label
+				labelPlacement
 				placeholder
 				gquizFieldType: quizFieldType
 				gquizShowAnswerExplanation: showAnswerExplanation

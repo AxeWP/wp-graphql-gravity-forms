@@ -79,9 +79,6 @@ abstract class AbstractFormField extends AbstractObject {
 
 		foreach ( $settings as $setting ) {
 			switch ( $setting ) {
-				case 'label_setting':
-					$properties[] = FieldProperty\LabelProperty::get();
-					break;
 				case 'conditional_logic_field_setting':
 					$properties[] = FieldProperty\ConditionalLogicProperty::get();
 					break;
@@ -90,6 +87,12 @@ abstract class AbstractFormField extends AbstractObject {
 					break;
 				case 'description_setting':
 					$properties[] = FieldProperty\DescriptionProperty::get();
+					break;
+				case 'label_setting':
+					$properties[] = FieldProperty\LabelProperty::get();
+					break;
+				case 'label_placement_setting':
+					$properties[] = FieldProperty\LabelPlacementProperty::get();
 					break;
 			}
 		}

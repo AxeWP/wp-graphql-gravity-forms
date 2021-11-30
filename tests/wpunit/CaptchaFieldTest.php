@@ -112,6 +112,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				displayOnly
 				errorMessage
 				label
+				labelPlacement
 				simpleCaptchaBackgroundColor
 				simpleCaptchaSize
 				simpleCaptchaFontColor
@@ -214,7 +215,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						[
 							$this->expectedNode(
 								'0',
-								$this->property_helper->getAllActualValues( $form['fields'][1] )
+								$this->property_helper->getAllActualValues( $form['fields'][1], ['labelPlacement'] )
 							),
 						]
 					),

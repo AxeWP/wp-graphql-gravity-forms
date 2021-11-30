@@ -240,7 +240,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function labelPlacement( $value = null ) {
-		return isset( $value ) ? $value : '';
+		return isset( $value ) ? $value : 'inherit';
 	}
 
 	public function layoutGridColumnSpan( $value = null ) {

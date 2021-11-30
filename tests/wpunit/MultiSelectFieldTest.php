@@ -119,6 +119,7 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 				inputName
 				isRequired
 				label
+				labelPlacement
 				size
 				values
 				visibility

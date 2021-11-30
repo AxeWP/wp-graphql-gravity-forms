@@ -174,6 +174,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 				}
 				isRequired
 				label
+				labelPlacement
 				placeholder
 				gquizFieldType: quizFieldType
 				gquizShowAnswerExplanation: showAnswerExplanation

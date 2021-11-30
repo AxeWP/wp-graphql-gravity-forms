@@ -153,6 +153,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 				errorMessage
 				isRequired
 				label
+				labelPlacement
 				noDuplicates
 				size
 				subLabelPlacement

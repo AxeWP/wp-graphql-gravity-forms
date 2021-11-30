@@ -144,6 +144,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				}
 				isRequired
 				label
+				labelPlacement
 				nameFormat
 				size
 				subLabelPlacement
