@@ -110,6 +110,11 @@ class FormField extends AbstractType implements TypeWithFields {
 				'type'        => [ 'non_null' => 'String' ],
 				'description' => __( 'The type of field to be displayed.', 'wp-graphql-gravity-forms' ),
 			],
+			'displayOnly'                => [
+				'type'        => 'Boolean',
+				'description' => __( 'Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) : bool => ! empty( $source->displayOnly ),
+			],
 		];
 	}
 

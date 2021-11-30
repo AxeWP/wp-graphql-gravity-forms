@@ -132,7 +132,6 @@ return array(
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DefaultValueProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/DefaultValueProperty.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DescriptionPlacementProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/DescriptionPlacementProperty.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DescriptionProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/DescriptionProperty.php',
-    'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DisplayOnlyProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/DisplayOnlyProperty.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\EmailInputProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/EmailInputProperty.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\EnableAutocompleteProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/EnableAutocompleteProperty.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\EnableChoiceValueProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/EnableChoiceValueProperty.php',

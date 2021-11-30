@@ -147,7 +147,6 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DefaultValueProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/DefaultValueProperty.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DescriptionPlacementProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/DescriptionPlacementProperty.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DescriptionProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/DescriptionProperty.php',
-        'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DisplayOnlyProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/DisplayOnlyProperty.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\EmailInputProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/EmailInputProperty.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\EnableAutocompleteProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/EnableAutocompleteProperty.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\EnableChoiceValueProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/EnableChoiceValueProperty.php',

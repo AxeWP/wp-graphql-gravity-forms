@@ -44,7 +44,6 @@ class HtmlField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			FieldProperty\DisplayOnlyProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			[
 				'content'        => [
