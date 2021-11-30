@@ -46,7 +46,6 @@ class SignatureField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),

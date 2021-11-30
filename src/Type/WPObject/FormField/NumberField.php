@@ -45,7 +45,6 @@ class NumberField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\AutocompleteAttributeProperty::get(),

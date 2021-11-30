@@ -58,13 +58,23 @@ abstract class AbstractFormField extends AbstractObject {
 	 * Used to autoregister FormField fields.
 	 */
 	protected static function get_fields_from_gf_settings() : array {
-		$field = GF_Fields::get( static::$gf_type );
+		$fields = GF_Fields::get_all();
 
-		if ( empty( $field ) ) {
+		if ( empty( $fields[ static::$gf_type ] ) ) {
 			return [];
 		}
 
-		$settings = $field->get_form_editor_field_settings();
+		$settings = $fields[ static::$gf_type ]->get_form_editor_field_settings();
+
+		if ( ! empty( $fields[ static::$gf_type ]->inputType ) ) {
+			$input_type = $fields[ static::$gf_type ]->inputType;
+
+			$additional_settings = $fields[ $input_type ]->get_form_editor_field_settings();
+
+			if ( ! empty( $additional_settings ) ) {
+				$settings += $additional_settings;
+			}
+		}
 
 		return static::get_field_properties_from_settings( $settings );
 	}
@@ -79,6 +89,9 @@ abstract class AbstractFormField extends AbstractObject {
 
 		foreach ( $settings as $setting ) {
 			switch ( $setting ) {
+				case 'admin_label_setting':
+					$properties[] = FieldProperty\AdminLabelProperty::get();
+					break;
 				case 'conditional_logic_field_setting':
 					$properties[] = FieldProperty\ConditionalLogicProperty::get();
 					break;
