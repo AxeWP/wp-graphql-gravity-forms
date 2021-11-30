@@ -47,7 +47,6 @@ class RadioField extends AbstractFormField {
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnablePriceProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),

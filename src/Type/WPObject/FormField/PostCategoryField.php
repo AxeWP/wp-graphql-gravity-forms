@@ -48,7 +48,6 @@ class PostCategoryField extends AbstractFormField {
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\ChoicesProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),

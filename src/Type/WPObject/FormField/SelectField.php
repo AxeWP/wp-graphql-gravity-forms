@@ -50,7 +50,6 @@ class SelectField extends AbstractFormField {
 			FieldProperty\ChoicesProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnableEnhancedUiProperty::get(),

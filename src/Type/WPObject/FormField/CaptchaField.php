@@ -15,7 +15,6 @@ use WPGraphQL\GF\Type\Enum\CaptchaThemeEnum;
 use WPGraphQL\GF\Type\Enum\CaptchaTypeEnum;
 use WPGraphQL\GF\Type\Enum\SizePropertyEnum;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
-use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - CaptchaField
@@ -50,7 +49,6 @@ class CaptchaField extends AbstractFormField {
 			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\DisplayOnlyProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			[

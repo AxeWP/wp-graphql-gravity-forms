@@ -48,7 +48,6 @@ class PostTagsField extends AbstractFormField {
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\EnableSelectAllProperty::get(),
 			FieldProperty\InputNameProperty::get(),

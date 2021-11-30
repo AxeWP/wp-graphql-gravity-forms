@@ -13,7 +13,6 @@ namespace WPGraphQL\GF\Type\WPObject\FormField;
 
 use WPGraphQL\GF\Type\Enum\MinPasswordStrengthEnum;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
-use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - PasswordField
@@ -48,7 +47,6 @@ class PasswordField extends AbstractFormField {
 			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),

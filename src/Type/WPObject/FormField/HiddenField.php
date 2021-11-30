@@ -12,7 +12,6 @@
 namespace WPGraphQL\GF\Type\WPObject\FormField;
 
 use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
-use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Hidden field.

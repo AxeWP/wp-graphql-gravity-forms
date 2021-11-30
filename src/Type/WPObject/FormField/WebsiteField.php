@@ -48,7 +48,6 @@ class WebsiteField extends AbstractFormField {
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),

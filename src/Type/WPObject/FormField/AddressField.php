@@ -13,7 +13,6 @@ namespace WPGraphQL\GF\Type\WPObject\FormField;
 
 use WPGraphQL\GF\Type\Enum\AddressTypeEnum;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
-use WPGraphQL\GF\Utils\Utils;
 
 
 /**
@@ -50,7 +49,6 @@ class AddressField extends AbstractFormField {
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),

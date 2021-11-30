@@ -45,7 +45,6 @@ class ConsentField extends AbstractFormField {
 			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),

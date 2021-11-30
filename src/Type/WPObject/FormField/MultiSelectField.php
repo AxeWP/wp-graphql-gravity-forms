@@ -50,7 +50,6 @@ class MultiSelectField extends AbstractFormField {
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\ChoicesProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnableEnhancedUiProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),

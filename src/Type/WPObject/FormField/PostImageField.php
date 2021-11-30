@@ -49,7 +49,6 @@ class PostImageField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[

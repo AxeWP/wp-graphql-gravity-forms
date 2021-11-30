@@ -51,7 +51,6 @@ class NumberField extends AbstractFormField {
 			FieldProperty\AutocompleteAttributeProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),

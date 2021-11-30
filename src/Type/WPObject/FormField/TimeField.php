@@ -48,7 +48,6 @@ class TimeField extends AbstractFormField {
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\InputsProperty::get(),
