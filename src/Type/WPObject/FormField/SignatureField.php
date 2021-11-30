@@ -52,7 +52,6 @@ class SignatureField extends AbstractFormField {
 			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
@@ -84,7 +83,8 @@ class SignatureField extends AbstractFormField {
 					'type'        => 'String',
 					'description' => __( 'Color of the pen to be used for the signature. Can be any valid CSS color value.', 'wp-graphql-gravity-forms' ),
 				],
-			]
+			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

@@ -51,7 +51,6 @@ class ListField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\LabelPlacementProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
@@ -76,7 +75,8 @@ class ListField extends AbstractFormField {
 					'type'        => 'Int',
 					'description' => __( 'The maximum number of rows the user can add to the field.', 'wp-graphql-gravity-forms' ),
 				],
-			]
+			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

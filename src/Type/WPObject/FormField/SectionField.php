@@ -45,9 +45,9 @@ class SectionField extends AbstractFormField {
 		return array_merge(
 			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\DisplayOnlyProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			FieldProperty\SizeProperty::get(),
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

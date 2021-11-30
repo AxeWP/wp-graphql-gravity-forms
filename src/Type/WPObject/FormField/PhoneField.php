@@ -55,7 +55,6 @@ class PhoneField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SizeProperty::get(),
@@ -65,7 +64,8 @@ class PhoneField extends AbstractFormField {
 					'type'        => PhoneFieldFormatEnum::$type,
 					'description' => __( 'Determines the allowed format for phones. If the phone value does not conform with the specified format, the field will fail validation.', 'wp-graphql-gravity-forms' ),
 				],
-			]
+			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

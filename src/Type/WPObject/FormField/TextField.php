@@ -54,7 +54,6 @@ class TextField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
@@ -65,7 +64,8 @@ class TextField extends AbstractFormField {
 					'type'        => 'Boolean',
 					'description' => __( 'Determines if a text field input tag should be created with a "password" type.', 'wp-graphql-gravity-forms' ),
 				],
-			]
+			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

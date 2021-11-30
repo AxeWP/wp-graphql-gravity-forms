@@ -45,7 +45,6 @@ class HtmlField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\DisplayOnlyProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			[
 				'content'        => [
@@ -57,6 +56,7 @@ class HtmlField extends AbstractFormField {
 					'description' => __( 'Indicates whether the default margins are turned on to align the HTML content with other fields.', 'wp-graphql-gravity-forms' ),
 				],
 			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

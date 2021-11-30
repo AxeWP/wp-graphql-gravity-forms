@@ -11,6 +11,7 @@
 namespace WPGraphQL\GF\Utils;
 
 use GF_Field;
+use GF_Fields;
 use GFAPI;
 use GFCommon;
 use GFFormDisplay;
@@ -29,7 +30,7 @@ class GFUtils {
 	 * @return string
 	 */
 	public static function get_ip( string $ip ) : string {
-			return ! empty( $ip ) ? sanitize_text_field( $ip ) : GFFormsModel::get_ip();
+		return ! empty( $ip ) ? sanitize_text_field( $ip ) : GFFormsModel::get_ip();
 	}
 
 	/**

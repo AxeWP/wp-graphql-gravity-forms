@@ -49,8 +49,8 @@ class HiddenField extends AbstractFormField {
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\InputNameProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\SizeProperty::get(),
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

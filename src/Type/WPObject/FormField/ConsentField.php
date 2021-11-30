@@ -49,7 +49,6 @@ class ConsentField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'checkboxLabel' => [
@@ -57,6 +56,7 @@ class ConsentField extends AbstractFormField {
 					'description' => __( 'Text of the consent checkbox', 'wp-graphql-gravity-forms' ),
 				],
 			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

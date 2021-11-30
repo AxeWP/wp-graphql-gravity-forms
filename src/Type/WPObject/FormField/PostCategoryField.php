@@ -52,7 +52,6 @@ class PostCategoryField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SizeProperty::get(),
@@ -62,7 +61,8 @@ class PostCategoryField extends AbstractFormField {
 					'type'        => 'Boolean',
 					'description' => __( 'Determines if all categories should be displayed on the Post Category drop down. If this property is true (display all categories), the Post Category drop down will display the categories hierarchically.', 'wp-graphql-gravity-forms' ),
 				],
-			]
+			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

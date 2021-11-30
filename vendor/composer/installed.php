@@ -5,7 +5,7 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'a0bb1cdec45cb0ddbba73c34e5f47e5a008b06e8',
+        'reference' => 'e77bea94d4c4ce5bed76bed35012a9df5357999b',
         'name' => 'harness-software/wp-graphql-gravity-forms',
         'dev' => true,
     ),
@@ -241,7 +241,7 @@
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'a0bb1cdec45cb0ddbba73c34e5f47e5a008b06e8',
+            'reference' => 'e77bea94d4c4ce5bed76bed35012a9df5357999b',
             'dev_requirement' => false,
         ),
         'hautelook/phpass' => array(

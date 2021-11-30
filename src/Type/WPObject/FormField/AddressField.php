@@ -45,7 +45,7 @@ class AddressField extends AbstractFormField {
 	 * {@inheritDoc}
 	 */
 	public static function get_fields() : array {
-		return array_merge(
+		$return = array_merge(
 			FieldProperty\AdminLabelProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AllowsPrepopulateProperty::get(),
@@ -54,7 +54,6 @@ class AddressField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\LabelPlacementProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
@@ -97,6 +96,9 @@ class AddressField extends AbstractFormField {
 					'description' => __( 'An array containing the the individual properties for each element of the address field.', 'wp-graphql-gravity-forms' ),
 				],
 			],
+			... static::get_fields_from_gf_settings()
 		);
+
+		return $return;
 	}
 }

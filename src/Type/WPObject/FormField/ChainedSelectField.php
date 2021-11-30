@@ -52,7 +52,6 @@ class ChainedSelectField extends AbstractFormField {
 			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
@@ -75,6 +74,7 @@ class ChainedSelectField extends AbstractFormField {
 					'description' => __( 'An array containing the the individual properties for each element of the Chained Select field.', 'wp-graphql-gravity-forms' ),
 				],
 			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

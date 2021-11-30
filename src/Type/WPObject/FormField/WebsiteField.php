@@ -52,11 +52,11 @@ class WebsiteField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

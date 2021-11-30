@@ -54,7 +54,6 @@ class EmailField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SizeProperty::get(),
@@ -70,6 +69,7 @@ class EmailField extends AbstractFormField {
 					'description' => __( 'An array containing the the individual properties for each element of the email field.', 'wp-graphql-gravity-forms' ),
 				],
 			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

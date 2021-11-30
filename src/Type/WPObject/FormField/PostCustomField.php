@@ -53,7 +53,6 @@ class PostCustomField extends AbstractFormField {
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\InputTypeProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
@@ -64,7 +63,8 @@ class PostCustomField extends AbstractFormField {
 					'type'        => 'String',
 					'description' => __( 'The name of the Post Custom Field that the submitted value should be assigned to.', 'wp-graphql-gravity-forms' ),
 				],
-			]
+			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

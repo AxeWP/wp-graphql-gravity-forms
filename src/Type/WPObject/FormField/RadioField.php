@@ -53,7 +53,6 @@ class RadioField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
@@ -67,6 +66,7 @@ class RadioField extends AbstractFormField {
 					'description' => __( 'Indicates whether the \'Enable "other" choice\' option is checked in the editor.', 'wp-graphql-gravity-forms' ),
 				],
 			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

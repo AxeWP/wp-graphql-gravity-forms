@@ -51,7 +51,6 @@ class PasswordField extends AbstractFormField {
 			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
@@ -69,6 +68,7 @@ class PasswordField extends AbstractFormField {
 					'description' => __( 'Indicates whether the field displays the password strength indicator.', 'wp-graphql-gravity-forms' ),
 				],
 			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

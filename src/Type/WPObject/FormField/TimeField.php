@@ -53,7 +53,6 @@ class TimeField extends AbstractFormField {
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\InputsProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
@@ -63,7 +62,8 @@ class TimeField extends AbstractFormField {
 					'type'        => TimeFieldFormatEnum::$type,
 					'description' => __( 'Determines how the time is displayed.', 'wp-graphql-gravity-forms' ),
 				],
-			]
+			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

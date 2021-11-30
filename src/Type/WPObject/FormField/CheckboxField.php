@@ -55,7 +55,6 @@ class CheckboxField extends AbstractFormField {
 			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
@@ -64,6 +63,7 @@ class CheckboxField extends AbstractFormField {
 					'description' => __( 'List of inputs. Checkboxes are treated as multi-input fields, since each checkbox item is stored separately.', 'wp-graphql-gravity-forms' ),
 				],
 			],
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }

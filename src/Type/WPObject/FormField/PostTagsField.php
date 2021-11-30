@@ -53,11 +53,11 @@ class PostTagsField extends AbstractFormField {
 			FieldProperty\EnableSelectAllProperty::get(),
 			FieldProperty\InputNameProperty::get(),
 			FieldProperty\IsRequiredProperty::get(),
-			FieldProperty\LabelProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
+			... static::get_fields_from_gf_settings(),
 		);
 	}
 }
