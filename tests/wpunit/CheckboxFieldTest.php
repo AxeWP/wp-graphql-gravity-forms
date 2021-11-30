@@ -173,6 +173,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 						value
 					}
 				}
+				cssClass
 				description
 				descriptionPlacement
 				enablePrice

@@ -209,6 +209,7 @@ class QuizFieldCheckboxTest extends FormFieldTestCase implements FormFieldTestCa
 						value
 					}
 				}
+				cssClass
 				defaultValue
 				description
 				enableAutocomplete

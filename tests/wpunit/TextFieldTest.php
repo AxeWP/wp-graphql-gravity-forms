@@ -99,6 +99,7 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 						value
 					}
 				}
+				cssClass
 				defaultValue
 				description
 				descriptionPlacement

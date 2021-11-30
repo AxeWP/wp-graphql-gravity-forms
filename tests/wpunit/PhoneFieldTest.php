@@ -100,6 +100,7 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 						value
 					}
 				}
+				cssClass
 				defaultValue
 				description
 				descriptionPlacement

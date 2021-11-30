@@ -147,6 +147,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 						value
 					}
 				}
+				cssClass
 				description
 				descriptionPlacement
 				errorMessage

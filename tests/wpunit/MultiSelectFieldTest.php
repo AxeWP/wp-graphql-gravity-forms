@@ -110,6 +110,7 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 						value
 					}
 				}
+				cssClass
 				description
 				descriptionPlacement
 				enableChoiceValue

@@ -2876,6 +2876,7 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\ChoiceProperty\\ChoiceValueProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/ChoiceProperty/ChoiceValueProperty.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\ChoicesProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/ChoicesProperty.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\ConditionalLogicProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/ConditionalLogicProperty.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\CssClassProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/CssClassProperty.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DateInputProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/DateInputProperty.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DefaultValueProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/DefaultValueProperty.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DescriptionPlacementProperty' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/DescriptionPlacementProperty.php',

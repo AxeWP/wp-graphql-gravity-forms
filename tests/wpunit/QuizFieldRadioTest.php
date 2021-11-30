@@ -159,6 +159,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 						value
 					}
 				}
+				cssClass
 				defaultValue
 				description
 				enableAutocomplete

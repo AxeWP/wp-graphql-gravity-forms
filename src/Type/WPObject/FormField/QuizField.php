@@ -48,6 +48,7 @@ class QuizField extends AbstractFormField {
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\AutocompleteAttributeProperty::get(),
 			FieldProperty\ConditionalLogicProperty::get(),
+			FieldProperty\CssClassProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),

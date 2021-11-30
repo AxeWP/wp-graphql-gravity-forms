@@ -102,6 +102,7 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						value
 					}
 				}
+				cssClass
 				description
 				descriptionPlacement
 				errorMessage

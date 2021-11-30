@@ -110,6 +110,7 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 						value
 					}
 				}
+				cssClass
 				deleteIconUrl
 				description
 				descriptionPlacement

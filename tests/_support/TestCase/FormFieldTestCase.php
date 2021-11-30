@@ -129,7 +129,6 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 				gravityFormsEntry(id: \$id, idType: \$idType ) {
 					formFields {
 						nodes {
-							cssClass
 							formId
 							id
 							layoutGridColumnSpan

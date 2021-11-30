@@ -99,6 +99,7 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 						value
 					}
 				}
+				cssClass
 				dateFormat
 				dateType
 				defaultValue

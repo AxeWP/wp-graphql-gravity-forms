@@ -102,6 +102,7 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 						value
 					}
 				}
+				cssClass
 				defaultValue
 				description
 				descriptionPlacement

@@ -159,6 +159,7 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 				}
 				gquizAnswerExplanation: answerExplanation
 				autocompleteAttribute
+				cssClass
 				defaultValue
 				description
 				enableAutocomplete

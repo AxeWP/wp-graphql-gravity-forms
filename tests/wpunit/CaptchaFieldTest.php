@@ -106,6 +106,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						value
 					}
 				}
+				cssClass
 				description
 				descriptionPlacement
 				displayOnly

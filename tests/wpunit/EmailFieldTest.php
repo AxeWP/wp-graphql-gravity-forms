@@ -121,6 +121,7 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 						value
 					}
 				}
+				cssClass
 				description
 				descriptionPlacement
 				emailConfirmEnabled

@@ -105,6 +105,7 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 						value
 					}
 				}
+				cssClass
 				defaultValue
 				description
 				descriptionPlacement

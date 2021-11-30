@@ -104,6 +104,7 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 						value
 					}
 				}
+				cssClass
 				description
 				descriptionPlacement
 				enableChoiceValue

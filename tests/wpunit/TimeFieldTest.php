@@ -117,6 +117,7 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 						value
 					}
 				}
+				cssClass
 				description
 				descriptionPlacement
 				errorMessage

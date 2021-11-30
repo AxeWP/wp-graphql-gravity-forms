@@ -122,6 +122,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 						value
 					}
 				}
+				cssClass
 				description
 				descriptionPlacement
 				enableAutocomplete

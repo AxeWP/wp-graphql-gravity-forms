@@ -128,6 +128,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				}
 				copyValuesOptionDefault
 				copyValuesOptionField
+				cssClass
 				defaultCountry
 				defaultProvince
 				defaultState

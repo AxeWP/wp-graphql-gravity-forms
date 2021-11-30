@@ -160,6 +160,7 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 						value
 					}
 				}
+				cssClass
 				deleteIconUrl
 				description
 				descriptionPlacement

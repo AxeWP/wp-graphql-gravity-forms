@@ -68,6 +68,7 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						value
 					}
 				}
+				cssClass
 				description
 				displayOnly
 				label

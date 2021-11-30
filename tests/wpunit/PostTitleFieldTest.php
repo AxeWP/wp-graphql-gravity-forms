@@ -99,6 +99,7 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 						value
 					}
 				}
+				cssClass
 				defaultValue
 				description
 				descriptionPlacement

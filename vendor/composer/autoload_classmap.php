@@ -2429,6 +2429,7 @@ return array(
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\ChoiceProperty\\ChoiceValueProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/ChoiceProperty/ChoiceValueProperty.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\ChoicesProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/ChoicesProperty.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\ConditionalLogicProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/ConditionalLogicProperty.php',
+    'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\CssClassProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/CssClassProperty.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DateInputProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/DateInputProperty.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DefaultValueProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/DefaultValueProperty.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\DescriptionPlacementProperty' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/DescriptionPlacementProperty.php',
