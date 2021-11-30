@@ -48,8 +48,6 @@ class NameField extends AbstractFormField {
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),
-			FieldProperty\ErrorMessageProperty::get(),
-			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
 			FieldProperty\VisibilityProperty::get(),

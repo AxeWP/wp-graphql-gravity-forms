@@ -101,11 +101,17 @@ abstract class AbstractFormField extends AbstractObject {
 				case 'description_setting':
 					$properties[] = FieldProperty\DescriptionProperty::get();
 					break;
+				case 'error_message_setting':
+					$properties[] = FieldProperty\ErrorMessageProperty::get();
+					break;
 				case 'label_setting':
 					$properties[] = FieldProperty\LabelProperty::get();
 					break;
 				case 'label_placement_setting':
 					$properties[] = FieldProperty\LabelPlacementProperty::get();
+					break;
+				case 'rules_setting':
+					$properties[] = FieldProperty\IsRequiredProperty::get();
 					break;
 			}
 		}

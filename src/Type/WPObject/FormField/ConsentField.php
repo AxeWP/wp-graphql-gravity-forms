@@ -44,9 +44,7 @@ class ConsentField extends AbstractFormField {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
-			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'checkboxLabel' => [

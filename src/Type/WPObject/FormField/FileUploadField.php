@@ -47,8 +47,6 @@ class FileUploadField extends AbstractFormField {
 			FieldProperty\AllowedExtensionsProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\ErrorMessageProperty::get(),
-			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[

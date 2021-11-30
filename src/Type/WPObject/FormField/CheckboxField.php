@@ -50,9 +50,7 @@ class CheckboxField extends AbstractFormField {
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnablePriceProperty::get(),
 			FieldProperty\EnableSelectAllProperty::get(),
-			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\InputNameProperty::get(),
-			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[

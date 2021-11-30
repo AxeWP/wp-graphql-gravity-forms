@@ -45,8 +45,6 @@ class PostImageField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\AllowedExtensionsProperty::get(),
-			FieldProperty\ErrorMessageProperty::get(),
-			FieldProperty\IsRequiredProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
 			FieldProperty\VisibilityProperty::get(),

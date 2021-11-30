@@ -48,7 +48,6 @@ class CaptchaField extends AbstractFormField {
 		return array_merge(
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\DisplayOnlyProperty::get(),
-			FieldProperty\ErrorMessageProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			[
 				'captchaLanguage'              => [
