@@ -96,6 +96,15 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 					text
 					value
 				}
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				defaultValue
 				description
 				descriptionPlacement

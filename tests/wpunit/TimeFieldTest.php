@@ -108,7 +108,15 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 				adminLabel
 				adminOnly
 				allowsPrepopulate
-				cssClass
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				description
 				descriptionPlacement
 				errorMessage

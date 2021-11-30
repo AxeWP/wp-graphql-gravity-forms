@@ -97,6 +97,15 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				captchaLanguage
 				captchaType
 				captchaTheme
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				description
 				descriptionPlacement
 				displayOnly

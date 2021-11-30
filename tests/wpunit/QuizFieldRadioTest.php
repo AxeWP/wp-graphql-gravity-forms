@@ -150,6 +150,15 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 				allowsPrepopulate
 				gquizAnswerExplanation: answerExplanation
 				autocompleteAttribute
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				defaultValue
 				description
 				enableAutocomplete

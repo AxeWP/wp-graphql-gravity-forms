@@ -136,15 +136,6 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 							layoutSpacerGridColumnSpan
 							pageNumber
 							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
 							{$this->field_query}
 						}
 					}

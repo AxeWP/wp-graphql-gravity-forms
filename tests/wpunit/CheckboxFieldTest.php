@@ -164,6 +164,15 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 				adminLabel
 				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				description
 				descriptionPlacement
 				enablePrice

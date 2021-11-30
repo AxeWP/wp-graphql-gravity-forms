@@ -91,6 +91,15 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 				adminOnly
 				allowsPrepopulate
 				autocompleteAttribute
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				defaultValue
 				description
 				descriptionPlacement

@@ -138,6 +138,15 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 				allowsPrepopulate
 				chainedSelectsAlignment
 				chainedSelectsHideInactive
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				description
 				descriptionPlacement
 				errorMessage

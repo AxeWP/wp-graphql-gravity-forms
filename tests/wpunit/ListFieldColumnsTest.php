@@ -151,6 +151,15 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 					text
 					value
 				}
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				deleteIconUrl
 				description
 				descriptionPlacement

@@ -86,10 +86,6 @@ class FormField extends AbstractType implements TypeWithFields {
 	 */
 	public static function get_fields() : array {
 		return [
-			'conditionalLogic'           => [
-				'type'        => ConditionalLogic::$type,
-				'description' => __( 'Controls the visibility of the field based on values selected by the user.', 'wp-graphql-gravity-forms' ),
-			],
 			'cssClass'                   => [
 				'type'        => 'String',
 				'description' => __( 'String containing the custom CSS classes to be added to the <li> tag that contains the field. Useful for applying custom formatting to specific fields.', 'wp-graphql-gravity-forms' ),

@@ -148,6 +148,15 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 		return '... on QuizField {
 				adminLabel
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				gquizAnswerExplanation: answerExplanation
 				autocompleteAttribute
 				defaultValue

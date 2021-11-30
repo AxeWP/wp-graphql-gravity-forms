@@ -88,6 +88,15 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 			... on WebsiteField {
 				adminLabel
 				adminOnly
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				defaultValue
 				description
 				descriptionPlacement

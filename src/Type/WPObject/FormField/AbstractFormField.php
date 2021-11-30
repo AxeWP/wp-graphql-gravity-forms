@@ -82,6 +82,9 @@ abstract class AbstractFormField extends AbstractObject {
 				case 'label_setting':
 					$properties[] = FieldProperty\LabelProperty::get();
 					break;
+				case 'conditional_logic_field_setting':
+					$properties[] = FieldProperty\ConditionalLogicProperty::get();
+					break;
 			}
 		}
 		return $properties;

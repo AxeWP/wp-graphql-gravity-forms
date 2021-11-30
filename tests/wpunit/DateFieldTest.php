@@ -90,6 +90,15 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				allowsPrepopulate
 				calendarIconType
 				calendarIconUrl
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				dateFormat
 				dateType
 				defaultValue

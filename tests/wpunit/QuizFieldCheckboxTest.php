@@ -200,6 +200,15 @@ class QuizFieldCheckboxTest extends FormFieldTestCase implements FormFieldTestCa
 				allowsPrepopulate
 				gquizAnswerExplanation: answerExplanation
 				autocompleteAttribute
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				defaultValue
 				description
 				enableAutocomplete

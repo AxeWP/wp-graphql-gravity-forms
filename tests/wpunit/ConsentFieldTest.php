@@ -93,6 +93,15 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				adminLabel
 				adminOnly
 				checkboxLabel
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				description
 				descriptionPlacement
 				errorMessage

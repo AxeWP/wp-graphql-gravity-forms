@@ -112,6 +112,15 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 				adminOnly
 				allowsPrepopulate
 				autocompleteAttribute
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				description
 				descriptionPlacement
 				emailConfirmEnabled

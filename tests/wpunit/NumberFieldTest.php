@@ -93,6 +93,15 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 				autocompleteAttribute
 				calculationFormula
 				calculationRounding
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				defaultValue
 				description
 				descriptionPlacement

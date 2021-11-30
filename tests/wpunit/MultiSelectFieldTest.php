@@ -101,6 +101,15 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					text
 					value
 				}
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				description
 				descriptionPlacement
 				enableChoiceValue

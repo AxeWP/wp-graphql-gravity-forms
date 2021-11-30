@@ -113,6 +113,15 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				adminLabel
 				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				description
 				descriptionPlacement
 				enableAutocomplete

@@ -90,6 +90,15 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 				adminLabel
 				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				defaultValue
 				description
 				descriptionPlacement

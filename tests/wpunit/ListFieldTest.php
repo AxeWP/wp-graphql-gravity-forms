@@ -101,6 +101,15 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					text
 					value
 				}
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				deleteIconUrl
 				description
 				descriptionPlacement

@@ -117,6 +117,15 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				adminLabel
 				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				copyValuesOptionDefault
 				copyValuesOptionField
 				defaultCountry

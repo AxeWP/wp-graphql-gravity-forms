@@ -90,6 +90,15 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				adminOnly
 				allowsPrepopulate
 				autocompleteAttribute
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				defaultValue
 				description
 				descriptionPlacement

@@ -90,6 +90,15 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 				adminLabel
 				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				defaultValue
 				description
 				descriptionPlacement

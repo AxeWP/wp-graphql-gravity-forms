@@ -89,6 +89,15 @@ class PostExcerptFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 				adminLabel
 				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				defaultValue
 				description
 				descriptionPlacement
