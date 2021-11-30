@@ -44,11 +44,9 @@ class PostTagsField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
-			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\EnableSelectAllProperty::get(),
-			FieldProperty\InputNameProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SizeProperty::get(),

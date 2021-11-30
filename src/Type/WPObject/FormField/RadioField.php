@@ -44,11 +44,9 @@ class RadioField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
-			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnablePriceProperty::get(),
-			FieldProperty\InputNameProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),

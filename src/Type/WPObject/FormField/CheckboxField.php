@@ -44,13 +44,11 @@ class CheckboxField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
-			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\ChoicesProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnablePriceProperty::get(),
 			FieldProperty\EnableSelectAllProperty::get(),
-			FieldProperty\InputNameProperty::get(),
 			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[

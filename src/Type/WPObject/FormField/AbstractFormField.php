@@ -12,6 +12,7 @@
 namespace WPGraphQL\GF\Type\WPObject\FormField;
 
 use GF_Fields;
+use GF_Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
@@ -76,15 +77,16 @@ abstract class AbstractFormField extends AbstractObject {
 			}
 		}
 
-		return static::get_field_properties_from_settings( $settings );
+		return static::get_field_properties_from_settings( $settings, $fields[ static::$gf_type ] );
 	}
 
 	/**
 	 * Grabs the GraphQL FormField property for for the corresponding GF field setting.
 	 *
-	 * @param array $settings .
+	 * @param array    $settings .
+	 * @param GF_Field $field .
 	 */
-	private static function get_field_properties_from_settings( array $settings ) : array {
+	private static function get_field_properties_from_settings( array $settings, GF_Field $field ) : array {
 		$properties = [];
 
 		foreach ( $settings as $setting ) {
@@ -109,6 +111,12 @@ abstract class AbstractFormField extends AbstractObject {
 					break;
 				case 'label_placement_setting':
 					$properties[] = FieldProperty\LabelPlacementProperty::get();
+					break;
+				case 'prepopulate_field_setting':
+					$properties[] = FieldProperty\AllowsPrepopulateProperty::get();
+					if ( empty( $field->inputs ) || 'checkbox' === $field->type || ! in_array( $field->type, [ 'date', 'email', 'time', 'password' ], true ) ) {
+						$properties[] = FieldProperty\InputNameProperty::get();
+					}
 					break;
 				case 'rules_setting':
 					$properties[] = FieldProperty\IsRequiredProperty::get();

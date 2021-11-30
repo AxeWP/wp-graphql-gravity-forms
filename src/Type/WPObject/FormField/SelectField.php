@@ -44,7 +44,6 @@ class SelectField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
-			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\AutocompleteAttributeProperty::get(),
 			FieldProperty\ChoicesProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
@@ -53,7 +52,6 @@ class SelectField extends AbstractFormField {
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnableEnhancedUiProperty::get(),
 			FieldProperty\EnablePriceProperty::get(),
-			FieldProperty\InputNameProperty::get(),
 			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SizeProperty::get(),

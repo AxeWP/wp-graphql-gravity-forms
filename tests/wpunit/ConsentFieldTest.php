@@ -107,7 +107,6 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				descriptionPlacement
 				errorMessage
 				formId
-				inputName
 				isRequired
 				label
 				value
