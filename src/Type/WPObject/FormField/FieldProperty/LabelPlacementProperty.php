@@ -27,6 +27,9 @@ class LabelPlacementProperty implements FieldProperty {
 			'labelPlacement' => [
 				'type'        => LabelPlacementPropertyEnum::$type,
 				'description' => __( 'The field label position.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $source ) {
+					return ! empty( $source['labelPlacement'] ) ? $source['labelPlacement'] : 'inherit';
+				},
 			],
 		];
 	}
