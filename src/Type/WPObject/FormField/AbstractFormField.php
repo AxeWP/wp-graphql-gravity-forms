@@ -94,6 +94,12 @@ abstract class AbstractFormField extends AbstractObject {
 				case 'admin_label_setting':
 					$properties[] = FieldProperty\AdminLabelProperty::get();
 					break;
+				case 'autocomplete_setting':
+					$properties[] = FieldProperty\EnableAutocompleteProperty::get();
+					if ( empty( $field->inputs ) ) {
+						$properties[] = FieldProperty\AutocompleteAttributeProperty::get();
+					}
+					break;
 				case 'conditional_logic_field_setting':
 					$properties[] = FieldProperty\ConditionalLogicProperty::get();
 					break;
@@ -134,6 +140,9 @@ abstract class AbstractFormField extends AbstractObject {
 					break;
 				case 'size_setting':
 					$properties[] = FieldProperty\SizeProperty::get();
+					break;
+				case 'sub_label_placement_setting':
+					$properties[] = FieldProperty\SubLabelPlacementProperty::get();
 					break;
 			}
 		}

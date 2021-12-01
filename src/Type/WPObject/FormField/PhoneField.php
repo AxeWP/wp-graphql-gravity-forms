@@ -45,9 +45,7 @@ class PhoneField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
-			FieldProperty\AutocompleteAttributeProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'phoneFormat' => [

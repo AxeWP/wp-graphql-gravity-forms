@@ -44,9 +44,7 @@ class TextField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
-			FieldProperty\AutocompleteAttributeProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
