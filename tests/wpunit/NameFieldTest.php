@@ -146,7 +146,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				label
 				labelPlacement
 				nameFormat
-				size
 				subLabelPlacement
 				type
 				visibility

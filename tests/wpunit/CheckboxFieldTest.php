@@ -184,7 +184,6 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 				isRequired
 				label
 				labelPlacement
-				size
 				type
 				visibility
 				checkboxValues {

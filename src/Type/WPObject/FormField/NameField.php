@@ -47,7 +47,6 @@ class NameField extends AbstractFormField {
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[

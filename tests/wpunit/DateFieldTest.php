@@ -111,7 +111,6 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				label
 				noDuplicates
 				placeholder
-				size
 				subLabelPlacement
 				value
 				visibility

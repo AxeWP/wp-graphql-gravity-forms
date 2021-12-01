@@ -47,7 +47,6 @@ class FileUploadField extends AbstractFormField {
 			FieldProperty\AllowedExtensionsProperty::get(),
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'maxFiles'      => [

@@ -72,7 +72,6 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					text
 					type
 				}
-				size
 			}
 		';
 	}

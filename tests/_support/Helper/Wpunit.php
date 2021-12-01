@@ -69,7 +69,6 @@ class Wpunit extends \Codeception\Module {
 			'isRequired',
 			'label',
 			'labelPlacement',
-			'size',
 			'subLabelPlacement',
 			[
 				'inputs' => [
@@ -99,7 +98,6 @@ class Wpunit extends \Codeception\Module {
 			'simpleCaptchaBackgroundColor',
 			'simpleCaptchaSize',
 			'simpleCaptchaFontColor',
-			'size',
 			[ 'type' => 'captcha' ],
 		];
 	}
@@ -121,7 +119,6 @@ class Wpunit extends \Codeception\Module {
 			'label',
 			'labelPlacement',
 			'noDuplicates',
-			'size',
 			'subLabelPlacement',
 			[ 'type' => 'chainedselect' ],
 			'visibility',
@@ -239,7 +236,6 @@ class Wpunit extends \Codeception\Module {
 			'isRequired',
 			'label',
 			'labelPlacement',
-			'size',
 			[ 'type' => 'checkbox' ],
 			'visibility',
 			[
@@ -340,7 +336,6 @@ class Wpunit extends \Codeception\Module {
 			'labelPlacement',
 			'noDuplicates',
 			'placeholder',
-			'size',
 			'subLabelPlacement',
 			[ 'type' => 'date' ],
 			'visibility',
@@ -414,7 +409,6 @@ class Wpunit extends \Codeception\Module {
 			[ 'adminOnly' => null ],
 			[ 'isRequired' => null ],
 			[ 'noDuplicates' => null ],
-			[ 'size' => null ],
 			'allowsPrepopulate',
 			'defaultValue',
 			'label',
@@ -434,7 +428,6 @@ class Wpunit extends \Codeception\Module {
 			['displayOnly' => true ],
 			'inputName',
 			'label',
-			'size',
 			[ 'type' => 'html' ],
 			'visibility',
 		];
@@ -475,7 +468,6 @@ class Wpunit extends \Codeception\Module {
 			'labelPlacement',
 			'listValues',
 			'maxRows',
-			'size',
 			[ 'type' => 'list' ],
 			'visibility',
 		];
@@ -540,7 +532,6 @@ class Wpunit extends \Codeception\Module {
 			'label',
 			'labelPlacement',
 			'nameFormat',
-			'size',
 			'subLabelPlacement',
 			[
 				'inputs' => [
@@ -662,7 +653,6 @@ class Wpunit extends \Codeception\Module {
 			'label',
 			'nextButton',
 			'previousButton',
-			'size',
 			[ 'type' => 'page' ],
 			'visibility',
 		];
@@ -862,7 +852,6 @@ class Wpunit extends \Codeception\Module {
 			'label',
 			'labelPlacement',
 			'noDuplicates',
-			'size',
 			[ 'type' => 'radio' ],
 			'visibility',
 		];
@@ -878,7 +867,6 @@ class Wpunit extends \Codeception\Module {
 			['displayOnly' => true],
 			'inputName',
 			'label',
-			'size',
 			[ 'type' => 'section' ],
 			'visibility',
 		];
@@ -1023,7 +1011,6 @@ class Wpunit extends \Codeception\Module {
 			'label',
 			'labelPlacement',
 			'noDuplicates',
-			'size',
 			'subLabelPlacement',
 			[ 'type' => 'time' ],
 			'visibility',

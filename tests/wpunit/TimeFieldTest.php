@@ -133,7 +133,6 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 				isRequired
 				label
 				noDuplicates
-				size
 				subLabelPlacement
 				timeFormat
 				timeValues {

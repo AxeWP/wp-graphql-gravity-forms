@@ -46,9 +46,7 @@ class WebsiteField extends AbstractFormField {
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			... static::get_fields_from_gf_settings(),
 		);

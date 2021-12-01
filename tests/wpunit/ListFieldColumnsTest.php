@@ -174,7 +174,6 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 					values
 				}
 				maxRows
-				size
 				visibility
 			}
 		';

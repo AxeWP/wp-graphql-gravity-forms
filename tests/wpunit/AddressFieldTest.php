@@ -151,7 +151,6 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				isRequired
 				label
 				labelPlacement
-				size
 				subLabelPlacement
 				type
 				addressValues {

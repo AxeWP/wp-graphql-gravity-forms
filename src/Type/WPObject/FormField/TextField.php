@@ -49,9 +49,7 @@ class TextField extends AbstractFormField {
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
-			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'enablePasswordInput' => [

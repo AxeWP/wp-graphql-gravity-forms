@@ -46,9 +46,7 @@ class PostCategoryField extends AbstractFormField {
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\ChoicesProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'displayAllCategories' => [

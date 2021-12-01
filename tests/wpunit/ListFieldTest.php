@@ -124,7 +124,6 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					values
 				}
 				maxRows
-				size
 				visibility
 			}
 		';

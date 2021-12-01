@@ -338,7 +338,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function simpleCaptchaSize( $value = null ) {
-		return isset( $value ) ? $value : null;
+		return $this->size( $value );
 	}
 
 	public function size( $value = null ) {

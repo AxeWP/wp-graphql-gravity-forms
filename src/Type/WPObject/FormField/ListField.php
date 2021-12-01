@@ -45,7 +45,6 @@ class ListField extends AbstractFormField {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'addIconUrl'    => [

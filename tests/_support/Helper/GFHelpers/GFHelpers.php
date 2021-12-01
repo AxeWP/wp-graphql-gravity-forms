@@ -121,6 +121,9 @@ abstract class GFHelpers {
 				$string = ucfirst( $key ) . 'Enum';
 				$value  = $this->get_enum_for_value( $string, $object->$key );
 				break;
+			case 'simpleCaptchaSize':
+				$string = 'SizePropertyEnum';
+				$value  = $this->get_enum_for_value( $string, $object->$key );
 			case 'labelPlacement':
 			case 'descriptionPlacement':
 			case 'size':

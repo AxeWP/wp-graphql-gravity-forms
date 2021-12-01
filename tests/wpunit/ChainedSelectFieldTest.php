@@ -155,7 +155,6 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 				label
 				labelPlacement
 				noDuplicates
-				size
 				subLabelPlacement
 				values
 				visibility

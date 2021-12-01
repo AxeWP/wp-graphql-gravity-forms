@@ -47,8 +47,6 @@ class RadioField extends AbstractFormField {
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnablePriceProperty::get(),
-			FieldProperty\NoDuplicatesProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'choices'           => [

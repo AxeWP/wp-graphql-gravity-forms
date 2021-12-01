@@ -72,7 +72,6 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				description
 				displayOnly
 				label
-				size
 				visibility
 			}
 		';

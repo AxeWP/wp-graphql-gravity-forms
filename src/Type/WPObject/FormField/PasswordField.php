@@ -47,7 +47,6 @@ class PasswordField extends AbstractFormField {
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
 			[
 				'inputs'                  => [

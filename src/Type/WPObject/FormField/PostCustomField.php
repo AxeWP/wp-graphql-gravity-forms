@@ -48,9 +48,7 @@ class PostCustomField extends AbstractFormField {
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\InputTypeProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
-			FieldProperty\NoDuplicatesProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'postCustomFieldName' => [

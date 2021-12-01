@@ -47,8 +47,6 @@ class ChainedSelectField extends AbstractFormField {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\NoDuplicatesProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[

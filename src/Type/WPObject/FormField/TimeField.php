@@ -47,8 +47,6 @@ class TimeField extends AbstractFormField {
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\InputsProperty::get(),
-			FieldProperty\NoDuplicatesProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[

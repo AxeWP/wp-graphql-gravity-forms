@@ -103,6 +103,9 @@ abstract class AbstractFormField extends AbstractObject {
 				case 'description_setting':
 					$properties[] = FieldProperty\DescriptionProperty::get();
 					break;
+				case 'duplicate_setting':
+					$properties[] = FieldProperty\NoDuplicatesProperty::get();
+					break;
 				case 'error_message_setting':
 					$properties[] = FieldProperty\ErrorMessageProperty::get();
 					break;
@@ -120,6 +123,9 @@ abstract class AbstractFormField extends AbstractObject {
 					break;
 				case 'rules_setting':
 					$properties[] = FieldProperty\IsRequiredProperty::get();
+					break;
+				case 'size_setting':
+					$properties[] = FieldProperty\SizeProperty::get();
 					break;
 			}
 		}

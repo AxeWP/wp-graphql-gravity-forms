@@ -116,7 +116,6 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 				label
 				noDuplicates
 				pageNumber
-				size
 				value
 				visibility
 			}

@@ -48,7 +48,6 @@ class PostContentField extends AbstractFormField {
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			... static::get_fields_from_gf_settings(),
 		);

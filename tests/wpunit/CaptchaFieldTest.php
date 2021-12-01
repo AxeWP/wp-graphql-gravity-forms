@@ -116,7 +116,6 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				simpleCaptchaBackgroundColor
 				simpleCaptchaSize
 				simpleCaptchaFontColor
-				size
 			}
 		';
 	}
@@ -215,7 +214,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						[
 							$this->expectedNode(
 								'0',
-								$this->property_helper->getAllActualValues( $form['fields'][1], ['labelPlacement'] )
+								$this->property_helper->getAllActualValues( $form['fields'][1], ['size'] )
 							),
 						]
 					),

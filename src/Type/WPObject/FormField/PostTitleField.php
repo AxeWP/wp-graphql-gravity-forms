@@ -47,7 +47,6 @@ class PostTitleField extends AbstractFormField {
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
-			FieldProperty\SizeProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			... static::get_fields_from_gf_settings(),
 		);
