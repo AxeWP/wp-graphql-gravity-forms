@@ -44,8 +44,6 @@ class HiddenField extends AbstractFormField {
 	 * {@inheritDoc}
 	 */
 	public static function get_fields() : array {
-		return array_merge(
-			... static::get_fields_from_gf_settings(),
-		);
+		return static::get_fields_from_gf_settings();
 	}
 }

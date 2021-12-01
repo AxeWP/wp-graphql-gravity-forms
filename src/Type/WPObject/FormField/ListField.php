@@ -68,7 +68,7 @@ class ListField extends AbstractFormField {
 					'description' => __( 'The maximum number of rows the user can add to the field.', 'wp-graphql-gravity-forms' ),
 				],
 			],
-			... static::get_fields_from_gf_settings(),
+			static::get_fields_from_gf_settings(),
 		);
 	}
 }

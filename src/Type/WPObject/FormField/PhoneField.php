@@ -53,7 +53,7 @@ class PhoneField extends AbstractFormField {
 					'description' => __( 'Determines the allowed format for phones. If the phone value does not conform with the specified format, the field will fail validation.', 'wp-graphql-gravity-forms' ),
 				],
 			],
-			... static::get_fields_from_gf_settings(),
+			static::get_fields_from_gf_settings(),
 		);
 	}
 }

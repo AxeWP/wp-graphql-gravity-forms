@@ -69,7 +69,7 @@ class PostImageField extends AbstractFormField {
 					'description' => __( "Whether the image field should be used to set the post's Featured Image", 'wp-graphql-gravity-forms' ),
 				],
 			],
-			... static::get_fields_from_gf_settings(),
+			static::get_fields_from_gf_settings(),
 		);
 	}
 }

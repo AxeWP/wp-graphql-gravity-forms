@@ -53,7 +53,7 @@ class PostCategoryField extends AbstractFormField {
 					'description' => __( 'Determines if all categories should be displayed on the Post Category drop down. If this property is true (display all categories), the Post Category drop down will display the categories hierarchically.', 'wp-graphql-gravity-forms' ),
 				],
 			],
-			... static::get_fields_from_gf_settings(),
+			static::get_fields_from_gf_settings(),
 		);
 	}
 }

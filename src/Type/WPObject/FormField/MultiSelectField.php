@@ -51,7 +51,7 @@ class MultiSelectField extends AbstractFormField {
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnableEnhancedUiProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
-			... static::get_fields_from_gf_settings(),
+			static::get_fields_from_gf_settings(),
 		);
 	}
 }

@@ -71,7 +71,7 @@ class DateField extends AbstractFormField {
 					'description' => __( 'An array containing the the individual properties for each element of the date field.', 'wp-graphql-gravity-forms' ),
 				],
 			],
-			... static::get_fields_from_gf_settings(),
+			static::get_fields_from_gf_settings(),
 		);
 	}
 

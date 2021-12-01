@@ -88,7 +88,7 @@ class NumberField extends AbstractFormField {
 					},
 				],
 			],
-			... static::get_fields_from_gf_settings(),
+			static::get_fields_from_gf_settings(),
 		);
 	}
 }

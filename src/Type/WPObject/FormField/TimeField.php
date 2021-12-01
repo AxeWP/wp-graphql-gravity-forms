@@ -54,7 +54,7 @@ class TimeField extends AbstractFormField {
 					'description' => __( 'Determines how the time is displayed.', 'wp-graphql-gravity-forms' ),
 				],
 			],
-			... static::get_fields_from_gf_settings(),
+			static::get_fields_from_gf_settings(),
 		);
 	}
 }

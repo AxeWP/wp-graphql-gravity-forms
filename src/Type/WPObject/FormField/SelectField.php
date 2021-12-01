@@ -50,7 +50,7 @@ class SelectField extends AbstractFormField {
 			FieldProperty\EnableEnhancedUiProperty::get(),
 			FieldProperty\EnablePriceProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
-			... static::get_fields_from_gf_settings(),
+			static::get_fields_from_gf_settings(),
 		);
 	}
 }

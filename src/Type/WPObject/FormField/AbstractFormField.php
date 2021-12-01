@@ -92,57 +92,57 @@ abstract class AbstractFormField extends AbstractObject {
 		foreach ( $settings as $setting ) {
 			switch ( $setting ) {
 				case 'admin_label_setting':
-					$properties[] = FieldProperty\AdminLabelProperty::get();
+					$properties += FieldProperty\AdminLabelProperty::get();
 					break;
 				case 'autocomplete_setting':
-					$properties[] = FieldProperty\EnableAutocompleteProperty::get();
+					$properties += FieldProperty\EnableAutocompleteProperty::get();
 					if ( empty( $field->inputs ) ) {
-						$properties[] = FieldProperty\AutocompleteAttributeProperty::get();
+						$properties += FieldProperty\AutocompleteAttributeProperty::get();
 					}
 					break;
 				case 'conditional_logic_field_setting':
-					$properties[] = FieldProperty\ConditionalLogicProperty::get();
+					$properties += FieldProperty\ConditionalLogicProperty::get();
 					break;
 				case 'css_class_setting':
-					$properties[] = FieldProperty\CssClassProperty::get();
+					$properties += FieldProperty\CssClassProperty::get();
 					break;
 				case 'default_value_setting':
 				case 'default_value_textarea_setting':
-					$properties[] = FieldProperty\DefaultValueProperty::get();
+					$properties += FieldProperty\DefaultValueProperty::get();
 					break;
 				case 'description_setting':
-					$properties[] = FieldProperty\DescriptionProperty::get();
+					$properties += FieldProperty\DescriptionProperty::get();
 					break;
 				case 'duplicate_setting':
-					$properties[] = FieldProperty\NoDuplicatesProperty::get();
+					$properties += FieldProperty\NoDuplicatesProperty::get();
 					break;
 				case 'error_message_setting':
-					$properties[] = FieldProperty\ErrorMessageProperty::get();
+					$properties += FieldProperty\ErrorMessageProperty::get();
 					break;
 				case 'label_setting':
-					$properties[] = FieldProperty\LabelProperty::get();
+					$properties += FieldProperty\LabelProperty::get();
 					break;
 				case 'label_placement_setting':
-					$properties[] = FieldProperty\LabelPlacementProperty::get();
+					$properties += FieldProperty\LabelPlacementProperty::get();
 					break;
 				case 'placeholder_setting':
 				case 'placeholder_textarea_setting':
-					$properties[] = FieldProperty\PlaceholderProperty::get();
+					$properties += FieldProperty\PlaceholderProperty::get();
 					break;
 				case 'prepopulate_field_setting':
-					$properties[] = FieldProperty\AllowsPrepopulateProperty::get();
+					$properties += FieldProperty\AllowsPrepopulateProperty::get();
 					if ( empty( $field->inputs ) || 'checkbox' === $field->type || ! in_array( $field->type, [ 'date', 'email', 'time', 'password' ], true ) ) {
-						$properties[] = FieldProperty\InputNameProperty::get();
+						$properties += FieldProperty\InputNameProperty::get();
 					}
 					break;
 				case 'rules_setting':
-					$properties[] = FieldProperty\IsRequiredProperty::get();
+					$properties += FieldProperty\IsRequiredProperty::get();
 					break;
 				case 'size_setting':
-					$properties[] = FieldProperty\SizeProperty::get();
+					$properties += FieldProperty\SizeProperty::get();
 					break;
 				case 'sub_label_placement_setting':
-					$properties[] = FieldProperty\SubLabelPlacementProperty::get();
+					$properties += FieldProperty\SubLabelPlacementProperty::get();
 					break;
 			}
 		}

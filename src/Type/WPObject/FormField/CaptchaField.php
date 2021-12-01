@@ -75,7 +75,7 @@ class CaptchaField extends AbstractFormField {
 					'description' => __( 'Determines the image’s background color, in HEX format (i.e. #CCCCCC). Only applicable to simple_captcha and math captcha types.', 'wp-graphql-gravity-forms' ),
 				],
 			],
-			... static::get_fields_from_gf_settings()
+			static::get_fields_from_gf_settings()
 		);
 	}
 }

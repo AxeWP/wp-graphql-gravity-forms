@@ -51,7 +51,7 @@ class ConsentField extends AbstractFormField {
 					'description' => __( 'Text of the consent checkbox', 'wp-graphql-gravity-forms' ),
 				],
 			],
-			... static::get_fields_from_gf_settings(),
+			static::get_fields_from_gf_settings(),
 		);
 	}
 }
