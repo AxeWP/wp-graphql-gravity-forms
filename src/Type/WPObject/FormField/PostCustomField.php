@@ -44,11 +44,9 @@ class PostCustomField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
-			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\InputTypeProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
-			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'postCustomFieldName' => [

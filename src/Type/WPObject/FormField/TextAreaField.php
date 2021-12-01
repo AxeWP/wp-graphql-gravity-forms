@@ -47,7 +47,6 @@ class TextAreaField extends AbstractFormField {
 			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
-			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'useRichTextEditor' => [

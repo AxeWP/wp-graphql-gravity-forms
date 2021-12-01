@@ -100,6 +100,10 @@ abstract class AbstractFormField extends AbstractObject {
 				case 'css_class_setting':
 					$properties[] = FieldProperty\CssClassProperty::get();
 					break;
+				case 'default_value_setting':
+				case 'default_value_textarea_setting':
+					$properties[] = FieldProperty\DefaultValueProperty::get();
+					break;
 				case 'description_setting':
 					$properties[] = FieldProperty\DescriptionProperty::get();
 					break;
@@ -114,6 +118,10 @@ abstract class AbstractFormField extends AbstractObject {
 					break;
 				case 'label_placement_setting':
 					$properties[] = FieldProperty\LabelPlacementProperty::get();
+					break;
+				case 'placeholder_setting':
+				case 'placeholder_textarea_setting':
+					$properties[] = FieldProperty\PlaceholderProperty::get();
 					break;
 				case 'prepopulate_field_setting':
 					$properties[] = FieldProperty\AllowsPrepopulateProperty::get();

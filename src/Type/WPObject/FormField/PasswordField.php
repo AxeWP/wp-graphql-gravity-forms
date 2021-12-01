@@ -46,7 +46,6 @@ class PasswordField extends AbstractFormField {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SubLabelPlacementProperty::get(),
 			[
 				'inputs'                  => [

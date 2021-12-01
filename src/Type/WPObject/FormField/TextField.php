@@ -45,11 +45,9 @@ class TextField extends AbstractFormField {
 		return array_merge(
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AutocompleteAttributeProperty::get(),
-			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
-			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			[
 				'enablePasswordInput' => [

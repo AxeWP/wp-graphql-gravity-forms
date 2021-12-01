@@ -46,13 +46,11 @@ class SelectField extends AbstractFormField {
 			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AutocompleteAttributeProperty::get(),
 			FieldProperty\ChoicesProperty::get(),
-			FieldProperty\DefaultValueProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\EnableAutocompleteProperty::get(),
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnableEnhancedUiProperty::get(),
 			FieldProperty\EnablePriceProperty::get(),
-			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\VisibilityProperty::get(),
 			... static::get_fields_from_gf_settings(),
 		);
