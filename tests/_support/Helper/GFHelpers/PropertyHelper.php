@@ -349,7 +349,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function subLabelPlacement( $value = null ) {
-		return isset( $value ) ? $value : '';
+		return $this->labelPlacement( $value );
 	}
 
 	public function text( $value = null ) {

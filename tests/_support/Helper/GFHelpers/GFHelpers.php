@@ -124,6 +124,11 @@ abstract class GFHelpers {
 			case 'simpleCaptchaSize':
 				$string = 'SizePropertyEnum';
 				$value  = $this->get_enum_for_value( $string, $object->$key );
+				break;
+			case 'subLabelPlacement':
+				$string = 'LabelPlacementPropertyEnum';
+				$value  = $this->get_enum_for_value( $string, $object->$key );
+				break;
 			case 'labelPlacement':
 			case 'descriptionPlacement':
 			case 'size':
