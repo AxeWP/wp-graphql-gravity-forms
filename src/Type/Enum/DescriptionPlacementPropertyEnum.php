@@ -20,8 +20,9 @@ class DescriptionPlacementPropertyEnum extends AbstractEnum {
 	public static string $type = 'DescriptionPlacementEnum';
 
 	// Individual elements.
-	const ABOVE = 'above';
-	const BELOW = 'below';
+	const ABOVE   = 'above';
+	const BELOW   = 'below';
+	const INHERIT = 'inherit';
 
 	/**
 	 * {@inheritDoc}
@@ -45,7 +46,7 @@ class DescriptionPlacementPropertyEnum extends AbstractEnum {
 			],
 			'INHERIT' => [
 				'description' => __( 'The field description is inherited from the form default settings.', 'wp-graphql-gravity-forms' ),
-				'value'       => '',
+				'value'       => self::INHERIT,
 			],
 		];
 	}

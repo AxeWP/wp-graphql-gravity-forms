@@ -29,6 +29,9 @@ class DescriptionPlacementProperty implements FieldProperty {
 				'type'        => DescriptionPlacementPropertyEnum::$type,
 				'description' => __( 'The placement of the field description.', 'wp-graphql-gravity-forms' ),
 			],
+			'resolve'              => function( $source ) {
+				return ! empty( $source['descriptionPlacement'] ) ? $source['descriptionPlacement'] : 'inherit';
+			},
 		];
 	}
 }
