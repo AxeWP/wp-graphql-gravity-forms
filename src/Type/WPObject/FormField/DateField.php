@@ -46,7 +46,6 @@ class DateField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			FieldProperty\DescriptionPlacementProperty::get(),
 			[
 				'calendarIconType' => [
 					'type'        => CalendarIconTypeEnum::$type,

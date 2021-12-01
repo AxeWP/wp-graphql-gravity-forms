@@ -45,7 +45,6 @@ class AddressField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		$return = array_merge(
-			FieldProperty\DescriptionPlacementProperty::get(),
 			[
 				'addressType'             => [
 					'type'        => AddressTypeEnum::$type,

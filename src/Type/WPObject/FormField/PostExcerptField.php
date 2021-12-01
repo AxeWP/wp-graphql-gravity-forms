@@ -11,8 +11,6 @@
 
 namespace WPGraphQL\GF\Type\WPObject\FormField;
 
-use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
-
 /**
  * Class - PostExcerptField
  */
@@ -42,10 +40,6 @@ class PostExcerptField extends AbstractFormField {
 	 * {@inheritDoc}
 	 */
 	public static function get_fields() : array {
-		return array_merge(
-			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\MaxLengthProperty::get(),
-			static::get_fields_from_gf_settings(),
-		);
+		return static::get_fields_from_gf_settings();
 	}
 }

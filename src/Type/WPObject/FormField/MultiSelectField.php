@@ -46,7 +46,6 @@ class MultiSelectField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\ChoicesProperty::get(),
-			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnableEnhancedUiProperty::get(),
 			static::get_fields_from_gf_settings(),

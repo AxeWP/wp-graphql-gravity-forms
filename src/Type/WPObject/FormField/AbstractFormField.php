@@ -121,9 +121,13 @@ abstract class AbstractFormField extends AbstractObject {
 					break;
 				case 'label_setting':
 					$properties += FieldProperty\LabelProperty::get();
+					$properties += FieldProperty\DescriptionPlacementProperty::get();
 					break;
 				case 'label_placement_setting':
 					$properties += FieldProperty\LabelPlacementProperty::get();
+					break;
+				case 'maxlen_setting':
+					$properties += FieldProperty\MaxLengthProperty::get();
 					break;
 				case 'placeholder_setting':
 				case 'placeholder_textarea_setting':

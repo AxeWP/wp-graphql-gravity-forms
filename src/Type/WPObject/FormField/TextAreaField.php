@@ -43,9 +43,6 @@ class TextAreaField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			FieldProperty\DefaultValueProperty::get(),
-			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\MaxLengthProperty::get(),
 			[
 				'useRichTextEditor' => [
 					'type'        => 'Boolean',

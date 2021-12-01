@@ -44,7 +44,6 @@ class PostCategoryField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\ChoicesProperty::get(),
-			FieldProperty\DescriptionPlacementProperty::get(),
 			[
 				'displayAllCategories' => [
 					'type'        => 'Boolean',

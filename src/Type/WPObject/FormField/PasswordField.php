@@ -44,7 +44,6 @@ class PasswordField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			FieldProperty\DescriptionPlacementProperty::get(),
 			[
 				'inputs'                  => [
 					'type'        => [ 'list_of' => FieldProperty\PasswordInputProperty::$type ],

@@ -44,8 +44,7 @@ class EmailField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			// For some reason GF doesnt include this in the settings.
-			FieldPRoperty\AutocompleteAttributeProperty::get(),
-			FieldProperty\DescriptionPlacementProperty::get(),
+			FieldProperty\AutocompleteAttributeProperty::get(),
 			// For some reason GF doesnt include this in the settings.
 			FieldProperty\SubLabelPlacementProperty::get(),
 			[
