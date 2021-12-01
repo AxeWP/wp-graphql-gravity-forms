@@ -71,7 +71,6 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				content
 				cssClass
 				disableMargins
-				displayOnly
 				label
 			}
 		';

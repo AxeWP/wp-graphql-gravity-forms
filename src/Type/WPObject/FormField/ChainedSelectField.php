@@ -45,9 +45,7 @@ class ChainedSelectField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\VisibilityProperty::get(),
 			[
 				'choices'                    => [
 					'type'        => [ 'list_of' => FieldProperty\ChainedSelectChoiceProperty::$type ],

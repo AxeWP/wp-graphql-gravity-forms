@@ -228,7 +228,6 @@ class QuizFieldCheckboxTest extends FormFieldTestCase implements FormFieldTestCa
 				size
 				type
 				values
-				visibility
 				inputs {
 					id
 					label

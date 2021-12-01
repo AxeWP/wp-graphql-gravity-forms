@@ -88,7 +88,6 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 		return '
 			... on SelectField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				autocompleteAttribute
 				choices {
@@ -122,7 +121,6 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 				placeholder
 				size
 				value
-				visibility
 			}
 		';
 	}

@@ -87,7 +87,6 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 		return '
 			... on WebsiteField {
 				adminLabel
-				adminOnly
 				conditionalLogic {
 					actionType
 					logicType
@@ -109,7 +108,6 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				placeholder
 				size
 				value
-				visibility
 			}
 		';
 	}

@@ -145,7 +145,6 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 			... on ListField {
 				addIconUrl
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				choices {
 					text
@@ -174,7 +173,6 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 					values
 				}
 				maxRows
-				visibility
 			}
 		';
 	}

@@ -86,7 +86,6 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 		return '
 			... on DateField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				calendarIconType
 				calendarIconUrl
@@ -113,7 +112,6 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				placeholder
 				subLabelPlacement
 				value
-				visibility
 				inputs {
 					customLabel
 					defaultValue

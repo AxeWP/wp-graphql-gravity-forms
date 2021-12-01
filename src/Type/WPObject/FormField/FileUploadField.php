@@ -45,9 +45,7 @@ class FileUploadField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\AllowedExtensionsProperty::get(),
-			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\VisibilityProperty::get(),
 			[
 				'maxFiles'      => [
 					'type'        => 'String',

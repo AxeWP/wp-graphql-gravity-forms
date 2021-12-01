@@ -88,7 +88,6 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 		return '
 			... on PhoneField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				autocompleteAttribute
 				conditionalLogic {
@@ -114,7 +113,6 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 				phoneFormat
 				placeholder
 				size
-				visibility
 			}
 		';
 	}

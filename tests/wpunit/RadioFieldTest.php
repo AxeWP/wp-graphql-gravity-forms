@@ -87,7 +87,6 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	public function field_query() : string {
 		return '... on RadioField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				choices {
 					isOtherChoice
@@ -117,7 +116,6 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 				noDuplicates
 				pageNumber
 				value
-				visibility
 			}
 		';
 	}

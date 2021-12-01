@@ -36,14 +36,15 @@ class Wpunit extends \Codeception\Module {
 	 */
 	public function getDefaultArgs() : array {
 		return [
+			'displayOnly',
 			[ 'conditionalLogic' => null ],
 			'cssClass',
 			'formId',
-			[ 'displayOnly' => false ],
 			[ 'id' => 1 ],
 			'layoutGridColumnSpan',
 			'layoutSpacerGridColumnSpan',
 			'pageNumber',
+			'visibility',
 		];
 	}
 
@@ -54,7 +55,6 @@ class Wpunit extends \Codeception\Module {
 		return [
 			'addressType',
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'copyValuesOptionDefault',
 			'copyValuesOptionField',
@@ -78,7 +78,6 @@ class Wpunit extends \Codeception\Module {
 				],
 			],
 			[ 'type' => 'address' ],
-			'visibility',
 		];
 	}
 
@@ -108,7 +107,6 @@ class Wpunit extends \Codeception\Module {
 	public function getChainedSelectFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'chainedSelectsAlignment',
 			'chainedSelectsHideInactive',
@@ -121,7 +119,6 @@ class Wpunit extends \Codeception\Module {
 			'noDuplicates',
 			'subLabelPlacement',
 			[ 'type' => 'chainedselect' ],
-			'visibility',
 			[
 				'inputs' => [
 					'fieldId' => 1,
@@ -224,7 +221,6 @@ class Wpunit extends \Codeception\Module {
 	public function getCheckboxFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'description',
 			'descriptionPlacement',
@@ -237,7 +233,6 @@ class Wpunit extends \Codeception\Module {
 			'label',
 			'labelPlacement',
 			[ 'type' => 'checkbox' ],
-			'visibility',
 			[
 				'inputs' => [
 					'fieldId' => 1,
@@ -273,7 +268,6 @@ class Wpunit extends \Codeception\Module {
 	public function getConsentFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'checkboxLabel',
 			'description',
 			'descriptionPlacement',
@@ -283,7 +277,6 @@ class Wpunit extends \Codeception\Module {
 			'label',
 			'labelPlacement',
 			[ 'type' => 'consent' ],
-			'visibility',
 			[
 				'inputs' => [
 					[
@@ -320,7 +313,6 @@ class Wpunit extends \Codeception\Module {
 	public function getDateFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'calendarIconType',
 			'calendarIconUrl',
@@ -338,7 +330,6 @@ class Wpunit extends \Codeception\Module {
 			'placeholder',
 			'subLabelPlacement',
 			[ 'type' => 'date' ],
-			'visibility',
 			[
 				'inputs' => [
 					'fieldId' => 1,
@@ -355,7 +346,6 @@ class Wpunit extends \Codeception\Module {
 	public function getEmailFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'autocompleteAttribute',
 			'defaultValue',
@@ -395,7 +385,6 @@ class Wpunit extends \Codeception\Module {
 			'placeholder',
 			'size',
 			[ 'type' => 'email' ],
-			'visibility',
 		];
 	}
 
@@ -406,14 +395,13 @@ class Wpunit extends \Codeception\Module {
 		return [
 			[ 'cssClass' => null ],
 			[ 'adminLabel' => null ],
-			[ 'adminOnly' => null ],
 			[ 'isRequired' => null ],
 			[ 'noDuplicates' => null ],
 			'allowsPrepopulate',
 			'defaultValue',
 			'label',
 			[ 'type' => 'hidden' ],
-			'visibility',
+			['visibility' => 'hidden'],
 		];
 	}
 
@@ -429,7 +417,6 @@ class Wpunit extends \Codeception\Module {
 			'inputName',
 			'label',
 			[ 'type' => 'html' ],
-			'visibility',
 		];
 	}
 	/**
@@ -439,7 +426,6 @@ class Wpunit extends \Codeception\Module {
 		return [
 			'addIconUrl',
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			[
 				'choices' => [
@@ -469,7 +455,6 @@ class Wpunit extends \Codeception\Module {
 			'listValues',
 			'maxRows',
 			[ 'type' => 'list' ],
-			'visibility',
 		];
 	}
 
@@ -479,7 +464,6 @@ class Wpunit extends \Codeception\Module {
 	public function getMultiSelectFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'description',
 			'descriptionPlacement',
@@ -493,7 +477,6 @@ class Wpunit extends \Codeception\Module {
 			'size',
 			'storageType',
 			[ 'type' => 'multiselect' ],
-			'visibility',
 			[
 				'choices' => [
 					[
@@ -522,7 +505,6 @@ class Wpunit extends \Codeception\Module {
 	public function getNameFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'description',
 			'descriptionPlacement',
@@ -605,7 +587,6 @@ class Wpunit extends \Codeception\Module {
 				],
 			],
 			[ 'type' => 'name' ],
-			'visibility',
 		];
 	}
 
@@ -615,7 +596,6 @@ class Wpunit extends \Codeception\Module {
 	public function getNumberFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'autocompleteAttribute',
 			'calculationFormula',
@@ -637,7 +617,6 @@ class Wpunit extends \Codeception\Module {
 			'rangeMin',
 			'size',
 			[ 'type' => 'number' ],
-			'visibility',
 		];
 	}
 
@@ -647,14 +626,12 @@ class Wpunit extends \Codeception\Module {
 	public function getPageFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			['displayOnly' => true],
 			'inputName',
 			'label',
 			'nextButton',
 			'previousButton',
 			[ 'type' => 'page' ],
-			'visibility',
 		];
 	}
 
@@ -664,7 +641,6 @@ class Wpunit extends \Codeception\Module {
 	public function getPhoneFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'autocompleteAttribute',
 			'defaultValue',
@@ -682,7 +658,6 @@ class Wpunit extends \Codeception\Module {
 			'phoneFormat',
 			'size',
 			[ 'type' => 'phone' ],
-			'visibility',
 		];
 	}
 
@@ -692,7 +667,6 @@ class Wpunit extends \Codeception\Module {
 	public function getPostContentFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'defaultValue',
 			'description',
@@ -706,7 +680,6 @@ class Wpunit extends \Codeception\Module {
 			'placeholder',
 			'size',
 			[ 'type' => 'post_content' ],
-			'visibility',
 		];
 	}
 
@@ -716,7 +689,6 @@ class Wpunit extends \Codeception\Module {
 	public function getPostExcerptFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'defaultValue',
 			'description',
@@ -730,7 +702,6 @@ class Wpunit extends \Codeception\Module {
 			'placeholder',
 			'size',
 			[ 'type' => 'post_excerpt' ],
-			'visibility',
 		];
 	}
 
@@ -740,7 +711,6 @@ class Wpunit extends \Codeception\Module {
 	public function getPostTitleFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'defaultValue',
 			'description',
@@ -754,7 +724,6 @@ class Wpunit extends \Codeception\Module {
 			'placeholder',
 			'size',
 			[ 'type' => 'post_title' ],
-			'visibility',
 		];
 	}
 
@@ -788,7 +757,6 @@ class Wpunit extends \Codeception\Module {
 			'gquizShowAnswerExplanation',
 			'size',
 			[ 'type' => 'quiz' ],
-			'visibility',
 			[
 				'choices' => [
 					[
@@ -820,7 +788,6 @@ class Wpunit extends \Codeception\Module {
 	public function getRadioFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			[
 				'choices' => [
@@ -853,7 +820,6 @@ class Wpunit extends \Codeception\Module {
 			'labelPlacement',
 			'noDuplicates',
 			[ 'type' => 'radio' ],
-			'visibility',
 		];
 	}
 
@@ -863,12 +829,10 @@ class Wpunit extends \Codeception\Module {
 	public function getSectionFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			['displayOnly' => true],
 			'inputName',
 			'label',
 			[ 'type' => 'section' ],
-			'visibility',
 		];
 	}
 
@@ -878,7 +842,6 @@ class Wpunit extends \Codeception\Module {
 	public function getSelectFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'autocompleteAttribute',
 			[
@@ -915,7 +878,6 @@ class Wpunit extends \Codeception\Module {
 			'noDuplicates',
 			'size',
 			[ 'type' => 'select' ],
-			'visibility',
 		];
 	}
 
@@ -925,7 +887,6 @@ class Wpunit extends \Codeception\Module {
 	public function getTextFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'autocompleteAttribute',
 			'defaultValue',
@@ -942,7 +903,6 @@ class Wpunit extends \Codeception\Module {
 			'placeholder',
 			'size',
 			[ 'type' => 'text' ],
-			'visibility',
 		];
 	}
 
@@ -952,7 +912,6 @@ class Wpunit extends \Codeception\Module {
 	public function getTextAreaFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'defaultValue',
 			'description',
@@ -968,7 +927,6 @@ class Wpunit extends \Codeception\Module {
 			'size',
 			[ 'type' => 'textarea' ],
 			'useRichTextEditor',
-			'visibility',
 		];
 	}
 
@@ -978,7 +936,6 @@ class Wpunit extends \Codeception\Module {
 	public function getTimeFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'allowsPrepopulate',
 			'description',
 			'descriptionPlacement',
@@ -1013,7 +970,6 @@ class Wpunit extends \Codeception\Module {
 			'noDuplicates',
 			'subLabelPlacement',
 			[ 'type' => 'time' ],
-			'visibility',
 		];
 	}
 
@@ -1024,7 +980,6 @@ class Wpunit extends \Codeception\Module {
 	public function getWebsiteFieldArgs() : array {
 		return [
 			'adminLabel',
-			'adminOnly',
 			'defaultValue',
 			'description',
 			'descriptionPlacement',
@@ -1037,7 +992,6 @@ class Wpunit extends \Codeception\Module {
 			'placeholder',
 			'size',
 			[ 'type' => 'website' ],
-			'visibility',
 		];
 	}
 

@@ -106,7 +106,6 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 		return '
 			... on TimeField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				conditionalLogic {
 					actionType
@@ -141,7 +140,6 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 					hours
 					minutes
 				}
-				visibility
 			}
 		';
 	}

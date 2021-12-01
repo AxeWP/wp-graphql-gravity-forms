@@ -43,10 +43,8 @@ class TextField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\MaxLengthProperty::get(),
-			FieldProperty\VisibilityProperty::get(),
 			[
 				'enablePasswordInput' => [
 					'type'        => 'Boolean',

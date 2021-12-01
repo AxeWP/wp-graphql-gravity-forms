@@ -91,7 +91,6 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 		return '
 			... on ConsentField {
 				adminLabel
-				adminOnly
 				checkboxLabel
 				conditionalLogic {
 					actionType
@@ -110,7 +109,6 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				isRequired
 				label
 				value
-				visibility
 			}
 		';
 	}

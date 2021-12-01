@@ -87,7 +87,6 @@ class PostExcerptFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 	public function field_query() : string {
 		return '... on PostExcerptField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				conditionalLogic {
 					actionType
@@ -110,7 +109,6 @@ class PostExcerptFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 				placeholder
 				size
 				value
-				visibility
 			}
 		';
 	}

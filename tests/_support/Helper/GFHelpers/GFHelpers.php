@@ -86,6 +86,7 @@ abstract class GFHelpers {
 			if ( 'formId' === $key ) {
 				continue;
 			}
+			codecept_debug( $key );
 
 			if ( is_array( $key ) ) {
 				$k = array_key_first( $key );

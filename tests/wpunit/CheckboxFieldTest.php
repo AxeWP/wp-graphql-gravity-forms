@@ -162,7 +162,6 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 		return '
 			... on CheckboxField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				conditionalLogic {
 					actionType
@@ -185,7 +184,6 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 				label
 				labelPlacement
 				type
-				visibility
 				checkboxValues {
 					inputId
           text

@@ -88,7 +88,6 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 		return '
 			... on NumberField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				autocompleteAttribute
 				calculationFormula
@@ -119,7 +118,6 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 				rangeMin
 				size
 				value
-				visibility
 			}
 		';
 	}

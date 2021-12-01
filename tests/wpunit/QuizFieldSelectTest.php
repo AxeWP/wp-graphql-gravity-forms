@@ -181,7 +181,6 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 				size
 				type
 				values
-				visibility
 				choices {
 					gquizIsCorrect: isCorrect
 					text

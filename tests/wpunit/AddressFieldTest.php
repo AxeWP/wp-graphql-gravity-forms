@@ -115,7 +115,6 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 			... on AddressField {
 				addressType
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				conditionalLogic {
 					actionType
@@ -161,7 +160,6 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					zip
 					country
 				}
-				visibility
 			}
 		';
 	}

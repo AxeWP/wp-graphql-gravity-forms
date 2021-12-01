@@ -111,7 +111,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 		return '
 			... on NameField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				conditionalLogic {
 					actionType
@@ -148,7 +147,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				nameFormat
 				subLabelPlacement
 				type
-				visibility
 				nameValues {
 					first
 					last

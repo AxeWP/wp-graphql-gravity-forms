@@ -70,9 +70,7 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				}
 				cssClass
 				description
-				displayOnly
 				label
-				visibility
 			}
 		';
 	}

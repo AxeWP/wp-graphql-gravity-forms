@@ -109,7 +109,6 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				cssClass
 				description
 				descriptionPlacement
-				displayOnly
 				errorMessage
 				label
 				labelPlacement

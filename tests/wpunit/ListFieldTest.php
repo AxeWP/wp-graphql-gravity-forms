@@ -95,7 +95,6 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 			... on ListField {
 				addIconUrl
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				choices {
 					text
@@ -124,7 +123,6 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					values
 				}
 				maxRows
-				visibility
 			}
 		';
 	}

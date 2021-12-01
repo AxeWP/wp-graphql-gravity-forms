@@ -134,7 +134,6 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 		return '
 			... on ChainedSelectField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				chainedSelectsAlignment
 				chainedSelectsHideInactive
@@ -157,7 +156,6 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 				noDuplicates
 				subLabelPlacement
 				values
-				visibility
 				inputs {
 					id
 					label

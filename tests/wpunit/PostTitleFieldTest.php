@@ -88,7 +88,6 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 		return '
 			... on PostTitleField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				conditionalLogic {
 					actionType
@@ -110,7 +109,6 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 				placeholder
 				size
 				type
-				visibility
 				value
 			}
 		';

@@ -44,7 +44,6 @@ class QuizField extends AbstractFormField {
 	public static function get_fields() : array {
 		return array_merge(
 			FieldProperty\AdminLabelProperty::get(),
-			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\AllowsPrepopulateProperty::get(),
 			FieldProperty\AutocompleteAttributeProperty::get(),
 			FieldProperty\ConditionalLogicProperty::get(),
@@ -62,7 +61,6 @@ class QuizField extends AbstractFormField {
 			FieldProperty\LabelPlacementProperty::get(),
 			FieldProperty\PlaceholderProperty::get(),
 			FieldProperty\SizeProperty::get(),
-			FieldProperty\VisibilityProperty::get(),
 			[
 				'answerExplanation'          => [
 					'type'        => 'String',

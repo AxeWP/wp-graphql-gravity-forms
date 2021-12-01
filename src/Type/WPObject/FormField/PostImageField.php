@@ -46,7 +46,6 @@ class PostImageField extends AbstractFormField {
 		return array_merge(
 			FieldProperty\AllowedExtensionsProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
-			FieldProperty\VisibilityProperty::get(),
 			[
 				'displayAlt'         => [
 					'type'        => 'Boolean',

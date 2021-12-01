@@ -181,7 +181,6 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 				size
 				type
 				values
-				visibility
 				choices {
 					gquizIsCorrect: isCorrect
 					text

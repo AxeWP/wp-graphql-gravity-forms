@@ -43,13 +43,11 @@ class SelectField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\ChoicesProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\EnableChoiceValueProperty::get(),
 			FieldProperty\EnableEnhancedUiProperty::get(),
 			FieldProperty\EnablePriceProperty::get(),
-			FieldProperty\VisibilityProperty::get(),
 			static::get_fields_from_gf_settings(),
 		);
 	}

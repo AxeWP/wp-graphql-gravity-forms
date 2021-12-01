@@ -88,7 +88,6 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 		return '
 			... on TextAreaField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				conditionalLogic {
 					actionType
@@ -113,7 +112,6 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 				size
 				useRichTextEditor
 				value
-				visibility
 			}
 		';
 	}

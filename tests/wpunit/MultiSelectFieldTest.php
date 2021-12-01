@@ -94,7 +94,6 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 		return '
 			... on MultiSelectField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				choices {
 					isSelected
@@ -122,7 +121,6 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 				labelPlacement
 				size
 				values
-				visibility
 			}
 		';
 	}

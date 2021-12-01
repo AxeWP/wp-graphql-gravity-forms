@@ -44,10 +44,8 @@ class TimeField extends AbstractFormField {
 	 */
 	public static function get_fields() : array {
 		return array_merge(
-			FieldProperty\AdminOnlyProperty::get(),
 			FieldProperty\DescriptionPlacementProperty::get(),
 			FieldProperty\InputsProperty::get(),
-			FieldProperty\VisibilityProperty::get(),
 			[
 				'timeFormat' => [
 					'type'        => TimeFieldFormatEnum::$type,

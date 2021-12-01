@@ -16,10 +16,6 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : ( $this->dummy->text( 0, 8, true ) ?? null );
 	}
 
-	public function adminOnly( $value = null ) {
-		return isset( $value ) ? $value : null;
-	}
-
 	public function allowsPrepopulate( $value = null ) {
 		return isset( $value ) ? $value : $this->dummy->yesno();
 	}
@@ -133,7 +129,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function displayOnly( $value = null ) :bool {
-		return isset( $value ) ? $value : true;
+		return isset( $value ) ? $value : false;
 	}
 
 	public function emailConfirmEnabled( $value = null ) :bool {

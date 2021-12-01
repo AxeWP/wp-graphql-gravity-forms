@@ -136,6 +136,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 							layoutSpacerGridColumnSpan
 							pageNumber
 							type
+							visibility
 							{$this->field_query}
 						}
 					}

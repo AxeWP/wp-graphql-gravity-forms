@@ -87,7 +87,6 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 		return '
 			... on TextField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				autocompleteAttribute
 				conditionalLogic {
@@ -113,7 +112,6 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				placeholder
 				size
 				value
-				visibility
 			}
 		';
 	}

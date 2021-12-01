@@ -15,7 +15,7 @@ use WPGraphQL\Registry\TypeRegistry;
 use GraphQL\Error\UserError;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
-use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
+use WPGraphQL\GF\Type\Enum\VisibilityPropertyEnum;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
@@ -86,6 +86,11 @@ class FormField extends AbstractType implements TypeWithFields {
 	 */
 	public static function get_fields() : array {
 		return [
+			'displayOnly'                => [
+				'type'        => 'Boolean',
+				'description' => __( 'Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) : bool => ! empty( $source->displayOnly ),
+			],
 			'formId'                     => [
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'The ID of the form this field belongs to.', 'wp-graphql-gravity-forms' ),
@@ -110,10 +115,10 @@ class FormField extends AbstractType implements TypeWithFields {
 				'type'        => [ 'non_null' => 'String' ],
 				'description' => __( 'The type of field to be displayed.', 'wp-graphql-gravity-forms' ),
 			],
-			'displayOnly'                => [
-				'type'        => 'Boolean',
-				'description' => __( 'Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source->displayOnly ),
+			'visibility'                 => [
+				'type'        => VisibilityPropertyEnum::$type,
+				'description' => __( 'Field visibility.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) : string => ! empty( $source->visibility ) ? $source->visibility : ( ! empty( $source->adminOnly ) ? 'administrative' : 'visible' ),
 			],
 		];
 	}
