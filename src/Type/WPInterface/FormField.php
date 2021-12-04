@@ -54,7 +54,12 @@ class FormField extends AbstractType implements TypeWithFields {
 					'description'     => self::get_description(),
 					'fields'          => self::get_fields(),
 					'resolveType'     => function( $value ) use ( $type_registry ) {
-						$possible_types = Utils::get_registered_form_field_types();
+						$possible_types    = Utils::get_registered_form_field_types();
+						$possible_subtypes = Utils::get_possible_form_field_child_types( $value->type );
+
+						if ( isset( $possible_subtypes[ $value->inputType ] ) ) {
+							return $possible_subtypes[ $value->inputType ];
+						}
 
 						if ( isset( $possible_types[ $value->type ] ) ) {
 							return $type_registry->get_type( $possible_types[ $value->type ] );
@@ -98,6 +103,11 @@ class FormField extends AbstractType implements TypeWithFields {
 			'id'                         => [
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'Field ID.', 'wp-graphql-gravity-forms' ),
+			],
+			// @todo convert to enum.
+			'inputType'                  => [
+				'type'        => 'String',
+				'description' => __( 'Contains a field type and allows a field type to be displayed as another field type. A good example is the Post Custom Field, that can be displayed as various different types of fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'layoutGridColumnSpan'       => [
 				'type'        => 'Int',

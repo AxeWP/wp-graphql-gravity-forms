@@ -17,7 +17,7 @@ class DescriptionPlacementPropertyEnum extends AbstractEnum {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'DescriptionPlacementEnum';
+	public static string $type = 'DescriptionPlacementPropertyEnum';
 
 	// Individual elements.
 	const ABOVE   = 'above';

@@ -61,16 +61,16 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : null;
 	}
 
-	public function chainedSelectsHideInactive( $value = null ) {
-		return isset( $value ) ? $value : null;
+	public function chainedSelectsHideInactive( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
 	public function choices( $value = null ) {
 		return isset( $value ) ? $value : null;
 	}
 
-	public function copyValuesOptionDefault( $value = null ) {
-		return isset( $value ) ? $value : '';
+	public function copyValuesOptionDefault( $value = null ) : bool {
+		return ! empty( $value );
 	}
 	public function copyValuesOptionField( $value = null ) {
 		return isset( $value ) ? $value : null;
@@ -112,71 +112,67 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : $this->dummy->text();
 	}
 
-	public function descriptionPlacement( $value = null ) {
-		return isset( $value ) ? $value : '';
+	public function descriptionPlacement( $value = null ) : string {
+		return ! empty( $value ) ?: 'inherit';
 	}
 
-	public function disableQuantity( $value = null ) {
-		return isset( $value ) ? $value : false;
+	public function disableQuantity( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
-	public function disableMargins( $value = null ) {
-		return isset( $value ) ? $value : false;
+	public function disableMargins( $value = null ) : bool{
+		return ! empty( $value );
 	}
 
-	public function displayAllCategories( $value = null ) {
-		return isset( $value ) ? $value : false;
+	public function displayAllCategories( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
-	public function displayOnly( $value = null ) :bool {
-		return isset( $value ) ? $value : false;
+	public function displayOnly( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
-	public function emailConfirmEnabled( $value = null ) :bool {
-		return isset( $value ) ? $value : true;
+	public function emailConfirmEnabled( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
-	public function enableAutocomplete( $value = null ) {
-		return isset( $value ) ? $value : $this->dummy->yesno();
+	public function enableAutocomplete( $value = null ) : bool {
+		return ! empty( $value ) ?: $this->dummy->yesno();
 	}
 
-	public function enableCalculation( $value = null ) {
-		return isset( $value ) ? $value : '';
+	public function enableCalculation( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
-	public function enableChoiceValue( $value = null ) {
-		return isset( $value ) ? $value : $this->dummy->yesno();
+	public function enableChoiceValue( $value = null ) : bool {
+		return ! empty( $value ) ?: $this->dummy->yesno();
 	}
 
-	public function enableCopyValuesOption( $value = null ) {
-		return isset( $value ) ? $value : '';
+	public function enableCopyValuesOption( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
-	public function enableEnhancedUI( $value = null ) {
-		return isset( $value ) ? $value : '';
+	public function enableEnhancedUI( $value = null ) : bool{
+		return ! empty( $value );
 	}
 
-	public function enableOtherChoice( $value = null ) {
-		return isset( $value ) ? $value : $this->dummy->yesno();
+	public function enableOtherChoice( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
-	public function enablePrice( $value = null ) {
-		return isset( $value ) ? $value : null;
+	public function enablePasswordInput( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
-	public function enablePasswordInput( $value = null ) {
-		return isset( $value ) ? $value : '';
+	public function gquizEnableRandomizeQuizChoices( bool $value = null ) : bool {
+		return ! empty( $value );
 	}
 
-	public function gquizEnableRandomizeQuizChoices( bool $value = null ) : ?bool {
-		return $value ?? $this->dummy->yesno();
+	public function enableSelectAll( $value = null ) : bool {
+		return ! empty( $value );
 	}
-
-	public function enableSelectAll( $value = null ) {
-		return isset( $value ) ? $value : $this->dummy->yesno();
-	}
-	public function enableColumns( $value = null ) {
-		return isset( $value ) ? $value : false;
+	public function enableColumns( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
 	public function gquizWeightedScoreEnabled( bool $value = null ) : ?bool {
@@ -192,11 +188,11 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function inputMask( $value = null ) {
-		return isset( $value ) ? $value : false;
+		return ! empty( $value ) ?: false;
 	}
 
-	public function inputMaskIsCustom( $value = null ) {
-		return isset( $value ) ? $value : false;
+	public function inputMaskIsCustom( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
 	public function inputMaskValue( $value = null ) {
@@ -262,8 +258,8 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : ( rand( 3, 10 ) ?: null );
 	}
 
-	public function multipleFiles( $value = null ) {
-		return isset( $value ) ? $value : false;
+	public function multipleFiles( $value = null ) : bool {
+		return ! empty( $value );
 	}
 
 	public function nextButton( $value = null ) {
@@ -278,8 +274,8 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : 'advanced';
 	}
 
-	public function noDuplicates( $value = null ) {
-		return isset( $value ) ? $value : false;
+	public function noDuplicates( $value = null ) : bool{
+		return ! empty( $value );
 	}
 	public function numberFormat( $value = null ) {
 		return isset( $value ) ? $value : 'decimal_comma';
@@ -337,9 +333,10 @@ class PropertyHelper extends GFHelpers {
 		return $this->size( $value );
 	}
 
-	public function size( $value = null ) {
-		return isset( $value ) ? $value : 'medium';
+	public function size( $value = null ) : string {
+		return ! empty( $value ) ?: 'medium';
 	}
+
 	public function storageType( $value = null ) {
 		return isset( $value ) ? $value : 'json';
 	}
@@ -365,7 +362,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function visibility( $value = null ) {
-		return isset( $value ) ? $value : 'visible';
+		return ! empty( $value ) ?: 'visible';
 	}
 
 	public function conditionalLogic( $value = null ) {

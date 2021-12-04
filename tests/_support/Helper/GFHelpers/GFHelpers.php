@@ -86,7 +86,6 @@ abstract class GFHelpers {
 			if ( 'formId' === $key ) {
 				continue;
 			}
-			codecept_debug( $key );
 
 			if ( is_array( $key ) ) {
 				$k = array_key_first( $key );
@@ -151,7 +150,7 @@ abstract class GFHelpers {
 			case 'displayOnly':
 			case 'enableCopyValuesOption':
 			case 'enablePasswordInput':
-				$value = ! empty( $object->$key ) ? (bool) $object->$key : null;
+				$value = (bool) $object->$key;
 				break;
 			case 'inputs':
 				if ( ! empty( $object->$key ) ) {
@@ -186,6 +185,7 @@ abstract class GFHelpers {
 	 */
 	public function getAllActualValues( $object, array $exclude = null ) {
 		$return_values = [];
+		codecept_debug( $object );
 		foreach ( $this->keys as $key ) {
 			if ( ! empty( $exclude ) && in_array( $key, $exclude, true ) ) {
 				continue;

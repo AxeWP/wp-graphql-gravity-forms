@@ -108,7 +108,6 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 				descriptionPlacement
 				enableChoiceValue
 				enableOtherChoice
-				enablePrice
 				errorMessage
 				inputName
 				isRequired

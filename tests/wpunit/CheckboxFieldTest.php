@@ -175,7 +175,6 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 				cssClass
 				description
 				descriptionPlacement
-				enablePrice
 				enableChoiceValue
 				enableSelectAll
 				errorMessage

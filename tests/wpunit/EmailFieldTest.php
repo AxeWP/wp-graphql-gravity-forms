@@ -110,7 +110,6 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 			... on EmailField {
 				adminLabel
 				allowsPrepopulate
-				autocompleteAttribute
 				conditionalLogic {
 					actionType
 					logicType

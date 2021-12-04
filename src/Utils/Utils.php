@@ -10,6 +10,7 @@
 
 namespace WPGraphQL\GF\Utils;
 
+use GF_Fields;
 use WPGraphQL\GF\TypeRegistry;
 use WPGraphQL\GF\Type\WPObject\FormField\AbstractFormField;
 
@@ -44,10 +45,29 @@ class Utils {
 	 * @since 0.4.0
 	 *
 	 * @param string $string the original string.
-	 * @return string
 	 */
 	public static function to_snake_case( $string ) : string {
 		return strtolower( (string) preg_replace( [ '/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/' ], '$1_$2', $string ) );
+	}
+
+	/**
+	 * Converts a string to snake_case.
+	 *
+	 * @since 0.10.0
+	 *
+	 * @param string $string the original string.
+	 */
+	public static function to_pascal_case( $string ) : string {
+		// Shim to map fields with existing PascalCase.
+		$fields_to_map = [
+			'chainedselect' => 'ChainedSelect',
+			'multiselect'   => 'MultiSelect',
+			'textarea'      => 'TextArea',
+			// Regular mapping.
+			'-'             => ' ',
+			'_'             => ' ',
+		];
+		return str_replace( ' ', '', ucwords( str_replace( array_keys( $fields_to_map ), array_values( $fields_to_map ), $string ) ) );
 	}
 
 	/**
@@ -150,19 +170,99 @@ class Utils {
 	 * E.g. `[ 'text' => 'TextField' ]`.
 	 */
 	public static function get_registered_form_field_types() : array {
-		$fields = array_filter(
-			TypeRegistry::get_registered_classes(),
-			function( $class ) {
-				$return = is_a( $class, AbstractFormField::class, true );
-				return $return;
-			}
-		);
-
 		$types = [];
+
+		$fields = GF_Fields::get_all();
 		foreach ( $fields as $field ) {
-			$types[ $field::$gf_type ] = $field::$type;
+			$types[ $field->type ] = self::to_pascal_case( $field->type ) . 'Field';
 		}
 
 		return $types;
+	}
+
+
+	/**
+	 * Returns an array of possible form field input types for GraphQL object generation.
+	 *
+	 * @param string $type . The current GF field type.
+	 */
+	public static function get_possible_form_field_child_types( string $type ) : ?array {
+		$prefix = self::to_pascal_case( $type );
+		switch ( $type ) {
+			case 'post_category':
+				return [
+					'checkbox'    => $prefix . 'Checkbox',
+					'multiselect' => $prefix . 'MultiselectField',
+					'radio'       => $prefix . 'RadioField',
+					'select'      => $prefix . 'SelectField',
+				];
+			case 'post_custom':
+				return [
+					'checkbox'    => $prefix . 'CheckboxField',
+					'date'        => $prefix . 'DateField',
+					'email'       => $prefix . 'EmailField',
+					'fileupload'  => $prefix . 'FileuploadField',
+					'hidden'      => $prefix . 'HiddenField',
+					'list'        => $prefix . 'ListField',
+					'multiselect' => $prefix . 'MultiselectField',
+					'number'      => $prefix . 'NumberField',
+					'phone'       => $prefix . 'PhoneField',
+					'radio'       => $prefix . 'RadioField',
+					'select'      => $prefix . 'SelectField',
+					'text'        => $prefix . 'TextField',
+					'textarea'    => $prefix . 'TextAreaField',
+					'time'        => $prefix . 'TimeField',
+					'website'     => $prefix . 'WebsiteField',
+				];
+			case 'post_tag':
+				return [
+					'checkbox'    => $prefix . 'CheckboxField',
+					'multiselect' => $prefix . 'MultiselectField',
+					'radio'       => $prefix . 'RadioField',
+					'select'      => $prefix . 'SelectField',
+					'text'        => $prefix . 'TextField',
+				];
+			case 'product':
+				return [
+					'calculation'   => $prefix . 'CalculationField',
+					'hiddenproduct' => $prefix . 'HiddenProductField',
+					'price'         => $prefix . 'PriceField',
+					'radio'         => $prefix . 'RadioField',
+					'select'        => $prefix . 'SelectField',
+					'singleproduct' => $prefix . 'SingleProductField',
+				];
+			case 'shipping':
+				return [
+					'radio'          => $prefix . 'RadioField',
+					'select'         => $prefix . 'SelectField',
+					'singleshipping' => $prefix . 'SingleShippingField',
+				];
+			case 'option':
+				return [
+					'checkbox' => $prefix . 'CheckboxField',
+					'radio'    => $prefix . 'RadioField',
+					'select'   => $prefix . 'SelectField',
+				];
+			case 'quiz':
+				return [
+					'checkbox' => $prefix . 'CheckboxField',
+					'radio'    => $prefix . 'RadioField',
+					'select'   => $prefix . 'SelectField',
+				];
+			case 'donation':
+				return [
+					'donation' => $prefix . 'DonationField',
+					'radio'    => $prefix . 'RadioField',
+					'select'   => $prefix . 'SelectField',
+				];
+			case 'quantity':
+				return [
+					'number' => $prefix . 'NumberField',
+					'hidden' => $prefix . 'HiddenField',
+					'select' => $prefix . 'SelectField',
+				];
+			default:
+				return null;
+		}
 	}
 }

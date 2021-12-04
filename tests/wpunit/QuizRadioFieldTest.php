@@ -149,7 +149,6 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 				adminLabel
 				allowsPrepopulate
 				gquizAnswerExplanation: answerExplanation
-				autocompleteAttribute
 				conditionalLogic {
 					actionType
 					logicType
@@ -160,32 +159,27 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 					}
 				}
 				cssClass
-				defaultValue
 				description
-				enableAutocomplete
-				enableEnhancedUI
+				descriptionPlacement
+				enableChoiceValue
 				gquizEnableRandomizeQuizChoices: enableRandomizeQuizChoices
-				enableSelectAll
 				gquizWeightedScoreEnabled: enableWeightedScore
 				errorMessage
 				inputName
-				inputs {
-					id
-				}
 				isRequired
 				label
 				labelPlacement
-				placeholder
-				gquizFieldType: quizFieldType
 				gquizShowAnswerExplanation: showAnswerExplanation
-				size
-				type
 				values
 				choices {
 					gquizIsCorrect: isCorrect
 					text
 					value
 					gquizWeight: weight
+					isOtherChoice
+				}
+				... on QuizRadioField {
+					enableOtherChoice
 				}
 			}
 		';
@@ -284,7 +278,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 							$this->expectedNode(
 								'nodes',
 								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
+									$this->property_helper->getAllActualValues( $form['fields'][0], ['gquizFieldType', 'enableSelectAll', 'inputs', 'autocompleteAttribute', 'defaultValue', 'enableAutocomplete', 'enableEnhancedUI', 'noDuplicates', 'placeholder', 'size' ] ),
 									[ 'values' => $this->field_value ],
 								)
 							),

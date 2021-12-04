@@ -111,7 +111,6 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 				enableAutocomplete
 				enableChoiceValue
 				enableEnhancedUI
-				enablePrice
 				errorMessage
 				inputName
 				isRequired
