@@ -87,9 +87,18 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 		return '
 			... on TextField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				autocompleteAttribute
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				defaultValue
 				description
 				descriptionPlacement
@@ -103,7 +112,6 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				placeholder
 				size
 				value
-				visibility
 			}
 		';
 	}

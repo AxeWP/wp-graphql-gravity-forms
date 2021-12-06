@@ -162,20 +162,27 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 		return '
 			... on CheckboxField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				description
 				descriptionPlacement
-				enablePrice
 				enableChoiceValue
 				enableSelectAll
 				errorMessage
 				inputName
 				isRequired
 				label
-				size
+				labelPlacement
 				type
-				visibility
 				checkboxValues {
 					inputId
           text

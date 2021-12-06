@@ -121,6 +121,14 @@ abstract class GFHelpers {
 				$string = ucfirst( $key ) . 'Enum';
 				$value  = $this->get_enum_for_value( $string, $object->$key );
 				break;
+			case 'simpleCaptchaSize':
+				$string = 'SizePropertyEnum';
+				$value  = $this->get_enum_for_value( $string, $object->$key );
+				break;
+			case 'subLabelPlacement':
+				$string = 'LabelPlacementPropertyEnum';
+				$value  = $this->get_enum_for_value( $string, $object->$key );
+				break;
 			case 'labelPlacement':
 			case 'descriptionPlacement':
 			case 'size':
@@ -142,7 +150,7 @@ abstract class GFHelpers {
 			case 'displayOnly':
 			case 'enableCopyValuesOption':
 			case 'enablePasswordInput':
-				$value = ! empty( $object->$key ) ? (bool) $object->$key : null;
+				$value = (bool) $object->$key;
 				break;
 			case 'inputs':
 				if ( ! empty( $object->$key ) ) {
@@ -177,6 +185,7 @@ abstract class GFHelpers {
 	 */
 	public function getAllActualValues( $object, array $exclude = null ) {
 		$return_values = [];
+		codecept_debug( $object );
 		foreach ( $this->keys as $key ) {
 			if ( ! empty( $exclude ) && in_array( $key, $exclude, true ) ) {
 				continue;

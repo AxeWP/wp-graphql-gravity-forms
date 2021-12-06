@@ -94,13 +94,22 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 		return '
 			... on MultiSelectField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				choices {
 					isSelected
 					text
 					value
 				}
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				description
 				descriptionPlacement
 				enableChoiceValue
@@ -109,9 +118,9 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 				inputName
 				isRequired
 				label
+				labelPlacement
 				size
 				values
-				visibility
 			}
 		';
 	}

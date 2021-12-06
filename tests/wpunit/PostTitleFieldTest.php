@@ -88,8 +88,17 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 		return '
 			... on PostTitleField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				defaultValue
 				description
 				descriptionPlacement
@@ -100,7 +109,6 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 				placeholder
 				size
 				type
-				visibility
 				value
 			}
 		';

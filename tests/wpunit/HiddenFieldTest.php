@@ -87,7 +87,6 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 				allowsPrepopulate
 				defaultValue
 				label
-				size
 				value
 			}
 		';

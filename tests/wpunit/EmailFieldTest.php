@@ -109,9 +109,17 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 		return '
 			... on EmailField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
-				autocompleteAttribute
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				description
 				descriptionPlacement
 				emailConfirmEnabled
@@ -135,7 +143,6 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 				size
 				subLabelPlacement
 				value
-				visibility
 			}
 		';
 	}

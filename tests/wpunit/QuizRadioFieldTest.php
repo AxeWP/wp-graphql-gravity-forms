@@ -8,9 +8,9 @@
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 /**
- * Class -QuizFieldSelectTest
+ * Class -QuizFieldRadioTest
  */
-class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -57,8 +57,8 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 			$this->factory->field->create(
 				array_merge(
 					$this->property_helper->values,
-					[ 'inputType' => 'select' ],
-					[ 'gquizFieldType' => 'select' ]
+					[ 'inputType' => 'radio' ],
+					[ 'gquizFieldType' => 'radio' ]
 				)
 			),
 		];
@@ -149,33 +149,37 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 				adminLabel
 				allowsPrepopulate
 				gquizAnswerExplanation: answerExplanation
-				autocompleteAttribute
-				defaultValue
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				description
-				enableAutocomplete
-				enableEnhancedUI
+				descriptionPlacement
+				enableChoiceValue
 				gquizEnableRandomizeQuizChoices: enableRandomizeQuizChoices
-				enableSelectAll
 				gquizWeightedScoreEnabled: enableWeightedScore
 				errorMessage
 				inputName
-				inputs {
-					id
-				}
 				isRequired
 				label
-				placeholder
-				gquizFieldType: quizFieldType
+				labelPlacement
 				gquizShowAnswerExplanation: showAnswerExplanation
-				size
-				type
 				values
-				visibility
 				choices {
 					gquizIsCorrect: isCorrect
 					text
 					value
 					gquizWeight: weight
+					isOtherChoice
+				}
+				... on QuizRadioField {
+					enableOtherChoice
 				}
 			}
 		';
@@ -274,7 +278,7 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 							$this->expectedNode(
 								'nodes',
 								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
+									$this->property_helper->getAllActualValues( $form['fields'][0], ['gquizFieldType', 'enableSelectAll', 'inputs', 'autocompleteAttribute', 'defaultValue', 'enableAutocomplete', 'enableEnhancedUI', 'noDuplicates', 'placeholder', 'size' ] ),
 									[ 'values' => $this->field_value ],
 								)
 							),

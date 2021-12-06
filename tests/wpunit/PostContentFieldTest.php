@@ -88,8 +88,17 @@ class PostContentFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 		return '
 			... on PostContentField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				defaultValue
 				description
 				descriptionPlacement
@@ -101,7 +110,6 @@ class PostContentFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 				placeholder
 				size
 				value
-				visibility
 			}
 		';
 	}

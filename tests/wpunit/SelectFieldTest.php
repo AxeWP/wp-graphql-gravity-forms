@@ -88,7 +88,6 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 		return '
 			... on SelectField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				autocompleteAttribute
 				choices {
@@ -96,13 +95,22 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 					text
 					value
 				}
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				defaultValue
 				description
 				descriptionPlacement
 				enableAutocomplete
 				enableChoiceValue
 				enableEnhancedUI
-				enablePrice
 				errorMessage
 				inputName
 				isRequired
@@ -112,7 +120,6 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 				placeholder
 				size
 				value
-				visibility
 			}
 		';
 	}

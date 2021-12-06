@@ -134,20 +134,28 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 		return '
 			... on ChainedSelectField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				chainedSelectsAlignment
 				chainedSelectsHideInactive
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				description
 				descriptionPlacement
 				errorMessage
 				isRequired
 				label
+				labelPlacement
 				noDuplicates
-				size
 				subLabelPlacement
 				values
-				visibility
 				inputs {
 					id
 					label

@@ -129,22 +129,14 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 				gravityFormsEntry(id: \$id, idType: \$idType ) {
 					formFields {
 						nodes {
-							cssClass
+							displayOnly
 							formId
 							id
 							layoutGridColumnSpan
 							layoutSpacerGridColumnSpan
 							pageNumber
 							type
-							conditionalLogic {
-								actionType
-								logicType
-								rules {
-									fieldId
-									operator
-									value
-								}
-							}
+							visibility
 							{$this->field_query}
 						}
 					}

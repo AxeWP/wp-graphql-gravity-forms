@@ -88,8 +88,17 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 		return '
 			... on TextAreaField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				defaultValue
 				description
 				descriptionPlacement
@@ -103,7 +112,6 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 				size
 				useRichTextEditor
 				value
-				visibility
 			}
 		';
 	}

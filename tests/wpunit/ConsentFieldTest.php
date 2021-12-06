@@ -91,17 +91,24 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 		return '
 			... on ConsentField {
 				adminLabel
-				adminOnly
 				checkboxLabel
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				description
 				descriptionPlacement
 				errorMessage
 				formId
-				inputName
 				isRequired
 				label
 				value
-				visibility
 			}
 		';
 	}

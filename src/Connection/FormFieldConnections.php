@@ -38,6 +38,8 @@ class FormFieldConnections extends AbstractConnection {
 					'fromFieldName'  => 'formFields',
 					'connectionArgs' => self::get_connection_args(),
 					'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+						$context->gfForm = $source;
+
 						if ( empty( $source->formFields ) ) {
 							return null;
 						}
@@ -93,6 +95,7 @@ class FormFieldConnections extends AbstractConnection {
 				'type'        => [ 'list_of' => FormFieldsEnum::$type ],
 				'description' => __( 'Array of Gravity Forms Field types to return.', 'wp-graphql-gravity-forms' ),
 			],
+			// @todo PageNumber
 		];
 	}
 

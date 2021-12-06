@@ -59,11 +59,18 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function field_query() : string {
 		return '
 			... on SectionField {
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				description
-				displayOnly
 				label
-				size
-				visibility
 			}
 		';
 	}

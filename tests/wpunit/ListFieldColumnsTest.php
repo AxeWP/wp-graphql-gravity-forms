@@ -145,12 +145,21 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 			... on ListField {
 				addIconUrl
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				choices {
 					text
 					value
 				}
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				deleteIconUrl
 				description
 				descriptionPlacement
@@ -164,8 +173,6 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 					values
 				}
 				maxRows
-				size
-				visibility
 			}
 		';
 	}

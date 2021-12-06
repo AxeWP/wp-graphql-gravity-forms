@@ -8,9 +8,9 @@
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 /**
- * Class -QuizFieldRadioTest
+ * Class -QuizCheckboxFieldTest
  */
-class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -57,8 +57,27 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 			$this->factory->field->create(
 				array_merge(
 					$this->property_helper->values,
-					[ 'inputType' => 'radio' ],
-					[ 'gquizFieldType' => 'radio' ]
+					[ 'inputType' => 'checkbox' ],
+					[ 'gquizFieldType' => 'checkbox' ],
+					[
+						'inputs' => [
+							[
+								'label' => 'First Choice',
+								'name'  => 'first',
+								'id'    => '1.1',
+							],
+							[
+								'label' => 'Second Choice',
+								'name'  => 'second',
+								'id'    => '1.2',
+							],
+							[
+								'label' => 'Third Choice',
+								'name'  => 'third',
+								'id'    => '1.3',
+							],
+						],
+					],
 				)
 			),
 		];
@@ -69,7 +88,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 			parent::generate_form_args(),
 			[
 				'gravityformsquiz' => [
-					'shuffleFields'                       => false,
+					'shuffleFields'                       => true,
 					'instantFeedback'                     => true,
 					'grading'                             => 'letter',
 					'grades'                              => [
@@ -103,6 +122,8 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	public function field_value() {
 		return [
 			$this->fields[0]['choices'][0]['text'],
+			$this->fields[0]['choices'][2]['text'],
+			null,
 		];
 	}
 
@@ -110,14 +131,39 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * The graphql field value input.
 	 */
 	public function field_value_input() {
-		return $this->fields[0]['choices'][0]['value'];
+		return [
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
+				'value'   => $this->fields[0]['choices'][0]['value'],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
+				'value'   => null,
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
+				'value'   => $this->fields[0]['choices'][2]['value'],
+			],
+		];
 	}
 	/**
 	 * The graphql field value input.
 	 */
 	public function updated_field_value_input() {
-		return $this->fields[0]['choices'][2]['value'];
-	}
+		return [
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
+				'value'   => null,
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
+				'value'   => $this->fields[0]['choices'][1]['value'],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
+				'value'   => $this->fields[0]['choices'][2]['value'],
+			],
+		];  }
 
 
 
@@ -126,16 +172,20 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 */
 	public function updated_field_value() {
 		return [
+			$this->fields[0]['choices'][1]['text'],
 			$this->fields[0]['choices'][2]['text'],
+			null,
 		];
 	}
-
 
 	/**
 	 * Thehe value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ (string) $this->fields[0]['id'] => $this->field_value_input ];
+		return [
+			(string) $this->fields[0]['inputs'][0]['id'] => $this->fields[0]['choices'][0]['text'],
+			(string) $this->fields[0]['inputs'][1]['id'] => $this->fields[0]['choices'][2]['text'],
+		];
 	}
 
 
@@ -149,33 +199,42 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 				adminLabel
 				allowsPrepopulate
 				gquizAnswerExplanation: answerExplanation
-				autocompleteAttribute
-				defaultValue
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				description
-				enableAutocomplete
-				enableEnhancedUI
+				descriptionPlacement
+				enableChoiceValue
 				gquizEnableRandomizeQuizChoices: enableRandomizeQuizChoices
-				enableSelectAll
 				gquizWeightedScoreEnabled: enableWeightedScore
 				errorMessage
 				inputName
-				inputs {
-					id
-				}
 				isRequired
 				label
-				placeholder
-				gquizFieldType: quizFieldType
+				labelPlacement
 				gquizShowAnswerExplanation: showAnswerExplanation
-				size
-				type
 				values
-				visibility
 				choices {
 					gquizIsCorrect: isCorrect
 					text
 					value
 					gquizWeight: weight
+					isOtherChoice
+				}
+				... on QuizCheckboxField {
+					enableSelectAll
+						inputs {
+						id
+						label
+						name
+					}
 				}
 			}
 		';
@@ -186,8 +245,8 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 */
 	public function submit_form_mutation(): string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: String!, $draft: Boolean) {
-				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
+			mutation ($formId: Int!, $fieldId: Int!, $value: [CheckboxInput]!, $draft: Boolean) {
+				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, checkboxValues: $value}}) {
 					errors {
 						id
 						message
@@ -197,7 +256,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 					entry {
 						formFields {
 							nodes {
-								... on QuizField {
+								... on QuizCheckboxField {
 									values
 								}
 							}
@@ -213,8 +272,8 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 */
 	public function update_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
-				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [CheckboxInput]! ){
+				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
 					errors {
 						id
 						message
@@ -222,7 +281,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 					entry {
 						formFields {
 							nodes {
-								... on QuizField {
+								... on QuizCheckboxField {
 									values
 								}
 							}
@@ -238,8 +297,8 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
-				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [CheckboxInput]! ){
+				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
 					errors {
 						id
 						message
@@ -247,7 +306,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 					entry {
 						formFields {
 							nodes {
-								... on QuizField {
+								... on QuizCheckboxField {
 									values
 								}
 							}
@@ -274,7 +333,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 							$this->expectedNode(
 								'nodes',
 								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
+									$this->property_helper->getAllActualValues( $form['fields'][0], ['gquizFieldType', 'enableOtherChoice', 'autocompleteAttribute', 'defaultValue', 'enableAutocomplete', 'enableEnhancedUI', 'noDuplicates', 'placeholder', 'size' ] ),
 									[ 'values' => $this->field_value ],
 								)
 							),
@@ -323,6 +382,8 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
-		$this->assertEquals( $this->field_value_input, $actual_entry[ $form['fields'][0]->id ] );
+		$this->assertEquals( $this->field_value_input[0]['value'], $actual_entry[ $form['fields'][0]['inputs'][0]['id'] ] );
+		$this->assertEquals( $this->field_value_input[1]['value'], $actual_entry[ $form['fields'][0]['inputs'][1]['id'] ] );
+		$this->assertEquals( $this->field_value_input[2]['value'], $actual_entry[ $form['fields'][0]['inputs'][2]['id'] ] );
 	}
 }

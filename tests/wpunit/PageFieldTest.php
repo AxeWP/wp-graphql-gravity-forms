@@ -61,7 +61,6 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function field_query() : string {
 		return '
 			... on PageField {
-				displayOnly
 				nextButton {
 					imageUrl
 					text
@@ -72,7 +71,6 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					text
 					type
 				}
-				size
 			}
 		';
 	}

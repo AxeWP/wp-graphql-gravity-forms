@@ -111,8 +111,17 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 		return '
 			... on NameField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				description
 				descriptionPlacement
 				enableAutocomplete
@@ -134,11 +143,10 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				}
 				isRequired
 				label
+				labelPlacement
 				nameFormat
-				size
 				subLabelPlacement
 				type
-				visibility
 				nameValues {
 					first
 					last

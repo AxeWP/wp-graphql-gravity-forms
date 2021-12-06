@@ -106,8 +106,16 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 		return '
 			... on TimeField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				cssClass
 				description
 				descriptionPlacement
@@ -124,7 +132,6 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 				isRequired
 				label
 				noDuplicates
-				size
 				subLabelPlacement
 				timeFormat
 				timeValues {
@@ -133,7 +140,6 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 					hours
 					minutes
 				}
-				visibility
 			}
 		';
 	}

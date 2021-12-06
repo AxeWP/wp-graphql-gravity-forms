@@ -23,7 +23,7 @@ class LabelPlacementPropertyEnum extends AbstractEnum {
 	const TOP     = 'top_label';
 	const LEFT    = 'left_label';
 	const RIGHT   = 'right_label';
-	const INHERIT = '';
+	const INHERIT = 'inherit';
 	const HIDDEN  = 'hidden_label';
 
 	/**

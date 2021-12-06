@@ -88,9 +88,18 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 		return '
 			... on PhoneField {
 				adminLabel
-				adminOnly
 				allowsPrepopulate
 				autocompleteAttribute
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
 				defaultValue
 				description
 				descriptionPlacement
@@ -104,7 +113,6 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 				phoneFormat
 				placeholder
 				size
-				visibility
 			}
 		';
 	}

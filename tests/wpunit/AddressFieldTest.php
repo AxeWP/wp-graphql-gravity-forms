@@ -115,10 +115,19 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 			... on AddressField {
 				addressType
 				adminLabel
-				adminOnly
 				allowsPrepopulate
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 				copyValuesOptionDefault
 				copyValuesOptionField
+				cssClass
 				defaultCountry
 				defaultProvince
 				defaultState
@@ -141,7 +150,6 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				isRequired
 				label
 				labelPlacement
-				size
 				subLabelPlacement
 				type
 				addressValues {
@@ -152,7 +160,6 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					zip
 					country
 				}
-				visibility
 			}
 		';
 	}

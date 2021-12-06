@@ -15,7 +15,7 @@ use WPGraphQL\Registry\TypeRegistry;
 use GraphQL\Error\UserError;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
-use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
+use WPGraphQL\GF\Type\Enum\VisibilityPropertyEnum;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
@@ -54,7 +54,12 @@ class FormField extends AbstractType implements TypeWithFields {
 					'description'     => self::get_description(),
 					'fields'          => self::get_fields(),
 					'resolveType'     => function( $value ) use ( $type_registry ) {
-						$possible_types = Utils::get_registered_form_field_types();
+						$possible_types    = Utils::get_registered_form_field_types();
+						$possible_subtypes = Utils::get_possible_form_field_child_types( $value->type );
+
+						if ( isset( $possible_subtypes[ $value->inputType ] ) ) {
+							return $possible_subtypes[ $value->inputType ];
+						}
 
 						if ( isset( $possible_types[ $value->type ] ) ) {
 							return $type_registry->get_type( $possible_types[ $value->type ] );
@@ -86,13 +91,10 @@ class FormField extends AbstractType implements TypeWithFields {
 	 */
 	public static function get_fields() : array {
 		return [
-			'conditionalLogic'           => [
-				'type'        => ConditionalLogic::$type,
-				'description' => __( 'Controls the visibility of the field based on values selected by the user.', 'wp-graphql-gravity-forms' ),
-			],
-			'cssClass'                   => [
-				'type'        => 'String',
-				'description' => __( 'String containing the custom CSS classes to be added to the <li> tag that contains the field. Useful for applying custom formatting to specific fields.', 'wp-graphql-gravity-forms' ),
+			'displayOnly'                => [
+				'type'        => 'Boolean',
+				'description' => __( 'Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) : bool => ! empty( $source->displayOnly ),
 			],
 			'formId'                     => [
 				'type'        => [ 'non_null' => 'Int' ],
@@ -101,6 +103,11 @@ class FormField extends AbstractType implements TypeWithFields {
 			'id'                         => [
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'Field ID.', 'wp-graphql-gravity-forms' ),
+			],
+			// @todo convert to enum.
+			'inputType'                  => [
+				'type'        => 'String',
+				'description' => __( 'Contains a field type and allows a field type to be displayed as another field type. A good example is the Post Custom Field, that can be displayed as various different types of fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'layoutGridColumnSpan'       => [
 				'type'        => 'Int',
@@ -117,6 +124,11 @@ class FormField extends AbstractType implements TypeWithFields {
 			'type'                       => [
 				'type'        => [ 'non_null' => 'String' ],
 				'description' => __( 'The type of field to be displayed.', 'wp-graphql-gravity-forms' ),
+			],
+			'visibility'                 => [
+				'type'        => VisibilityPropertyEnum::$type,
+				'description' => __( 'Field visibility.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) : string => ! empty( $source->visibility ) ? $source->visibility : ( ! empty( $source->adminOnly ) ? 'administrative' : 'visible' ),
 			],
 		];
 	}
