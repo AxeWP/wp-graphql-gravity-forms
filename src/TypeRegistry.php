@@ -121,6 +121,7 @@ class TypeRegistry {
 			Enum\ConditionalLogicActionTypeEnum::class,
 			Enum\ConditionalLogicLogicTypeEnum::class,
 			Enum\ConfirmationTypeEnum::class,
+			Enum\CreditCardTypeEnum::class,
 			Enum\DateFieldFormatEnum::class,
 			Enum\DateTypeEnum::class,
 			Enum\DescriptionPlacementPropertyEnum::class,
@@ -169,6 +170,7 @@ class TypeRegistry {
 	private static function inputs() : array {
 		$classes_to_register = [
 			Input\AddressInput::class,
+			Input\CreditCardInput::class,
 			Input\ChainedSelectInput::class,
 			Input\CheckboxInput::class,
 			Input\EmailInput::class,

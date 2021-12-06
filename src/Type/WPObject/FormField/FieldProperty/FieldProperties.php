@@ -15,6 +15,7 @@ use WPGraphQL\GF\Type\Enum\CalendarIconTypeEnum;
 use WPGraphQL\GF\Type\Enum\CaptchaThemeEnum;
 use WPGraphQL\GF\Type\Enum\CaptchaTypeEnum;
 use WPGraphQL\GF\Type\Enum\ChainedSelectsAlignmentEnum;
+use WPGraphQL\GF\Type\Enum\CreditCardTypeEnum;
 use WPGraphQL\GF\Type\Enum\DateFieldFormatEnum;
 use WPGraphQL\GF\Type\Enum\DateTypeEnum;
 use WPGraphQL\GF\Type\Enum\DescriptionPlacementPropertyEnum;
@@ -908,6 +909,19 @@ class FieldProperties {
 	}
 
 	/**
+	 * Get 'isQuantityDisabled' property.
+	 */
+	public static function is_quantity_disabled() : array {
+		return [
+			'isQuantityDisabled' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the quantity property should be disabled for this field.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source) => ! empty( $source->disableQuantity ),
+			],
+		];
+	}
+
+	/**
 	 * Get 'isRequired' property.
 	 */
 	public static function is_required() : array {
@@ -918,6 +932,20 @@ class FieldProperties {
 			],
 		];
 	}
+
+	/**
+	 * Get 'isSSLForced' property.
+	 */
+	public static function is_ssl_forced() : array {
+		return [
+			'isSSLForced' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Determines if the field requires the user to enter a value. Fields marked as required will prevent the form from being submitted if the user has not entered a value in it.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source) => ! empty( $source->forceSSL ),
+			],
+		];
+	}
+
 
 	/**
 	 * Get 'label' property.
@@ -1316,6 +1344,20 @@ class FieldProperties {
 			],
 		];
 	}
+
+
+	/**
+	 * Get 'supportedCreditCards' property.
+	 */
+	public static function supported_credit_cards() : array {
+		return [
+			'supportedCreditCards' => [
+				'type'        => [ 'list_of' => CreditCardTypeEnum::$type ],
+				'description' => __( 'The credit card type.', 'wp-graphql-gravity-forms' ),
+			],
+		];
+	}
+
 
 	/**
 	 * Get 'timeFormat' property.

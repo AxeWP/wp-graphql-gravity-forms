@@ -362,6 +362,25 @@ class PropertyMapper {
 	}
 
 	/**
+	 * Maps the `credit_card_setting` to its field properties.
+	 *
+	 * @param GF_Field $field .
+	 * @param array    $properties the existing properties array.
+	 */
+	public static function credit_card_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::supported_credit_cards();
+
+		$input_fields = array_merge(
+			FieldProperties::input_custom_label(),
+			FieldProperties::input_id(),
+			FieldProperties::label(),
+			FieldProperties::placeholder(),
+		);
+
+		$properties += InputMapper::map_inputs( $field, $input_fields );
+	}
+
+	/**
 	 * Maps the `css_class_setting` to its field properties.
 	 *
 	 * @param GF_Field $field .
@@ -455,6 +474,16 @@ class PropertyMapper {
 	}
 
 	/**
+	 * Maps the `disable_quantity_setting` to its field properties.
+	 *
+	 * @param GF_Field $field .
+	 * @param array    $properties the existing properties array.
+	 */
+	public static function disable_quantity_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::is_quantity_disabled();
+	}
+
+	/**
 	 * Maps the `duplicate_setting` to its field properties.
 	 *
 	 * @param GF_Field $field .
@@ -527,6 +556,16 @@ class PropertyMapper {
 	 */
 	public static function file_size_setting( GF_Field $field, array &$properties ) : void {
 		$properties += FieldProperties::max_file_size();
+	}
+
+	/**
+	 * Maps the `force_ssl_field_setting` to its field properties.
+	 *
+	 * @param GF_Field $field .
+	 * @param array    $properties the existing properties array.
+	 */
+	public static function force_ssl_field_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::is_ssl_forced();
 	}
 
 	/**
@@ -879,6 +918,16 @@ class PropertyMapper {
 	 */
 	public static function previous_button_setting( GF_Field $field, array &$properties ) : void {
 		$properties += FieldProperties::previous_button();
+	}
+
+	/**
+	 * Maps the `product_field_setting` to its field properties.
+	 *
+	 * @param GF_Field $field .
+	 * @param array    $properties the existing properties array.
+	 */
+	public static function product_field_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::product_field();
 	}
 
 	/**

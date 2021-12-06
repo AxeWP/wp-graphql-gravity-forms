@@ -179,7 +179,25 @@ class FormFields implements Registrable {
 			$setting = str_replace( '-', '_', (string) $setting );
 
 			// Skip properties registered elsewhere.
-			if ( in_array( $setting, [ 'post_author_setting', 'post_category_setting', 'post_content_template_setting', 'post_format_setting', 'post_status_setting', 'post_title_template_setting', 'post_category_field_type_setting', 'post_custom_field_type_setting', 'post_tag_type_setting', 'gquiz_setting_field_type' ], true ) ) {
+			if ( in_array(
+				$setting,
+				[
+					'default_input_values_setting',
+					'gquiz_setting_field_type',
+					'post_author_setting',
+					'post_category_field_type_setting',
+					'post_category_setting',
+					'post_content_template_setting',
+					'post_custom_field_type_setting',
+					'post_format_setting',
+					'post_status_setting',
+					'post_tag_type_setting',
+					'post_title_template_setting',
+					'quantity_field_type_setting',
+					'sub_labels_setting',
+				],
+				true
+			) ) {
 				continue;
 			}
 
