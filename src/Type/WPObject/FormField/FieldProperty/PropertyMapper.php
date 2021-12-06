@@ -381,6 +381,16 @@ class PropertyMapper {
 	}
 
 	/**
+	 * Maps the `credit_card_style_setting` to its field properties.
+	 *
+	 * @param GF_Field $field .
+	 * @param array    $properties the existing properties array.
+	 */
+	public static function credit_card_style_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::card_style();
+	}
+
+	/**
 	 * Maps the `css_class_setting` to its field properties.
 	 *
 	 * @param GF_Field $field .

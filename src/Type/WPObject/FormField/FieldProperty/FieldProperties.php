@@ -15,6 +15,7 @@ use WPGraphQL\GF\Type\Enum\CalendarIconTypeEnum;
 use WPGraphQL\GF\Type\Enum\CaptchaThemeEnum;
 use WPGraphQL\GF\Type\Enum\CaptchaTypeEnum;
 use WPGraphQL\GF\Type\Enum\ChainedSelectsAlignmentEnum;
+use WPGraphQL\GF\Type\Enum\CreditCardStyleEnum;
 use WPGraphQL\GF\Type\Enum\CreditCardTypeEnum;
 use WPGraphQL\GF\Type\Enum\DateFieldFormatEnum;
 use WPGraphQL\GF\Type\Enum\DateTypeEnum;
@@ -457,7 +458,21 @@ class FieldProperties {
 		return [
 			'copyValuesOptionLabel' => [
 				'type'        => 'String',
-				'description' => __( 'The label that appears next to the copy values option when the form is displayed. The default value is “Same as previous”.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The label that appears next to the copy values option when the form is displayed. The default value is \“Same as previous\”.', 'wp-graphql-gravity-forms' ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'cardStyle' property.
+	 *
+	 * @todo convert to Enum.
+	 */
+	public static function card_style() : array {
+		return [
+			'cardStyle' => [
+				'type'        => CreditCardStyleEnum::$type,
+				'description' => __( 'The credit card style.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

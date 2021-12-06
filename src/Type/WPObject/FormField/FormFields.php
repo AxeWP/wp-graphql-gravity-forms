@@ -184,6 +184,7 @@ class FormFields implements Registrable {
 				[
 					'default_input_values_setting',
 					'gquiz_setting_field_type',
+					'input_placeholders_setting',
 					'post_author_setting',
 					'post_category_field_type_setting',
 					'post_category_setting',
