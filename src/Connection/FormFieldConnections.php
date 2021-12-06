@@ -95,6 +95,7 @@ class FormFieldConnections extends AbstractConnection {
 				'type'        => [ 'list_of' => FormFieldsEnum::$type ],
 				'description' => __( 'Array of Gravity Forms Field types to return.', 'wp-graphql-gravity-forms' ),
 			],
+			// @todo PageNumber
 		];
 	}
 
