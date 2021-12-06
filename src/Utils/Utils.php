@@ -11,8 +11,6 @@
 namespace WPGraphQL\GF\Utils;
 
 use GF_Fields;
-use WPGraphQL\GF\TypeRegistry;
-use WPGraphQL\GF\Type\WPObject\FormField\AbstractFormField;
 
 /**
  * Class - Utils
@@ -174,7 +172,9 @@ class Utils {
 
 		$fields = GF_Fields::get_all();
 		foreach ( $fields as $field ) {
-			$types[ $field->type ] = self::to_pascal_case( $field->type ) . 'Field';
+			if ( ! in_array( $field->type, self::get_ignored_gf_field_types(), true ) ) {
+				$types[ $field->type ] = self::to_pascal_case( $field->type ) . 'Field';
+			}
 		}
 
 		return $types;
@@ -266,5 +266,37 @@ class Utils {
 			default:
 				return null;
 		}
+	}
+
+	/**
+	 * Gets a filterable list of Gravity Forms field types that should be disabled for this instance.
+	 */
+	public static function get_ignored_gf_field_types() : array {
+		$ignored_fields = [];
+
+		// These fields are registered as child types of a field interface, and should always be skipped.
+		$duplicate_fields = [
+			'calculation',
+			'hiddenproduct',
+			'singleproduct',
+			'singleshipping',
+		];
+
+		// These fields are no longer supported by GF.
+		$ignored_fields[] = 'donation';
+
+		// These fields are experimental, and don't have unit testing in place.
+		if ( ! defined( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS' ) || false === WPGRAPHQL_GF_EXPERIMENTAL_FIELDS ) {
+			$ignored_fields[] = 'repeater';
+		}
+
+		/**
+		 * Filters the list of ignored field types.
+		 *
+		 * Useful for adding/removing support for a specific Gravity Forms field.
+		 */
+		$ignored_fields = apply_filters( 'graphql_gf_ignored_field_types', $ignored_fields );
+
+		return array_merge( $ignored_fields, $duplicate_fields );
 	}
 }

@@ -32,24 +32,29 @@ function gf_graphql_constants() : void {
 		define( 'WPGRAPHQL_GF_VERSION', '0.10.0' );
 	}
 
-			// Plugin Folder Path.
+	// Plugin Folder Path.
 	if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_DIR' ) ) {
 		define( 'WPGRAPHQL_GF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 	}
 
-			// Plugin Folder URL.
+	// Plugin Folder URL.
 	if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_URL' ) ) {
 		define( 'WPGRAPHQL_GF_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 	}
 
-			// Plugin Root File.
+	// Plugin Root File.
 	if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_FILE' ) ) {
 		define( 'WPGRAPHQL_GF_PLUGIN_FILE', __FILE__ );
 	}
 
-			// Whether to autoload the files or not.
+	// Whether to autoload the files or not.
 	if ( ! defined( 'WPGRAPHQL_GF_AUTOLOAD' ) ) {
 		define( 'WPGRAPHQL_GF_AUTOLOAD', true );
+	}
+
+	// Whether to enable untested form fields the files or not.
+	if ( ! defined( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS' ) ) {
+		define( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS', false );
 	}
 }
 

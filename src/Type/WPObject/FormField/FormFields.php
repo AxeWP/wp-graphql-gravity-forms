@@ -49,7 +49,9 @@ class FormFields implements Registrable {
 		$fields = GF_Fields::get_all();
 
 		foreach ( $fields as $field ) {
-			self::register_gf_field( $field, $type_registry );
+			if ( ! in_array( $field->type, Utils::get_ignored_gf_field_types(), true ) ) {
+				self::register_gf_field( $field, $type_registry );
+			}
 		}
 	}
 
@@ -187,5 +189,4 @@ class FormFields implements Registrable {
 		}
 		return $properties;
 	}
-
 }
