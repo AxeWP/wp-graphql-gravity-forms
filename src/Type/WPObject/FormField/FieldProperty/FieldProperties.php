@@ -834,6 +834,20 @@ class FieldProperties {
 	}
 
 	/**
+	 * Get 'formattedPrice' property.
+	 */
+	public static function formatted_price() : array {
+		return [
+			'formattedPrice' => [
+				'type'        => 'String',
+				'description' => __( 'The price of the product, prefixed by the currency.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->basePrice ) ? $source->basePrice : null,
+			],
+		];
+	}
+
+
+	/**
 	 * Get 'customLabel' property for input.
 	 */
 	public static function input_custom_label() : array {
@@ -1174,6 +1188,20 @@ class FieldProperties {
 			],
 		];
 	}
+
+	/**
+	 * Get 'price' property.
+	 */
+	public static function price() : array {
+		return [
+			'price' => [
+				'type'        => 'Float',
+				'description' => __( 'The price of the product.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->basePrice ) ? floatval( preg_replace( '/[^\d\.]/', '', $source->basePrice ) ) : null,
+			],
+		];
+	}
+
 
 	/**
 	 * Get 'productField' property.

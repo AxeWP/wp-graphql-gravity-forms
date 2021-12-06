@@ -88,6 +88,17 @@ class PropertyMapper {
 	}
 
 	/**
+	 * Maps the `base_price_setting` to its field properties.
+	 *
+	 * @param GF_Field $field .
+	 * @param array    $properties the existing properties array.
+	 */
+	public static function base_price_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::price();
+		$properties += FieldProperties::formatted_price();
+	}
+
+	/**
 	 * Maps the `border_color_setting` to its field properties.
 	 *
 	 * @param GF_Field $field .
