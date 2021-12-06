@@ -184,6 +184,8 @@ class Utils {
 	/**
 	 * Returns an array of possible form field input types for GraphQL object generation.
 	 *
+	 * @todo make filterable.
+	 *
 	 * @param string $type . The current GF field type.
 	 */
 	public static function get_possible_form_field_child_types( string $type ) : ?array {
@@ -196,7 +198,7 @@ class Utils {
 					'radio'       => $prefix . 'RadioField',
 					'select'      => $prefix . 'SelectField',
 				];
-			case 'post_custom':
+			case 'post_custom_field':
 				return [
 					'checkbox'    => $prefix . 'CheckboxField',
 					'date'        => $prefix . 'DateField',
