@@ -249,19 +249,6 @@ class TypeRegistry {
 			WPObject\FormField\FieldValue\ValueProperty\PostImageValueProperty::class,
 			WPObject\FormField\FieldValue\ValueProperty\PostImageValueProperty::class,
 			WPObject\FormField\FieldValue\ValueProperty\TimeValueProperty::class,
-			// Form Field Values.
-			WPObject\FormField\FieldValue\AddressFieldValue::class,
-			WPObject\FormField\FieldValue\ChainedSelectFieldValue::class,
-			WPObject\FormField\FieldValue\CheckboxFieldValue::class,
-			WPObject\FormField\FieldValue\FileUploadFieldValue::class,
-			WPObject\FormField\FieldValue\ListFieldValue::class,
-			WPObject\FormField\FieldValue\MultiSelectFieldValue::class,
-			WPObject\FormField\FieldValue\NameFieldValue::class,
-			WPObject\FormField\FieldValue\PostCategoryFieldValue::class,
-			WPObject\FormField\FieldValue\PostCustomFieldValue::class,
-			WPObject\FormField\FieldValue\PostTagsFieldValue::class,
-			WPObject\FormField\FieldValue\QuizFieldValue::class,
-			WPObject\FormField\FieldValue\TimeFieldValue::class,
 			// Form Fields.
 			WPObject\FormField\FormFields::class,
 			// Field Error.

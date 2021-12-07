@@ -70,7 +70,6 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
 				'text'   => $this->fields[0]['choices'][1]['text'],
 				'value'   => null,
-
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
@@ -185,7 +184,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 				type
 				checkboxValues {
 					inputId
-          text
+					text
 					value
 				}
 				inputs {

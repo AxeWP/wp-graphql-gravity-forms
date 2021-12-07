@@ -101,22 +101,20 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return [
-			$this->fields[0]['choices'][0]['text'],
-		];
+		return $this->fields[0]['choices'][0]['text'];
 	}
 
 	/**
 	 * The graphql field value input.
 	 */
 	public function field_value_input() {
-		return $this->fields[0]['choices'][0]['value'];
+		return $this->fields[0]['choices'][0]['text'];
 	}
 	/**
 	 * The graphql field value input.
 	 */
 	public function updated_field_value_input() {
-		return $this->fields[0]['choices'][2]['value'];
+		return $this->fields[0]['choices'][2]['text'];
 	}
 
 
@@ -170,7 +168,6 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 				label
 				labelPlacement
 				gquizShowAnswerExplanation: showAnswerExplanation
-				values
 				choices {
 					gquizIsCorrect: isCorrect
 					text
@@ -186,6 +183,7 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 					noDuplicates
 					placeholder
 					size
+					value
 				}
 			}
 		';
@@ -207,8 +205,8 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 					entry {
 						formFields {
 							nodes {
-								... on QuizField {
-									values
+								... on QuizSelectField {
+									value
 								}
 							}
 						}
@@ -232,8 +230,8 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 					entry {
 						formFields {
 							nodes {
-								... on QuizField {
-									values
+								... on QuizSelectField {
+									value
 								}
 							}
 						}
@@ -257,8 +255,8 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 					entry {
 						formFields {
 							nodes {
-								... on QuizField {
-									values
+								... on QuizSelectField {
+									value
 								}
 							}
 						}
@@ -285,7 +283,7 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 								'nodes',
 								array_merge_recursive(
 									$this->property_helper->getAllActualValues( $form['fields'][0], ['gquizFieldType', 'enableOtherChoice', 'enableSelectAll', 'inputs' ] ),
-									[ 'values' => $this->field_value ],
+									[ 'value' => $this->field_value ],
 								)
 							),
 						]
@@ -314,8 +312,8 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 								'formFields',
 								[
 									$this->expectedNode(
-										'values',
-										$this->get_expected_fields( $value ),
+										'0',
+										$this->expectedField( 'value', $value ),
 									),
 								]
 							),
@@ -333,6 +331,6 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
-		$this->assertEquals( $this->field_value_input, $actual_entry[ $form['fields'][0]->id ] );
+		$this->assertEquals( $this->field_value_input, $actual_entry[ $form['fields'][0]->id ],'Submit mutation entry value not equal' );
 	}
 }

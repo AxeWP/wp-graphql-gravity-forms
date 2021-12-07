@@ -185,7 +185,6 @@ abstract class GFHelpers {
 	 */
 	public function getAllActualValues( $object, array $exclude = null ) {
 		$return_values = [];
-		codecept_debug( $object );
 		foreach ( $this->keys as $key ) {
 			if ( ! empty( $exclude ) && in_array( $key, $exclude, true ) ) {
 				continue;

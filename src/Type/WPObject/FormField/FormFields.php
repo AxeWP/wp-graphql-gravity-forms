@@ -226,5 +226,39 @@ class FormFields implements Registrable {
 		}
 
 		$properties += ValueProperties::value();
+
+		switch ( $field->get_input_type() ) {
+			// Ignore the quiz interface.
+			case 'quiz':
+				break;
+			case 'address':
+				$properties += ValueProperties::address_values();
+				break;
+			case 'chainedselect':
+				$properties += ValueProperties::chained_select_values();
+				break;
+			case 'checkbox':
+				$properties += ValueProperties::checkbox_values();
+				break;
+			case 'list':
+				$properties += ValueProperties::list_values();
+				break;
+			case 'name':
+				$properties += ValueProperties::name_values();
+				break;
+			case 'post_image':
+				$properties += ValueProperties::image_values();
+				break;
+			case 'time':
+				$properties += ValueProperties::time_values();
+				break;
+			case 'fileupload':
+			case 'multiselect':
+			case 'post_category':
+			case 'post_custom':
+			case 'post_tags':
+				$properties += ValueProperties::values();
+				break;
+		}
 	}
 }
