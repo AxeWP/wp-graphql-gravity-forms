@@ -95,7 +95,10 @@ class FormFieldConnections extends AbstractConnection {
 				'type'        => [ 'list_of' => FormFieldsEnum::$type ],
 				'description' => __( 'Array of Gravity Forms Field types to return.', 'wp-graphql-gravity-forms' ),
 			],
-			// @todo PageNumber
+			'page'        => [
+				'type'        => 'Int',
+				'description' => __( 'The form page number to return', 'wp-graphql-gravity-forms' ),
+			],
 		];
 	}
 
@@ -133,6 +136,12 @@ class FormFieldConnections extends AbstractConnection {
 			}
 
 			$fields = array_filter( $fields, fn( $field ) => in_array( $field['type'], $args['where']['types'], true ) );
+		}
+
+		if ( isset( $args['where']['page'] ) ) {
+			$page = absint( $args['where']['page'] );
+
+			$fields = array_filter( $fields, fn( $field ) => $page === (int) $field['pageNumber'] );
 		}
 
 		return $fields;
