@@ -101,22 +101,20 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return [
-			$this->fields[0]['choices'][0]['text'],
-		];
+		return $this->fields[0]['choices'][0]['text'];
 	}
 
 	/**
 	 * The graphql field value input.
 	 */
 	public function field_value_input() {
-		return $this->fields[0]['choices'][0]['value'];
+		return $this->fields[0]['choices'][0]['text'];
 	}
 	/**
 	 * The graphql field value input.
 	 */
 	public function updated_field_value_input() {
-		return $this->fields[0]['choices'][2]['value'];
+		return $this->fields[0]['choices'][2]['text'];
 	}
 
 
@@ -125,9 +123,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return [
-			$this->fields[0]['choices'][2]['text'],
-		];
+		return $this->fields[0]['choices'][2]['text'];
 	}
 
 
@@ -170,7 +166,6 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 				label
 				labelPlacement
 				gquizShowAnswerExplanation: showAnswerExplanation
-				values
 				choices {
 					gquizIsCorrect: isCorrect
 					text
@@ -179,6 +174,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 					isOtherChoice
 				}
 				... on QuizRadioField {
+					value
 					enableOtherChoice
 				}
 			}
@@ -201,8 +197,8 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 					entry {
 						formFields {
 							nodes {
-								... on QuizField {
-									values
+								... on QuizRadioField {
+									value
 								}
 							}
 						}
@@ -226,8 +222,8 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 					entry {
 						formFields {
 							nodes {
-								... on QuizField {
-									values
+								... on QuizRadioField {
+									value
 								}
 							}
 						}
@@ -251,8 +247,8 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 					entry {
 						formFields {
 							nodes {
-								... on QuizField {
-									values
+								... on QuizRadioField {
+									value
 								}
 							}
 						}
@@ -279,7 +275,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 								'nodes',
 								array_merge_recursive(
 									$this->property_helper->getAllActualValues( $form['fields'][0], ['gquizFieldType', 'enableSelectAll', 'inputs', 'autocompleteAttribute', 'defaultValue', 'enableAutocomplete', 'enableEnhancedUI', 'noDuplicates', 'placeholder', 'size' ] ),
-									[ 'values' => $this->field_value ],
+									[ 'value' => $this->field_value ],
 								)
 							),
 						]
@@ -308,8 +304,8 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 								'formFields',
 								[
 									$this->expectedNode(
-										'values',
-										$this->get_expected_fields( $value ),
+										'0',
+										$this->expectedField( 'value', $value ),
 									),
 								]
 							),
@@ -327,6 +323,6 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
-		$this->assertEquals( $this->field_value_input, $actual_entry[ $form['fields'][0]->id ] );
+		$this->assertEquals( $this->field_value_input, $actual_entry[ $form['fields'][0]->id ], 'Submit mutation entry value not equal' );
 	}
 }

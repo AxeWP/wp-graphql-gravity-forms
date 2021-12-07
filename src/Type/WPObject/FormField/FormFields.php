@@ -17,6 +17,7 @@ use GraphQL\Error\UserError;
 use WPGraphQL\GF\Interfaces\Registrable;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty\PropertyMapper;
+use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperties;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -206,6 +207,58 @@ class FormFields implements Registrable {
 				PropertyMapper::$setting( $field, $properties );
 			}
 		}
+
+		// Add field values to properties.
+		self::map_field_values_to_properties( $field, $properties );
+
 		return $properties;
+	}
+
+	/**
+	 * Adds the Gravity Forms field-specific entry value.
+	 *
+	 * @param GF_Field $field .
+	 * @param array    $properties .
+	 */
+	public static function map_field_values_to_properties( GF_Field $field, array &$properties ) : void {
+		if ( ! empty( $field->displayOnly ) ) {
+			return;
+		}
+
+		$properties += ValueProperties::value();
+
+		switch ( $field->get_input_type() ) {
+			// Ignore the quiz interface.
+			case 'quiz':
+				break;
+			case 'address':
+				$properties += ValueProperties::address_values();
+				break;
+			case 'chainedselect':
+				$properties += ValueProperties::chained_select_values();
+				break;
+			case 'checkbox':
+				$properties += ValueProperties::checkbox_values();
+				break;
+			case 'list':
+				$properties += ValueProperties::list_values();
+				break;
+			case 'name':
+				$properties += ValueProperties::name_values();
+				break;
+			case 'post_image':
+				$properties += ValueProperties::image_values();
+				break;
+			case 'time':
+				$properties += ValueProperties::time_values();
+				break;
+			case 'fileupload':
+			case 'multiselect':
+			case 'post_category':
+			case 'post_custom':
+			case 'post_tags':
+				$properties += ValueProperties::values();
+				break;
+		}
 	}
 }

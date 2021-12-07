@@ -121,9 +121,21 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function field_value() {
 		return [
-			$this->fields[0]['choices'][0]['text'],
-			$this->fields[0]['choices'][2]['text'],
-			null,
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
+				'text'    => $this->fields[0]['choices'][0]['text'],
+				'value'   => $this->fields[0]['choices'][0]['value'],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
+				'text'   => $this->fields[0]['choices'][1]['text'],
+				'value'   => null,
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
+				'value'   => $this->fields[0]['choices'][2]['value'],
+				'text'    => $this->fields[0]['choices'][2]['text'],
+			],
 		];
 	}
 
@@ -131,18 +143,19 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 * The graphql field value input.
 	 */
 	public function field_value_input() {
+		$field_value = $this->field_value();
 		return [
 			[
-				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
-				'value'   => $this->fields[0]['choices'][0]['value'],
+				'inputId' => $field_value[0]['inputId'],
+				'value'   => $field_value[0]['value'],
 			],
 			[
-				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
-				'value'   => null,
+				'inputId' => $field_value[1]['inputId'],
+				'value'   => $field_value[1]['value'],
 			],
 			[
-				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
-				'value'   => $this->fields[0]['choices'][2]['value'],
+				'inputId' => $field_value[2]['inputId'],
+				'value'   => $field_value[2]['value'],
 			],
 		];
 	}
@@ -150,20 +163,22 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 * The graphql field value input.
 	 */
 	public function updated_field_value_input() {
+		$field_value = $this->updated_field_value();
 		return [
 			[
-				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
-				'value'   => null,
+				'inputId' => $field_value[0]['inputId'],
+				'value'   => $field_value[0]['value'],
 			],
 			[
-				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
-				'value'   => $this->fields[0]['choices'][1]['value'],
+				'inputId' => $field_value[1]['inputId'],
+				'value'   => $field_value[1]['value'],
 			],
 			[
-				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
-				'value'   => $this->fields[0]['choices'][2]['value'],
+				'inputId' => $field_value[2]['inputId'],
+				'value'   => $field_value[2]['value'],
 			],
-		];  }
+		];
+	}
 
 
 
@@ -172,9 +187,21 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function updated_field_value() {
 		return [
-			$this->fields[0]['choices'][1]['text'],
-			$this->fields[0]['choices'][2]['text'],
-			null,
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
+				'value'   => null,
+				'text'    => $this->fields[0]['choices'][0]['text'],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
+				'text'    => $this->fields[0]['choices'][1]['text'],
+				'value'   => $this->fields[0]['choices'][1]['value'],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
+				'text'    => $this->fields[0]['choices'][2]['text'],
+				'value'   => $this->fields[0]['choices'][2]['value'],
+			],
 		];
 	}
 
@@ -183,8 +210,8 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function value() {
 		return [
-			(string) $this->fields[0]['inputs'][0]['id'] => $this->fields[0]['choices'][0]['text'],
-			(string) $this->fields[0]['inputs'][1]['id'] => $this->fields[0]['choices'][2]['text'],
+			(string) $this->field_value[0]['inputId'] => $this->field_value[0]['value'],
+			(string) $this->field_value[2]['inputId'] => $this->field_value[2]['value'],
 		];
 	}
 
@@ -220,7 +247,6 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 				label
 				labelPlacement
 				gquizShowAnswerExplanation: showAnswerExplanation
-				values
 				choices {
 					gquizIsCorrect: isCorrect
 					text
@@ -229,6 +255,11 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					isOtherChoice
 				}
 				... on QuizCheckboxField {
+					checkboxValues {
+						inputId
+						text
+						value
+					}
 					enableSelectAll
 						inputs {
 						id
@@ -257,7 +288,11 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 						formFields {
 							nodes {
 								... on QuizCheckboxField {
-									values
+									checkboxValues {
+										inputId
+										text
+										value
+									}
 								}
 							}
 						}
@@ -282,7 +317,11 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 						formFields {
 							nodes {
 								... on QuizCheckboxField {
-									values
+									checkboxValues {
+										inputId
+										text
+										value
+									}
 								}
 							}
 						}
@@ -307,7 +346,11 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 						formFields {
 							nodes {
 								... on QuizCheckboxField {
-									values
+									checkboxValues {
+										inputId
+										text
+										value
+									}
 								}
 							}
 						}
@@ -334,7 +377,7 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 								'nodes',
 								array_merge_recursive(
 									$this->property_helper->getAllActualValues( $form['fields'][0], ['gquizFieldType', 'enableOtherChoice', 'autocompleteAttribute', 'defaultValue', 'enableAutocomplete', 'enableEnhancedUI', 'noDuplicates', 'placeholder', 'size' ] ),
-									[ 'values' => $this->field_value ],
+									[ 'checkboxValues' => $this->field_value ],
 								)
 							),
 						]
@@ -363,7 +406,7 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 								'formFields',
 								[
 									$this->expectedNode(
-										'values',
+										'checkboxValues',
 										$this->get_expected_fields( $value ),
 									),
 								]
@@ -382,8 +425,8 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
-		$this->assertEquals( $this->field_value_input[0]['value'], $actual_entry[ $form['fields'][0]['inputs'][0]['id'] ] );
-		$this->assertEquals( $this->field_value_input[1]['value'], $actual_entry[ $form['fields'][0]['inputs'][1]['id'] ] );
-		$this->assertEquals( $this->field_value_input[2]['value'], $actual_entry[ $form['fields'][0]['inputs'][2]['id'] ] );
+		$this->assertEquals( $this->field_value[0]['value'], $actual_entry[ $form['fields'][0]['inputs'][0]['id'] ] );
+		$this->assertEquals( $this->field_value[1]['value'], $actual_entry[ $form['fields'][0]['inputs'][1]['id'] ] );
+		$this->assertEquals( $this->field_value[2]['value'], $actual_entry[ $form['fields'][0]['inputs'][2]['id'] ] );
 	}
 }
