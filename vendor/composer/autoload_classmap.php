@@ -24,7 +24,6 @@ return array(
     'WPGraphQL\\GF\\Interfaces\\Enum' => $baseDir . '/src/Interfaces/Enum.php',
     'WPGraphQL\\GF\\Interfaces\\Field' => $baseDir . '/src/Interfaces/Field.php',
     'WPGraphQL\\GF\\Interfaces\\FieldProperty' => $baseDir . '/src/Interfaces/FieldProperty.php',
-    'WPGraphQL\\GF\\Interfaces\\FieldValue' => $baseDir . '/src/Interfaces/FieldValue.php',
     'WPGraphQL\\GF\\Interfaces\\Mutation' => $baseDir . '/src/Interfaces/Mutation.php',
     'WPGraphQL\\GF\\Interfaces\\Registrable' => $baseDir . '/src/Interfaces/Registrable.php',
     'WPGraphQL\\GF\\Interfaces\\Type' => $baseDir . '/src/Interfaces/Type.php',

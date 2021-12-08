@@ -39,7 +39,6 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
         'WPGraphQL\\GF\\Interfaces\\Enum' => __DIR__ . '/../..' . '/src/Interfaces/Enum.php',
         'WPGraphQL\\GF\\Interfaces\\Field' => __DIR__ . '/../..' . '/src/Interfaces/Field.php',
         'WPGraphQL\\GF\\Interfaces\\FieldProperty' => __DIR__ . '/../..' . '/src/Interfaces/FieldProperty.php',
-        'WPGraphQL\\GF\\Interfaces\\FieldValue' => __DIR__ . '/../..' . '/src/Interfaces/FieldValue.php',
         'WPGraphQL\\GF\\Interfaces\\Mutation' => __DIR__ . '/../..' . '/src/Interfaces/Mutation.php',
         'WPGraphQL\\GF\\Interfaces\\Registrable' => __DIR__ . '/../..' . '/src/Interfaces/Registrable.php',
         'WPGraphQL\\GF\\Interfaces\\Type' => __DIR__ . '/../..' . '/src/Interfaces/Type.php',
