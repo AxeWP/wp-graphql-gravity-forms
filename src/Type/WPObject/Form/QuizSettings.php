@@ -10,6 +10,7 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
+use WPGraphQL\AppContext;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 use WPGraphQL\GF\Type\Enum\QuizGradingTypeEnum;
@@ -92,12 +93,12 @@ class QuizSettings extends AbstractObject {
 			'maxScore'                            => [
 				'type'        => 'Float',
 				'description' => __( 'The maximum score for this form.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $root, array $args ) : ?float {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) : ?float {
 					if ( ! class_exists( 'GFQuiz' ) ) {
 						return null;
 					}
 
-					return ( gf_quiz() )->get_max_score( $root['form'] ) ?: null;
+					return ( gf_quiz() )->get_max_score( $context->gfForm ) ?: null;
 				},
 			],
 		];
