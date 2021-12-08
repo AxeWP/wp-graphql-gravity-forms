@@ -122,7 +122,6 @@ class TypeRegistry {
 			Enum\ConditionalLogicLogicTypeEnum::class,
 			Enum\ConfirmationTypeEnum::class,
 			Enum\CreditCardTypeEnum::class,
-			Enum\CreditCardStyleEnum::class,
 			Enum\DateFieldFormatEnum::class,
 			Enum\DateTypeEnum::class,
 			Enum\DescriptionPlacementPropertyEnum::class,
