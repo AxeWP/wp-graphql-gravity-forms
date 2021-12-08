@@ -303,8 +303,6 @@ class TypeRegistry {
 
 	/**
 	 * Registers mutation.
-	 *
-	 * @todo convert mutations to a static class, and this to a list of Registrable classes.
 	 */
 	public static function mutations() : array {
 		$classes_to_register = [
