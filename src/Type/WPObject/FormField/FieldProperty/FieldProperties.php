@@ -665,6 +665,19 @@ class FieldProperties {
 	}
 
 	/**
+	 * Get 'dropdownPlaceholder' property.
+	 */
+	public static function dropdown_placeholder() : array {
+		return [
+			'dropdownPlaceholder' => [
+				'type'        => 'String',
+				'description' => __( 'The dropdown placeholder for the field', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->categoryInitialItem ) ? $source->categoryInitialItem : null,
+			],
+		];
+	}
+
+	/**
 	 * Get 'email_confirm_enabled' property.
 	 */
 	public static function email_confirm_enabled() : array {

@@ -849,11 +849,12 @@ class PropertyMapper {
 	/**
 	 * Maps the `post_category_initial_item_setting` to its field properties.
 	 *
-	 * @todo implement property.
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
-	public static function post_category_initial_item_setting( GF_Field $field, array &$properties ) : void {}
+	public static function post_category_initial_item_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::dropdown_placeholder();
+	}
 
 	/**
 	 * Maps the `post_custom_field_setting` to its field properties.
