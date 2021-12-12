@@ -781,7 +781,7 @@ class FieldProperties {
 			'enableRandomizeQuizChoices' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether to randomize the order in which the answers are displayed to the user.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $root['gquizEnableRandomizeQuizChoices'] ),
+				'resolve'     => fn( $source ) : bool => ! empty( $source['gquizEnableRandomizeQuizChoices'] ),
 			],
 		];
 	}
