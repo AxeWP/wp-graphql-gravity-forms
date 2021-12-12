@@ -42,7 +42,7 @@ class EntriesFieldFiltersInput extends AbstractInput {
 				'type'        => FieldFiltersOperatorInputEnum::$type,
 				'description' => __( 'The operator to use for filtering.', 'wp-graphql-gravity-forms' ),
 			],
-			// @TODO - Is there a cleaner way to do this? Values can be any of these types.
+			// @todo - Is there a cleaner way to do this? Values can be any of these types.
 			'stringValues' => [
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'The field value(s) to filter by. Must be string values. If using this field, do not also use intValues, floatValues or boolValues.', 'wp-graphql-gravity-forms' ),

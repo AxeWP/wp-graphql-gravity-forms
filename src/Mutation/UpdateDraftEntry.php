@@ -124,7 +124,7 @@ class UpdateDraftEntry extends AbstractMutation {
 				$form,
 				$submission['partial_entry'],
 				$submission['field_values'],
-				$submission['page_number'] ?? 1, // @TODO: Maybe get from request.
+				$submission['page_number'] ?? 1, // @todo: Maybe get from request.
 				$submission['files'] ?? [],
 				$submission['gform_unique_id'] ?? null,
 				$submission['partial_entry']['ip'],
