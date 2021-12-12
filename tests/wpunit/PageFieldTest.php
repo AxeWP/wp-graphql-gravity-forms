@@ -71,6 +71,15 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					text
 					type
 				}
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
 			}
 		';
 	}

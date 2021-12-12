@@ -625,6 +625,19 @@ class Wpunit extends \Codeception\Module {
 	public function getPageFieldArgs() : array {
 		return [
 			'adminLabel',
+			[
+				'conditionalLogic' => [
+					'actionType' => 'hide',
+					'logicType'  => 'any',
+					'rules'      => [
+						[
+							'fieldId'  => 1,
+							'operator' => 'is',
+							'value'    => 'value2',
+						],
+					],
+				],
+			],
 			['displayOnly' => true],
 			'inputName',
 			'label',

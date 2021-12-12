@@ -837,8 +837,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'formattedPrice' property.
-	 *
-	 * @todo replace with GFCommon::to_money()
 	 */
 	public static function formatted_price() : array {
 		return [
