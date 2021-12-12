@@ -49,6 +49,6 @@ class PostFormatTypeEnum extends AbstractEnum {
 			];
 		}
 
-		return $values ?? [];
+		return $values;
 	}
 }

@@ -69,7 +69,7 @@ class Entry extends Model {
 				'formId'          => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
 				'id'              => fn() : string => Relay::toGlobalId( GraphQLEntry::$type, $this->data['resumeToken'] ?? (string) $this->data['id'] ),
 				'ip'              => fn() : ?string => ! empty( $this->data['ip'] ) ? $this->data['ip'] : null,
-				'isDraft'         => fn() : bool => empty( $this->data['id'] ) ?? false,
+				'isDraft'         => fn() : bool => empty( $this->data['id'] ),
 				'isFulfilled'     => fn() : bool => ! empty( $this->data['is_fulfilled'] ),
 				'isStarred'       => fn() : bool => ! empty( $this->data['is_starred'] ),
 				'isRead'          => fn() : bool => ! empty( $this->data['is_read'] ),

@@ -9,8 +9,6 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 use WPGraphQL\Type\WPEnumType;
-use WPGraphQL\GF\Type\WPObject\FormField\AbstractFormField;
-use WPGraphQL\GF\GF;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
@@ -48,6 +46,6 @@ class FormFieldTypeEnum extends AbstractEnum {
 			];
 		}
 
-		return $values ?? [];
+		return $values;
 	}
 }

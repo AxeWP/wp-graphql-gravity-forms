@@ -44,7 +44,7 @@ class FormFieldConnections extends AbstractConnection {
 							return null;
 						}
 
-						$fields = static::filter_form_fields_by_connection_args( $source->formFields, $args );
+						$fields = self::filter_form_fields_by_connection_args( $source->formFields, $args );
 
 						return FormFieldsConnectionResolver::resolve( $fields, $args, $context, $info );
 					},

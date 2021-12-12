@@ -52,6 +52,6 @@ class AddressCountryEnum extends AbstractEnum {
 			];
 		}
 
-		return $values ?? [];
+		return $values;
 	}
 }
