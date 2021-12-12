@@ -127,8 +127,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 				'enableHoneypot'             => $form['enableHoneypot'],
 				'formFields'                 => [
 					'nodes' => [
-						[ 'type' => $form['fields'][0]['type'] ],
-						[ 'type' => $form['fields'][1]['type'] ],
+						[ 'type' => $this->tester->get_enum_for_value( Enum\FormFieldTypeEnum::$type, $form['fields'][0]['type'] ) ],
+						[ 'type' => $this->tester->get_enum_for_value( Enum\FormFieldTypeEnum::$type, $form['fields'][1]['type'] ) ],
 					],
 				],
 				'firstPageCssClass'          => $form['firstPageCssClass'],

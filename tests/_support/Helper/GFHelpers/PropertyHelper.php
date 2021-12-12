@@ -208,7 +208,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function inputType( $value = null ) {
-		return isset( $value ) ? $value : '';
+		return isset( $value ) ? $value : null;
 	}
 
 	public function gquizAnswerExplanation( string $value = null ) : ?string {

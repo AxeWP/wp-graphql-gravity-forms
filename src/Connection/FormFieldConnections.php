@@ -17,7 +17,7 @@ use WPGraphQL\GF\Model\Form as FormModel;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\GF\Type\WPInterface\FormField;
-use WPGraphQL\GF\Type\Enum\FormFieldsEnum;
+use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
 use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -92,7 +92,7 @@ class FormFieldConnections extends AbstractConnection {
 				'description' => __( 'Array of form field adminLabels to return.', 'wp-graphql-gravity-forms' ),
 			],
 			'types'       => [
-				'type'        => [ 'list_of' => FormFieldsEnum::$type ],
+				'type'        => [ 'list_of' => FormFieldTypeEnum::$type ],
 				'description' => __( 'Array of Gravity Forms Field types to return.', 'wp-graphql-gravity-forms' ),
 			],
 			'page'        => [

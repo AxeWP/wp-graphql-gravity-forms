@@ -41,6 +41,7 @@ class Wpunit extends \Codeception\Module {
 			'cssClass',
 			'formId',
 			[ 'id' => 1 ],
+			['inputType' => null ],
 			'layoutGridColumnSpan',
 			'layoutSpacerGridColumnSpan',
 			'pageNumber',

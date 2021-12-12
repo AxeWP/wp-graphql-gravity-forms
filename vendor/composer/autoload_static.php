@@ -74,7 +74,7 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
         'WPGraphQL\\GF\\Type\\Enum\\FieldFiltersModeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FieldFiltersModeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FieldFiltersOperatorInputEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FieldFiltersOperatorInputEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormDescriptionPlacementEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormDescriptionPlacementEnum.php',
-        'WPGraphQL\\GF\\Type\\Enum\\FormFieldsEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormFieldsEnum.php',
+        'WPGraphQL\\GF\\Type\\Enum\\FormFieldTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormFieldTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormLabelPlacementEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormLabelPlacementEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormLimitEntriesPeriodEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormLimitEntriesPeriodEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormStatusEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormStatusEnum.php',

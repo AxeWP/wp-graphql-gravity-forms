@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - FormFieldsEnum
+ * Enum Type - FormFieldTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.0.1
@@ -14,15 +14,15 @@ use WPGraphQL\GF\GF;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
- * Class - FormFieldsEnum
+ * Class - FormFieldTypeEnum
  */
-class FormFieldsEnum extends AbstractEnum {
+class FormFieldTypeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'FormFieldsEnum';
+	public static string $type = 'FormFieldTypeEnum';
 
 
 	/**
@@ -44,7 +44,7 @@ class FormFieldsEnum extends AbstractEnum {
 			$values[ WPEnumType::get_safe_name( $gf_type ) ] = [
 				'value'       => $gf_type,
 				// translators: GF Field type.
-				'description' => sprintf( __( 'FormField enum %s.', 'wp-graphql-gravity-forms' ), $gf_type ),
+				'description' => sprintf( __( 'A Gravity Forms %s field.', 'wp-graphql-gravity-forms' ), $gf_type ),
 			];
 		}
 

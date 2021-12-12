@@ -132,6 +132,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 							displayOnly
 							formId
 							id
+							inputType
 							layoutGridColumnSpan
 							layoutSpacerGridColumnSpan
 							pageNumber

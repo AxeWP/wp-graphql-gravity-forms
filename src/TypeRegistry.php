@@ -129,7 +129,7 @@ class TypeRegistry {
 			Enum\FieldFiltersModeEnum::class,
 			Enum\FieldFiltersOperatorInputEnum::class,
 			Enum\FormDescriptionPlacementEnum::class,
-			Enum\FormFieldsEnum::class,
+			Enum\FormFieldTypeEnum::class,
 			Enum\FormLabelPlacementEnum::class,
 			Enum\FormLimitEntriesPeriodEnum::class,
 			Enum\FormStatusEnum::class,

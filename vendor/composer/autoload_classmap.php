@@ -59,7 +59,7 @@ return array(
     'WPGraphQL\\GF\\Type\\Enum\\FieldFiltersModeEnum' => $baseDir . '/src/Type/Enum/FieldFiltersModeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FieldFiltersOperatorInputEnum' => $baseDir . '/src/Type/Enum/FieldFiltersOperatorInputEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FormDescriptionPlacementEnum' => $baseDir . '/src/Type/Enum/FormDescriptionPlacementEnum.php',
-    'WPGraphQL\\GF\\Type\\Enum\\FormFieldsEnum' => $baseDir . '/src/Type/Enum/FormFieldsEnum.php',
+    'WPGraphQL\\GF\\Type\\Enum\\FormFieldTypeEnum' => $baseDir . '/src/Type/Enum/FormFieldTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FormLabelPlacementEnum' => $baseDir . '/src/Type/Enum/FormLabelPlacementEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FormLimitEntriesPeriodEnum' => $baseDir . '/src/Type/Enum/FormLimitEntriesPeriodEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FormStatusEnum' => $baseDir . '/src/Type/Enum/FormStatusEnum.php',
