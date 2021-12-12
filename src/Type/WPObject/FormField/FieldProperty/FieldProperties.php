@@ -991,13 +991,11 @@ class FieldProperties {
 
 	/**
 	 * Get 'maxFiles' property.
-	 *
-	 * @todo make Int
 	 */
 	public static function max_files() : array {
 		return [
 			'maxFiles' => [
-				'type'        => 'String',
+				'type'        => 'Int',
 				'description' => __( 'When the field is set to allow multiple files to be uploaded, this property is available to set a limit on how many may be uploaded.', 'wp-graphql-gravity-forms' ),
 			],
 		];
