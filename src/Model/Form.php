@@ -74,7 +74,7 @@ class Form extends Model {
 				'enableAnimation'            => fn() : bool => $this->data['enableAnimation'] ?? false,
 				'enableHoneypot'             => fn() : bool => $this->data['enableHoneypot'] ?? false,
 				'firstPageCssClass'          => fn() : ?string => $this->data['firstPageCssClass'] ?? null,
-				// @todo switch to model.
+				// @todo maybe switch to model.
 				'formFields'                 => function() : ?array {
 					$return = ! empty( $this->data['fields'] ) ? $this->data['fields'] : null;
 					return $return;

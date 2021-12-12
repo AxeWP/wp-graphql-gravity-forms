@@ -217,8 +217,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'calendarIconUrl' property.
-	 *
-	 * @todo convert to enum
 	 */
 	public static function calendar_icon_url() : array {
 		return [
@@ -1003,8 +1001,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'maxFileSize' property.
-	 *
-	 * @todo make Int
 	 */
 	public static function max_file_size() : array {
 		return [
@@ -1017,8 +1013,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'maxRows' property.
-	 *
-	 * @todo make Int
 	 */
 	public static function max_rows() : array {
 		return [
@@ -1043,8 +1037,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'multipleFiles' property.
-	 *
-	 * @todo make Int
 	 */
 	public static function multiple_files() : array {
 		return [
@@ -1179,8 +1171,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'postCustomFieldName' property.
-	 *
-	 * @todo Convert to enum.
 	 */
 	public static function post_custom_field_name() : array {
 		return [

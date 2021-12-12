@@ -402,20 +402,16 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	private function get_paging() : array {
 		/**
 		 * Throw error if querying by first + before.
-		 *
-		 * @todo support `first` + `before`.
 		 */
 		if ( ! empty( $this->args['first'] ) && ! empty( $this->args['before'] ) ) {
-				throw new UserError( __( 'Sorry, `before` pagination is currently not supported when `first` is set.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( __( '`before` pagination is currently not supported when `first` is set.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		/**
 		 * Throw error if querying by last + after.
-		 *
-		 * @todo support `last` + `after`
 		 */
 		if ( ! empty( $this->args['last'] ) && ! empty( $this->args['after'] ) ) {
-				throw new UserError( __( 'Sorry, `last` pagination is currently not supported when `after` is set.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( __( '`after` pagination is currently not supported when `last` is set.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		return [
