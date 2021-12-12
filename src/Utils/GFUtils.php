@@ -459,7 +459,7 @@ class GFUtils {
 	 */
 	public static function handle_file_upload( $file, $target ) {
 		// Default to uploads dir if alternative not provided.
-		$target = $target ?? wp_upload_dir();
+		$target = $target ?: wp_upload_dir();
 
 		// Check if filetype & ext are valid.
 		$wp_filetype     = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
