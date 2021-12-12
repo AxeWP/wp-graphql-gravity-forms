@@ -340,15 +340,27 @@ class FieldProperties {
 	}
 
 	/**
+	 * Get the 'formattedPrice' choice property.
+	 */
+	public static function choice_formatted_price() : array {
+		return [
+			'formattedPrice' => [
+				'type'        => 'String',
+				'description' => __( 'The price associated with the choice.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source['price'] ) ? $source['price'] : null,
+			],
+		];
+	}
+
+	/**
 	 * Get the 'price' choice property.
-	 *
-	 * @todo check type.
 	 */
 	public static function choice_price() : array {
 		return [
 			'price' => [
-				'type'        => 'String',
+				'type'        => 'Float',
 				'description' => __( 'The price associated with the choice.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source['price'] ) ? floatval( preg_replace( '/[^\d\.]/', '', $source['price'] ) ) : null,
 			],
 		];
 	}

@@ -267,6 +267,7 @@ class PropertyMapper {
 		// Add pricing property.
 		if ( ! empty( $field->enablePrice ) || in_array( $field->type, [ 'product', 'option', 'shipping' ], true ) ) {
 			$choice_fields += FieldProperties::choice_price();
+			$choice_fields += FieldProperties::choice_formatted_price();
 		}
 
 		$properties += ChoiceMapper::map_choices( $field, $choice_fields );
