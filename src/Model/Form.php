@@ -114,7 +114,6 @@ class Form extends Model {
 				'postCategory'               => fn() : ?int => isset( $this->data['postCategory'] ) ? (int) $this->data['postCategory'] : null,
 				'postContentTemplate'        => fn() : ?string => $this->data['postContentTemplate'] ?? null,
 				'postContentTemplateEnabled' => fn() : bool => $this->data['postContentTemplateEnabled'] ?? false,
-				// @todo convert to enum.
 				'postFormat'                 => fn() : ?string => $this->data['postFormat'] ?? null,
 				'postStatus'                 => fn() : ?string => $this->data['postStatus'] ?? null,
 				'postTitleTemplate'          => fn() : ?string => $this->data['postTitleTemplate'] ?? null,

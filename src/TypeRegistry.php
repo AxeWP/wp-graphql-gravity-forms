@@ -142,6 +142,7 @@ class TypeRegistry {
 			Enum\PageProgressStyleEnum::class,
 			Enum\PageProgressTypeEnum::class,
 			Enum\PhoneFieldFormatEnum::class,
+			Enum\PostFormatTypeEnum::class,
 			Enum\QuizFieldTypeEnum::class,
 			Enum\QuizGradingTypeEnum::class,
 			Enum\RequiredIndicatorEnum::class,
