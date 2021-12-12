@@ -137,6 +137,12 @@ abstract class GFHelpers {
 				$string = ucfirst( $key ) . 'PropertyEnum';
 				$value  = $this->get_enum_for_value( $string, $object->$key );
 				break;
+			case 'country':
+			case 'defaultCountry':
+				// @todo: rename classes.
+				$string = 'AddressCountryEnum';
+				$value  = $this->get_enum_for_value( $string, $object->$key );
+				break;
 			case 'dateFormat':
 				// @todo: rename classes.
 				$string = 'DateFieldFormatEnum';

@@ -42,6 +42,7 @@ return array(
     'WPGraphQL\\GF\\TypeRegistry' => $baseDir . '/src/TypeRegistry.php',
     'WPGraphQL\\GF\\Type\\AbstractType' => $baseDir . '/src/Type/AbstractType.php',
     'WPGraphQL\\GF\\Type\\Enum\\AbstractEnum' => $baseDir . '/src/Type/Enum/AbstractEnum.php',
+    'WPGraphQL\\GF\\Type\\Enum\\AddressCountryEnum' => $baseDir . '/src/Type/Enum/AddressCountryEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\AddressTypeEnum' => $baseDir . '/src/Type/Enum/AddressTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\ButtonTypeEnum' => $baseDir . '/src/Type/Enum/ButtonTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\CalendarIconTypeEnum' => $baseDir . '/src/Type/Enum/CalendarIconTypeEnum.php',

@@ -113,6 +113,7 @@ class TypeRegistry {
 		// Enums to register.
 		$classes_to_register = [
 			Enum\AddressTypeEnum::class,
+			Enum\AddressCountryEnum::class,
 			Enum\ButtonTypeEnum::class,
 			Enum\CalendarIconTypeEnum::class,
 			Enum\CaptchaThemeEnum::class,

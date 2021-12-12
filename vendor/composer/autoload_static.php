@@ -57,6 +57,7 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
         'WPGraphQL\\GF\\TypeRegistry' => __DIR__ . '/../..' . '/src/TypeRegistry.php',
         'WPGraphQL\\GF\\Type\\AbstractType' => __DIR__ . '/../..' . '/src/Type/AbstractType.php',
         'WPGraphQL\\GF\\Type\\Enum\\AbstractEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AbstractEnum.php',
+        'WPGraphQL\\GF\\Type\\Enum\\AddressCountryEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AddressCountryEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\AddressTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AddressTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\ButtonTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/ButtonTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\CalendarIconTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/CalendarIconTypeEnum.php',

@@ -10,6 +10,7 @@ namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
 
 use GF_Field;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Type\Enum\AddressCountryEnum;
 use WPGraphQL\GF\Type\Enum\AddressTypeEnum;
 use WPGraphQL\GF\Type\Enum\CalendarIconTypeEnum;
 use WPGraphQL\GF\Type\Enum\CaptchaThemeEnum;
@@ -229,8 +230,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'captchaLanguage' property.
-	 *
-	 * @todo convert to enum
 	 */
 	public static function captcha_language() : array {
 		return [
@@ -496,13 +495,11 @@ class FieldProperties {
 
 	/**
 	 * Get 'defaultCountry' property.
-	 *
-	 * @todo make enum.
 	 */
 	public static function default_country() : array {
 		return [
 			'defaultCountry' => [
-				'type'        => 'String',
+				'type'        => AddressCountryEnum::$type,
 				'description' => __( 'Contains the country that will be selected by default. Only applicable when "addressType" is set to "INTERATIONAL".', 'wp-graphql-gravity-forms' ),
 			],
 		];
