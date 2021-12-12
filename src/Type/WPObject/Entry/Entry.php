@@ -71,28 +71,20 @@ class Entry extends AbstractObject implements Field {
 	 */
 	public static function get_fields() : array {
 		return [
-			'id'             => [
-				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
+			'createdBy'      => [
+				'type'        => 'User',
+				'description' => __( 'The user who created the entry.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $source, array $args, AppContext $context ) {
+					if ( empty( $source->createdById ) ) {
+						return null;
+					}
+
+					return DataSource::resolve_user( $source->createdById, $context );
+				},
 			],
-			'entryId'        => [
+			'createdById'    => [
 				'type'        => 'Int',
-				'description' => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => $source->databaseId ?? null,
-			],
-			'form'           => [
-				'type'        => Form::$type,
-				'description' => __( 'The form used to generate this entry.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source, array $args, AppContext $context ) => Factory::resolve_form( $source->formId, $context ),
-			],
-			'formId'         => [
-				'type'        => 'Int',
-				'description' => __( 'The ID of the form that was submitted to generate this entry.', 'wp-graphql-gravity-forms' ),
-			],
-			// @TODO: Add field to get post data.
-			'postId'         => [
-				'type'        => 'Int',
-				'description' => __( 'For forms with Post fields, this property contains the Id of the Post that was created.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
 			'dateCreated'    => [
 				'type'        => 'String',
@@ -112,6 +104,28 @@ class Entry extends AbstractObject implements Field {
 				'type'        => 'String',
 				'description' => __( 'The date and time that the entry was updated, in the format "Y-m-d H:i:s" (i.e. 2010-07-15 17:26:58).', 'wp-graphql-gravity-forms' ),
 			],
+			'entryId'        => [
+				'type'        => 'Int',
+				'description' => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => $source->databaseId ?? null,
+			],
+			'form'           => [
+				'type'        => Form::$type,
+				'description' => __( 'The form used to generate this entry.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source, array $args, AppContext $context ) => Factory::resolve_form( $source->formId, $context ),
+			],
+			'formId'         => [
+				'type'        => 'Int',
+				'description' => __( 'The ID of the form that was submitted to generate this entry.', 'wp-graphql-gravity-forms' ),
+			],
+			'id'             => [
+				'type'        => [ 'non_null' => 'ID' ],
+				'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
+			],
+			'ip'             => [
+				'type'        => 'String',
+				'description' => __( 'Client IP of user who submitted the form.', 'wp-graphql-gravity-forms' ),
+			],
 			'isStarred'      => [
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates if the entry has been starred (i.e marked with a star). 1 for entries that are starred and 0 for entries that are not starred.', 'wp-graphql-gravity-forms' ),
@@ -120,40 +134,18 @@ class Entry extends AbstractObject implements Field {
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates if the entry has been read. 1 for entries that are read and 0 for entries that have not been read.', 'wp-graphql-gravity-forms' ),
 			],
-			'ip'             => [
-				'type'        => 'String',
-				'description' => __( 'Client IP of user who submitted the form.', 'wp-graphql-gravity-forms' ),
-			],
-			'sourceUrl'      => [
-				'type'        => 'String',
-				'description' => __( 'Source URL of page that contained the form when it was submitted.', 'wp-graphql-gravity-forms' ),
-			],
-			'userAgent'      => [
-				'type'        => 'String',
-				'description' => __( 'Provides the name and version of both the browser and operating system from which the entry was submitted.', 'wp-graphql-gravity-forms' ),
-			],
-			'createdBy'      => [
-				'type'        => 'User',
-				'description' => __( 'The user who created the entry.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source, array $args, AppContext $context ) {
-					if ( empty( $source->createdById ) ) {
-						return null;
-					}
-
-					return DataSource::resolve_user( $source->createdById, $context );
-				},
-			],
-			'createdById'    => [
-				'type'        => 'Int',
-				'description' => __( 'ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
-			],
-			'status'         => [
-				'type'        => EntryStatusEnum::$type,
-				'description' => __( 'The current status of the entry.', 'wp-graphql-gravity-forms' ),
-			],
 			'isDraft'        => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the entry is a draft.', 'wp-graphql-gravity-forms' ),
+			],
+			'post'           => [
+				'type'        => 'Post',
+				'description' => __( 'For forms with Post fields, this is the post object that was created.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source, array $args, AppContext $context ) => ! empty( $source->postId ) ? DataSource::resolve_post_object( $source->postId, $context ) : null,
+			],
+			'postId'         => [
+				'type'        => 'Int',
+				'description' => __( 'For forms with Post fields, this property contains the Id of the Post that was created.', 'wp-graphql-gravity-forms' ),
 			],
 			'quizResults'    => [
 				'type'        => EntryQuizResults::$type,
@@ -166,6 +158,19 @@ class Entry extends AbstractObject implements Field {
 				'type'        => 'String',
 				'description' => __( 'The resume token. Only applies to draft entries.', 'wp-graphql-gravity-forms' ),
 			],
+			'sourceUrl'      => [
+				'type'        => 'String',
+				'description' => __( 'Source URL of page that contained the form when it was submitted.', 'wp-graphql-gravity-forms' ),
+			],
+			'status'         => [
+				'type'        => EntryStatusEnum::$type,
+				'description' => __( 'The current status of the entry.', 'wp-graphql-gravity-forms' ),
+			],
+			'userAgent'      => [
+				'type'        => 'String',
+				'description' => __( 'Provides the name and version of both the browser and operating system from which the entry was submitted.', 'wp-graphql-gravity-forms' ),
+			],
+
 			/**
 			 * TODO: Add support for these pricing properties that are only relevant
 			 * when a Gravity Forms payment gateway add-on is being used:
