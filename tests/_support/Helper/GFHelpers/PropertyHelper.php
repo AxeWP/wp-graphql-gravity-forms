@@ -34,7 +34,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function calculationRounding( $value = null ) {
-		return isset( $value ) ? $value : '';
+		return isset( $value ) ? $value : null;
 	}
 
 	public function calendarIconType( $value = null ) {

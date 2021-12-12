@@ -193,13 +193,11 @@ class FieldProperties {
 
 	/**
 	 * Get 'calculationRounding' property.
-	 *
-	 * @todo make Int
 	 */
 	public static function calculation_rounding() : array {
 		return [
 			'calculationRounding' => [
-				'type'        => 'String',
+				'type'        => 'Int',
 				'description' => __( 'Specifies to how many decimal places the number should be rounded. This is available when enableCalculation is true, but is not available when the chosen format is “Currency”.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -836,6 +834,7 @@ class FieldProperties {
 
 	/**
 	 * Get 'formattedPrice' property.
+	 *
 	 * @todo replace with GFCommon::to_money()
 	 */
 	public static function formatted_price() : array {
