@@ -88,6 +88,7 @@ class Wpunit extends \Codeception\Module {
 	 */
 	public function getCaptchaFieldArgs() : array {
 		return [
+			'captchaBadgePosition',
 			'captchaLanguage',
 			'captchaTheme',
 			'captchaType',

@@ -61,6 +61,7 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
         'WPGraphQL\\GF\\Type\\Enum\\AddressTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AddressTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\ButtonTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/ButtonTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\CalendarIconTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/CalendarIconTypeEnum.php',
+        'WPGraphQL\\GF\\Type\\Enum\\CaptchaBadgePositionEnum' => __DIR__ . '/../..' . '/src/Type/Enum/CaptchaBadgePositionEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\CaptchaThemeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/CaptchaThemeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\CaptchaTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/CaptchaTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\ChainedSelectsAlignmentEnum' => __DIR__ . '/../..' . '/src/Type/Enum/ChainedSelectsAlignmentEnum.php',

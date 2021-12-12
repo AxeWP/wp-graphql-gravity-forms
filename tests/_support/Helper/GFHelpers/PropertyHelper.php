@@ -45,6 +45,10 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : null;
 	}
 
+	public function captchaBadgePosition( $value = null ) {
+		return isset( $value ) ? $value : 'bottomright';
+	}
+
 	public function captchaLanguage( $value = null ) {
 		return isset( $value ) ? $value : 'iw';
 	}

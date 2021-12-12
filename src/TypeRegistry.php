@@ -116,6 +116,7 @@ class TypeRegistry {
 			Enum\AddressCountryEnum::class,
 			Enum\ButtonTypeEnum::class,
 			Enum\CalendarIconTypeEnum::class,
+			Enum\CaptchaBadgePositionEnum::class,
 			Enum\CaptchaThemeEnum::class,
 			Enum\CaptchaTypeEnum::class,
 			Enum\ChainedSelectsAlignmentEnum::class,

@@ -46,6 +46,7 @@ return array(
     'WPGraphQL\\GF\\Type\\Enum\\AddressTypeEnum' => $baseDir . '/src/Type/Enum/AddressTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\ButtonTypeEnum' => $baseDir . '/src/Type/Enum/ButtonTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\CalendarIconTypeEnum' => $baseDir . '/src/Type/Enum/CalendarIconTypeEnum.php',
+    'WPGraphQL\\GF\\Type\\Enum\\CaptchaBadgePositionEnum' => $baseDir . '/src/Type/Enum/CaptchaBadgePositionEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\CaptchaThemeEnum' => $baseDir . '/src/Type/Enum/CaptchaThemeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\CaptchaTypeEnum' => $baseDir . '/src/Type/Enum/CaptchaTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\ChainedSelectsAlignmentEnum' => $baseDir . '/src/Type/Enum/ChainedSelectsAlignmentEnum.php',

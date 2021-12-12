@@ -13,6 +13,7 @@ use WPGraphQL\AppContext;
 use WPGraphQL\GF\Type\Enum\AddressCountryEnum;
 use WPGraphQL\GF\Type\Enum\AddressTypeEnum;
 use WPGraphQL\GF\Type\Enum\CalendarIconTypeEnum;
+use WPGraphQL\GF\Type\Enum\CaptchaBadgePositionEnum;
 use WPGraphQL\GF\Type\Enum\CaptchaThemeEnum;
 use WPGraphQL\GF\Type\Enum\CaptchaTypeEnum;
 use WPGraphQL\GF\Type\Enum\ChainedSelectsAlignmentEnum;
@@ -224,6 +225,19 @@ class FieldProperties {
 			'calendarIconUrl' => [
 				'type'        => 'String',
 				'description' => __( 'Contains the URL to the custom calendar icon. Only applicable when calendarIconType is set to custom.', 'wp-graphql-gravity-forms' ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'captchaBadgePosition' property.
+	 */
+	public static function captcha_badge_position() : array {
+		return [
+			'captchaBadgePosition' => [
+				'type'        => CaptchaBadgePositionEnum::$type,
+				'description' => __( 'The language used when the captcha is displayed. This property is available when the captchaType is “captcha”, the default. The possible values are the language codes used by WordPress.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => isset( $source->captchaBadge ) ? $source->captchaBadge : 'bottomright',
 			],
 		];
 	}

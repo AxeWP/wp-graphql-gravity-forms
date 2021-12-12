@@ -151,11 +151,12 @@ class PropertyMapper {
 	/**
 	 * Maps the `captcha_badge_setting` to its field properties.
 	 *
-	 * @todo implement.
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
-	public static function captcha_badge_setting( GF_Field $field, array &$properties ) : void {}
+	public static function captcha_badge_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::captcha_badge_position();
+	}
 
 	/**
 	 * Maps the `captcha_bg_setting` to its field properties.
