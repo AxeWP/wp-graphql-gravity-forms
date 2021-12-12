@@ -513,7 +513,6 @@ class Wpunit extends \Codeception\Module {
 			'isRequired',
 			'label',
 			'labelPlacement',
-			'nameFormat',
 			'subLabelPlacement',
 			[
 				'inputs' => [

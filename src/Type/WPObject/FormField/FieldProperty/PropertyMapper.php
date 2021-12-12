@@ -682,8 +682,6 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function name_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::name_format();
-
 		$input_fields = array_merge(
 			FieldProperties::autocomplete_attribute(),
 			FieldProperties::default_value(),

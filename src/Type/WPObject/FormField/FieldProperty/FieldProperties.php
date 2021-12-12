@@ -507,8 +507,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'defaultProvince' property.
-	 *
-	 * @todo make enum.
 	 */
 	public static function default_province() : array {
 		return [
@@ -521,8 +519,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'defaultState' property.
-	 *
-	 * @todo make enum.
 	 */
 	public static function default_state() : array {
 		return [
@@ -1057,20 +1053,6 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'nameFormat' property.
-	 *
-	 * @todo make Enum
-	 */
-	public static function name_format() : array {
-		return [
-			'nameFormat' => [
-				'type'        => 'String',
-				'description' => __( 'The format of the name field. Originally, the name field could be a “normal” format with just First and Last being the fields displayed or an “extended” format which included prefix and suffix fields, or a “simple” format which just had one input field. These are legacy formats which are no longer used when adding a Name field to a form. The Name field was modified in a way which allows each of the components of the normal and extended formats to be able to be turned on or off. The nameFormat is now only “advanced”. Name fields in the previous formats are automatically upgraded to the new type if the form field is modified in the admin. The code is backwards-compatible and will continue to handle the “normal”, “extended”, “simple” formats for fields which have not yet been upgraded.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
 	 * Get 'nextButton' property.
 	 */
 	public static function next_button() : array {
@@ -1083,7 +1065,7 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'nameFormat' property.
+	 * Get 'numberFormat' property.
 	 */
 	public static function number_format() : array {
 		return [
