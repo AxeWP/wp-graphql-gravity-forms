@@ -847,6 +847,18 @@ class FieldProperties {
 			],
 		];
 	}
+	/**
+	 * Get 'hasInputMask' property.
+	 */
+	public static function has_input_mask() : array {
+		return [
+			'hasInputMask' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the field has an input mask.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->inputMask ),
+			],
+		];
+	}
 
 
 	/**
@@ -893,6 +905,18 @@ class FieldProperties {
 			'key' => [
 				'type'        => 'String',
 				'description' => __( 'Key used to identify this input.', 'wp-graphql-gravity-forms' ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'inputMaskValue' property.
+	 */
+	public static function input_mask_value() : array {
+		return [
+			'inputMaskValue' => [
+				'type'        => 'String',
+				'description' => __( 'The pattern used for the input mask.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

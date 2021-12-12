@@ -187,16 +187,8 @@ class PropertyHelper extends GFHelpers {
 		return (string) isset( $value ) ? $value : 1;
 	}
 
-	public function inputMask( $value = null ) {
-		return ! empty( $value ) ?: false;
-	}
-
-	public function inputMaskIsCustom( $value = null ) : bool {
-		return ! empty( $value );
-	}
-
 	public function inputMaskValue( $value = null ) {
-		return isset( $value ) ? $value : '';
+		return $value ?? '?****************************************************';
 	}
 
 	public function inputName( $value = null ) {
@@ -217,6 +209,10 @@ class PropertyHelper extends GFHelpers {
 
 	public function gquizIsCorrect( bool $value = null ) : ?bool {
 		return $value ?? $this->dummy - yesno();
+	}
+
+	public function hasInputMask( bool $value = null ) : ?bool {
+		return isset( $value ) ? $value : true;
 	}
 
 	public function isRequired( $value = null ) {

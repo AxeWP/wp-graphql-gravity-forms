@@ -9,8 +9,6 @@
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
 
 use GF_Field;
-use WPGraphQL\AppContext;
-use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - PropertyMapper
@@ -614,7 +612,10 @@ class PropertyMapper {
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
-	public static function input_mask_setting( GF_Field $field, array &$properties ) : void {}
+	public static function input_mask_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::input_mask_value();
+		$properties += FieldProperties::has_input_mask();
+	}
 
 	/**
 	 * Maps the `label_setting` to its field properties.
