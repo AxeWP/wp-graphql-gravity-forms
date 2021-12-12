@@ -16,7 +16,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		/**
 		 * Class instances.
 		 *
-		 * @var GF $instance
+		 * @var ?GF $instance
 		 */
 		private static $instance;
 
@@ -24,7 +24,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		 * Constructor
 		 */
 		public static function instance() : self {
-			if ( ! isset( self::$instance ) && ! ( is_a( self::$instance, __CLASS__ ) ) ) {
+			if ( ! isset( self::$instance ) || ! ( is_a( self::$instance, __CLASS__ ) ) ) {
 				if ( ! function_exists( 'is_plugin_active' ) ) {
 					require_once ABSPATH . 'wp-admin/includes/plugin.php';
 				}

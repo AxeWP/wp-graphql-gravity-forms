@@ -207,11 +207,11 @@ class SubmitForm extends AbstractMutation {
 			$draft_entry        = GFUtils::get_draft_entry( $submission['resume_token'] );
 			$decoded_submission = json_decode( $draft_entry['submission'], true );
 
-			$ip         = (bool) empty( $ip ) ? $ip : $decoded_submission['partial_entry']['ip'];
-			$created_by = $created_by ?? $decoded_submission['partial_entry']['created_by'];
-			$source_url = $source_url ?? $decoded_submission['partial_entry']['source_url'];
+			$ip         = $ip ?: $decoded_submission['partial_entry']['ip'];
+			$created_by = $created_by ?: $decoded_submission['partial_entry']['created_by'];
+			$source_url = $source_url ?: $decoded_submission['partial_entry']['source_url'];
 			$is_updated = GFFormsModel::update_draft_submission( $submission['resume_token'], $form, $draft_entry['date_created'], $ip, $source_url, $draft_entry['submission'] );
-			if ( empty( $is_updated ) ) {
+			if ( false === $is_updated ) {
 				throw new UserError( __( 'Unable to update the draft entry properties.', 'wp-graphql-gravity-forms' ) );
 			}
 			return;

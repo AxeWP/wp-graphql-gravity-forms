@@ -41,6 +41,7 @@ class Wpunit extends \Codeception\Module {
 			'cssClass',
 			'formId',
 			[ 'id' => 1 ],
+			['inputType' => null ],
 			'layoutGridColumnSpan',
 			'layoutSpacerGridColumnSpan',
 			'pageNumber',
@@ -87,6 +88,7 @@ class Wpunit extends \Codeception\Module {
 	 */
 	public function getCaptchaFieldArgs() : array {
 		return [
+			'captchaBadgePosition',
 			'captchaLanguage',
 			'captchaTheme',
 			'captchaType',
@@ -512,7 +514,6 @@ class Wpunit extends \Codeception\Module {
 			'isRequired',
 			'label',
 			'labelPlacement',
-			'nameFormat',
 			'subLabelPlacement',
 			[
 				'inputs' => [
@@ -625,6 +626,19 @@ class Wpunit extends \Codeception\Module {
 	public function getPageFieldArgs() : array {
 		return [
 			'adminLabel',
+			[
+				'conditionalLogic' => [
+					'actionType' => 'hide',
+					'logicType'  => 'any',
+					'rules'      => [
+						[
+							'fieldId'  => 1,
+							'operator' => 'is',
+							'value'    => 'value2',
+						],
+					],
+				],
+			],
 			['displayOnly' => true],
 			'inputName',
 			'label',
@@ -898,7 +912,9 @@ class Wpunit extends \Codeception\Module {
 			'descriptionPlacement',
 			'enablePasswordInput',
 			'errorMessage',
+			'hasInputMask',
 			'inputName',
+			'inputMaskValue',
 			'isRequired',
 			'label',
 			'labelPlacement',

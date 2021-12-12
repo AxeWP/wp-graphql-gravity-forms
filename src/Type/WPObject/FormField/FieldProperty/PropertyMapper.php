@@ -9,8 +9,6 @@
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
 
 use GF_Field;
-use WPGraphQL\AppContext;
-use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - PropertyMapper
@@ -153,11 +151,12 @@ class PropertyMapper {
 	/**
 	 * Maps the `captcha_badge_setting` to its field properties.
 	 *
-	 * @todo implement.
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
-	public static function captcha_badge_setting( GF_Field $field, array &$properties ) : void {}
+	public static function captcha_badge_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::captcha_badge_position();
+	}
 
 	/**
 	 * Maps the `captcha_bg_setting` to its field properties.
@@ -267,6 +266,7 @@ class PropertyMapper {
 		// Add pricing property.
 		if ( ! empty( $field->enablePrice ) || in_array( $field->type, [ 'product', 'option', 'shipping' ], true ) ) {
 			$choice_fields += FieldProperties::choice_price();
+			$choice_fields += FieldProperties::choice_formatted_price();
 		}
 
 		$properties += ChoiceMapper::map_choices( $field, $choice_fields );
@@ -321,22 +321,14 @@ class PropertyMapper {
 	}
 
 	/**
-	 * Maps the `conditional_logic_nextbutton_setting` to its field properties.
-	 *
-	 * @todo implement property.
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function conditional_logic_nextbutton_setting( GF_Field $field, array &$properties ) : void {}
-
-	/**
 	 * Maps the `conditional_logic_page_setting` to its field properties.
 	 *
-	 * @todo implement property.
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
-	public static function conditional_logic_page_setting( GF_Field $field, array &$properties ) : void {}
+	public static function conditional_logic_page_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::conditional_logic();
+	}
 
 	/**
 	 * Maps the `content_setting` to its field properties.
@@ -378,16 +370,6 @@ class PropertyMapper {
 		);
 
 		$properties += InputMapper::map_inputs( $field, $input_fields );
-	}
-
-	/**
-	 * Maps the `credit_card_style_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function credit_card_style_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::card_style();
 	}
 
 	/**
@@ -627,11 +609,13 @@ class PropertyMapper {
 	/**
 	 * Maps the `input_mask_setting` to its field properties.
 	 *
-	 * @todo implement property.
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
-	public static function input_mask_setting( GF_Field $field, array &$properties ) : void {}
+	public static function input_mask_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::input_mask_value();
+		$properties += FieldProperties::has_input_mask();
+	}
 
 	/**
 	 * Maps the `label_setting` to its field properties.
@@ -692,8 +676,6 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function name_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::name_format();
-
 		$input_fields = array_merge(
 			FieldProperties::autocomplete_attribute(),
 			FieldProperties::default_value(),
@@ -798,11 +780,12 @@ class PropertyMapper {
 	/**
 	 * Maps the `password_visibility_setting` to its field properties.
 	 *
-	 * @todo implement property.
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
-	public static function password_visibility_setting( GF_Field $field, array &$properties ) : void {}
+	public static function password_visibility_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::has_password_visibility_toggle();
+	}
 
 	/**
 	 * Maps the `pen_color_setting` to its field properties.
@@ -867,11 +850,12 @@ class PropertyMapper {
 	/**
 	 * Maps the `post_category_initial_item_setting` to its field properties.
 	 *
-	 * @todo implement property.
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
-	public static function post_category_initial_item_setting( GF_Field $field, array &$properties ) : void {}
+	public static function post_category_initial_item_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::dropdown_placeholder();
+	}
 
 	/**
 	 * Maps the `post_custom_field_setting` to its field properties.

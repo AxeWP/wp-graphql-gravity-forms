@@ -66,7 +66,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 			'city'    => 'Rochester Hills',
 			'state'   => 'Michigan',
 			'zip'     => '48306',
-			'country' => 'USA',
+			'country' => 'United States',
 		];
 	}
 
@@ -74,7 +74,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * The graphql field value input.
 	 */
 	public function field_value_input() {
-		return $this->field_value;
+		return array_merge($this->field_value, ['country' => 'US']);
 	}
 
 	/**
@@ -101,9 +101,17 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 			'city'    => 'Rochester Hills',
 			'state'   => 'Michigan',
 			'zip'     => '48306',
-			'country' => 'USA',
+			'country' => 'United States',
 		];
 	}
+
+	/**
+	 * The graphql field value input.
+	 */
+	public function updated_field_value_input() {
+		return array_merge($this->updated_field_value(), ['country' => 'US']);
+	}
+
 
 	/**
 	 * The GraphQL query string.
@@ -285,7 +293,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 								'nodes',
 								array_merge_recursive(
 									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'addressValues' => $this->field_value ],
+									[ 'addressValues' => $this->field_value_input ],
 								)
 							),
 						]

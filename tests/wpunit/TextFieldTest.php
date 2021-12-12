@@ -104,7 +104,9 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				descriptionPlacement
 				enablePasswordInput
 				errorMessage
+				hasInputMask
 				inputName
+				inputMaskValue
 				isRequired
 				label
 				maxLength

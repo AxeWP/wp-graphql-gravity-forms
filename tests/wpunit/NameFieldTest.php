@@ -144,7 +144,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				isRequired
 				label
 				labelPlacement
-				nameFormat
 				subLabelPlacement
 				type
 				nameValues {

@@ -680,7 +680,7 @@ class FormSubmissionHelper {
 		$folder   = \GFSignature::get_signatures_folder();
 		$filename = uniqid( '', true ) . '.png';
 		$path     = $folder . $filename;
-		// @TODO: switch to WP Filesystem.
+		// @todo: switch to WP Filesystem.
 		$number_of_bytes = file_put_contents( $path, $signature_decoded ); //phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
 
 		if ( false === $number_of_bytes ) {

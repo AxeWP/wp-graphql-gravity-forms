@@ -32,7 +32,6 @@ class NameInput extends AbstractInput {
 	 */
 	public static function get_fields() : array {
 		return [
-			// @todo make Enum.
 			'prefix' => [
 				'type'        => 'String',
 				'description' => __( 'Prefix, such as Mr., Mrs. etc.', 'wp-graphql-gravity-forms' ),

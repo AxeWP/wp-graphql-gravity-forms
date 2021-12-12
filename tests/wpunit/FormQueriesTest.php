@@ -127,8 +127,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 				'enableHoneypot'             => $form['enableHoneypot'],
 				'formFields'                 => [
 					'nodes' => [
-						[ 'type' => $form['fields'][0]['type'] ],
-						[ 'type' => $form['fields'][1]['type'] ],
+						[ 'type' => $this->tester->get_enum_for_value( Enum\FormFieldTypeEnum::$type, $form['fields'][0]['type'] ) ],
+						[ 'type' => $this->tester->get_enum_for_value( Enum\FormFieldTypeEnum::$type, $form['fields'][1]['type'] ) ],
 					],
 				],
 				'firstPageCssClass'          => $form['firstPageCssClass'],
@@ -211,7 +211,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 				'postCategory'               => $form['postCategory'],
 				'postContentTemplate'        => $form['postContentTemplate'],
 				'postContentTemplateEnabled' => $form['postContentTemplateEnabled'],
-				'postFormat'                 => $form['postFormat'],
+				'postFormat'                 => $this->tester->get_enum_for_value( Enum\PostFormatTypeEnum::$type, $form['postFormat'] ),
 				'postStatus'                 => $form['postStatus'],
 				'postTitleTemplate'          => $form['postTitleTemplate'],
 				'postTitleTemplateEnabled'   => $form['postTitleTemplateEnabled'],
@@ -246,7 +246,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$this->assertEquals( $expected, $actual['data'] );
 
 		// Test with global ID.
-		$actual = graphql(
+		$actual = $this->graphql(
 			[
 				'query'     => $query,
 				'variables' => [

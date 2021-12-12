@@ -78,19 +78,19 @@ class DraftEntry extends Model {
 	protected function init() : void {
 		if ( empty( $this->fields ) ) {
 			$this->fields = [
-				'currency'    => fn() : ?int => ! empty( $this->submission['partial_entry']['currency'] ) ? (int) $this->submission['partial_entry']['currency'] : null,
-				'dateCreated' => fn() : ?string => ! empty( $this->data['date_created'] ) ? $this->data['date_created'] : null,
-				'formId'      => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
-				'sourceUrl'   => fn() : ?string => ! empty( $this->submission['partial_entry']['source_url'] ) ? $this->submission['partial_entry']['source_url'] : null,
-				'createdById' => fn() : ?int => ! empty( $this->submission['partial_entry']['created_by'] ) ? (int) $this->submission['partial_entry']['created_by'] : null,
-				'dateUpdated' => fn() : ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? $this->submission['partial_entry']['date_updated'] : null,
-				'entry'       => fn() : array => $this->submission['partial_entry'],
-				'id'          => fn() : string => Relay::toGlobalId( GraphQLEntry::$type, $this->resume_token ),
-				'ip'          => fn() : ?string => ! empty( $this->submission['partial_entry']['ip'] ) ? $this->submission['partial_entry']['ip'] : null,
-				'isDraft'     => fn() : bool => true,
-				'postId'      => fn() : ?int => ! empty( $this->data['post_id'] ) ? (int) $this->data['post_id'] : null,
-				'resumeToken' => fn() : string => $this->resume_token,
-				'userAgent'   => fn() : ?string => ! empty( $this->data['user_agent'] ) ? $this->submission['partial_entry']['user_agent'] : null,
+				'createdById'    => fn() : ?int => ! empty( $this->submission['partial_entry']['created_by'] ) ? (int) $this->submission['partial_entry']['created_by'] : null,
+				'currency'       => fn() : ?int => ! empty( $this->submission['partial_entry']['currency'] ) ? (int) $this->submission['partial_entry']['currency'] : null,
+				'dateCreatedUTC' => fn() : ?string => ! empty( $this->data['date_created'] ) ? $this->data['date_created'] : null,
+				'dateUpdatedUTC' => fn() : ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? $this->submission['partial_entry']['date_updated'] : null,
+				'entry'          => fn() : array => $this->submission['partial_entry'],
+				'formId'         => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
+				'id'             => fn() : string => Relay::toGlobalId( GraphQLEntry::$type, $this->resume_token ),
+				'ip'             => fn() : ?string => ! empty( $this->submission['partial_entry']['ip'] ) ? $this->submission['partial_entry']['ip'] : null,
+				'isDraft'        => fn() : bool => true,
+				'postId'         => fn() : ?int => ! empty( $this->data['post_id'] ) ? (int) $this->data['post_id'] : null,
+				'resumeToken'    => fn() : string => $this->resume_token,
+				'sourceUrl'      => fn() : ?string => ! empty( $this->submission['partial_entry']['source_url'] ) ? $this->submission['partial_entry']['source_url'] : null,
+				'userAgent'      => fn() : ?string => ! empty( $this->data['user_agent'] ) ? $this->submission['partial_entry']['user_agent'] : null,
 			];
 		}
 	}

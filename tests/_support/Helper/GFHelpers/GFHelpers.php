@@ -137,6 +137,12 @@ abstract class GFHelpers {
 				$string = ucfirst( $key ) . 'PropertyEnum';
 				$value  = $this->get_enum_for_value( $string, $object->$key );
 				break;
+			case 'country':
+			case 'defaultCountry':
+				// @todo: rename classes.
+				$string = 'AddressCountryEnum';
+				$value  = $this->get_enum_for_value( $string, $object->$key );
+				break;
 			case 'dateFormat':
 				// @todo: rename classes.
 				$string = 'DateFieldFormatEnum';
@@ -169,7 +175,10 @@ abstract class GFHelpers {
 				$value  = $this->get_enum_for_value( $string, $object->$key );
 				break;
 			case 'inputType':
-				return [];
+			case 'type':
+				$string = 'FormFieldTypeEnum';
+				$value  = $this->get_enum_for_value( $string, $object->$key );
+				break;
 			default:
 				$value = isset( $object->$key ) ? $object->$key : null;
 				break;

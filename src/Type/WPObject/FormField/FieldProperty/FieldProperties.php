@@ -10,12 +10,13 @@ namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
 
 use GF_Field;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Type\Enum\AddressCountryEnum;
 use WPGraphQL\GF\Type\Enum\AddressTypeEnum;
 use WPGraphQL\GF\Type\Enum\CalendarIconTypeEnum;
+use WPGraphQL\GF\Type\Enum\CaptchaBadgePositionEnum;
 use WPGraphQL\GF\Type\Enum\CaptchaThemeEnum;
 use WPGraphQL\GF\Type\Enum\CaptchaTypeEnum;
 use WPGraphQL\GF\Type\Enum\ChainedSelectsAlignmentEnum;
-use WPGraphQL\GF\Type\Enum\CreditCardStyleEnum;
 use WPGraphQL\GF\Type\Enum\CreditCardTypeEnum;
 use WPGraphQL\GF\Type\Enum\DateFieldFormatEnum;
 use WPGraphQL\GF\Type\Enum\DateTypeEnum;
@@ -194,13 +195,11 @@ class FieldProperties {
 
 	/**
 	 * Get 'calculationRounding' property.
-	 *
-	 * @todo make Int
 	 */
 	public static function calculation_rounding() : array {
 		return [
 			'calculationRounding' => [
-				'type'        => 'String',
+				'type'        => 'Int',
 				'description' => __( 'Specifies to how many decimal places the number should be rounded. This is available when enableCalculation is true, but is not available when the chosen format is “Currency”.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -220,8 +219,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'calendarIconUrl' property.
-	 *
-	 * @todo convert to enum
 	 */
 	public static function calendar_icon_url() : array {
 		return [
@@ -233,9 +230,20 @@ class FieldProperties {
 	}
 
 	/**
+	 * Get 'captchaBadgePosition' property.
+	 */
+	public static function captcha_badge_position() : array {
+		return [
+			'captchaBadgePosition' => [
+				'type'        => CaptchaBadgePositionEnum::$type,
+				'description' => __( 'The language used when the captcha is displayed. This property is available when the captchaType is “captcha”, the default. The possible values are the language codes used by WordPress.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => isset( $source->captchaBadge ) ? $source->captchaBadge : 'bottomright',
+			],
+		];
+	}
+
+	/**
 	 * Get 'captchaLanguage' property.
-	 *
-	 * @todo convert to enum
 	 */
 	public static function captcha_language() : array {
 		return [
@@ -346,15 +354,27 @@ class FieldProperties {
 	}
 
 	/**
+	 * Get the 'formattedPrice' choice property.
+	 */
+	public static function choice_formatted_price() : array {
+		return [
+			'formattedPrice' => [
+				'type'        => 'String',
+				'description' => __( 'The price associated with the choice.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source['price'] ) ? $source['price'] : null,
+			],
+		];
+	}
+
+	/**
 	 * Get the 'price' choice property.
-	 *
-	 * @todo check type.
 	 */
 	public static function choice_price() : array {
 		return [
 			'price' => [
-				'type'        => 'String',
+				'type'        => 'Float',
 				'description' => __( 'The price associated with the choice.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source['price'] ) ? floatval( preg_replace( '/[^\d\.]/', '', $source['price'] ) ) : null,
 			],
 		];
 	}
@@ -464,20 +484,6 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'cardStyle' property.
-	 *
-	 * @todo convert to Enum.
-	 */
-	public static function card_style() : array {
-		return [
-			'cardStyle' => [
-				'type'        => CreditCardStyleEnum::$type,
-				'description' => __( 'The credit card style.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
 	 * Get 'cssClass' property.
 	 */
 	public static function css_class() : array {
@@ -515,13 +521,11 @@ class FieldProperties {
 
 	/**
 	 * Get 'defaultCountry' property.
-	 *
-	 * @todo make enum.
 	 */
 	public static function default_country() : array {
 		return [
 			'defaultCountry' => [
-				'type'        => 'String',
+				'type'        => AddressCountryEnum::$type,
 				'description' => __( 'Contains the country that will be selected by default. Only applicable when "addressType" is set to "INTERATIONAL".', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -529,8 +533,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'defaultProvince' property.
-	 *
-	 * @todo make enum.
 	 */
 	public static function default_province() : array {
 		return [
@@ -543,8 +545,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'defaultState' property.
-	 *
-	 * @todo make enum.
 	 */
 	public static function default_state() : array {
 		return [
@@ -679,6 +679,19 @@ class FieldProperties {
 	}
 
 	/**
+	 * Get 'dropdownPlaceholder' property.
+	 */
+	public static function dropdown_placeholder() : array {
+		return [
+			'dropdownPlaceholder' => [
+				'type'        => 'String',
+				'description' => __( 'The dropdown placeholder for the field', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->categoryInitialItem ) ? $source->categoryInitialItem : null,
+			],
+		];
+	}
+
+	/**
 	 * Get 'email_confirm_enabled' property.
 	 */
 	public static function email_confirm_enabled() : array {
@@ -807,7 +820,7 @@ class FieldProperties {
 			'enableRandomizeQuizChoices' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether to randomize the order in which the answers are displayed to the user.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $root['gquizEnableRandomizeQuizChoices'] ),
+				'resolve'     => fn( $source ) : bool => ! empty( $source['gquizEnableRandomizeQuizChoices'] ),
 			],
 		];
 	}
@@ -858,6 +871,18 @@ class FieldProperties {
 				'type'        => 'String',
 				'description' => __( 'The price of the product, prefixed by the currency.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $source ) => ! empty( $source->basePrice ) ? $source->basePrice : null,
+			],
+		];
+	}
+	/**
+	 * Get 'hasInputMask' property.
+	 */
+	public static function has_input_mask() : array {
+		return [
+			'hasInputMask' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the field has an input mask.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->inputMask ),
 			],
 		];
 	}
@@ -912,6 +937,18 @@ class FieldProperties {
 	}
 
 	/**
+	 * Get 'inputMaskValue' property.
+	 */
+	public static function input_mask_value() : array {
+		return [
+			'inputMaskValue' => [
+				'type'        => 'String',
+				'description' => __( 'The pattern used for the input mask.', 'wp-graphql-gravity-forms' ),
+			],
+		];
+	}
+
+	/**
 	 * Get 'name' property for input.
 	 */
 	public static function input_name() : array {
@@ -919,6 +956,19 @@ class FieldProperties {
 			'name' => [
 				'type'        => 'String',
 				'description' => __( 'Assigns a name to this field so that it can be populated dynamically via this input name. Only applicable when allowsPrepopulate is `true`.', 'wp-graphql-gravity-forms' ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasPasswordVisibilityToggle' property.
+	 */
+	public static function has_password_visibility_toggle() : array {
+		return [
+			'hasPasswordVisibilityToggle' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the Password visibility toggle should be enabled for this field.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source) => ! empty( $source->passwordVisibilityEnabled ),
 			],
 		];
 	}
@@ -1006,13 +1056,11 @@ class FieldProperties {
 
 	/**
 	 * Get 'maxFiles' property.
-	 *
-	 * @todo make Int
 	 */
 	public static function max_files() : array {
 		return [
 			'maxFiles' => [
-				'type'        => 'String',
+				'type'        => 'Int',
 				'description' => __( 'When the field is set to allow multiple files to be uploaded, this property is available to set a limit on how many may be uploaded.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -1020,8 +1068,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'maxFileSize' property.
-	 *
-	 * @todo make Int
 	 */
 	public static function max_file_size() : array {
 		return [
@@ -1034,8 +1080,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'maxRows' property.
-	 *
-	 * @todo make Int
 	 */
 	public static function max_rows() : array {
 		return [
@@ -1060,8 +1104,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'multipleFiles' property.
-	 *
-	 * @todo make Int
 	 */
 	public static function multiple_files() : array {
 		return [
@@ -1085,20 +1127,6 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'nameFormat' property.
-	 *
-	 * @todo make Enum
-	 */
-	public static function name_format() : array {
-		return [
-			'nameFormat' => [
-				'type'        => 'String',
-				'description' => __( 'The format of the name field. Originally, the name field could be a “normal” format with just First and Last being the fields displayed or an “extended” format which included prefix and suffix fields, or a “simple” format which just had one input field. These are legacy formats which are no longer used when adding a Name field to a form. The Name field was modified in a way which allows each of the components of the normal and extended formats to be able to be turned on or off. The nameFormat is now only “advanced”. Name fields in the previous formats are automatically upgraded to the new type if the form field is modified in the admin. The code is backwards-compatible and will continue to handle the “normal”, “extended”, “simple” formats for fields which have not yet been upgraded.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
 	 * Get 'nextButton' property.
 	 */
 	public static function next_button() : array {
@@ -1111,7 +1139,7 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'nameFormat' property.
+	 * Get 'numberFormat' property.
 	 */
 	public static function number_format() : array {
 		return [
@@ -1196,8 +1224,6 @@ class FieldProperties {
 
 	/**
 	 * Get 'postCustomFieldName' property.
-	 *
-	 * @todo Convert to enum.
 	 */
 	public static function post_custom_field_name() : array {
 		return [

@@ -94,6 +94,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function field_query() : string {
 		return '
 			... on CaptchaField {
+				captchaBadgePosition
 				captchaLanguage
 				captchaType
 				captchaTheme

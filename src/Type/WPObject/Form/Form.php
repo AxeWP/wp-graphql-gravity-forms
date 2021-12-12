@@ -19,6 +19,7 @@ use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Button;
 use WPGraphQL\GF\Type\Enum;
+use WPGraphQL\GF\Type\Enum\PostFormatTypeEnum;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -188,7 +189,7 @@ class Form extends AbstractObject implements Field {
 				'description' => __( 'Determines if the post template functionality is enabled. When enabled, the post content will be created based on the template specified by postContentTemplate.', 'wp-graphql-gravity-forms' ),
 			],
 			'postFormat'                 => [
-				'type'        => 'String',
+				'type'        => PostFormatTypeEnum::$type,
 				'description' => __( 'For forms with Post fields, determines the format that the Post should be created with.', 'wp-graphql-gravity-forms' ),
 			],
 			'postStatus'                 => [
@@ -206,13 +207,9 @@ class Form extends AbstractObject implements Field {
 			'quizSettings'               => [
 				'type'        => QuizSettings::$type,
 				'description' => __( 'Quiz-specific settings that will affect ALL Quiz fields in the form. Requires Gravity Forms Quiz addon.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function( $root ) : ?array {
-					/**
-					 * Entire form object is required for 'maxScore'.
-					 *
-					 * @todo find way to access parent field values from child field.
-					 */
-					return $root['quizSettings'] + [ 'form' => $root ] ?? null;
+				'resolve'     => static function( $source, array $args, AppContext $context ) : ?array {
+					$context->gfForm = $source;
+					return ! empty( $source['quizSettings'] ) ? $source['quizSettings'] : null;
 				},
 			],
 			'requiredIndicator'          => [

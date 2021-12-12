@@ -15,6 +15,7 @@ use WPGraphQL\Registry\TypeRegistry;
 use GraphQL\Error\UserError;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
+use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
 use WPGraphQL\GF\Type\Enum\VisibilityPropertyEnum;
 use WPGraphQL\GF\Utils\Utils;
 
@@ -104,10 +105,10 @@ class FormField extends AbstractType implements TypeWithFields {
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'Field ID.', 'wp-graphql-gravity-forms' ),
 			],
-			// @todo convert to enum.
 			'inputType'                  => [
-				'type'        => 'String',
-				'description' => __( 'Contains a field type and allows a field type to be displayed as another field type. A good example is the Post Custom Field, that can be displayed as various different types of fields.', 'wp-graphql-gravity-forms' ),
+				'type'        => FormFieldTypeEnum::$type,
+				'description' => __( 'The base form field type used to display the input. A good example is the Post Custom Field that can be displayed as various different types of fields.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->inputType ) ? $source->inputType : null,
 			],
 			'layoutGridColumnSpan'       => [
 				'type'        => 'Int',
@@ -122,7 +123,7 @@ class FormField extends AbstractType implements TypeWithFields {
 				'description' => __( 'The form page this field is located on. Default is 1.', 'wp-graphql-gravity-forms' ),
 			],
 			'type'                       => [
-				'type'        => [ 'non_null' => 'String' ],
+				'type'        => [ 'non_null' => FormFieldTypeEnum::$type ],
 				'description' => __( 'The type of field to be displayed.', 'wp-graphql-gravity-forms' ),
 			],
 			'visibility'                 => [

@@ -113,8 +113,10 @@ class TypeRegistry {
 		// Enums to register.
 		$classes_to_register = [
 			Enum\AddressTypeEnum::class,
+			Enum\AddressCountryEnum::class,
 			Enum\ButtonTypeEnum::class,
 			Enum\CalendarIconTypeEnum::class,
+			Enum\CaptchaBadgePositionEnum::class,
 			Enum\CaptchaThemeEnum::class,
 			Enum\CaptchaTypeEnum::class,
 			Enum\ChainedSelectsAlignmentEnum::class,
@@ -122,7 +124,6 @@ class TypeRegistry {
 			Enum\ConditionalLogicLogicTypeEnum::class,
 			Enum\ConfirmationTypeEnum::class,
 			Enum\CreditCardTypeEnum::class,
-			Enum\CreditCardStyleEnum::class,
 			Enum\DateFieldFormatEnum::class,
 			Enum\DateTypeEnum::class,
 			Enum\DescriptionPlacementPropertyEnum::class,
@@ -130,7 +131,7 @@ class TypeRegistry {
 			Enum\FieldFiltersModeEnum::class,
 			Enum\FieldFiltersOperatorInputEnum::class,
 			Enum\FormDescriptionPlacementEnum::class,
-			Enum\FormFieldsEnum::class,
+			Enum\FormFieldTypeEnum::class,
 			Enum\FormLabelPlacementEnum::class,
 			Enum\FormLimitEntriesPeriodEnum::class,
 			Enum\FormStatusEnum::class,
@@ -143,6 +144,7 @@ class TypeRegistry {
 			Enum\PageProgressStyleEnum::class,
 			Enum\PageProgressTypeEnum::class,
 			Enum\PhoneFieldFormatEnum::class,
+			Enum\PostFormatTypeEnum::class,
 			Enum\QuizFieldTypeEnum::class,
 			Enum\QuizGradingTypeEnum::class,
 			Enum\RequiredIndicatorEnum::class,
@@ -303,8 +305,6 @@ class TypeRegistry {
 
 	/**
 	 * Registers mutation.
-	 *
-	 * @todo convert mutations to a static class, and this to a list of Registrable classes.
 	 */
 	public static function mutations() : array {
 		$classes_to_register = [

@@ -45,6 +45,6 @@ class CreditCardTypeEnum extends AbstractEnum {
 			];
 		}
 
-		return $values ?? [];
+		return $values;
 	}
 }
