@@ -934,6 +934,19 @@ class FieldProperties {
 	}
 
 	/**
+	 * Get 'hasPasswordVisibilityToggle' property.
+	 */
+	public static function has_password_visibility_toggle() : array {
+		return [
+			'hasPasswordVisibilityToggle' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the Password visibility toggle should be enabled for this field.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source) => ! empty( $source->passwordVisibilityEnabled ),
+			],
+		];
+	}
+
+	/**
 	 * Get 'isQuantityDisabled' property.
 	 */
 	public static function is_quantity_disabled() : array {

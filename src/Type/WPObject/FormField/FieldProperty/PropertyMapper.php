@@ -608,7 +608,6 @@ class PropertyMapper {
 	/**
 	 * Maps the `input_mask_setting` to its field properties.
 	 *
-	 * @todo implement property.
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
@@ -780,11 +779,12 @@ class PropertyMapper {
 	/**
 	 * Maps the `password_visibility_setting` to its field properties.
 	 *
-	 * @todo implement property.
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
-	public static function password_visibility_setting( GF_Field $field, array &$properties ) : void {}
+	public static function password_visibility_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::has_password_visibility_toggle();
+	}
 
 	/**
 	 * Maps the `pen_color_setting` to its field properties.
