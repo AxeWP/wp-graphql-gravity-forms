@@ -361,7 +361,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 			query {
 				gravityFormsForms {
 					nodes {
-						formId
+						formId: databaseId
 					}
 				}
 			}
@@ -392,11 +392,11 @@ class FormQueriesTest extends GFGraphQLTestCase {
 					edges {
 						cursor
 						node {
-							formId
+							formId: databaseId
 						}
 					}
 					nodes {
-						formId
+						formId: databaseId
 					}
 				}
 			}

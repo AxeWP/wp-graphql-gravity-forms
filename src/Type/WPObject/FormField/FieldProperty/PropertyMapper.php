@@ -161,7 +161,6 @@ class PropertyMapper {
 	/**
 	 * Maps the `captcha_bg_setting` to its field properties.
 	 *
-	 * @todo implement and make generic
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
@@ -172,7 +171,6 @@ class PropertyMapper {
 	/**
 	 * Maps the `captcha_fg_setting` to its field properties.
 	 *
-	 * @todo implement and make generic
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
@@ -193,7 +191,6 @@ class PropertyMapper {
 	/**
 	 * Maps the `captcha_size_setting` to its field properties.
 	 *
-	 * @todo implement and make generic
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */

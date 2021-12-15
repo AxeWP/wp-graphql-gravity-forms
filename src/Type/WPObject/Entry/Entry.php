@@ -50,8 +50,9 @@ class Entry extends AbstractObject implements Field {
 			static::prepare_config(
 				[
 					'description'     => static::get_description(),
-					'fields'          => static::get_fields(),
 					'eagerlyLoadType' => static::$should_load_eagerly,
+					'fields'          => static::get_fields(),
+					'interfaces'      => [ 'Node', 'DatabaseIdentifier' ],
 				]
 			)
 		);
@@ -105,9 +106,10 @@ class Entry extends AbstractObject implements Field {
 				'description' => __( 'The date and time that the entry was updated, in the format "Y-m-d H:i:s" (i.e. 2010-07-15 17:26:58).', 'wp-graphql-gravity-forms' ),
 			],
 			'entryId'        => [
-				'type'        => 'Int',
-				'description' => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => $source->databaseId ?? null,
+				'type'              => 'Int',
+				'description'       => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Deprecated in favor of the databaseId field', 'wp-graphql-gravity-forms' ),
+				'resolve'           => fn( $source ) => $source->databaseId ?? null,
 			],
 			'form'           => [
 				'type'        => Form::$type,
@@ -117,10 +119,6 @@ class Entry extends AbstractObject implements Field {
 			'formId'         => [
 				'type'        => 'Int',
 				'description' => __( 'The ID of the form that was submitted to generate this entry.', 'wp-graphql-gravity-forms' ),
-			],
-			'id'             => [
-				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
 			],
 			'ip'             => [
 				'type'        => 'String',

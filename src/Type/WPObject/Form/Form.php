@@ -49,8 +49,9 @@ class Form extends AbstractObject implements Field {
 			static::prepare_config(
 				[
 					'description'     => static::get_description(),
-					'fields'          => static::get_fields(),
 					'eagerlyLoadType' => static::$should_load_eagerly,
+					'fields'          => static::get_fields(),
+					'interfaces'      => [ 'Node', 'DatabaseIdentifier' ],
 				]
 			)
 		);
@@ -86,10 +87,6 @@ class Form extends AbstractObject implements Field {
 				'type'        => 'String',
 				'description' => __( 'The custom text to use to indicate a field is required.', 'wp-graphql-gravity-forms' ),
 			],
-			'databaseId'                 => [
-				'type'        => 'Int',
-				'description' => __( 'The form database ID.', 'wp-graphql-gravity-forms' ),
-			],
 			'dateCreated'                => [
 				'type'        => 'String',
 				'description' => __( 'The date the form was created in this format: YYYY-MM-DD HH:mm:ss.', 'wp-graphql-gravity-forms' ),
@@ -119,10 +116,6 @@ class Form extends AbstractObject implements Field {
 				'description'       => __( 'Form ID.', 'wp-graphql-gravity-forms' ),
 				'deprecationReason' => __( 'Deprecated in favor of the databaseId field', 'wp-graphql-gravity-forms' ),
 				'resolve'           => fn( $source ) => $source->databaseId,
-			],
-			'id'                         => [
-				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
 			],
 			'isActive'                   => [
 				'type'        => 'Boolean',

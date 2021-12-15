@@ -21,11 +21,11 @@ use WPGraphQL\GF\Utils\GFUtils;
  */
 class DraftEntriesLoader extends AbstractDataLoader {
 	/**
-	 * Loader name.
+	 * Loader name. Same as the GraphQL Object.
 	 *
 	 * @var string
 	 */
-	public static string $name = 'gravityFormsDraftEntries';
+	public static string $name = 'GravityFormsDraftEntry';
 
 	/**
 	 * {@inheritDoc}

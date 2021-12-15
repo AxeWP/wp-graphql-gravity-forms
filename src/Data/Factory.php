@@ -18,7 +18,7 @@ use WPGraphQL\GF\Data\Connection\FormsConnectionResolver;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
-
+use WPGraphQL\GF\Model;
 /**
  * Class - Factory
  */
@@ -37,6 +37,30 @@ class Factory {
 		$loaders[ FormsLoader::$name ]        = new FormsLoader( $context );
 
 		return $loaders;
+	}
+
+	/**
+	 * Resolves Relay node for Gravity Forms types.
+	 *
+	 * @param mixed $type     Node type.
+	 * @param mixed $node     Node object.
+	 *
+	 * @return mixed
+	 */
+	public static function resolve_node_type( $type, $node ) {
+		switch ( true ) {
+			case is_a( $node, Model\Form::class ):
+				$type = Model\Form::class;
+				break;
+			case is_a( $node, Model\Entry::class ):
+				$type = Model\Entry::class;
+				break;
+			case is_a( $node, Model\DraftEntry::class ):
+				$type = Model\DraftEntry::class;
+				break;
+		}
+
+		return $type;
 	}
 
 	/**
