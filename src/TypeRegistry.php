@@ -179,7 +179,7 @@ class TypeRegistry {
 			Input\EmailFieldInput::class,
 			Input\EntriesDateFiltersInput::class,
 			Input\EntriesFieldFiltersInput::class,
-			Input\EntriesSortingInput::class,
+			Input\EntriesConnectionOrderbyInput::class,
 			Input\FormsConnectionOrderbyInput::class,
 			Input\ListFieldInput::class,
 			Input\NameFieldInput::class,

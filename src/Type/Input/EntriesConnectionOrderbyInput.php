@@ -1,6 +1,6 @@
 <?php
 /**
- * GraphQL Input Type - EntriesSortingInput
+ * GraphQL Input Type - EntriesConnectionOrderbyInput
  * Sorting input type for Entries queries.
  *
  * @package WPGraphQL\GF\Type\Input
@@ -10,21 +10,21 @@
 namespace WPGraphQL\GF\Type\Input;
 
 /**
- * Class - EntriesSortingInput
+ * Class - EntriesConnectionOrderbyInput
  */
-class EntriesSortingInput extends AbstractInput {
+class EntriesConnectionOrderbyInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'EntriesSortingInput';
+	public static string $type = 'EntriesConnectionOrderbyInput';
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'Sorting input fields for Entries queries.', 'wp-graphql-gravity-forms' );
+		return __( 'Options for ordering the connection', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
@@ -32,13 +32,13 @@ class EntriesSortingInput extends AbstractInput {
 	 */
 	public static function get_fields() : array {
 		return [
-			'key'       => [
+			'field'     => [
 				'type'        => 'String',
-				'description' => __( 'The key of the field to sort by.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The field name used to sort the results.', 'wp-graphql-gravity-forms' ),
 			],
-			'direction' => [
+			'order'     => [
 				'type'        => 'OrderEnum',
-				'description' => __( 'The sorting direction.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The cardinality of the order of the connection.', 'wp-graphql-gravity-forms' ),
 			],
 			'isNumeric' => [
 				'type'        => 'Boolean',

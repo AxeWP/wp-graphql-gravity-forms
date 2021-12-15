@@ -16,7 +16,7 @@ use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Enum\FieldFiltersModeEnum;
 use WPGraphQL\GF\Type\Input\EntriesDateFiltersInput;
 use WPGraphQL\GF\Type\Input\EntriesFieldFiltersInput;
-use WPGraphQL\GF\Type\Input\EntriesSortingInput;
+use WPGraphQL\GF\Type\Input\EntriesConnectionOrderbyInput;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
@@ -52,7 +52,7 @@ class EntryConnections extends AbstractConnection {
 					'fromType'       => Form::$type,
 					'toType'         => Entry::$type,
 					'fromFieldName'  => 'entries',
-					'connectionArgs' => self::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'sort' ] ),
+					'connectionArgs' => self::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby' ] ),
 					'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
 						$context->gfForm = $source;
 
@@ -91,8 +91,8 @@ class EntryConnections extends AbstractConnection {
 				'type'        => FieldFiltersModeEnum::$type,
 				'description' => __( 'Whether to filter by ALL or ANY of the field filters. Default is ALL.', 'wp-graphql-gravity-forms' ),
 			],
-			'sort'             => [
-				'type'        => EntriesSortingInput::$type,
+			'orderby'          => [
+				'type'        => EntriesConnectionOrderbyInput::$type,
 				'description' => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
 			],
 		];

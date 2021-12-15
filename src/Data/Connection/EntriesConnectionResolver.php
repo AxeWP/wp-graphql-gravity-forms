@@ -377,11 +377,11 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 			'direction' => 'DESC',
 		];
 
-		if ( ! empty( $this->args['where']['sort'] ) && is_array( $this->args['where']['sort'] ) ) {
+		if ( ! empty( $this->args['where']['orderby'] ) && is_array( $this->args['where']['orderby'] ) ) {
 			$sort = [
-				'key'        => $this->args['where']['sort']['key'] ?? '',
-				'direction'  => $this->args['where']['sort']['direction'] ?? 'ASC',
-				'is_numeric' => $this->args['where']['sort']['isNumeric'] ?? false,
+				'key'        => $this->args['where']['orderby']['key'] ?? '',
+				'direction'  => $this->args['where']['orderby']['order'] ?? 'ASC',
+				'is_numeric' => $this->args['where']['orderby']['isNumeric'] ?? false,
 			];
 		}
 
