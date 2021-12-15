@@ -9,8 +9,6 @@
 
 namespace WPGraphQL\GF\Type\Input;
 
-use WPGraphQL\GF\Type\Enum\SortingInputEnum;
-
 /**
  * Class - EntriesSortingInput
  */
@@ -39,7 +37,7 @@ class EntriesSortingInput extends AbstractInput {
 				'description' => __( 'The key of the field to sort by.', 'wp-graphql-gravity-forms' ),
 			],
 			'direction' => [
-				'type'        => SortingInputEnum::$type,
+				'type'        => 'OrderEnum',
 				'description' => __( 'The sorting direction.', 'wp-graphql-gravity-forms' ),
 			],
 			'isNumeric' => [

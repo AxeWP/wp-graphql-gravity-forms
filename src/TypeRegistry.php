@@ -153,7 +153,6 @@ class TypeRegistry {
 			Enum\SignatureFieldBorderStyleEnum::class,
 			Enum\SignatureFieldBorderWidthEnum::class,
 			Enum\FormFieldSizeEnum::class,
-			Enum\SortingInputEnum::class,
 			Enum\TimeFieldFormatEnum::class,
 			Enum\FormFieldVisibilityEnum::class,
 		];

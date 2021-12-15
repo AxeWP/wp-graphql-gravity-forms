@@ -99,7 +99,6 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
         'WPGraphQL\\GF\\Type\\Enum\\QuizFieldTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/QuizFieldTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\SignatureFieldBorderStyleEnum' => __DIR__ . '/../..' . '/src/Type/Enum/SignatureFieldBorderStyleEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\SignatureFieldBorderWidthEnum' => __DIR__ . '/../..' . '/src/Type/Enum/SignatureFieldBorderWidthEnum.php',
-        'WPGraphQL\\GF\\Type\\Enum\\SortingInputEnum' => __DIR__ . '/../..' . '/src/Type/Enum/SortingInputEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\TimeFieldFormatEnum' => __DIR__ . '/../..' . '/src/Type/Enum/TimeFieldFormatEnum.php',
         'WPGraphQL\\GF\\Type\\Input\\AbstractInput' => __DIR__ . '/../..' . '/src/Type/Input/AbstractInput.php',
         'WPGraphQL\\GF\\Type\\Input\\AddressInput' => __DIR__ . '/../..' . '/src/Type/Input/AddressInput.php',

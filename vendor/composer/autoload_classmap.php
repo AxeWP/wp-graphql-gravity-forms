@@ -84,7 +84,6 @@ return array(
     'WPGraphQL\\GF\\Type\\Enum\\QuizFieldTypeEnum' => $baseDir . '/src/Type/Enum/QuizFieldTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\SignatureFieldBorderStyleEnum' => $baseDir . '/src/Type/Enum/SignatureFieldBorderStyleEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\SignatureFieldBorderWidthEnum' => $baseDir . '/src/Type/Enum/SignatureFieldBorderWidthEnum.php',
-    'WPGraphQL\\GF\\Type\\Enum\\SortingInputEnum' => $baseDir . '/src/Type/Enum/SortingInputEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\TimeFieldFormatEnum' => $baseDir . '/src/Type/Enum/TimeFieldFormatEnum.php',
     'WPGraphQL\\GF\\Type\\Input\\AbstractInput' => $baseDir . '/src/Type/Input/AbstractInput.php',
     'WPGraphQL\\GF\\Type\\Input\\AddressInput' => $baseDir . '/src/Type/Input/AddressInput.php',
