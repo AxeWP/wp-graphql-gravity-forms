@@ -130,7 +130,6 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 					formFields {
 						nodes {
 							displayOnly
-							formId
 							id
 							inputType
 							layoutGridColumnSpan

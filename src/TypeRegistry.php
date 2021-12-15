@@ -208,6 +208,7 @@ class TypeRegistry {
 	public static function interfaces() : array {
 		$classes_to_register = [
 			WPInterface\FormField::class,
+			WPInterface\NodeWithForm::class,
 		];
 
 		/**

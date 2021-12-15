@@ -20,6 +20,7 @@ use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
+use WPGraphQL\GF\Type\WPInterface\NodeWithForm;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -52,7 +53,7 @@ class Entry extends AbstractObject implements Field {
 					'description'     => static::get_description(),
 					'eagerlyLoadType' => static::$should_load_eagerly,
 					'fields'          => static::get_fields(),
-					'interfaces'      => [ 'Node', 'DatabaseIdentifier' ],
+					'interfaces'      => [ 'Node', 'DatabaseIdentifier', NodeWithForm::$type ],
 				]
 			)
 		);
@@ -110,15 +111,6 @@ class Entry extends AbstractObject implements Field {
 				'description'       => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
 				'deprecationReason' => __( 'Deprecated in favor of the databaseId field', 'wp-graphql-gravity-forms' ),
 				'resolve'           => fn( $source ) => $source->databaseId ?? null,
-			],
-			'form'           => [
-				'type'        => Form::$type,
-				'description' => __( 'The form used to generate this entry.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source, array $args, AppContext $context ) => Factory::resolve_form( $source->formId, $context ),
-			],
-			'formId'         => [
-				'type'        => 'Int',
-				'description' => __( 'The ID of the form that was submitted to generate this entry.', 'wp-graphql-gravity-forms' ),
 			],
 			'ip'             => [
 				'type'        => 'String',

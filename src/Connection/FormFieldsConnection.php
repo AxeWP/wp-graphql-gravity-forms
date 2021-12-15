@@ -62,7 +62,7 @@ class FormFieldsConnection extends AbstractConnection {
 					'connectionArgs' => self::get_connection_args(),
 					'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
 						if ( empty( $context->gfForm ) ) {
-							$context->gfForm = new FormModel( GFUtils::get_form( $source->formId, false ) );
+							$context->gfForm = new FormModel( GFUtils::get_form( $source->formDatabaseId, false ) );
 						}
 
 						$context->gfEntry = $source;

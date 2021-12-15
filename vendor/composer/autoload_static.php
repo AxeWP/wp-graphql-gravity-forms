@@ -115,6 +115,7 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
         'WPGraphQL\\GF\\Type\\Input\\NameFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/NameFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\PostImageFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/PostImageFieldInput.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FormField' => __DIR__ . '/../..' . '/src/Type/WPInterface/FormField.php',
+        'WPGraphQL\\GF\\Type\\WPInterface\\NodeWithForm' => __DIR__ . '/../..' . '/src/Type/WPInterface/NodeWithForm.php',
         'WPGraphQL\\GF\\Type\\WPObject\\AbstractObject' => __DIR__ . '/../..' . '/src/Type/WPObject/AbstractObject.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Button\\FormButton' => __DIR__ . '/../..' . '/src/Type/WPObject/Button/FormButton.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Button\\FormLastPageButton' => __DIR__ . '/../..' . '/src/Type/WPObject/Button/FormLastPageButton.php',

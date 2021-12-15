@@ -100,6 +100,7 @@ return array(
     'WPGraphQL\\GF\\Type\\Input\\NameFieldInput' => $baseDir . '/src/Type/Input/NameFieldInput.php',
     'WPGraphQL\\GF\\Type\\Input\\PostImageFieldInput' => $baseDir . '/src/Type/Input/PostImageFieldInput.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\FormField' => $baseDir . '/src/Type/WPInterface/FormField.php',
+    'WPGraphQL\\GF\\Type\\WPInterface\\NodeWithForm' => $baseDir . '/src/Type/WPInterface/NodeWithForm.php',
     'WPGraphQL\\GF\\Type\\WPObject\\AbstractObject' => $baseDir . '/src/Type/WPObject/AbstractObject.php',
     'WPGraphQL\\GF\\Type\\WPObject\\Button\\FormButton' => $baseDir . '/src/Type/WPObject/Button/FormButton.php',
     'WPGraphQL\\GF\\Type\\WPObject\\Button\\FormLastPageButton' => $baseDir . '/src/Type/WPObject/Button/FormLastPageButton.php',

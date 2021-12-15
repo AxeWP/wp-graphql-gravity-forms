@@ -8,6 +8,7 @@
 use GraphQLRelay\Relay;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 use WPGraphQL\GF\Type\Enum;
+use WPGraphQL\GF\Type\WPObject\Form\Form;
 
 /**
  * Class - EntryQueriesTest
@@ -101,7 +102,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 				'form'        => [
 					'databaseId' => $form['id'],
 				],
-				'formId'  => $form['id'],
+				'formDatabaseId' => $form['id'],
+				'formId'      => Relay::toGlobalId( Form::$type, $form['id'] ),
 				'id'          => $global_id,
 				'ip'          => $entry['ip'],
 				'isDraft'     => (bool) null,
@@ -173,7 +175,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 				'form'        => [
 					'databaseId' => $form['id'],
 				],
-				'formId'      => $form['id'],
+				'formId'      => Relay::toGlobalId( Form::$type, $form['id'] ),
+				'formDatabaseId' => $form['id'],
 				'id'          => $global_id,
 				'ip'          => $entry['ip'],
 				'isDraft'     => (bool) null,
@@ -398,6 +401,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 					form {
 						databaseId
 					}
+					formDatabaseId
 					formId
 					id
 					ip

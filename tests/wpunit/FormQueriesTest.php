@@ -132,7 +132,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 					],
 				],
 				'firstPageCssClass'          => $form['firstPageCssClass'],
-				'formId'                     => $form['id'],
+				'databaseId'                     => $form['id'],
 				'id'                         => $global_id,
 				'isActive'                   => (bool) $form['is_active'],
 				'isTrash'                    => (bool) $form['is_trash'],
@@ -302,7 +302,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 					'enableHoneypot'             => false,
 					'formFields'                 => null,
 					'firstPageCssClass'          => null,
-					'formId'                     => $form['id'],
+					'databaseId'                 => $form['id'],
 					'id'                         => $global_id,
 					'isActive'                   => (bool) $form['is_active'],
 					'isTrash'                    => (bool) $form['is_trash'],
@@ -361,7 +361,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 			query {
 				gravityFormsForms {
 					nodes {
-						formId: databaseId
+						databaseId
 					}
 				}
 			}
@@ -392,11 +392,11 @@ class FormQueriesTest extends GFGraphQLTestCase {
 					edges {
 						cursor
 						node {
-							formId: databaseId
+							databaseId
 						}
 					}
 					nodes {
-						formId: databaseId
+						databaseId
 					}
 				}
 			}
@@ -415,8 +415,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$this->assertArrayNotHasKey( 'errors', $response, 'First array has errors.' );
 		$this->assertCount( 2, $response['data']['gravityFormsForms']['nodes'], 'First does not return correct amount.' );
 
-		$this->assertSame( $form_ids[0], $response['data']['gravityFormsForms']['nodes'][0]['formId'], 'First - node 0 is not same.' );
-		$this->assertSame( $form_ids[1], $response['data']['gravityFormsForms']['nodes'][1]['formId'], 'First - node 1 is not same' );
+		$this->assertSame( $form_ids[0], $response['data']['gravityFormsForms']['nodes'][0]['databaseId'], 'First - node 0 is not same.' );
+		$this->assertSame( $form_ids[1], $response['data']['gravityFormsForms']['nodes'][1]['databaseId'], 'First - node 1 is not same' );
 		$this->assertTrue( $response['data']['gravityFormsForms']['pageInfo']['hasNextPage'], 'First does not have next page.' );
 		$this->assertFalse( $response['data']['gravityFormsForms']['pageInfo']['hasPreviousPage'], 'First has previous page.' );
 
@@ -431,8 +431,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 		$this->assertArrayNotHasKey( 'errors', $response, 'First/after #1 array has errors.' );
 		$this->assertCount( 2, $response['data']['gravityFormsForms']['nodes'], 'First/after #1 does not return correct amount.' );
-		$this->assertSame( $form_ids[2], $response['data']['gravityFormsForms']['nodes'][0]['formId'], 'First/after #1 - node 0 is not same.' );
-		$this->assertSame( $form_ids[3], $response['data']['gravityFormsForms']['nodes'][1]['formId'], 'First/after #1- node 1 is not same.' );
+		$this->assertSame( $form_ids[2], $response['data']['gravityFormsForms']['nodes'][0]['databaseId'], 'First/after #1 - node 0 is not same.' );
+		$this->assertSame( $form_ids[3], $response['data']['gravityFormsForms']['nodes'][1]['databaseId'], 'First/after #1- node 1 is not same.' );
 
 		$variables = [
 			'first'  => 2,
@@ -444,8 +444,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertCount( 2, $response['data']['gravityFormsForms']['nodes'], 'First/after #2 does not return correct amount.' );
-		$this->assertSame( $form_ids[4], $response['data']['gravityFormsForms']['nodes'][0]['formId'], 'First/after #2 - node 0 is not same' );
-		$this->assertSame( $form_ids[5], $response['data']['gravityFormsForms']['nodes'][1]['formId'], 'First/after #2 - node 1 is not same.' );
+		$this->assertSame( $form_ids[4], $response['data']['gravityFormsForms']['nodes'][0]['databaseId'], 'First/after #2 - node 0 is not same' );
+		$this->assertSame( $form_ids[5], $response['data']['gravityFormsForms']['nodes'][1]['databaseId'], 'First/after #2 - node 1 is not same.' );
 		$this->assertTrue( $response['data']['gravityFormsForms']['pageInfo']['hasNextPage'], 'First/after #1 does not have next page.' );
 		$this->assertTrue( $response['data']['gravityFormsForms']['pageInfo']['hasPreviousPage'], 'First/after #1 does not have previous page.' );
 
@@ -476,8 +476,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertCount( 2, $response['data']['gravityFormsForms']['nodes'], 'Last does not return correct amount.' );
-		$this->assertSame( $form_ids[4], $response['data']['gravityFormsForms']['nodes'][0]['formId'], 'Last - node 0 is not same' );
-		$this->assertSame( $form_ids[5], $response['data']['gravityFormsForms']['nodes'][1]['formId'], 'Last - node 1 is not same.' );
+		$this->assertSame( $form_ids[4], $response['data']['gravityFormsForms']['nodes'][0]['databaseId'], 'Last - node 0 is not same' );
+		$this->assertSame( $form_ids[5], $response['data']['gravityFormsForms']['nodes'][1]['databaseId'], 'Last - node 1 is not same.' );
 		$this->assertFalse( $response['data']['gravityFormsForms']['pageInfo']['hasNextPage'], 'Last has next page.' );
 		$this->assertTrue( $response['data']['gravityFormsForms']['pageInfo']['hasPreviousPage'], 'Last does not have previous page.' );
 
@@ -494,8 +494,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$this->assertArrayNotHasKey( 'errors', $response, 'Last array has errors.' );
 
 		$this->assertCount( 2, $response['data']['gravityFormsForms']['nodes'], 'last/before #1 does not return correct amount.' );
-		$this->assertSame( $form_ids[2], $response['data']['gravityFormsForms']['nodes'][0]['formId'], 'last/before #1 - node 0 is not same' );
-		$this->assertSame( $form_ids[3], $response['data']['gravityFormsForms']['nodes'][1]['formId'], 'last/before #1 - node 1 is not same' );
+		$this->assertSame( $form_ids[2], $response['data']['gravityFormsForms']['nodes'][0]['databaseId'], 'last/before #1 - node 0 is not same' );
+		$this->assertSame( $form_ids[3], $response['data']['gravityFormsForms']['nodes'][1]['databaseId'], 'last/before #1 - node 1 is not same' );
 		$this->assertTrue( $response['data']['gravityFormsForms']['pageInfo']['hasNextPage'], 'Last/before #1 does not have next page.' );
 		$this->assertTrue( $response['data']['gravityFormsForms']['pageInfo']['hasPreviousPage'], 'Last/before #1 does not have previous page.' );
 
@@ -542,21 +542,21 @@ class FormQueriesTest extends GFGraphQLTestCase {
 			query {
 				inactive: gravityFormsForms(where: {status: INACTIVE}) {
 					nodes {
-						formId
+						databaseId
 						isActive
 						isTrash
 					}
 				}
 				trashed: gravityFormsForms(where: {status: TRASHED}) {
 					nodes {
-						formId
+						databaseId
 						isActive
 						isTrash
 					}
 				}
 				inactive_trashed: gravityFormsForms(where: {status: INACTIVE_TRASHED}) {
 					nodes {
-						formId
+						databaseId
 						isActive
 						isTrash
 					}
@@ -585,7 +585,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 			query {
 				gravityFormsForms( where: { sort: { key: "id", direction: DESC }, status:INACTIVE_TRASHED } ) {
 					nodes {
-						formId
+						databaseId
 					}
 				}
 			}
@@ -594,7 +594,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response );
-		$this->assertGreaterThan( $response['data']['gravityFormsForms']['nodes'][1]['formId'], $response['data']['gravityFormsForms']['nodes'][0]['formId'] );
+		$this->assertGreaterThan( $response['data']['gravityFormsForms']['nodes'][1]['databaseId'], $response['data']['gravityFormsForms']['nodes'][0]['databaseId'] );
 	}
 
 	/**
@@ -650,7 +650,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						}
 					}
 					firstPageCssClass
-					formId
+					databaseId
 					id
 					isActive
 					isTrash
