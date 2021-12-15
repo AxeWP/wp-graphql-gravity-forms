@@ -288,9 +288,9 @@ class TypeRegistry {
 	 */
 	public static function connections() : array {
 		$classes_to_register = [
-			Connection\EntryConnections::class,
-			Connection\FormConnections::class,
-			Connection\FormFieldConnections::class,
+			Connection\EntriesConnection::class,
+			Connection\FormsConnection::class,
+			Connection\FormFieldsConnection::class,
 		];
 
 		/**

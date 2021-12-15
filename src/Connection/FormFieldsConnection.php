@@ -1,6 +1,6 @@
 <?php
 /**
- * Connection - EntryConnections
+ * Connection - EntriesConnection
  *
  * Registers all connections TO Gravity Forms Field.
  *
@@ -22,9 +22,9 @@ use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
- * Class - EntryConnections
+ * Class - FormFieldsConnection
  */
-class FormFieldConnections extends AbstractConnection {
+class FormFieldsConnection extends AbstractConnection {
 	/**
 	 * {@inheritDoc}
 	 */

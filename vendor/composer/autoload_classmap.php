@@ -8,9 +8,9 @@ $baseDir = dirname($vendorDir);
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'WPGraphQL\\GF\\Connection\\AbstractConnection' => $baseDir . '/src/Connection/AbstractConnection.php',
-    'WPGraphQL\\GF\\Connection\\EntryConnections' => $baseDir . '/src/Connection/EntryConnections.php',
-    'WPGraphQL\\GF\\Connection\\FormConnections' => $baseDir . '/src/Connection/FormConnections.php',
-    'WPGraphQL\\GF\\Connection\\FormFieldConnections' => $baseDir . '/src/Connection/FormFieldConnections.php',
+    'WPGraphQL\\GF\\Connection\\EntriesConnection' => $baseDir . '/src/Connection/EntriesConnection.php',
+    'WPGraphQL\\GF\\Connection\\FormFieldsConnection' => $baseDir . '/src/Connection/FormFieldsConnection.php',
+    'WPGraphQL\\GF\\Connection\\FormsConnection' => $baseDir . '/src/Connection/FormsConnection.php',
     'WPGraphQL\\GF\\CoreSchemaFilters' => $baseDir . '/src/CoreSchemaFilters.php',
     'WPGraphQL\\GF\\Data\\Connection\\EntriesConnectionResolver' => $baseDir . '/src/Data/Connection/EntriesConnectionResolver.php',
     'WPGraphQL\\GF\\Data\\Connection\\FormFieldsConnectionResolver' => $baseDir . '/src/Data/Connection/FormFieldsConnectionResolver.php',

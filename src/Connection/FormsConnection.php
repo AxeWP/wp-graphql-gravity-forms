@@ -18,9 +18,9 @@ use WPGraphQL\GF\Type\Input\FormsConnectionOrderbyInput;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
- * Class - FormConnections
+ * Class - FormsConnection
  */
-class FormConnections extends AbstractConnection {
+class FormsConnection extends AbstractConnection {
 	/**
 	 * GraphQL field name in node tree.
 	 *

@@ -1,6 +1,6 @@
 <?php
 /**
- * Connection - EntryConnections
+ * Connection - EntriesConnection
  *
  * Registers all connections TO Gravity Forms Entry.
  *
@@ -23,9 +23,9 @@ use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
- * Class - EntryConnections
+ * Class - EntriesConnection
  */
-class EntryConnections extends AbstractConnection {
+class EntriesConnection extends AbstractConnection {
 	/**
 	 * {@inheritDoc}
 	 */

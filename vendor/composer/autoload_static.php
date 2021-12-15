@@ -23,9 +23,9 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'WPGraphQL\\GF\\Connection\\AbstractConnection' => __DIR__ . '/../..' . '/src/Connection/AbstractConnection.php',
-        'WPGraphQL\\GF\\Connection\\EntryConnections' => __DIR__ . '/../..' . '/src/Connection/EntryConnections.php',
-        'WPGraphQL\\GF\\Connection\\FormConnections' => __DIR__ . '/../..' . '/src/Connection/FormConnections.php',
-        'WPGraphQL\\GF\\Connection\\FormFieldConnections' => __DIR__ . '/../..' . '/src/Connection/FormFieldConnections.php',
+        'WPGraphQL\\GF\\Connection\\EntriesConnection' => __DIR__ . '/../..' . '/src/Connection/EntriesConnection.php',
+        'WPGraphQL\\GF\\Connection\\FormFieldsConnection' => __DIR__ . '/../..' . '/src/Connection/FormFieldsConnection.php',
+        'WPGraphQL\\GF\\Connection\\FormsConnection' => __DIR__ . '/../..' . '/src/Connection/FormsConnection.php',
         'WPGraphQL\\GF\\CoreSchemaFilters' => __DIR__ . '/../..' . '/src/CoreSchemaFilters.php',
         'WPGraphQL\\GF\\Data\\Connection\\EntriesConnectionResolver' => __DIR__ . '/../..' . '/src/Data/Connection/EntriesConnectionResolver.php',
         'WPGraphQL\\GF\\Data\\Connection\\FormFieldsConnectionResolver' => __DIR__ . '/../..' . '/src/Data/Connection/FormFieldsConnectionResolver.php',
