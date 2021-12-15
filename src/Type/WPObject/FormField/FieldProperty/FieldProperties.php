@@ -29,7 +29,7 @@ use WPGraphQL\GF\Type\Enum\SignatureFieldBorderStyleEnum;
 use WPGraphQL\GF\Type\Enum\SignatureFieldBorderWidthEnum;
 use WPGraphQL\GF\Type\Enum\FormFieldSizeEnum;
 use WPGraphQL\GF\Type\Enum\TimeFieldFormatEnum;
-use WPGraphQL\GF\Type\WPObject\Button\Button;
+use WPGraphQL\GF\Type\WPObject\Button\FormButton;
 use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
 
 /**
@@ -1132,7 +1132,7 @@ class FieldProperties {
 	public static function next_button() : array {
 		return [
 			'nextButton' => [
-				'type'        => Button::$type,
+				'type'        => FormButton::$type,
 				'description' => __( 'An array containing the the individual properties for the "Next" button.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -1252,7 +1252,7 @@ class FieldProperties {
 	public static function previous_button() : array {
 		return [
 			'previousButton' => [
-				'type'        => Button::$type,
+				'type'        => FormButton::$type,
 				'description' => __( 'An array containing the the individual properties for the "Previous" button.', 'wp-graphql-gravity-forms' ),
 			],
 		];

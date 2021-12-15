@@ -1,10 +1,10 @@
 <?php
 /**
- * GraphQL Object Type - LastPageButton
+ * GraphQL Object Type - FormLastPageButton
  *
  * @see https://docs.gravityforms.com/button/
  *
- * @package WPGraphQL\GF\Type\WPObject\LastPageButton
+ * @package WPGraphQL\GF\Type\WPObject\FormLastPageButton
  * @since   0.4.0
  */
 
@@ -15,15 +15,15 @@ use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\Enum\FormButtonTypeEnum;
 
 /**
- * Class - LastPageButton
+ * Class - FormLastPageButton
  */
-class LastPageButton extends AbstractObject {
+class FormLastPageButton extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'LastPageButton';
+	public static string $type = 'FormLastPageButton';
 
 	/**
 	 * {@inheritDoc}

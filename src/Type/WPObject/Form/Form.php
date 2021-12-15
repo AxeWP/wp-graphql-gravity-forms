@@ -72,7 +72,7 @@ class Form extends AbstractObject implements Field {
 	public static function get_fields() : array {
 		return [
 			'button'                     => [
-				'type'        => Button\Button::$type,
+				'type'        => Button\FormButton::$type,
 				'description' => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
 			],
 			'confirmations'              => [
@@ -130,7 +130,7 @@ class Form extends AbstractObject implements Field {
 				'description' => __( 'Determines where the field labels should be placed in relation to the field.', 'wp-graphql-gravity-forms' ),
 			],
 			'lastPageButton'             => [
-				'type'        => Button\LastPageButton::$type,
+				'type'        => Button\FormLastPageButton::$type,
 				'description' => __( 'Last page button data.', 'wp-graphql-gravity-forms' ),
 			],
 			'limitEntries'               => [

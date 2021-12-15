@@ -226,8 +226,8 @@ class TypeRegistry {
 	public static function objects() : array {
 		$classes_to_register = [
 			// Buttons.
-			WPObject\Button\Button::class,
-			WPObject\Button\LastPageButton::class,
+			WPObject\Button\FormButton::class,
+			WPObject\Button\FormLastPageButton::class,
 			// Conditional Logic.
 			WPObject\ConditionalLogic\ConditionalLogic::class,
 			WPObject\ConditionalLogic\ConditionalLogicRule::class,

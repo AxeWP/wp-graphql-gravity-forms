@@ -16,15 +16,15 @@ use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
 use WPGraphQL\GF\Type\Enum\FormButtonTypeEnum;
 
 /**
- * Class - Button
+ * Class - FormButton
  */
-class Button extends AbstractObject {
+class FormButton extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'Button';
+	public static string $type = 'FormButton';
 
 	/**
 	 * {@inheritDoc}
