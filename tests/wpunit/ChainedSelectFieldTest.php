@@ -184,7 +184,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 * SubmitForm mutation string.
 	 */
 	public function submit_form_mutation(): string {
-		return 'mutation ($formId: Int!, $fieldId: Int!, $value: [ChainedSelectInput]!, $draft: Boolean) {
+		return 'mutation ($formId: Int!, $fieldId: Int!, $value: [ChainedSelectFieldInput]!, $draft: Boolean) {
 				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, chainedSelectValues: $value}}) {
 					errors {
 						id
@@ -211,7 +211,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 */
 	public function update_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [ChainedSelectInput]! ){
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [ChainedSelectFieldInput]! ){
 				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, chainedSelectValues: $value} }) {
 					errors {
 						id
@@ -236,7 +236,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [ChainedSelectInput]! ){
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [ChainedSelectFieldInput]! ){
 				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, chainedSelectValues: $value} }) {
 					errors {
 						id

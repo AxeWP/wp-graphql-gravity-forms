@@ -276,7 +276,7 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function submit_form_mutation(): string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: [CheckboxInput]!, $draft: Boolean) {
+			mutation ($formId: Int!, $fieldId: Int!, $value: [CheckboxFieldInput]!, $draft: Boolean) {
 				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, checkboxValues: $value}}) {
 					errors {
 						id
@@ -307,7 +307,7 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function update_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [CheckboxInput]! ){
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [CheckboxFieldInput]! ){
 				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
 					errors {
 						id
@@ -336,7 +336,7 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [CheckboxInput]! ){
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [CheckboxFieldInput]! ){
 				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
 					errors {
 						id

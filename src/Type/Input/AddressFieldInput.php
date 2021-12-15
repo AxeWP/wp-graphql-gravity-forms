@@ -1,6 +1,6 @@
 <?php
 /**
- * GraphQL Input Type - AddressInput
+ * GraphQL Input Type - AddressFieldInput
  * Input fields for address field.
  *
  * @package WPGraphQL\GF\Type\Input
@@ -12,15 +12,15 @@ namespace WPGraphQL\GF\Type\Input;
 use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;
 
 /**
- * Class - AddressInput
+ * Class - AddressFieldInput
  */
-class AddressInput extends AbstractInput {
+class AddressFieldInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'AddressInput';
+	public static string $type = 'AddressFieldInput';
 
 	/**
 	 * {@inheritDoc}

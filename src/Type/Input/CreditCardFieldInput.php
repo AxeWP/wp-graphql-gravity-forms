@@ -1,6 +1,6 @@
 <?php
 /**
- * GraphQL Input Type - CreditCardInput
+ * GraphQL Input Type - CreditCardFieldInput
  * Input fields for address field.
  *
  * @package WPGraphQL\GF\Type\Input
@@ -12,21 +12,21 @@ namespace WPGraphQL\GF\Type\Input;
 use WPGraphQL\GF\Type\Enum\FormCreditCardTypeEnum;
 
 /**
- * Class - CreditCardInput
+ * Class - CreditCardFieldInput
  */
-class CreditCardInput extends AbstractInput {
+class CreditCardFieldInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'CreditCardInput';
+	public static string $type = 'CreditCardFieldInput';
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'Input fields for Address FormField.', 'wp-graphql-gravity-forms' );
+		return __( 'Input fields for Credit Card FormField.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**

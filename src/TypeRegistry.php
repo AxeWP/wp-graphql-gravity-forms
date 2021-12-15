@@ -172,25 +172,25 @@ class TypeRegistry {
 	 */
 	private static function inputs() : array {
 		$classes_to_register = [
-			Input\AddressInput::class,
-			Input\CreditCardInput::class,
-			Input\ChainedSelectInput::class,
-			Input\CheckboxInput::class,
-			Input\EmailInput::class,
+			Input\AddressFieldInput::class,
+			Input\CreditCardFieldInput::class,
+			Input\ChainedSelectFieldInput::class,
+			Input\CheckboxFieldInput::class,
+			Input\EmailFieldInput::class,
 			Input\EntriesDateFiltersInput::class,
 			Input\EntriesFieldFiltersInput::class,
 			Input\EntriesSortingInput::class,
 			Input\FormsSortingInput::class,
-			Input\ListInput::class,
-			Input\NameInput::class,
+			Input\ListFieldInput::class,
+			Input\NameFieldInput::class,
 		];
 
 		if ( Utils::is_graphql_upload_enabled() ) {
-			$classes_to_register[] = Input\PostImageInput::class;
+			$classes_to_register[] = Input\PostImageFieldInput::class;
 		}
 
 		// Register late, since it depends on above inputs.
-		$classes_to_register[] = Input\FieldValuesInput::class;
+		$classes_to_register[] = Input\FormFieldValuesInput::class;
 
 		/**
 		 * Filters the list of input classes to register.

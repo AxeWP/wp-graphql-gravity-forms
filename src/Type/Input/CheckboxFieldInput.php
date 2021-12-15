@@ -1,6 +1,6 @@
 <?php
 /**
- * GraphQL Input Type - CheckboxInput
+ * GraphQL Input Type - CheckboxFieldInput
  * Input fields for a single checkbox.
  *
  * @package WPGraphQL\GF\Type\Input
@@ -10,15 +10,15 @@
 namespace WPGraphQL\GF\Type\Input;
 
 /**
- * Class - CheckboxInput
+ * Class - CheckboxFieldInput
  */
-class CheckboxInput extends AbstractInput {
+class CheckboxFieldInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'CheckboxInput';
+	public static string $type = 'CheckboxFieldInput';
 
 	/**
 	 * {@inheritDoc}

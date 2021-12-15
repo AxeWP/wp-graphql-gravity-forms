@@ -1,6 +1,6 @@
 <?php
 /**
- * GraphQL Input Type - ChainedSelectInput
+ * GraphQL Input Type - ChainedSelectFieldInput
  * Input fields for a single ChainedSelect.
  *
  * @package WPGraphQL\GF\Type\Input
@@ -10,15 +10,15 @@
 namespace WPGraphQL\GF\Type\Input;
 
 /**
- * Class - ChainedSelectInput
+ * Class - ChainedSelectFieldInput
  */
-class ChainedSelectInput extends AbstractInput {
+class ChainedSelectFieldInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'ChainedSelectInput';
+	public static string $type = 'ChainedSelectFieldInput';
 
 	/**
 	 * {@inheritDoc}

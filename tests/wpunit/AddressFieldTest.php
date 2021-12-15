@@ -179,7 +179,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function submit_form_mutation() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: AddressInput!, $draft: Boolean) {
+			mutation ($formId: Int!, $fieldId: Int!, $value: AddressFieldInput!, $draft: Boolean) {
 				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, addressValues: $value}}) {
 					errors {
 						id
@@ -215,7 +215,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function update_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: AddressInput! ){
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: AddressFieldInput! ){
 				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, addressValues: $value} }) {
 					errors {
 						id
@@ -249,7 +249,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: AddressInput! ){
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: AddressFieldInput! ){
 				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, addressValues: $value} }) {
 					errors {
 						id

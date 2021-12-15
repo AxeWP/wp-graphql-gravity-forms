@@ -1,6 +1,6 @@
 <?php
 /**
- * GraphQL Input Type - PostImageInput
+ * GraphQL Input Type - PostImageFieldInput
  * Input fields for a single Post Image.
  *
  * @package WPGraphQL\GF\Type\Input
@@ -10,9 +10,9 @@
 namespace WPGraphQL\GF\Type\Input;
 
 /**
- * Class - PostImageInput
+ * Class - PostImageFieldInput
  */
-class PostImageInput extends AbstractInput {
+class PostImageFieldInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

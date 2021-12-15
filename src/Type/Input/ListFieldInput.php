@@ -1,6 +1,6 @@
 <?php
 /**
- * GraphQL Input Type - ListInput
+ * GraphQL Input Type - ListFieldInput
  * Input fields for a single List field item.
  *
  * @package WPGraphQL\GF\Type\Input
@@ -11,15 +11,15 @@
 namespace WPGraphQL\GF\Type\Input;
 
 /**
- * Class - ListInput
+ * Class - ListFieldInput
  */
-class ListInput extends AbstractInput {
+class ListFieldInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'ListInput';
+	public static string $type = 'ListFieldInput';
 
 	/**
 	 * {@inheritDoc}

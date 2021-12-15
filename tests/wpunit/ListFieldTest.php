@@ -132,7 +132,7 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function submit_form_mutation() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: [ListInput]!, $draft: Boolean) {
+			mutation ($formId: Int!, $fieldId: Int!, $value: [ListFieldInput]!, $draft: Boolean) {
 				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, listValues: $value}}) {
 					errors {
 						id
@@ -161,7 +161,7 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function update_entry_mutation() : string {
 		return '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [ListInput] ){
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [ListFieldInput] ){
 				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, listValues: $value} }) {
 					errors {
 						id
@@ -188,7 +188,7 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function update_draft_entry_mutation() : string {
 		return '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [ListInput]! ){
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [ListFieldInput]! ){
 				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, listValues: $value} }) {
 					errors {
 						id
@@ -277,7 +277,7 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function check_saved_values( $actual_entry, $form ) : void {
 		$actual_value = maybe_unserialize( $actual_entry[ $form['fields'][0]->id ], true );
 
-		// Convert to GraphQL ListInput
+		// Convert to GraphQL ListFieldInput
 		$converted_value = array_map( fn( $value) => [ 'rowValues' => $value ], $actual_value );
 		$this->assertEquals( $this->field_value, $converted_value, 'Submit mutation entry value not equal' );
 	}

@@ -18,7 +18,7 @@ use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
-use WPGraphQL\GF\Type\Input\FieldValuesInput;
+use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
 use WPGraphQL\GF\Utils\GFUtils;
 
 /**
@@ -42,7 +42,7 @@ class SubmitForm extends AbstractMutation {
 				'description' => __( 'Optional. ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
-				'type'        => [ 'list_of' => FieldValuesInput::$type ],
+				'type'        => [ 'list_of' => FormFieldValuesInput::$type ],
 				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
 			],
 			'formId'      => [

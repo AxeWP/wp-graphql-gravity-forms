@@ -1,6 +1,6 @@
 <?php
 /**
- * GraphQL Input Type - NameInput
+ * GraphQL Input Type - NameFieldInput
  * Input fields for name field.
  *
  * @package WPGraphQL\GF\Type\Input
@@ -10,15 +10,15 @@
 namespace WPGraphQL\GF\Type\Input;
 
 /**
- * Class - NameInput
+ * Class - NameFieldInput
  */
-class NameInput extends AbstractInput {
+class NameFieldInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'NameInput';
+	public static string $type = 'NameFieldInput';
 
 	/**
 	 * {@inheritDoc}

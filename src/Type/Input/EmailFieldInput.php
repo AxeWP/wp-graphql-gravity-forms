@@ -1,6 +1,6 @@
 <?php
 /**
- * GraphQL Input Type - EmailInput
+ * GraphQL Input Type - EmailFieldInput
  * Input fields for a single checkbox.
  *
  * @package WPGraphQL\GF\Type\Input
@@ -10,15 +10,15 @@
 namespace WPGraphQL\GF\Type\Input;
 
 /**
- * Class - EmailInput
+ * Class - EmailFieldInput
  */
-class EmailInput extends AbstractInput {
+class EmailFieldInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'EmailInput';
+	public static string $type = 'EmailFieldInput';
 
 	/**
 	 * {@inheritDoc}
