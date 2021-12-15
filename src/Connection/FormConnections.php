@@ -14,7 +14,7 @@ use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\GF\Type\Enum\FormStatusEnum;
-use WPGraphQL\GF\Type\Input\FormsSortingInput;
+use WPGraphQL\GF\Type\Input\FormsConnectionOrderbyInput;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -61,8 +61,8 @@ class FormConnections extends AbstractConnection {
 				'type'        => FormStatusEnum::$type,
 				'description' => __( 'Status of the forms to get.', 'wp-graphql-gravity-forms' ),
 			],
-			'sort'    => [
-				'type'        => FormsSortingInput::$type,
+			'orderby' => [
+				'type'        => FormsConnectionOrderbyInput::$type,
 				'description' => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
 			],
 		];

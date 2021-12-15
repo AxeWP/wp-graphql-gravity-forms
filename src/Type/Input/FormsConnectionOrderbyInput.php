@@ -1,6 +1,6 @@
 <?php
 /**
- * GraphQL Input Type - FormsSortingInput
+ * GraphQL Input Type - FormsConnectionOrderbyInput
  * Sorting input type for Forms queries.
  *
  * @package WPGraphQL\GF\Type\Input
@@ -9,18 +9,16 @@
 
 namespace WPGraphQL\GF\Type\Input;
 
-use WPGraphQL\GF\Type\Enum\SortingInputEnum;
-
 /**
- * Class - FormsSortingInput
+ * Class - FormsConnectionOrderbyInput
  */
-class FormsSortingInput extends AbstractInput {
+class FormsConnectionOrderbyInput extends AbstractInput {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'FormsSortingInput';
+	public static string $type = 'FormsConnectionOrderbyInput';
 
 	/**
 	 * {@inheritDoc}
@@ -34,13 +32,13 @@ class FormsSortingInput extends AbstractInput {
 	 */
 	public static function get_fields() : array {
 		return [
-			'key'       => [
+			'field'     => [
 				'type'        => 'String',
-				'description' => __( 'The key of the field to sort by.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The field name used to sort the results.', 'wp-graphql-gravity-forms' ),
 			],
 			'direction' => [
 				'type'        => 'OrderEnum',
-				'description' => __( 'The sorting direction.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The cardinality of the order of the connection.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

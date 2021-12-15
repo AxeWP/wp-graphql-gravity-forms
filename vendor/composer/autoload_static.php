@@ -110,7 +110,7 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
         'WPGraphQL\\GF\\Type\\Input\\EntriesFieldFiltersInput' => __DIR__ . '/../..' . '/src/Type/Input/EntriesFieldFiltersInput.php',
         'WPGraphQL\\GF\\Type\\Input\\EntriesSortingInput' => __DIR__ . '/../..' . '/src/Type/Input/EntriesSortingInput.php',
         'WPGraphQL\\GF\\Type\\Input\\FormFieldValuesInput' => __DIR__ . '/../..' . '/src/Type/Input/FormFieldValuesInput.php',
-        'WPGraphQL\\GF\\Type\\Input\\FormsSortingInput' => __DIR__ . '/../..' . '/src/Type/Input/FormsSortingInput.php',
+        'WPGraphQL\\GF\\Type\\Input\\FormsConnectionOrderbyInput' => __DIR__ . '/../..' . '/src/Type/Input/FormsConnectionOrderbyInput.php',
         'WPGraphQL\\GF\\Type\\Input\\ListFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/ListFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\NameFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/NameFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\PostImageFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/PostImageFieldInput.php',

@@ -180,7 +180,7 @@ class TypeRegistry {
 			Input\EntriesDateFiltersInput::class,
 			Input\EntriesFieldFiltersInput::class,
 			Input\EntriesSortingInput::class,
-			Input\FormsSortingInput::class,
+			Input\FormsConnectionOrderbyInput::class,
 			Input\ListFieldInput::class,
 			Input\NameFieldInput::class,
 		];

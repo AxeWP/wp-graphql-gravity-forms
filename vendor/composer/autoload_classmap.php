@@ -95,7 +95,7 @@ return array(
     'WPGraphQL\\GF\\Type\\Input\\EntriesFieldFiltersInput' => $baseDir . '/src/Type/Input/EntriesFieldFiltersInput.php',
     'WPGraphQL\\GF\\Type\\Input\\EntriesSortingInput' => $baseDir . '/src/Type/Input/EntriesSortingInput.php',
     'WPGraphQL\\GF\\Type\\Input\\FormFieldValuesInput' => $baseDir . '/src/Type/Input/FormFieldValuesInput.php',
-    'WPGraphQL\\GF\\Type\\Input\\FormsSortingInput' => $baseDir . '/src/Type/Input/FormsSortingInput.php',
+    'WPGraphQL\\GF\\Type\\Input\\FormsConnectionOrderbyInput' => $baseDir . '/src/Type/Input/FormsConnectionOrderbyInput.php',
     'WPGraphQL\\GF\\Type\\Input\\ListFieldInput' => $baseDir . '/src/Type/Input/ListFieldInput.php',
     'WPGraphQL\\GF\\Type\\Input\\NameFieldInput' => $baseDir . '/src/Type/Input/NameFieldInput.php',
     'WPGraphQL\\GF\\Type\\Input\\PostImageFieldInput' => $baseDir . '/src/Type/Input/PostImageFieldInput.php',
