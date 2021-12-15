@@ -88,9 +88,9 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 						'databaseId' => (int) $entry['created_by'],
 				],
 				'dateCreated' => get_date_from_gmt( $entry['date_created'] ),
-				'dateCreatedUTC' => $entry['date_created'],
+				'dateCreatedGmt' => $entry['date_created'],
 				'dateUpdated' => get_date_from_gmt( $entry['date_updated'] ),
-				'dateUpdatedUTC' => $entry['date_updated'],
+				'dateUpdatedGmt' => $entry['date_updated'],
 				'entryId'     => (int) $entry['id'],
 				'formFields'  => [
 					'nodes' => [
@@ -161,9 +161,9 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 						'databaseId' => (int) $entry['created_by'],
 				],
 				'dateCreated' => get_date_from_gmt( $entry['date_created'] ),
-				'dateCreatedUTC' => $entry['date_created'],
+				'dateCreatedGmt' => $entry['date_created'],
 				'dateUpdated' => get_date_from_gmt( $entry['date_updated'] ),
-				'dateUpdatedUTC' => $entry['date_updated'],
+				'dateUpdatedGmt' => $entry['date_updated'],
 				'entryId'     => (int) $entry['id'],
 				'formFields'  => [
 					'nodes' => [
@@ -389,9 +389,9 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 						databaseId
 					}
 					dateCreated
-					dateCreatedUTC
+					dateCreatedGmt
 					dateUpdated
-					dateUpdatedUTC
+					dateUpdatedGmt
 					entryId
 					formFields {
 						nodes {

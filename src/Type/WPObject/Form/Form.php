@@ -89,7 +89,11 @@ class Form extends AbstractObject implements Field {
 			],
 			'dateCreated'                => [
 				'type'        => 'String',
-				'description' => __( 'The date the form was created in this format: YYYY-MM-DD HH:mm:ss.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The date and time that the entry was created in local time.', 'wp-graphql-gravity-forms' ),
+			],
+			'dateCreatedGmt'             => [
+				'type'        => 'String',
+				'description' => __( 'The date and time that the entry was created in GMT.', 'wp-graphql-gravity-forms' ),
 			],
 			'description'                => [
 				'type'        => 'String',

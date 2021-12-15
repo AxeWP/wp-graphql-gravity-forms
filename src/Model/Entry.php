@@ -63,8 +63,10 @@ class Entry extends Model {
 			$this->fields = [
 				'createdById'     => fn() : ?int => ! empty( $this->data['created_by'] ) ? (int) $this->data['created_by'] : null,
 				'databaseId'      => fn() : ?int => ! empty( $this->data['id'] ) ? (int) $this->data['id'] : null,
-				'dateCreatedUTC'  => fn() : ?string => ! empty( $this->data['date_created'] ) ? $this->data['date_created'] : null,
-				'dateUpdatedUTC'  => fn() : ?string => ! empty( $this->data['date_updated'] ) ? $this->data['date_updated'] : null,
+				'dateCreated'     => fn() : ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,
+				'dateCreatedGmt'  => fn() : ?string => ! empty( $this->data['date_created'] ) ? $this->data['date_created'] : null,
+				'dateUpdated'     => fn() : ?string => ! empty( $this->data['date_updated'] ) ? get_date_from_gmt( $this->data['date_updated'] ) : null,
+				'dateUpdatedGmt'  => fn() : ?string => ! empty( $this->data['date_updated'] ) ? $this->data['date_updated'] : null,
 				'entry'           => fn() : array => $this->data,
 				'entryValues'     => fn() : ?array => array_filter( $this->data, fn( $key ) => is_numeric( $key ), ARRAY_FILTER_USE_KEY ) ?: null,
 				'formDatabaseId'  => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,

@@ -90,21 +90,19 @@ class Entry extends AbstractObject implements Field {
 			],
 			'dateCreated'    => [
 				'type'        => 'String',
-				'description' => __( 'The date and time that the entry was created, in the format "Y-m-d H:i:s" (i.e. 2010-07-15 17:26:58).', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->dateCreatedUTC ) ? get_date_from_gmt( $source->dateCreatedUTC ) : null,
+				'description' => __( 'The date and time that the entry was created in local time.', 'wp-graphql-gravity-forms' ),
 			],
-			'dateCreatedUTC' => [
+			'dateCreatedGmt' => [
 				'type'        => 'String',
-				'description' => __( 'The date and time that the entry was created, in the format "Y-m-d H:i:s" (i.e. 2010-07-15 17:26:58).', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The date and time that the entry was created in GMT.', 'wp-graphql-gravity-forms' ),
 			],
 			'dateUpdated'    => [
 				'type'        => 'String',
-				'description' => __( 'The date and time that the entry was created, in the format "Y-m-d H:i:s" (i.e. 2010-07-15 17:26:58).', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->dateUpdatedUTC ) ? get_date_from_gmt( $source->dateUpdatedUTC ) : null,
+				'description' => __( 'The date and time that the entry was created in local time.', 'wp-graphql-gravity-forms' ),
 			],
-			'dateUpdatedUTC' => [
+			'dateUpdatedGmt' => [
 				'type'        => 'String',
-				'description' => __( 'The date and time that the entry was updated, in the format "Y-m-d H:i:s" (i.e. 2010-07-15 17:26:58).', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The date and time that the entry was updated in GMT.', 'wp-graphql-gravity-forms' ),
 			],
 			'entryId'        => [
 				'type'              => 'Int',
