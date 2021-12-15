@@ -17,7 +17,7 @@ class CaptchaFieldTypeEnum extends AbstractEnum {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'CaptchaFieldTypeEnum ';
+	public static string $type = 'CaptchaFieldTypeEnum';
 
 	// Individual elements.
 	const RECAPTCHA = 'recaptcha';
