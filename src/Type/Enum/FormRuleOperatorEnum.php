@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - RuleOperatorEnum
+ * Enum Type - FormRuleOperatorEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - RuleOperatorEnum
+ * Class - FormRuleOperatorEnum
  */
-class RuleOperatorEnum extends AbstractEnum {
+class FormRuleOperatorEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'RuleOperatorEnum';
+	public static string $type = 'FormRuleOperatorEnum';
 
 	// Individual elements.
 	const IS           = 'is';

@@ -9,7 +9,7 @@
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
 
-use WPGraphQL\GF\Type\Enum\AddressCountryEnum;
+use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 
@@ -57,7 +57,7 @@ class AddressValueProperty extends AbstractObject {
 				'description' => __( 'Address zip code', 'wp-graphql-gravity-forms' ),
 			],
 			'country' => [
-				'type'        => AddressCountryEnum::$type,
+				'type'        => AddressFieldCountryEnum::$type,
 				'description' => __( 'Address country.', 'wp-graphql-gravity-forms' ),
 			],
 		];

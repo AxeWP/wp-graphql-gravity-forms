@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - SizePropertyEnum
+ * Enum Type - FormFieldSizeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - SizePropertyEnum
+ * Class - FormFieldSizeEnum
  */
-class SizePropertyEnum extends AbstractEnum {
+class FormFieldSizeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'SizePropertyEnum';
+	public static string $type = 'FormFieldSizeEnum';
 
 	// Individual elements.
 	const SMALL  = 'small';

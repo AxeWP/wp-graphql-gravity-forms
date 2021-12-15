@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - QuizGradingTypeEnum
+ * Enum Type - QuizFieldGradingTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.9.1
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - QuizGradingTypeEnum
+ * Class - QuizFieldGradingTypeEnum
  */
-class QuizGradingTypeEnum extends AbstractEnum {
+class QuizFieldGradingTypeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'QuizGradingTypeEnum';
+	public static string $type = 'QuizFieldGradingTypeEnum';
 
 	// Individual elements.
 	const NONE     = 'none';

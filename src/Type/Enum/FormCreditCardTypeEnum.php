@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - CreditCardTypeEnum
+ * Enum Type - FormCreditCardTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -12,15 +12,15 @@ use GFCommon;
 use WPGraphQL\Type\WPEnumType;
 
 /**
- * Class - CreditCardTypeEnum
+ * Class - FormCreditCardTypeEnum
  */
-class CreditCardTypeEnum extends AbstractEnum {
+class FormCreditCardTypeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'SupportedCreditCardTypeEnum';
+	public static string $type = 'FormFormCreditCardTypeEnum';
 
 	/**
 	 * {@inheritDoc}

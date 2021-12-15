@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - PageProgressStyleEnum
+ * Enum Type - FormPageProgressStyleEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - PageProgressStyleEnum
+ * Class - FormPageProgressStyleEnum
  */
-class PageProgressStyleEnum extends AbstractEnum {
+class FormPageProgressStyleEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'PageProgressStyleEnum';
+	public static string $type = 'FormPageProgressStyleEnum';
 
 	// Individual elements.
 	const BLUE   = 'blue';

@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - CaptchaThemeEnum
+ * Enum Type - CaptchaFieldThemeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - CaptchaThemeEnum
+ * Class - CaptchaFieldThemeEnum
  */
-class CaptchaThemeEnum extends AbstractEnum {
+class CaptchaFieldThemeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'CaptchaThemeEnum';
+	public static string $type = 'CaptchaFieldThemeEnum';
 
 	// Individual elements.
 	const DARK  = 'dark';

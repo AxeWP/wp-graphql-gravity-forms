@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - CalendarIconTypeEnum
+ * Enum Type - FormFieldCalendarIconTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - CalendarIconTypeEnum
+ * Class - FormFieldCalendarIconTypeEnum
  */
-class CalendarIconTypeEnum extends AbstractEnum {
+class FormFieldCalendarIconTypeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'CalendarIconTypeEnum';
+	public static string $type = 'FormFieldCalendarIconTypeEnum';
 
 	// Individual elements.
 	const CALENDAR = 'calendar';

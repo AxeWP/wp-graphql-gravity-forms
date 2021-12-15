@@ -81,14 +81,14 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						'rules'      => [
 							[
 								'fieldId'  => $form['button']['conditionalLogic']['rules'][0]['fieldId'],
-								'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['button']['conditionalLogic']['rules'][0]['operator'] ),
+								'operator' => $this->tester->get_enum_for_value( Enum\FormRuleOperatorEnum::$type, $form['button']['conditionalLogic']['rules'][0]['operator'] ),
 								'value'    => $form['button']['conditionalLogic']['rules'][0]['value'],
 							],
 						],
 					],
 					'imageUrl'         => $form['button']['imageUrl'],
 					'text'             => $form['button']['text'],
-					'type'             => $this->tester->get_enum_for_value( Enum\ButtonTypeEnum::$type, $form['button']['type'] ),
+					'type'             => $this->tester->get_enum_for_value( Enum\FormButtonTypeEnum::$type, $form['button']['type'] ),
 				],
 				'confirmations'              => [
 					[
@@ -98,7 +98,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						'name'             => $form['confirmations'][ $confirmation_key ]['name'],
 						'pageId'           => $form['confirmations'][ $confirmation_key ]['pageId'],
 						'queryString'      => $form['confirmations'][ $confirmation_key ]['queryString'],
-						'type'             => $this->tester->get_enum_for_value( Enum\ConfirmationTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['type'] ),
+						'type'             => $this->tester->get_enum_for_value( Enum\FormConfirmationTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['type'] ),
 						'url'              => $form['confirmations'][ $confirmation_key ]['url'],
 						'conditionalLogic' => [
 							'actionType' => $this->tester->get_enum_for_value( Enum\ConditionalLogicActionTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['conditionalLogic']['actionType'] ),
@@ -106,12 +106,12 @@ class FormQueriesTest extends GFGraphQLTestCase {
 							'rules'      => [
 								[
 									'fieldId'  => $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][0]['fieldId'],
-									'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][0]['operator'] ),
+									'operator' => $this->tester->get_enum_for_value( Enum\FormRuleOperatorEnum::$type, $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][0]['operator'] ),
 									'value'    => $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][0]['value'],
 								],
 								[
 									'fieldId'  => $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][1]['fieldId'],
-									'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][1]['operator'] ),
+									'operator' => $this->tester->get_enum_for_value( Enum\FormRuleOperatorEnum::$type, $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][1]['operator'] ),
 									'value'    => $form['confirmations'][ $confirmation_key ]['conditionalLogic']['rules'][1]['value'],
 								],
 							],
@@ -140,7 +140,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 				'lastPageButton'             => [
 					'imageUrl' => $form['lastPageButton']['imageUrl'],
 					'text'     => $form['lastPageButton']['text'],
-					'type'     => $this->tester->get_enum_for_value( Enum\ButtonTypeEnum::$type, $form['lastPageButton']['type'] ),
+					'type'     => $this->tester->get_enum_for_value( Enum\FormButtonTypeEnum::$type, $form['lastPageButton']['type'] ),
 				],
 				'limitEntries'               => $form['limitEntries'],
 				'limitEntriesCount'          => $form['limitEntriesCount'],
@@ -158,12 +158,12 @@ class FormQueriesTest extends GFGraphQLTestCase {
 							'rules'      => [
 								[
 									'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['fieldId'],
-									'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['operator'] ),
+									'operator' => $this->tester->get_enum_for_value( Enum\FormRuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['operator'] ),
 									'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][0]['value'],
 								],
 								[
 									'fieldId'  => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['fieldId'],
-									'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['operator'] ),
+									'operator' => $this->tester->get_enum_for_value( Enum\FormRuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['operator'] ),
 									'value'    => $form['notifications']['5cfec9464e529']['conditionalLogic']['rules'][1]['value'],
 								],
 							],
@@ -181,13 +181,13 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						'routing'           => [
 							[
 								'fieldId'  => $form['notifications']['5cfec9464e529']['routing'][0]['fieldId'],
-								'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['routing'][0]['operator'] ),
+								'operator' => $this->tester->get_enum_for_value( Enum\FormRuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['routing'][0]['operator'] ),
 								'value'    => $form['notifications']['5cfec9464e529']['routing'][0]['value'],
 								'email'    => $form['notifications']['5cfec9464e529']['routing'][0]['email'],
 							],
 							[
 								'fieldId'  => $form['notifications']['5cfec9464e529']['routing'][1]['fieldId'],
-								'operator' => $this->tester->get_enum_for_value( Enum\RuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['routing'][1]['operator'] ),
+								'operator' => $this->tester->get_enum_for_value( Enum\FormRuleOperatorEnum::$type, $form['notifications']['5cfec9464e529']['routing'][1]['operator'] ),
 								'value'    => $form['notifications']['5cfec9464e529']['routing'][1]['value'],
 								'email'    => $form['notifications']['5cfec9464e529']['routing'][1]['email'],
 							],
@@ -195,7 +195,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						'service'           => $form['notifications']['5cfec9464e529']['service'],
 						'subject'           => $form['notifications']['5cfec9464e529']['subject'],
 						'to'                => $form['notifications']['5cfec9464e529']['to'],
-						'toType'            => $this->tester->get_enum_for_value( Enum\NotificationToTypeEnum::$type, $form['notifications']['5cfec9464e529']['toType'] ),
+						'toType'            => $this->tester->get_enum_for_value( Enum\FormNotificationToTypeEnum::$type, $form['notifications']['5cfec9464e529']['toType'] ),
 					],
 				],
 				'pagination'                 => [
@@ -204,8 +204,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 					'displayProgressbarOnConfirmation' => $form['pagination']['display_progressbar_on_confirmation'],
 					'pages'                            => $form['pagination']['pages'],
 					'progressbarCompletionText'        => $form['pagination']['progressbar_completion_text'],
-					'style'                            => $this->tester->get_enum_for_value( Enum\PageProgressStyleEnum::$type, $form['pagination']['style'] ),
-					'type'                             => $this->tester->get_enum_for_value( Enum\PageProgressTypeEnum::$type, $form['pagination']['type'] ),
+					'style'                            => $this->tester->get_enum_for_value( Enum\FormPageProgressStyleEnum::$type, $form['pagination']['style'] ),
+					'type'                             => $this->tester->get_enum_for_value( Enum\FormPageProgressTypeEnum::$type, $form['pagination']['type'] ),
 				],
 				'postAuthor'                 => $form['postAuthor'],
 				'postCategory'               => $form['postCategory'],
@@ -215,7 +215,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 				'postStatus'                 => $form['postStatus'],
 				'postTitleTemplate'          => $form['postTitleTemplate'],
 				'postTitleTemplateEnabled'   => $form['postTitleTemplateEnabled'],
-				'requiredIndicator'          => $this->tester->get_enum_for_value( Enum\RequiredIndicatorEnum::$type, $form['requiredIndicator'] ),
+				'requiredIndicator'          => $this->tester->get_enum_for_value( Enum\FormFieldRequiredIndicatorEnum::$type, $form['requiredIndicator'] ),
 				'requireLogin'               => $form['requireLogin'],
 				'requireLoginMessage'        => $form['requireLoginMessage'],
 				'save'                       => [
@@ -288,7 +288,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 							'name'             => $form['confirmations'][ $confirmation_key ]['name'],
 							'pageId'           => $form['confirmations'][ $confirmation_key ]['pageId'],
 							'queryString'      => $form['confirmations'][ $confirmation_key ]['queryString'],
-							'type'             => $this->tester->get_enum_for_value( Enum\ConfirmationTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['type'] ),
+							'type'             => $this->tester->get_enum_for_value( Enum\FormConfirmationTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['type'] ),
 							'url'              => $form['confirmations'][ $confirmation_key ]['url'],
 							'conditionalLogic' => null,
 						],

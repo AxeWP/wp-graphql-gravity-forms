@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - SignatureBorderWidthEnum
+ * Enum Type - SignatureFieldBorderWidthEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - SignatureBorderWidthEnum
+ * Class - SignatureFieldBorderWidthEnum
  */
-class SignatureBorderWidthEnum extends AbstractEnum {
+class SignatureFieldBorderWidthEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'SignatureBorderWidthEnum';
+	public static string $type = 'SignatureFieldBorderWidthEnum';
 
 	// Individual elements.
 	const NONE   = '0';

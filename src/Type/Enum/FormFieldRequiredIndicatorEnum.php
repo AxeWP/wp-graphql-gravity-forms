@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - RequiredIndicatorEnum
+ * Enum Type - FormFieldRequiredIndicatorEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.6.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - RequiredIndicatorEnum
+ * Class - FormFieldRequiredIndicatorEnum
  */
-class RequiredIndicatorEnum extends AbstractEnum {
+class FormFieldRequiredIndicatorEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'RequiredIndicatorEnum';
+	public static string $type = 'FormFieldRequiredIndicatorEnum';
 
 	// Individual elements.
 	const ASTERISK = 'asterisk';

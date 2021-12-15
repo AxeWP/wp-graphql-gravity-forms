@@ -12,8 +12,8 @@ namespace WPGraphQL\GF\Type\WPObject\Form;
 
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
-use WPGraphQL\GF\Type\Enum\PageProgressStyleEnum;
-use WPGraphQL\GF\Type\Enum\PageProgressTypeEnum;
+use WPGraphQL\GF\Type\Enum\FormPageProgressStyleEnum;
+use WPGraphQL\GF\Type\Enum\FormPageProgressTypeEnum;
 
 /**
  * Class - FormPagination
@@ -39,7 +39,7 @@ class FormPagination extends AbstractObject {
 	public static function get_fields() : array {
 		return [
 			'type'                             => [
-				'type'        => PageProgressTypeEnum::$type,
+				'type'        => FormPageProgressTypeEnum::$type,
 				'description' => __( 'Type of progress indicator.', 'wp-graphql-gravity-forms' ),
 			],
 			'pages'                            => [
@@ -47,7 +47,7 @@ class FormPagination extends AbstractObject {
 				'description' => __( 'Names of the form\'s pages.', 'wp-graphql-gravity-forms' ),
 			],
 			'style'                            => [
-				'type'        => PageProgressStyleEnum::$type,
+				'type'        => FormPageProgressStyleEnum::$type,
 				'description' => __( 'Style of progress bar.', 'wp-graphql-gravity-forms' ),
 			],
 			'backgroundColor'                  => [

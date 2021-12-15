@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - PageProgressTypeEnum
+ * Enum Type - FormPageProgressTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - PageProgressTypeEnum
+ * Class - FormPageProgressTypeEnum
  */
-class PageProgressTypeEnum extends AbstractEnum {
+class FormPageProgressTypeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'PageProgressTypeEnum';
+	public static string $type = 'FormPageProgressTypeEnum';
 
 	// Individual elements.
 	const PERCENTAGE = 'percentage';

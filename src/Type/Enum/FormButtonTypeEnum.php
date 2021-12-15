@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - ButtonTypeEnum
+ * Enum Type - FormButtonTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - ButtonTypeEnum
+ * Class - FormButtonTypeEnum
  */
-class ButtonTypeEnum extends AbstractEnum {
+class FormButtonTypeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'ButtonTypeEnum';
+	public static string $type = 'FormButtonTypeEnum';
 
 	// Individual elements.
 	const TEXT  = 'text';

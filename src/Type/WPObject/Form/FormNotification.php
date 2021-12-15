@@ -13,7 +13,7 @@ namespace WPGraphQL\GF\Type\WPObject\Form;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
-use WPGraphQL\GF\Type\Enum\NotificationToTypeEnum;
+use WPGraphQL\GF\Type\Enum\FormNotificationToTypeEnum;
 
 /**
  * Class - FormNotification
@@ -63,7 +63,7 @@ class FormNotification extends AbstractObject {
 				'description' => __( 'The ID of an email field, an email address or merge tag to be used as the email to address.', 'wp-graphql-gravity-forms' ),
 			],
 			'toType'            => [
-				'type'        => NotificationToTypeEnum::$type,
+				'type'        => FormNotificationToTypeEnum::$type,
 				'description' => __( 'Identifies what to use for the notification "to".', 'wp-graphql-gravity-forms' ),
 			],
 			'bcc'               => [

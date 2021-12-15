@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - ChainedSelectsAlignmentEnum
+ * Enum Type - ChainedSelectFieldAlignmentEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - ChainedSelectsAlignmentEnum
+ * Class - ChainedSelectFieldAlignmentEnum
  */
-class ChainedSelectsAlignmentEnum extends AbstractEnum {
+class ChainedSelectFieldAlignmentEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'ChainedSelectsAlignmentEnum';
+	public static string $type = 'ChainedSelectFieldAlignmentEnum';
 
 	// Individual elements.
 	const HORIZONTAL = 'horizontal';

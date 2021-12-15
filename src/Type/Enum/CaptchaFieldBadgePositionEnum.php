@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - CaptchaBadgePositionEnum
+ * Enum Type - CaptchaFieldBadgePositionEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - CaptchaBadgePositionEnum
+ * Class - CaptchaFieldBadgePositionEnum
  */
-class CaptchaBadgePositionEnum extends AbstractEnum {
+class CaptchaFieldBadgePositionEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'CaptchaBadgePositionEnum';
+	public static string $type = 'CaptchaFieldBadgePositionEnum';
 
 	// Individual elements.
 	const BOTTOM_RIGHT = 'bottomright';

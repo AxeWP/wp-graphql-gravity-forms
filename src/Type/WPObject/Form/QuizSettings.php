@@ -13,7 +13,7 @@ namespace WPGraphQL\GF\Type\WPObject\Form;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
-use WPGraphQL\GF\Type\Enum\QuizGradingTypeEnum;
+use WPGraphQL\GF\Type\Enum\QuizFieldGradingTypeEnum;
 
 /**
  * Class - FormConfirmation
@@ -47,7 +47,7 @@ class QuizSettings extends AbstractObject {
 				'description' => __( 'Display correct or incorrect indicator and explanation (if any) immediately after answer selection. This setting only applies to radio button quiz fields and it is intended for training applications and trivial quizzes. It should not be considered a secure option for critical testing requirements.', 'wp-graphql-gravity-forms' ),
 			],
 			'grading'                             => [
-				'type'        => QuizGradingTypeEnum::$type,
+				'type'        => QuizFieldGradingTypeEnum::$type,
 				'description' => __( 'The quiz grading type. Defaults to `NONE`.', 'wp-graphql-gravity-forms' ),
 			],
 			'grades'                              => [

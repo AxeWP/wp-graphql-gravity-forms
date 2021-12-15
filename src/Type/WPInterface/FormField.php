@@ -16,7 +16,7 @@ use GraphQL\Error\UserError;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
-use WPGraphQL\GF\Type\Enum\VisibilityPropertyEnum;
+use WPGraphQL\GF\Type\Enum\FormFieldVisibilityEnum;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
@@ -127,7 +127,7 @@ class FormField extends AbstractType implements TypeWithFields {
 				'description' => __( 'The type of field to be displayed.', 'wp-graphql-gravity-forms' ),
 			],
 			'visibility'                 => [
-				'type'        => VisibilityPropertyEnum::$type,
+				'type'        => FormFieldVisibilityEnum::$type,
 				'description' => __( 'Field visibility.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $source ) : string => ! empty( $source->visibility ) ? $source->visibility : ( ! empty( $source->adminOnly ) ? 'administrative' : 'visible' ),
 			],

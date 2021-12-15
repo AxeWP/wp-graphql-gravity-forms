@@ -13,7 +13,7 @@ namespace WPGraphQL\GF\Type\WPObject\Button;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
-use WPGraphQL\GF\Type\Enum\ButtonTypeEnum;
+use WPGraphQL\GF\Type\Enum\FormButtonTypeEnum;
 
 /**
  * Class - Button
@@ -39,7 +39,7 @@ class Button extends AbstractObject {
 	public static function get_fields() : array {
 		return [
 			'type'             => [
-				'type'        => ButtonTypeEnum::$type,
+				'type'        => FormButtonTypeEnum::$type,
 				'description' => __( 'Specifies the type of button to be displayed. Defaults to TEXT.', 'wp-graphql-gravity-forms' ),
 			],
 			'text'             => [

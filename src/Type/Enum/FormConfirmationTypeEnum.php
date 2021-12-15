@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - ConfirmationTypeEnum
+ * Enum Type - FormConfirmationTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - ConfirmationTypeEnum
+ * Class - FormConfirmationTypeEnum
  */
-class ConfirmationTypeEnum extends AbstractEnum {
+class FormConfirmationTypeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'ConfirmationTypeEnum';
+	public static string $type = 'FormConfirmationTypeEnum';
 
 	// Individual elements.
 	const MESSAGE  = 'message';

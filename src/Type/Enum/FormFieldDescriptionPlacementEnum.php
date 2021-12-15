@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - DescriptionPlacementPropertyEnum
+ * Enum Type - FormFieldDescriptionPlacementEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - DescriptionPlacementPropertyEnum
+ * Class - FormFieldDescriptionPlacementEnum
  */
-class DescriptionPlacementPropertyEnum extends AbstractEnum {
+class FormFieldDescriptionPlacementEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'DescriptionPlacementPropertyEnum';
+	public static string $type = 'FormFieldDescriptionPlacementEnum';
 
 	// Individual elements.
 	const ABOVE   = 'above';

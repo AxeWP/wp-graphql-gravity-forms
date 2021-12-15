@@ -10,24 +10,24 @@ namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
 
 use GF_Field;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Type\Enum\AddressCountryEnum;
-use WPGraphQL\GF\Type\Enum\AddressTypeEnum;
-use WPGraphQL\GF\Type\Enum\CalendarIconTypeEnum;
-use WPGraphQL\GF\Type\Enum\CaptchaBadgePositionEnum;
-use WPGraphQL\GF\Type\Enum\CaptchaThemeEnum;
-use WPGraphQL\GF\Type\Enum\CaptchaTypeEnum;
-use WPGraphQL\GF\Type\Enum\ChainedSelectsAlignmentEnum;
-use WPGraphQL\GF\Type\Enum\CreditCardTypeEnum;
+use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;
+use WPGraphQL\GF\Type\Enum\AddressFieldTypeEnum;
+use WPGraphQL\GF\Type\Enum\FormFieldCalendarIconTypeEnum;
+use WPGraphQL\GF\Type\Enum\CaptchaFieldBadgePositionEnum;
+use WPGraphQL\GF\Type\Enum\CaptchaFieldThemeEnum;
+use WPGraphQL\GF\Type\Enum\CaptchaFieldTypeEnum;
+use WPGraphQL\GF\Type\Enum\ChainedSelectFieldAlignmentEnum;
+use WPGraphQL\GF\Type\Enum\FormCreditCardTypeEnum;
 use WPGraphQL\GF\Type\Enum\DateFieldFormatEnum;
-use WPGraphQL\GF\Type\Enum\DateTypeEnum;
-use WPGraphQL\GF\Type\Enum\DescriptionPlacementPropertyEnum;
-use WPGraphQL\GF\Type\Enum\LabelPlacementPropertyEnum;
-use WPGraphQL\GF\Type\Enum\MinPasswordStrengthEnum;
+use WPGraphQL\GF\Type\Enum\DateFieldTypeEnum;
+use WPGraphQL\GF\Type\Enum\FormFieldDescriptionPlacementEnum;
+use WPGraphQL\GF\Type\Enum\FormFieldLabelPlacementEnum;
+use WPGraphQL\GF\Type\Enum\PasswordFieldMinStrengthEnum;
 use WPGraphQL\GF\Type\Enum\NumberFieldFormatEnum;
 use WPGraphQL\GF\Type\Enum\PhoneFieldFormatEnum;
-use WPGraphQL\GF\Type\Enum\SignatureBorderStyleEnum;
-use WPGraphQL\GF\Type\Enum\SignatureBorderWidthEnum;
-use WPGraphQL\GF\Type\Enum\SizePropertyEnum;
+use WPGraphQL\GF\Type\Enum\SignatureFieldBorderStyleEnum;
+use WPGraphQL\GF\Type\Enum\SignatureFieldBorderWidthEnum;
+use WPGraphQL\GF\Type\Enum\FormFieldSizeEnum;
 use WPGraphQL\GF\Type\Enum\TimeFieldFormatEnum;
 use WPGraphQL\GF\Type\WPObject\Button\Button;
 use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
@@ -54,7 +54,7 @@ class FieldProperties {
 	public static function address_type() : array {
 		return [
 			'addressType' => [
-				'type'        => AddressTypeEnum::$type,
+				'type'        => AddressFieldTypeEnum::$type,
 				'description' => __( 'Determines the type of address to be displayed.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -151,7 +151,7 @@ class FieldProperties {
 	public static function border_style() : array {
 		return [
 			'borderStyle' => [
-				'type'        => SignatureBorderStyleEnum::$type,
+				'type'        => SignatureFieldBorderStyleEnum::$type,
 				'description' => __( 'Border style to be used around the signature area.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -175,7 +175,7 @@ class FieldProperties {
 	public static function border_width() : array {
 		return [
 			'borderWidth' => [
-				'type'        => SignatureBorderWidthEnum::$type,
+				'type'        => SignatureFieldBorderWidthEnum::$type,
 				'description' => __( 'Width of the border around the signature area.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -211,7 +211,7 @@ class FieldProperties {
 	public static function calendar_icon_type() : array {
 		return [
 			'calendarIconType' => [
-				'type'        => CalendarIconTypeEnum::$type,
+				'type'        => FormFieldCalendarIconTypeEnum::$type,
 				'description' => __( 'Determines how the date field displays it’s calendar icon.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -235,7 +235,7 @@ class FieldProperties {
 	public static function captcha_badge_position() : array {
 		return [
 			'captchaBadgePosition' => [
-				'type'        => CaptchaBadgePositionEnum::$type,
+				'type'        => CaptchaFieldBadgePositionEnum::$type,
 				'description' => __( 'The language used when the captcha is displayed. This property is available when the captchaType is “captcha”, the default. The possible values are the language codes used by WordPress.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $source ) => isset( $source->captchaBadge ) ? $source->captchaBadge : 'bottomright',
 			],
@@ -260,7 +260,7 @@ class FieldProperties {
 	public static function captcha_theme() : array {
 		return [
 			'captchaTheme' => [
-				'type'        => CaptchaThemeEnum::$type,
+				'type'        => CaptchaFieldThemeEnum::$type,
 				'description' => __( 'Determines the theme to be used for the reCAPTCHA field. Only applicable to the recaptcha captcha type.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn ( $root ) => $root['captchaTheme'] ?: null,
 			],
@@ -273,7 +273,7 @@ class FieldProperties {
 	public static function captcha_type() : array {
 		return [
 			'captchaType' => [
-				'type'        => CaptchaTypeEnum::$type,
+				'type'        => CaptchaFieldTypeEnum::$type,
 				'description' => __( 'Determines the type of CAPTCHA field to be used.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $root ) => $root['captchaType'] ?: 'recaptcha',
 			],
@@ -286,7 +286,7 @@ class FieldProperties {
 	public static function chained_selects_alignment() : array {
 		return [
 			'chainedSelectsAlignment' => [
-				'type'        => ChainedSelectsAlignmentEnum::$type,
+				'type'        => ChainedSelectFieldAlignmentEnum::$type,
 				'description' => __( 'Alignment of the dropdown fields.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -513,7 +513,7 @@ class FieldProperties {
 	public static function date_type() : array {
 		return [
 			'dateType' => [
-				'type'        => DateTypeEnum::$type,
+				'type'        => DateFieldTypeEnum::$type,
 				'description' => __( 'The type of date field to display.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -525,7 +525,7 @@ class FieldProperties {
 	public static function default_country() : array {
 		return [
 			'defaultCountry' => [
-				'type'        => AddressCountryEnum::$type,
+				'type'        => AddressFieldCountryEnum::$type,
 				'description' => __( 'Contains the country that will be selected by default. Only applicable when "addressType" is set to "INTERATIONAL".', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -597,7 +597,7 @@ class FieldProperties {
 	public static function description_placement() : array {
 		return [
 			'descriptionPlacement' => [
-				'type'        => DescriptionPlacementPropertyEnum::$type,
+				'type'        => FormFieldDescriptionPlacementEnum::$type,
 				'description' => __( 'The placement of the field description.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( $source ) {
 					return ! empty( $source['descriptionPlacement'] ) ? $source['descriptionPlacement'] : 'inherit';
@@ -1030,7 +1030,7 @@ class FieldProperties {
 	public static function label_placement() : array {
 		return [
 			'labelPlacement' => [
-				'type'        => LabelPlacementPropertyEnum::$type,
+				'type'        => FormFieldLabelPlacementEnum::$type,
 				'description' => __( 'The field label position.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( $source ) {
 					return ! empty( $source['labelPlacement'] ) ? $source['labelPlacement'] : 'inherit';
@@ -1096,7 +1096,7 @@ class FieldProperties {
 	public static function min_password_strength() : array {
 		return [
 			'minPasswordStrength' => [
-				'type'        => MinPasswordStrengthEnum::$type,
+				'type'        => PasswordFieldMinStrengthEnum::$type,
 				'description' => __( 'Indicates how strong the password should be.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -1329,7 +1329,7 @@ class FieldProperties {
 	public static function size() : array {
 		return [
 			'size' => [
-				'type'        => SizePropertyEnum::$type,
+				'type'        => FormFieldSizeEnum::$type,
 				'description' => __( 'Determines the size of the field when displayed on the page.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -1365,7 +1365,7 @@ class FieldProperties {
 	public static function simple_captcha_size() : array {
 		return [
 			'simpleCaptchaSize' => [
-				'type'        => SizePropertyEnum::$type,
+				'type'        => FormFieldSizeEnum::$type,
 				'description' => __( 'Determines the CAPTCHA image size. Only applicable to simple_captcha and math captcha types.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -1377,7 +1377,7 @@ class FieldProperties {
 	public static function sub_label_placement() : array {
 		return [
 			'subLabelPlacement' => [
-				'type'        => LabelPlacementPropertyEnum::$type,
+				'type'        => FormFieldLabelPlacementEnum::$type,
 				'description' => __( 'The placement of the labels for the subfields within the group. This setting controls all of the subfields, they cannot be set individually. They may be aligned above or below the inputs. If this property is not set, the “Sub-Label Placement” setting on the Form Settings->Form Layout page is used. If no setting is specified, the default is above inputs.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( $source ) {
 					return ! empty( $source['subLabelPlacement'] ) ? $source['subLabelPlacement'] : 'inherit';
@@ -1393,7 +1393,7 @@ class FieldProperties {
 	public static function supported_credit_cards() : array {
 		return [
 			'supportedCreditCards' => [
-				'type'        => [ 'list_of' => CreditCardTypeEnum::$type ],
+				'type'        => [ 'list_of' => FormCreditCardTypeEnum::$type ],
 				'description' => __( 'The credit card type.', 'wp-graphql-gravity-forms' ),
 			],
 		];

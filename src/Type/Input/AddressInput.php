@@ -9,7 +9,7 @@
 
 namespace WPGraphQL\GF\Type\Input;
 
-use WPGraphQL\GF\Type\Enum\AddressCountryEnum;
+use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;
 
 /**
  * Class - AddressInput
@@ -55,7 +55,7 @@ class AddressInput extends AbstractInput {
 				'description' => __( 'Address zip code', 'wp-graphql-gravity-forms' ),
 			],
 			'country' => [
-				'type'        => AddressCountryEnum::$type,
+				'type'        => AddressFieldCountryEnum::$type,
 				'description' => __( 'Address country.', 'wp-graphql-gravity-forms' ),
 			],
 		];

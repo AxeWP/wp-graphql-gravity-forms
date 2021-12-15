@@ -9,7 +9,7 @@
 
 namespace WPGraphQL\GF\Type\Input;
 
-use WPGraphQL\GF\Type\Enum\CreditCardTypeEnum;
+use WPGraphQL\GF\Type\Enum\FormCreditCardTypeEnum;
 
 /**
  * Class - CreditCardInput
@@ -55,7 +55,7 @@ class CreditCardInput extends AbstractInput {
 				'description' => __( 'Credit Card cardholder name', 'wp-graphql-gravity-forms' ),
 			],
 			'cardType'        => [
-				'type'        => CreditCardTypeEnum::$type,
+				'type'        => FormCreditCardTypeEnum::$type,
 				'description' => __( 'The credit card type', 'wp-graphql-gravity-forms' ),
 			],
 		];

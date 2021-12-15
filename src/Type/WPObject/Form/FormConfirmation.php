@@ -13,7 +13,7 @@ namespace WPGraphQL\GF\Type\WPObject\Form;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
-use WPGraphQL\GF\Type\Enum\ConfirmationTypeEnum;
+use WPGraphQL\GF\Type\Enum\FormConfirmationTypeEnum;
 
 /**
  * Class - FormConfirmation
@@ -67,7 +67,7 @@ class FormConfirmation extends AbstractObject {
 				'description' => __( 'Contains the query string to be appended to the redirection url. Only applicable when type is set to redirect.', 'wp-graphql-gravity-forms' ),
 			],
 			'type'             => [
-				'type'        => ConfirmationTypeEnum::$type,
+				'type'        => FormConfirmationTypeEnum::$type,
 				'description' => __( 'Determines the type of confirmation to be used.', 'wp-graphql-gravity-forms' ),
 			],
 			'url'              => [

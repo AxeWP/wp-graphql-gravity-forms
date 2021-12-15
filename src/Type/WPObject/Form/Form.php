@@ -206,7 +206,7 @@ class Form extends AbstractObject implements Field {
 				},
 			],
 			'requiredIndicator'          => [
-				'type'        => Enum\RequiredIndicatorEnum::$type,
+				'type'        => Enum\FormFieldRequiredIndicatorEnum::$type,
 				'description' => __( 'Type of indicator to use when field is required.', 'wp-graphql-gravity-forms' ),
 			],
 			'requireLogin'               => [

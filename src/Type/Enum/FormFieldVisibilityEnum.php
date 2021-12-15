@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - VisibilityPropertyEnum
+ * Enum Type - FormFieldVisibilityEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - VisibilityPropertyEnum
+ * Class - FormFieldVisibilityEnum
  */
-class VisibilityPropertyEnum extends AbstractEnum {
+class FormFieldVisibilityEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'VisibilityPropertyEnum';
+	public static string $type = 'FormFieldVisibilityEnum';
 
 	// Individual elements.
 	const VISIBLE        = 'visible';

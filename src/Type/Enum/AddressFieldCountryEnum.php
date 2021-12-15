@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - AddressCountryEnum
+ * Enum Type - AddressFieldCountryEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -13,15 +13,15 @@ use GF_Field_Address;
 use WPGraphQL\Type\WPEnumType;
 
 /**
- * Class - AddressCountryEnum
+ * Class - AddressFieldCountryEnum
  */
-class AddressCountryEnum extends AbstractEnum {
+class AddressFieldCountryEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'AddressCountryEnum';
+	public static string $type = 'AddressFieldCountryEnum';
 
 	/**
 	 * {@inheritDoc}

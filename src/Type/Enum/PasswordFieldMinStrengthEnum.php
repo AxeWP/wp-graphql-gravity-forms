@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - MinPasswordStrengthEnum
+ * Enum Type - PasswordFieldMinStrengthEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - MinPasswordStrengthEnum
+ * Class - PasswordFieldMinStrengthEnum
  */
-class MinPasswordStrengthEnum extends AbstractEnum {
+class PasswordFieldMinStrengthEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'MinPasswordStrengthEnum';
+	public static string $type = 'PasswordFieldMinStrengthEnum';
 
 	// Individual elements.
 	const SHORT  = 'short';

@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - LabelPlacementPropertyEnum
+ * Enum Type - FormFieldLabelPlacementEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - LabelPlacementPropertyEnum
+ * Class - FormFieldLabelPlacementEnum
  */
-class LabelPlacementPropertyEnum extends AbstractEnum {
+class FormFieldLabelPlacementEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'LabelPlacementPropertyEnum';
+	public static string $type = 'FormFieldLabelPlacementEnum';
 
 	// Individual elements.
 	const TOP     = 'top_label';

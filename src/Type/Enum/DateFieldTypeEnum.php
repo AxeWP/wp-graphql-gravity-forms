@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - DateTypeEnum
+ * Enum Type - DateFieldTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - DateTypeEnum
+ * Class - DateFieldTypeEnum
  */
-class DateTypeEnum extends AbstractEnum {
+class DateFieldTypeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'DateTypeEnum';
+	public static string $type = 'DateFieldTypeEnum';
 
 	// Individual elements.
 	const FIELD    = 'datefield';

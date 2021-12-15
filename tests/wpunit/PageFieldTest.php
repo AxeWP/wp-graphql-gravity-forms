@@ -127,8 +127,8 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 											'displayProgressbarOnConfirmation' => $form['pagination']['display_progressbar_on_confirmation'],
 											'pages' => $form['pagination']['pages'],
 											'progressbarCompletionText' => $form['pagination']['progressbar_completion_text'],
-											'style' => $this->tester->get_enum_for_value( Enum\PageProgressStyleEnum::$type, $form['pagination']['style'] ),
-											'type'  => $this->tester->get_enum_for_value( Enum\PageProgressTypeEnum::$type, $form['pagination']['type'] ),
+											'style' => $this->tester->get_enum_for_value( Enum\FormPageProgressStyleEnum::$type, $form['pagination']['style'] ),
+											'type'  => $this->tester->get_enum_for_value( Enum\FormPageProgressTypeEnum::$type, $form['pagination']['type'] ),
 										]
 									),
 								]

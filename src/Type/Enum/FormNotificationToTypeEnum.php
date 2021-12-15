@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - NotificationToTypeEnum
+ * Enum Type - FormNotificationToTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - NotificationToTypeEnum
+ * Class - FormNotificationToTypeEnum
  */
-class NotificationToTypeEnum extends AbstractEnum {
+class FormNotificationToTypeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'NotificationToTypeEnum';
+	public static string $type = 'FormNotificationToTypeEnum';
 
 	// Individual elements.
 	const EMAIL   = 'email';

@@ -105,6 +105,64 @@ abstract class GFHelpers {
 		return $return_values;
 	}
 
+	public function getEnumKey( string $key ) {
+		$string = null;
+ 
+		switch( $key ){
+			case 'addressType':
+				$string = 'AddressFieldTypeEnum';
+				break;
+			case 'country':
+			case 'defaultCountry':
+				$string = 'AddressFieldCountryEnum';
+				break;
+			case 'badgePosition':
+				$string = 'CaptchaFieldBadgePosition';
+				break;
+			case 'captchaTheme':
+				$string = 'CaptchaFieldThemeEnum';
+				break;
+			case 'captchaType':
+				$string = 'CaptchaFieldTypeEnum';
+				break;
+			case 'chainedSelectsAlignment':
+				$string = 'ChainedSelectFieldAlignmentEnum';
+				break;
+			case 'dateType':
+				$string = 'DateFieldTypeEnum';
+				break;
+			case 'dateFormat':
+				$string = 'DateFieldFormatEnum';
+				break;
+			case 'gquizFieldType':
+				$string = 'QuizFieldTypeEnum';
+				break;
+			case 'inputType':
+				$string = 'FormFieldTypeEnum';
+				break;
+			case 'numberFormat':
+				$string = 'NumberFieldFormatEnum';
+				break;
+			case 'simpleCaptchaSize':
+				$string = 'FormFieldSizeEnum';
+				break;
+			case 'subLabelPlacement':
+				$string = 'FormFieldLabelPlacementEnum';
+				break;
+			// Prepend FormField
+			case 'calendarIconType':
+			case 'descriptionPlacement':
+			case 'labelPlacement':
+			case 'requiredIndicator':
+			case 'size':
+			case 'type':
+			case 'visibility':
+				$string = 'FormField' . ucfirst( $key ) . 'Enum';
+				break;
+		}
+		return $string;
+	}
+
 	/**
 	 * Gets the actual object values for the provided key.
 	 *
@@ -113,45 +171,6 @@ abstract class GFHelpers {
 	 */
 	public function getActualValue( string $key, $object ) {
 		switch ( $key ) {
-			case 'addressType':
-			case 'captchaType':
-			case 'captchaTheme':
-			case 'calendarIconType':
-			case 'dateType':
-				$string = ucfirst( $key ) . 'Enum';
-				$value  = $this->get_enum_for_value( $string, $object->$key );
-				break;
-			case 'simpleCaptchaSize':
-				$string = 'SizePropertyEnum';
-				$value  = $this->get_enum_for_value( $string, $object->$key );
-				break;
-			case 'subLabelPlacement':
-				$string = 'LabelPlacementPropertyEnum';
-				$value  = $this->get_enum_for_value( $string, $object->$key );
-				break;
-			case 'labelPlacement':
-			case 'descriptionPlacement':
-			case 'size':
-			case 'visibility':
-				// @todo: rename classes.
-				$string = ucfirst( $key ) . 'PropertyEnum';
-				$value  = $this->get_enum_for_value( $string, $object->$key );
-				break;
-			case 'country':
-			case 'defaultCountry':
-				// @todo: rename classes.
-				$string = 'AddressCountryEnum';
-				$value  = $this->get_enum_for_value( $string, $object->$key );
-				break;
-			case 'dateFormat':
-				// @todo: rename classes.
-				$string = 'DateFieldFormatEnum';
-				$value  = $this->get_enum_for_value( $string, $object->$key );
-				break;
-			case 'gquizFieldType':
-				$string = 'QuizFieldTypeEnum';
-				$value  = $this->get_enum_for_value( $string, $object->$key );
-				break;
 			case 'copyValuesOptionDefault':
 			case 'displayOnly':
 			case 'enableCopyValuesOption':
@@ -169,17 +188,14 @@ abstract class GFHelpers {
 			case 'maxLength':
 				$value = (int) $object->$key;
 				break;
-			case 'numberFormat':
-				// @todo: rename classes.
-				$string = 'NumberFieldFormatEnum';
-				$value  = $this->get_enum_for_value( $string, $object->$key );
-				break;
-			case 'inputType':
-			case 'type':
-				$string = 'FormFieldTypeEnum';
-				$value  = $this->get_enum_for_value( $string, $object->$key );
-				break;
 			default:
+				// Handle Enums.
+				$string = $this->getEnumKey( $key );
+				if( null !== $string ){
+					$value = $this->get_enum_for_value( $string, $object->$key );
+					break;
+				}
+
 				$value = isset( $object->$key ) ? $object->$key : null;
 				break;
 		}

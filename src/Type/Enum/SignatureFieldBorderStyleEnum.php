@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - SignatureBorderStyleEnum
+ * Enum Type - SignatureFieldBorderStyleEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - SignatureBorderStyleEnum
+ * Class - SignatureFieldBorderStyleEnum
  */
-class SignatureBorderStyleEnum extends AbstractEnum {
+class SignatureFieldBorderStyleEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'SignatureBorderStyleEnum';
+	public static string $type = 'SignatureFieldBorderStyleEnum';
 
 	// Individual elements.
 	const DOTTED = 'dotted';
