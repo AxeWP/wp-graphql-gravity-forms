@@ -1,6 +1,6 @@
 <?php
 /**
- * Enum Type - IdTypeEnum
+ * Enum Type - FormIdTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
  * @since   0.4.0
@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 /**
- * Class - IdTypeEnum
+ * Class - FormIdTypeEnum
  */
-class IdTypeEnum extends AbstractEnum {
+class FormIdTypeEnum extends AbstractEnum {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'IdTypeEnum';
+	public static string $type = 'FormIdTypeEnum';
 
 	// Individual elements.
 	const ID          = 'global_id';
@@ -27,7 +27,7 @@ class IdTypeEnum extends AbstractEnum {
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'Type of button to be displayed. Default is TEXT.', 'wp-graphql-gravity-forms' );
+		return __( 'The Type of Identifier used to fetch a single resource.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**

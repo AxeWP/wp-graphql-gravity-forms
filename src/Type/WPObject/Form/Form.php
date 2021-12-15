@@ -304,7 +304,7 @@ class Form extends AbstractObject implements Field {
 						'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
 					],
 					'idType' => [
-						'type'        => Enum\IdTypeEnum::$type,
+						'type'        => Enum\FormIdTypeEnum::$type,
 						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID', 'wp-graphql-gravity-forms' ),
 					],
 				],

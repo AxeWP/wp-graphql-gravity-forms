@@ -602,7 +602,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 	 */
 	private function get_form_query() : string {
 		return '
-			query getForm( $id: ID!, $idType: IdTypeEnum ) {
+			query getForm( $id: ID!, $idType: FormIdTypeEnum ) {
 				gravityFormsForm( id: $id, idType: $idType ) {
 					button {
 						conditionalLogic {

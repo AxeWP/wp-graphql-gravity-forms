@@ -201,8 +201,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		$draft_tokens = $this->factory->draft_entry->create_many( 2, [ 'form_id' => $this->form_id ] );
 
 		$query = '
-			query( $id: ID! ) {
-				gravityFormsEntry( id: $id ) {
+			query( $id: ID!, $idType: EntryIdTypeEnum) {
+				gravityFormsEntry( id: $id, idType: $idType ) {
 					resumeToken
 				}
 			}
@@ -213,7 +213,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 				'query'     => $query,
 				'variables' => [
 					'id' => $draft_tokens[0],
-					'idType' => 'ID',
+					'idType' => 'RESUME_TOKEN',
 				],
 			]
 		);
@@ -379,7 +379,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	 */
 	private function get_entry_query() : string {
 		return '
-			query getEntry($id: ID!, $idType: IdTypeEnum) {
+			query getEntry($id: ID!, $idType: EntryIdTypeEnum) {
 				gravityFormsEntry(id: $id, idType: $idType) {
 					createdById
 					createdBy {

@@ -125,7 +125,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	 */
 	protected function entry_query() : string {
 		return "
-			query getFieldValue(\$id: ID!, \$idType: IdTypeEnum) {
+			query getFieldValue(\$id: ID!, \$idType: EntryIdTypeEnum) {
 				gravityFormsEntry(id: \$id, idType: \$idType ) {
 					formFields {
 						nodes {

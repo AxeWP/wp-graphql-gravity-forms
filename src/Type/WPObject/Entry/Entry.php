@@ -19,7 +19,7 @@ use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
-use WPGraphQL\GF\Type\Enum\IdTypeEnum;
+use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -193,7 +193,7 @@ class Entry extends AbstractObject implements Field {
 						'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
 					],
 					'idType' => [
-						'type'        => IdTypeEnum::$type,
+						'type'        => EntryIdTypeEnum::$type,
 						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID', 'wp-graphql-gravity-forms' ),
 					],
 				],
@@ -203,28 +203,22 @@ class Entry extends AbstractObject implements Field {
 					}
 
 					$idType = $args['idType'] ?? 'global_id';
-					/**
-					 * If global id is used, get the (int) id.
-					 */
-					if ( 'database_id' === $idType ) {
-						$id = (int) sanitize_text_field( $args['id'] );
-					} else {
+
+					if ( 'global_id' === $idType ) {
 						$id_parts = Relay::fromGlobalId( $args['id'] );
 
-						// Check if Global ID or resumeToken .
 						if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-							$id = sanitize_text_field( $args['id'] );
-						} else {
-							$id = (int) sanitize_text_field( $id_parts['id'] );
+							throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
 						}
+
+						$idType = 'GravityFormsEntry' === $id_parts['type'] ? 'database_id' : 'resume_token';
+
+						$id = sanitize_text_field( $id_parts['id'] );
+					} else {
+						$id = sanitize_text_field( $args['id'] );
 					}
 
-					if ( is_int( $id ) ) {
-						return Factory::resolve_entry( $id, $context );
-					}
-
-					// TODO: Test if draft entry actually gets returned.
-					return Factory::resolve_draft_entry( $id, $context );
+					return 'database_id' === $idType ? Factory::resolve_entry( (int) $id, $context ) : Factory::resolve_draft_entry( $id, $context );
 				},
 			]
 		);
