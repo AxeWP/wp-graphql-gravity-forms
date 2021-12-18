@@ -60,11 +60,11 @@ class FormConfirmation extends AbstractObject {
 			],
 			'pageId'           => [
 				'type'        => 'Int',
-				'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to "PAGE".', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to `PAGE`.', 'wp-graphql-gravity-forms' ),
 			],
 			'queryString'      => [
 				'type'        => 'String',
-				'description' => __( 'Contains the query string to be appended to the redirection url. Only applicable when type is set to redirect.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Contains the query string to be appended to the redirection url. Only applicable when type is set to `REDIRECT`.', 'wp-graphql-gravity-forms' ),
 			],
 			'type'             => [
 				'type'        => FormConfirmationTypeEnum::$type,
@@ -72,7 +72,7 @@ class FormConfirmation extends AbstractObject {
 			],
 			'url'              => [
 				'type'        => 'String',
-				'description' => __( 'Contains the URL that the browser will be redirected to. Only applicable when type is set to "REDIRECT".', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Contains the URL that the browser will be redirected to. Only applicable when type is set to `REDIRECT`.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

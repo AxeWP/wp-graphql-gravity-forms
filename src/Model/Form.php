@@ -52,8 +52,8 @@ class Form extends Model {
 	protected function init() : void {
 		if ( empty( $this->fields ) ) {
 			$this->fields = [
-				'button'                     => fn() : ?array => isset( $this->data['button'] ) ? $this->data['button'] : null,
-				'confirmations'              => function() : ?array {
+				'button'                       => fn() : ?array => isset( $this->data['button'] ) ? $this->data['button'] : null,
+				'confirmations'                => function() : ?array {
 					if ( empty( $this->data['confirmations'] ) ) {
 						return null;
 					}
@@ -65,34 +65,45 @@ class Form extends Model {
 						$this->data['confirmations']
 					);
 				},
-				'cssClass'                   => fn() : ?string => ! empty( $this->data['cssClass'] ) ? $this->data['cssClass'] : null,
-				'customRequiredIndicator'    => fn() : ?string => ! empty( $this->data['customRequiredIndicator'] ) ? $this->data['customRequiredIndicator'] : null,
-				'databaseId'                 => fn() : int => (int) $this->data['id'],
-				'dateCreatedGmt'             => fn() : ?string => $this->data['date_created'] ?? null,
-				'dateCreated'                => fn() : ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,
-				'description'                => fn() : ?string => $this->data['description'] ?? null,
-				'descriptionPlacement'       => fn() : ?string => $this->data['descriptionPlacement'] ?? null,
-				'enableAnimation'            => fn() : bool => $this->data['enableAnimation'] ?? false,
-				'enableHoneypot'             => fn() : bool => $this->data['enableHoneypot'] ?? false,
-				'firstPageCssClass'          => fn() : ?string => $this->data['firstPageCssClass'] ?? null,
+				'cssClass'                     => fn() : ?string => ! empty( $this->data['cssClass'] ) ? $this->data['cssClass'] : null,
+				'customRequiredIndicator'      => fn() : ?string => ! empty( $this->data['customRequiredIndicator'] ) ? $this->data['customRequiredIndicator'] : null,
+				'databaseId'                   => fn() : int => (int) $this->data['id'],
+				'dateCreatedGmt'               => fn() : ?string => $this->data['date_created'] ?? null,
+				'dateCreated'                  => fn() : ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,
+				'description'                  => fn() : ?string => $this->data['description'] ?? null,
+				'descriptionPlacement'         => fn() : ?string => $this->data['descriptionPlacement'] ?? null,
+				'entryLimits'                  => function() : array {
+					return [
+						'hasLimit'            => ! empty( $this->data['limitEntries'] ),
+						'limitationPeriod'    => ! empty( $this->data['limitEntriesPeriod'] ) ? $this->data['limitEntriesPeriod'] : null,
+						'limitReachedMessage' => ! empty( $this->data['limitEntriesMessage'] ) ? $this->data['limitEntriesMessage'] : null,
+						'maxEntries'          => isset( $this->data['limitEntriesCount'] ) ? (int) $this->data['limitEntriesCount'] : null,
+					];
+				},
+				'hasConditionalLogicAnimation' => fn() : bool => $this->data['enableAnimation'] ?? false,
+				'hasHoneypot'                  => fn() : bool => $this->data['enableHoneypot'] ?? false,
+				'firstPageCssClass'            => fn() : ?string => $this->data['firstPageCssClass'] ?? null,
 				// @todo maybe switch to model.
-				'formFields'                 => function() : ?array {
+				'formFields'                   => function() : ?array {
 					$return = ! empty( $this->data['fields'] ) ? $this->data['fields'] : null;
 					return $return;
 				},
-				'id'                         => fn() : string => Relay::toGlobalId( GraphQLForm::$type, $this->data['id'] ),
-				'isActive'                   => fn() : bool => $this->data['is_active'] ?? true,
-				'isTrash'                    => fn() : bool => $this->data['is_trash'] ?? false,
-				'labelPlacement'             => fn() : ?string => $this->data['labelPlacement'] ?? null,
-				'lastPageButton'             => fn() : ?array => ! empty( $this->data['lastPageButton'] ) ? $this->data['lastPageButton'] : null,
-				'limitEntries'               => fn() : bool => $this->data['limitEntries'] ?? false,
-				'limitEntriesCount'          => fn() : ?int => isset( $this->data['limitEntriesCount'] ) ? (int) $this->data['limitEntriesCount'] : null,
-				'limitEntriesMessage'        => fn() : ?string => $this->data['limitEntriesMessage'] ?? null,
-				'limitEntriesPeriod'         => fn() : ?string => $this->data['limitEntriesPeriod'] ?? null,
-				'markupVersion'              => fn() : ?string => $this->data['markupVersion'] ?? null,
-				'notifications'              => fn() : ?array => ! empty( $this->data['notifications'] ) ? $this->data['notifications'] : null,
-				'nextFieldId'                => fn() : ?int => isset( $this->data['nextFieldId'] ) ? (int) $this->data['nextFieldId'] : null,
-				'pagination'                 => function() : ?array {
+				'id'                           => fn() : string => Relay::toGlobalId( GraphQLForm::$type, $this->data['id'] ),
+
+				'isActive'                     => fn() : bool => $this->data['is_active'] ?? true,
+				'isTrash'                      => fn() : bool => $this->data['is_trash'] ?? false,
+				'labelPlacement'               => fn() : ?string => $this->data['labelPlacement'] ?? null,
+				'lastPageButton'               => fn() : ?array => ! empty( $this->data['lastPageButton'] ) ? $this->data['lastPageButton'] : null,
+				'login'                        => function() : array {
+					return [
+						'isLoginRequired'      => ! empty( $this->data['requireLogin'] ),
+						'loginRequiredMessage' => ! empty( $this->data['requireLoginMessage'] ) ? $this->data['requireLoginMessage'] : null,
+					];
+				},
+				'markupVersion'                => fn() : ?string => $this->data['markupVersion'] ?? null,
+				'notifications'                => fn() : ?array => ! empty( $this->data['notifications'] ) ? $this->data['notifications'] : null,
+				'nextFieldId'                  => fn() : ?int => isset( $this->data['nextFieldId'] ) ? (int) $this->data['nextFieldId'] : null,
+				'pagination'                   => function() : ?array {
 					if ( ! isset( $this->data['pagination'] ) ) {
 						return null;
 					}
@@ -111,35 +122,48 @@ class Form extends Model {
 
 					return $pagination;
 				},
-				'postAuthor'                 => fn() : ?int => isset( $this->data['postAuthor'] ) ? (int) $this->data['postAuthor'] : null,
-				'postCategory'               => fn() : ?int => isset( $this->data['postCategory'] ) ? (int) $this->data['postCategory'] : null,
-				'postContentTemplate'        => fn() : ?string => $this->data['postContentTemplate'] ?? null,
-				'postContentTemplateEnabled' => fn() : bool => $this->data['postContentTemplateEnabled'] ?? false,
-				'postFormat'                 => fn() : ?string => $this->data['postFormat'] ?? null,
-				'postStatus'                 => fn() : ?string => $this->data['postStatus'] ?? null,
-				'postTitleTemplate'          => fn() : ?string => $this->data['postTitleTemplate'] ?? null,
-				'postTitleTemplateEnabled'   => fn() : bool => $this->data['postContentTemplateEnabled'] ?? false,
-				'quizSettings'               => fn() : ?array => ! empty( $this->data['gravityformsquiz'] ) ? $this->data['gravityformsquiz'] : null,
-				'requiredIndicator'          => fn() : ?string => $this->data['requiredIndicator'] ?? null,
-				'requireLogin'               => fn() : bool => $this->data['requireLogin'] ?? false,
-				'requireLoginMessage'        => fn() : ?string => ! empty( $this->data['requireLoginMessage'] ) ? $this->data['requireLoginMessage'] : null,
-				'save'                       => fn() : ?array => ! empty( $this->data['save'] ) ? $this->data['save'] : null,
-				'scheduleEnd'                => fn() : ?string => ! empty( $this->data['scheduleEnd'] ) ? $this->data['scheduleEnd'] : null,
-				'scheduleEndAmpm'            => fn() : ?string => ! empty( $this->data['scheduleEndAmpm'] ) ? $this->data['scheduleEndAmpm'] : null,
-				'scheduleEndHour'            => fn() : ?int => isset( $this->data['scheduleEndHour'] ) ? (int) $this->data['scheduleEndHour'] : null,
-				'scheduleEndMinute'          => fn() : ?int => isset( $this->data['scheduleEndMinute'] ) ? (int) $this->data['scheduleEndMinute'] : null,
-				'scheduleForm'               => fn() : bool => $this->data['scheduleForm'] ?? false,
-				'scheduleMessage'            => fn() : ?string => ! empty( $this->data['scheduleMessage'] ) ? $this->data['scheduleMessage'] : null,
-				'schedulePendingMessage'     => fn() : ?string => ! empty( $this->data['schedulePendingMessage'] ) ? $this->data['schedulePendingMessage'] : null,
-				'scheduleStart'              => fn() : ?string => ! empty( $this->data['scheduleStart'] ) ? $this->data['scheduleStart'] : null,
-				'scheduleStartAmpm'          => fn() : ?string => ! empty( $this->data['scheduleStartAmpm'] ) ? $this->data['scheduleStartAmpm'] : null,
-				'scheduleStartHour'          => fn() : ?int => isset( $this->data['scheduleStartHour'] ) ? (int) $this->data['scheduleStartHour'] : null,
-				'scheduleStartMinute'        => fn() : ?int => isset( $this->data['scheduleStartMinute'] ) ? (int) $this->data['scheduleStartMinute'] : null,
-				'subLabelPlacement'          => fn() : ?string => ! empty( $this->data['subLabelPlacement'] ) ? $this->data['subLabelPlacement'] : null,
-				'title'                      => fn() : ?string => ! empty( $this->data['title'] ) ? $this->data['title'] : null,
-				'useCurrentUserAsAuthor'     => fn() : bool => $this->data['useCurrentUserAsAuthor'] ?? false,
-				'validationSummary'          => fn() : bool => $this->data['validationSummary'] ?? false,
-				'version'                    => fn() : ?string => ! empty( $this->data['version'] ) ? $this->data['version'] : null,
+				'postCreation'                 => function() : array {
+					return [
+						'authorDatabaseId'             => isset( $this->data['postAuthor'] ) ? (int) $this->data['postAuthor'] : null,
+						'authorId'                     => isset( $this->data['postAuthor'] ) ? Relay::toGlobalId( 'user', $this->data['postAuthor'] ) : null,
+						'categoryDatabaseId'           => isset( $this->data['postCategory'] ) ? (int) $this->data['postCategory'] : null,
+						'contentTemplate'              => ! empty( $this->data['postContentTemplate'] ) ? $this->data['postContentTemplate'] : null,
+						'format'                       => $this->data['postFormat'] ?? '0',
+						'hasContentTemplate'           => ! empty( $this->data['postContentTemplateEnabled'] ),
+						'hasTitleTemplate'             => ! empty( $this->data['postTitleTemplateEnabled'] ),
+						'status'                       => ! empty( $this->data['postStatus'] ) ? $this->data['postStatus'] : null,
+						'titleTemplate'                => ! empty( $this->data['postTitleTemplate'] ) ? $this->data['postTitleTemplate'] : null,
+						'shouldUseCurrentUserAsAuthor' => ! empty( $this->data['useCurrentUserAsAuthor'] ),
+					];
+				},
+				'quiz'                         => fn() : ?array => ! empty( $this->data['gravityformsquiz'] ) ? $this->data['gravityformsquiz'] : null,
+				'requiredIndicator'            => fn() : ?string => $this->data['requiredIndicator'] ?? null,
+				'saveAndContinue'              => fn() : ?array => ! empty( $this->data['save'] ) ? $this->data['save'] : null,
+				'scheduling'                   => function() : array {
+					return [
+						'closedMessage'  => ! empty( $this->data['scheduleMessage'] ) ? $this->data['scheduleMessage'] : null,
+						'hasSchedule'    => ! empty( $this->data['scheduleForm'] ),
+						'pendingMessage' => ! empty( $this->data['schedulePendingMessage'] ) ? $this->data['schedulePendingMessage'] : null,
+						'endDetails'     => [
+							'date'    => ! empty( $this->data['scheduleEnd'] ) ? get_date_from_gmt( $this->data['scheduleEnd'] ) : null,
+							'dateGmt' => ! empty( $this->data['scheduleEnd'] ) ? $this->data['scheduleEnd'] : null,
+							'amPm'    => ! empty( $this->data['scheduleEndAmpm'] ) ? $this->data['scheduleEndAmpm'] : null,
+							'hour'    => isset( $this->data['scheduleEndHour'] ) ? (int) $this->data['scheduleEndHour'] : null,
+							'minute'  => isset( $this->data['scheduleEndMinute'] ) ? (int) $this->data['scheduleEndMinute'] : null,
+						],
+						'startDetails'   => [
+							'date'    => ! empty( $this->data['scheduleStart'] ) ? get_date_from_gmt( $this->data['scheduleStart'] ) : null,
+							'dateGmt' => ! empty( $this->data['scheduleStart'] ) ? $this->data['scheduleStart'] : null,
+							'amPm'    => ! empty( $this->data['scheduleStartAmpm'] ) ? $this->data['scheduleStartAmpm'] : null,
+							'hour'    => isset( $this->data['scheduleStartHour'] ) ? (int) $this->data['scheduleStartHour'] : null,
+							'minute'  => isset( $this->data['scheduleStartMinute'] ) ? (int) $this->data['scheduleStartMinute'] : null,
+						],
+					];
+				},
+				'subLabelPlacement'            => fn() : ?string => ! empty( $this->data['subLabelPlacement'] ) ? $this->data['subLabelPlacement'] : null,
+				'title'                        => fn() : ?string => ! empty( $this->data['title'] ) ? $this->data['title'] : null,
+				'hasValidationSummary'         => fn() : bool => ! empty( $this->data['validationSummary'] ),
+				'version'                      => fn() : ?string => ! empty( $this->data['version'] ) ? $this->data['version'] : null,
 			];
 		}
 	}

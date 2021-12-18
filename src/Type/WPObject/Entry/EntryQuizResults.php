@@ -34,28 +34,28 @@ class EntryQuizResults extends AbstractObject {
 	 */
 	public static function get_fields() : array {
 		return [
-			'score'   => [
+			'score'          => [
 				'type'        => 'Int',
 				'description' => __( 'The raw quiz score.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function( $root ) : ?int {
 					return $root['gquiz_score'] ?? null;
 				},
 			],
-			'percent' => [
+			'percent'        => [
 				'type'        => 'Int',
 				'description' => __( 'The quiz score as a percent.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function( $root ) : ?int {
 					return $root['gquiz_percent'] ?? null;
 				},
 			],
-			'grade'   => [
+			'grade'          => [
 				'type'        => 'String',
 				'description' => __( 'The quiz score as a letter grade.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function( $root ) : ?string {
 					return $root['gquiz_grade'] ?? null;
 				},
 			],
-			'isPass'  => [
+			'isPassingScore' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the quiz score meets the assigned passing threshold.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function( $root ) : ?bool {

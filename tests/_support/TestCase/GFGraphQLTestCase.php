@@ -10,6 +10,8 @@
 
 namespace Tests\WPGraphQL\GF\TestCase;
 
+use WPGraphQL\GF\Type\Enum;
+
 /**
  * Class - GraphQLTestCase
  */
@@ -76,5 +78,31 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 			$expected[] = $this->expectedField( $key, $value );
 		}
 		return $expected;
+	}
+
+	protected function get_expected_conditional_logic_fields( $conditional_logic ) {
+		return $this->expectedObject(
+			'conditionalLogic',
+			[
+				$this->expectedField( 'actionType', $this->tester->get_enum_for_value( Enum\ConditionalLogicActionTypeEnum::$type, $conditional_logic['actionType'] ) ),
+				$this->expectedField(
+					'logicType',
+					$this->tester->get_enum_for_value( Enum\ConditionalLogicLogicTypeEnum::$type, $conditional_logic['logicType'] ),
+					$this->expectedObject(
+						'rules',
+						[
+							$this->expectedNode(
+								'0',
+								[
+									$this->expectedField( 'fieldId', $conditional_logic['rules'][0]['fieldId'] ),
+									$this->expectedField( 'operator', $conditional_logic['rules'][0]['operator'] ),
+									$this->expectedField( 'value', $conditional_logic['rules'][0]['value'] ),
+								]
+							),
+						]
+					),
+				),
+			]
+		);
 	}
 }

@@ -74,7 +74,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * The graphql field value input.
 	 */
 	public function field_value_input() {
-		return array_merge($this->field_value, ['country' => 'US']);
+		return array_merge( $this->field_value, [ 'country' => 'US' ] );
 	}
 
 	/**
@@ -109,7 +109,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * The graphql field value input.
 	 */
 	public function updated_field_value_input() {
-		return array_merge($this->updated_field_value(), ['country' => 'US']);
+		return array_merge( $this->updated_field_value(), [ 'country' => 'US' ] );
 	}
 
 

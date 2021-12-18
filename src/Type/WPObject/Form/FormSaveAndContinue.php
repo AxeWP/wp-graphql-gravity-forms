@@ -12,15 +12,15 @@ use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 
 /**
- * Class - SaveAndContinue
+ * Class - FormSaveAndContinue
  */
-class SaveAndContinue extends AbstractObject {
+class FormSaveAndContinue extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'SaveAndContinue';
+	public static string $type = 'FormSaveAndContinue';
 
 	/**
 	 * {@inheritDoc}
@@ -34,16 +34,15 @@ class SaveAndContinue extends AbstractObject {
 	 */
 	public static function get_fields() : array {
 		return [
-			'enabled'    => [
+			'isSaveAndContinueEnabled' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the Save And Continue feature is enabled.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source) => ! empty( $source['enabled'] ),
 			],
-			'buttonText' => [
-				'type'        => 'string',
+			'buttonText'               => [
+				'type'        => 'String',
 				'description' => __( 'Contains the save button text.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $root ) : string {
-					return $root['button']['text'];
-				},
+				'resolve'     => fn ( $source): string  => ! empty( $source['button']['text'] ) ? $source['button']['text'] : null,
 			],
 		];
 	}
