@@ -10,10 +10,9 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
-use WPGraphQL\GF\Type\WPObject\AbstractObject;
-
 use WPGraphQL\GF\Type\Enum\FormPageProgressStyleEnum;
 use WPGraphQL\GF\Type\Enum\FormPageProgressTypeEnum;
+use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 /**
  * Class - FormPagination

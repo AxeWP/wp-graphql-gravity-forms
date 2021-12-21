@@ -11,13 +11,13 @@
 
 namespace WPGraphQL\GF\Type\WPInterface;
 
-use WPGraphQL\Registry\TypeRegistry;
 use GraphQL\Error\UserError;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
 use WPGraphQL\GF\Type\Enum\FormFieldVisibilityEnum;
 use WPGraphQL\GF\Utils\Utils;
+use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FormField
@@ -129,5 +129,4 @@ class FormField extends AbstractType implements TypeWithFields {
 			],
 		];
 	}
-
 }

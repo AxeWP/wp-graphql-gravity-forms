@@ -10,16 +10,16 @@
 
 namespace WPGraphQL\GF\Connection;
 
-use WPGraphQL\GF\Type\WPObject\Entry\Entry;
-use WPGraphQL\GF\Type\WPObject\Form\Form;
-use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
-use WPGraphQL\GF\Type\Enum\FieldFiltersModeEnum;
-use WPGraphQL\GF\Type\Input\EntriesDateFiltersInput;
-use WPGraphQL\GF\Type\Input\EntriesFieldFiltersInput;
-use WPGraphQL\GF\Type\Input\EntriesConnectionOrderbyInput;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
+use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
+use WPGraphQL\GF\Type\Enum\FieldFiltersModeEnum;
+use WPGraphQL\GF\Type\Input\EntriesConnectionOrderbyInput;
+use WPGraphQL\GF\Type\Input\EntriesDateFiltersInput;
+use WPGraphQL\GF\Type\Input\EntriesFieldFiltersInput;
+use WPGraphQL\GF\Type\WPObject\Entry\Entry;
+use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**

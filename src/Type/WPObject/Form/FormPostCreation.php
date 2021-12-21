@@ -13,7 +13,6 @@ use WPGraphQL\Data\DataSource;
 use WPGraphQL\GF\Type\Enum\PostFormatTypeEnum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
-
 /**
  * Class - FormPostCreation
  */

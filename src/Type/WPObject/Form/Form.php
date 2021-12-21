@@ -11,15 +11,14 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
-use GraphQLRelay\Relay;
 use GraphQL\Error\UserError;
+use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
+use WPGraphQL\GF\Type\Enum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Button;
-use WPGraphQL\GF\Type\Enum;
-use WPGraphQL\GF\Type\Enum\PostFormatTypeEnum;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**

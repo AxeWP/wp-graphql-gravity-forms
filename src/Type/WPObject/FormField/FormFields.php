@@ -11,8 +11,8 @@
 
 namespace WPGraphQL\GF\Type\WPObject\FormField;
 
-use GF_Fields;
 use GF_Field;
+use GF_Fields;
 use GraphQL\Error\UserError;
 use WPGraphQL\GF\Interfaces\Registrable;
 use WPGraphQL\GF\Type\WPInterface\FormField;

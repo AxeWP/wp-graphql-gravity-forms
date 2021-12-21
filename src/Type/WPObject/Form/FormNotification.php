@@ -10,10 +10,9 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
-use WPGraphQL\GF\Type\WPObject\AbstractObject;
-
-use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
 use WPGraphQL\GF\Type\Enum\FormNotificationToTypeEnum;
+use WPGraphQL\GF\Type\WPObject\AbstractObject;
+use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
 
 /**
  * Class - FormNotification

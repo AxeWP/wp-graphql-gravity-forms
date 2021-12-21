@@ -16,9 +16,9 @@ use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
+use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
-use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
 use WPGraphQL\GF\Utils\GFUtils;
 
 /**

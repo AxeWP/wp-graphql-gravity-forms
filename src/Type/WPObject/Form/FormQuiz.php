@@ -11,9 +11,8 @@
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Type\WPObject\AbstractObject;
-
 use WPGraphQL\GF\Type\Enum\QuizFieldGradingTypeEnum;
+use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 /**
  * Class - FormConfirmation

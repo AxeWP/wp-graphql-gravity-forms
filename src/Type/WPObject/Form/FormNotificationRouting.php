@@ -11,9 +11,8 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
-use WPGraphQL\GF\Type\WPObject\AbstractObject;
-
 use WPGraphQL\GF\Type\Enum\FormRuleOperatorEnum;
+use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 /**
  * Class - FormNotificationRouting

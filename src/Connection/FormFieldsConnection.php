@@ -14,10 +14,10 @@ use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
 use WPGraphQL\GF\Model\Form as FormModel;
+use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
+use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
-use WPGraphQL\GF\Type\WPInterface\FormField;
-use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
 use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\Registry\TypeRegistry;
 

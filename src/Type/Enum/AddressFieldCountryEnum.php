@@ -8,8 +8,8 @@
 
 namespace WPGraphQL\GF\Type\Enum;
 
-use GF_Fields;
 use GF_Field_Address;
+use GF_Fields;
 use WPGraphQL\Type\WPEnumType;
 
 /**

@@ -10,10 +10,9 @@
 
 namespace WPGraphQL\GF\Type\WPObject\ConditionalLogic;
 
-use WPGraphQL\GF\Type\WPObject\AbstractObject;
-
 use WPGraphQL\GF\Type\Enum\ConditionalLogicActionTypeEnum;
 use WPGraphQL\GF\Type\Enum\ConditionalLogicLogicTypeEnum;
+use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 /**
  * Class - ConditionalLogic

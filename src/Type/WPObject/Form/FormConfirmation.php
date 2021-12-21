@@ -10,10 +10,9 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
-use WPGraphQL\GF\Type\WPObject\AbstractObject;
-
-use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
 use WPGraphQL\GF\Type\Enum\FormConfirmationTypeEnum;
+use WPGraphQL\GF\Type\WPObject\AbstractObject;
+use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
 
 /**
  * Class - FormConfirmation

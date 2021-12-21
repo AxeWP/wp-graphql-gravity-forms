@@ -10,10 +10,7 @@
 
 namespace WPGraphQL\GF\Data\Connection;
 
-use GFAPI;
-use GFFormsModel;
 use GraphQL\Type\Definition\ResolveInfo;
-use GraphQL\Error\UserError;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
 

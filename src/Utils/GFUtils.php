@@ -11,7 +11,6 @@
 namespace WPGraphQL\GF\Utils;
 
 use GF_Field;
-use GF_Fields;
 use GFAPI;
 use GFCommon;
 use GFFormDisplay;

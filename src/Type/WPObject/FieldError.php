@@ -11,7 +11,6 @@ namespace WPGraphQL\GF\Type\WPObject;
 
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
-
 /**
  * Class - FieldError
  */

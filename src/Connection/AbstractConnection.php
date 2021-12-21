@@ -9,7 +9,6 @@
 namespace WPGraphQL\GF\Connection;
 
 use WPGraphQL\GF\Interfaces\Registrable;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - AbstractConnection

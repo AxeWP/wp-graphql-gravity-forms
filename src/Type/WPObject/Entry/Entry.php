@@ -17,11 +17,10 @@ use WPGraphQL\AppContext;
 use WPGraphQL\Data\DataSource;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
-use WPGraphQL\GF\Type\WPObject\AbstractObject;
-use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
+use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\WPInterface\NodeWithForm;
-use WPGraphQL\GF\Type\WPObject\Form\Form;
+use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**

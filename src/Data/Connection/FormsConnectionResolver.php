@@ -12,12 +12,11 @@ namespace WPGraphQL\GF\Data\Connection;
 
 use GFAPI;
 use GFFormsModel;
-use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Error\UserError;
+use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
-use WPGraphQL\GF\Model\Form;
 use WPGraphQL\GF\Type\Enum\FormStatusEnum;
 use WPGraphQL\GF\Utils\GFUtils;
 

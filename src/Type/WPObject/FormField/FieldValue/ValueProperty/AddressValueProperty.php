@@ -12,7 +12,6 @@ namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
 use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
-
 /**
  * Class - AddressValueProperty
  */

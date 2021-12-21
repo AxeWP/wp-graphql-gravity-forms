@@ -10,10 +10,9 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Button;
 
-use WPGraphQL\GF\Type\WPObject\AbstractObject;
-
-use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
 use WPGraphQL\GF\Type\Enum\FormButtonTypeEnum;
+use WPGraphQL\GF\Type\WPObject\AbstractObject;
+use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
 
 /**
  * Class - FormButton

@@ -12,7 +12,6 @@ namespace WPGraphQL\GF\Type\WPObject\Form;
 
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
-
 /**
  * Class - FormConfirmation
  */

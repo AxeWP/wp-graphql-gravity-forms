@@ -10,8 +10,8 @@ namespace WPGraphQL\GF;
 
 use Exception;
 use WPGraphQL\GF\Connection;
-use WPGraphQL\GF\Mutation;
 use WPGraphQL\GF\Interfaces\Registrable;
+use WPGraphQL\GF\Mutation;
 use WPGraphQL\GF\Type\Enum;
 use WPGraphQL\GF\Type\Input;
 use WPGraphQL\GF\Type\WPInterface;

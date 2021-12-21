@@ -10,7 +10,6 @@ namespace WPGraphQL\GF\Type\WPObject\Entry;
 
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
-
 /**
  * Class - EntryQuizResults
  */

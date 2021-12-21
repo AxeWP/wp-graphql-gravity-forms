@@ -11,7 +11,6 @@ namespace WPGraphQL\GF\Type\WPObject\Form;
 use WPGraphQL\GF\Type\Enum\FormLimitEntriesPeriodEnum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
-
 /**
  * Class - FormEntryLimits
  */
