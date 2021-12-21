@@ -55,7 +55,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		 */
 		$can_user_view_entries = apply_filters(
 			'wp_graphql_gf_can_view_entries',
-			current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ) || get_current_user_id() === $this->source['createdById'],
+			current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ) || get_current_user_id() === $this->source['createdByDatabaseId'],
 			$this->get_form_ids()
 		);
 

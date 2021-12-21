@@ -320,6 +320,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 						databaseId
 					}
 					createdById
+					createdByDatabaseId
 					databaseId
 					dateCreated
 					dateUpdated
@@ -359,7 +360,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 			$this->expectedObject(
 				'gravityFormsEntry',
 				[
-					$this->expectedField( 'createdById', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : null ),
+					$this->expectedField( 'createdByDatabaseId', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : null ),
+					$this->expectedField( 'createdById', ! empty( $entry['created_by'] ) ? $this->toRelayId( 'user', $entry['created_by'] ) : null ),
 					$this->expectedObject(
 						'createdBy',
 						[
