@@ -48,7 +48,7 @@ class Entry extends Model {
 			return false;
 		}
 
-		if ( get_current_user_id() === $this->data['createdById'] ) {
+		if ( get_current_user_id() === $this->data['created_by'] ) {
 			return false;
 		}
 
