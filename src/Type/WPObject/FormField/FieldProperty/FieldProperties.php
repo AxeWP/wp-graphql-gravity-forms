@@ -10,26 +10,27 @@ namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
 
 use GF_Field;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Type\Enum\AddressCountryEnum;
-use WPGraphQL\GF\Type\Enum\AddressTypeEnum;
-use WPGraphQL\GF\Type\Enum\CalendarIconTypeEnum;
-use WPGraphQL\GF\Type\Enum\CaptchaBadgePositionEnum;
-use WPGraphQL\GF\Type\Enum\CaptchaThemeEnum;
-use WPGraphQL\GF\Type\Enum\CaptchaTypeEnum;
-use WPGraphQL\GF\Type\Enum\ChainedSelectsAlignmentEnum;
-use WPGraphQL\GF\Type\Enum\CreditCardTypeEnum;
+use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;
+use WPGraphQL\GF\Type\Enum\AddressFieldTypeEnum;
+use WPGraphQL\GF\Type\Enum\FormFieldCalendarIconTypeEnum;
+use WPGraphQL\GF\Type\Enum\CaptchaFieldBadgePositionEnum;
+use WPGraphQL\GF\Type\Enum\CaptchaFieldThemeEnum;
+use WPGraphQL\GF\Type\Enum\CaptchaFieldTypeEnum;
+use WPGraphQL\GF\Type\Enum\ChainedSelectFieldAlignmentEnum;
+use WPGraphQL\GF\Type\Enum\FormCreditCardTypeEnum;
 use WPGraphQL\GF\Type\Enum\DateFieldFormatEnum;
-use WPGraphQL\GF\Type\Enum\DateTypeEnum;
-use WPGraphQL\GF\Type\Enum\DescriptionPlacementPropertyEnum;
-use WPGraphQL\GF\Type\Enum\LabelPlacementPropertyEnum;
-use WPGraphQL\GF\Type\Enum\MinPasswordStrengthEnum;
+use WPGraphQL\GF\Type\Enum\DateFieldTypeEnum;
+use WPGraphQL\GF\Type\Enum\FormFieldDescriptionPlacementEnum;
+use WPGraphQL\GF\Type\Enum\FormFieldLabelPlacementEnum;
+use WPGraphQL\GF\Type\Enum\PasswordFieldMinStrengthEnum;
 use WPGraphQL\GF\Type\Enum\NumberFieldFormatEnum;
 use WPGraphQL\GF\Type\Enum\PhoneFieldFormatEnum;
-use WPGraphQL\GF\Type\Enum\SignatureBorderStyleEnum;
-use WPGraphQL\GF\Type\Enum\SignatureBorderWidthEnum;
-use WPGraphQL\GF\Type\Enum\SizePropertyEnum;
+use WPGraphQL\GF\Type\Enum\SignatureFieldBorderStyleEnum;
+use WPGraphQL\GF\Type\Enum\SignatureFieldBorderWidthEnum;
+use WPGraphQL\GF\Type\Enum\FormFieldSizeEnum;
+use WPGraphQL\GF\Type\Enum\FormFieldSubLabelPlacementEnum;
 use WPGraphQL\GF\Type\Enum\TimeFieldFormatEnum;
-use WPGraphQL\GF\Type\WPObject\Button\Button;
+use WPGraphQL\GF\Type\WPObject\Button\FormButton;
 use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
 
 /**
@@ -54,7 +55,7 @@ class FieldProperties {
 	public static function address_type() : array {
 		return [
 			'addressType' => [
-				'type'        => AddressTypeEnum::$type,
+				'type'        => AddressFieldTypeEnum::$type,
 				'description' => __( 'Determines the type of address to be displayed.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -78,32 +79,9 @@ class FieldProperties {
 	public static function allowed_extensions() : array {
 		return [
 			'allowedExtensions' => [
-				'type'        => 'String',
+				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'A comma-delimited list of the file extensions which may be uploaded.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'allowsPrepopulate' property.
-	 */
-	public static function allows_prepopulate() : array {
-		return [
-			'allowsPrepopulate' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Determines if the field’s value can be pre-populated dynamically.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'autocompleteAttribute' property.
-	 */
-	public static function autocomplete_attribute() : array {
-		return [
-			'autocompleteAttribute' => [
-				'type'        => 'String',
-				'description' => __( 'The autocomplete attribute for the field.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->allowedExtensions ) ? explode( ',', $source->allowedExtensions ) : null,
 			],
 		];
 	}
@@ -116,7 +94,19 @@ class FieldProperties {
 			'answerExplanation' => [
 				'type'        => 'String',
 				'description' => __( 'The explanation for the correct answer and/or incorrect answers.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn ( $source ) : ?string => $source['gquizAnswerExplanation'] ?? null,
+				'resolve'     => fn ( $source ) : ?string => ! empty( $source->gquizAnswerExplanation ) ? $source->gquizAnswerExplanation : null,
+			],
+		];
+	}
+
+	/**
+	 * Get 'autocompleteAttribute' property.
+	 */
+	public static function autocomplete_attribute() : array {
+		return [
+			'autocompleteAttribute' => [
+				'type'        => 'String',
+				'description' => __( 'The autocomplete attribute for the field.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -151,8 +141,20 @@ class FieldProperties {
 	public static function border_style() : array {
 		return [
 			'borderStyle' => [
-				'type'        => SignatureBorderStyleEnum::$type,
+				'type'        => SignatureFieldBorderStyleEnum::$type,
 				'description' => __( 'Border style to be used around the signature area.', 'wp-graphql-gravity-forms' ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'borderWidth' property.
+	 */
+	public static function border_width() : array {
+		return [
+			'borderWidth' => [
+				'type'        => SignatureFieldBorderWidthEnum::$type,
+				'description' => __( 'Width of the border around the signature area.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -165,18 +167,6 @@ class FieldProperties {
 			'boxWidth' => [
 				'type'        => 'Int',
 				'description' => __( 'Width of the signature field in pixels.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'borderWidth' property.
-	 */
-	public static function border_width() : array {
-		return [
-			'borderWidth' => [
-				'type'        => SignatureBorderWidthEnum::$type,
-				'description' => __( 'Width of the border around the signature area.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -200,7 +190,7 @@ class FieldProperties {
 		return [
 			'calculationRounding' => [
 				'type'        => 'Int',
-				'description' => __( 'Specifies to how many decimal places the number should be rounded. This is available when enableCalculation is true, but is not available when the chosen format is “Currency”.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Specifies to how many decimal places the number should be rounded. This is available when isCalculation is true, but is not available when the chosen format is “Currency”.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -211,7 +201,7 @@ class FieldProperties {
 	public static function calendar_icon_type() : array {
 		return [
 			'calendarIconType' => [
-				'type'        => CalendarIconTypeEnum::$type,
+				'type'        => FormFieldCalendarIconTypeEnum::$type,
 				'description' => __( 'Determines how the date field displays it’s calendar icon.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -230,12 +220,38 @@ class FieldProperties {
 	}
 
 	/**
+	 * Get 'canAcceptMultipleFiles' property.
+	 */
+	public static function can_accept_multiple_files() : array {
+		return [
+			'canAcceptMultipleFiles' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Indicates whether multiple files may be uploaded.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->multipleFiles ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'canPrepopulate' property.
+	 */
+	public static function can_prepopulate() : array {
+		return [
+			'canPrepopulate' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Determines if the field’s value can be pre-populated dynamically.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->allowsPrepopulate ),
+			],
+		];
+	}
+
+	/**
 	 * Get 'captchaBadgePosition' property.
 	 */
 	public static function captcha_badge_position() : array {
 		return [
 			'captchaBadgePosition' => [
-				'type'        => CaptchaBadgePositionEnum::$type,
+				'type'        => CaptchaFieldBadgePositionEnum::$type,
 				'description' => __( 'The language used when the captcha is displayed. This property is available when the captchaType is “captcha”, the default. The possible values are the language codes used by WordPress.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $source ) => isset( $source->captchaBadge ) ? $source->captchaBadge : 'bottomright',
 			],
@@ -260,7 +276,7 @@ class FieldProperties {
 	public static function captcha_theme() : array {
 		return [
 			'captchaTheme' => [
-				'type'        => CaptchaThemeEnum::$type,
+				'type'        => CaptchaFieldThemeEnum::$type,
 				'description' => __( 'Determines the theme to be used for the reCAPTCHA field. Only applicable to the recaptcha captcha type.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn ( $root ) => $root['captchaTheme'] ?: null,
 			],
@@ -273,7 +289,7 @@ class FieldProperties {
 	public static function captcha_type() : array {
 		return [
 			'captchaType' => [
-				'type'        => CaptchaTypeEnum::$type,
+				'type'        => CaptchaFieldTypeEnum::$type,
 				'description' => __( 'Determines the type of CAPTCHA field to be used.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $root ) => $root['captchaType'] ?: 'recaptcha',
 			],
@@ -286,20 +302,8 @@ class FieldProperties {
 	public static function chained_selects_alignment() : array {
 		return [
 			'chainedSelectsAlignment' => [
-				'type'        => ChainedSelectsAlignmentEnum::$type,
+				'type'        => ChainedSelectFieldAlignmentEnum::$type,
 				'description' => __( 'Alignment of the dropdown fields.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'chainedSelectsHideInactive' property.
-	 */
-	public static function chained_selects_hide_inactive() : array {
-		return [
-			'chainedSelectsHideInactive' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Whether inactive dropdowns should be hidden.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -324,7 +328,7 @@ class FieldProperties {
 			'isCorrect' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates the choice item is the correct answer.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source['gquizIsCorrect'] ),
+				'resolve'     => fn( $source ) : bool => ! empty( $source->gquizIsCorrect ),
 			],
 		];
 	}
@@ -448,25 +452,14 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'copyValuesOptionDefault' property.
+	 * Get 'copyValuesOptionFieldId' property.
 	 */
-	public static function copy_values_option_default() : array {
+	public static function copy_values_option_field_id() : array {
 		return [
-			'copyValuesOptionDefault' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Determines whether the option to copy values is turned on or off by default.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'copyValuesOptionField' property.
-	 */
-	public static function copy_values_option_field() : array {
-		return [
-			'copyValuesOptionField' => [
+			'copyValuesOptionFieldId' => [
 				'type'        => 'Int',
 				'description' => __( 'The field id of the field being used as the copy source.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->copyValuesOptionField ) ? $source->copyValuesOptionField : null,
 			],
 		];
 	}
@@ -491,6 +484,9 @@ class FieldProperties {
 			'cssClass' => [
 				'type'        => 'String',
 				'description' => __( 'String containing the custom CSS classes to be added to the <li> tag that contains the field. Useful for applying custom formatting to specific fields.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function ( $source ) {
+					return $source->cssClass;
+				},
 			],
 		];
 	}
@@ -513,7 +509,7 @@ class FieldProperties {
 	public static function date_type() : array {
 		return [
 			'dateType' => [
-				'type'        => DateTypeEnum::$type,
+				'type'        => DateFieldTypeEnum::$type,
 				'description' => __( 'The type of date field to display.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -525,7 +521,7 @@ class FieldProperties {
 	public static function default_country() : array {
 		return [
 			'defaultCountry' => [
-				'type'        => AddressCountryEnum::$type,
+				'type'        => AddressFieldCountryEnum::$type,
 				'description' => __( 'Contains the country that will be selected by default. Only applicable when "addressType" is set to "INTERATIONAL".', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -592,93 +588,6 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'descriptionPlacement' property.
-	 */
-	public static function description_placement() : array {
-		return [
-			'descriptionPlacement' => [
-				'type'        => DescriptionPlacementPropertyEnum::$type,
-				'description' => __( 'The placement of the field description.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source ) {
-					return ! empty( $source['descriptionPlacement'] ) ? $source['descriptionPlacement'] : 'inherit';
-				},
-			],
-		];
-	}
-
-	/**
-	 * Get 'disableMargins' property.
-	 */
-	public static function disable_margins() : array {
-		return [
-			'disableMargins' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Indicates whether the default margins are turned on to align the HTML content with other fields.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'displayAllCategories' property.
-	 */
-	public static function display_all_categories() : array {
-		return [
-			'displayAllCategories' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Determines if all categories should be displayed on the Post Category drop down. If this property is true (display all categories), the Post Category drop down will display the categories hierarchically.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'displayAlt' property.
-	 */
-	public static function display_alt() : array {
-		return [
-			'displayAlt' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Controls the visibility of the alt metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'displayCaption' property.
-	 */
-	public static function display_caption() : array {
-		return [
-			'displayCaption' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Controls the visibility of the caption metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'displayDescription' property.
-	 */
-	public static function display_description() : array {
-		return [
-			'displayDescription' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Controls the visibility of the description metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'displayTitle' property.
-	 */
-	public static function display_title() : array {
-		return [
-			'displayTitle' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Controls the visibility of the title metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
 	 * Get 'dropdownPlaceholder' property.
 	 */
 	public static function dropdown_placeholder() : array {
@@ -692,160 +601,16 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'email_confirm_enabled' property.
+	 * Get 'descriptionPlacement' property.
 	 */
-	public static function email_confirm_enabled() : array {
+	public static function description_placement() : array {
 		return [
-			'emailConfirmEnabled' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Determines whether the Confirm Email field is active.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'enableAutocomplete' property.
-	 */
-	public static function enable_autocomplete() : array {
-		return [
-			'enableAutocomplete' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Whether autocomplete should be enabled for this field.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'enableCalculation' property.
-	 */
-	public static function enable_calculation() : array {
-		return [
-			'enableCalculation' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Indicates whether the number field is a calculation.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'enableChoiceValue' property.
-	 */
-	public static function enable_choice_value() : array {
-		return [
-			'enableChoiceValue' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Determines if the field (checkbox, select or radio) have choice values enabled, which allows the field to have choice values different from the labels that are displayed to the user.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'enableColumns' property.
-	 */
-	public static function enable_columns() : array {
-		return [
-			'enableColumns' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Determines if the field should use multiple columns. Default is false.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'enableCopyValuesOption' property.
-	 */
-	public static function enable_copy_values_option() : array {
-		return [
-			'enableCopyValuesOption' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Indicates whether the copy values option can be used. This option allows users to skip filling out the field and use the same values as another. For example, if the mailing and billing address are the same.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-
-	/**
-	 * Get 'enableEnhancedUI' property.
-	 */
-	public static function enable_enhanced_ui() : array {
-		return [
-			'enableEnhancedUI' => [
-				'type'        => 'Boolean',
-				'description' => __( 'When set to true, the "Chosen" jQuery script will be applied to this field, enabling search capabilities to Drop Down fields and a more user-friendly interface for Multi Select fields.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'enableOtherChoice' property.
-	 */
-	public static function enable_other_choice() : array {
-		return [
-			'enableOtherChoice' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Indicates whether the \'Enable "other" choice\' option is checked in the editor.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'enablePasswordInput' property.
-	 */
-	public static function enable_password_input() : array {
-		return [
-			'enablePasswordInput' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Determines if a text field input tag should be created with a "password" type.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'enablePrice' property.
-	 */
-	public static function enable_price() : array {
-		return [
-			'enablePrice' => [
-				'type'        => 'Boolean',
-				'description' => __( 'This property is used when the radio button is a product option field and will be set to true. If not associated with a product, then it is false.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'enableRandomizeQuizChoices' property.
-	 */
-	public static function enable_randomize_quiz_choices() : array {
-		return [
-			'enableRandomizeQuizChoices' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Whether to randomize the order in which the answers are displayed to the user.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source['gquizEnableRandomizeQuizChoices'] ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'enableSelectAll' property.
-	 */
-	public static function enable_select_all() : array {
-		return [
-			'enableSelectAll' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Whether the "select all" choice should be displayed.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'enableWeightedScore' property.
-	 */
-	public static function enable_weighted_score() : array {
-		return [
-			'enableWeightedScore' => [
-				'type'        => 'Boolean',
-				'description' => __( 'If this setting is disabled then the response will be awarded a score of 1 if correct and 0 if incorrect.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source['gquizWeightedScoreEnabled'] ),
+			'descriptionPlacement' => [
+				'type'        => FormFieldDescriptionPlacementEnum::$type,
+				'description' => __( 'The placement of the field description.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $source ) {
+					return ! empty( $source->descriptionPlacement ) ? $source->descriptionPlacement : 'inherit';
+				},
 			],
 		];
 	}
@@ -874,6 +639,125 @@ class FieldProperties {
 			],
 		];
 	}
+
+	/**
+	 * Get 'hasAllCategories' property.
+	 */
+	public static function has_all_categories() : array {
+		return [
+			'hasAllCategories' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Determines if all categories should be displayed on the Post Category drop down. If this property is true (display all categories), the Post Category drop down will display the categories hierarchically.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->displayAllCategories ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasAlt' property.
+	 */
+	public static function has_alt() : array {
+		return [
+			'hasAlt' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Controls the visibility of the alt metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->displayAlt ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasAutocomplete' property.
+	 */
+	public static function has_autocomplete() : array {
+		return [
+			'hasAutocomplete' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether autocomplete should be enabled for this field.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->enableAutocomplete ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasCaption' property.
+	 */
+	public static function has_caption() : array {
+		return [
+			'hasCaption' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Controls the visibility of the caption metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->displayCaption ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasChoiceValue' property.
+	 */
+	public static function has_choice_value() : array {
+		return [
+			'hasChoiceValue' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Determines if the field (checkbox, select or radio) have choice values enabled, which allows the field to have choice values different from the labels that are displayed to the user.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->enableChoiceValue ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasColumns' property.
+	 */
+	public static function has_columns() : array {
+		return [
+			'hasColumns' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Determines if the field should use multiple columns. Default is false.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->enableColumns ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasDescription' property.
+	 */
+	public static function has_description() : array {
+		return [
+			'hasDescription' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Controls the visibility of the description metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->displayDescription ),
+			],
+		];
+	}
+
+
+	/**
+	 * Get 'hasEmailConfirmation' property.
+	 */
+	public static function has_email_confirmation() : array {
+		return [
+			'hasEmailConfirmation' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Determines whether the Confirm Email field is active.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->emailConfirmEnabled ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasEnhancedUI' property.
+	 */
+	public static function has_enhanced_ui() : array {
+		return [
+			'hasEnhancedUI' => [
+				'type'        => 'Boolean',
+				'description' => __( 'When set to true, the "Chosen" jQuery script will be applied to this field, enabling search capabilities to Drop Down fields and a more user-friendly interface for Multi Select fields.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->enableEnhancedUI ),
+			],
+		];
+	}
+
 	/**
 	 * Get 'hasInputMask' property.
 	 */
@@ -887,6 +771,122 @@ class FieldProperties {
 		];
 	}
 
+	/**
+	 * Get 'hasMargins' property.
+	 */
+	public static function has_margins() : array {
+		return [
+			'hasMargins' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Indicates whether the default margins are turned on to align the HTML content with other fields.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => empty( $source->disableMargins ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasOtherChoice' property.
+	 */
+	public static function has_other_choice() : array {
+		return [
+			'hasOtherChoice' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Indicates whether the \'Enable "other" choice\' option is checked in the editor.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->enableOtherChoice ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasPasswordStrengthIndicator' property.
+	 */
+	public static function has_password_strength_indicator() : array {
+		return [
+			'hasPasswordStrengthIndicator' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Indicates whether the field displays the password strength indicator.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->passwordStrengthEnabled ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasPasswordVisibilityToggle' property.
+	 */
+	public static function has_password_visibility_toggle() : array {
+		return [
+			'hasPasswordVisibilityToggle' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the Password visibility toggle should be enabled for this field.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->passwordVisibilityEnabled ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasPrice' property.
+	 */
+	public static function has_price() : array {
+		return [
+			'hasPrice' => [
+				'type'        => 'Boolean',
+				'description' => __( 'This property is used when the radio button is a product option field and will be set to true. If not associated with a product, then it is false.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->enablePrice ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasSelectAll' property.
+	 */
+	public static function has_select_all() : array {
+		return [
+			'hasSelectAll' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the \"select all\" choice should be displayed.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) : bool => ! empty( $source->enableSelectAll ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasRichTextEditor' property.
+	 */
+	public static function has_rich_text_editor() : array {
+		return [
+			'hasRichTextEditor' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Indicates whether the field uses the rich text editor interface.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->useRichTextEditor ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'hasTitle' property.
+	 */
+	public static function has_title() : array {
+		return [
+			'hasTitle' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Controls the visibility of the title metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
+			],
+			'resolve'  => fn( $source ) => ! empty( $source->displayTitle ),
+		];
+	}
+
+	/**
+	 * Get 'hasWeightedScore' property.
+	 */
+	public static function has_weighted_score() : array {
+		return [
+			'hasWeightedScore' => [
+				'type'        => 'Boolean',
+				'description' => __( 'If this setting is disabled then the response will be awarded a score of 1 if correct and 0 if incorrect.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) : bool => ! empty( $source->gquizWeightedScoreEnabled ),
+			],
+		];
+	}
 
 	/**
 	 * Get 'customLabel' property for input.
@@ -955,20 +955,46 @@ class FieldProperties {
 		return [
 			'name' => [
 				'type'        => 'String',
-				'description' => __( 'Assigns a name to this field so that it can be populated dynamically via this input name. Only applicable when allowsPrepopulate is `true`.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Assigns a name to this field so that it can be populated dynamically via this input name. Only applicable when canPrepopulate is `true`.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
 
 	/**
-	 * Get 'hasPasswordVisibilityToggle' property.
+	 * Get 'isCalculation' property.
 	 */
-	public static function has_password_visibility_toggle() : array {
+	public static function is_calculation() : array {
 		return [
-			'hasPasswordVisibilityToggle' => [
+			'isCalculation' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the Password visibility toggle should be enabled for this field.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source) => ! empty( $source->passwordVisibilityEnabled ),
+				'description' => __( 'Indicates whether the number field is a calculation.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->enableCalculation ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'isFeaturedImage' property.
+	 */
+	public static function is_featured_image() : array {
+		return [
+			'isFeaturedImage' => [
+				'type'        => 'Boolean',
+				'description' => __( "Whether the image field should be used to set the post's Featured Image", 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->postFeaturedImage ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'isPasswordInput' property.
+	 */
+	public static function is_password_input() : array {
+		return [
+			'isPasswordInput' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Determines if a text field input tag should be created with a "password" type.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->enablePasswordInput ),
 			],
 		];
 	}
@@ -981,7 +1007,7 @@ class FieldProperties {
 			'isQuantityDisabled' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the quantity property should be disabled for this field.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source) => ! empty( $source->disableQuantity ),
+				'resolve'     => fn( $source ) => ! empty( $source->disableQuantity ),
 			],
 		];
 	}
@@ -1006,7 +1032,7 @@ class FieldProperties {
 			'isSSLForced' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Determines if the field requires the user to enter a value. Fields marked as required will prevent the form from being submitted if the user has not entered a value in it.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source) => ! empty( $source->forceSSL ),
+				'resolve'     => fn( $source ) => ! empty( $source->forceSSL ),
 			],
 		];
 	}
@@ -1030,10 +1056,10 @@ class FieldProperties {
 	public static function label_placement() : array {
 		return [
 			'labelPlacement' => [
-				'type'        => LabelPlacementPropertyEnum::$type,
+				'type'        => FormFieldLabelPlacementEnum::$type,
 				'description' => __( 'The field label position.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( $source ) {
-					return ! empty( $source['labelPlacement'] ) ? $source['labelPlacement'] : 'inherit';
+					return ! empty( $source->labelPlacement ) ? $source->labelPlacement : 'inherit';
 				},
 			],
 		];
@@ -1096,20 +1122,8 @@ class FieldProperties {
 	public static function min_password_strength() : array {
 		return [
 			'minPasswordStrength' => [
-				'type'        => MinPasswordStrengthEnum::$type,
+				'type'        => PasswordFieldMinStrengthEnum::$type,
 				'description' => __( 'Indicates how strong the password should be.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'multipleFiles' property.
-	 */
-	public static function multiple_files() : array {
-		return [
-			'multipleFiles' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Indicates whether multiple files may be uploaded.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -1121,7 +1135,7 @@ class FieldProperties {
 		return [
 			'inputName' => [
 				'type'        => 'String',
-				'description' => __( 'Assigns a name to this field so that it can be populated dynamically via this input name. Only applicable when allowsPrepopulate is `true`.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Assigns a name to this field so that it can be populated dynamically via this input name. Only applicable when canPrepopulate is `true`.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -1132,7 +1146,7 @@ class FieldProperties {
 	public static function next_button() : array {
 		return [
 			'nextButton' => [
-				'type'        => Button::$type,
+				'type'        => FormButton::$type,
 				'description' => __( 'An array containing the the individual properties for the "Next" button.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -1146,30 +1160,6 @@ class FieldProperties {
 			'numberFormat' => [
 				'type'        => NumberFieldFormatEnum::$type,
 				'description' => __( 'Specifies the format allowed for the number field.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'noDuplicates' property.
-	 */
-	public static function no_duplicates() : array {
-		return [
-			'noDuplicates' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Determines if the field allows duplicate submissions.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'passwordStrengthEnabled' property.
-	 */
-	public static function password_strength_enabled() : array {
-		return [
-			'passwordStrengthEnabled' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Indicates whether the field displays the password strength indicator.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -1235,24 +1225,12 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'postFeaturedImage' property.
-	 */
-	public static function post_featured_image() : array {
-		return [
-			'postFeaturedImage' => [
-				'type'        => 'Boolean',
-				'description' => __( "Whether the image field should be used to set the post's Featured Image", 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
 	 * Get 'previousButton' property.
 	 */
 	public static function previous_button() : array {
 		return [
 			'previousButton' => [
-				'type'        => Button::$type,
+				'type'        => FormButton::$type,
 				'description' => __( 'An array containing the the individual properties for the "Previous" button.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -1311,14 +1289,66 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'showAnswerExplanation' property.
+	 * Get 'shouldAllowDuplicates' property.
 	 */
-	public static function show_answer_explanation() : array {
+	public static function should_allow_duplicates() : array {
 		return [
-			'showAnswerExplanation' => [
+			'shouldAllowDuplicates' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Determines if the field allows duplicate submissions.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => empty( $source->noDuplicates ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'shouldCopyValuesOption' property.
+	 */
+	public static function should_copy_values_option() : array {
+		return [
+			'shouldCopyValuesOption' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Indicates whether the copy values option can be used. This option allows users to skip filling out the field and use the same values as another. For example, if the mailing and billing address are the same.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->enableCopyValuesOption ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'shouldHideInactiveChoices' property.
+	 */
+	public static function should_hide_inactive_choices() : array {
+		return [
+			'shouldHideInactiveChoices' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether inactive dropdowns should be hidden.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->chainedSelectsHideInactive ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'shouldRandomizeQuizChoices' property.
+	 */
+	public static function should_randomize_quiz_choices() : array {
+		return [
+			'shouldRandomizeQuizChoices' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether to randomize the order in which the answers are displayed to the user.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) : bool => ! empty( $source->gquizEnableRandomizeQuizChoices ),
+			],
+		];
+	}
+
+	/**
+	 * Get 'shouldShowAnswerExplanation' property.
+	 */
+	public static function should_show_answer_explanation() : array {
+		return [
+			'shouldShowAnswerExplanation' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether to show an answer explanation.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source) : bool => ! empty( $source['gquizShowAnswerExplanation'] ),
+				'resolve'     => fn( $source ) : bool => ! empty( $source->gquizShowAnswerExplanation ),
 			],
 		];
 	}
@@ -1329,7 +1359,7 @@ class FieldProperties {
 	public static function size() : array {
 		return [
 			'size' => [
-				'type'        => SizePropertyEnum::$type,
+				'type'        => FormFieldSizeEnum::$type,
 				'description' => __( 'Determines the size of the field when displayed on the page.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -1365,7 +1395,7 @@ class FieldProperties {
 	public static function simple_captcha_size() : array {
 		return [
 			'simpleCaptchaSize' => [
-				'type'        => SizePropertyEnum::$type,
+				'type'        => FormFieldSizeEnum::$type,
 				'description' => __( 'Determines the CAPTCHA image size. Only applicable to simple_captcha and math captcha types.', 'wp-graphql-gravity-forms' ),
 			],
 		];
@@ -1377,10 +1407,10 @@ class FieldProperties {
 	public static function sub_label_placement() : array {
 		return [
 			'subLabelPlacement' => [
-				'type'        => LabelPlacementPropertyEnum::$type,
+				'type'        => FormFieldSubLabelPlacementEnum::$type,
 				'description' => __( 'The placement of the labels for the subfields within the group. This setting controls all of the subfields, they cannot be set individually. They may be aligned above or below the inputs. If this property is not set, the “Sub-Label Placement” setting on the Form Settings->Form Layout page is used. If no setting is specified, the default is above inputs.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( $source ) {
-					return ! empty( $source['subLabelPlacement'] ) ? $source['subLabelPlacement'] : 'inherit';
+					return ! empty( $source->subLabelPlacement ) ? $source->subLabelPlacement : 'inherit';
 				},
 			],
 		];
@@ -1393,8 +1423,9 @@ class FieldProperties {
 	public static function supported_credit_cards() : array {
 		return [
 			'supportedCreditCards' => [
-				'type'        => [ 'list_of' => CreditCardTypeEnum::$type ],
+				'type'        => [ 'list_of' => FormCreditCardTypeEnum::$type ],
 				'description' => __( 'The credit card type.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->creditCards ) ? $source->creditCards : null,
 			],
 		];
 	}
@@ -1408,17 +1439,6 @@ class FieldProperties {
 			'timeFormat' => [
 				'type'        => TimeFieldFormatEnum::$type,
 				'description' => __( 'Determines how the time is displayed.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-	/**
-	 * Get 'useRichTextEditor' property.
-	 */
-	public static function use_rich_text_editor() : array {
-		return [
-			'useRichTextEditor' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Indicates whether the field uses the rich text editor interface.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

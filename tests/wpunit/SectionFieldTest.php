@@ -46,10 +46,11 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return []; }
+		return [];
+	}
 
 	/**
 	 * The GraphQL query string.
@@ -61,7 +62,6 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 			... on SectionField {
 				conditionalLogic {
 					actionType
-					logicType
 					rules {
 						fieldId
 						operator
@@ -101,6 +101,8 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -109,8 +111,8 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								$this->property_helper->getAllActualValues( $form['fields'][0] ),
+								'nodes',
+								$expected,
 							),
 						]
 					),

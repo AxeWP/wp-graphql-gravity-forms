@@ -61,22 +61,22 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return 'third';
+		return $this->fields[0]['choices'][0]['value'];
 	}
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return 'second';
+		return $this->fields[0]['choices'][2]['value'];
 	}
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 'input_' . $this->fields[0]['id'] => $this->field_value ];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 	/**
@@ -88,8 +88,8 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 		return '
 			... on SelectField {
 				adminLabel
-				allowsPrepopulate
 				autocompleteAttribute
+				canPrepopulate
 				choices {
 					isSelected
 					text
@@ -108,16 +108,16 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 				defaultValue
 				description
 				descriptionPlacement
-				enableAutocomplete
-				enableChoiceValue
-				enableEnhancedUI
 				errorMessage
+				hasAutocomplete
+				hasChoiceValue
+				hasEnhancedUI
 				inputName
 				isRequired
 				label
-				noDuplicates
-				pageNumber
+				labelPlacement
 				placeholder
+				shouldAllowDuplicates
 				size
 				value
 			}
@@ -207,6 +207,9 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -215,11 +218,8 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -247,8 +247,10 @@ class SelectFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),

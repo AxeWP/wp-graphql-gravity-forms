@@ -85,7 +85,7 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 * The graphql field value input.
 	 */
 	public function updated_field_value_input() {
-		$value = $this->updated_field_value();
+		$value = $this->updated_field_value;
 		return [
 			'value'             => $value,
 			'confirmationValue' => $value,
@@ -97,7 +97,7 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 'input_' . $this->fields[0]['id'] => $this->field_value ];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 	/**
@@ -109,7 +109,7 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 		return '
 			... on EmailField {
 				adminLabel
-				allowsPrepopulate
+				canPrepopulate
 				conditionalLogic {
 					actionType
 					logicType
@@ -122,10 +122,9 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 				cssClass
 				description
 				descriptionPlacement
-				emailConfirmEnabled
-				enableAutocomplete
 				errorMessage
-				inputName
+				hasAutocomplete
+				hasEmailConfirmation
 				inputs {
 					autocompleteAttribute
 					customLabel
@@ -137,9 +136,9 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 				}
 				isRequired
 				label
-				noDuplicates
-				pageNumber
+				labelPlacement
 				placeholder
+				shouldAllowDuplicates
 				size
 				subLabelPlacement
 				value
@@ -152,7 +151,7 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 */
 	public function submit_form_mutation() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: EmailInput!, $draft: Boolean) {
+			mutation ($formId: Int!, $fieldId: Int!, $value: EmailFieldInput!, $draft: Boolean) {
 				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, emailValues: $value}}) {
 					errors {
 						id
@@ -179,7 +178,7 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 */
 	public function update_entry_mutation() : string {
 		return '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: EmailInput! ){
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: EmailFieldInput! ){
 				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, emailValues: $value} }) {
 					errors {
 						id
@@ -204,7 +203,7 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 */
 	public function update_draft_entry_mutation() : string {
 		return '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: EmailInput! ){
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: EmailFieldInput! ){
 				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, emailValues: $value} }) {
 					errors {
 						id
@@ -230,6 +229,9 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -238,11 +240,8 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -270,8 +269,10 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),

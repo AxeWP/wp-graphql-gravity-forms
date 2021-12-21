@@ -10,6 +10,7 @@ namespace WPGraphQL\GF\Model;
 
 use GraphQLRelay\Relay;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry as GraphQLEntry;
+use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\Model\Model;
 
 /**
@@ -80,10 +81,14 @@ class DraftEntry extends Model {
 			$this->fields = [
 				'createdById'    => fn() : ?int => ! empty( $this->submission['partial_entry']['created_by'] ) ? (int) $this->submission['partial_entry']['created_by'] : null,
 				'currency'       => fn() : ?int => ! empty( $this->submission['partial_entry']['currency'] ) ? (int) $this->submission['partial_entry']['currency'] : null,
-				'dateCreatedUTC' => fn() : ?string => ! empty( $this->data['date_created'] ) ? $this->data['date_created'] : null,
-				'dateUpdatedUTC' => fn() : ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? $this->submission['partial_entry']['date_updated'] : null,
+				'dateCreated'    => fn() : ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,
+				'dateCreatedGmt' => fn() : ?string => ! empty( $this->data['date_created'] ) ? $this->data['date_created'] : null,
+				'dateUpdated'    => fn() : ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? get_date_from_gmt( $this->submission['partial_entry']['date_updated'] ) : null,
+				'dateUpdatedGmt' => fn() : ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? $this->submission['partial_entry']['date_updated'] : null,
+
 				'entry'          => fn() : array => $this->submission['partial_entry'],
-				'formId'         => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
+				'formDatabaseId' => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
+				'formId'         => fn() => ! empty( $this->data['form_id'] ) ? Relay::toGlobalId( Form::$type, $this->data['form_id'] ) : null,
 				'id'             => fn() : string => Relay::toGlobalId( GraphQLEntry::$type, $this->resume_token ),
 				'ip'             => fn() : ?string => ! empty( $this->submission['partial_entry']['ip'] ) ? $this->submission['partial_entry']['ip'] : null,
 				'isDraft'        => fn() : bool => true,

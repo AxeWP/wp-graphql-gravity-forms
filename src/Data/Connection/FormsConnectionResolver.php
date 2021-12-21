@@ -240,10 +240,10 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 			'direction' => 'DESC',
 		];
 
-		if ( ! empty( $this->args['where']['sort'] ) && is_array( $this->args['where']['sort'] ) ) {
+		if ( ! empty( $this->args['where']['orderby'] ) && is_array( $this->args['where']['orderby'] ) ) {
 			$sort = [
-				'key'       => $this->args['where']['sort']['key'] ?? '',
-				'direction' => $this->args['where']['sort']['direction'] ?? 'ASC',
+				'key'       => $this->args['where']['orderby']['key'] ?? '',
+				'direction' => $this->args['where']['orderby']['order'] ?? 'ASC',
 			];
 		}
 

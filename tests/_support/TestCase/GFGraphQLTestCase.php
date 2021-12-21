@@ -10,6 +10,10 @@
 
 namespace Tests\WPGraphQL\GF\TestCase;
 
+use Helper\GFHelpers\GFHelpers;
+use RuntimeException;
+use WPGraphQL\GF\Type\Enum;
+
 /**
  * Class - GraphQLTestCase
  */
@@ -76,5 +80,31 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 			$expected[] = $this->expectedField( $key, $value );
 		}
 		return $expected;
+	}
+
+	public function get_expected_conditional_logic_fields( $conditional_logic ) {
+		if ( empty( $conditional_logic ) ) {
+			return $this->expectedField( 'conditionalLogic', static::IS_NULL );
+		}
+
+		return $this->expectedObject(
+			'conditionalLogic',
+			[
+				$this->expectedField( 'actionType', ! empty( $conditional_logic['actionType'] ) ? GFHelpers::get_enum_for_value( Enum\ConditionalLogicActionTypeEnum::$type, $conditional_logic['actionType'] ) : static::IS_NULL ),
+				$this->expectedField(
+					'logicType',
+					! empty( $conditional_logic['actionType'] ) ? GFHelpers::get_enum_for_value( Enum\ConditionalLogicLogicTypeEnum::$type, $conditional_logic['logicType'] ) : static::IS_NULL
+				),
+				$this->expectedNode(
+					'rules',
+					[
+						$this->expectedField( 'fieldId', ! empty( $conditional_logic['rules'][0]['fieldId'] ) ? (float) $conditional_logic['rules'][0]['fieldId'] : static::IS_NULL ),
+						$this->expectedField( 'operator', ! empty( $conditional_logic['rules'][0]['operator'] ) ? GFHelpers::get_enum_for_value( Enum\FormRuleOperatorEnum::$type, $conditional_logic['rules'][0]['operator'] ) : static::IS_NULL ),
+						$this->expectedField( 'value', ! empty( $conditional_logic['rules'][0]['value'] ) ? $conditional_logic['rules'][0]['value'] : static::IS_NULL ),
+					],
+					0
+				),
+			]
+		);
 	}
 }

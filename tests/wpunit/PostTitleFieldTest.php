@@ -73,10 +73,10 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 'input_' . $this->fields[0]['id'] => $this->field_value ];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 	/**
@@ -88,7 +88,7 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 		return '
 			... on PostTitleField {
 				adminLabel
-				allowsPrepopulate
+				canPrepopulate
 				conditionalLogic {
 					actionType
 					logicType
@@ -106,9 +106,9 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 				inputName
 				isRequired
 				label
+				labelPlacement
 				placeholder
 				size
-				type
 				value
 			}
 		';
@@ -197,6 +197,9 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -205,11 +208,8 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -237,8 +237,10 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),

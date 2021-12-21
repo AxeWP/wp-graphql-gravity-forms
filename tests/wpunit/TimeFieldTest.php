@@ -64,13 +64,13 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 		return [
 			'amPm'         => 'am',
 			'displayValue' => '08:05 am',
-			'hours'        => 8,
-			'minutes'      => 5,
+			'hours'        => '08',
+			'minutes'      => '05',
 		];
 	}
 
 	public function field_value_input() {
-		return ( $this->field_value() )['displayValue'];
+		return $this->field_value['displayValue'];
 	}
 
 	/**
@@ -79,22 +79,22 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 	public function updated_field_value() {
 		return [
 			'amPm'         => 'pm',
-			'displayValue' => '20:05',
-			'hours'        => 8,
-			'minutes'      => 5,
+			'displayValue' => '11:05 pm',
+			'hours'        => '11',
+			'minutes'      => '05',
 		];
 	}
 
 	public function updated_field_value_input() {
-		return ( $this->updated_field_value() )['displayValue'];
+		return $this->updated_field_value['displayValue'];
 	}
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 'input_' . $this->fields[0]['id'] => $this->field_value['displayValue'] ];
+		return [ $this->fields[0]['id'] => $this->field_value['displayValue'] ];
 	}
 
 	/**
@@ -106,7 +106,7 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 		return '
 			... on TimeField {
 				adminLabel
-				allowsPrepopulate
+				canPrepopulate
 				conditionalLogic {
 					actionType
 					logicType
@@ -120,7 +120,6 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 				description
 				descriptionPlacement
 				errorMessage
-				inputName
 				inputs {
 					autocompleteAttribute
 					customLabel
@@ -131,7 +130,8 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 				}
 				isRequired
 				label
-				noDuplicates
+				labelPlacement
+				shouldAllowDuplicates
 				subLabelPlacement
 				timeFormat
 				timeValues {
@@ -242,6 +242,9 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'timeValues', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -250,11 +253,8 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -282,8 +282,10 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'timeValues', $value ),
+										]
 									),
 								]
 							),

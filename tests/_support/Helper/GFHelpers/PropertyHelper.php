@@ -76,6 +76,7 @@ class PropertyHelper extends GFHelpers {
 	public function copyValuesOptionDefault( $value = null ) : bool {
 		return ! empty( $value );
 	}
+
 	public function copyValuesOptionField( $value = null ) {
 		return isset( $value ) ? $value : null;
 	}
@@ -85,7 +86,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function dateFormat( $value = null ) {
-		return isset( $value ) ? $value : 'dmy';
+		return isset( $value ) ? $value : 'ymd_dash';
 	}
 
 	public function dateType( $value = null ) {
@@ -124,7 +125,7 @@ class PropertyHelper extends GFHelpers {
 		return ! empty( $value );
 	}
 
-	public function disableMargins( $value = null ) : bool{
+	public function disableMargins( $value = null ) : bool {
 		return ! empty( $value );
 	}
 
@@ -156,7 +157,7 @@ class PropertyHelper extends GFHelpers {
 		return ! empty( $value );
 	}
 
-	public function enableEnhancedUI( $value = null ) : bool{
+	public function enableEnhancedUI( $value = null ) : bool {
 		return ! empty( $value );
 	}
 
@@ -184,7 +185,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function errorMessage( $value = null ) {
-		return isset( $value ) ? $value : $this->dummy->text();
+		return isset( $value ) ? $value : null;
 	}
 
 	public function id( $value = null ) {
@@ -220,7 +221,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function isRequired( $value = null ) {
-		return isset( $value ) ? $value : $this->dummy->yesno();
+		return isset( $value ) ? $value : false;
 	}
 
 	public function isSelected( $value = null ) {
@@ -252,7 +253,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function maxLength( $value = null ) {
-		return isset( $value ) ? $value : ( rand( 0, 150 ) ?: null );
+		return isset( $value ) ? $value : ( rand( 100, 550 ) ?: null );
 	}
 	public function maxRows( $value = null ) {
 		return isset( $value ) ? $value : ( rand( 3, 10 ) ?: null );
@@ -274,7 +275,7 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : 'advanced';
 	}
 
-	public function noDuplicates( $value = null ) : bool{
+	public function noDuplicates( $value = null ) : bool {
 		return ! empty( $value );
 	}
 	public function numberFormat( $value = null ) {

@@ -73,10 +73,10 @@ class PostExcerptFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 'input_' . $this->fields[0]['id'] => $this->field_value ];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 	/**
@@ -87,7 +87,7 @@ class PostExcerptFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 	public function field_query() : string {
 		return '... on PostExcerptField {
 				adminLabel
-				allowsPrepopulate
+				canPrepopulate
 				conditionalLogic {
 					actionType
 					logicType
@@ -105,6 +105,7 @@ class PostExcerptFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 				inputName
 				isRequired
 				label
+				labelPlacement
 				maxLength
 				placeholder
 				size
@@ -196,6 +197,9 @@ class PostExcerptFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -204,11 +208,8 @@ class PostExcerptFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -236,8 +237,10 @@ class PostExcerptFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),

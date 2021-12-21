@@ -8,6 +8,8 @@
 use GraphQLRelay\Relay;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 use WPGraphQL\GF\Type\Enum;
+use WPGraphQL\GF\Type\WPObject\Form\Form;
+use Helper\GFHelpers\GFHelpers;
 
 /**
  * Class - EntryQueriesTest
@@ -80,54 +82,21 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$expected = [
-			'gravityFormsEntry' => [
-				'createdById' => (int) $entry['created_by'],
-				'createdBy'   => [
-						'databaseId' => (int) $entry['created_by'],
-				],
-				'dateCreated' => get_date_from_gmt( $entry['date_created'] ),
-				'dateCreatedUTC' => $entry['date_created'],
-				'dateUpdated' => get_date_from_gmt( $entry['date_updated'] ),
-				'dateUpdatedUTC' => $entry['date_updated'],
-				'entryId'     => (int) $entry['id'],
-				'formFields'  => [
-					'nodes' => [
-						[
-							'id' => $form['fields'][0]['id'],
-						],
-					],
-				],
-				'form'        => [
-					'databaseId' => $form['id'],
-				],
-				'formId'  => $form['id'],
-				'id'          => $global_id,
-				'ip'          => $entry['ip'],
-				'isDraft'     => (bool) null,
-				'isRead'      => ! empty( $entry['is_read'] ),
-				'isStarred'   => (bool) $entry['is_starred'],
-				'postId'      => $entry['post_id'],
-				'resumeToken' => null,
-				'sourceUrl'   => $entry['source_url'],
-				'status'      => $this->tester->get_enum_for_value( Enum\EntryStatusEnum::$type, $entry['status'] ),
-				'userAgent'   => $entry['user_agent'],
-			],
-		];
+		$expected = $this->expected_field_response( $entry, $form );
+
 		// Test with Database Id.
 		$this->assertArrayNotHasKey( 'errors', $response );
-		$this->assertEquals( $expected, $response['data'] );
+		$this->assertQuerySuccessful( $response, $expected );
 
 		// Test with Global Id.
 		$variables = [
 			'id'     => $global_id,
 			'idType' => 'ID',
 		];
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
+		$response  = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response );
-		$this->assertEquals( $expected, $response['data'] );
+		$this->assertQuerySuccessful( $response, $expected );
 	}
 
 	/**
@@ -141,53 +110,19 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		);
 		$global_id = Relay::toGlobalId( 'GravityFormsEntry', $entry_id );
 		$entry     = $this->factory->entry->get_object_by_id( $entry_id );
-		$form      = $this->factory->form->get_object_by_id(  $this->form_id );
+		$form      = $this->factory->form->get_object_by_id( $this->form_id );
 
-		$query     = $this->get_entry_query();
+		$query = $this->get_entry_query();
 
 		$variables = [
 			'id'     => $entry_id,
 			'idType' => 'DATABASE_ID',
 		];
-		$response = $this->graphql( compact( 'query', 'variables' ) );
+		$response  = $this->graphql( compact( 'query', 'variables' ) );
 
-
-		$expected = [
-			'gravityFormsEntry' => [
-				'createdById' => (int) $entry['created_by'],
-				'createdBy'   => [
-						'databaseId' => (int) $entry['created_by'],
-				],
-				'dateCreated' => get_date_from_gmt( $entry['date_created'] ),
-				'dateCreatedUTC' => $entry['date_created'],
-				'dateUpdated' => get_date_from_gmt( $entry['date_updated'] ),
-				'dateUpdatedUTC' => $entry['date_updated'],
-				'entryId'     => (int) $entry['id'],
-				'formFields'  => [
-					'nodes' => [
-						[
-							'id' => $form['fields'][0]['id'],
-						],
-					],
-				],
-				'form'        => [
-					'databaseId' => $form['id'],
-				],
-				'formId'      => $form['id'],
-				'id'          => $global_id,
-				'ip'          => $entry['ip'],
-				'isDraft'     => (bool) null,
-				'isRead'      => (bool) null,
-				'isStarred'   => (bool) null,
-				'postId'      => null,
-				'resumeToken' => null,
-				'sourceUrl'   => $entry['source_url'],
-				'status'      => $this->tester->get_enum_for_value( Enum\EntryStatusEnum::$type, $entry['status'] ),
-				'userAgent'   => $entry['user_agent'],
-			],
-		];
+		$expected = $this->expected_field_response( $entry, $form );
 		$this->assertArrayNotHasKey( 'errors', $response );
-		$this->assertEquals( $expected, $response['data'] );
+		$this->assertQuerySuccessful( $response, $expected );
 
 		$this->factory->entry->delete( $entry_id );
 	}
@@ -201,8 +136,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		$draft_tokens = $this->factory->draft_entry->create_many( 2, [ 'form_id' => $this->form_id ] );
 
 		$query = '
-			query( $id: ID! ) {
-				gravityFormsEntry( id: $id ) {
+			query( $id: ID!, $idType: EntryIdTypeEnum) {
+				gravityFormsEntry( id: $id, idType: $idType ) {
 					resumeToken
 				}
 			}
@@ -212,8 +147,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 			[
 				'query'     => $query,
 				'variables' => [
-					'id' => $draft_tokens[0],
-					'idType' => 'ID',
+					'id'     => $draft_tokens[0],
+					'idType' => 'RESUME_TOKEN',
 				],
 			]
 		);
@@ -379,38 +314,93 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	 */
 	private function get_entry_query() : string {
 		return '
-			query getEntry($id: ID!, $idType: IdTypeEnum) {
+			query getEntry($id: ID!, $idType: EntryIdTypeEnum) {
 				gravityFormsEntry(id: $id, idType: $idType) {
-					createdById
 					createdBy {
 						databaseId
 					}
+					createdById
+					databaseId
 					dateCreated
-					dateCreatedUTC
 					dateUpdated
-					dateUpdatedUTC
+					dateCreatedGmt
+					dateUpdatedGmt
 					entryId
+					formDatabaseId
+					form {
+						databaseId
+					}
 					formFields {
 						nodes {
 							id
 						}
 					}
-					form {
-						databaseId
-					}
-					formId
 					id
 					ip
 					isDraft
 					isRead
 					isStarred
-					postId
-					resumeToken
 					sourceUrl
 					status
 					userAgent
 				}
 			}
 		';
+	}
+
+	/**
+	 * The expected WPGraphQL field response.
+	 *
+	 * @param array $form the current form instance.
+	 * @return array
+	 */
+	public function expected_field_response( array $entry, array $form ) : array {
+		return [
+			$this->expectedObject(
+				'gravityFormsEntry',
+				[
+					$this->expectedField( 'createdById', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : null ),
+					$this->expectedObject(
+						'createdBy',
+						[
+							$this->expectedField( 'databaseId', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : null ),
+						]
+					),
+					$this->expectedField( 'databaseId', ! empty( $entry['id'] ) ? (int) $entry['id'] : null ),
+					$this->expectedField( 'dateCreated', ! empty( $entry['date_created'] ) ? get_date_from_gmt( $entry['date_created'] ) : null ),
+					$this->expectedField( 'dateCreatedGmt', ! empty( $entry['date_created'] ) ? $entry['date_created'] : null ),
+					$this->expectedField( 'dateUpdated', ! empty( $entry['date_updated'] ) ? get_date_from_gmt( $entry['date_updated'] ) : null ),
+					$this->expectedField( 'dateUpdatedGmt', ! empty( $entry['date_updated'] ) ? $entry['date_updated'] : null ),
+					$this->expectedField( 'entryId', ! empty( $entry['id'] ) ? (int) $entry['id'] : null ),
+					$this->expectedField( 'formDatabaseId', ! empty( $form['id'] ) ? (int) $form['id'] : null ),
+					$this->expectedObject(
+						'form',
+						[
+							$this->expectedField( 'databaseId', isset( $form['id'] ) ? (int) $form['id'] : null ),
+						]
+					),
+					$this->expectedObject(
+						'formFields',
+						[
+							$this->expectedNode(
+								'nodes',
+								[
+									$this->expectedField( 'id', (int) $form['fields'][0]['id'] ),
+								]
+							),
+						]
+					),
+					$this->expectedField( 'id', $this->toRelayId( 'GravityFormsEntry', $entry['id'] ) ),
+					$this->expectedField( 'ip', ! empty( $entry['ip'] ) ? $entry['ip'] : null ),
+					$this->expectedField( 'isDraft', ! empty( $entry['is_draft'] ) ),
+					$this->expectedField( 'isRead', ! empty( $entry['is_read'] ) ),
+					$this->expectedField( 'isStarred', ! empty( $entry['isStarred'] ) ),
+					// $this->expectedField( 'resumeToken', ! empty( $entry['resumeToken'] ) ? $entry['resumeToken'] : null ),
+					$this->expectedField( 'sourceUrl', ! empty( $entry['source_url'] ) ? $entry['source_url'] : null ),
+					$this->expectedField( 'status', ! empty( $entry['status'] ) ? GFHelpers::get_enum_for_value( Enum\EntryStatusEnum::$type, $entry['status'] ) : null ),
+					$this->expectedField( 'userAgent', ! empty( $entry['user_agent'] ) ? $entry['user_agent'] : null ),
+				]
+			),
+		];
 	}
 }

@@ -73,10 +73,10 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 'input_' . $this->fields[0]['id'] => $this->field_value ];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 	/**
@@ -88,10 +88,12 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 		return '
 			... on NumberField {
 				adminLabel
-				allowsPrepopulate
 				autocompleteAttribute
 				calculationFormula
 				calculationRounding
+				canPrepopulate
+				cssClass
+				defaultValue
 				conditionalLogic {
 					actionType
 					logicType
@@ -101,21 +103,20 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 						value
 					}
 				}
-				cssClass
-				defaultValue
 				description
 				descriptionPlacement
-				enableAutocomplete
-				enableCalculation
 				errorMessage
+				hasAutocomplete
 				inputName
+				isCalculation
 				isRequired
 				label
-				noDuplicates
+				labelPlacement
 				numberFormat
 				placeholder
 				rangeMax
 				rangeMin
+				shouldAllowDuplicates
 				size
 				value
 			}
@@ -205,6 +206,9 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -213,11 +217,8 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -245,8 +246,10 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),

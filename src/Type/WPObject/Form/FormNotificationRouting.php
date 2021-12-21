@@ -13,7 +13,7 @@ namespace WPGraphQL\GF\Type\WPObject\Form;
 
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
-use WPGraphQL\GF\Type\Enum\RuleOperatorEnum;
+use WPGraphQL\GF\Type\Enum\FormRuleOperatorEnum;
 
 /**
  * Class - FormNotificationRouting
@@ -43,7 +43,7 @@ class FormNotificationRouting extends AbstractObject {
 				'description' => __( 'Target field ID. The field that will have it’s value compared with the value property to determine if this rule is a match.', 'wp-graphql-gravity-forms' ),
 			],
 			'operator' => [
-				'type'        => RuleOperatorEnum::$type,
+				'type'        => FormRuleOperatorEnum::$type,
 				'description' => __( 'Operator to be used when evaluating this rule.', 'wp-graphql-gravity-forms' ),
 			],
 			'value'    => [

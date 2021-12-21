@@ -41,6 +41,28 @@ class ValueProperties {
 	}
 
 	/**
+	 * Get `consentValue` property.
+	 *
+	 * @return array
+	 */
+	public static function consent_value() : array {
+		return [
+			'consentValue' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Consent field value. This is `true` when consent is given, `false` when it is not.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function ( $source, array $args, AppContext $context ) {
+					if ( ! self::is_field_and_entry( $source, $context ) ) {
+						return null;
+					}
+
+					$input_key = $source->inputs[0]['id'];
+					return isset( $context->gfEntry->entry[ $input_key ] ) ? (bool) $context->gfEntry->entry[ $input_key ] : null;
+				},
+			],
+		];
+	}
+
+	/**
 	 * Get `addressValues` property.
 	 */
 	public static function address_values() : array {

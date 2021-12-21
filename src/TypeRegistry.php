@@ -112,49 +112,51 @@ class TypeRegistry {
 	private static function enums() : array {
 		// Enums to register.
 		$classes_to_register = [
-			Enum\AddressTypeEnum::class,
-			Enum\AddressCountryEnum::class,
-			Enum\ButtonTypeEnum::class,
-			Enum\CalendarIconTypeEnum::class,
-			Enum\CaptchaBadgePositionEnum::class,
-			Enum\CaptchaThemeEnum::class,
-			Enum\CaptchaTypeEnum::class,
-			Enum\ChainedSelectsAlignmentEnum::class,
+			Enum\AddressFieldCountryEnum::class,
+			Enum\AddressFieldTypeEnum::class,
+			Enum\AmPmEnum::class,
+			Enum\CaptchaFieldBadgePositionEnum::class,
+			Enum\CaptchaFieldThemeEnum::class,
+			Enum\CaptchaFieldTypeEnum::class,
+			Enum\ChainedSelectFieldAlignmentEnum::class,
 			Enum\ConditionalLogicActionTypeEnum::class,
 			Enum\ConditionalLogicLogicTypeEnum::class,
-			Enum\ConfirmationTypeEnum::class,
-			Enum\CreditCardTypeEnum::class,
 			Enum\DateFieldFormatEnum::class,
-			Enum\DateTypeEnum::class,
-			Enum\DescriptionPlacementPropertyEnum::class,
+			Enum\DateFieldTypeEnum::class,
+			Enum\EntryIdTypeEnum::class,
 			Enum\EntryStatusEnum::class,
 			Enum\FieldFiltersModeEnum::class,
 			Enum\FieldFiltersOperatorInputEnum::class,
+			Enum\FormButtonTypeEnum::class,
+			Enum\FormConfirmationTypeEnum::class,
+			Enum\FormCreditCardTypeEnum::class,
 			Enum\FormDescriptionPlacementEnum::class,
+			Enum\FormFieldCalendarIconTypeEnum::class,
+			Enum\FormFieldDescriptionPlacementEnum::class,
+			Enum\FormFieldLabelPlacementEnum::class,
+			Enum\FormFieldRequiredIndicatorEnum::class,
+			Enum\FormFieldSizeEnum::class,
+			Enum\FormFieldSubLabelPlacementEnum::class,
 			Enum\FormFieldTypeEnum::class,
+			Enum\FormFieldVisibilityEnum::class,
+			Enum\FormIdTypeEnum::class,
 			Enum\FormLabelPlacementEnum::class,
 			Enum\FormLimitEntriesPeriodEnum::class,
+			Enum\FormNotificationToTypeEnum::class,
+			Enum\FormPageProgressStyleEnum::class,
+			Enum\FormPageProgressTypeEnum::class,
+			Enum\FormRuleOperatorEnum::class,
 			Enum\FormStatusEnum::class,
 			Enum\FormSubLabelPlacementEnum::class,
-			Enum\IdTypeEnum::class,
-			Enum\LabelPlacementPropertyEnum::class,
-			Enum\MinPasswordStrengthEnum::class,
-			Enum\NotificationToTypeEnum::class,
 			Enum\NumberFieldFormatEnum::class,
-			Enum\PageProgressStyleEnum::class,
-			Enum\PageProgressTypeEnum::class,
+			Enum\PasswordFieldMinStrengthEnum::class,
 			Enum\PhoneFieldFormatEnum::class,
 			Enum\PostFormatTypeEnum::class,
+			Enum\QuizFieldGradingTypeEnum::class,
 			Enum\QuizFieldTypeEnum::class,
-			Enum\QuizGradingTypeEnum::class,
-			Enum\RequiredIndicatorEnum::class,
-			Enum\RuleOperatorEnum::class,
-			Enum\SignatureBorderStyleEnum::class,
-			Enum\SignatureBorderWidthEnum::class,
-			Enum\SizePropertyEnum::class,
-			Enum\SortingInputEnum::class,
+			Enum\SignatureFieldBorderStyleEnum::class,
+			Enum\SignatureFieldBorderWidthEnum::class,
 			Enum\TimeFieldFormatEnum::class,
-			Enum\VisibilityPropertyEnum::class,
 		];
 
 		/**
@@ -172,25 +174,25 @@ class TypeRegistry {
 	 */
 	private static function inputs() : array {
 		$classes_to_register = [
-			Input\AddressInput::class,
-			Input\CreditCardInput::class,
-			Input\ChainedSelectInput::class,
-			Input\CheckboxInput::class,
-			Input\EmailInput::class,
+			Input\AddressFieldInput::class,
+			Input\ChainedSelectFieldInput::class,
+			Input\CheckboxFieldInput::class,
+			Input\CreditCardFieldInput::class,
+			Input\EmailFieldInput::class,
+			Input\EntriesConnectionOrderbyInput::class,
 			Input\EntriesDateFiltersInput::class,
 			Input\EntriesFieldFiltersInput::class,
-			Input\EntriesSortingInput::class,
-			Input\FormsSortingInput::class,
-			Input\ListInput::class,
-			Input\NameInput::class,
+			Input\FormsConnectionOrderbyInput::class,
+			Input\ListFieldInput::class,
+			Input\NameFieldInput::class,
 		];
 
 		if ( Utils::is_graphql_upload_enabled() ) {
-			$classes_to_register[] = Input\PostImageInput::class;
+			$classes_to_register[] = Input\PostImageFieldInput::class;
 		}
 
 		// Register late, since it depends on above inputs.
-		$classes_to_register[] = Input\FieldValuesInput::class;
+		$classes_to_register[] = Input\FormFieldValuesInput::class;
 
 		/**
 		 * Filters the list of input classes to register.
@@ -208,6 +210,7 @@ class TypeRegistry {
 	public static function interfaces() : array {
 		$classes_to_register = [
 			WPInterface\FormField::class,
+			WPInterface\NodeWithForm::class,
 		];
 
 		/**
@@ -226,8 +229,8 @@ class TypeRegistry {
 	public static function objects() : array {
 		$classes_to_register = [
 			// Buttons.
-			WPObject\Button\Button::class,
-			WPObject\Button\LastPageButton::class,
+			WPObject\Button\FormButton::class,
+			WPObject\Button\FormLastPageButton::class,
 			// Conditional Logic.
 			WPObject\ConditionalLogic\ConditionalLogic::class,
 			WPObject\ConditionalLogic\ConditionalLogicRule::class,
@@ -237,12 +240,18 @@ class TypeRegistry {
 			// Forms.
 			WPObject\Form\Form::class,
 			WPObject\Form\FormConfirmation::class,
+			WPObject\Form\FormEntryLimits::class,
+			WPObject\Form\FormLogin::class,
 			WPObject\Form\FormNotification::class,
 			WPObject\Form\FormNotificationRouting::class,
 			WPObject\Form\FormPagination::class,
+			WPObject\Form\FormPostCreation::class,
 			WPObject\Form\QuizGrades::class,
-			WPObject\Form\QuizSettings::class,
-			WPObject\Form\SaveAndContinue::class,
+			WPObject\Form\QuizConfirmation::class,
+			WPObject\Form\FormQuiz::class,
+			WPObject\Form\FormScheduleDetails::class,
+			WPObject\Form\FormSchedule::class,
+			WPObject\Form\FormSaveAndContinue::class,
 			// Form Field Value properties.
 			WPObject\FormField\FieldValue\ValueProperty\AddressValueProperty::class,
 			WPObject\FormField\FieldValue\ValueProperty\CheckboxValueProperty::class,
@@ -288,9 +297,9 @@ class TypeRegistry {
 	 */
 	public static function connections() : array {
 		$classes_to_register = [
-			Connection\EntryConnections::class,
-			Connection\FormConnections::class,
-			Connection\FormFieldConnections::class,
+			Connection\EntriesConnection::class,
+			Connection\FormsConnection::class,
+			Connection\FormFieldsConnection::class,
 		];
 
 		/**

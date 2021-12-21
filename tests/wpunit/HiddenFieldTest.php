@@ -72,10 +72,10 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 	}
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 'input_' . $this->fields[0]['id'] => $this->field_value ];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 	/**
@@ -84,8 +84,9 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function field_query() : string {
 		return '
 			... on HiddenField {
-				allowsPrepopulate
+				canPrepopulate
 				defaultValue
+				inputName
 				label
 				value
 			}
@@ -175,6 +176,9 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -183,11 +187,8 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -215,8 +216,10 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),

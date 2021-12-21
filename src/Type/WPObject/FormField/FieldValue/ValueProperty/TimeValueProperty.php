@@ -9,6 +9,7 @@
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
 
+use WPGraphQL\GF\Type\Enum\AmPmEnum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 
@@ -37,7 +38,7 @@ class TimeValueProperty extends AbstractObject {
 		return [
 			'displayValue' => [
 				'type'        => 'String',
-				'description' => __( 'The full display value. Example: "08:25 am".', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The full display value in 12-hour format. Example: "08:25 am".', 'wp-graphql-gravity-forms' ),
 			],
 			'hours'        => [
 				'type'        => 'String',
@@ -48,7 +49,7 @@ class TimeValueProperty extends AbstractObject {
 				'description' => __( 'The minutes, in this format: mm.', 'wp-graphql-gravity-forms' ),
 			],
 			'amPm'         => [
-				'type'        => 'String',
+				'type'        => AmPmEnum::$type,
 				'description' => __( 'AM or PM.', 'wp-graphql-gravity-forms' ),
 			],
 		];

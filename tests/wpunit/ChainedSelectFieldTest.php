@@ -134,33 +134,8 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 		return '
 			... on ChainedSelectField {
 				adminLabel
-				allowsPrepopulate
+				canPrepopulate
 				chainedSelectsAlignment
-				chainedSelectsHideInactive
-				conditionalLogic {
-					actionType
-					logicType
-					rules {
-						fieldId
-						operator
-						value
-					}
-				}
-				cssClass
-				description
-				descriptionPlacement
-				errorMessage
-				isRequired
-				label
-				labelPlacement
-				noDuplicates
-				subLabelPlacement
-				values
-				inputs {
-					id
-					label
-					name
-				}
 				choices {
 					choices {
 						choices {
@@ -176,6 +151,34 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 					text
 					value
 				}
+				conditionalLogic {
+					actionType
+					logicType
+					rules {
+						fieldId
+						operator
+						value
+					}
+				}
+				cssClass
+				descriptionPlacement
+				description
+				errorMessage
+				hasChoiceValue
+				inputName
+				inputs {
+					label
+					id
+					name
+				}
+				isRequired
+				label
+				labelPlacement
+				shouldAllowDuplicates
+				shouldHideInactiveChoices
+				subLabelPlacement
+				values
+				visibility
 			}
 		';
 	}
@@ -184,7 +187,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 * SubmitForm mutation string.
 	 */
 	public function submit_form_mutation(): string {
-		return 'mutation ($formId: Int!, $fieldId: Int!, $value: [ChainedSelectInput]!, $draft: Boolean) {
+		return 'mutation ($formId: Int!, $fieldId: Int!, $value: [ChainedSelectFieldInput]!, $draft: Boolean) {
 				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, chainedSelectValues: $value}}) {
 					errors {
 						id
@@ -211,7 +214,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 */
 	public function update_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [ChainedSelectInput]! ){
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: [ChainedSelectFieldInput]! ){
 				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, chainedSelectValues: $value} }) {
 					errors {
 						id
@@ -236,7 +239,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [ChainedSelectInput]! ){
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [ChainedSelectFieldInput]! ){
 				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, chainedSelectValues: $value} }) {
 					errors {
 						id
@@ -262,6 +265,9 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ): array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expectedField( 'values', $this->field_value() );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -271,10 +277,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 						[
 							$this->expectedNode(
 								'nodes',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'values' => $this->field_value ],
-								)
+								$expected,
 							),
 						]
 					),
@@ -302,8 +305,10 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expectedField( 'values', $value ),
+										],
 									),
 								]
 							),

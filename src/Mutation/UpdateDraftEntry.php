@@ -16,7 +16,7 @@ use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\WPObject\Entry\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
-use WPGraphQL\GF\Type\Input\FieldValuesInput;
+use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
 use WPGraphQL\GF\Utils\GFUtils;
 
 /**
@@ -47,7 +47,7 @@ class UpdateDraftEntry extends AbstractMutation {
 				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
-				'type'        => [ 'list_of' => FieldValuesInput::$type ],
+				'type'        => [ 'list_of' => FormFieldValuesInput::$type ],
 				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
 			],
 			'ip'          => [

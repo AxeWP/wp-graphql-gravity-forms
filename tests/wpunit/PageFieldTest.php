@@ -7,7 +7,6 @@
 
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
-use WPGraphQL\GF\Type\Enum;
 
 /**
  * Class -PageFieldTest
@@ -48,7 +47,7 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
 		return []; }
@@ -61,16 +60,6 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function field_query() : string {
 		return '
 			... on PageField {
-				nextButton {
-					imageUrl
-					text
-					type
-				}
-				previousButton {
-					imageUrl
-					text
-					type
-				}
 				conditionalLogic {
 					actionType
 					logicType
@@ -79,6 +68,35 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 						operator
 						value
 					}
+				}
+				cssClass
+				nextButton {
+					conditionalLogic {
+						actionType
+						logicType
+						rules {
+							fieldId
+							operator
+							value
+						}
+					}
+					imageUrl
+					text
+					type
+				}
+				previousButton {
+					conditionalLogic {
+						actionType
+						logicType
+						rules {
+							fieldId
+							operator
+							value
+						}
+					}
+					imageUrl
+					text
+					type
 				}
 			}
 		';
@@ -110,37 +128,18 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
 				[
 					$this->expectedObject(
-						'form',
-						[
-							$this->expectedObject(
-								'pagination',
-								[
-									$this->get_expected_fields(
-										[
-											'backgroundColor' => $form['pagination']['backgroundColor'],
-											'color' => $form['pagination']['color'],
-											'displayProgressbarOnConfirmation' => $form['pagination']['display_progressbar_on_confirmation'],
-											'pages' => $form['pagination']['pages'],
-											'progressbarCompletionText' => $form['pagination']['progressbar_completion_text'],
-											'style' => $this->tester->get_enum_for_value( Enum\PageProgressStyleEnum::$type, $form['pagination']['style'] ),
-											'type'  => $this->tester->get_enum_for_value( Enum\PageProgressTypeEnum::$type, $form['pagination']['type'] ),
-										]
-									),
-								]
-							),
-						]
-					),
-					$this->expectedObject(
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								$this->property_helper->getAllActualValues( $form['fields'][0] ),
+								'nodes',
+								$expected,
 							),
 						]
 					),

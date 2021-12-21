@@ -19,11 +19,11 @@ use WPGraphQL\GF\Model\Entry;
  */
 class EntriesLoader extends AbstractDataLoader {
 	/**
-	 * Loader name.
+	 * Loader name. Same as the GraphQL Object.
 	 *
 	 * @var string
 	 */
-	public static string $name = 'gravityFormsEntries';
+	public static string $name = 'GravityFormsEntry';
 
 	/**
 	 * {@inheritDoc}

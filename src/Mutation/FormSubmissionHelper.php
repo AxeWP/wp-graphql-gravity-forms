@@ -138,7 +138,7 @@ class FormSubmissionHelper {
 	 */
 	public static function validate_field_value( $value, GF_Field $field, array $form, array &$errors ) : void {
 		$field->validate( $value, $form );
-		if ( $field->failed_validation ) {
+		if ( ! empty( $field->failed_validation ) ) {
 			$errors[] = [
 				'id'      => $field->id,
 				'message' => $field->validation_message,

@@ -175,10 +175,9 @@ class FormFields implements Registrable {
 	 */
 	private static function map_settings_to_field_properties( GF_Field $field, array $settings ) : array {
 		$properties = [];
+		$settings   = str_replace( '-', '_', $settings );
 
 		foreach ( $settings as $setting ) {
-			$setting = str_replace( '-', '_', (string) $setting );
-
 			// Skip properties registered elsewhere.
 			if ( in_array(
 				$setting,
@@ -222,7 +221,7 @@ class FormFields implements Registrable {
 	 * @param array    $properties .
 	 */
 	public static function map_field_values_to_properties( GF_Field $field, array &$properties ) : void {
-		if ( ! empty( $field->displayOnly ) ) {
+		if ( ! empty( $field->displayOnly ) || in_array( $field->type, [ 'html', 'page', 'section' ], true ) ) {
 			return;
 		}
 
@@ -240,6 +239,9 @@ class FormFields implements Registrable {
 				break;
 			case 'checkbox':
 				$properties += ValueProperties::checkbox_values();
+				break;
+			case 'consent':
+				$properties += ValueProperties::consent_value();
 				break;
 			case 'list':
 				$properties += ValueProperties::list_values();
@@ -259,6 +261,8 @@ class FormFields implements Registrable {
 			case 'post_custom':
 			case 'post_tags':
 				$properties += ValueProperties::values();
+				break;
+			default:
 				break;
 		}
 	}

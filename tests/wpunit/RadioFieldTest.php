@@ -61,22 +61,22 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return '2015';
+		return $this->fields[0]['choices'][0]['value'];
 	}
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return '2016';
+		return $this->fields[0]['choices'][2]['value'];
 	}
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 'input_' . $this->fields[0]['id'] => $this->field_value ];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 	/**
@@ -87,7 +87,7 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	public function field_query() : string {
 		return '... on RadioField {
 				adminLabel
-				allowsPrepopulate
+				canPrepopulate
 				choices {
 					isOtherChoice
 					isSelected
@@ -106,14 +106,14 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 				cssClass
 				description
 				descriptionPlacement
-				enableChoiceValue
-				enableOtherChoice
 				errorMessage
+				hasChoiceValue
+				hasOtherChoice
 				inputName
 				isRequired
 				label
-				noDuplicates
-				pageNumber
+				labelPlacement
+				shouldAllowDuplicates
 				value
 			}
 		';
@@ -202,6 +202,9 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -210,11 +213,8 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -242,8 +242,10 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),

@@ -13,7 +13,7 @@ namespace WPGraphQL\GF\Type\WPObject\Form;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
-use WPGraphQL\GF\Type\Enum\ConfirmationTypeEnum;
+use WPGraphQL\GF\Type\Enum\FormConfirmationTypeEnum;
 
 /**
  * Class - FormConfirmation
@@ -60,19 +60,19 @@ class FormConfirmation extends AbstractObject {
 			],
 			'pageId'           => [
 				'type'        => 'Int',
-				'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to "PAGE".', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to `PAGE`.', 'wp-graphql-gravity-forms' ),
 			],
 			'queryString'      => [
 				'type'        => 'String',
-				'description' => __( 'Contains the query string to be appended to the redirection url. Only applicable when type is set to redirect.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Contains the query string to be appended to the redirection url. Only applicable when type is set to `REDIRECT`.', 'wp-graphql-gravity-forms' ),
 			],
 			'type'             => [
-				'type'        => ConfirmationTypeEnum::$type,
+				'type'        => FormConfirmationTypeEnum::$type,
 				'description' => __( 'Determines the type of confirmation to be used.', 'wp-graphql-gravity-forms' ),
 			],
 			'url'              => [
 				'type'        => 'String',
-				'description' => __( 'Contains the URL that the browser will be redirected to. Only applicable when type is set to "REDIRECT".', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Contains the URL that the browser will be redirected to. Only applicable when type is set to `REDIRECT`.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

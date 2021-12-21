@@ -110,8 +110,8 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function field_query() : string {
 		return '
 			... on NameField {
+				canPrepopulate
 				adminLabel
-				allowsPrepopulate
 				conditionalLogic {
 					actionType
 					logicType
@@ -124,8 +124,9 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				cssClass
 				description
 				descriptionPlacement
-				enableAutocomplete
 				errorMessage
+				hasAutocomplete
+				inputName
 				inputs {
 					autocompleteAttribute
 					choices {
@@ -135,17 +136,17 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					}
 					customLabel
 					defaultValue
+					hasChoiceValue
 					id
 					isHidden
 					key
 					label
+					name
 					placeholder
 				}
 				isRequired
-				label
 				labelPlacement
-				subLabelPlacement
-				type
+				label
 				nameValues {
 					first
 					last
@@ -153,6 +154,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					prefix
 					suffix
 				}
+				subLabelPlacement
 			}
 		';
 	}
@@ -164,7 +166,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function submit_form_mutation() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: NameInput!, $draft: Boolean) {
+			mutation ($formId: Int!, $fieldId: Int!, $value: NameFieldInput!, $draft: Boolean) {
 				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, nameValues: $value}}) {
 					errors {
 						id
@@ -199,7 +201,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function update_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: NameInput! ){
+			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: NameFieldInput! ){
 				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, nameValues: $value} }) {
 					errors {
 						id
@@ -232,7 +234,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: NameInput! ){
+			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: NameFieldInput! ){
 				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, nameValues: $value} }) {
 					errors {
 						id
@@ -264,6 +266,9 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * @return array
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'nameValues', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -273,10 +278,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 						[
 							$this->expectedNode(
 								'nodes',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'nameValues' => $this->field_value ],
-								)
+								$expected,
 							),
 						]
 					),
@@ -304,8 +306,10 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 								'formFields',
 								[
 									$this->expectedNode(
-										'nameValues',
-										$this->get_expected_fields( $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'nameValues', $value ),
+										]
 									),
 								]
 							),

@@ -46,7 +46,7 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
 		return []; }
@@ -70,7 +70,7 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				}
 				content
 				cssClass
-				disableMargins
+				hasMargins
 				label
 			}
 		';
@@ -102,6 +102,8 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -110,8 +112,8 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								$this->property_helper->getAllActualValues( $form['fields'][0] ),
+								'nodes',
+								$expected
 							),
 						]
 					),

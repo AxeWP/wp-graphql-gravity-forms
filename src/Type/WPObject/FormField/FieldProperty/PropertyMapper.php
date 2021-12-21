@@ -14,7 +14,6 @@ use GF_Field;
  * Class - PropertyMapper
  */
 class PropertyMapper {
-
 	/**
 	 * Maps the `add_icon_url_setting` to its field properties.
 	 *
@@ -69,7 +68,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function autocomplete_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::enable_autocomplete();
+		$properties += FieldProperties::has_autocomplete();
 		if ( ! in_array( $field->type, [ 'address', 'email', 'name' ], true ) ) {
 			$properties += FieldProperties::autocomplete_attribute();
 		}
@@ -117,16 +116,6 @@ class PropertyMapper {
 	}
 
 	/**
-	 * Maps the `box_width_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function box_width_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::box_width();
-	}
-
-	/**
 	 * Maps the `border_width_setting` to its field properties.
 	 *
 	 * @param GF_Field $field .
@@ -137,13 +126,24 @@ class PropertyMapper {
 	}
 
 	/**
+	 * Maps the `box_width_setting` to its field properties.
+	 *
+	 * @param GF_Field $field .
+	 * @param array    $properties the existing properties array.
+	 */
+	public static function box_width_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::box_width();
+	}
+
+
+	/**
 	 * Maps the `calculation_setting` to its field properties.
 	 *
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function calculation_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::enable_calculation();
+		$properties += FieldProperties::is_calculation();
 		$properties += FieldProperties::calculation_formula();
 		$properties += FieldProperties::calculation_rounding();
 	}
@@ -161,7 +161,6 @@ class PropertyMapper {
 	/**
 	 * Maps the `captcha_bg_setting` to its field properties.
 	 *
-	 * @todo implement and make generic
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
@@ -172,7 +171,6 @@ class PropertyMapper {
 	/**
 	 * Maps the `captcha_fg_setting` to its field properties.
 	 *
-	 * @todo implement and make generic
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
@@ -193,7 +191,6 @@ class PropertyMapper {
 	/**
 	 * Maps the `captcha_size_setting` to its field properties.
 	 *
-	 * @todo implement and make generic
 	 * @param GF_Field $field .
 	 * @param array    $properties the existing properties array.
 	 */
@@ -238,7 +235,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function chained_selects_hide_inactive_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::chained_selects_hide_inactive();
+		$properties += FieldProperties::should_hide_inactive_choices();
 	}
 
 	/**
@@ -258,7 +255,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function choices_setting( GF_Field $field, array &$properties ) : void {
-		$properties    += FieldProperties::enable_choice_value();
+		$properties    += FieldProperties::has_choice_value();
 		$choice_fields  = FieldProperties::choice_text();
 		$choice_fields += FieldProperties::choice_value();
 		$choice_fields += FieldProperties::choice_is_selected();
@@ -280,6 +277,8 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function chained_choices_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::has_choice_value();
+
 		$choice_fields  = FieldProperties::choice_text();
 		$choice_fields += FieldProperties::choice_value();
 		$choice_fields += FieldProperties::choice_is_selected();
@@ -303,7 +302,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function columns_setting( GF_Field $field, array &$properties ) : void {
-		$properties    += FieldProperties::enable_columns();
+		$properties    += FieldProperties::has_columns();
 		$choice_fields  = FieldProperties::choice_text();
 		$choice_fields += FieldProperties::choice_value();
 
@@ -347,9 +346,8 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function copy_values_option( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::enable_copy_values_option();
-		$properties += FieldProperties::copy_values_option_default();
-		$properties += FieldProperties::copy_values_option_field();
+		$properties += FieldProperties::should_copy_values_option();
+		$properties += FieldProperties::copy_values_option_field_id();
 		$properties += FieldProperties::copy_values_option_label();
 	}
 
@@ -394,10 +392,10 @@ class PropertyMapper {
 		$input_fields = array_merge(
 			FieldProperties::autocomplete_attribute(),
 			FieldProperties::default_value(),
-			FieldProperties::label(),
-			FieldProperties::placeholder(),
 			FieldProperties::input_custom_label(),
 			FieldProperties::input_id(),
+			FieldProperties::label(),
+			FieldProperties::placeholder(),
 		);
 
 		$properties += InputMapper::map_inputs( $field, $input_fields );
@@ -422,7 +420,9 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function default_value_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::default_value();
+		if ( 'email' !== $field->type ) {
+			$properties += FieldProperties::default_value();
+		}
 	}
 
 	/**
@@ -462,7 +462,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function disable_margins_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::disable_margins();
+		$properties += FieldProperties::has_margins();
 	}
 
 	/**
@@ -482,7 +482,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function duplicate_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::no_duplicates();
+		$properties += FieldProperties::should_allow_duplicates();
 	}
 
 	/**
@@ -492,7 +492,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function email_confirm_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::email_confirm_enabled();
+		$properties += FieldProperties::has_email_confirmation();
 
 		// This is not set in the settings.
 		$properties += FieldProperties::sub_label_placement();
@@ -500,11 +500,11 @@ class PropertyMapper {
 		$input_fields = array_merge(
 			FieldProperties::autocomplete_attribute(),
 			FieldProperties::default_value(),
-			FieldProperties::label(),
-			FieldProperties::placeholder(),
 			FieldProperties::input_custom_label(),
 			FieldProperties::input_id(),
 			FieldProperties::input_name(),
+			FieldProperties::label(),
+			FieldProperties::placeholder(),
 		);
 
 		$properties += InputMapper::map_inputs( $field, $input_fields );
@@ -527,7 +527,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function enable_enhanced_ui_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::enable_enhanced_ui();
+		$properties += FieldProperties::has_enhanced_ui();
 	}
 
 	/**
@@ -567,7 +567,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function gquiz_setting_choices( GF_Field $field, array &$properties ) : void {
-		$properties    += FieldProperties::enable_weighted_score();
+		$properties    += FieldProperties::has_weighted_score();
 		$choice_fields  = FieldProperties::choice_is_correct();
 		$choice_fields += FieldProperties::choice_weight();
 		$choice_fields += FieldProperties::choice_is_other();
@@ -582,7 +582,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function gquiz_setting_show_answer_explanation( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::show_answer_explanation();
+		$properties += FieldProperties::should_show_answer_explanation();
 		$properties += FieldProperties::answer_explanation();
 	}
 
@@ -593,7 +593,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function gquiz_setting_randomize_quiz_choices( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::enable_randomize_quiz_choices();
+		$properties += FieldProperties::should_randomize_quiz_choices();
 	}
 
 	/**
@@ -666,7 +666,7 @@ class PropertyMapper {
 	 */
 	public static function multiple_files_setting( GF_Field $field, array &$properties ) : void {
 		$properties += FieldProperties::max_files();
-		$properties += FieldProperties::multiple_files();
+		$properties += FieldProperties::can_accept_multiple_files();
 	}
 
 	/**
@@ -679,14 +679,14 @@ class PropertyMapper {
 		$input_fields = array_merge(
 			FieldProperties::autocomplete_attribute(),
 			FieldProperties::default_value(),
-			FieldProperties::label(),
-			FieldProperties::placeholder(),
+			FieldProperties::has_choice_value(),
 			FieldProperties::input_custom_label(),
 			FieldProperties::input_id(),
 			FieldProperties::input_is_hidden(),
 			FieldProperties::input_key(),
 			FieldProperties::input_name(),
-			FieldProperties::enable_choice_value(),
+			FieldProperties::label(),
+			FieldProperties::placeholder(),
 		);
 
 		$choice_fields = array_merge(
@@ -727,7 +727,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function other_choice_setting( GF_Field $field, array &$properties ): void {
-		$properties   += FieldProperties::enable_other_choice();
+		$properties   += FieldProperties::has_other_choice();
 		$choice_fields = FieldProperties::choice_is_other();
 
 		// Quiz fields are registered on the QuizChoiceProperty object.
@@ -745,7 +745,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function password_field_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::enable_password_input();
+		$properties += FieldProperties::is_password_input();
 	}
 
 	/**
@@ -756,11 +756,11 @@ class PropertyMapper {
 	 */
 	public static function password_setting( GF_Field $field, array &$properties ) : void {
 		$input_fields = array_merge(
-			FieldProperties::label(),
-			FieldProperties::placeholder(),
 			FieldProperties::input_custom_label(),
 			FieldProperties::input_id(),
 			FieldProperties::input_is_hidden(),
+			FieldProperties::label(),
+			FieldProperties::placeholder(),
 		);
 
 		$properties += InputMapper::map_inputs( $field, $input_fields );
@@ -773,7 +773,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function password_strength_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::password_strength_enabled();
+		$properties += FieldProperties::has_password_strength_indicator();
 		$properties += FieldProperties::min_password_strength();
 	}
 
@@ -844,7 +844,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function post_category_checkbox_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::display_all_categories();
+		$properties += FieldProperties::has_all_categories();
 	}
 
 	/**
@@ -874,7 +874,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function post_image_featured_image( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::post_featured_image();
+		$properties += FieldProperties::is_featured_image();
 	}
 
 	/**
@@ -884,10 +884,10 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function post_image_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::display_alt();
-		$properties += FieldProperties::display_caption();
-		$properties += FieldProperties::display_description();
-		$properties += FieldProperties::display_title();
+		$properties += FieldProperties::has_alt();
+		$properties += FieldProperties::has_caption();
+		$properties += FieldProperties::has_description();
+		$properties += FieldProperties::has_title();
 	}
 
 	/**
@@ -897,9 +897,9 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function prepopulate_field_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::allows_prepopulate();
+		$properties += FieldProperties::can_prepopulate();
 
-		if ( empty( $field->inputs ) || 'checkbox' === $field->type || ! in_array( $field->type, [ 'date', 'email', 'time', 'password' ], true ) ) {
+		if ( ( empty( $field->inputs ) && ! in_array( $field->type, [ 'email', 'time', 'password' ], true ) ) || 'checkbox' === $field->type ) {
 			$properties += FieldProperties::name();
 		}
 	}
@@ -942,7 +942,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function rich_text_editor_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::use_rich_text_editor();
+		$properties += FieldProperties::has_rich_text_editor();
 	}
 
 	/**
@@ -972,12 +972,12 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function select_all_choices_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::enable_select_all();
+		$properties += FieldProperties::has_select_all();
 
 		$input_fields = array_merge(
-			FieldProperties::label(),
 			FieldProperties::input_id(),
 			FieldProperties::input_name(),
+			FieldProperties::label(),
 		);
 
 		$properties += InputMapper::map_inputs( $field, $input_fields );
@@ -1004,12 +1004,11 @@ class PropertyMapper {
 
 		$input_fields = array_merge(
 			FieldProperties::autocomplete_attribute(),
-			FieldProperties::placeholder(),
 			FieldProperties::default_value(),
-			FieldProperties::label(),
-			FieldProperties::autocomplete_attribute(),
 			FieldProperties::input_custom_label(),
 			FieldProperties::input_id(),
+			FieldProperties::label(),
+			FieldProperties::placeholder(),
 		);
 
 		$properties += InputMapper::map_inputs( $field, $input_fields );

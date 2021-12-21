@@ -19,11 +19,11 @@ use WPGraphQL\GF\Utils\GFUtils;
  */
 class FormsLoader extends AbstractDataLoader {
 	/**
-	 * Loader name.
+	 * Loader name. Same as the GraphQL Object.
 	 *
 	 * @var string
 	 */
-	public static string $name = 'gravityFormsForms';
+	public static string $name = 'GravityFormsForm';
 
 	/**
 	 * {@inheritDoc}

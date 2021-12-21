@@ -19,7 +19,8 @@ use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
-use WPGraphQL\GF\Type\Enum\IdTypeEnum;
+use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
+use WPGraphQL\GF\Type\WPInterface\NodeWithForm;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -50,8 +51,9 @@ class Entry extends AbstractObject implements Field {
 			static::prepare_config(
 				[
 					'description'     => static::get_description(),
-					'fields'          => static::get_fields(),
 					'eagerlyLoadType' => static::$should_load_eagerly,
+					'fields'          => static::get_fields(),
+					'interfaces'      => [ 'Node', 'DatabaseIdentifier', NodeWithForm::$type ],
 				]
 			)
 		);
@@ -88,39 +90,25 @@ class Entry extends AbstractObject implements Field {
 			],
 			'dateCreated'    => [
 				'type'        => 'String',
-				'description' => __( 'The date and time that the entry was created, in the format "Y-m-d H:i:s" (i.e. 2010-07-15 17:26:58).', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->dateCreatedUTC ) ? get_date_from_gmt( $source->dateCreatedUTC ) : null,
+				'description' => __( 'The date and time that the entry was created in local time.', 'wp-graphql-gravity-forms' ),
 			],
-			'dateCreatedUTC' => [
+			'dateCreatedGmt' => [
 				'type'        => 'String',
-				'description' => __( 'The date and time that the entry was created, in the format "Y-m-d H:i:s" (i.e. 2010-07-15 17:26:58).', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The date and time that the entry was created in GMT.', 'wp-graphql-gravity-forms' ),
 			],
 			'dateUpdated'    => [
 				'type'        => 'String',
-				'description' => __( 'The date and time that the entry was created, in the format "Y-m-d H:i:s" (i.e. 2010-07-15 17:26:58).', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->dateUpdatedUTC ) ? get_date_from_gmt( $source->dateUpdatedUTC ) : null,
+				'description' => __( 'The date and time that the entry was created in local time.', 'wp-graphql-gravity-forms' ),
 			],
-			'dateUpdatedUTC' => [
+			'dateUpdatedGmt' => [
 				'type'        => 'String',
-				'description' => __( 'The date and time that the entry was updated, in the format "Y-m-d H:i:s" (i.e. 2010-07-15 17:26:58).', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The date and time that the entry was updated in GMT.', 'wp-graphql-gravity-forms' ),
 			],
 			'entryId'        => [
-				'type'        => 'Int',
-				'description' => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => $source->databaseId ?? null,
-			],
-			'form'           => [
-				'type'        => Form::$type,
-				'description' => __( 'The form used to generate this entry.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source, array $args, AppContext $context ) => Factory::resolve_form( $source->formId, $context ),
-			],
-			'formId'         => [
-				'type'        => 'Int',
-				'description' => __( 'The ID of the form that was submitted to generate this entry.', 'wp-graphql-gravity-forms' ),
-			],
-			'id'             => [
-				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
+				'type'              => 'Int',
+				'description'       => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Deprecated in favor of the databaseId field', 'wp-graphql-gravity-forms' ),
+				'resolve'           => fn( $source ) => $source->databaseId ?? null,
 			],
 			'ip'             => [
 				'type'        => 'String',
@@ -195,7 +183,7 @@ class Entry extends AbstractObject implements Field {
 						'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
 					],
 					'idType' => [
-						'type'        => IdTypeEnum::$type,
+						'type'        => EntryIdTypeEnum::$type,
 						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID', 'wp-graphql-gravity-forms' ),
 					],
 				],
@@ -205,28 +193,22 @@ class Entry extends AbstractObject implements Field {
 					}
 
 					$idType = $args['idType'] ?? 'global_id';
-					/**
-					 * If global id is used, get the (int) id.
-					 */
-					if ( 'database_id' === $idType ) {
-						$id = (int) sanitize_text_field( $args['id'] );
-					} else {
+
+					if ( 'global_id' === $idType ) {
 						$id_parts = Relay::fromGlobalId( $args['id'] );
 
-						// Check if Global ID or resumeToken .
 						if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-							$id = sanitize_text_field( $args['id'] );
-						} else {
-							$id = (int) sanitize_text_field( $id_parts['id'] );
+							throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
 						}
+
+						$idType = 'GravityFormsEntry' === $id_parts['type'] ? 'database_id' : 'resume_token';
+
+						$id = sanitize_text_field( $id_parts['id'] );
+					} else {
+						$id = sanitize_text_field( $args['id'] );
 					}
 
-					if ( is_int( $id ) ) {
-						return Factory::resolve_entry( $id, $context );
-					}
-
-					// TODO: Test if draft entry actually gets returned.
-					return Factory::resolve_draft_entry( $id, $context );
+					return 'database_id' === $idType ? Factory::resolve_entry( (int) $id, $context ) : Factory::resolve_draft_entry( $id, $context );
 				},
 			]
 		);
