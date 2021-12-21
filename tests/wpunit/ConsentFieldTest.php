@@ -61,24 +61,46 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return $this->fields[0]->checkboxLabel;
+		return true;
+	}
+
+	/**
+	 * The value as expected in GraphQL.
+	 */
+	public function field_value_input() {
+		return 'true';
 	}
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return $this->fields[0]->checkboxLabel;
+		return false;
+	}
+
+	public function updated_field_value_input() {
+		return '';
 	}
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
 		return [
 			(string) $this->fields[0]->inputs[0]['id'] => true,
 			(string) $this->fields[0]->inputs[1]['id'] => $this->fields[0]->checkboxLabel,
 			(string) $this->fields[0]->inputs[2]['id'] => true,
+		];
+	}
+
+	/**
+	 * The value as expected by Gravity Forms.
+	 */
+	public function updated_value() {
+		return [
+			(string) $this->fields[0]->inputs[0]['id'] => false,
+			(string) $this->fields[0]->inputs[1]['id'] => $this->fields[0]->checkboxLabel,
+			(string) $this->fields[0]->inputs[2]['id'] => false,
 		];
 	}
 
@@ -101,13 +123,14 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						value
 					}
 				}
+				consentValue
 				cssClass
 				description
 				descriptionPlacement
 				errorMessage
 				isRequired
 				label
-				value
+				labelPlacement
 			}
 		';
 	}
@@ -129,7 +152,7 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						formFields {
 							nodes {
 								... on ConsentField {
-									value
+									consentValue
 								}
 							}
 						}
@@ -154,7 +177,7 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						formFields {
 							nodes {
 								... on ConsentField {
-									value
+									consentValue
 								}
 							}
 						}
@@ -179,7 +202,7 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						formFields {
 							nodes {
 								... on ConsentField {
-									value
+									consentValue
 								}
 							}
 						}
@@ -195,6 +218,9 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ): array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'consentValue', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -203,11 +229,8 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -235,8 +258,10 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 								'formFields',
 								[
 									$this->expectedNode(
-										'value',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'consentValue', $value ),
+										]
 									),
 								]
 							),
@@ -254,6 +279,6 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
-		$this->assertEquals( $this->field_value_input, $actual_entry[ $form['fields'][0]->inputs[1]['id'] ], 'Submit mutation entry value not equal' );
+		$this->assertEquals( $this->field_value, $actual_entry[ $form['fields'][0]->inputs[0]['id'] ], 'Submit mutation entry value not equal' );
 	}
 }

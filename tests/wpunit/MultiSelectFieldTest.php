@@ -80,7 +80,7 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 */
 	public function value() {
 		return [
-			(string) $this->fields[0]['id'] => json_encode( $this->field_value() ),
+			$this->fields[0]['id'] => json_encode( $this->field_value ),
 		];
 	}
 
@@ -94,7 +94,7 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 		return '
 			... on MultiSelectField {
 				adminLabel
-				allowsPrepopulate
+				canPrepopulate
 				choices {
 					isSelected
 					text
@@ -112,14 +112,15 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 				cssClass
 				description
 				descriptionPlacement
-				enableChoiceValue
-				enableEnhancedUI
 				errorMessage
+				hasChoiceValue
+				hasEnhancedUI
 				inputName
 				isRequired
 				label
 				labelPlacement
 				size
+				type
 				values
 			}
 		';
@@ -207,6 +208,9 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ): array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'values', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -216,10 +220,7 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 						[
 							$this->expectedNode(
 								'nodes',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0], [ 'storageType' ] ),
-									[ 'values' => $this->field_value ],
-								)
+								$expected,
 							),
 						]
 					),
@@ -247,8 +248,10 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'values', $value ),
+										]
 									),
 								]
 							),

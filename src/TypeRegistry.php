@@ -136,6 +136,7 @@ class TypeRegistry {
 			Enum\FormFieldLabelPlacementEnum::class,
 			Enum\FormFieldRequiredIndicatorEnum::class,
 			Enum\FormFieldSizeEnum::class,
+			Enum\FormFieldSubLabelPlacementEnum::class,
 			Enum\FormFieldTypeEnum::class,
 			Enum\FormFieldVisibilityEnum::class,
 			Enum\FormIdTypeEnum::class,

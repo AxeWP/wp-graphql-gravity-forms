@@ -39,7 +39,7 @@ interface FormFieldTestCaseInterface {
 	public function updated_field_value_input();
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value();
 

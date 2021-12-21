@@ -35,7 +35,7 @@ class FormEntryLimits extends AbstractObject {
 	 */
 	public static function get_fields() : array {
 		return [
-			'hasLimits'           => [
+			'hasLimit'            => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the form has a limit on the number of submissions.', 'wp-graphql-gravity-forms' ),
 			],

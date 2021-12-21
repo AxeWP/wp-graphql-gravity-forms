@@ -71,10 +71,10 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 'input_' . $this->fields[0]['id'] => $this->field_value ];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 	/**
@@ -86,9 +86,9 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 		return '
 			... on DateField {
 				adminLabel
-				allowsPrepopulate
 				calendarIconType
 				calendarIconUrl
+				canPrepopulate
 				conditionalLogic {
 					actionType
 					logicType
@@ -106,19 +106,21 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				descriptionPlacement
 				errorMessage
 				inputName
-				isRequired
-				label
-				noDuplicates
-				placeholder
-				subLabelPlacement
-				value
 				inputs {
+					autocompleteAttribute
 					customLabel
 					defaultValue
 					id
 					label
 					placeholder
 				}
+				isRequired
+				label
+				labelPlacement
+				placeholder
+				shouldAllowDuplicates
+				subLabelPlacement
+				value
 			}
 		';
 	}
@@ -206,6 +208,9 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -214,11 +219,8 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -246,8 +248,10 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),

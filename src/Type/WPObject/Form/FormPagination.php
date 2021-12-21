@@ -49,6 +49,7 @@ class FormPagination extends AbstractObject {
 			'hasProgressbarOnConfirmation' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the confirmation bar should be displayed with the confirmation text.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source) => ! empty( $source['displayProgressbarOnConfirmation'] ),
 			],
 			'pageNames'                    => [
 				'type'        => [ 'list_of' => 'String' ],

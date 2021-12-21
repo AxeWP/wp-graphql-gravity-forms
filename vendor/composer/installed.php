@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '876ee53268b1abdc72d4c02cf58fa59bf32d6a23',
+    'reference' => '17a8d4a8ab7b24f84e9344959c016af35090152f',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
@@ -40,12 +40,12 @@
     ),
     'codeception/codeception' => 
     array (
-      'pretty_version' => '4.1.23',
-      'version' => '4.1.23.0',
+      'pretty_version' => '4.1.24',
+      'version' => '4.1.24.0',
       'aliases' => 
       array (
       ),
-      'reference' => '27d18cd5d5a1d77d3f1b01ea776238676faf5dcc',
+      'reference' => '1fc3a8f4d6cf7350e1b69afd136708cfffc89e9e',
     ),
     'codeception/lib-asserts' => 
     array (
@@ -94,21 +94,21 @@
     ),
     'codeception/module-filesystem' => 
     array (
-      'pretty_version' => '2.0.0',
-      'version' => '2.0.0.0',
+      'pretty_version' => '2.0.1',
+      'version' => '2.0.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '9236f490785d6f470af1e4f27866e116b78bd502',
+      'reference' => 'ae1fa5f13ba00bdb8a83d4258ef577c5114ddef9',
     ),
     'codeception/module-phpbrowser' => 
     array (
-      'pretty_version' => '2.0.0',
-      'version' => '2.0.0.0',
+      'pretty_version' => '2.0.1',
+      'version' => '2.0.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '955440661c41985962f5b7f68ab5b532d966768c',
+      'reference' => 'd66924f343032a480fde1264b606c3357d2ed0d2',
     ),
     'codeception/module-rest' => 
     array (
@@ -246,7 +246,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '876ee53268b1abdc72d4c02cf58fa59bf32d6a23',
+      'reference' => '17a8d4a8ab7b24f84e9344959c016af35090152f',
     ),
     'hautelook/phpass' => 
     array (
@@ -257,26 +257,26 @@
     ),
     'illuminate/collections' => 
     array (
-      'pretty_version' => 'v8.75.0',
-      'version' => '8.75.0.0',
+      'pretty_version' => 'v8.76.2',
+      'version' => '8.76.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '5a018387352afa2af30fd2be0a78c31e93295720',
+      'reference' => 'f7dc6269a1d773f1d7a2a71034f32d2b60eaac42',
     ),
     'illuminate/contracts' => 
     array (
-      'pretty_version' => 'v8.75.0',
-      'version' => '8.75.0.0',
+      'pretty_version' => 'v8.76.2',
+      'version' => '8.76.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'b07755f7c456cf587dfbfd6f0854f9f7c1a34b2f',
+      'reference' => '9baa9f781071e67d7b171775bd3be7ead13ddd29',
     ),
     'illuminate/macroable' => 
     array (
-      'pretty_version' => 'v8.75.0',
-      'version' => '8.75.0.0',
+      'pretty_version' => 'v8.76.2',
+      'version' => '8.76.2.0',
       'aliases' => 
       array (
       ),
@@ -284,12 +284,12 @@
     ),
     'illuminate/support' => 
     array (
-      'pretty_version' => 'v8.75.0',
-      'version' => '8.75.0.0',
+      'pretty_version' => 'v8.76.2',
+      'version' => '8.76.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'f542bb78a8a1013ab33fbe14974c45b2a88993d0',
+      'reference' => '9429d41f950d3461910fd51a4df90b2ac93a9f3a',
     ),
     'justinrainbow/json-schema' => 
     array (
@@ -333,12 +333,12 @@
     ),
     'mustache/mustache' => 
     array (
-      'pretty_version' => 'v2.13.0',
-      'version' => '2.13.0.0',
+      'pretty_version' => 'v2.14.0',
+      'version' => '2.14.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'e95c5a008c23d3151d59ea72484d4f72049ab7f4',
+      'reference' => '4e2724dd40ae9499a55e7db7df82665be0ab7e34',
     ),
     'myclabs/deep-copy' => 
     array (
@@ -768,12 +768,12 @@
     ),
     'squizlabs/php_codesniffer' => 
     array (
-      'pretty_version' => '3.6.1',
-      'version' => '3.6.1.0',
+      'pretty_version' => '3.6.2',
+      'version' => '3.6.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'f268ca40d54617c6e06757f83f699775c9b3ff2e',
+      'reference' => '5e4e71592f69da17871dba6e80dd51bce74a351a',
     ),
     'symfony/browser-kit' => 
     array (

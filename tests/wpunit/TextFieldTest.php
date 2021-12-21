@@ -72,10 +72,10 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 'input_' . $this->fields[0]['id'] => $this->field_value ];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 	/**
@@ -87,7 +87,7 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 		return '
 			... on TextField {
 				adminLabel
-				allowsPrepopulate
+				canPrepopulate
 				autocompleteAttribute
 				conditionalLogic {
 					actionType
@@ -102,16 +102,18 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				defaultValue
 				description
 				descriptionPlacement
-				enablePasswordInput
 				errorMessage
+				hasAutocomplete
 				hasInputMask
-				inputName
 				inputMaskValue
+				inputName
+				isPasswordInput
 				isRequired
 				label
+				labelPlacement
 				maxLength
-				noDuplicates
 				placeholder
+				shouldAllowDuplicates
 				size
 				value
 			}
@@ -201,6 +203,9 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -209,11 +214,8 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -241,8 +243,10 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),

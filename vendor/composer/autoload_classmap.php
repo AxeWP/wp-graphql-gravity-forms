@@ -66,6 +66,7 @@ return array(
     'WPGraphQL\\GF\\Type\\Enum\\FormFieldLabelPlacementEnum' => $baseDir . '/src/Type/Enum/FormFieldLabelPlacementEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FormFieldRequiredIndicatorEnum' => $baseDir . '/src/Type/Enum/FormFieldRequiredIndicatorEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FormFieldSizeEnum' => $baseDir . '/src/Type/Enum/FormFieldSizeEnum.php',
+    'WPGraphQL\\GF\\Type\\Enum\\FormFieldSubLabelPlacementEnum' => $baseDir . '/src/Type/Enum/FormFieldSubLabelPlacementEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FormFieldTypeEnum' => $baseDir . '/src/Type/Enum/FormFieldTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FormFieldVisibilityEnum' => $baseDir . '/src/Type/Enum/FormFieldVisibilityEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FormIdTypeEnum' => $baseDir . '/src/Type/Enum/FormIdTypeEnum.php',

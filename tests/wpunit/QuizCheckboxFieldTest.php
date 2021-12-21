@@ -128,7 +128,7 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
-				'text'   => $this->fields[0]['choices'][1]['text'],
+				'text'    => $this->fields[0]['choices'][1]['text'],
 				'value'   => null,
 			],
 			[
@@ -206,7 +206,7 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	}
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
 		return [
@@ -224,12 +224,20 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	public function field_query():string {
 		return '... on QuizField {
 				adminLabel
-				allowsPrepopulate
-				gquizAnswerExplanation: answerExplanation
-				conditionalLogic {
+				answerExplanation
+				canPrepopulate
+				choices{
+					isCorrect
+					isOtherChoice
+					isSelected
+					text
+					value
+					weight
+				}
+				conditionalLogic{
 					actionType
 					logicType
-					rules {
+					rules{
 						fieldId
 						operator
 						value
@@ -238,30 +246,23 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 				cssClass
 				description
 				descriptionPlacement
-				enableChoiceValue
-				gquizEnableRandomizeQuizChoices: enableRandomizeQuizChoices
-				gquizWeightedScoreEnabled: enableWeightedScore
 				errorMessage
+				hasChoiceValue
+				hasWeightedScore
 				inputName
 				isRequired
 				label
 				labelPlacement
-				gquizShowAnswerExplanation: showAnswerExplanation
-				choices {
-					gquizIsCorrect: isCorrect
-					text
-					value
-					gquizWeight: weight
-					isOtherChoice
-				}
+				shouldRandomizeQuizChoices
+				shouldShowAnswerExplanation
 				... on QuizCheckboxField {
 					checkboxValues {
 						inputId
 						text
 						value
 					}
-					enableSelectAll
-						inputs {
+					hasSelectAll
+					inputs {
 						id
 						label
 						name
@@ -366,6 +367,9 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ): array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'checkboxValues', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -375,10 +379,7 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 						[
 							$this->expectedNode(
 								'nodes',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0], ['gquizFieldType', 'enableOtherChoice', 'autocompleteAttribute', 'defaultValue', 'enableAutocomplete', 'enableEnhancedUI', 'noDuplicates', 'placeholder', 'size' ] ),
-									[ 'checkboxValues' => $this->field_value ],
-								)
+								$expected,
 							),
 						]
 					),
@@ -406,8 +407,10 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 								'formFields',
 								[
 									$this->expectedNode(
-										'checkboxValues',
-										$this->get_expected_fields( $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'checkboxValues', $value ),
+										]
 									),
 								]
 							),

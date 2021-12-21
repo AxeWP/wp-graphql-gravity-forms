@@ -8,6 +8,8 @@
 namespace Helper\GFHelpers;
 
 use Dummy;
+use GF_Field;
+use WPGraphQL\GF\Type\WPObject\FormField\FormFields;
 
 /**
  * Abstract Class - GFHelpers.
@@ -32,6 +34,7 @@ abstract class GFHelpers {
 	 * @var array
 	 */
 	public $values;
+
 
 	/**
 	 * Constructor
@@ -105,120 +108,6 @@ abstract class GFHelpers {
 		return $return_values;
 	}
 
-	public function getEnumKey( string $key ) {
-		$string = null;
- 
-		switch( $key ){
-			case 'addressType':
-				$string = 'AddressFieldTypeEnum';
-				break;
-			case 'country':
-			case 'defaultCountry':
-				$string = 'AddressFieldCountryEnum';
-				break;
-			case 'badgePosition':
-				$string = 'CaptchaFieldBadgePosition';
-				break;
-			case 'captchaTheme':
-				$string = 'CaptchaFieldThemeEnum';
-				break;
-			case 'captchaType':
-				$string = 'CaptchaFieldTypeEnum';
-				break;
-			case 'chainedSelectsAlignment':
-				$string = 'ChainedSelectFieldAlignmentEnum';
-				break;
-			case 'dateType':
-				$string = 'DateFieldTypeEnum';
-				break;
-			case 'dateFormat':
-				$string = 'DateFieldFormatEnum';
-				break;
-			case 'gquizFieldType':
-				$string = 'QuizFieldTypeEnum';
-				break;
-			case 'inputType':
-				$string = 'FormFieldTypeEnum';
-				break;
-			case 'numberFormat':
-				$string = 'NumberFieldFormatEnum';
-				break;
-			case 'simpleCaptchaSize':
-				$string = 'FormFieldSizeEnum';
-				break;
-			case 'subLabelPlacement':
-				$string = 'FormFieldLabelPlacementEnum';
-				break;
-			// Prepend FormField
-			case 'calendarIconType':
-			case 'descriptionPlacement':
-			case 'labelPlacement':
-			case 'requiredIndicator':
-			case 'size':
-			case 'type':
-			case 'visibility':
-				$string = 'FormField' . ucfirst( $key ) . 'Enum';
-				break;
-		}
-		return $string;
-	}
-
-	/**
-	 * Gets the actual object values for the provided key.
-	 *
-	 * @param string $key .
-	 * @param mixed  $object .
-	 */
-	public function getActualValue( string $key, $object ) {
-		switch ( $key ) {
-			case 'copyValuesOptionDefault':
-			case 'displayOnly':
-			case 'enableCopyValuesOption':
-			case 'enablePasswordInput':
-				$value = (bool) $object->$key;
-				break;
-			case 'inputs':
-				if ( ! empty( $object->$key ) ) {
-					foreach ( $object->$key as $k => $val ) {
-						$object->$key[ $k ]['id'] = (float) $object->$key[ $k ]['id'];
-					}
-				}
-				$value = $object->$key;
-				break;
-			case 'maxLength':
-				$value = (int) $object->$key;
-				break;
-			default:
-				// Handle Enums.
-				$string = $this->getEnumKey( $key );
-				if( null !== $string ){
-					$value = $this->get_enum_for_value( $string, $object->$key );
-					break;
-				}
-
-				$value = isset( $object->$key ) ? $object->$key : null;
-				break;
-		}
-		$return = [ $key => $value ];
-		return $return;
-	}
-
-	/**
-	 * Gets all actual object values.
-	 *
-	 * @param mixed $object
-	 */
-	public function getAllActualValues( $object, array $exclude = null ) {
-		$return_values = [];
-		foreach ( $this->keys as $key ) {
-			if ( ! empty( $exclude ) && in_array( $key, $exclude, true ) ) {
-				continue;
-			}
-			$return_values += $this->getActualValue( $key, $object );
-		}
-		return $return_values;
-	}
-
 	/**
 	 * Converts a string value to its Enum equivalent
 	 *
@@ -226,7 +115,7 @@ abstract class GFHelpers {
 	 * @param string|null $value .
 	 * @return string|null
 	 */
-	public function get_enum_for_value( string $enumName, $value ) {
+	public static function get_enum_for_value( string $enumName, $value ) {
 		if ( null === $value ) {
 			return null;
 		}

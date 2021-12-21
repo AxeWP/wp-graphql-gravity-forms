@@ -12,14 +12,22 @@ namespace Tests\WPGraphQL\GF\TestCase;
 
 use GFFormsModel;
 use GFAPI;
+use GF_Field;
+use Helper\GFHelpers\ExpectedFormFields;
+use WPGraphQL\GF\Type\WPObject\FormField\FormFields;
 
 /**
  * Class - FormFieldTestCase
  */
 class FormFieldTestCase extends GFGraphQLTestCase {
+	use ExpectedFormFields;
+
 	protected $draft_token;
 	protected $entry_id;
 	protected $field_value;
+	protected $field_value_input;
+	protected $updated_field_value;
+	protected $updated_field_value_input;
 	protected $fields;
 	protected $form_id;
 
@@ -49,11 +57,13 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$this->fields = $this->generate_fields();
 
-		$this->field_value       = $this->field_value();
-		$this->field_value_input = $this->field_value_input();
-		$this->value             = $this->value();
-		$this->field_query       = $this->field_query();
-		$this->entry_query       = $this->entry_query();
+		$this->field_value               = $this->field_value();
+		$this->field_value_input         = $this->field_value_input();
+		$this->updated_field_value       = $this->updated_field_value();
+		$this->updated_field_value_input = $this->updated_field_value_input();
+		$this->value                     = $this->value();
+		$this->field_query               = $this->field_query();
+		$this->entry_query               = $this->entry_query();
 
 		$this->form_args = $this->generate_form_args();
 
@@ -117,7 +127,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	 * The graphql field value input.
 	 */
 	public function updated_field_value_input() {
-		return $this->updated_field_value();
+		return $this->updated_field_value;
 	}
 
 	/**
@@ -159,11 +169,11 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		];
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
-		$this->assertArrayNotHasKey( 'errors', $response );
+		$this->assertArrayNotHasKey( 'errors', $response, 'field has errors' );
 
 		$expected = $this->expected_field_response( $form );
 
-		$this->assertQuerySuccessful( $response, $expected );
+		$this->assertQuerySuccessful( $response, $expected, 'query not successful' );
 
 		// Test Draft entry.
 		if ( $this->test_draft ) {
@@ -246,8 +256,8 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
-		$field_value       = $this->updated_field_value();
-		$field_value_input = $this->updated_field_value_input();
+		$field_value       = $this->updated_field_value;
+		$field_value_input = $this->updated_field_value_input;
 
 		$query = $this->update_entry_mutation();
 
@@ -273,8 +283,8 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
 
-		$field_value       = $this->updated_field_value();
-		$field_value_input = $this->updated_field_value_input();
+		$field_value       = $this->updated_field_value;
+		$field_value_input = $this->updated_field_value_input;
 
 		$query = $this->update_draft_entry_mutation();
 
@@ -291,6 +301,21 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$this->assertQuerySuccessful( $response, $expected );
 
 		$this->factory->draft_entry->delete( $resume_token );
+	}
+
+	protected function getExpectedFormFieldValues( GF_Field $field ) {
+		$expected = [];
+
+		$field_settings = str_replace( '-', '_', FormFields::get_field_settings( $field ) );
+
+		foreach ( $field_settings as $setting ) {
+			if ( method_exists( $this, $setting ) ) {
+				codecept_debug( $setting );
+				$this->$setting( $field, $expected );
+			}
+		}
+
+		return $expected;
 	}
 
 }

@@ -68,15 +68,14 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * Sets the value as expected by Gravity Forms.
 	 */
 	public function field_value() {
-		return $this->property_helper->dummy->words( 1, 5 );
+		return 'Some value';
 	}
-
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return $this->property_helper->dummy->words( 1, 5 );
+		return 'Some updated value';
 	}
 
 	/**
@@ -87,6 +86,30 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	}
 
 	/**
+	 * The value as expected in GraphQL.
+	 */
+	public function updated_value() {
+		return [ $this->fields[0]['id'] => $this->updated_field_value ];
+	}
+
+		/**
+		 * The entire GraphQL query with the form field values added.
+		 */
+	protected function entry_query() : string {
+		return "
+			query getFieldValue(\$id: ID!, \$idType: EntryIdTypeEnum) {
+				gravityFormsEntry(id: \$id, idType: \$idType ) {
+					formFields(where:{types:CAPTCHA}) {
+						nodes {
+							{$this->field_query}
+						}
+					}
+				}
+			}
+		";
+	}
+
+	/**
 	 * The GraphQL query string.
 	 *
 	 * @return string
@@ -94,10 +117,19 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function field_query() : string {
 		return '
 			... on CaptchaField {
-				captchaBadgePosition
+				displayOnly
+				id
+				inputType
+				layoutGridColumnSpan
+				layoutSpacerGridColumnSpan
+				pageNumber
+				type
+				visibility
+				# type-specific
+ 				captchaBadgePosition
 				captchaLanguage
-				captchaType
 				captchaTheme
+				captchaType
 				conditionalLogic {
 					actionType
 					logicType
@@ -114,8 +146,8 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				label
 				labelPlacement
 				simpleCaptchaBackgroundColor
-				simpleCaptchaSize
 				simpleCaptchaFontColor
+				simpleCaptchaSize
 			}
 		';
 	}
@@ -136,7 +168,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					entryId
 					resumeToken
 					entry {
-						formFields {
+						formFields(where:{types:TEXT}) {
 							nodes {
 								... on TextField {
 									value
@@ -186,7 +218,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						message
 					}
 					entry {
-						formFields {
+						formFields (where:{types:TEXT}){
 							nodes {
 								... on TextField {
 									value
@@ -205,16 +237,18 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * @return array
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected = $this->getExpectedFormFieldValues( $form['fields'][1] );
+
 		return [
 			$this->expectedObject(
-				'gravityFormsForm',
+				'gravityFormsEntry',
 				[
 					$this->expectedObject(
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								$this->property_helper->getAllActualValues( $form['fields'][1], ['size'] )
+								'nodes',
+								$expected
 							),
 						]
 					),
@@ -240,10 +274,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedNode(
-										'1',
-										$this->expectedField( 'value', $value ),
-									),
+									$this->expectedField( 'nodes.0.value', $value ),
 								]
 							),
 						]

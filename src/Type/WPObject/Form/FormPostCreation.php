@@ -49,6 +49,7 @@ class FormPostCreation extends AbstractObject {
 				'type'        => 'User',
 				'description' => __( 'When `useCurrentUserAsAuthor` is `false`, this contains the User object for the author.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source, array $args, AppContext $context ) {
+					codecept_debug( $source );
 					if ( empty( $source['authorDatabaseId'] ) ) {
 						return null;
 					}

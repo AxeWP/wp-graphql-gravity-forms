@@ -5,8 +5,11 @@
  * @package Tests\WPGraphQL\GF
  */
 
+use Helper\GFHelpers\GFHelpers;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
+use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;
+
 /**
  * Class -AddressFieldTest
  */
@@ -66,16 +69,10 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 			'city'    => 'Rochester Hills',
 			'state'   => 'Michigan',
 			'zip'     => '48306',
-			'country' => 'United States',
+			'country' => 'US',
 		];
 	}
 
-	/**
-	 * The graphql field value input.
-	 */
-	public function field_value_input() {
-		return array_merge( $this->field_value, [ 'country' => 'US' ] );
-	}
 
 	/**
 	 * Sets the value as expected by Gravity Forms.
@@ -87,7 +84,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 			$this->fields[0]['inputs'][2]['id'] => $this->field_value['city'],
 			$this->fields[0]['inputs'][3]['id'] => $this->field_value['state'],
 			$this->fields[0]['inputs'][4]['id'] => $this->field_value['zip'],
-			$this->fields[0]['inputs'][5]['id'] => $this->field_value['country'],
+			$this->fields[0]['inputs'][5]['id'] => 'United States',
 		];
 	}
 
@@ -97,20 +94,14 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function updated_field_value() {
 		return [
 			'street'  => '234 Main St.',
-			'lineTwo' => 'Apt. 456',
-			'city'    => 'Rochester Hills',
+			'lineTwo' => 'Apt. 567',
+			'city'    => 'Other Hills',
 			'state'   => 'Michigan',
-			'zip'     => '48306',
-			'country' => 'United States',
+			'zip'     => '48307',
+			'country' => 'US',
 		];
 	}
 
-	/**
-	 * The graphql field value input.
-	 */
-	public function updated_field_value_input() {
-		return array_merge( $this->updated_field_value(), [ 'country' => 'US' ] );
-	}
 
 
 	/**
@@ -123,7 +114,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 			... on AddressField {
 				addressType
 				adminLabel
-				allowsPrepopulate
+				canPrepopulate
 				conditionalLogic {
 					actionType
 					logicType
@@ -133,16 +124,15 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						value
 					}
 				}
-				copyValuesOptionDefault
-				copyValuesOptionField
+				copyValuesOptionFieldId
 				cssClass
 				defaultCountry
 				defaultProvince
 				defaultState
 				description
 				descriptionPlacement
-				enableAutocomplete
-				enableCopyValuesOption
+				hasAutocomplete
+				shouldCopyValuesOption
 				errorMessage
 				inputs {
 					customLabel
@@ -282,6 +272,9 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * @return array
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'addressValues', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -291,10 +284,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						[
 							$this->expectedNode(
 								'nodes',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'addressValues' => $this->field_value_input ],
-								)
+								$expected,
 							),
 						]
 					),
@@ -322,8 +312,10 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 								'formFields',
 								[
 									$this->expectedNode(
-										'addressValues',
-										$this->get_expected_fields( $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'addressValues', $value ),
+										]
 									),
 								]
 							),
@@ -346,6 +338,6 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 		$this->assertEquals( $this->field_value['city'], $actual_entry[ $form['fields'][0]['inputs'][2]['id'] ], 'Submit mutation entry value 3 not equal' );
 		$this->assertEquals( $this->field_value['state'], $actual_entry[ $form['fields'][0]['inputs'][3]['id'] ], 'Submit mutation entry value 4 not equal' );
 		$this->assertEquals( $this->field_value['zip'], $actual_entry[ $form['fields'][0]['inputs'][4]['id'] ], 'Submit mutation entry value 5 not equal' );
-		$this->assertEquals( $this->field_value['country'], $actual_entry[ $form['fields'][0]['inputs'][5]['id'] ], 'Submit mutation entry value 6 not equal' );
+		$this->assertEquals( $this->field_value['country'], GFHelpers::get_enum_for_value( AddressFieldCountryEnum::$type, $actual_entry[ $form['fields'][0]['inputs'][5]['id'] ], 'Submit mutation entry value 6 not equal' ) );
 	}
 }

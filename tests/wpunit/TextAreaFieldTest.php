@@ -8,7 +8,6 @@
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 
-
 /**
  * Class -TextAreaFieldTest.
  */
@@ -73,10 +72,10 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 'input_' . $this->fields[0]['id'] => $this->field_value ];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 	/**
@@ -88,11 +87,11 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 		return '
 			... on TextAreaField {
 				adminLabel
-				allowsPrepopulate
-				conditionalLogic {
+				canPrepopulate
+				conditionalLogic{
 					actionType
 					logicType
-					rules {
+					rules{
 						fieldId
 						operator
 						value
@@ -103,14 +102,15 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 				description
 				descriptionPlacement
 				errorMessage
-				isRequired
+				hasRichTextEditor
 				inputName
+				isRequired
 				label
+				labelPlacement
 				maxLength
-				noDuplicates
 				placeholder
+				shouldAllowDuplicates
 				size
-				useRichTextEditor
 				value
 			}
 		';
@@ -199,6 +199,9 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -207,11 +210,8 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 						'formFields',
 						[
 							$this->expectedNode(
-								'0',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0] ),
-									[ 'value' => $this->field_value ],
-								)
+								'nodes',
+								$expected,
 							),
 						]
 					),
@@ -239,8 +239,10 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),

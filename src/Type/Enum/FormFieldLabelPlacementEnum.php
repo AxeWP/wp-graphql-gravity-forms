@@ -38,9 +38,13 @@ class FormFieldLabelPlacementEnum extends AbstractEnum {
 	 */
 	public static function get_values() : array {
 		return [
-			'TOP'     => [
-				'description' => __( 'Field label is displayed on top of the fields.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::TOP,
+			'HIDDEN'  => [
+				'description' => __( 'Field label is hidden.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::HIDDEN,
+			],
+			'INHERIT' => [
+				'description' => __( 'Field label is inherited from the form defaults.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::INHERIT,
 			],
 			'LEFT'    => [
 				'description' => __( 'Field label is displayed beside the fields and aligned to the left.', 'wp-graphql-gravity-forms' ),
@@ -50,13 +54,9 @@ class FormFieldLabelPlacementEnum extends AbstractEnum {
 				'description' => __( 'Field label is displayed beside the fields and aligned to the right.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::RIGHT,
 			],
-			'INHERIT' => [
-				'description' => __( 'Field label is inherited from the form defaults.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::INHERIT,
-			],
-			'HIDDEN'  => [
-				'description' => __( 'Field label is hidden.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::HIDDEN,
+			'TOP'     => [
+				'description' => __( 'Field label is displayed on top of the fields.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::TOP,
 			],
 		];
 	}

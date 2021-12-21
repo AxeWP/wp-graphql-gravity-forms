@@ -101,39 +101,22 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return $this->fields[0]['choices'][0]['text'];
+		return $this->fields[0]['choices'][0]['value'];
 	}
-
-	/**
-	 * The graphql field value input.
-	 */
-	public function field_value_input() {
-		return $this->fields[0]['choices'][0]['text'];
-	}
-	/**
-	 * The graphql field value input.
-	 */
-	public function updated_field_value_input() {
-		return $this->fields[0]['choices'][2]['text'];
-	}
-
-
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return [
-			$this->fields[0]['choices'][2]['text'],
-		];
+		return $this->fields[0]['choices'][2]['value'];
 	}
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ (string) $this->fields[0]['id'] => $this->field_value_input ];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 
@@ -145,12 +128,20 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 	public function field_query():string {
 		return '... on QuizField {
 				adminLabel
-				allowsPrepopulate
-				gquizAnswerExplanation: answerExplanation
-				conditionalLogic {
+				answerExplanation
+				canPrepopulate
+				choices{
+					isCorrect
+					isOtherChoice
+					isSelected
+					text
+					value
+					weight
+				}
+				conditionalLogic{
 					actionType
 					logicType
-					rules {
+					rules{
 						fieldId
 						operator
 						value
@@ -159,29 +150,22 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 				cssClass
 				description
 				descriptionPlacement
-				enableChoiceValue
-				gquizEnableRandomizeQuizChoices: enableRandomizeQuizChoices
-				gquizWeightedScoreEnabled: enableWeightedScore
 				errorMessage
+				hasChoiceValue
+				hasWeightedScore
 				inputName
 				isRequired
 				label
 				labelPlacement
-				gquizShowAnswerExplanation: showAnswerExplanation
-				choices {
-					gquizIsCorrect: isCorrect
-					text
-					value
-					gquizWeight: weight
-					isOtherChoice
-				}
+				shouldRandomizeQuizChoices
+				shouldShowAnswerExplanation
 				... on QuizSelectField {
 					autocompleteAttribute
 					defaultValue
-					enableAutocomplete
-					enableEnhancedUI
-					noDuplicates
+					hasAutocomplete
+					hasEnhancedUI
 					placeholder
+					shouldAllowDuplicates
 					size
 					value
 				}
@@ -272,6 +256,9 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ): array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -281,10 +268,7 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 						[
 							$this->expectedNode(
 								'nodes',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0], ['gquizFieldType', 'enableOtherChoice', 'enableSelectAll', 'inputs' ] ),
-									[ 'value' => $this->field_value ],
-								)
+								$expected,
 							),
 						]
 					),
@@ -312,8 +296,10 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),
@@ -331,6 +317,6 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
-		$this->assertEquals( $this->field_value_input, $actual_entry[ $form['fields'][0]->id ],'Submit mutation entry value not equal' );
+		$this->assertEquals( $this->field_value_input, $actual_entry[ $form['fields'][0]->id ], 'Submit mutation entry value not equal' );
 	}
 }

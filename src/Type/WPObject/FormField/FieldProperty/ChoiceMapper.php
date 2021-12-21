@@ -25,7 +25,9 @@ class ChoiceMapper {
 	 * @param array    $choice_fields .
 	 */
 	public static function map_choices( GF_Field $field, array $choice_fields ) : array {
-		$name = Utils::to_pascal_case( ( $field->type !== $field->inputType ? $field->type . '_' . $field->inputType : $field->type ) . 'ChoiceProperty' );
+		$input_type = ! empty( $field->inputType ) ? $field->inputType : $field->type;
+
+		$name = Utils::to_pascal_case( ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'ChoiceProperty' );
 
 		register_graphql_object_type(
 			$name,

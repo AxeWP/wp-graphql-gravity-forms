@@ -40,7 +40,7 @@ class Wpunit extends \Codeception\Module {
 			[ 'conditionalLogic' => null ],
 			'cssClass',
 			[ 'id' => 1 ],
-			['inputType' => null ],
+			[ 'inputType' => null ],
 			'layoutGridColumnSpan',
 			'layoutSpacerGridColumnSpan',
 			'pageNumber',
@@ -401,7 +401,7 @@ class Wpunit extends \Codeception\Module {
 			'defaultValue',
 			'label',
 			[ 'type' => 'hidden' ],
-			['visibility' => 'hidden'],
+			[ 'visibility' => 'hidden' ],
 		];
 	}
 
@@ -413,7 +413,7 @@ class Wpunit extends \Codeception\Module {
 			'adminLabel',
 			'content',
 			'disableMargins',
-			['displayOnly' => true ],
+			[ 'displayOnly' => true ],
 			'inputName',
 			'label',
 			[ 'type' => 'html' ],
@@ -638,7 +638,7 @@ class Wpunit extends \Codeception\Module {
 					],
 				],
 			],
-			['displayOnly' => true],
+			[ 'displayOnly' => true ],
 			'inputName',
 			'label',
 			'nextButton',
@@ -846,7 +846,7 @@ class Wpunit extends \Codeception\Module {
 	public function getSectionFieldArgs() : array {
 		return [
 			'adminLabel',
-			['displayOnly' => true],
+			[ 'displayOnly' => true ],
 			'inputName',
 			'label',
 			[ 'type' => 'section' ],
@@ -1047,22 +1047,7 @@ class Wpunit extends \Codeception\Module {
 						'queryString'      => 'text={Single Line Text:1}&textarea={Text Area:2}',
 						'type'             => 'message',
 						'url'              => 'https://example.com/',
-						'conditionalLogic' => [
-							'actionType' => 'show',
-							'logicType'  => 'any',
-							'rules'      => [
-								[
-									'fieldId'  => 1,
-									'operator' => 'is',
-									'value'    => 'value1',
-								],
-								[
-									'fieldId'  => 1,
-									'operator' => 'is',
-									'value'    => 'value2',
-								],
-							],
-						],
+						'conditionalLogic' => null,
 					],
 				],
 				'cssClass'                   => 'css-class-1 css-class-2',

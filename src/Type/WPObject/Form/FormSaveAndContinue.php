@@ -34,12 +34,12 @@ class FormSaveAndContinue extends AbstractObject {
 	 */
 	public static function get_fields() : array {
 		return [
-			'isSaveAndContinueEnabled' => [
+			'hasSaveAndContinue' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the Save And Continue feature is enabled.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $source) => ! empty( $source['enabled'] ),
 			],
-			'buttonText'               => [
+			'buttonText'         => [
 				'type'        => 'String',
 				'description' => __( 'Contains the save button text.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn ( $source): string  => ! empty( $source['button']['text'] ) ? $source['button']['text'] : null,

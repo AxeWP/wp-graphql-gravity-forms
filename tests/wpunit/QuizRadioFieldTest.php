@@ -128,7 +128,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 
 
 	/**
-	 * Thehe value as expected by Gravity Forms.
+	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
 		return [ (string) $this->fields[0]['id'] => $this->field_value_input ];
@@ -143,12 +143,20 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	public function field_query():string {
 		return '... on QuizField {
 				adminLabel
-				allowsPrepopulate
-				gquizAnswerExplanation: answerExplanation
-				conditionalLogic {
+				answerExplanation
+				canPrepopulate
+				choices{
+					isCorrect
+					isOtherChoice
+					isSelected
+					text
+					value
+					weight
+				}
+				conditionalLogic{
 					actionType
 					logicType
-					rules {
+					rules{
 						fieldId
 						operator
 						value
@@ -157,25 +165,19 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 				cssClass
 				description
 				descriptionPlacement
-				enableChoiceValue
-				gquizEnableRandomizeQuizChoices: enableRandomizeQuizChoices
-				gquizWeightedScoreEnabled: enableWeightedScore
 				errorMessage
+				hasChoiceValue
+				hasWeightedScore
 				inputName
 				isRequired
 				label
 				labelPlacement
-				gquizShowAnswerExplanation: showAnswerExplanation
-				choices {
-					gquizIsCorrect: isCorrect
-					text
-					value
-					gquizWeight: weight
-					isOtherChoice
-				}
+				shouldRandomizeQuizChoices
+				shouldShowAnswerExplanation
 				... on QuizRadioField {
+					hasOtherChoice
+					shouldAllowDuplicates
 					value
-					enableOtherChoice
 				}
 			}
 		';
@@ -264,6 +266,9 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ): array {
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+
 		return [
 			$this->expectedObject(
 				'gravityFormsEntry',
@@ -273,10 +278,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 						[
 							$this->expectedNode(
 								'nodes',
-								array_merge_recursive(
-									$this->property_helper->getAllActualValues( $form['fields'][0], ['gquizFieldType', 'enableSelectAll', 'inputs', 'autocompleteAttribute', 'defaultValue', 'enableAutocomplete', 'enableEnhancedUI', 'noDuplicates', 'placeholder', 'size' ] ),
-									[ 'value' => $this->field_value ],
-								)
+								$expected,
 							),
 						]
 					),
@@ -304,8 +306,10 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 								'formFields',
 								[
 									$this->expectedNode(
-										'0',
-										$this->expectedField( 'value', $value ),
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
 									),
 								]
 							),

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
+class ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -81,6 +81,7 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
         'WPGraphQL\\GF\\Type\\Enum\\FormFieldLabelPlacementEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormFieldLabelPlacementEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormFieldRequiredIndicatorEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormFieldRequiredIndicatorEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormFieldSizeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormFieldSizeEnum.php',
+        'WPGraphQL\\GF\\Type\\Enum\\FormFieldSubLabelPlacementEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormFieldSubLabelPlacementEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormFieldTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormFieldTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormFieldVisibilityEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormFieldVisibilityEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormIdTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormIdTypeEnum.php',
@@ -158,9 +159,9 @@ class ComposerStaticInit4041e9042c6b9fdddfadea4e48957371
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4041e9042c6b9fdddfadea4e48957371::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4041e9042c6b9fdddfadea4e48957371::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit4041e9042c6b9fdddfadea4e48957371::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f::$classMap;
 
         }, null, ClassLoader::class);
     }
