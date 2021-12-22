@@ -1,6 +1,6 @@
 <?php
 /**
- * Mutation - submitGravityFormsForm
+ * Mutation - submitGfForm
  *
  * Submits a Gravity Forms form.
  *
@@ -17,7 +17,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
-use WPGraphQL\GF\Type\WPObject\Entry\Entry;
+use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Utils\GFUtils;
 
@@ -30,7 +30,7 @@ class SubmitForm extends AbstractMutation {
 	 *
 	 * @var string
 	 */
-	public static $name = 'submitGravityFormsForm';
+	public static $name = 'submitGfForm';
 
 	/**
 	 * {@inheritDoc}

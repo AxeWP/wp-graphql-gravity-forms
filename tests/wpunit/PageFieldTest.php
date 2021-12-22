@@ -132,7 +132,7 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 
 		return [
 			$this->expectedObject(
-				'gravityFormsEntry',
+				'gfEntry',
 				[
 					$this->expectedObject(
 						'formFields',

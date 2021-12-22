@@ -18,8 +18,8 @@ use WPGraphQL\GF\Type\Enum\FieldFiltersModeEnum;
 use WPGraphQL\GF\Type\Input\EntriesConnectionOrderbyInput;
 use WPGraphQL\GF\Type\Input\EntriesDateFiltersInput;
 use WPGraphQL\GF\Type\Input\EntriesFieldFiltersInput;
-use WPGraphQL\GF\Type\WPObject\Entry\Entry;
-use WPGraphQL\GF\Type\WPObject\Form\Form;
+use WPGraphQL\GF\Type\WPInterface\Entry;
+use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -36,7 +36,7 @@ class EntriesConnection extends AbstractConnection {
 				[
 					'fromType'       => 'RootQuery',
 					'toType'         => Entry::$type,
-					'fromFieldName'  => 'gravityFormsEntries',
+					'fromFieldName'  => 'gfEntries',
 					'connectionArgs' => self::get_filtered_connection_args(),
 					'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
 						return Factory::resolve_entries_connection( $root, $args, $context, $info );
@@ -45,19 +45,16 @@ class EntriesConnection extends AbstractConnection {
 			)
 		);
 
-		// Form to Entry.
+		// RootQuery to SubmittedEntry.
 		register_graphql_connection(
 			self::prepare_config(
 				[
-					'fromType'       => Form::$type,
-					'toType'         => Entry::$type,
-					'fromFieldName'  => 'entries',
-					'connectionArgs' => self::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby' ] ),
-					'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
-						$context->gfForm = $source;
-
-						$args['where']['formIds'] = $source->formId ?? null;
-						return Factory::resolve_entries_connection( $source, $args, $context, $info );
+					'fromType'       => 'RootQuery',
+					'toType'         => SubmittedEntry::$type,
+					'fromFieldName'  => 'gfSubmittedEntries',
+					'connectionArgs' => self::get_filtered_connection_args(),
+					'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+						return Factory::resolve_entries_connection( $root, $args, $context, $info );
 					},
 				]
 			),

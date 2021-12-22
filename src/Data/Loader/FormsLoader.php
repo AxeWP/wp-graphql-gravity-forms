@@ -23,7 +23,7 @@ class FormsLoader extends AbstractDataLoader {
 	 *
 	 * @var string
 	 */
-	public static string $name = 'GravityFormsForm';
+	public static string $name = 'gf_form';
 
 	/**
 	 * {@inheritDoc}

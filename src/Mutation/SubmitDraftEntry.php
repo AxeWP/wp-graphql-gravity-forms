@@ -1,6 +1,6 @@
 <?php
 /**
- * Mutation - submitGravityFormsDraftEntry
+ * Mutation - submitGfDraftEntry
  *
  * Registers mutation to submit a Gravity Forms draft entry so that it becomes a permanent entry.
  *
@@ -15,8 +15,8 @@ use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Model\Entry as EntryModel;
-use WPGraphQL\GF\Type\WPObject\Entry\Entry;
+use WPGraphQL\GF\Model\SubmittedEntry as EntryModel;
+use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Utils\GFUtils;
 
@@ -29,7 +29,7 @@ class SubmitDraftEntry extends AbstractMutation {
 	 *
 	 * @var string
 	 */
-	public static $name = 'submitGravityFormsDraftEntry';
+	public static $name = 'submitGfDraftEntry';
 
 	/**
 	 * {@inheritDoc}
@@ -53,7 +53,7 @@ class SubmitDraftEntry extends AbstractMutation {
 				'description' => __( 'The ID of the entry that was created.', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'   => [
-				'type'        => Entry::$type,
+				'type'        => SubmittedEntry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload ) {
 					if ( ! empty( $payload['errors'] ) ) {

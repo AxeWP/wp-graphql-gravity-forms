@@ -26,7 +26,7 @@ class FormsConnection extends AbstractConnection {
 	 *
 	 * @var string
 	 */
-	public static $from_field_name = 'gravityFormsForms';
+	public static $from_field_name = 'gfForms';
 
 	/**
 	 * {@inheritDoc}
@@ -38,7 +38,7 @@ class FormsConnection extends AbstractConnection {
 				[
 					'fromType'       => 'RootQuery',
 					'toType'         => Form::$type,
-					'fromFieldName'  => 'gravityFormsForms',
+					'fromFieldName'  => 'gfForms',
 					'connectionArgs' => self::get_connection_args(),
 					'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
 						return Factory::resolve_forms_connection( $root, $args, $context, $info );

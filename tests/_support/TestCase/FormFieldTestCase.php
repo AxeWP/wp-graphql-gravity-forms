@@ -136,7 +136,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	protected function entry_query() : string {
 		return "
 			query getFieldValue(\$id: ID!, \$idType: EntryIdTypeEnum) {
-				gravityFormsEntry(id: \$id, idType: \$idType ) {
+				gfEntry(id: \$id, idType: \$idType ) {
 					formFields {
 						nodes {
 							displayOnly
@@ -189,7 +189,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	}
 
 	/**
-	 * Tests submitting the field values as a draft entry with submitGravityFormsForm.
+	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	protected function runTestSubmitDraft() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
@@ -206,17 +206,17 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$expected = $this->expected_mutation_response( 'submitGravityFormsForm', $this->field_value );
+		$expected = $this->expected_mutation_response( 'submitGfForm', $this->field_value );
 
 		$this->assertQuerySuccessful( $response, $expected );
 
-		$resume_token = $response['data']['submitGravityFormsForm']['resumeToken'];
+		$resume_token = $response['data']['submitGfForm']['resumeToken'];
 
 		$this->factory->draft_entry->delete( $resume_token );
 	}
 
 	/**
-	 * Tests submitting the field values as an entry with submitGravityFormsForm.
+	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	protected function runTestSubmit() : void {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
@@ -233,11 +233,11 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		// Test entry.
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$expected = $this->expected_mutation_response( 'submitGravityFormsForm', $this->field_value );
+		$expected = $this->expected_mutation_response( 'submitGfForm', $this->field_value );
 		$this->assertQuerySuccessful( $response, $expected );
-		$this->assertEquals( $response['data']['submitGravityFormsForm']['errors'], null );
+		$this->assertEquals( $response['data']['submitGfForm']['errors'], null );
 
-		$entry_id = $response['data']['submitGravityFormsForm']['entryId'];
+		$entry_id = $response['data']['submitGfForm']['entryId'];
 
 		$actual_entry = GFAPI::get_entry( $entry_id );
 
@@ -249,7 +249,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	}
 
 	/**
-	 * Tests updating the field value with updateGravityFormsEntry.
+	 * Tests updating the field value with updateGfEntry.
 	 */
 	protected function runTestUpdate() : void {
 		wp_set_current_user( $this->admin->ID );
@@ -269,13 +269,13 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$expected = $this->expected_mutation_response( 'updateGravityFormsEntry', $field_value );
+		$expected = $this->expected_mutation_response( 'updateGfEntry', $field_value );
 
 		$this->assertQuerySuccessful( $response, $expected );
 	}
 
 	/**
-	 * Tests updating the draft field value with updateGravityFormsEntry.
+	 * Tests updating the draft field value with updateGfEntry.
 	 */
 	protected function runTestUpdateDraft() : void {
 		wp_set_current_user( $this->admin->ID );
@@ -296,7 +296,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$expected = $this->expected_mutation_response( 'updateGravityFormsDraftEntry', $field_value );
+		$expected = $this->expected_mutation_response( 'updateGfDraftEntry', $field_value );
 
 		$this->assertQuerySuccessful( $response, $expected );
 

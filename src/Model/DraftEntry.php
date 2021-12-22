@@ -9,8 +9,8 @@
 namespace WPGraphQL\GF\Model;
 
 use GraphQLRelay\Relay;
-use WPGraphQL\GF\Type\WPObject\Entry\Entry as GraphQLEntry;
-use WPGraphQL\GF\Type\WPObject\Form\Form;
+use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
+use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\Model\Model;
 
 /**
@@ -79,23 +79,27 @@ class DraftEntry extends Model {
 	protected function init() : void {
 		if ( empty( $this->fields ) ) {
 			$this->fields = [
+				// Interface fields.
 				'createdByDatabaseId' => fn() : ?int => ! empty( $this->submission['partial_entry']['created_by'] ) ? (int) $this->submission['partial_entry']['created_by'] : null,
 				'createdById'         => fn() : ?string => ! empty( $this->data['created_by'] ) ? Relay::toGlobalId( 'user', $this->data['created_by'] ) : null,
-				'currency'            => fn() : ?int => ! empty( $this->submission['partial_entry']['currency'] ) ? (int) $this->submission['partial_entry']['currency'] : null,
 				'dateCreated'         => fn() : ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,
 				'dateCreatedGmt'      => fn() : ?string => ! empty( $this->data['date_created'] ) ? $this->data['date_created'] : null,
 				'dateUpdated'         => fn() : ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? get_date_from_gmt( $this->submission['partial_entry']['date_updated'] ) : null,
 				'dateUpdatedGmt'      => fn() : ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? $this->submission['partial_entry']['date_updated'] : null,
 				'entry'               => fn() : array => $this->submission['partial_entry'],
+				'entryValues'         => fn() : ?array => array_filter( $this->submission['partial_entry'], fn( $key ) => is_numeric( $key ), ARRAY_FILTER_USE_KEY ) ?: null,
+				'formId'              => fn() => ! empty( $this->data['form_id'] ) ? Relay::toGlobalId( FormsLoader::$name, $this->data['form_id'] ) : null,
 				'formDatabaseId'      => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
-				'formId'              => fn() => ! empty( $this->data['form_id'] ) ? Relay::toGlobalId( Form::$type, $this->data['form_id'] ) : null,
-				'id'                  => fn() : string => Relay::toGlobalId( GraphQLEntry::$type, $this->resume_token ),
+				'id'                  => fn() : string => Relay::toGlobalId( DraftEntriesLoader::$name, $this->resume_token ),
 				'ip'                  => fn() : ?string => ! empty( $this->submission['partial_entry']['ip'] ) ? $this->submission['partial_entry']['ip'] : null,
-				'isDraft'             => fn() : bool => true,
-				'postDatabaseId'      => fn() : ?int => ! empty( $this->data['post_id'] ) ? (int) $this->data['post_id'] : null,
-				'resumeToken'         => fn() : string => $this->resume_token,
+				'isDraft'             => fn() : bool => ! empty( $this->resume_token ),
+				'isSubmitted'         => fn() : bool => ! empty( $this->submission['partial_entry']['id'] ),
 				'sourceUrl'           => fn() : ?string => ! empty( $this->submission['partial_entry']['source_url'] ) ? $this->submission['partial_entry']['source_url'] : null,
 				'userAgent'           => fn() : ?string => ! empty( $this->data['user_agent'] ) ? $this->submission['partial_entry']['user_agent'] : null,
+
+				// Fields specific to the model.
+				'currency'            => fn() : ?int => ! empty( $this->submission['partial_entry']['currency'] ) ? (int) $this->submission['partial_entry']['currency'] : null,
+				'resumeToken'         => fn() : string => $this->resume_token,
 			];
 		}
 	}

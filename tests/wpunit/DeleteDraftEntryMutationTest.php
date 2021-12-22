@@ -1,6 +1,6 @@
 <?php
 /**
- * Test deleteGravityFormsDraftEntry mutation .
+ * Test deleteGfDraftEntry mutation .
  *
  * @package .
  */
@@ -51,21 +51,21 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 	}
 
 	/**
-	 * Tests `deleteGravityFormsDraftEntry`.
+	 * Tests `deleteGfDraftEntry`.
 	 */
-	public function testDeleteGravityFormsDraftEntry() : void {
+	public function testDeleteGfDraftEntry() : void {
 		$actual = $this->createMutation();
 		$this->assertArrayNotHasKey( 'errors', $actual );
 
-		$actual_draft = GFFormsModel::get_draft_submission_values( $actual['data']['deleteGravityFormsDraftEntry']['resumeToken'] );
+		$actual_draft = GFFormsModel::get_draft_submission_values( $actual['data']['deleteGfDraftEntry']['resumeToken'] );
 
 		$this->assertNull( $actual_draft );
 	}
 
 	/**
-	 * Tests `deleteGravityFormsDraftEntry` when a bad resumeToken is supplied.
+	 * Tests `deleteGfDraftEntry` when a bad resumeToken is supplied.
 	 */
-	public function testDeleteGravityFormsDraftEntry_badToken() : void {
+	public function testDeleteGfDraftEntry_badToken() : void {
 		$actual = $this->createMutation( [ 'resumeToken' => 'notarealtoken' ] );
 		$this->assertArrayHasKey( 'errors', $actual );
 
@@ -78,11 +78,11 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 	 */
 	public function createMutation( array $args = [] ) : array {
 		$mutation = '
-			mutation deleteGravityFormsDraftEntry(
+			mutation deleteGfDraftEntry(
 				$resumeToken: String!,
 				$clientMutationId: String,
 			) {
-				deleteGravityFormsDraftEntry(
+				deleteGfDraftEntry(
 					input: {
 						resumeToken: $resumeToken
 						clientMutationId: $clientMutationId

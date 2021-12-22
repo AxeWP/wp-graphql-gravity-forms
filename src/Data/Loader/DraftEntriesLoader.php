@@ -25,7 +25,7 @@ class DraftEntriesLoader extends AbstractDataLoader {
 	 *
 	 * @var string
 	 */
-	public static string $name = 'GravityFormsDraftEntry';
+	public static string $name = 'gf_draft_entry';
 
 	/**
 	 * {@inheritDoc}

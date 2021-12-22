@@ -1,6 +1,6 @@
 <?php
 /**
- * Mutation - UpdateGravityFormsDraftEntry
+ * Mutation - UpdateGfDraftEntry
  *
  * Updates a Gravity Forms draft entry.
  *
@@ -15,7 +15,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
-use WPGraphQL\GF\Type\WPObject\Entry\Entry;
+use WPGraphQL\GF\Type\WPObject\Entry\DraftEntry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Utils\GFUtils;
 
@@ -28,7 +28,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	 *
 	 * @var string
 	 */
-	public static $name = 'updateGravityFormsDraftEntry';
+	public static $name = 'updateGfDraftEntry';
 
 	/**
 	 * Gravity Forms field validation errors.
@@ -75,7 +75,7 @@ class UpdateDraftEntry extends AbstractMutation {
 				'description' => __( 'Draft entry resume token.', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'       => [
-				'type'        => Entry::$type,
+				'type'        => DraftEntry::$type,
 				'description' => __( 'The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload, array $args, AppContext $context ) {
 					if ( ! empty( $payload['errors'] ) || ! $payload['resumeToken'] ) {

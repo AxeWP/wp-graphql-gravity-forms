@@ -20,25 +20,25 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 		$this->runTestField();
 	}
 	/**
-	 * Tests submitting the field values as a draft entry with submitGravityFormsForm.
+	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
 	/**
-	 * Tests submitting the field values as an entry with submitGravityFormsForm.
+	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmit(): void {
 		$this->runTestSubmit();
 	}
 	/**
-	 * Tests updating the field value with updateGravityFormsEntry.
+	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdate(): void {
 		$this->runTestUpdate();
 	}
 	/**
-	 * Tests updating the draft field value with updateGravityFormsEntry.
+	 * Tests updating the draft field value with updateGfEntry.
 	 */
 	public function testUpdateDraft():void {
 		$this->runTestUpdateDraft();
@@ -150,7 +150,7 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 	public function submit_form_mutation() : string {
 		return '
 			mutation ($formId: Int!, $fieldId: Int!, $value: String!, $draft: Boolean) {
-				submitGravityFormsForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
+				submitGfForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
 					errors {
 						id
 						message
@@ -181,8 +181,8 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 	 */
 	public function update_entry_mutation() : string {
 		return '
-			mutation updateGravityFormsEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
-				updateGravityFormsEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
+			mutation updateGfEntry( $entryId: Int!, $fieldId: Int!, $value: String! ){
+				updateGfEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
 						message
@@ -211,8 +211,8 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 	 */
 	public function update_draft_entry_mutation() : string {
 		return '
-			mutation updateGravityFormsDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
-				updateGravityFormsDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
+			mutation updateGfDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
+				updateGfDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
 						message
@@ -247,7 +247,7 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 
 		return [
 			$this->expectedObject(
-				'gravityFormsEntry',
+				'gfEntry',
 				[
 					$this->expectedObject(
 						'formFields',

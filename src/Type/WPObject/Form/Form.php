@@ -12,11 +12,17 @@
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
 use GraphQL\Error\UserError;
+use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Connection\EntriesConnection;
+use WPGraphQL\GF\Connection\FormFieldsConnection;
+use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\Enum;
+use WPGraphQL\GF\Type\WPInterface\Entry;
+use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Button;
 use WPGraphQL\Registry\TypeRegistry;
@@ -30,14 +36,14 @@ class Form extends AbstractObject implements Field {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GravityFormsForm';
+	public static string $type = 'GfForm';
 
 	/**
 	 * Field registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $field_name = 'gravityFormsForm';
+	public static string $field_name = 'gfForm';
 
 	/**
 	 * {@inheritDoc}
@@ -48,6 +54,31 @@ class Form extends AbstractObject implements Field {
 			static::prepare_config(
 				[
 					'description'     => static::get_description(),
+					'connections'     => [
+						'entries'    => [
+							'toType'         => Entry::$type,
+							'connectionArgs' => EntriesConnection::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby' ] ),
+							'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
+								$context->gfForm = $source;
+
+								$args['where']['formIds'] = $source->formId ?? null;
+								return Factory::resolve_entries_connection( $source, $args, $context, $info );
+							},
+						],
+						'formFields' => [
+							'toType'         => FormField::$type,
+							'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
+							'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+								$context->gfForm = $source;
+
+								if ( empty( $source->formFields ) ) {
+									return null;
+								}
+
+								return FormFieldsConnectionResolver::resolve( $source->formFields, $args, $context, $info );
+							},
+						],
+					],
 					'eagerlyLoadType' => static::$should_load_eagerly,
 					'fields'          => static::get_fields(),
 					'interfaces'      => [ 'Node', 'DatabaseIdentifier' ],

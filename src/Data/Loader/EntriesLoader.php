@@ -12,7 +12,7 @@ namespace WPGraphQL\GF\Data\Loader;
 
 use GF_Query;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
-use WPGraphQL\GF\Model\Entry;
+use WPGraphQL\GF\Model\SubmittedEntry;
 
 /**
  * Class - EntriesLoader
@@ -23,13 +23,13 @@ class EntriesLoader extends AbstractDataLoader {
 	 *
 	 * @var string
 	 */
-	public static string $name = 'GravityFormsEntry';
+	public static string $name = 'gf_entry';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_model( $entry, $key ) : Entry {
-		return new Entry( $entry );
+	protected function get_model( $entry, $key ) : SubmittedEntry {
+		return new SubmittedEntry( $entry );
 	}
 
 	/**
