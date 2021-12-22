@@ -15,7 +15,7 @@ use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
-use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
+use WPGraphQL\GF\Type\Enum\DraftEntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\Registry\TypeRegistry;
@@ -93,7 +93,7 @@ class DraftEntry extends AbstractObject implements Field {
 						'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
 					],
 					'idType' => [
-						'type'        => EntryIdTypeEnum::$type,
+						'type'        => DraftEntryIdTypeEnum::$type,
 						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID', 'wp-graphql-gravity-forms' ),
 					],
 				],

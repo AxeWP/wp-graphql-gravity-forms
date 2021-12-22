@@ -10,10 +10,12 @@
 
 namespace WPGraphQL\GF\Connection;
 
+use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
+use WPGraphQL\GF\Type\Enum\EntryTypeEnum;
 use WPGraphQL\GF\Type\Enum\FieldFiltersModeEnum;
 use WPGraphQL\GF\Type\Input\EntriesConnectionOrderbyInput;
 use WPGraphQL\GF\Type\Input\EntriesDateFiltersInput;
@@ -39,6 +41,10 @@ class EntriesConnection extends AbstractConnection {
 					'fromFieldName'  => 'gfEntries',
 					'connectionArgs' => self::get_filtered_connection_args(),
 					'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+						if ( isset( $args['entryType'] ) && EntryTypeEnum::SUBMITTED !== $args['entryType'] ) {
+							throw new UserError( __( 'Only lists of `SUBMITTED` entries may currently be queried.', 'wp-graphql-gravity-forms' ) );
+						}
+
 						return Factory::resolve_entries_connection( $root, $args, $context, $info );
 					},
 				]
@@ -52,7 +58,7 @@ class EntriesConnection extends AbstractConnection {
 					'fromType'       => 'RootQuery',
 					'toType'         => SubmittedEntry::$type,
 					'fromFieldName'  => 'gfSubmittedEntries',
-					'connectionArgs' => self::get_filtered_connection_args(),
+					'connectionArgs' => self::get_filtered_connection_args( [ 'formIds', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby', 'status' ] ),
 					'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
 						return Factory::resolve_entries_connection( $root, $args, $context, $info );
 					},
@@ -72,10 +78,6 @@ class EntriesConnection extends AbstractConnection {
 				'type'        => [ 'list_of' => 'ID' ],
 				'description' => __( 'Array of form IDs to limit the entries to. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
 			],
-			'status'           => [
-				'type'        => EntryStatusEnum::$type,
-				'description' => __( 'Entry status. Default is "ACTIVE".', 'wp-graphql-gravity-forms' ),
-			],
 			'dateFilters'      => [
 				'type'        => EntriesDateFiltersInput::$type,
 				'description' => __( 'Date filters to apply.', 'wp-graphql-gravity-forms' ),
@@ -91,6 +93,14 @@ class EntriesConnection extends AbstractConnection {
 			'orderby'          => [
 				'type'        => EntriesConnectionOrderbyInput::$type,
 				'description' => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
+			],
+			'status'           => [
+				'type'        => EntryStatusEnum::$type,
+				'description' => __( 'Entry status. Default is "ACTIVE".', 'wp-graphql-gravity-forms' ),
+			],
+			'entryType'        => [
+				'type'        => EntryTypeEnum::$type,
+				'description' => __( 'Entry status. Default is `SUBMITTED`. Currently no other types are supported.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

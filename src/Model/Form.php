@@ -83,7 +83,6 @@ class Form extends Model {
 				'hasConditionalLogicAnimation' => fn() : bool => $this->data['enableAnimation'] ?? false,
 				'hasHoneypot'                  => fn() : bool => $this->data['enableHoneypot'] ?? false,
 				'firstPageCssClass'            => fn() : ?string => $this->data['firstPageCssClass'] ?? null,
-				// @todo maybe switch to model.
 				'formFields'                   => function() : ?array {
 					$return = ! empty( $this->data['fields'] ) ? $this->data['fields'] : null;
 					return $return;

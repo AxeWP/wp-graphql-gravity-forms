@@ -73,36 +73,6 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	}
 
 	/**
-	 * Tests `submitGfDraftn a field doesnt validate correctly.
-	 *
-	 * @TODO .
-	 */
-	// public function testSubmitGfDraftalue() : void {
-	// $draft_token = $this->factory->draft_entry->create(
-	// [
-	// 'form_id'      => $this->form_id,
-	// 'entry'        => [
-	// $this->fields[0]['id'] => 'not value1',
-	// ],
-	// 'field_values' => [
-	// 'input_' . $this->fields[0]['id'] => 'not value1',
-	// ],
-	// ]
-	// );
-
-	// $entry = $this->factory->draft_entry->get_object_by_id( $draft_token);
-	// codecept_debug($entry);
-	// $submission = json_decode($entry['submission'], true);
-	// codecept_debug($submission);
-	// $actual      = $this->createMutation( [ 'resumeToken' => $draft_token ] );
-	// codecept_debug( $actual );
-	// $this->assertArrayNotHasKey( 'errors', $actual );
-
-	// $this->factory->draft_entry->delete( $draft_token );
-	// $this->factory->entry->delete( $actual['data']['entryId'] );
-	// }
-
-	/**
 	 * Creates the mutation.
 	 *
 	 * @param array $args .

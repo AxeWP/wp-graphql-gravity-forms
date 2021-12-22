@@ -123,8 +123,10 @@ class TypeRegistry {
 			Enum\ConditionalLogicLogicTypeEnum::class,
 			Enum\DateFieldFormatEnum::class,
 			Enum\DateFieldTypeEnum::class,
+			Enum\DraftEntryIdTypeEnum::class,
 			Enum\EntryIdTypeEnum::class,
 			Enum\EntryStatusEnum::class,
+			Enum\EntryTypeEnum::class,
 			Enum\FieldFiltersModeEnum::class,
 			Enum\FieldFiltersOperatorInputEnum::class,
 			Enum\FormButtonTypeEnum::class,
@@ -156,6 +158,7 @@ class TypeRegistry {
 			Enum\QuizFieldTypeEnum::class,
 			Enum\SignatureFieldBorderStyleEnum::class,
 			Enum\SignatureFieldBorderWidthEnum::class,
+			Enum\SubmittedEntryIdTypeEnum::class,
 			Enum\TimeFieldFormatEnum::class,
 		];
 
