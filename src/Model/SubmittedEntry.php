@@ -9,16 +9,16 @@
 namespace WPGraphQL\GF\Model;
 
 use GraphQLRelay\Relay;
-use WPGraphQL\GF\Type\WPObject\Entry\Entry as GraphQLEntry;
-use WPGraphQL\GF\Type\WPObject\Form\Form;
+use WPGraphQL\GF\Data\Loader\EntriesLoader;
+use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\Model\Model;
 
 /**
  * Class - Entry
  */
-class Entry extends Model {
+class SubmittedEntry extends Model {
 	/**
-	 * Stores the incoming Entry to be modeled.
+	 * Stores the incoming Gravity Forms entry to be modeled.
 	 *
 	 * @var array $data;
 	 */
@@ -40,19 +40,15 @@ class Entry extends Model {
 	 * {@inheritDoc}
 	 */
 	protected function is_private() : bool {
-		if ( ! is_user_logged_in() ) {
-			return true;
-		}
+		$private = true;
 
 		if ( current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ) ) {
-			return false;
+			$private = false;
+		} elseif ( get_current_user_id() === $this->data['created_by'] ) {
+			$private = false;
 		}
 
-		if ( get_current_user_id() === $this->data['created_by'] ) {
-			return false;
-		}
-
-		return true;
+		return apply_filters( 'wp_graphql_gf_can_view_entries', $private );
 	}
 
 	/**
@@ -61,9 +57,9 @@ class Entry extends Model {
 	protected function init() : void {
 		if ( empty( $this->fields ) ) {
 			$this->fields = [
+				// Interface fields.
 				'createdByDatabaseId' => fn() : ?int => ! empty( $this->data['created_by'] ) ? (int) $this->data['created_by'] : null,
 				'createdById'         => fn() : ?string => ! empty( $this->data['created_by'] ) ? Relay::toGlobalId( 'user', $this->data['created_by'] ) : null,
-				'databaseId'          => fn() : ?int => ! empty( $this->data['id'] ) ? (int) $this->data['id'] : null,
 				'dateCreated'         => fn() : ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,
 				'dateCreatedGmt'      => fn() : ?string => ! empty( $this->data['date_created'] ) ? $this->data['date_created'] : null,
 				'dateUpdated'         => fn() : ?string => ! empty( $this->data['date_updated'] ) ? get_date_from_gmt( $this->data['date_updated'] ) : null,
@@ -71,10 +67,16 @@ class Entry extends Model {
 				'entry'               => fn() : array => $this->data,
 				'entryValues'         => fn() : ?array => array_filter( $this->data, fn( $key ) => is_numeric( $key ), ARRAY_FILTER_USE_KEY ) ?: null,
 				'formDatabaseId'      => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
-				'formId'              => fn() => ! empty( $this->data['form_id'] ) ? Relay::toGlobalId( Form::$type, $this->data['form_id'] ) : null,
-				'id'                  => fn() : string => Relay::toGlobalId( GraphQLEntry::$type, $this->data['resumeToken'] ?? (string) $this->data['id'] ),
+				'formId'              => fn() => ! empty( $this->data['form_id'] ) ? Relay::toGlobalId( FormsLoader::$name, $this->data['form_id'] ) : null,
+				'id'                  => fn() : string => Relay::toGlobalId( EntriesLoader::$name, (string) $this->data['id'] ),
 				'ip'                  => fn() : ?string => ! empty( $this->data['ip'] ) ? $this->data['ip'] : null,
-				'isDraft'             => fn() : bool => empty( $this->data['id'] ),
+				'isDraft'             => fn() : bool => ! empty( $this->data['resume_token'] ),
+				'isSubmitted'         => fn() : bool => ! empty( $this->data['id'] ),
+				'sourceUrl'           => fn() : ?string => ! empty( $this->data['source_url'] ) ? $this->data['source_url'] : null,
+				'userAgent'           => fn() : ?string => ! empty( $this->data['user_agent'] ) ? $this->data['user_agent'] : null,
+
+				// Fields specific to the model.
+				'databaseId'          => fn() : ?int => ! empty( $this->data['id'] ) ? (int) $this->data['id'] : null,
 				'isFulfilled'         => fn() : bool => ! empty( $this->data['is_fulfilled'] ),
 				'isStarred'           => fn() : bool => ! empty( $this->data['is_starred'] ),
 				'isRead'              => fn() : bool => ! empty( $this->data['is_read'] ),
@@ -83,12 +85,9 @@ class Entry extends Model {
 				'paymentMethod'       => fn() : ?string => ! empty( $this->data['payment_method'] ) ? $this->data['payment_method'] : null,
 				'paymentStatus'       => fn() : ?string => ! empty( $this->data['payment_status'] ) ? $this->data['payment_status'] : null,
 				'postDatabaseId'      => fn() : ?int => ! empty( $this->data['post_id'] ) ? (int) $this->data['post_id'] : null,
-				'resumeToken'         => fn() : ?string => ! empty( $this->data['resumeToken'] ) ? $this->data['resumeToken'] : null,
-				'sourceUrl'           => fn() : ?string => ! empty( $this->data['source_url'] ) ? $this->data['source_url'] : null,
 				'status'              => fn() : ?string => ! empty( $this->data['status'] ) ? $this->data['status'] : null,
 				'transactionId'       => fn() : ?string => ! empty( $this->data['transaction_id'] ) ? $this->data['transaction_id'] : null,
 				'transactionType'     => fn() : ?string => ! empty( $this->data['transaction_type'] ) ? $this->data['transaction_type'] : null,
-				'userAgent'           => fn() : ?string => ! empty( $this->data['user_agent'] ) ? $this->data['user_agent'] : null,
 			];
 		}
 	}

@@ -105,7 +105,7 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 
 		return [
 			$this->expectedObject(
-				'gravityFormsEntry',
+				'gfEntry',
 				[
 					$this->expectedObject(
 						'formFields',

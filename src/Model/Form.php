@@ -9,7 +9,7 @@
 namespace WPGraphQL\GF\Model;
 
 use GraphQLRelay\Relay;
-use WPGraphQL\GF\Type\WPObject\Form\Form as GraphQLForm;
+use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\Model\Model;
 
 /**
@@ -88,7 +88,7 @@ class Form extends Model {
 					$return = ! empty( $this->data['fields'] ) ? $this->data['fields'] : null;
 					return $return;
 				},
-				'id'                           => fn() : string => Relay::toGlobalId( GraphQLForm::$type, $this->data['id'] ),
+				'id'                           => fn() : string => Relay::toGlobalId( FormsLoader::$name, $this->data['id'] ),
 
 				'isActive'                     => fn() : bool => $this->data['is_active'] ?? true,
 				'isTrash'                      => fn() : bool => $this->data['is_trash'] ?? false,

@@ -1,6 +1,6 @@
 <?php
 /**
- * Mutation - deleteGravityFormsEntry
+ * Mutation - deleteGfEntry
  *
  * Registers mutation to delete a Gravity Forms entry.
  *
@@ -24,7 +24,7 @@ class DeleteEntry extends AbstractMutation {
 	 *
 	 * @var string
 	 */
-	public static $name = 'deleteGravityFormsEntry';
+	public static $name = 'deleteGfEntry';
 
 	/**
 	 * {@inheritDoc}

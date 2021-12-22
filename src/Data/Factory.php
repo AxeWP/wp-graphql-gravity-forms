@@ -52,8 +52,8 @@ class Factory {
 			case is_a( $node, Model\Form::class ):
 				$type = Model\Form::class;
 				break;
-			case is_a( $node, Model\Entry::class ):
-				$type = Model\Entry::class;
+			case is_a( $node, Model\SubmittedEntry::class ):
+				$type = Model\SubmittedEntry::class;
 				break;
 			case is_a( $node, Model\DraftEntry::class ):
 				$type = Model\DraftEntry::class;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Mutation - UpdateGravityFormsEntry
+ * Mutation - UpdategfEntry
  *
  * Updates a Gravity Forms entry.
  *
@@ -17,7 +17,7 @@ use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
-use WPGraphQL\GF\Type\WPObject\Entry\Entry;
+use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Utils\GFUtils;
 
@@ -30,7 +30,7 @@ class UpdateEntry extends AbstractMutation {
 	 *
 	 * @var string
 	 */
-	public static $name = 'updateGravityFormsEntry';
+	public static $name = 'updateGfEntry';
 
 	/**
 	 * Gravity Forms field validation errors.
@@ -85,7 +85,7 @@ class UpdateEntry extends AbstractMutation {
 				'description' => __( 'The ID of the entry that was created. Null if the entry was only partially submitted or submitted as a draft.', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'   => [
-				'type'        => Entry::$type,
+				'type'        => SubmittedEntry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload, array $args, AppContext $context ) {
 					if ( ! empty( $payload['errors'] ) || ! $payload['entryId'] ) {

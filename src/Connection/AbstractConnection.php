@@ -52,7 +52,7 @@ abstract class AbstractConnection implements Registrable {
 	 *
 	 * @param array $filter_by .
 	 */
-	protected static function get_filtered_connection_args( array $filter_by = null ) : array {
+	public static function get_filtered_connection_args( array $filter_by = null ) : array {
 		$connection_args = static::get_connection_args();
 
 		if ( empty( $filter_by ) ) {

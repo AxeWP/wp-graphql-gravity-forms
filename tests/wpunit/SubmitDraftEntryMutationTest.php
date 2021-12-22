@@ -1,6 +1,6 @@
 <?php
 /**
- * Test submitGravityFormsDraftEntry mutation .
+ * Test submitGfDraftEntry mutation .
  *
  * @package .
  */
@@ -57,27 +57,27 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	}
 
 	/**
-	 * Tests `submitGravityFormsDraftEntry`.
+	 * Tests `submitGfDraft
 	 */
 	public function testSubmitGravityFormsDraftEntry() : void {
 		wp_set_current_user( $this->admin->ID );
 		$actual = $this->createMutation();
 		$this->assertArrayNotHasKey( 'errors', $actual );
 
-		$actual_entry = $this->factory->entry->get_object_by_id( $actual['data']['submitGravityFormsDraftEntry']['entryId'] );
+		$actual_entry = $this->factory->entry->get_object_by_id( $actual['data']['submitGfDraftEntry']['entryId'] );
 
-		$this->assertEquals( $actual_entry['id'], $actual['data']['submitGravityFormsDraftEntry']['entryId'] );
+		$this->assertEquals( $actual_entry['id'], $actual['data']['submitGfDraftEntry']['entryId'] );
 
-		$this->assertEquals( 'value1', $actual['data']['submitGravityFormsDraftEntry']['entry']['formFields']['nodes'][0]['value'] );
-		$this->factory->entry->delete( $actual['data']['submitGravityFormsDraftEntry']['entryId'] );
+		$this->assertEquals( 'value1', $actual['data']['submitGfDraftEntry']['entry']['formFields']['nodes'][0]['value'] );
+		$this->factory->entry->delete( $actual['data']['submitGfDraftEntry']['entryId'] );
 	}
 
 	/**
-	 * Tests `submitGravityFormsDraftEntry` when a field doesnt validate correctly.
+	 * Tests `submitGfDraftn a field doesnt validate correctly.
 	 *
 	 * @TODO .
 	 */
-	// public function testSubmitGravityFormsDraftEntry_badValue() : void {
+	// public function testSubmitGfDraftalue() : void {
 	// $draft_token = $this->factory->draft_entry->create(
 	// [
 	// 'form_id'      => $this->form_id,
@@ -99,7 +99,7 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	// $this->assertArrayNotHasKey( 'errors', $actual );
 
 	// $this->factory->draft_entry->delete( $draft_token );
-	// $this->factory->entry->delete( $actual['data']['submitGravityFormsDraftEntry']['entryId'] );
+	// $this->factory->entry->delete( $actual['data']['entryId'] );
 	// }
 
 	/**
@@ -109,11 +109,11 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	 */
 	public function createMutation( array $args = [] ) : array {
 		$mutation = '
-			mutation submitGravityFormsDraftEntry(
+			mutation submitGfDraftEntry (
 				$resumeToken: String!,
 				$clientMutationId: String,
 			) {
-				submitGravityFormsDraftEntry(
+				submitGfDraftEntry (
 					input: {
 						resumeToken: $resumeToken
 						clientMutationId: $clientMutationId

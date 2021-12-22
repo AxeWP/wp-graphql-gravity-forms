@@ -83,6 +83,8 @@ class FormFieldsConnectionResolver {
 			return null;
 		}
 
+		$fields = self::filter_form_fields_by_connection_args( $source, $args );
+
 		$fields = self::prepare_data( $source );
 
 		$connection = Relay::connectionFromArray( $fields, $args );
@@ -128,5 +130,49 @@ class FormFieldsConnectionResolver {
 			'last',
 			'suffix',
 		];
+	}
+
+		/**
+		 * Filters the form fields by the connection's where args.
+		 *
+		 * @param array $fields .
+		 * @param array $args .
+		 * @return array
+		 */
+	private static function filter_form_fields_by_connection_args( $fields, $args ) : array {
+		if ( isset( $args['where']['ids'] ) ) {
+			if ( ! is_array( $args['where']['ids'] ) ) {
+				$args['where']['ids'] = [ $args['where']['ids'] ];
+			}
+			$ids = array_map( 'absint', $args['where']['ids'] );
+
+			$fields = array_filter( $fields, fn( $field ) => in_array( (int) $field['id'], $ids, true ) );
+		}
+
+		if ( isset( $args['where']['adminLabels'] ) ) {
+			if ( ! is_array( $args['where']['adminLabels'] ) ) {
+				$args['where']['adminLabels'] = [ $args['where']['adminLabels'] ];
+			}
+
+			$admin_labels = array_map( 'sanitize_text_field', $args['where']['adminLabels'] );
+
+			$fields = array_filter( $fields, fn( $field)  => in_array( $field['adminLabel'], $admin_labels, true ) );
+		}
+
+		if ( isset( $args['where']['fieldTypes'] ) ) {
+			if ( ! is_array( $args['where']['fieldTypes'] ) ) {
+				$args['where']['fieldTypes'] = [ $args['where']['fieldTypes'] ];
+			}
+
+			$fields = array_filter( $fields, fn( $field ) => in_array( $field['type'], $args['where']['fieldTypes'], true ) );
+		}
+
+		if ( isset( $args['where']['pageNumber'] ) ) {
+			$page = absint( $args['where']['pageNumber'] );
+
+			$fields = array_filter( $fields, fn( $field ) => $page === (int) $field['pageNumber'] );
+		}
+
+		return $fields;
 	}
 }

@@ -11,6 +11,10 @@
 namespace WPGraphQL\GF\Utils;
 
 use GF_Fields;
+use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
+use WPGraphQL\GF\Data\Loader\EntriesLoader;
+use WPGraphQL\GF\Type\WPObject\Entry\DraftEntry;
+use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
 
 /**
  * Class - Utils
@@ -177,6 +181,23 @@ class Utils {
 			}
 		}
 
+		return $types;
+	}
+
+	/**
+	 * Gets an array of GF entry types paired with their GraphQL type names.
+	 *
+	 * E.g. `[ 'draft_entry' => 'GfDraftEntry' ]`
+	 *
+	 * @return array
+	 */
+	public static function get_registered_entry_types() : array {
+		$types = [
+			EntriesLoader::$name      => SubmittedEntry::$type,
+			DraftEntriesLoader::$name => DraftEntry::$type,
+		];
+
+		// @todo add filter for partial entries.
 		return $types;
 	}
 

@@ -10,6 +10,7 @@ use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 use WPGraphQL\GF\Type\Enum;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
 use Helper\GFHelpers\GFHelpers;
+use WPGraphQL\GF\Data\Loader\EntriesLoader;
 
 /**
  * Class - EntryQueriesTest
@@ -64,12 +65,12 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	}
 
 	/**
-	 * Tests `gravityFormsEntry`.
+	 * Tests `gfEntry`.
 	 */
-	public function testGravityFormsEntryQuery() : void {
+	public function testEntryQuery() : void {
 		wp_set_current_user( $this->admin->ID );
 
-		$global_id = Relay::toGlobalId( 'GravityFormsEntry', $this->entry_ids[0] );
+		$global_id = Relay::toGlobalId( EntriesLoader::$name, $this->entry_ids[0] );
 		$entry     = $this->factory->entry->get_object_by_id( $this->entry_ids[0] );
 		$form      = $this->factory->form->get_object_by_id( $this->form_id );
 
@@ -100,15 +101,15 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	}
 
 	/**
-	 * Tests `gravityFormsEntry` with no setup variables.
+	 * Tests `gfEntry` with no setup variables.
 	 */
-	public function testGravityFormsEntryQuery_empty() {
+	public function testEntryQuery_empty() {
 		wp_set_current_user( $this->admin->ID );
 
 		$entry_id  = $this->factory->entry->create(
 			[ 'form_id' => $this->form_id ]
 		);
-		$global_id = Relay::toGlobalId( 'GravityFormsEntry', $entry_id );
+		$global_id = Relay::toGlobalId( EntriesLoader::$name, $entry_id );
 		$entry     = $this->factory->entry->get_object_by_id( $entry_id );
 		$form      = $this->factory->form->get_object_by_id( $this->form_id );
 
@@ -128,17 +129,19 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	}
 
 	/**
-	 * Tests `gravityFormsEntry` with draft entry.
+	 * Tests `gfEntry` with draft entry.
 	 */
-	public function testGravityFormsEntryQuery_draft() : void {
+	public function testEntryQuery_draft() : void {
 		wp_set_current_user( $this->admin->ID );
 
 		$draft_tokens = $this->factory->draft_entry->create_many( 2, [ 'form_id' => $this->form_id ] );
 
 		$query = '
 			query( $id: ID!, $idType: EntryIdTypeEnum) {
-				gravityFormsEntry( id: $id, idType: $idType ) {
-					resumeToken
+				gfEntry( id: $id, idType: $idType ) {
+					... on GfDraftEntry {
+						resumeToken
+					}
 				}
 			}
 		';
@@ -153,22 +156,24 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 			]
 		);
 		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $draft_tokens[0], $actual['data']['gravityFormsEntry']['resumeToken'] );
+		$this->assertEquals( $draft_tokens[0], $actual['data']['gfEntry']['resumeToken'] );
 
 		$this->factory->draft_entry->delete( $draft_tokens );
 	}
 
 	/**
-	 * Tests `gravityFormsEntries`.
+	 * Tests `gfEntries`.
 	 */
 	public function testEntriesQuery() : void {
 		wp_set_current_user( $this->admin->ID );
 
 		$query = '
 			query {
-				gravityFormsEntries {
+				gfEntries {
 					nodes {
-						entryId
+						... on GfSubmittedEntry {
+							databaseId
+						}
 					}
 				}
 			}
@@ -176,11 +181,11 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		$actual = $this->graphql( [ 'query' => $query ] );
 		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertCount( 6, $actual['data']['gravityFormsEntries']['nodes'] );
+		$this->assertCount( 6, $actual['data']['gfEntries']['nodes'] );
 	}
 
 	/**
-	 * Tests `gravityFormsEntries` with query args .
+	 * Tests `gfEntries` with query args .
 	 */
 	public function testEntriesQueryArgs() {
 		wp_set_current_user( $this->admin->ID );
@@ -189,7 +194,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		$query = '
 				query( $first: Int, $after: String, $last:Int, $before: String ) {
-					gravityFormsEntries( first: $first, after: $after, last: $last, before: $before ) {
+					gfEntries( first: $first, after: $after, last: $last, before: $before ) {
 						pageInfo{
 							hasNextPage
 							hasPreviousPage
@@ -200,7 +205,9 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 							cursor
 						}
 						nodes {
-							entryId
+							... on GfSubmittedEntry {
+								databaseId
+							}
 						}
 					}
 				}
@@ -218,16 +225,16 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		// Check `first` argument.
 		$this->assertArrayNotHasKey( 'errors', $response, 'First array has errors.' );
 
-		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'First does not return correct amount.' );
-		$this->assertSame( $entry_ids[0], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'First - node 0 is not same.' );
-		$this->assertSame( $entry_ids[1], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'First - node 1 is not same.' );
-		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'First does not have next page.' );
-		$this->assertFalse( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'First has previous page.' );
+		$this->assertCount( 2, $response['data']['gfEntries']['nodes'], 'First does not return correct amount.' );
+		$this->assertSame( $entry_ids[0], $response['data']['gfEntries']['nodes'][0]['databaseId'], 'First - node 0 is not same.' );
+		$this->assertSame( $entry_ids[1], $response['data']['gfEntries']['nodes'][1]['databaseId'], 'First - node 1 is not same.' );
+		$this->assertTrue( $response['data']['gfEntries']['pageInfo']['hasNextPage'], 'First does not have next page.' );
+		$this->assertFalse( $response['data']['gfEntries']['pageInfo']['hasPreviousPage'], 'First has previous page.' );
 
 		// Check `after` argument.
 		$variables = [
 			'first'  => 2,
-			'after'  => $response['data']['gravityFormsEntries']['pageInfo']['endCursor'],
+			'after'  => $response['data']['gfEntries']['pageInfo']['endCursor'],
 			'last'   => null,
 			'before' => null,
 		];
@@ -235,15 +242,15 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response, 'First/after #1 array has errors.' );
-		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'First/after #1 does not return correct amount.' );
-		$this->assertSame( $entry_ids[2], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'First/after #1- node 0 is not same.' );
-		$this->assertSame( $entry_ids[3], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'First/after #1 - node 1 is not same' );
-		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'First/after #1 does not have next page.' );
-		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'First/after #1 does not have previous page.' );
+		$this->assertCount( 2, $response['data']['gfEntries']['nodes'], 'First/after #1 does not return correct amount.' );
+		$this->assertSame( $entry_ids[2], $response['data']['gfEntries']['nodes'][0]['databaseId'], 'First/after #1- node 0 is not same.' );
+		$this->assertSame( $entry_ids[3], $response['data']['gfEntries']['nodes'][1]['databaseId'], 'First/after #1 - node 1 is not same' );
+		$this->assertTrue( $response['data']['gfEntries']['pageInfo']['hasNextPage'], 'First/after #1 does not have next page.' );
+		$this->assertTrue( $response['data']['gfEntries']['pageInfo']['hasPreviousPage'], 'First/after #1 does not have previous page.' );
 
 		$variables = [
 			'first'  => 2,
-			'after'  => $response['data']['gravityFormsEntries']['pageInfo']['endCursor'],
+			'after'  => $response['data']['gfEntries']['pageInfo']['endCursor'],
 			'last'   => null,
 			'before' => null,
 		];
@@ -251,11 +258,11 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response, 'First/after #2 array has errors.' );
-		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'First/after #2 does not return correct amount.' );
-		$this->assertSame( $entry_ids[4], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'First/after #2 - node 0 is not same' );
-		$this->assertSame( $entry_ids[5], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'First/after #2 - node 1 is not same.' );
-		$this->assertFalse( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'First/after #2 has next page.' );
-		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'First/after #2 does not have previous page.' );
+		$this->assertCount( 2, $response['data']['gfEntries']['nodes'], 'First/after #2 does not return correct amount.' );
+		$this->assertSame( $entry_ids[4], $response['data']['gfEntries']['nodes'][0]['databaseId'], 'First/after #2 - node 0 is not same' );
+		$this->assertSame( $entry_ids[5], $response['data']['gfEntries']['nodes'][1]['databaseId'], 'First/after #2 - node 1 is not same.' );
+		$this->assertFalse( $response['data']['gfEntries']['pageInfo']['hasNextPage'], 'First/after #2 has next page.' );
+		$this->assertTrue( $response['data']['gfEntries']['pageInfo']['hasPreviousPage'], 'First/after #2 does not have previous page.' );
 
 		// Check last argument.
 		$variables = [
@@ -268,43 +275,43 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response, 'Last array has errors.' );
-		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'Last does not return correct amount.' );
-		$this->assertSame( $entry_ids[4], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'Last - node 0 is not same' );
-		$this->assertSame( $entry_ids[5], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'Last - node 1 is not same.' );
-		$this->assertFalse( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'Last has next page.' );
-		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'Last does not have previous page.' );
+		$this->assertCount( 2, $response['data']['gfEntries']['nodes'], 'Last does not return correct amount.' );
+		$this->assertSame( $entry_ids[4], $response['data']['gfEntries']['nodes'][0]['databaseId'], 'Last - node 0 is not same' );
+		$this->assertSame( $entry_ids[5], $response['data']['gfEntries']['nodes'][1]['databaseId'], 'Last - node 1 is not same.' );
+		$this->assertFalse( $response['data']['gfEntries']['pageInfo']['hasNextPage'], 'Last has next page.' );
+		$this->assertTrue( $response['data']['gfEntries']['pageInfo']['hasPreviousPage'], 'Last does not have previous page.' );
 
 		// Check `before` argument.
 		$variables = [
 			'first'  => null,
 			'after'  => null,
 			'last'   => 2,
-			'before' => $response['data']['gravityFormsEntries']['pageInfo']['endCursor'],
+			'before' => $response['data']['gfEntries']['pageInfo']['endCursor'],
 		];
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response, 'Last/before #1 array has errors.' );
-		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'last/before does not return correct amount.' );
-		$this->assertSame( $entry_ids[2], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'last/before #1 - node 0 is not same' );
-		$this->assertSame( $entry_ids[3], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'last/before #1 - node 1 is not same' );
-		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'Last/before #1 does not have next page.' );
-		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'Last/before #1 does not have previous page.' );
+		$this->assertCount( 2, $response['data']['gfEntries']['nodes'], 'last/before does not return correct amount.' );
+		$this->assertSame( $entry_ids[2], $response['data']['gfEntries']['nodes'][0]['databaseId'], 'last/before #1 - node 0 is not same' );
+		$this->assertSame( $entry_ids[3], $response['data']['gfEntries']['nodes'][1]['databaseId'], 'last/before #1 - node 1 is not same' );
+		$this->assertTrue( $response['data']['gfEntries']['pageInfo']['hasNextPage'], 'Last/before #1 does not have next page.' );
+		$this->assertTrue( $response['data']['gfEntries']['pageInfo']['hasPreviousPage'], 'Last/before #1 does not have previous page.' );
 
 		$variables = [
 			'first'  => null,
 			'after'  => null,
 			'last'   => 2,
-			'before' => $response['data']['gravityFormsEntries']['pageInfo']['endCursor'],
+			'before' => $response['data']['gfEntries']['pageInfo']['endCursor'],
 		];
 		$response  = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response, 'Last/before #2 array has errors.' );
-		$this->assertCount( 2, $response['data']['gravityFormsEntries']['nodes'], 'last/before does not return correct amount.' );
-		$this->assertSame( $entry_ids[0], $response['data']['gravityFormsEntries']['nodes'][0]['entryId'], 'last/before #2 - node 0 is not same' );
-		$this->assertSame( $entry_ids[1], $response['data']['gravityFormsEntries']['nodes'][1]['entryId'], 'last/before #2 - node 1 is not same' );
-		$this->assertTrue( $response['data']['gravityFormsEntries']['pageInfo']['hasNextPage'], 'Last/before #2 does not have next page.' );
-		$this->assertFalse( $response['data']['gravityFormsEntries']['pageInfo']['hasPreviousPage'], 'Last/before #2 has previous page.' );
+		$this->assertCount( 2, $response['data']['gfEntries']['nodes'], 'last/before does not return correct amount.' );
+		$this->assertSame( $entry_ids[0], $response['data']['gfEntries']['nodes'][0]['databaseId'], 'last/before #2 - node 0 is not same' );
+		$this->assertSame( $entry_ids[1], $response['data']['gfEntries']['nodes'][1]['databaseId'], 'last/before #2 - node 1 is not same' );
+		$this->assertTrue( $response['data']['gfEntries']['pageInfo']['hasNextPage'], 'Last/before #2 does not have next page.' );
+		$this->assertFalse( $response['data']['gfEntries']['pageInfo']['hasPreviousPage'], 'Last/before #2 has previous page.' );
 	}
 
 	/**
@@ -315,18 +322,16 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	private function get_entry_query() : string {
 		return '
 			query getEntry($id: ID!, $idType: EntryIdTypeEnum) {
-				gravityFormsEntry(id: $id, idType: $idType) {
+				gfEntry(id: $id, idType: $idType) {
 					createdBy {
 						databaseId
 					}
 					createdById
 					createdByDatabaseId
-					databaseId
 					dateCreated
 					dateUpdated
 					dateCreatedGmt
 					dateUpdatedGmt
-					entryId
 					formDatabaseId
 					form {
 						databaseId
@@ -339,11 +344,19 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 					id
 					ip
 					isDraft
-					isRead
-					isStarred
+					isSubmitted
 					sourceUrl
-					status
 					userAgent
+					... on GfDraftEntry {
+						resumeToken
+					}
+					... on GfSubmittedEntry {
+						databaseId
+						isStarred
+						isRead
+						postDatabaseId
+						status
+					}
 				}
 			}
 		';
@@ -358,27 +371,26 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	public function expected_field_response( array $entry, array $form ) : array {
 		return [
 			$this->expectedObject(
-				'gravityFormsEntry',
+				'gfEntry',
 				[
-					$this->expectedField( 'createdByDatabaseId', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : null ),
-					$this->expectedField( 'createdById', ! empty( $entry['created_by'] ) ? $this->toRelayId( 'user', $entry['created_by'] ) : null ),
+					$this->expectedField( 'createdByDatabaseId', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : static::IS_NULL ),
+					$this->expectedField( 'createdById', ! empty( $entry['created_by'] ) ? $this->toRelayId( 'user', $entry['created_by'] ) : static::IS_NULL ),
 					$this->expectedObject(
 						'createdBy',
 						[
-							$this->expectedField( 'databaseId', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : null ),
+							$this->expectedField( 'databaseId', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : static::IS_NULL ),
 						]
 					),
-					$this->expectedField( 'databaseId', ! empty( $entry['id'] ) ? (int) $entry['id'] : null ),
-					$this->expectedField( 'dateCreated', ! empty( $entry['date_created'] ) ? get_date_from_gmt( $entry['date_created'] ) : null ),
-					$this->expectedField( 'dateCreatedGmt', ! empty( $entry['date_created'] ) ? $entry['date_created'] : null ),
-					$this->expectedField( 'dateUpdated', ! empty( $entry['date_updated'] ) ? get_date_from_gmt( $entry['date_updated'] ) : null ),
-					$this->expectedField( 'dateUpdatedGmt', ! empty( $entry['date_updated'] ) ? $entry['date_updated'] : null ),
-					$this->expectedField( 'entryId', ! empty( $entry['id'] ) ? (int) $entry['id'] : null ),
-					$this->expectedField( 'formDatabaseId', ! empty( $form['id'] ) ? (int) $form['id'] : null ),
+					$this->expectedField( 'databaseId', ! empty( $entry['id'] ) ? (int) $entry['id'] : static::IS_NULL ),
+					$this->expectedField( 'dateCreated', ! empty( $entry['date_created'] ) ? get_date_from_gmt( $entry['date_created'] ) : static::IS_NULL ),
+					$this->expectedField( 'dateCreatedGmt', ! empty( $entry['date_created'] ) ? $entry['date_created'] : static::IS_NULL ),
+					$this->expectedField( 'dateUpdated', ! empty( $entry['date_updated'] ) ? get_date_from_gmt( $entry['date_updated'] ) : static::IS_NULL ),
+					$this->expectedField( 'dateUpdatedGmt', ! empty( $entry['date_updated'] ) ? $entry['date_updated'] : static::IS_NULL ),
+					$this->expectedField( 'formDatabaseId', ! empty( $form['id'] ) ? (int) $form['id'] : static::IS_NULL ),
 					$this->expectedObject(
 						'form',
 						[
-							$this->expectedField( 'databaseId', isset( $form['id'] ) ? (int) $form['id'] : null ),
+							$this->expectedField( 'databaseId', isset( $form['id'] ) ? (int) $form['id'] : static::IS_NULL ),
 						]
 					),
 					$this->expectedObject(
@@ -392,15 +404,16 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 							),
 						]
 					),
-					$this->expectedField( 'id', $this->toRelayId( 'GravityFormsEntry', $entry['id'] ) ),
-					$this->expectedField( 'ip', ! empty( $entry['ip'] ) ? $entry['ip'] : null ),
-					$this->expectedField( 'isDraft', ! empty( $entry['is_draft'] ) ),
+					$this->expectedField( 'id', $this->toRelayId( EntriesLoader::$name, $entry['id'] ) ),
+					$this->expectedField( 'ip', ! empty( $entry['ip'] ) ? $entry['ip'] : static::IS_NULL ),
+					$this->expectedField( 'isDraft', ! empty( $entry['resume_token'] ) ),
+					$this->expectedField( 'isSubmitted', ! empty( $entry['id'] ) ),
 					$this->expectedField( 'isRead', ! empty( $entry['is_read'] ) ),
 					$this->expectedField( 'isStarred', ! empty( $entry['isStarred'] ) ),
-					// $this->expectedField( 'resumeToken', ! empty( $entry['resumeToken'] ) ? $entry['resumeToken'] : null ),
-					$this->expectedField( 'sourceUrl', ! empty( $entry['source_url'] ) ? $entry['source_url'] : null ),
-					$this->expectedField( 'status', ! empty( $entry['status'] ) ? GFHelpers::get_enum_for_value( Enum\EntryStatusEnum::$type, $entry['status'] ) : null ),
-					$this->expectedField( 'userAgent', ! empty( $entry['user_agent'] ) ? $entry['user_agent'] : null ),
+					$this->expectedField( 'resumeToken', ! empty( $entry['resumeToken'] ) ? $entry['resumeToken'] : static::IS_NULL ),
+					$this->expectedField( 'sourceUrl', ! empty( $entry['source_url'] ) ? $entry['source_url'] : static::IS_NULL ),
+					$this->expectedField( 'status', ! empty( $entry['status'] ) ? GFHelpers::get_enum_for_value( Enum\EntryStatusEnum::$type, $entry['status'] ) : static::IS_NULL ),
+					$this->expectedField( 'userAgent', ! empty( $entry['user_agent'] ) ? $entry['user_agent'] : static::IS_NULL ),
 				]
 			),
 		];

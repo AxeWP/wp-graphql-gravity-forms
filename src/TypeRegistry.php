@@ -209,6 +209,7 @@ class TypeRegistry {
 	 */
 	public static function interfaces() : array {
 		$classes_to_register = [
+			WPInterface\Entry::class,
 			WPInterface\FormField::class,
 			WPInterface\NodeWithForm::class,
 		];
@@ -235,7 +236,8 @@ class TypeRegistry {
 			WPObject\ConditionalLogic\ConditionalLogic::class,
 			WPObject\ConditionalLogic\ConditionalLogicRule::class,
 			// Entries.
-			WPObject\Entry\Entry::class,
+			WPObject\Entry\DraftEntry::class,
+			WPObject\Entry\SubmittedEntry::class,
 			WPObject\Entry\EntryQuizResults::class,
 			// Forms.
 			WPObject\Form\Form::class,
