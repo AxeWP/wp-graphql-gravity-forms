@@ -197,10 +197,13 @@ class Utils {
 			DraftEntriesLoader::$name => DraftEntry::$type,
 		];
 
-		// @todo add filter for partial entries.
-		return $types;
+		/**
+		 * Filter for modifying the Gravity Forms Entry types supported by WPGraphQL.
+		 *
+		 * @param $entry_types An array of Data Loader names => GraphQL Types.
+		 */
+		return apply_filters( 'graphql_gf_registered_entry_types', $types );
 	}
-
 
 	/**
 	 * Returns an array of possible form field input types for GraphQL object generation.
@@ -331,6 +334,8 @@ class Utils {
 		 * Filters the list of ignored field types.
 		 *
 		 * Useful for adding/removing support for a specific Gravity Forms field.
+		 *
+		 * @param array $ignored_fields An array of GF_Field $type names to be ignored by WPGraphQL.
 		 */
 		$ignored_fields = apply_filters( 'graphql_gf_ignored_field_types', $ignored_fields );
 
