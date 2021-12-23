@@ -74,13 +74,17 @@ class EntriesConnection extends AbstractConnection {
 	 */
 	public static function get_connection_args() : array {
 		return [
-			'formIds'          => [
-				'type'        => [ 'list_of' => 'ID' ],
-				'description' => __( 'Array of form IDs to limit the entries to. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
-			],
 			'dateFilters'      => [
 				'type'        => EntriesDateFiltersInput::$type,
 				'description' => __( 'Date filters to apply.', 'wp-graphql-gravity-forms' ),
+			],
+			'entryType'        => [
+				'type'        => EntryTypeEnum::$type,
+				'description' => __( 'Entry status. Default is `SUBMITTED`. Currently no other types are supported.', 'wp-graphql-gravity-forms' ),
+			],
+			'formIds'          => [
+				'type'        => [ 'list_of' => 'ID' ],
+				'description' => __( 'Array of form IDs to limit the entries to. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldFilters'     => [
 				'type'        => [ 'list_of' => EntriesFieldFiltersInput::$type ],
@@ -97,10 +101,6 @@ class EntriesConnection extends AbstractConnection {
 			'status'           => [
 				'type'        => EntryStatusEnum::$type,
 				'description' => __( 'Entry status. Default is "ACTIVE".', 'wp-graphql-gravity-forms' ),
-			],
-			'entryType'        => [
-				'type'        => EntryTypeEnum::$type,
-				'description' => __( 'Entry status. Default is `SUBMITTED`. Currently no other types are supported.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
