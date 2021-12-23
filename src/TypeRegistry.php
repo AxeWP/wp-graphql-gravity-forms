@@ -169,7 +169,7 @@ class TypeRegistry {
 		 *
 		 * @param array           $classes_to_register Array of classes to be registered to the schema.
 		 */
-		return apply_filters( 'graphql_gf_enums_to_register', $classes_to_register );
+		return apply_filters( 'graphql_gf_registered_enum_classes', $classes_to_register );
 	}
 
 	/**
@@ -204,7 +204,7 @@ class TypeRegistry {
 		 *
 		 * @param array           $classes_to_register Array of classes to be registered to the schema.
 		 */
-		return apply_filters( 'graphql_gf_inputs_to_register', $classes_to_register );
+		return apply_filters( 'graphql_gf_registered_input_classes', $classes_to_register );
 	}
 
 	/**
@@ -224,7 +224,7 @@ class TypeRegistry {
 		 *
 		 * @param array           $classes_to_register = Array of classes to be registered to the schema.
 		 */
-		return apply_filters( 'graphql_gf_interfaces_to_register', $classes_to_register );
+		return apply_filters( 'graphql_gf_registered_interface_classes', $classes_to_register );
 	}
 
 	/**
@@ -278,7 +278,7 @@ class TypeRegistry {
 		 *
 		 * @param array           $classes_to_register = Array of classes to be registered to the schema.
 		 */
-		return apply_filters( 'graphql_gf_objects_to_register', $classes_to_register );
+		return apply_filters( 'graphql_gf_registered_object_classes', $classes_to_register );
 	}
 
 	/**
@@ -294,7 +294,7 @@ class TypeRegistry {
 		 *
 		 * @param array           $classes_to_register = Array of classes to be registered to the schema.
 		 */
-		return apply_filters( 'graphql_gf_fields_to_register', $classes_to_register );
+		return apply_filters( 'graphql_gf_registered_field_classes', $classes_to_register );
 	}
 
 	/**
@@ -314,7 +314,7 @@ class TypeRegistry {
 		 *
 		 * @param array           $classes_to_register = Array of classes to be registered to the schema.
 		 */
-		return apply_filters( 'graphql_gf_connections_to_register', $classes_to_register );
+		return apply_filters( 'graphql_gf_registered_connection_classes', $classes_to_register );
 	}
 
 	/**
@@ -337,7 +337,7 @@ class TypeRegistry {
 		 *
 		 * @param array           $classes_to_register = Array of classes to be registered to the schema.
 		 */
-		$classes_to_register = apply_filters( 'graphql_gf_mutations_to_register', $classes_to_register );
+		$classes_to_register = apply_filters( 'graphql_gf_registered_mutation_classes', $classes_to_register );
 
 		return $classes_to_register;
 	}
