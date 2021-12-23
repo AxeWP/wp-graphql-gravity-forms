@@ -10,6 +10,8 @@ namespace WPGraphQL\GF\Type\WPInterface;
 
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
+use WPGraphQL\GF\Interfaces\Registrable;
+use WPGraphQL\GF\Interfaces\Type;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
@@ -18,7 +20,7 @@ use WPGraphQL\Registry\TypeRegistry;
 /**
  * Class - NodeWithForm
  */
-class NodeWithForm extends AbstractType implements TypeWithFields {
+class NodeWithForm implements Registrable, Type, TypeWithFields {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

@@ -8,6 +8,8 @@
 
 namespace WPGraphQL\GF\Type\WPObject;
 
+use WPGraphQL\GF\Interfaces\Registrable;
+use WPGraphQL\GF\Interfaces\Type;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\Registry\TypeRegistry;
@@ -15,7 +17,23 @@ use WPGraphQL\Registry\TypeRegistry;
 /**
  * Class - AbstractType
  */
-abstract class AbstractObject extends AbstractType implements TypeWithFields {
+abstract class AbstractObject implements Registrable, Type, TypeWithFields {
+	/**
+	 * Type registered in WPGraphQL.
+	 *
+	 * @var string
+	 */
+	public static string $type = 'FormField';
+
+	/**
+	 * Whether the type should be loaded eagerly by WPGraphQL. Defaults to false.
+	 *
+	 * Eager load should only be necessary for types that are not referenced directly (e.g. in Unions, Interfaces ).
+	 *
+	 * @var boolean
+	 */
+	public static bool $should_load_eagerly = false;
+
 	/**
 	 * Register Object type to GraphQL schema.
 	 *

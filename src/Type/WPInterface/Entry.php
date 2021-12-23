@@ -17,9 +17,10 @@ use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Interfaces\Field;
+use WPGraphQL\GF\Interfaces\Registrable;
+use WPGraphQL\GF\Interfaces\Type;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Model\Form;
-use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
 use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\GF\Utils\Utils;
@@ -28,7 +29,7 @@ use WPGraphQL\Registry\TypeRegistry;
 /**
  * Class - FormEntry
  */
-class Entry extends AbstractType implements TypeWithFields, Field {
+class Entry implements Field, Registrable, Type, TypeWithFields {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -44,7 +45,9 @@ class Entry extends AbstractType implements TypeWithFields, Field {
 	public static string $field_name = 'gfEntry';
 
 	/**
-	 * {@inheritDoc}
+	 * Whether the type should be loaded eagerly by WPGraphQL. Defaults to false.
+	 *
+	 * Eager load should only be necessary for types that are not referenced directly (e.g. in Unions, Interfaces ).
 	 *
 	 * @var boolean
 	 */

@@ -12,6 +12,8 @@
 namespace WPGraphQL\GF\Type\WPInterface;
 
 use GraphQL\Error\UserError;
+use WPGraphQL\GF\Interfaces\Registrable;
+use WPGraphQL\GF\Interfaces\Type;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
@@ -22,7 +24,7 @@ use WPGraphQL\Registry\TypeRegistry;
 /**
  * Class - FormField
  */
-class FormField extends AbstractType implements TypeWithFields {
+class FormField implements Registrable, Type, TypeWithFields {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -31,7 +33,9 @@ class FormField extends AbstractType implements TypeWithFields {
 	public static string $type = 'FormField';
 
 	/**
-	 * {@inheritDoc}
+	 * Whether the type should be loaded eagerly by WPGraphQL. Defaults to false.
+	 *
+	 * Eager load should only be necessary for types that are not referenced directly (e.g. in Unions, Interfaces ).
 	 *
 	 * @var boolean
 	 */

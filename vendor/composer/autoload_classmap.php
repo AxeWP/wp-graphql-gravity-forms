@@ -40,7 +40,6 @@ return array(
     'WPGraphQL\\GF\\Mutation\\UpdateDraftEntry' => $baseDir . '/src/Mutation/UpdateDraftEntry.php',
     'WPGraphQL\\GF\\Mutation\\UpdateEntry' => $baseDir . '/src/Mutation/UpdateEntry.php',
     'WPGraphQL\\GF\\TypeRegistry' => $baseDir . '/src/TypeRegistry.php',
-    'WPGraphQL\\GF\\Type\\AbstractType' => $baseDir . '/src/Type/AbstractType.php',
     'WPGraphQL\\GF\\Type\\Enum\\AbstractEnum' => $baseDir . '/src/Type/Enum/AbstractEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\AddressFieldCountryEnum' => $baseDir . '/src/Type/Enum/AddressFieldCountryEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\AddressFieldTypeEnum' => $baseDir . '/src/Type/Enum/AddressFieldTypeEnum.php',
