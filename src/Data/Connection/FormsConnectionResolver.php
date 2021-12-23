@@ -87,7 +87,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 		 * @param AppContext  $context    The AppContext passed down the GraphQL tree
 		 * @param ResolveInfo $info       The ResolveInfo passed down the GraphQL tree
 		 */
-		$query_args = apply_filters( 'wp_graphql_gf_forms_connection_query_args', $query_args, $this->source, $this->args, $this->context, $this->info );
+		$query_args = apply_filters( 'graphql_gf_forms_connection_query_args', $query_args, $this->source, $this->args, $this->context, $this->info );
 
 		return $query_args;
 	}
@@ -120,7 +120,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 			 *
 			 * @param array $form Form meta array.
 			 */
-			$query[ $form['id'] ] = apply_filters( 'wp_graphql_gf_form_object', $form );
+			$query[ $form['id'] ] = apply_filters( 'graphql_gf_form_object', $form );
 		}
 
 		return $query;
