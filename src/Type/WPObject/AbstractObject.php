@@ -24,13 +24,11 @@ abstract class AbstractObject extends AbstractType implements TypeWithFields {
 	public static function register( TypeRegistry $type_registry = null ) : void {
 		register_graphql_object_type(
 			static::$type,
-			static::prepare_config(
-				[
-					'description'     => static::get_description(),
-					'fields'          => static::get_fields(),
-					'eagerlyLoadType' => static::$should_load_eagerly,
-				]
-			)
+			[
+				'description'     => static::get_description(),
+				'fields'          => static::get_fields(),
+				'eagerlyLoadType' => static::$should_load_eagerly,
+			]
 		);
 	}
 }

@@ -51,39 +51,37 @@ class Form extends AbstractObject implements Field {
 	public static function register( TypeRegistry $type_registry = null ) : void {
 		register_graphql_object_type(
 			static::$type,
-			static::prepare_config(
-				[
-					'description'     => static::get_description(),
-					'connections'     => [
-						'entries'    => [
-							'toType'         => Entry::$type,
-							'connectionArgs' => EntriesConnection::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby' ] ),
-							'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
-								$context->gfForm = $source;
+			[
+				'description'     => static::get_description(),
+				'connections'     => [
+					'entries'    => [
+						'toType'         => Entry::$type,
+						'connectionArgs' => EntriesConnection::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby' ] ),
+						'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
+							$context->gfForm = $source;
 
-								$args['where']['formIds'] = $source->formId ?? null;
-								return Factory::resolve_entries_connection( $source, $args, $context, $info );
-							},
-						],
-						'formFields' => [
-							'toType'         => FormField::$type,
-							'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
-							'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
-								$context->gfForm = $source;
-
-								if ( empty( $source->formFields ) ) {
-									return null;
-								}
-
-								return FormFieldsConnectionResolver::resolve( $source->formFields, $args, $context, $info );
-							},
-						],
+							$args['where']['formIds'] = $source->formId ?? null;
+							return Factory::resolve_entries_connection( $source, $args, $context, $info );
+						},
 					],
-					'eagerlyLoadType' => static::$should_load_eagerly,
-					'fields'          => static::get_fields(),
-					'interfaces'      => [ 'Node', 'DatabaseIdentifier' ],
-				]
-			)
+					'formFields' => [
+						'toType'         => FormField::$type,
+						'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
+						'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+							$context->gfForm = $source;
+
+							if ( empty( $source->formFields ) ) {
+								return null;
+							}
+
+							return FormFieldsConnectionResolver::resolve( $source->formFields, $args, $context, $info );
+						},
+					],
+				],
+				'eagerlyLoadType' => static::$should_load_eagerly,
+				'fields'          => static::get_fields(),
+				'interfaces'      => [ 'Node', 'DatabaseIdentifier' ],
+			]
 		);
 
 		self::register_field();

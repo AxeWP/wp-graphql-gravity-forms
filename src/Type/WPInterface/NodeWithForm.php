@@ -39,12 +39,10 @@ class NodeWithForm extends AbstractType implements TypeWithFields {
 
 		register_graphql_interface_type(
 			static::$type,
-			static::prepare_config(
-				[
-					'description' => self::get_description(),
-					'fields'      => self::get_fields(),
-				]
-			)
+			[
+				'description' => self::get_description(),
+				'fields'      => self::get_fields(),
+			]
 		);
 	}
 

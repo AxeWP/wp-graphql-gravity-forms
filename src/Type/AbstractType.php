@@ -30,24 +30,4 @@ abstract class AbstractType implements Registrable, Type {
 	 * @var boolean
 	 */
 	public static bool $should_load_eagerly = false;
-
-	/**
-	 * Gets the filterable $config array for the GraphQL type.
-	 *
-	 * @param array $config The individual config values.
-	 *
-	 * @return array
-	 */
-	public static function prepare_config( array $config ) : array {
-		/**
-		 * Filter for modifying the GraphQL type $config array used to register the type in WPGraphQL.
-		 *
-		 * @param array  $config The config array.
-		 * @param string $type The GraphQL type name.
-		 */
-		$config = apply_filters( 'wp_graphql_gf_type_config', $config, static::$type );
-		$config = apply_filters( 'wp_graphql_gf_' . static::$type . '_type_config', $config );
-
-		return $config;
-	}
 }

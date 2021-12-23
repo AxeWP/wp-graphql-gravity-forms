@@ -50,33 +50,31 @@ class FormField extends AbstractType implements TypeWithFields {
 
 		register_graphql_interface_type(
 			static::$type,
-			static::prepare_config(
-				[
-					'description'     => self::get_description(),
-					'fields'          => self::get_fields(),
-					'resolveType'     => function( $value ) use ( $type_registry ) {
-						$possible_types    = Utils::get_registered_form_field_types();
-						$possible_subtypes = Utils::get_possible_form_field_child_types( $value->type );
+			[
+				'description'     => self::get_description(),
+				'fields'          => self::get_fields(),
+				'resolveType'     => function( $value ) use ( $type_registry ) {
+					$possible_types    = Utils::get_registered_form_field_types();
+					$possible_subtypes = Utils::get_possible_form_field_child_types( $value->type );
 
-						if ( isset( $possible_subtypes[ $value->inputType ] ) ) {
-							return $possible_subtypes[ $value->inputType ];
-						}
+					if ( isset( $possible_subtypes[ $value->inputType ] ) ) {
+						return $possible_subtypes[ $value->inputType ];
+					}
 
-						if ( isset( $possible_types[ $value->type ] ) ) {
-							return $type_registry->get_type( $possible_types[ $value->type ] );
-						}
+					if ( isset( $possible_types[ $value->type ] ) ) {
+						return $type_registry->get_type( $possible_types[ $value->type ] );
+					}
 
-						throw new UserError(
-							sprintf(
-							/* translators: %s: GF field type */
-								__( 'The "%s" Gravity Forms field type is not (yet) supported by the schema.', 'wp-graphql-gravity-forms' ),
-								$value->type
-							)
-						);
-					},
-					'eagerlyLoadType' => static::$should_load_eagerly,
-				]
-			)
+					throw new UserError(
+						sprintf(
+						/* translators: %s: GF field type */
+							__( 'The "%s" Gravity Forms field type is not (yet) supported by the schema.', 'wp-graphql-gravity-forms' ),
+							$value->type
+						)
+					);
+				},
+				'eagerlyLoadType' => static::$should_load_eagerly,
+			]
 		);
 	}
 

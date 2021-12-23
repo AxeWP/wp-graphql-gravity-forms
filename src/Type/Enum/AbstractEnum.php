@@ -22,13 +22,11 @@ abstract class AbstractEnum extends AbstractType implements Enum {
 	public static function register( TypeRegistry $type_registry = null ) : void {
 		register_graphql_enum_type(
 			static::$type,
-			static::prepare_config(
-				[
-					'description'     => static::get_description(),
-					'values'          => static::get_values(),
-					'eagerlyLoadType' => static::$should_load_eagerly,
-				]
-			)
+			[
+				'description'     => static::get_description(),
+				'values'          => static::get_values(),
+				'eagerlyLoadType' => static::$should_load_eagerly,
+			]
 		);
 	}
 }

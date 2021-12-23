@@ -22,23 +22,6 @@ abstract class AbstractConnection implements Registrable {
 	public static $from_field_name;
 
 	/**
-	 * Gets the filterable $config array for the GraphQL connection.
-	 *
-	 * @param array $config The individual config values.
-	 */
-	protected static function prepare_config( array $config ) : array {
-		/**
-		 * Filter for modifying the GraphQL connection $config array used to register the connection in WPGraphQL.
-		 *
-		 * @param array  $config The config array.
-		 * @param string $type The GraphQL type name.
-		 */
-		$config = apply_filters( 'wp_graphql_gf_connection_config', $config, $config['fromType'], $config['toType'] );
-
-		return $config;
-	}
-
-	/**
 	 * Gets custom connection configuration arguments, such as the resolver, edgeFields, connectionArgs, etc.
 	 *
 	 * @return array
