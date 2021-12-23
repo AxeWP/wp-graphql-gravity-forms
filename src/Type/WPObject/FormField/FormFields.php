@@ -68,7 +68,7 @@ class FormFields implements Registrable {
 
 		$possible_types = Utils::get_possible_form_field_child_types( $field->type );
 
-		if ( null !== $possible_types ) {
+		if ( ! empty( $possible_types ) ) {
 			$shared_settings = [];
 
 			foreach ( $possible_types as $gf_type => $type ) {
@@ -206,10 +206,12 @@ class FormFields implements Registrable {
 			if ( method_exists( PropertyMapper::class, $setting ) ) {
 				PropertyMapper::$setting( $field, $properties );
 			}
+
+			$properties = apply_filters( 'graphql_gf_form_field_setting_properties', $properties, $setting, $field );
 		}
 
 		// Add field values to properties.
-		self::map_field_values_to_properties( $field, $properties );
+		$properties = self::map_field_values_to_properties( $field, $properties );
 
 		return $properties;
 	}
@@ -220,14 +222,16 @@ class FormFields implements Registrable {
 	 * @param GF_Field $field .
 	 * @param array    $properties .
 	 */
-	public static function map_field_values_to_properties( GF_Field $field, array &$properties ) : void {
+	public static function map_field_values_to_properties( GF_Field $field, array $properties ) : array {
 		if ( ! empty( $field->displayOnly ) || in_array( $field->type, [ 'html', 'page', 'section' ], true ) ) {
-			return;
+			return $properties;
 		}
 
 		$properties += ValueProperties::value();
 
-		switch ( $field->get_input_type() ) {
+		$input_type = $field->get_input_type();
+
+		switch ( $input_type ) {
 			// Ignore the quiz interface.
 			case 'quiz':
 				break;
@@ -265,5 +269,9 @@ class FormFields implements Registrable {
 			default:
 				break;
 		}
+
+		$properties = apply_filters( 'graphql_gf_form_field_value_properties', $properties, $field );
+
+		return $properties;
 	}
 }
