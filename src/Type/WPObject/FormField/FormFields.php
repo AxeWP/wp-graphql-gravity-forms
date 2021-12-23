@@ -207,6 +207,13 @@ class FormFields implements Registrable {
 				PropertyMapper::$setting( $field, $properties );
 			}
 
+			/**
+			 * Filter to modify the Form Field GraphQL fields based on GF_Field::form_editor_field_settings().
+			 *
+			 * @param array $properties An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
+			 * @param string $setting The `form_editor_field_settings()` key.
+			 * @param GF_Field $field The Gravity Forms Field object.
+			 */
 			$properties = apply_filters( 'graphql_gf_form_field_setting_properties', $properties, $setting, $field );
 		}
 
@@ -270,6 +277,12 @@ class FormFields implements Registrable {
 				break;
 		}
 
+		/**
+		 * Filter to modify the Form Field value GraphQL field.
+		 *
+		 * @param array $properties An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
+		 * @param GF_Field $field The Gravity Forms Field object.
+		 */
 		$properties = apply_filters( 'graphql_gf_form_field_value_properties', $properties, $field );
 
 		return $properties;
