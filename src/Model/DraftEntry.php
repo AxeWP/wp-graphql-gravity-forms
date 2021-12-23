@@ -58,13 +58,10 @@ class DraftEntry extends Model {
 	 * {@inheritDoc}
 	 */
 	protected function is_private() : bool {
-		$can_view = false;
+		$can_view = true;
 
-		if ( get_current_user_id() === $this->submission['partial_entry']['created_by'] ) {
-			$can_view = true;
-		}
 		/**
-		 * Filter to control whether the user should be allowed to view entries.
+		 * Filter to control whether the user should be allowed to view draft entries.
 		 *
 		 * @since 0.10.0
 		 *
