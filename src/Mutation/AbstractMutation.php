@@ -49,6 +49,4 @@ abstract class AbstractMutation implements Mutation, Registrable {
 			throw new UserError( __( 'Mutation not processed. The input data was missing or invalid.', 'wp-graphql-gravity-forms' ) );
 		}
 	}
-
-
 }
