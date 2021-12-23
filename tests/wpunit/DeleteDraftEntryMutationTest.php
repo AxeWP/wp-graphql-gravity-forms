@@ -32,7 +32,10 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 
 		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
 		$this->draft_token        = $this->factory->draft_entry->create(
-			[ 'form_id' => $this->form_id ]
+			[
+				'form_id'    => $this->form_id,
+				'created_by' => $this->admin->ID,
+			]
 		);
 		$this->client_mutation_id = 'someUniqueId';
 

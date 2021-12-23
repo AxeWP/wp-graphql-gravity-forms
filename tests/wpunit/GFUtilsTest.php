@@ -36,7 +36,12 @@ class GFUtilsTest extends GFGraphQLTestCase {
 				$this->fields[0]['id'] => 'This is a default Text Entry',
 			]
 		);
-		$this->draft_token       = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
+		$this->draft_token       = $this->factory->draft_entry->create(
+			[
+				'form_id'    => $this->form_id,
+				'created_by' => $this->admin->ID,
+			]
+		);
 	}
 
 	/**

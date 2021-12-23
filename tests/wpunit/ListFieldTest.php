@@ -212,8 +212,8 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function update_draft_entry_mutation() : string {
 		return '
-			mutation updateGfDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: [ListFieldInput]! ){
-				updateGfDraftEntry(input:{clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, listValues: $value} }) {
+			mutation updateGfDraftEntry( $createdBy: Int, $resumeToken: String!, $fieldId: Int!, $value: [ListFieldInput]! ){
+				updateGfDraftEntry( input: {createdBy: $createdBy, clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, listValues: $value} }) {
 					errors {
 						id
 						message

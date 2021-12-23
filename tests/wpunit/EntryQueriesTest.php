@@ -134,7 +134,13 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	public function testEntryQuery_draft() : void {
 		wp_set_current_user( $this->admin->ID );
 
-		$draft_tokens = $this->factory->draft_entry->create_many( 2, [ 'form_id' => $this->form_id ] );
+		$draft_tokens = $this->factory->draft_entry->create_many(
+			2,
+			[
+				'form_id'    => $this->form_id,
+				'created_by' => $this->admin->ID,
+			]
+		);
 
 		$query = '
 			query( $id: ID!, $idType: EntryIdTypeEnum) {
