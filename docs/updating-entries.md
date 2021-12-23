@@ -2,13 +2,13 @@
 
 ## Update an Entry
 
-You can update a [Gravity Forms entry](https://docs.gravityforms.com/entry-object/) with the `updateGravityFormsEntry` mutation. This mutation works similarly to [`submitGravityFormsForm`](submitting-forms.md).
+You can update a [Gravity Forms entry](https://docs.gravityforms.com/entry-object/) with the `updateGfEntry` mutation. This mutation works similarly to [`submitGfForm`](submitting-forms.md).
 
 ### Example Mutation
 
 ```graphql
 {
-  updateGravityFormsEntry(
+  updateGfEntry(
     input: {
       entryId: 1
       isRead: false # Optional. Used to mark the entry as read.
@@ -16,7 +16,7 @@ You can update a [Gravity Forms entry](https://docs.gravityforms.com/entry-objec
       status: ACTIVE # Optional. Can be used to mark an entry as trash or spam.
       fieldValues: [
         {
-          # See the above section on using `submitGravityFormsForm`
+          # See the above section on using `submitGfForm`
           id: 1
           value: "This is a text field value."
         }
@@ -38,18 +38,18 @@ You can update a [Gravity Forms entry](https://docs.gravityforms.com/entry-objec
 
 ## Update a Draft Entry
 
-Updating a [Gravity Forms draft entry](https://docs.gravityforms.com/database-storage-structure-reference/#wp-gf-draft-submissions) using the `updateGravityFormsDraftEntry` mutation follows a similar pattern to [updating an entry](#update-an-entry) :
+Updating a [Gravity Forms draft entry](https://docs.gravityforms.com/database-storage-structure-reference/#wp-gf-draft-submissions) using the `updateGfDraftEntry` mutation follows a similar pattern to [updating an entry](#update-an-entry) :
 
 ### Example Mutation
 
 ```graphql
 {
-  updateGravityFormsEntry(
+  updateGfEntry(
     input: {
       resumeToken: "f82a5d986f4d4f199893f751adee98e9"
       fieldValues: [
         {
-          # See the above section on using `submitGravityFormsForm`
+          # See the above section on using `submitGfForm`
           id: 1
           value: "This is a text field value."
         }

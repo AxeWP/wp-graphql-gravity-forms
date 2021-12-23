@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'e06a7cbd11b7129cb55bd86fff411682ca5c36d5',
+    'reference' => '305691733f00752675c65b86512dfcf53931ca24',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
@@ -40,39 +40,39 @@
     ),
     'codeception/codeception' => 
     array (
-      'pretty_version' => '4.1.24',
-      'version' => '4.1.24.0',
+      'pretty_version' => '4.1.27',
+      'version' => '4.1.27.0',
       'aliases' => 
       array (
       ),
-      'reference' => '1fc3a8f4d6cf7350e1b69afd136708cfffc89e9e',
+      'reference' => '2d9a11e6f487e3bcc17e22b7552fb6a10cec5c7c',
     ),
     'codeception/lib-asserts' => 
     array (
-      'pretty_version' => '1.13.2',
-      'version' => '1.13.2.0',
+      'pretty_version' => '2.0.0',
+      'version' => '2.0.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '184231d5eab66bc69afd6b9429344d80c67a33b6',
+      'reference' => 'df9c8346722ddde4a20e6372073c09c8df87c296',
     ),
     'codeception/lib-innerbrowser' => 
     array (
-      'pretty_version' => '2.0.0',
-      'version' => '2.0.0.0',
+      'pretty_version' => '2.0.1',
+      'version' => '2.0.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '2a583993e806799576a1fac1a7f59197eb441678',
+      'reference' => 'c7bf42d5a38e2883ae9cf298ec9d15b1185815fb',
     ),
     'codeception/module-asserts' => 
     array (
-      'pretty_version' => '2.0.0',
-      'version' => '2.0.0.0',
+      'pretty_version' => '2.0.1',
+      'version' => '2.0.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'ef4a27087b09bf3c3b88fa9025e3179848541a79',
+      'reference' => '313673c35de00ad337d3b5f895a1998695d3b537',
     ),
     'codeception/module-cli' => 
     array (
@@ -103,12 +103,12 @@
     ),
     'codeception/module-phpbrowser' => 
     array (
-      'pretty_version' => '2.0.1',
-      'version' => '2.0.1.0',
+      'pretty_version' => '2.0.2',
+      'version' => '2.0.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'd66924f343032a480fde1264b606c3357d2ed0d2',
+      'reference' => 'fda6d97253d0595843adb87ec0b9b7d6d89539ac',
     ),
     'codeception/module-rest' => 
     array (
@@ -139,12 +139,12 @@
     ),
     'codeception/stub' => 
     array (
-      'pretty_version' => '3.7.0',
-      'version' => '3.7.0.0',
+      'pretty_version' => '4.0.0',
+      'version' => '4.0.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '468dd5fe659f131fc997f5196aad87512f9b1304',
+      'reference' => '4c9cf3e19bd5f064e08e7f3ba6be651c218dc6ae',
     ),
     'codeception/util-universalframework' => 
     array (
@@ -246,7 +246,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'e06a7cbd11b7129cb55bd86fff411682ca5c36d5',
+      'reference' => '305691733f00752675c65b86512dfcf53931ca24',
     ),
     'hautelook/phpass' => 
     array (
@@ -257,17 +257,17 @@
     ),
     'illuminate/collections' => 
     array (
-      'pretty_version' => 'v8.76.2',
-      'version' => '8.76.2.0',
+      'pretty_version' => 'v8.77.1',
+      'version' => '8.77.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'f7dc6269a1d773f1d7a2a71034f32d2b60eaac42',
+      'reference' => 'bafdbd033a717aed94e4d023512f2c9eb3e8cd77',
     ),
     'illuminate/contracts' => 
     array (
-      'pretty_version' => 'v8.76.2',
-      'version' => '8.76.2.0',
+      'pretty_version' => 'v8.77.1',
+      'version' => '8.77.1.0',
       'aliases' => 
       array (
       ),
@@ -275,8 +275,8 @@
     ),
     'illuminate/macroable' => 
     array (
-      'pretty_version' => 'v8.76.2',
-      'version' => '8.76.2.0',
+      'pretty_version' => 'v8.77.1',
+      'version' => '8.77.1.0',
       'aliases' => 
       array (
       ),
@@ -284,12 +284,12 @@
     ),
     'illuminate/support' => 
     array (
-      'pretty_version' => 'v8.76.2',
-      'version' => '8.76.2.0',
+      'pretty_version' => 'v8.77.1',
+      'version' => '8.77.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '9429d41f950d3461910fd51a4df90b2ac93a9f3a',
+      'reference' => '789b5c9a28884bc6b07841574cc86abdec7c5f68',
     ),
     'justinrainbow/json-schema' => 
     array (

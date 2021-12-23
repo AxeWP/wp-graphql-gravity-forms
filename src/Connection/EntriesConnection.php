@@ -34,36 +34,32 @@ class EntriesConnection extends AbstractConnection {
 	public static function register( TypeRegistry $type_registry = null ) : void {
 		// RootQuery to Entry.
 		register_graphql_connection(
-			self::prepare_config(
-				[
-					'fromType'       => 'RootQuery',
-					'toType'         => Entry::$type,
-					'fromFieldName'  => 'gfEntries',
-					'connectionArgs' => self::get_filtered_connection_args(),
-					'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						if ( isset( $args['entryType'] ) && EntryTypeEnum::SUBMITTED !== $args['entryType'] ) {
-							throw new UserError( __( 'Only lists of `SUBMITTED` entries may currently be queried.', 'wp-graphql-gravity-forms' ) );
-						}
+			[
+				'fromType'       => 'RootQuery',
+				'toType'         => Entry::$type,
+				'fromFieldName'  => 'gfEntries',
+				'connectionArgs' => self::get_filtered_connection_args(),
+				'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+					if ( isset( $args['entryType'] ) && EntryTypeEnum::SUBMITTED !== $args['entryType'] ) {
+						throw new UserError( __( 'Only lists of `SUBMITTED` entries may currently be queried.', 'wp-graphql-gravity-forms' ) );
+					}
 
-						return Factory::resolve_entries_connection( $root, $args, $context, $info );
-					},
-				]
-			)
+					return Factory::resolve_entries_connection( $root, $args, $context, $info );
+				},
+			]
 		);
 
 		// RootQuery to SubmittedEntry.
 		register_graphql_connection(
-			self::prepare_config(
-				[
-					'fromType'       => 'RootQuery',
-					'toType'         => SubmittedEntry::$type,
-					'fromFieldName'  => 'gfSubmittedEntries',
-					'connectionArgs' => self::get_filtered_connection_args( [ 'formIds', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby', 'status' ] ),
-					'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						return Factory::resolve_entries_connection( $root, $args, $context, $info );
-					},
-				]
-			),
+			[
+				'fromType'       => 'RootQuery',
+				'toType'         => SubmittedEntry::$type,
+				'fromFieldName'  => 'gfSubmittedEntries',
+				'connectionArgs' => self::get_filtered_connection_args( [ 'formIds', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby', 'status' ] ),
+				'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+					return Factory::resolve_entries_connection( $root, $args, $context, $info );
+				},
+			]
 		);
 	}
 
@@ -74,13 +70,17 @@ class EntriesConnection extends AbstractConnection {
 	 */
 	public static function get_connection_args() : array {
 		return [
-			'formIds'          => [
-				'type'        => [ 'list_of' => 'ID' ],
-				'description' => __( 'Array of form IDs to limit the entries to. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
-			],
 			'dateFilters'      => [
 				'type'        => EntriesDateFiltersInput::$type,
 				'description' => __( 'Date filters to apply.', 'wp-graphql-gravity-forms' ),
+			],
+			'entryType'        => [
+				'type'        => EntryTypeEnum::$type,
+				'description' => __( 'Entry status. Default is `SUBMITTED`. Currently no other types are supported.', 'wp-graphql-gravity-forms' ),
+			],
+			'formIds'          => [
+				'type'        => [ 'list_of' => 'ID' ],
+				'description' => __( 'Array of form IDs to limit the entries to. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldFilters'     => [
 				'type'        => [ 'list_of' => EntriesFieldFiltersInput::$type ],
@@ -97,10 +97,6 @@ class EntriesConnection extends AbstractConnection {
 			'status'           => [
 				'type'        => EntryStatusEnum::$type,
 				'description' => __( 'Entry status. Default is "ACTIVE".', 'wp-graphql-gravity-forms' ),
-			],
-			'entryType'        => [
-				'type'        => EntryTypeEnum::$type,
-				'description' => __( 'Entry status. Default is `SUBMITTED`. Currently no other types are supported.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

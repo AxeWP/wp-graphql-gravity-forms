@@ -176,8 +176,8 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 */
 	public function update_draft_entry_mutation() : string {
 		return '
-			mutation updateGfDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: String! ){
-				updateGfDraftEntry( input:{clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
+			mutation updateGfDraftEntry( $createdBy: Int, $resumeToken: String!, $fieldId: Int!, $value: String! ){
+				updateGfDraftEntry( input: {createdBy: $createdBy, clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
 						message

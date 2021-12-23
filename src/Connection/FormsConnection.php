@@ -34,17 +34,15 @@ class FormsConnection extends AbstractConnection {
 	public static function register( TypeRegistry $type_registry = null ) : void {
 		// RootQuery to Form.
 		register_graphql_connection(
-			self::prepare_config(
-				[
-					'fromType'       => 'RootQuery',
-					'toType'         => Form::$type,
-					'fromFieldName'  => 'gfForms',
-					'connectionArgs' => self::get_connection_args(),
-					'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						return Factory::resolve_forms_connection( $root, $args, $context, $info );
-					},
-				]
-			)
+			[
+				'fromType'       => 'RootQuery',
+				'toType'         => Form::$type,
+				'fromFieldName'  => 'gfForms',
+				'connectionArgs' => self::get_connection_args(),
+				'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
+					return Factory::resolve_forms_connection( $root, $args, $context, $info );
+				},
+			]
 		);
 	}
 

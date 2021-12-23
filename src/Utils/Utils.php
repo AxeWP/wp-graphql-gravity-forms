@@ -197,30 +197,32 @@ class Utils {
 			DraftEntriesLoader::$name => DraftEntry::$type,
 		];
 
-		// @todo add filter for partial entries.
-		return $types;
+		/**
+		 * Filter for modifying the Gravity Forms Entry types supported by WPGraphQL.
+		 *
+		 * @param $entry_types An array of Data Loader names => GraphQL Types.
+		 */
+		return apply_filters( 'graphql_gf_registered_entry_types', $types );
 	}
-
 
 	/**
 	 * Returns an array of possible form field input types for GraphQL object generation.
 	 *
-	 * @todo make filterable.
-	 *
-	 * @param string $type . The current GF field type.
+	 * @param string $type The current GF field type.
 	 */
 	public static function get_possible_form_field_child_types( string $type ) : ?array {
 		$prefix = self::to_pascal_case( $type );
 		switch ( $type ) {
 			case 'post_category':
-				return [
-					'checkbox'    => $prefix . 'Checkbox',
+				$child_types = [
+					'checkbox'    => $prefix . 'CheckboxField',
 					'multiselect' => $prefix . 'MultiselectField',
 					'radio'       => $prefix . 'RadioField',
 					'select'      => $prefix . 'SelectField',
 				];
+				break;
 			case 'post_custom_field':
-				return [
+				$child_types = [
 					'checkbox'    => $prefix . 'CheckboxField',
 					'date'        => $prefix . 'DateField',
 					'email'       => $prefix . 'EmailField',
@@ -237,16 +239,18 @@ class Utils {
 					'time'        => $prefix . 'TimeField',
 					'website'     => $prefix . 'WebsiteField',
 				];
+				break;
 			case 'post_tag':
-				return [
+				$child_types = [
 					'checkbox'    => $prefix . 'CheckboxField',
 					'multiselect' => $prefix . 'MultiselectField',
 					'radio'       => $prefix . 'RadioField',
 					'select'      => $prefix . 'SelectField',
 					'text'        => $prefix . 'TextField',
 				];
+				break;
 			case 'product':
-				return [
+				$child_types = [
 					'calculation'   => $prefix . 'CalculationField',
 					'hiddenproduct' => $prefix . 'HiddenProductField',
 					'price'         => $prefix . 'PriceField',
@@ -254,39 +258,54 @@ class Utils {
 					'select'        => $prefix . 'SelectField',
 					'singleproduct' => $prefix . 'SingleProductField',
 				];
+				break;
 			case 'shipping':
-				return [
+				$child_types = [
 					'radio'          => $prefix . 'RadioField',
 					'select'         => $prefix . 'SelectField',
 					'singleshipping' => $prefix . 'SingleShippingField',
 				];
+				break;
 			case 'option':
-				return [
+				$child_types = [
 					'checkbox' => $prefix . 'CheckboxField',
 					'radio'    => $prefix . 'RadioField',
 					'select'   => $prefix . 'SelectField',
 				];
+				break;
 			case 'quiz':
-				return [
+				$child_types = [
 					'checkbox' => $prefix . 'CheckboxField',
 					'radio'    => $prefix . 'RadioField',
 					'select'   => $prefix . 'SelectField',
 				];
+				break;
 			case 'donation':
-				return [
+				$child_types = [
 					'donation' => $prefix . 'DonationField',
 					'radio'    => $prefix . 'RadioField',
 					'select'   => $prefix . 'SelectField',
 				];
+				break;
 			case 'quantity':
-				return [
+				$child_types = [
 					'number' => $prefix . 'NumberField',
 					'hidden' => $prefix . 'HiddenField',
 					'select' => $prefix . 'SelectField',
 				];
+				break;
 			default:
-				return null;
+				$child_types = [];
+				break;
 		}
+
+		/**
+		 * Filter for altering the child types of a specific GF_Field.
+		 *
+		 * @param array $child_types An array of GF_Field::$type => GraphQL type names.
+		 * @param string $field_type The 'parent' GF_Field type.
+		 */
+		return apply_filters( 'graphql_gf_form_field_child_types', $child_types, $type );
 	}
 
 	/**
@@ -305,16 +324,26 @@ class Utils {
 
 		// These fields are no longer supported by GF.
 		$ignored_fields[] = 'donation';
+		// This field is still in beta.
+		$ignored_fields[] = 'repeater';
 
 		// These fields are experimental, and don't have unit testing in place.
 		if ( ! defined( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS' ) || false === WPGRAPHQL_GF_EXPERIMENTAL_FIELDS ) {
-			$ignored_fields[] = 'repeater';
+			$ignored_fields[] = 'creditcard';
+			$ignored_fields[] = 'option';
+			$ignored_fields[] = 'price';
+			$ignored_fields[] = 'product';
+			$ignored_fields[] = 'quantity';
+			$ignored_fields[] = 'shipping';
+			$ignored_fields[] = 'total';
 		}
 
 		/**
 		 * Filters the list of ignored field types.
 		 *
 		 * Useful for adding/removing support for a specific Gravity Forms field.
+		 *
+		 * @param array $ignored_fields An array of GF_Field $type names to be ignored by WPGraphQL.
 		 */
 		$ignored_fields = apply_filters( 'graphql_gf_ignored_field_types', $ignored_fields );
 

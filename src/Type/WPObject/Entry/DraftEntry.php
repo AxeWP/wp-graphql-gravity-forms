@@ -45,14 +45,12 @@ class DraftEntry extends AbstractObject implements Field {
 	public static function register( TypeRegistry $type_registry = null ) : void {
 		register_graphql_object_type(
 			static::$type,
-			static::prepare_config(
-				[
-					'description'     => static::get_description(),
-					'eagerlyLoadType' => static::$should_load_eagerly,
-					'fields'          => static::get_fields(),
-					'interfaces'      => [ Entry::$type ],
-				]
-			)
+			[
+				'description'     => static::get_description(),
+				'eagerlyLoadType' => static::$should_load_eagerly,
+				'fields'          => static::get_fields(),
+				'interfaces'      => [ Entry::$type ],
+			]
 		);
 
 		self::register_field();

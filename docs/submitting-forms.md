@@ -1,35 +1,37 @@
 # Submitting Forms
 
-Form submissions are handled with the `submitGravityFormsForm` mutation.
+Form submissions are handled with the `submitGfForm` mutation.
 
-This mutation can be used either to submit an Entry or to submit a draft entry, by toggling the `saveAsDraft` input to `true`.
+This mutation can be used either to submit an Entry or to submit a draft entry, by toggling the `saveAsDraft` input to `true` .
 
 The `fieldValues` input takes an array of objects containing the `id` of the field, and a value input that corresponds to the Gravity Forms Field type.
 
 **Note**: Due to [GraphQL's current lack of support for Input Union types](https://github.com/harness-software/wp-graphql-gravity-forms/issues/4#issuecomment-563305561), you must use the specific value type specific to that field. A full list of field value types and their corresponding field fragments are below.
 
+## Supported Field Value input types
+
 | Field Value Input Type                                                  | Used for                                                                                                                                                                                                                                                 | Sub-fields                                                       |
 | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| `addressValues` _( obj )_                                               | `AddressField`                                                                                                                                                                                                                                           | `city`<br>`country`<br>`lineTwo`<br>`state`<br>`street`<br>`zip` |
-| `chainedSelectValues` _( [ obj ] )_ <sup>[1](#chainedSelectsNote)</sup> | `ChainedSelectField`                                                                                                                                                                                                                                     | `inputId`<br>`value`                                             |
-| `checkboxValues` _( [ obj ] )_                                          | `CheckboxField`<br>`QuizField`<sup>[3](#quizNote)</sup>                                                                                                                                                                                                                                          | `inputId`<br>`value`                                             |
-| `emailValues` _( obj )_                                                 | `EmailField`                                                                                                                                                                                                                                             | `confirmationValue`<br/>`value`                                  |
-| `fileUploadValues` _( [ Upload ] )_<sup>[2](#uploadNote)</sup>          | `FileUploadField`                                                                                                                                                                                                                                        | `name`<br>`type`<br>`size`<br>`tmp_name`<br>                                                              |
-| `listValues` _( [ obj ] )_                                              | `ListField`                                                                                                                                                                                                                                              | `rowValues` _( [ String ] )_                                     |
-| `nameValues` _( obj )_                                                  | `NameField`                                                                                                                                                                                                                                              | `first`<br>`last`<br>`midele`<br>`prefix`<br>`suffix`            |
-| `postImageValues` _( obj )_ <sup>[2](#uploadNote)</sup>                 | `PostImageField`                                                                                                                                                                                                                                         | `altText`<br>`caption`<br>`description`<br>`image`<br>`title`    |
-| `value` _( string )_                                                    | `ConsentField`<br>`DateField`<br>`HiddenField`<br>`NumberField`<br>`PhoneField`<br>`PostContentField`<br>`PostExcerptField`<br>`PostTitleField`<br>`QuizField`<sup>[3](#quizNote)</sup><br>`RadioField`<br>`SelectField`<br>`SignatureField`<br>`TextAreaField`<br>`TextField`<br>`TimeField`<br>`WebsiteField` | n/a                                                              |
-| `values` _( [ string ] )_                                               | `MultiSelectField`<br>`PostCategoryField`<br>`PostCustomField`<br>`PostTagsField`                                                                                                                                                                        | n/a                                                              |
+| `addressValues` _( obj )_                                               | `AddressField` | `city` <br> `country` <br> `lineTwo` <br> `state` <br> `street` <br> `zip` |
+| `chainedSelectValues` _( [ obj ] )_ <sup>[1](#chainedSelectsNote)</sup> | `ChainedSelectField` | `inputId` <br> `value` |
+| `checkboxValues` _( [ obj ] )_                                          | `CheckboxField` <br> `QuizField` <sup>[3](#quizNote)</sup>                                                                                                                                                                                                                                          | `inputId` <br> `value` |
+| `emailValues` _( obj )_                                                 | `EmailField` | `confirmationValue` <br/> `value` |
+| `fileUploadValues` _( [ Upload ] )_<sup>[2](#uploadNote)</sup>          | `FileUploadField` | `name` <br> `type` <br> `size` <br> `tmp_name` <br>                                                              |
+| `listValues` _( [ obj ] )_                                              | `ListField` | `rowValues` _( [ String ] )_                                     |
+| `nameValues` _( obj )_                                                  | `NameField` | `first` <br> `last` <br> `midele` <br> `prefix` <br> `suffix` |
+| `postImageValues` _( obj )_ <sup>[2](#uploadNote)</sup>                 | `PostImageField` | `altText` <br> `caption` <br> `description` <br> `image` <br> `title` |
+| `value` _( string )_                                                    | `ConsentField` <br> `DateField` <br> `HiddenField` <br> `NumberField` <br> `PhoneField` <br> `PostContentField` <br> `PostExcerptField` <br> `PostTitleField` <br> `QuizField` <sup>[3](#quizNote)</sup><br> `RadioField` <br> `SelectField` <br> `SignatureField` <br> `TextAreaField` <br> `TextField` <br> `TimeField` <br> `WebsiteField` | n/a                                                              |
+| `values` _( [ string ] )_                                               | `MultiSelectField` <br> `PostCategoryField` <br> `PostCustomField` <br> `PostTagsField` | n/a                                                              |
 
 <a name="chainedSelectNote">1</a>: In order to use `chainedSelectValues` you must install and activate [Gravity Forms Chained Selects](https://www.gravityforms.com/add-ons/chained-selects/).<br>
-<a name="uploadNote">2</a>: In order to use `fileUploadValues` or `postImageValues`, you must install and activate [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload).<br>
-<a name="quizNote">3</a>: [Gravity Forms Quiz Fields](https://docs.gravityforms.com/quiz-field/) can be either a Checkbox, Radio, or Select field. The field value input type is assigned accordingly. 
+<a name="uploadNote">2</a>: In order to use `fileUploadValues` or `postImageValues` , you must install and activate [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload).<br>
+<a name="quizNote">3</a>: [Gravity Forms Quiz Fields](https://docs.gravityforms.com/quiz-field/) can be either a Checkbox, Radio, or Select field. The field value input type is assigned accordingly.
 
 ### Example Mutation
 
 ```graphql
 {
-  submitGravityFormsForm(
+  submitGfForm(
     input: {
       formId: 50
       createdBy: 1 # The user ID.
@@ -108,10 +110,10 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
       id # The field that failed validation.
       message
     }
-    entryId # Will return null if submitting a draft entry
+    databaseId # Will return null if submitting a draft entry
     resumeToken # Will return null if submitting an entry.
     entry {
-      # See above section on querying Entries.
+      # See docs on querying Entries.
       id
     }
   }
@@ -122,9 +124,9 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
 
 In addition to any frontend, or GraphQL validation checks, Gravity Forms validates the values of each `formField` , and returns them in the `errors` field.
 
-If the field is updated successfully, the `errors` field will be `null`, and the `entry` in the response will be the newly updated entry object. Depending on whether `saveAsDraft` is `true`, you will either get the new `entryId` or the `resumeToken`, with the other value set to `null`.
+If the field is updated successfully, the `errors` field will be `null` , and the `entry` in the response will be the newly updated entry object. Depending on whether `saveAsDraft` is `true` , you will either get the new `entryId` or the `resumeToken` , with the other value set to `null` .
 
-If the field is NOT updated successfully, such as when a field validation error occurs, the `entry` object in the response will be `null`, and the `errors` field will provide data about the error. Example:
+If the field is NOT updated successfully, such as when a field validation error occurs, the `entry` object in the response will be `null` , and the `errors` field will provide data about the error. Example:
 
 ```json
 "errors": [

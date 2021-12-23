@@ -239,8 +239,8 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
-			mutation updateGfDraftEntry( $resumeToken: String!, $fieldId: Int!, $value: AddressFieldInput! ){
-				updateGfDraftEntry(input: {clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, addressValues: $value} }) {
+			mutation updateGfDraftEntry( $createdBy: Int, $resumeToken: String!, $fieldId: Int!, $value: AddressFieldInput! ){
+				updateGfDraftEntry( input: {createdBy: $createdBy, clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, addressValues: $value} }) {
 					errors {
 						id
 						message

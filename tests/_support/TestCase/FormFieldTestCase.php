@@ -88,6 +88,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 							'fieldValues' => $this->property_helper->get_field_values( $this->value ),
 						]
 					),
+					'created_by'  => $this->admin->ID,
 					'fieldValues' => $this->property_helper->get_field_values( $this->value ),
 				]
 			);
@@ -281,7 +282,12 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		wp_set_current_user( $this->admin->ID );
 
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
-		$resume_token = $this->factory->draft_entry->create( [ 'form_id' => $this->form_id ] );
+		$resume_token = $this->factory->draft_entry->create(
+			[
+				'form_id'    => $this->form_id,
+				'created_by' => $this->admin->ID,
+			]
+		);
 
 		$field_value       = $this->updated_field_value;
 		$field_value_input = $this->updated_field_value_input;
@@ -292,6 +298,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 			'resumeToken' => $resume_token,
 			'fieldId'     => $form['fields'][0]->id,
 			'value'       => $field_value_input,
+			'createdBy'   => $this->admin->ID,
 		];
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );

@@ -1,16 +1,21 @@
 # 🚀📄 WPGraphQL for Gravity Forms
 
 [![Project Status: Active.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
 ![Packagist License](https://img.shields.io/packagist/l/harness-software/wp-graphql-gravity-forms?color=green)
+
 ![Packagist Version](https://img.shields.io/packagist/v/harness-software/wp-graphql-gravity-forms?label=stable)
+
 ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/harness-software/wp-graphql-gravity-forms/v0.9.2)
+
 ![GitHub forks](https://img.shields.io/github/forks/harness-software/wp-graphql-gravity-forms?style=social)
+
 ![GitHub Repo stars](https://img.shields.io/github/stars/harness-software/wp-graphql-gravity-forms?style=social)
 
 A WordPress plugin that provides a GraphQL API for interacting with Gravity Forms.
 
-- [Join the WPGraphQL community on Slack.](https://join.slack.com/t/wp-graphql/shared_invite/zt-3vloo60z-PpJV2PFIwEathWDOxCTTLA)
-- [Documentation](#documentation)
+* [Join the WPGraphQL community on Slack.](https://join.slack.com/t/wp-graphql/shared_invite/zt-3vloo60z-PpJV2PFIwEathWDOxCTTLA)
+* [Documentation](#documentation)
 
 ## Overview
 
@@ -26,10 +31,11 @@ Our hope for this open source project is that it will enable more teams to lever
 
 ## System Requirements
 
-- PHP 7.4+
-- WPGraphQL 1.0.0+
-- Gravity Forms 2.5+
-- WordPress 5.4.1+
+* PHP 7.4+
+* WordPress 5.4.1+
+* WPGraphQL 1.6.4+
+* Gravity Forms 2.5+
+* ( Recommended ) [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload) - used for [File Upload and Post Image submissions](docs/submitting-forms.md).
 
 ## Quick Install
 
@@ -39,27 +45,35 @@ Our hope for this open source project is that it will enable more teams to lever
 
 ## Supported Features
 
-- Querying forms and entries.
-- Submitting forms.
-- Updating entries and draft entries.
-- Deleting entries and draft entries.
+* Querying forms and entries.
+* Submitting forms.
+* Updating entries and draft entries.
+* Deleting entries and draft entries.
 
 ## Future Feature Enhancements
 
-[_View all Feature Requests_](https://github.com/harness-software/wp-graphql-gravity-forms/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement) 
-- Add support for missing form fields [Github Issue](https://github.com/harness-software/wp-graphql-gravity-forms/issues/119)
-- Ability to query for lists of draft entries, or both entries and draft entries
-- Ability to get the total count for a list of entries.
-- Ability to create, update, and delete an individual Gravity Form.
-- Create & update integration tests. [Github Issue](https://github.com/harness-software/wp-graphql-gravity-forms/issues/116).
+[_View all Feature Requests_](https://github.com/harness-software/wp-graphql-gravity-forms/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
+
+* Add support for missing form fields [Github Issue](https://github.com/harness-software/wp-graphql-gravity-forms/issues/119)
+* Ability to query for lists of draft entries.
+* Ability to get the total count for a list of entries.
+* Ability to create, update, and delete an individual Gravity Form.
+* Create & update integration tests. [Github Issue](https://github.com/harness-software/wp-graphql-gravity-forms/issues/116).
 
 ## Documentation
 
-- [Using Global IDs vs Database IDs](docs/using-global-ids.md)
-- [Querying forms](docs/querying-forms.md)
-- [Querying entries & draft entries ](docs/querying-entries.md)
-- [Querying `formFields` and their values](docs/querying-formfields.md)
-- [Submitting forms](docs/submitting-forms.md)
-- [Updating entries & draft entries](docs/updating-entries.md)
-- [Deleting entries & draft entries](docs/deleting-entries.md)
-- [Actions & Filters](docs/actions-and-filters.md)
+* [Supported Gravity Forms form fields](docs/form-field-support.md)
+* [Using Global IDs vs Database IDs](docs/using-global-ids.md)
+* [Querying forms](docs/querying-forms.md)
+* [Querying entries & draft entries](docs/querying-entries.md)
+* [Querying `formFields` and their values](docs/querying-formfields.md)
+* [Submitting forms](docs/submitting-forms.md)
+* [Updating entries & draft entries](docs/updating-entries.md)
+* [Deleting entries & draft entries](docs/deleting-entries.md)
+* [Actions & Filters](docs/actions-and-filters.md)
+
+## Recipes
+
+* [Register a Gravity Forms Form to a custom GraphQL field](docs/register-form-to-custom-field.md)
+* [Register custom connections to Gravity Forms Entries](docs/recipes/register-custom-entries-connection.md)
+* [Register custom Gravity Forms fields](docs/recipes/register-custom-form-field.md)

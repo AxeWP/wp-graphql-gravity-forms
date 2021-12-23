@@ -45,21 +45,25 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @throws UserError .
 	 */
 	public function should_execute() : bool {
+		$can_view = false;
+
+		if (
+			current_user_can( 'gravityforms_view_entries' ) ||
+			current_user_can( 'gform_full_access' ) ) {
+			$can_view = true;
+		}
+
 		/**
 		 * Filter to control whether the user should be allowed to view entries.
 		 *
-		 * @since 0.5.0
+		 * @since 0.10.0
 		 *
 		 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
-		 * @param array|int $form_ids The specific form IDs being queried. Returns `0` if querying entries from all forms.
+		 * @param int|int[] $form_ids List of he specific form ID being queried.
 		 */
-		$can_user_view_entries = apply_filters(
-			'wp_graphql_gf_can_view_entries',
-			current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ) || get_current_user_id() === $this->source['createdByDatabaseId'],
-			$this->get_form_ids()
-		);
+		$can_view = apply_filters( 'graphql_gf_can_view_entries', $can_view, $this->get_form_ids() );
 
-		return $can_user_view_entries;
+		return $can_view;
 	}
 
 	/**
@@ -118,7 +122,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		 * @param AppContext  $context    The AppContext passed down the GraphQL tree
 		 * @param ResolveInfo $info       The ResolveInfo passed down the GraphQL tree
 		 */
-		$query_args = apply_filters( 'wp_graphql_gf_entries_connection_query_args', $query_args, $this->source, $this->args, $this->context, $this->info );
+		$query_args = apply_filters( 'graphql_gf_entries_connection_query_args', $query_args, $this->source, $this->args, $this->context, $this->info );
 
 		return $query_args;
 	}

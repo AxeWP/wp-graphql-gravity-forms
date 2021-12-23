@@ -58,19 +58,19 @@ class DraftEntry extends Model {
 	 * {@inheritDoc}
 	 */
 	protected function is_private() : bool {
-		if ( ! is_user_logged_in() ) {
-			return true;
-		}
+		$can_view = true;
 
-		if ( current_user_can( 'gravityforms_view_entries' ) || current_user_can( 'gform_full_access' ) ) {
-			return false;
-		}
+		/**
+		 * Filter to control whether the user should be allowed to view draft entries.
+		 *
+		 * @since 0.10.0
+		 *
+		 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
+		 * @param int|int[] $form_ids List of he specific form ID being queried.
+		 */
+		$can_view = apply_filters( 'graphql_gf_can_view_draft_entries', $can_view, $this->data['form_id'] );
 
-		if ( get_current_user_id() === $this->data['created_by'] ) {
-			return false;
-		}
-
-		return true;
+		return ! $can_view;
 	}
 
 	/**

@@ -55,7 +55,6 @@ class ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f
         'WPGraphQL\\GF\\Mutation\\UpdateDraftEntry' => __DIR__ . '/../..' . '/src/Mutation/UpdateDraftEntry.php',
         'WPGraphQL\\GF\\Mutation\\UpdateEntry' => __DIR__ . '/../..' . '/src/Mutation/UpdateEntry.php',
         'WPGraphQL\\GF\\TypeRegistry' => __DIR__ . '/../..' . '/src/TypeRegistry.php',
-        'WPGraphQL\\GF\\Type\\AbstractType' => __DIR__ . '/../..' . '/src/Type/AbstractType.php',
         'WPGraphQL\\GF\\Type\\Enum\\AbstractEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AbstractEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\AddressFieldCountryEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AddressFieldCountryEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\AddressFieldTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AddressFieldTypeEnum.php',
