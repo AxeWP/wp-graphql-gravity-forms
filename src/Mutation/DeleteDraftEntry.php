@@ -44,7 +44,8 @@ class DeleteDraftEntry extends AbstractMutation {
 				'description' => __( 'Either the global ID of the draft entry, or its resume token', 'wp-graphql-gravity-forms' ),
 			],
 			'idType' => [
-				'type' => DraftEntryIdTypeEnum::$type,
+				'type'        => DraftEntryIdTypeEnum::$type,
+				'description' => __( 'The ID type for the draft entry. Defaults to `ID` ', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -79,21 +80,8 @@ class DeleteDraftEntry extends AbstractMutation {
 				throw new UserError( __( 'Sorry, you are not allowed to delete entries', 'wp-graphql-gravity-forms' ) );
 			}
 
-			$id_type = isset( $input['idType'] ) ? $input['idType'] : 'global_id';
-
-			if ( 'resume_token' === $id_type ) {
-				$resume_token = $input['id'];
-			} else {
-				$id_parts = Relay::fromGlobalId( $input['id'] );
-
-				if ( ! isset( $id_parts['id'] ) || DraftEntriesLoader::$name !== $id_parts['type'] ) {
-					throw new UserError( __( 'The ID passed is not a for a valid Gravity Forms draft entry.', 'wp-graphql-gravity-forms' ) );
-				}
-
-				$resume_token = $id_parts['id'];
-			}
-
-			$resume_token = sanitize_text_field( $resume_token );
+			$id_type      = isset( $input['idType'] ) ? $input['idType'] : 'global_id';
+			$resume_token = self::get_resume_token_from_id( $input['id'], $id_type );
 
 			$entry_before_delete = GFUtils::get_draft_entry( $resume_token );
 

@@ -78,15 +78,7 @@ class DeleteEntry extends AbstractMutation {
 				throw new UserError( __( 'Sorry, you are not allowed to delete entries', 'wp-graphql-gravity-forms' ) );
 			}
 
-			$id_parts = Relay::fromGlobalId( $input['id'] );
-
-			if ( isset( $id_parts['id'] ) && EntriesLoader::$name === $id_parts['type'] ) {
-				$entry_id = $id_parts['id'];
-			} else {
-				$entry_id = $input['id'];
-			}
-
-			$entry_id = absint( $entry_id );
+			$entry_id = self::get_entry_id_from_id( $input['id'] );
 
 			if ( empty( $input['forceDelete'] ) ) {
 				$result          = GFAPI::update_entry_property( $entry_id, 'status', 'trash' );
