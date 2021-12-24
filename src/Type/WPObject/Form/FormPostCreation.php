@@ -9,7 +9,6 @@
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
 use WPGraphQL\AppContext;
-use WPGraphQL\Data\DataSource;
 use WPGraphQL\GF\Type\Enum\PostFormatTypeEnum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
@@ -48,11 +47,10 @@ class FormPostCreation extends AbstractObject {
 				'type'        => 'User',
 				'description' => __( 'When `useCurrentUserAsAuthor` is `false`, this contains the User object for the author.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source, array $args, AppContext $context ) {
-					codecept_debug( $source );
 					if ( empty( $source['authorDatabaseId'] ) ) {
 						return null;
 					}
-					return DataSource::resolve_user( (int) $source['authorDatabaseId'], $context );
+					return $context->get_loader( 'user' )->load_deferred( (int) $source['authorDatabaseId'] );
 				},
 			],
 			'categoryDatabaseId'           => [
