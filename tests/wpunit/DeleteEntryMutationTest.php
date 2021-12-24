@@ -19,7 +19,6 @@ class DeleteEntryMutationTest extends GFGraphQLTestCase {
 	private $entry_id;
 	private $text_field_helper;
 
-
 	/**
 	 * Run before each test.
 	 */
@@ -30,10 +29,10 @@ class DeleteEntryMutationTest extends GFGraphQLTestCase {
 		// Your set up methods here.
 		wp_set_current_user( $this->admin->ID );
 
-		$this->text_field_helper  = $this->tester->getPropertyHelper( 'TextField' );
-		$this->fields[]           = $this->factory->field->create( $this->text_field_helper->values );
-		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
-		$this->entry_id           = $this->factory->entry->create(
+		$this->text_field_helper = $this->tester->getPropertyHelper( 'TextField' );
+		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
+		$this->form_id           = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
+		$this->entry_id          = $this->factory->entry->create(
 			[
 				'form_id'              => $this->form_id,
 				'created_by'           => $this->admin->ID,
@@ -62,12 +61,12 @@ class DeleteEntryMutationTest extends GFGraphQLTestCase {
 		$query = $this->delete_mutation();
 
 		$variables = [
-			'id' => $this->entry_id,
+			'id'          => $this->entry_id,
 			'forceDelete' => false,
 		];
 
 		// Test as guest.
-		wp_set_current_user(0);
+		wp_set_current_user( 0 );
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayHasKey( 'errors', $response, 'Delete without permissions should fail' );
@@ -77,9 +76,9 @@ class DeleteEntryMutationTest extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response, 'Delete with databaseId has errors' );
-		$this->assertEquals( $this->toRelayId(EntriesLoader::$name, $this->entry_id ), $response['data']['deleteGfEntry']['deletedId'], 'Delete with databaseId id mismatch' );
+		$this->assertEquals( $this->toRelayId( EntriesLoader::$name, $this->entry_id ), $response['data']['deleteGfEntry']['deletedId'], 'Delete with databaseId id mismatch' );
 		$this->assertEquals( $this->entry_id, $response['data']['deleteGfEntry']['entry']['databaseId'], 'delete with databaseId mismatch' );
-		$this->assertEquals( GFHelpers::get_enum_for_value( EntryStatusEnum::$type, 'trash' ), $response['data']['deleteGfEntry']['entry']['status'], 'delete with databaseId not sent to trash');
+		$this->assertEquals( GFHelpers::get_enum_for_value( EntryStatusEnum::$type, 'trash' ), $response['data']['deleteGfEntry']['entry']['status'], 'delete with databaseId not sent to trash' );
 
 		$actual_entry = GFAPI::get_entry( $response['data']['deleteGfEntry']['entry']['databaseId'] );
 
@@ -87,11 +86,10 @@ class DeleteEntryMutationTest extends GFGraphQLTestCase {
 
 		// Test force delete
 		$variables = [
-			'id' => $this->entry_id,
+			'id'          => $this->entry_id,
 			'forceDelete' => true,
 		];
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
+		$response  = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response );
 
@@ -108,16 +106,16 @@ class DeleteEntryMutationTest extends GFGraphQLTestCase {
 
 		// Test Global Id
 		$variables = [
-			'id' => $this->toRelayId( EntriesLoader::$name, $this->entry_id ),
+			'id'          => $this->toRelayId( EntriesLoader::$name, $this->entry_id ),
 			'forceDelete' => false,
 		];
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
-		
+
 		$this->assertArrayNotHasKey( 'errors', $response, 'Delete with global has errors' );
-		$this->assertEquals( $this->toRelayId(EntriesLoader::$name, $this->entry_id ), $response['data']['deleteGfEntry']['deletedId'], 'Delete with global id mismatch' );
+		$this->assertEquals( $this->toRelayId( EntriesLoader::$name, $this->entry_id ), $response['data']['deleteGfEntry']['deletedId'], 'Delete with global id mismatch' );
 		$this->assertEquals( $this->entry_id, $response['data']['deleteGfEntry']['entry']['databaseId'], 'delete with global id databaseId mismatch' );
-		$this->assertEquals( GFHelpers::get_enum_for_value( EntryStatusEnum::$type, 'trash' ), $response['data']['deleteGfEntry']['entry']['status'], 'delete with globalId not sent to trash');
+		$this->assertEquals( GFHelpers::get_enum_for_value( EntryStatusEnum::$type, 'trash' ), $response['data']['deleteGfEntry']['entry']['status'], 'delete with globalId not sent to trash' );
 
 		$actual_entry = GFAPI::get_entry( $response['data']['deleteGfEntry']['entry']['databaseId'] );
 

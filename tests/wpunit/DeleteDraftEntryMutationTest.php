@@ -30,8 +30,8 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 		$this->text_field_helper = $this->tester->getPropertyHelper( 'TextField' );
 		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
 
-		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
-		$this->draft_token        = $this->factory->draft_entry->create(
+		$this->form_id     = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
+		$this->draft_token = $this->factory->draft_entry->create(
 			[
 				'form_id'    => $this->form_id,
 				'created_by' => $this->admin->ID,
@@ -59,12 +59,12 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 		$query = $this->delete_mutation();
 
 		$variables = [
-			'id'      => $this->draft_token,
-			'idType'  => 'RESUME_TOKEN' 
+			'id'     => $this->draft_token,
+			'idType' => 'RESUME_TOKEN',
 		];
 
 		// Test as guest.
-		wp_set_current_user(0);
+		wp_set_current_user( 0 );
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayHasKey( 'errors', $response, 'Delete without permissions should fail' );
@@ -74,7 +74,7 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response, 'Delete with resume_token has errors' );
-		$this->assertEquals( $this->toRelayId( DraftEntriesLoader::$name, $this->draft_token), $response['data']['deleteGfDraftEntry']['deletedId'], 'Delete with resume_token id mismatch' );
+		$this->assertEquals( $this->toRelayId( DraftEntriesLoader::$name, $this->draft_token ), $response['data']['deleteGfDraftEntry']['deletedId'], 'Delete with resume_token id mismatch' );
 		$this->assertEquals( $this->draft_token, $response['data']['deleteGfDraftEntry']['draftEntry']['resumeToken'], 'Delete with resume_token token mismatch' );
 
 		$actual_draft = GFFormsModel::get_draft_submission_values( $response['data']['deleteGfDraftEntry']['draftEntry']['resumeToken'] );
@@ -90,14 +90,14 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 
 		// Test Global Id
 		$variables = [
-			'id' => $this->toRelayId( DraftEntriesLoader::$name, $this->draft_token ),
+			'id'     => $this->toRelayId( DraftEntriesLoader::$name, $this->draft_token ),
 			'idType' => 'ID',
 		];
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $response, 'Delete with id has errors' );
-		$this->assertEquals( $this->toRelayId( DraftEntriesLoader::$name, $this->draft_token), $response['data']['deleteGfDraftEntry']['deletedId'], 'Delete with id id mismatch' );
+		$this->assertEquals( $this->toRelayId( DraftEntriesLoader::$name, $this->draft_token ), $response['data']['deleteGfDraftEntry']['deletedId'], 'Delete with id id mismatch' );
 		$this->assertEquals( $this->draft_token, $response['data']['deleteGfDraftEntry']['draftEntry']['resumeToken'], 'Delete with id token mismatch' );
 
 		$actual_draft = GFFormsModel::get_draft_submission_values( $response['data']['deleteGfDraftEntry']['draftEntry']['resumeToken'] );
@@ -114,8 +114,8 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 		$query = $this->delete_mutation();
 
 		$variables = [
-			'id'      => 'not4RealT0ke3n',
-			'idType'  => 'RESUME_TOKEN'
+			'id'     => 'not4RealT0ke3n',
+			'idType' => 'RESUME_TOKEN',
 		];
 
 		$response = graphql( compact( 'query', 'variables' ) );

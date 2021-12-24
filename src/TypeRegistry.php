@@ -188,6 +188,8 @@ class TypeRegistry {
 			Input\FormsConnectionOrderbyInput::class,
 			Input\ListFieldInput::class,
 			Input\NameFieldInput::class,
+			Input\UpdateDraftEntryMetaInput::class,
+			Input\UpdateEntryMetaInput::class,
 		];
 
 		if ( Utils::is_graphql_upload_enabled() ) {

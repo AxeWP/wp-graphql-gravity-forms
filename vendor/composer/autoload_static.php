@@ -118,6 +118,8 @@ class ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f
         'WPGraphQL\\GF\\Type\\Input\\ListFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/ListFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\NameFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/NameFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\PostImageFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/PostImageFieldInput.php',
+        'WPGraphQL\\GF\\Type\\Input\\UpdateDraftEntryMetaInput' => __DIR__ . '/../..' . '/src/Type/Input/UpdateDraftEntryMetaInput.php',
+        'WPGraphQL\\GF\\Type\\Input\\UpdateEntryMetaInput' => __DIR__ . '/../..' . '/src/Type/Input/UpdateEntryMetaInput.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\Entry' => __DIR__ . '/../..' . '/src/Type/WPInterface/Entry.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FormField' => __DIR__ . '/../..' . '/src/Type/WPInterface/FormField.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\NodeWithForm' => __DIR__ . '/../..' . '/src/Type/WPInterface/NodeWithForm.php',

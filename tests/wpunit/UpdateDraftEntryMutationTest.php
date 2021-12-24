@@ -16,7 +16,6 @@ class UpdateDraftEntryMutationTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_id;
 	private $draft_token;
-	private $client_mutation_id;
 	private $text_field_helper;
 
 
@@ -65,15 +64,20 @@ class UpdateDraftEntryMutationTest extends GFGraphQLTestCase {
 		$query = $this->update_mutation();
 
 		$variables = [
-			'id' => $this->draft_token,
-			'idType' => 'RESUME_TOKEN',
-			'createdById' => $this->admin->ID,
-			'fieldValues' => [[
-				'id' => $this->fields[0]['id'],
-				'value' => 'value2',
-			]],
-			'ip' => '192.168.0.2',
-			'sourceUrl' => 'someSource'
+			'id'          => $this->draft_token,
+			'idType'      => 'RESUME_TOKEN',
+			'entryMeta'   => [
+				'createdById' => $this->admin->ID,
+				'ip'          => '192.168.0.2',
+				'sourceUrl'   => 'someSource',
+				'userAgent'   => 'Mozilla/5.0 (Linux; Android 7.0; SM-G892A Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/60.0.3112.107 Mobile Safari/537.36',
+			],
+			'fieldValues' => [
+				[
+					'id'    => $this->fields[0]['id'],
+					'value' => 'value2',
+				],
+			],
 		];
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
@@ -81,31 +85,30 @@ class UpdateDraftEntryMutationTest extends GFGraphQLTestCase {
 		$this->assertArrayNotHasKey( 'errors', $response, 'Update draft has errors.' );
 		$this->assertEquals( $this->toRelayId( DraftEntriesLoader::$name, $this->draft_token ), $response['data']['updateGfDraftEntry']['draftEntry']['id'], 'IDs  dont match' );
 		$this->assertEquals( $this->draft_token, $response['data']['updateGfDraftEntry']['draftEntry']['resumeToken'], 'DatabaseIds  dont match' );
-		$this->assertEquals( $variables['createdById'], $response['data']['updateGfDraftEntry']['draftEntry']['createdByDatabaseId'], 'Created by doesnt match' );
-		$this->assertEquals( $variables['ip'], $response['data']['updateGfDraftEntry']['draftEntry']['ip'], 'Resume tokens dont match' );
-		$this->assertEquals( $variables['sourceUrl'], $response['data']['updateGfDraftEntry']['draftEntry']['sourceUrl'], 'Source urls dont match' );
+
+		$this->assertEquals( $variables['entryMeta']['createdById'], $response['data']['updateGfDraftEntry']['draftEntry']['createdByDatabaseId'], 'Created by doesnt match' );
+		$this->assertEquals( $variables['entryMeta']['ip'], $response['data']['updateGfDraftEntry']['draftEntry']['ip'], 'Resume tokens dont match' );
+		$this->assertEquals( $variables['entryMeta']['sourceUrl'], $response['data']['updateGfDraftEntry']['draftEntry']['sourceUrl'], 'Source urls dont match' );
+		$this->assertEquals( $variables['entryMeta']['userAgent'], $response['data']['updateGfDraftEntry']['draftEntry']['userAgent'], 'User agent doesnt match' );
+
+		$this->assertEquals( GFUtils::get_resume_url( $variables['entryMeta']['sourceUrl'], $this->draft_token ), $response['data']['updateGfDraftEntry']['resumeUrl'], 'Field values dont match' );
 		$this->assertEquals( $variables['fieldValues'][0]['value'], $response['data']['updateGfDraftEntry']['draftEntry']['formFields']['nodes'][0]['value'], 'Field values dont match' );
-		$this->assertEquals( GFUtils::get_resume_url( $variables['sourceUrl'], $this->draft_token ), $response['data']['updateGfDraftEntry']['resumeUrl'], 'Field values dont match' );
 	}
 
 	public function update_mutation() : string {
 		return '
 			mutation updateGfDraftEntry (
 				$id: ID!,
+				$entryMeta: UpdateDraftEntryMetaInput
 				$idType: DraftEntryIdTypeEnum
-				$createdById: Int
 				$fieldValues: [FormFieldValuesInput]
-				$ip: String
-				$sourceUrl: String
 			) {
 				updateGfDraftEntry (
 					input: {
 						id: $id
 						idType: $idType
-						createdById: $createdById
+						entryMeta: $entryMeta
 						fieldValues: $fieldValues
-						ip: $ip
-						sourceUrl: $sourceUrl
 					}
 				) {
 					draftEntry {
@@ -114,6 +117,7 @@ class UpdateDraftEntryMutationTest extends GFGraphQLTestCase {
 						ip
 						resumeToken
 						sourceUrl
+						userAgent
 						formFields {
 							nodes {
 								... on TextField {
@@ -123,7 +127,7 @@ class UpdateDraftEntryMutationTest extends GFGraphQLTestCase {
 						}
 					}
 					resumeUrl
-  			}
+				}
 			}
 		';
 	}

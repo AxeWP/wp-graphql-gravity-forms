@@ -85,7 +85,7 @@ abstract class AbstractMutation implements Mutation, Registrable {
 	protected static function get_entry_id_from_id( $id ) : int {
 		$id_parts = Relay::fromGlobalId( $id );
 
-		if ( isset( $id_parts['id'] ) ) {
+		if ( isset( $id_parts['id'] ) && ! empty( $id_parts['type'] ) ) {
 			if ( EntriesLoader::$name !== $id_parts['type'] ) {
 				throw new UserError( __( 'The ID passed is not a for a valid Gravity Forms entry.', 'wp-graphql-gravity-forms' ) );
 			}

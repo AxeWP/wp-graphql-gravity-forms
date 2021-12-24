@@ -224,8 +224,8 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function update_entry_mutation() : string {
 		return '
-			mutation updateGfEntry( $entryId: Int!, $fieldId: Int!, $value: [ListFieldInput] ){
-				updateGfEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, listValues: $value} }) {
+			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: [ListFieldInput] ){
+				updateGfEntry( input: { id: $entryId, fieldValues: {id: $fieldId, listValues: $value} }) {
 					errors {
 						id
 						message
@@ -251,13 +251,13 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function update_draft_entry_mutation() : string {
 		return '
-			mutation updateGfDraftEntry( $createdBy: Int, $resumeToken: String!, $fieldId: Int!, $value: [ListFieldInput]! ){
-				updateGfDraftEntry( input: {createdBy: $createdBy, clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, listValues: $value} }) {
+			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: [ListFieldInput]! ){
+				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, fieldValues: {id: $fieldId, listValues: $value} }) {
 					errors {
 						id
 						message
 					}
-					entry {
+					entry: draftEntry {
 						formFields {
 							nodes {
 								... on ListField {

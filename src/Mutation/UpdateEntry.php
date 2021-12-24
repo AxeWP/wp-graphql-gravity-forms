@@ -10,6 +10,7 @@
 
 namespace WPGraphQL\GF\Mutation;
 
+use GFCommon;
 use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -17,6 +18,7 @@ use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
+use WPGraphQL\GF\Type\Input\UpdateEntryMetaInput;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Utils\GFUtils;
@@ -44,33 +46,17 @@ class UpdateEntry extends AbstractMutation {
 	 */
 	public static function get_input_fields() : array {
 		return [
-			'entryId'     => [
-				'type'        => [ 'non_null' => 'Int' ],
-				'description' => __( 'The Gravity Forms entry id.', 'wp-graphql-gravity-forms' ),
+			'id'          => [
+				'type'        => [ 'non_null' => 'ID' ],
+				'description' => __( 'ID of the entry to delete, either a global or database ID', 'wp-graphql-gravity-forms' ),
+			],
+			'entryMeta'   => [
+				'type'        => UpdateEntryMetaInput::$type,
+				'description' => __( 'The entry meta values to update.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
 				'type'        => [ 'list_of' => FormFieldValuesInput::$type ],
-				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
-			],
-			'isStarred'   => [
-				'type'        => 'Boolean',
-				'description' => __( 'Indicates if the entry has been starred (i.e marked with a star).', 'wp-graphql-gravity-forms' ),
-			],
-			'isRead'      => [
-				'type'        => 'Boolean',
-				'description' => __( 'Indicates if the entry has been read. 1 for entries that are read and 0 for entries that have not been read.', 'wp-graphql-gravity-forms' ),
-			],
-			'ip'          => [
-				'type'        => 'String',
-				'description' => __( 'Client IP of user who submitted the form.', 'wp-graphql-gravity-forms' ),
-			],
-			'createdBy'   => [
-				'type'        => 'Int',
-				'description' => __( 'ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
-			],
-			'status'      => [
-				'type'        => EntryStatusEnum::$type,
-				'description' => __( 'The current status of the entry.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The field ids and their values to update.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -80,22 +66,18 @@ class UpdateEntry extends AbstractMutation {
 	 */
 	public static function get_output_fields() : array {
 		return [
-			'entryId' => [
-				'type'        => 'Int',
-				'description' => __( 'The ID of the entry that was created. Null if the entry was only partially submitted or submitted as a draft.', 'wp-graphql-gravity-forms' ),
-			],
-			'entry'   => [
+			'entry'  => [
 				'type'        => SubmittedEntry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload, array $args, AppContext $context ) {
-					if ( ! empty( $payload['errors'] ) || ! $payload['entryId'] ) {
+					if ( ! empty( $payload['errors'] ) || empty( $payload['entryId'] ) ) {
 						return null;
 					}
 
-					return Factory::resolve_entry( $payload['entryId'], $context );
+					return Factory::resolve_entry( (int) $payload['entryId'], $context );
 				},
 			],
-			'errors'  => [
+			'errors' => [
 				'type'        => [ 'list_of' => FieldError::$type ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
@@ -110,14 +92,27 @@ class UpdateEntry extends AbstractMutation {
 			// Check for required fields.
 			static::check_required_inputs( $input );
 
-			// Set default values.
-			$entry = GFUtils::get_entry( (int) $input['entryId'] );
-			$form  = GFUtils::get_form( $entry['form_id'] );
+			// Get the entry.
+			$entry_id = self::get_entry_id_from_id( $input['id'] );
+			$entry    = GFUtils::get_entry( $entry_id );
+
+			// Check if user has permissions.
+			if (
+				! GFCommon::current_user_can_any( 'gravityforms_edit_entries' ) &&
+				! empty( $entry['created_by'] )
+				&& get_current_user_id() !== absint( $entry['created_by'] )
+			) {
+				throw new UserError( __( 'Sorry, you are not allowed to edit entries', 'wp-graphql-gravity-forms' ) );
+			}
+
+			// Prepare the entry data.
+			$form = GFUtils::get_form( $entry['form_id'] );
 
 			$entry_data = self::prepare_entry_data( $input, $entry, $form );
 
-			if ( ! empty( self::$errors ) ) {
-				return [ 'errors' => self::$errors ];
+			// Return early if field errors.
+			if ( ! empty( $entry_data['errors'] ) ) {
+				return $entry_data;
 			}
 
 			$updated_entry_id = GFUtils::update_entry( $entry_data );
@@ -136,14 +131,8 @@ class UpdateEntry extends AbstractMutation {
 	 * @throws UserError .
 	 */
 	protected static function check_required_inputs( $input = null ) : void {
-		parent::check_required_inputs( $input );
-
-		if ( ! isset( $input['entryId'] ) ) {
-			throw new UserError( __( 'Mutation not processed. Entry ID not provided.', 'wp-graphql-gravity-forms' ) );
-		}
-
-		if ( empty( $input['fieldValues'] ) ) {
-			throw new UserError( __( 'Mutation not processed. Field values not provided.', 'wp-graphql-gravity-forms' ) );
+		if ( ! empty( $input['entryMeta'] ) && empty( $input['fieldValues'] ) ) {
+			throw new UserError( __( 'Mutation not processed. No data provided to update.', 'wp-graphql-gravity-forms' ) );
 		}
 	}
 
@@ -153,33 +142,63 @@ class UpdateEntry extends AbstractMutation {
 	 * @param array $input .
 	 * @param array $entry .
 	 * @param array $form .
-	 * @return array
+	 * @throws UserError .
 	 */
 	private static function prepare_entry_data( array $input, array $entry, array $form ) : array {
-			$is_starred = $input['isStarred'] ?? null;
-			$is_read    = $input['isRead'] ?? null;
-			$ip         = empty( $form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
-			$created_by = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : null;
-			$status     = $input['status'] ?? null;
+		// Update Field values.
+		$field_values = ! empty( $input['fieldValues'] ) ? self::prepare_field_values( $input['fieldValues'], $entry, $form ) : [];
+		if ( ! empty( self::$errors ) ) {
+			return [ 'errors' => self::$errors ];
+		}
 
-			$entry_properties = array_filter(
-				[
-					'is_starred' => $is_starred,
-					'is_read'    => $is_read,
-					'ip'         => $ip,
-					'created_by' => $created_by,
-					'status'     => $status,
-				],
-				fn( $property ) => (bool) strlen( $property )
-			);
+		// Update Created by id.
+		if ( isset( $input['entryMeta']['createdById'] ) ) {
+			if ( ! GFCommon::current_user_can_any( 'gravityforms_edit_entries' ) ) {
+				throw new UserError( __( 'Sorry, you do not have permission to change the Entry user', 'wp-graphql-gravity-forms' ) );
+			}
+			$entry['created_by'] = $input['entryMeta']['createdById'];
+		}
 
-			$field_values = self::prepare_field_values( $input['fieldValues'], $entry, $form );
+		// Update Date created.
+		if ( isset( $input['entryMeta']['dateCreatedGmt'] ) ) {
+			$entry['date_created'] = $input['entryMeta']['dateCreatedGmt'];
+		}
 
-			return array_replace(
-				$entry,
-				$entry_properties,
-				$field_values,
-			);
+		// Update IP.
+		if ( isset( $input['entryMeta']['ip'] ) ) {
+			$ip          = empty( $form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['entryMeta']['ip'] ?? '' ) : '';
+			$entry['ip'] = ! empty( $ip ) ? sanitize_text_field( $ip ) : $entry['ip'];
+		}
+
+		// Update isRead.
+		if ( isset( $input['entryMeta']['isRead'] ) ) {
+			$entry['is_read'] = $input['entryMeta']['isRead'];
+		}
+
+		// Update isStarred.
+		if ( isset( $input['entryMeta']['isStarred'] ) ) {
+			$entry['is_starred'] = $input['entryMeta']['isStarred'];
+		}
+
+		// Update source url.
+		if ( isset( $input['entryMeta']['sourceUrl'] ) ) {
+			$entry['source_url'] = $input['entryMeta']['sourceUrl'];
+		}
+
+		// Update status.
+		if ( isset( $input['entryMeta']['status'] ) ) {
+			$entry['status'] = $input['entryMeta']['status'];
+		}
+
+		// Update user agent.
+		if ( isset( $input['entryMeta']['userAgent'] ) ) {
+			$entry['user_agent'] = $input['entryMeta']['userAgent'];
+		}
+
+		return array_replace(
+			$entry,
+			$field_values,
+		);
 	}
 
 	/**
