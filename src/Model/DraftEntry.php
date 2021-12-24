@@ -95,7 +95,7 @@ class DraftEntry extends Model {
 				'isDraft'             => fn() : bool => ! empty( $this->resume_token ),
 				'isSubmitted'         => fn() : bool => ! empty( $this->submission['partial_entry']['id'] ),
 				'sourceUrl'           => fn() : ?string => ! empty( $this->submission['partial_entry']['source_url'] ) ? $this->submission['partial_entry']['source_url'] : null,
-				'userAgent'           => fn() : ?string => ! empty( $this->data['user_agent'] ) ? $this->submission['partial_entry']['user_agent'] : null,
+				'userAgent'           => fn() : ?string => ! empty( $this->submission['partial_entry']['user_agent'] ) ? $this->submission['partial_entry']['user_agent'] : null,
 
 				// Fields specific to the model.
 				'currency'            => fn() : ?int => ! empty( $this->submission['partial_entry']['currency'] ) ? (int) $this->submission['partial_entry']['currency'] : null,
