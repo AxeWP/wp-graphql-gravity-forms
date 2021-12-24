@@ -12,10 +12,11 @@
 namespace WPGraphQL\GF\Mutation;
 
 use GFFormsModel;
-use GraphQL\Error\UserError;
+
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Model\SubmittedEntry as EntryModel;
+use WPGraphQL\GF\Data\Factory;
+use WPGraphQL\GF\Type\Enum\DraftEntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Utils\GFUtils;
@@ -36,9 +37,13 @@ class SubmitDraftEntry extends AbstractMutation {
 	 */
 	public static function get_input_fields() : array {
 		return [
-			'resumeToken' => [
-				'type'        => [ 'non_null' => 'String' ],
-				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
+			'id'     => [
+				'type'        => [ 'non_null' => 'ID' ],
+				'description' => __( 'Either the global ID of the draft entry, or its resume token', 'wp-graphql-gravity-forms' ),
+			],
+			'idType' => [
+				'type'        => DraftEntryIdTypeEnum::$type,
+				'description' => __( 'The ID type for the draft entry. Defaults to `ID` ', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -48,24 +53,18 @@ class SubmitDraftEntry extends AbstractMutation {
 	 */
 	public static function get_output_fields() : array {
 		return [
-			'entryId' => [
-				'type'        => 'Int',
-				'description' => __( 'The ID of the entry that was created.', 'wp-graphql-gravity-forms' ),
-			],
-			'entry'   => [
+			'entry'  => [
 				'type'        => SubmittedEntry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( array $payload ) {
-					if ( ! empty( $payload['errors'] ) ) {
+				'resolve'     => function( array $payload, array $args, AppContext $context ) {
+					if ( ! empty( $payload['errors'] ) || empty( $payload['entryId'] ) ) {
 						return null;
 					}
 
-					$entry = GFUtils::get_entry( $payload['entryId'] );
-
-					return new EntryModel( $entry );
+					return Factory::resolve_entry( (int) $payload['entryId'], $context );
 				},
 			],
-			'errors'  => [
+			'errors' => [
 				'type'        => [ 'list_of' => FieldError::$type ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
@@ -77,19 +76,19 @@ class SubmitDraftEntry extends AbstractMutation {
 	 */
 	public static function mutate_and_get_payload() : callable {
 		return function( $input, AppContext $context, ResolveInfo $info ) : array {
-			static::check_required_inputs( $input );
+			// Get the resume token.
+			$id_type      = isset( $input['idType'] ) ? $input['idType'] : 'global_id';
+			$resume_token = self::get_resume_token_from_id( $input['id'], $id_type );
 
-			$resume_token = sanitize_text_field( $input['resumeToken'] );
-			$submission   = GFUtils::get_draft_submission( $resume_token );
-			$form_id      = $submission['partial_entry']['form_id'];
-
-			$form = GFUtils::get_form( $form_id );
+			// Prepare the entry data.
+			$submission = GFUtils::get_draft_submission( $resume_token );
+			$form       = GFUtils::get_form( $submission['partial_entry']['form_id'] );
 
 			$submission['page_number'] = GFUtils::get_last_form_page( $form );
 
 			add_filter( 'gform_field_validation', [ FormSubmissionHelper::class, 'disable_validation_for_unsupported_fields' ], 10, 4 );
 			$result = GFUtils::submit_form(
-				$form_id,
+				$submission['partial_entry']['form_id'],
 				$submission['field_values'], // $input_values,
 				$submission['field_values'],
 			);
@@ -105,17 +104,5 @@ class SubmitDraftEntry extends AbstractMutation {
 				'errors'  => isset( $result['validation_messages'] ) ? FormSubmissionHelper::get_submission_errors( $result['validation_messages'] ) : null,
 			];
 		};
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @throws UserError .
-	 */
-	protected static function check_required_inputs( $input ) : void {
-		parent::check_required_inputs( $input );
-		if ( ! isset( $input['resumeToken'] ) ) {
-				throw new UserError( __( 'Mutation not processed. The resumeToken must be set.', 'wp-graphql-gravity-forms' ) );
-		}
 	}
 }
