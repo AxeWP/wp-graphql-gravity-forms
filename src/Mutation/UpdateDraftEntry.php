@@ -14,6 +14,7 @@ use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
+use WPGraphQL\GF\Type\Enum\DraftEntryIdTypeEnum;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
 use WPGraphQL\GF\Type\WPObject\Entry\DraftEntry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
@@ -42,9 +43,13 @@ class UpdateDraftEntry extends AbstractMutation {
 	 */
 	public static function get_input_fields() : array {
 		return [
-			'resumeToken' => [
-				'type'        => [ 'non_null' => 'String' ],
-				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
+			'id'          => [
+				'type'        => [ 'non_null' => 'ID' ],
+				'description' => __( 'Either the global ID of the draft entry, or its resume token', 'wp-graphql-gravity-forms' ),
+			],
+			'idType'      => [
+				'type'        => DraftEntryIdTypeEnum::$type,
+				'description' => __( 'The ID type for the draft entry. Defaults to `ID` ', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
 				'type'        => [ 'list_of' => FormFieldValuesInput::$type ],
@@ -54,9 +59,9 @@ class UpdateDraftEntry extends AbstractMutation {
 				'type'        => 'String',
 				'description' => __( 'Client IP of user who submitted the form.', 'wp-graphql-gravity-forms' ),
 			],
-			'createdBy'   => [
+			'createdById' => [
 				'type'        => 'Int',
-				'description' => __( 'ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The database ID of the user that submitted of the form if a logged in user submitted the form. Accepts either a ', 'wp-graphql-gravity-forms' ),
 			],
 			'sourceUrl'   => [
 				'type'        => 'String',
@@ -70,11 +75,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	 */
 	public static function get_output_fields() : array {
 		return [
-			'resumeToken' => [
-				'type'        => 'String',
-				'description' => __( 'Draft entry resume token.', 'wp-graphql-gravity-forms' ),
-			],
-			'entry'       => [
+			'draftEntry' => [
 				'type'        => DraftEntry::$type,
 				'description' => __( 'The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload, array $args, AppContext $context ) {
@@ -84,11 +85,11 @@ class UpdateDraftEntry extends AbstractMutation {
 					return Factory::resolve_draft_entry( $payload['resumeToken'], $context );
 				},
 			],
-			'errors'      => [
+			'errors'     => [
 				'type'        => [ 'list_of' => FieldError::$type ],
-				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Field validation errors.', 'wp-graphql-gravity-forms' ),
 			],
-			'resumeUrl'   => [
+			'resumeUrl'  => [
 				'type'        => 'String',
 				'description' => __( 'Draft resume URL. If the "Referer" header is not included in the request, this will be an empty string.', 'wp-graphql-gravity-forms' ),
 			],
@@ -103,22 +104,40 @@ class UpdateDraftEntry extends AbstractMutation {
 			// Check for required fields.
 			static::check_required_inputs( $input );
 
-			$resume_token = sanitize_text_field( $input['resumeToken'] );
-			$submission   = GFUtils::get_draft_submission( $resume_token );
-			$form         = GFUtils::get_form( $submission['partial_entry']['form_id'] );
+			// Get the resume token.
+			$id_type      = isset( $input['idType'] ) ? $input['idType'] : 'global_id';
+			$resume_token = self::get_resume_token_from_id( $input['id'], $id_type );
 
-			$values = self::prepare_field_values( $input['fieldValues'], $form, $submission['partial_entry'], $submission );
-			if ( ! empty( self::$errors ) ) {
-				return [ 'errors' => self::$errors ];
+			// Get the submission and form.
+			$submission = GFUtils::get_draft_submission( $resume_token );
+			$form       = GFUtils::get_form( $submission['partial_entry']['form_id'] );
+
+			// Update field values.
+			if ( ! empty( $input['fieldValues'] ) ) {
+				$values = self::prepare_field_values( $input['fieldValues'], $form, $submission['partial_entry'], $submission );
+				if ( ! empty( self::$errors ) ) {
+					return [ 'errors' => self::$errors ];
+				}
+
+				$submission['partial_entry'] = array_replace( $submission['partial_entry'], $values );
+				$submission['field_values']  = array_replace( $submission['field_values'] ?? [], FormSubmissionHelper::rename_keys_for_field_values( $values ) );
 			}
 
-			$submission['partial_entry'] = array_replace( $submission['partial_entry'], $values );
-			$submission['field_values']  = array_replace( $submission['field_values'] ?? [], FormSubmissionHelper::rename_keys_for_field_values( $values ) );
+			// Update IP Address.
+			if ( isset( $input['ip'] ) ) {
+				$ip                                = empty( $form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
+				$submission['partial_entry']['ip'] = ! empty( $ip ) ? sanitize_text_field( $ip ) : $submission['partial_entry']['ip'];
+			}
 
-			$ip                                = empty( $form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
-			$submission['partial_entry']['ip'] = ! empty( $ip ) ? $ip : $submission['partial_entry']['ip'];
+			// Update CreatedBy ID.
+			if ( isset( $input['createdById'] ) ) {
+				$submission['partial_entry']['created_by'] = absint( $input['createdById'] );
+			}
 
-			$submission['partial_entry']['created_by'] = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : $submission['partial_entry']['created_by'];
+			// Update Source Url.
+			if ( isset( $input['sourceUrl'] ) ) {
+				$submission['partial_entry']['source_url'] = sanitize_text_field( $input['sourceUrl'] );
+			}
 
 			$resume_token = GFUtils::save_draft_submission(
 				$form,
@@ -127,8 +146,8 @@ class UpdateDraftEntry extends AbstractMutation {
 				$submission['page_number'] ?? 1, // @todo: Maybe get from request.
 				$submission['files'] ?? [],
 				$submission['gform_unique_id'] ?? null,
-				$submission['partial_entry']['ip'],
-				$input['source_url'] ?? $submission['partial_entry']['source_url'] ?? '',
+				$submission['partial_entry']['ip'] ?? '',
+				$submission['partial_entry']['source_url'] ?? '',
 				$resume_token
 			);
 
@@ -176,14 +195,8 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * @throws UserError .
 	 */
 	protected static function check_required_inputs( $input = null ) : void {
-		parent::check_required_inputs( $input );
-
-		if ( ! isset( $input['resumeToken'] ) ) {
-			throw new UserError( __( 'Mutation not processed. Resume token not provided.', 'wp-graphql-gravity-forms' ) );
-		}
-
-		if ( empty( $input['fieldValues'] ) ) {
-			throw new UserError( __( 'Mutation not processed. Field values not provided.', 'wp-graphql-gravity-forms' ) );
+		if ( empty( $input['fieldValues'] ) && ! isset( $input['ip'] ) && ! isset( $input['createdById'] ) && ! isset( $input['sourceUrl'] ) ) {
+			throw new UserError( __( 'Mutation not processed. No data provided to update.', 'wp-graphql-gravity-forms' ) );
 		}
 	}
 }

@@ -118,7 +118,7 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 			'idType'  => 'RESUME_TOKEN'
 		];
 
-		$response = $this->graphql( compact( 'query', 'variables' ) );
+		$response = graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayHasKey( 'errors', $response );
 
