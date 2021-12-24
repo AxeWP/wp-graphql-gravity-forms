@@ -11,9 +11,15 @@
 namespace WPGraphQL\GF\Mutation;
 
 use GFAPI;
+use GFCommon;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
+use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Data\Loader\EntriesLoader;
+use WPGraphQL\GF\Model\SubmittedEntry as ModelSubmittedEntry;
+use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
+use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - DeleteEntry
@@ -31,9 +37,13 @@ class DeleteEntry extends AbstractMutation {
 	 */
 	public static function get_input_fields() : array {
 		return [
-			'entryId' => [
-				'type'        => [ 'non_null' => 'Int' ],
-				'description' => __( 'ID of the entry to delete', 'wp-graphql-gravity-forms' ),
+			'id'          => [
+				'type'        => [ 'non_null' => 'ID' ],
+				'description' => __( 'ID of the entry to delete, either a global or database ID', 'wp-graphql-gravity-forms' ),
+			],
+			'forceDelete' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the entry should be force deleted instead of being moved to the trash', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -43,9 +53,18 @@ class DeleteEntry extends AbstractMutation {
 	 */
 	public static function get_output_fields() : array {
 		return [
-			'entryId' => [
-				'type'        => 'Int',
-				'description' => __( 'The ID of the entry that was deleted.', 'wp-graphql-gravity-forms' ),
+			'deletedId' => [
+				'type'        => 'ID',
+				'description' => __( 'The global ID of the draft entry that was deleted.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $payload ) {
+					$deleted = (object) $payload['deletedEntry'];
+					return ! empty( $deleted->id ) ? $deleted->id : null;
+				},
+			],
+			'entry'     => [
+				'type'        => SubmittedEntry::$type,
+				'description' => __( 'The entry object before it was deleted', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $payload ) => $payload['deletedEntry'] ?? null,
 			],
 		];
 	}
@@ -55,34 +74,35 @@ class DeleteEntry extends AbstractMutation {
 	 */
 	public static function mutate_and_get_payload() : callable {
 		return function( $input, AppContext $context, ResolveInfo $info ) : array {
-			static::check_required_inputs( $input );
-
-			$entry_id         = (int) $input['entryId'];
-			$does_entry_exist = GFAPI::entry_exists( $entry_id );
-
-			if ( ! $does_entry_exist ) {
-				throw new UserError( __( 'An invalid entry ID was provided.', 'wp-graphql-gravity-forms' ) );
+			if ( ! GFCommon::current_user_can_any( 'gravityforms_delete_entries' ) ) {
+				throw new UserError( __( 'Sorry, you are not allowed to delete entries', 'wp-graphql-gravity-forms' ) );
 			}
 
-			$result = GFAPI::delete_entry( $entry_id );
+			$id_parts = Relay::fromGlobalId( $input['id'] );
+
+			if ( isset( $id_parts['id'] ) && EntriesLoader::$name === $id_parts['type'] ) {
+				$entry_id = $id_parts['id'];
+			} else {
+				$entry_id = $input['id'];
+			}
+
+			$entry_id = absint( $entry_id );
+
+			if ( empty( $input['forceDelete'] ) ) {
+				$result          = GFAPI::update_entry_property( $entry_id, 'status', 'trash' );
+				$entry_to_return = GFUtils::get_entry( $entry_id );
+			} else {
+				$entry_to_return = GFUtils::get_entry( $entry_id );
+				$result          = GFAPI::delete_entry( $entry_id );
+			}
 
 			if ( is_wp_error( $result ) ) {
 				throw new UserError( __( 'An error occurred while deleting the entry. Error: ', 'wp-graphql-gravity-forms' ) . $result->get_error_message() );
 			}
 
-			return [ 'entryId' => $entry_id ];
+			return [
+				'deletedEntry' => new ModelSubmittedEntry( $entry_to_return ),
+			];
 		};
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @throws UserError .
-	 */
-	protected static function check_required_inputs( $input ) : void {
-		parent::check_required_inputs( $input );
-		if ( ! isset( $input['entryId'] ) ) {
-				throw new UserError( __( 'Mutation not processed. The entryId must be set.', 'wp-graphql-gravity-forms' ) );
-		}
 	}
 }

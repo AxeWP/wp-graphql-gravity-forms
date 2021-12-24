@@ -1,6 +1,6 @@
 <?php
 /**
- * Mutation - UpdategfEntry
+ * Mutation - UpdateGfEntry
  *
  * Updates a Gravity Forms entry.
  *
