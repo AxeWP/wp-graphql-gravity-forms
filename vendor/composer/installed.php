@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '305691733f00752675c65b86512dfcf53931ca24',
+    'reference' => 'f3b5a3a6e465896256c59449d58b12b28733be0e',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
@@ -49,84 +49,84 @@
     ),
     'codeception/lib-asserts' => 
     array (
-      'pretty_version' => '2.0.0',
-      'version' => '2.0.0.0',
+      'pretty_version' => '1.13.2',
+      'version' => '1.13.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'df9c8346722ddde4a20e6372073c09c8df87c296',
+      'reference' => '184231d5eab66bc69afd6b9429344d80c67a33b6',
     ),
     'codeception/lib-innerbrowser' => 
     array (
-      'pretty_version' => '2.0.1',
-      'version' => '2.0.1.0',
+      'pretty_version' => '1.5.1',
+      'version' => '1.5.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c7bf42d5a38e2883ae9cf298ec9d15b1185815fb',
+      'reference' => '31b4b56ad53c3464fcb2c0a14d55a51a201bd3c2',
     ),
     'codeception/module-asserts' => 
     array (
-      'pretty_version' => '2.0.1',
-      'version' => '2.0.1.0',
+      'pretty_version' => '1.3.1',
+      'version' => '1.3.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '313673c35de00ad337d3b5f895a1998695d3b537',
+      'reference' => '59374f2fef0cabb9e8ddb53277e85cdca74328de',
     ),
     'codeception/module-cli' => 
     array (
-      'pretty_version' => '2.0.0',
-      'version' => '2.0.0.0',
+      'pretty_version' => '1.1.1',
+      'version' => '1.1.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'aa9bdd8346983eebc3aa3f21e902399ceefec372',
+      'reference' => '1f841ad4a1d43e5d9e60a43c4cc9e5af8008024f',
     ),
     'codeception/module-db' => 
     array (
-      'pretty_version' => '2.0.0',
-      'version' => '2.0.0.0',
+      'pretty_version' => '1.1.0',
+      'version' => '1.1.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '23f4fe67ecc1902982001839dd131397d605d681',
+      'reference' => '8c8076cd05d4db95798acd7dba2a56578210982c',
     ),
     'codeception/module-filesystem' => 
     array (
-      'pretty_version' => '2.0.1',
-      'version' => '2.0.1.0',
+      'pretty_version' => '1.0.3',
+      'version' => '1.0.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'ae1fa5f13ba00bdb8a83d4258ef577c5114ddef9',
+      'reference' => '781be167fb1557bfc9b61e0a4eac60a32c534ec1',
     ),
     'codeception/module-phpbrowser' => 
     array (
-      'pretty_version' => '2.0.2',
-      'version' => '2.0.2.0',
+      'pretty_version' => '1.0.2',
+      'version' => '1.0.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'fda6d97253d0595843adb87ec0b9b7d6d89539ac',
+      'reference' => '770a6be4160a5c0c08d100dd51bff35f6056bbf1',
     ),
     'codeception/module-rest' => 
     array (
-      'pretty_version' => '2.0.0',
-      'version' => '2.0.0.0',
+      'pretty_version' => '1.4.2',
+      'version' => '1.4.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'da2666b9097f2a3951e56cb478bc6625a7f71fbb',
+      'reference' => '9cd7a87fd9343494e7782f7bdb51687c25046917',
     ),
     'codeception/module-webdriver' => 
     array (
-      'pretty_version' => '2.0.0',
-      'version' => '2.0.0.0',
+      'pretty_version' => '1.4.0',
+      'version' => '1.4.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '085c55430c5e17c1b710ecdc9bd22e175dffed4b',
+      'reference' => 'baa18b7bf70aa024012f967b5ce5021e1faa9151',
     ),
     'codeception/phpunit-wrapper' => 
     array (
@@ -246,7 +246,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '305691733f00752675c65b86512dfcf53931ca24',
+      'reference' => 'f3b5a3a6e465896256c59449d58b12b28733be0e',
     ),
     'hautelook/phpass' => 
     array (
@@ -302,12 +302,12 @@
     ),
     'lucatume/wp-browser' => 
     array (
-      'pretty_version' => '3.0.15',
-      'version' => '3.0.15.0',
+      'pretty_version' => '3.0.17',
+      'version' => '3.0.17.0',
       'aliases' => 
       array (
       ),
-      'reference' => '389f7055e2f25618b955721fc27f63df777f620e',
+      'reference' => '496a1e1f4aea4cc6629761bcc2950711861365a6',
     ),
     'mikehaertl/php-shellcommand' => 
     array (

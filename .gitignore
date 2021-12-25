@@ -13,7 +13,6 @@
 .scannerwork
 *.zip
 build/
-composer.lock
 coverage/*
 node_modules/
 phpcs.xml
