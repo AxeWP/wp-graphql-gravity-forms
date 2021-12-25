@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f
+class ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -118,6 +118,9 @@ class ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f
         'WPGraphQL\\GF\\Type\\Input\\ListFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/ListFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\NameFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/NameFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\PostImageFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/PostImageFieldInput.php',
+        'WPGraphQL\\GF\\Type\\Input\\SubmitFormMetaInput' => __DIR__ . '/../..' . '/src/Type/Input/SubmitFormMetaInput.php',
+        'WPGraphQL\\GF\\Type\\Input\\UpdateDraftEntryMetaInput' => __DIR__ . '/../..' . '/src/Type/Input/UpdateDraftEntryMetaInput.php',
+        'WPGraphQL\\GF\\Type\\Input\\UpdateEntryMetaInput' => __DIR__ . '/../..' . '/src/Type/Input/UpdateEntryMetaInput.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\Entry' => __DIR__ . '/../..' . '/src/Type/WPInterface/Entry.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FormField' => __DIR__ . '/../..' . '/src/Type/WPInterface/FormField.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\NodeWithForm' => __DIR__ . '/../..' . '/src/Type/WPInterface/NodeWithForm.php',
@@ -163,9 +166,9 @@ class ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit0b3e32775b7bc2b8c56e7957c0de644f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488::$classMap;
 
         }, null, ClassLoader::class);
     }

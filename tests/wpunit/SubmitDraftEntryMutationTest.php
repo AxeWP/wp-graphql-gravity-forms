@@ -14,7 +14,6 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_id;
 	private $draft_token;
-	private $client_mutation_id;
 	private $text_field_helper;
 
 
@@ -26,10 +25,10 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 		parent::setUp();
 
 		// Your set up methods here.
-		$this->text_field_helper  = $this->tester->getPropertyHelper( 'TextField' );
-		$this->fields[]           = $this->factory->field->create( $this->text_field_helper->values );
-		$this->form_id            = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
-		$this->draft_token        = $this->factory->draft_entry->create(
+		$this->text_field_helper = $this->tester->getPropertyHelper( 'TextField' );
+		$this->fields[]          = $this->factory->field->create( $this->text_field_helper->values );
+		$this->form_id           = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
+		$this->draft_token       = $this->factory->draft_entry->create(
 			[
 				'form_id'      => $this->form_id,
 				'entry'        => [
@@ -40,7 +39,6 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 				],
 			]
 		);
-		$this->client_mutation_id = 'someUniqueId';
 		$this->clearSchema();
 	}
 
@@ -60,37 +58,44 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	 * Tests `submitGfDraft
 	 */
 	public function testSubmitGravityFormsDraftEntry() : void {
+		$query = $this->submit_mutation();
+
+		$variables = [
+			'id'     => $this->draft_token,
+			'idType' => 'RESUME_TOKEN',
+		];
+
 		wp_set_current_user( $this->admin->ID );
-		$actual = $this->createMutation();
-		$this->assertArrayNotHasKey( 'errors', $actual );
+		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$actual_entry = $this->factory->entry->get_object_by_id( $actual['data']['submitGfDraftEntry']['entryId'] );
+		$this->assertArrayNotHasKey( 'errors', $response );
 
-		$this->assertEquals( $actual_entry['id'], $actual['data']['submitGfDraftEntry']['entryId'] );
+		$actual_entry = $this->factory->entry->get_object_by_id( $response['data']['submitGfDraftEntry']['entry']['databaseId'] ?? null );
 
-		$this->assertEquals( 'value1', $actual['data']['submitGfDraftEntry']['entry']['formFields']['nodes'][0]['value'] );
-		$this->factory->entry->delete( $actual['data']['submitGfDraftEntry']['entryId'] );
+		$this->assertEquals( $actual_entry['id'], $response['data']['submitGfDraftEntry']['entry']['databaseId'] );
+
+		$this->assertEquals( 'value1', $response['data']['submitGfDraftEntry']['entry']['formFields']['nodes'][0]['value'] );
+
+		$this->factory->entry->delete( $actual_entry['id'] );
 	}
 
 	/**
 	 * Creates the mutation.
-	 *
-	 * @param array $args .
 	 */
-	public function createMutation( array $args = [] ) : array {
-		$mutation = '
+	public function submit_mutation() : string {
+		return '
 			mutation submitGfDraftEntry (
-				$resumeToken: String!,
-				$clientMutationId: String,
+				$id: ID!
+				$idType: DraftEntryIdTypeEnum
 			) {
 				submitGfDraftEntry (
 					input: {
-						resumeToken: $resumeToken
-						clientMutationId: $clientMutationId
+						id: $id
+						idType: $idType
 					}
 				) {
-					entryId
 					entry {
+						databaseId
 						formFields {
 							nodes {
 								... on TextField {
@@ -99,20 +104,12 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 							}
 						}
 					}
+					errors{
+						id
+						message
+					}
   			}
 			}
 		';
-
-		$variables = [
-			'resumeToken'      => $args['resumeToken'] ?? $this->draft_token,
-			'clientMutationId' => $this->client_mutation_id,
-		];
-
-		return $this->graphql(
-			[
-				'query'     => $mutation,
-				'variables' => $variables,
-			]
-		);
 	}
 }

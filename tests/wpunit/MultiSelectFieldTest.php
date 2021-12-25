@@ -130,14 +130,12 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 * SubmitForm mutation string.
 	 */
 	public function submit_form_mutation(): string {
-		return 'mutation ($formId: Int!, $fieldId: Int!, $value: [String]!, $draft: Boolean) {
-				submitGfForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, values: $value}}) {
+		return 'mutation ($formId: ID!, $fieldId: Int!, $value: [String]!, $draft: Boolean) {
+				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, values: $value}}) {
 					errors {
 						id
 						message
 					}
-					entryId
-					resumeToken
 					entry {
 						formFields {
 							nodes {
@@ -145,6 +143,12 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 									values
 								}
 							}
+						}
+						... on GfSubmittedEntry {
+							databaseId
+						}
+						... on GfDraftEntry {
+							resumeToken
 						}
 					}
 				}
@@ -157,8 +161,8 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 */
 	public function update_entry_mutation(): string {
 		return '
-			mutation updateGfEntry( $entryId: Int!, $fieldId: Int!, $value: [String]! ){
-				updateGfEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, values: $value} }) {
+			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: [String]! ){
+				updateGfEntry( input: { id: $entryId, fieldValues: {id: $fieldId, values: $value} }) {
 					errors {
 						id
 						message
@@ -182,13 +186,13 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
-			mutation updateGfDraftEntry( $createdBy: Int, $resumeToken: String!, $fieldId: Int!, $value: [String]! ){
-				updateGfDraftEntry( input: {createdBy: $createdBy, clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, values: $value} }) {
+			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: [String]! ){
+				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, fieldValues: {id: $fieldId, values: $value} }) {
 					errors {
 						id
 						message
 					}
-					entry {
+					entry: draftEntry {
 						formFields {
 							nodes {
 								... on MultiSelectField {

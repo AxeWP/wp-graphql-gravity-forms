@@ -17,6 +17,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
+use WPGraphQL\GF\Type\Input\SubmitFormMetaInput;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Utils\GFUtils;
@@ -37,37 +38,29 @@ class SubmitForm extends AbstractMutation {
 	 */
 	public static function get_input_fields() : array {
 		return [
-			'createdBy'   => [
-				'type'        => 'Int',
-				'description' => __( 'Optional. ID of the user that submitted of the form if a logged in user submitted the form.', 'wp-graphql-gravity-forms' ),
+			'id'          => [
+				'type'        => [ 'non_null' => 'ID' ],
+				'description' => __( 'The form ID. Accepts either a global or Database ID.', 'wp-graphql-gravity-forms' ),
+			],
+			'entryMeta'   => [
+				'type'        => SubmitFormMetaInput::$type,
+				'description' => __( 'The entry meta associated with the submission.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
-				'type'        => [ 'list_of' => FormFieldValuesInput::$type ],
+				'type'        => [ 'non_null' => [ 'list_of' => FormFieldValuesInput::$type ] ],
 				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
-			],
-			'formId'      => [
-				'type'        => [ 'non_null' => 'Int' ],
-				'description' => __( 'The form ID.', 'wp-graphql-gravity-forms' ),
-			],
-			'ip'          => [
-				'type'        => 'String',
-				'description' => __( 'Optional. The IP address of the user who submitted the draft entry. Default is an empty string.', 'wp-graphql-gravity-forms' ),
 			],
 			'saveAsDraft' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Optional. Set to `true` if submitting a draft entry.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Set to `true` if submitting a draft entry. Defaults to `false`.', 'wp-graphql-gravity-forms' ),
 			],
 			'sourcePage'  => [
 				'type'        => 'Int',
-				'description' => __( 'Optional. Useful for multi-page forms to indicate which page of the form was just submitted.', 'wp-graphql-gravity-forms' ),
-			],
-			'sourceUrl'   => [
-				'type'        => 'String',
-				'description' => __( 'Optional. Used to overwrite the sourceUrl the form was submitted from.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Useful for multi-page forms to indicate which page of the form was just submitted.', 'wp-graphql-gravity-forms' ),
 			],
 			'targetPage'  => [
 				'type'        => 'Int',
-				'description' => __( 'Optional. Useful for multi-page forms to indicate which page is to be loaded if the current page passes validation.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Useful for multi-page forms to indicate which page is to be loaded if the current page passes validation.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -77,11 +70,7 @@ class SubmitForm extends AbstractMutation {
 	 */
 	public static function get_output_fields() : array {
 		return [
-			'entryId'     => [
-				'type'        => 'Int',
-				'description' => __( 'The ID of the entry that was created. Null if the entry was only partially submitted or submitted as a draft.', 'wp-graphql-gravity-forms' ),
-			],
-			'entry'       => [
+			'entry'     => [
 				'type'        => Entry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload, array $args, AppContext $context ) {
@@ -97,17 +86,13 @@ class SubmitForm extends AbstractMutation {
 					}
 				},
 			],
-			'errors'      => [
+			'errors'    => [
 				'type'        => [ 'list_of' => FieldError::$type ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
-			'resumeToken' => [
+			'resumeUrl' => [
 				'type'        => 'String',
-				'description' => __( 'Draft resume token.', 'wp-graphql-gravity-forms' ),
-			],
-			'resumeUrl'   => [
-				'type'        => 'String',
-				'description' => __( 'Draft resume URL. If the "Referer" header is not included in the request, this will be an empty string.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Draft resume URL. Null if submitting an entry. If the "Referer" header is not included in the request, this will be an empty string.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -117,18 +102,15 @@ class SubmitForm extends AbstractMutation {
 	 */
 	public static function mutate_and_get_payload() : callable {
 		return function( $input, AppContext $context, ResolveInfo $info ) : array {
-			// Check for required fields.
-			static::check_required_inputs( $input );
+			// Get the form database_id.
+			$form_id = self::get_form_id_from_id( $input['id'] );
 
-			$form = GFUtils::get_form( $input['formId'] );
+			$form = GFUtils::get_form( $form_id );
 
 			// Set default values.
-			$target_page   = $input['targetPage'] ?? 0;
-			$source_page   = $input['sourcePage'] ?? 0;
-			$save_as_draft = $input['saveAsDraft'] ?? false;
-			$ip            = empty( $form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
-			$created_by    = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : null;
-			$source_url    = $input['sourceUrl'] ?? '';
+			$target_page   = isset( $input['targetPage'] ) ? absint( $input['targetPage'] ) : 0;
+			$source_page   = isset( $input['sourcePage'] ) ? absint( $input['sourcePage'] ) : 0;
+			$save_as_draft = ! empty( $input['saveAsDraft'] );
 
 			// Initialize $_FILES with fileupload inputs.
 			self::initialize_files( $form );
@@ -137,40 +119,66 @@ class SubmitForm extends AbstractMutation {
 
 			add_filter( 'gform_field_validation', [ FormSubmissionHelper::class, 'disable_validation_for_unsupported_fields' ], 10, 4 );
 			$submission = GFUtils::submit_form(
-				$input['formId'],
-				self::get_input_values( $save_as_draft, $field_values, GFFormsModel::$uploaded_files[ $input['formId'] ] ?? [] ),
+				$input['id'],
+				self::get_input_values(
+					$save_as_draft,
+					$field_values,
+					GFFormsModel::$uploaded_files[ $input['id'] ] ?? []
+				),
 				$field_values,
 				$target_page,
 				$source_page,
 			);
 			remove_filter( 'gform_field_validation', [ FormSubmissionHelper::class, 'disable_validation_for_unsupported_fields' ] );
 
+			$entry_data = self::prepare_entry_data( $input );
+
 			if ( $submission['is_valid'] ) {
-				self::update_entry_properties( $form, $submission, $ip, $source_url, $created_by );
+				self::update_entry_properties( $form, $submission, $entry_data );
 			}
 
 			return [
 				'entryId'     => ! empty( $submission['entry_id'] ) ? absint( $submission['entry_id'] ) : null,
 				'resumeToken' => $submission['resume_token'] ?? null,
-				'resumeUrl'   => isset( $submission['resume_token'] ) ? GFUtils::get_resume_url( $source_url, $submission['resume_token'], $form ) : null,
+				'resumeUrl'   => isset( $submission['resume_token'] ) ? GFUtils::get_resume_url( $submission['resume_token'], $entry_data['source_url'] ?? '', $form ) : null,
 				'errors'      => isset( $submission['validation_messages'] ) ? FormSubmissionHelper::get_submission_errors( $submission['validation_messages'] ) : null,
 			];
 		};
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Prepares draft entry object for update.
 	 *
-	 * @throws UserError .
+	 * @param array $input .
 	 */
-	protected static function check_required_inputs( $input = null ) : void {
-		parent::check_required_inputs( $input );
-		if ( ! isset( $input['formId'] ) ) {
-			throw new UserError( __( 'Mutation not processed. Form ID not provided.', 'wp-graphql-gravity-forms' ) );
+	private static function prepare_entry_data( array $input ) : array {
+		$data = [];
+
+		// Update Created by id.
+		if ( isset( $input['entryMeta']['createdById'] ) ) {
+			$data['created_by'] = absint( $input['entryMeta']['createdById'] );
 		}
-		if ( empty( $input['fieldValues'] ) ) {
-			throw new UserError( __( 'Mutation not processed. Field values not provided.', 'wp-graphql-gravity-forms' ) );
+
+		// Update Date created.
+		if ( isset( $input['entryMeta']['dateCreatedGmt'] ) ) {
+			$data['date_created'] = sanitize_text_field( $input['entryMeta']['dateCreatedGmt'] );
 		}
+		// Update IP created.
+		if ( isset( $input['entryMeta']['ip'] ) ) {
+			$data['ip'] = GFUtils::get_ip( $input['entryMeta']['sourceUrl'] );
+		}
+
+		// Update source url.
+		if ( isset( $input['entryMeta']['sourceUrl'] ) ) {
+			$data['source_url'] = $input['entryMeta']['sourceUrl'];
+		}
+
+		// Update user agent.
+		if ( isset( $input['entryMeta']['userAgent'] ) ) {
+			$data['user_agent'] = $input['entryMeta']['userAgent'];
+		}
+
+		return $data;
 	}
 
 	/**
@@ -195,25 +203,29 @@ class SubmitForm extends AbstractMutation {
 	/**
 	 * Updates entry properties that cannot be set with GFAPI::submit_form().
 	 *
-	 * @param array   $form .
-	 * @param array   $submission The Gravity Forms submission result array.
-	 * @param string  $ip .
-	 * @param string  $source_url .
-	 * @param integer $created_by .
+	 * @param array $form .
+	 * @param array $submission The Gravity Forms submission result array.
+	 * @param array $entry_meta .
 	 * @throws UserError .
 	 */
-	private static function update_entry_properties( array $form, array $submission, string $ip, string $source_url, int $created_by = null ) : void {
+	private static function update_entry_properties( array $form, array $submission, array $entry_meta ) : void {
 		if ( ! empty( $submission['resume_token'] ) ) {
-			$draft_entry        = GFUtils::get_draft_entry( $submission['resume_token'] );
-			$decoded_submission = json_decode( $draft_entry['submission'], true );
+			$decoded_submission = GFUtils::get_draft_submission( $submission['resume_token'] );
 
-			$ip         = $ip ?: $decoded_submission['partial_entry']['ip'];
-			$created_by = $created_by ?: $decoded_submission['partial_entry']['created_by'];
-			$source_url = $source_url ?: $decoded_submission['partial_entry']['source_url'];
-			$is_updated = GFFormsModel::update_draft_submission( $submission['resume_token'], $form, $draft_entry['date_created'], $ip, $source_url, $draft_entry['submission'] );
-			if ( false === $is_updated ) {
-				throw new UserError( __( 'Unable to update the draft entry properties.', 'wp-graphql-gravity-forms' ) );
-			}
+			$decoded_submission['partial_entry'] = array_replace( $decoded_submission['partial_entry'], $entry_meta );
+
+			GFUtils::save_draft_submission(
+				$form,
+				$decoded_submission['partial_entry'],
+				$decoded_submission['field_values'],
+				$decoded_submission['page_number'] ?? 1,
+				$decoded_submission['files'] ?? [],
+				$decoded_submission['gform_unique_id'] ?? null,
+				$decoded_submission['partial_entry']['ip'] ?? '',
+				$decoded_submission['partial_entry']['source_url'] ?? '',
+				$submission['resume_token'],
+			);
+
 			return;
 		}
 
@@ -221,24 +233,17 @@ class SubmitForm extends AbstractMutation {
 			return;
 		}
 
-		if ( ! empty( $ip ) ) {
-			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'ip', $ip );
-			if ( false === $is_updated ) {
-				throw new UserError( __( 'Unable to update the entry IP address', 'wp-graphql-gravity-forms' ) );
-			}
-		}
+		foreach ( $entry_meta as $key => $value ) {
+			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], $key, $value );
 
-		if ( null !== $created_by ) {
-			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'created_by', $created_by );
 			if ( false === $is_updated ) {
-				throw new UserError( __( 'Unable to update the entry createdBy id.', 'wp-graphql-gravity-forms' ) );
-			}
-		}
-
-		if ( ! empty( $source_url ) ) {
-			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'source_url', $source_url );
-			if ( false === $is_updated ) {
-				throw new UserError( __( 'Unable to update the entry source url', 'wp-graphql-gravity-forms' ) );
+				throw new UserError(
+					sprintf(
+						// translators: Gravity Forms entry property.
+						__( 'Unable to update the entry `%s` property.', 'wp-graphql-gravity-forms' ),
+						$key
+					)
+				);
 			}
 		}
 	}

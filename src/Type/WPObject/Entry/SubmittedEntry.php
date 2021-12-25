@@ -78,11 +78,11 @@ class SubmittedEntry extends AbstractObject implements Field {
 			],
 			'isStarred'      => [
 				'type'        => 'Boolean',
-				'description' => __( 'Indicates if the entry has been starred (i.e marked with a star). 1 for entries that are starred and 0 for entries that are not starred.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Indicates if the entry has been starred (i.e marked with a star).', 'wp-graphql-gravity-forms' ),
 			],
 			'isRead'         => [
 				'type'        => 'Boolean',
-				'description' => __( 'Indicates if the entry has been read. 1 for entries that are read and 0 for entries that have not been read.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Whether the entry has been read.', 'wp-graphql-gravity-forms' ),
 			],
 			'post'           => [
 				'type'        => 'Post',

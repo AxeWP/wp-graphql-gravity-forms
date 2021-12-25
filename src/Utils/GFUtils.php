@@ -267,15 +267,15 @@ class GFUtils {
 	/**
 	 * Get the draft resume URL.
 	 *
-	 * @param string     $source_url   Source URL.
 	 * @param string     $resume_token Resume token.
+	 * @param string     $source_url   Source URL.
 	 * @param array|null $form         Form object.
 	 *
 	 * @return string Resume URL, or empty string if no source URL was provided.
 	 */
-	public static function get_resume_url( string $source_url, string $resume_token, $form = [] ) : string {
-		if ( ! $source_url ) {
-			return '';
+	public static function get_resume_url( string $resume_token, string $source_url = '', $form = [] ) : string {
+		if ( empty( $source_url ) ) {
+			$source_url = GFFormsModel::get_current_page_url();
 		}
 
 		/**

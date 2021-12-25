@@ -180,6 +180,9 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 						... on GfSubmittedEntry {
 							databaseId
 						}
+						... on GfDraftEntry {
+							resumeToken
+						}
 					}
 				}
 			}

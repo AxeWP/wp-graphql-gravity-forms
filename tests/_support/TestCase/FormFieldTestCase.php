@@ -211,7 +211,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$this->assertQuerySuccessful( $response, $expected );
 
-		$resume_token = $response['data']['submitGfForm']['resumeToken'];
+		$resume_token = $response['data']['submitGfForm']['entry']['resumeToken'];
 
 		$this->factory->draft_entry->delete( $resume_token );
 	}
@@ -238,7 +238,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$this->assertQuerySuccessful( $response, $expected );
 		$this->assertEquals( $response['data']['submitGfForm']['errors'], null );
 
-		$entry_id = $response['data']['submitGfForm']['entryId'];
+		$entry_id = $response['data']['submitGfForm']['entry']['databaseId'];
 
 		$actual_entry = GFAPI::get_entry( $entry_id );
 

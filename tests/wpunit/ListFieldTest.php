@@ -156,14 +156,12 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function submit_form_mutation() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: [ListFieldInput]!, $draft: Boolean) {
-				submitGfForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, listValues: $value}}) {
+			mutation ($formId: ID!, $fieldId: Int!, $value: [ListFieldInput]!, $draft: Boolean) {
+				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, listValues: $value}}) {
 					errors {
 						id
 						message
 					}
-					entryId
-					resumeToken
 					entry {
 						formFields {
 							nodes {
@@ -173,6 +171,12 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 									}
 								}
 							}
+						}
+						... on GfSubmittedEntry {
+							databaseId
+						}
+						... on GfDraftEntry {
+							resumeToken
 						}
 					}
 				}
@@ -185,8 +189,8 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function update_entry_mutation() : string {
 		return '
-			mutation updateGfEntry( $entryId: Int!, $fieldId: Int!, $value: [ListFieldInput] ){
-				updateGfEntry(input: {clientMutationId: "abc123", entryId: $entryId, fieldValues: {id: $fieldId, listValues: $value} }) {
+			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: [ListFieldInput] ){
+				updateGfEntry( input: { id: $entryId, fieldValues: {id: $fieldId, listValues: $value} }) {
 					errors {
 						id
 						message
@@ -212,13 +216,13 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 */
 	public function update_draft_entry_mutation() : string {
 		return '
-			mutation updateGfDraftEntry( $createdBy: Int, $resumeToken: String!, $fieldId: Int!, $value: [ListFieldInput]! ){
-				updateGfDraftEntry( input: {createdBy: $createdBy, clientMutationId: "abc123", resumeToken: $resumeToken, fieldValues: {id: $fieldId, listValues: $value} }) {
+			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: [ListFieldInput]! ){
+				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, fieldValues: {id: $fieldId, listValues: $value} }) {
 					errors {
 						id
 						message
 					}
-					entry {
+					entry: draftEntry {
 						formFields {
 							nodes {
 								... on ListField {
