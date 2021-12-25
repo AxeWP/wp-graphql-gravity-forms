@@ -151,14 +151,12 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 */
 	public function submit_form_mutation() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: EmailFieldInput!, $draft: Boolean) {
-				submitGfForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, emailValues: $value}}) {
+			mutation ( $formId: ID!, $fieldId: Int!, $value: EmailFieldInput!, $draft: Boolean) {
+				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, emailValues: $value}}) {
 					errors {
 						id
 						message
 					}
-					entryId
-					resumeToken
 					entry {
 						formFields {
 							nodes {
@@ -166,6 +164,12 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 									value
 								}
 							}
+						}
+						... on GfSubmittedEntry {
+							databaseId
+						}
+						... on GfDraftEntry {
+							resumeToken
 						}
 					}
 				}

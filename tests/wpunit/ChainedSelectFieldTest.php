@@ -187,14 +187,12 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 * SubmitForm mutation string.
 	 */
 	public function submit_form_mutation(): string {
-		return 'mutation ($formId: Int!, $fieldId: Int!, $value: [ChainedSelectFieldInput]!, $draft: Boolean) {
-				submitGfForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, chainedSelectValues: $value}}) {
+		return 'mutation ($formId: ID!, $fieldId: Int!, $value: [ChainedSelectFieldInput]!, $draft: Boolean) {
+				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, chainedSelectValues: $value}}) {
 					errors {
 						id
 						message
 					}
-					entryId
-					resumeToken
 					entry {
 						formFields {
 							nodes {
@@ -202,6 +200,12 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 									values
 								}
 							}
+						}
+						... on GfSubmittedEntry {
+							databaseId
+						}
+						... on GfDraftEntry {
+							resumeToken
 						}
 					}
 				}

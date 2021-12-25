@@ -195,14 +195,12 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function submit_form_mutation() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: [ListFieldInput]!, $draft: Boolean) {
-				submitGfForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, listValues: $value}}) {
+			mutation ($formId: ID!, $fieldId: Int!, $value: [ListFieldInput]!, $draft: Boolean) {
+				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, listValues: $value}}) {
 					errors {
 						id
 						message
 					}
-					entryId
-					resumeToken
 					entry {
 						formFields {
 							nodes {
@@ -212,6 +210,12 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 									}
 								}
 							}
+						}
+						... on GfSubmittedEntry {
+							databaseId
+						}
+						... on GfDraftEntry {
+							resumeToken
 						}
 					}
 				}

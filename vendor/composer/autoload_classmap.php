@@ -103,6 +103,7 @@ return array(
     'WPGraphQL\\GF\\Type\\Input\\ListFieldInput' => $baseDir . '/src/Type/Input/ListFieldInput.php',
     'WPGraphQL\\GF\\Type\\Input\\NameFieldInput' => $baseDir . '/src/Type/Input/NameFieldInput.php',
     'WPGraphQL\\GF\\Type\\Input\\PostImageFieldInput' => $baseDir . '/src/Type/Input/PostImageFieldInput.php',
+    'WPGraphQL\\GF\\Type\\Input\\SubmitFormMetaInput' => $baseDir . '/src/Type/Input/SubmitFormMetaInput.php',
     'WPGraphQL\\GF\\Type\\Input\\UpdateDraftEntryMetaInput' => $baseDir . '/src/Type/Input/UpdateDraftEntryMetaInput.php',
     'WPGraphQL\\GF\\Type\\Input\\UpdateEntryMetaInput' => $baseDir . '/src/Type/Input/UpdateEntryMetaInput.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\Entry' => $baseDir . '/src/Type/WPInterface/Entry.php',

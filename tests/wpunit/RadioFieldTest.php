@@ -124,14 +124,12 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	 */
 	public function submit_form_mutation() : string {
 		return '
-			mutation ($formId: Int!, $fieldId: Int!, $value: String!, $draft: Boolean) {
-				submitGfForm(input: {formId: $formId, clientMutationId: "123abc", saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
+			mutation ($formId: ID!, $fieldId: Int!, $value: String!, $draft: Boolean) {
+				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
 					errors {
 						id
 						message
 					}
-					entryId
-					resumeToken
 					entry {
 						formFields {
 							nodes {
@@ -139,6 +137,12 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 									value
 								}
 							}
+						}
+						... on GfSubmittedEntry {
+							databaseId
+						}
+						... on GfDraftEntry {
+							resumeToken
 						}
 					}
 				}

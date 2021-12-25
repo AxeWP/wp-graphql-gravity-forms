@@ -91,7 +91,7 @@ class UpdateDraftEntryMutationTest extends GFGraphQLTestCase {
 		$this->assertEquals( $variables['entryMeta']['sourceUrl'], $response['data']['updateGfDraftEntry']['draftEntry']['sourceUrl'], 'Source urls dont match' );
 		$this->assertEquals( $variables['entryMeta']['userAgent'], $response['data']['updateGfDraftEntry']['draftEntry']['userAgent'], 'User agent doesnt match' );
 
-		$this->assertEquals( GFUtils::get_resume_url( $variables['entryMeta']['sourceUrl'], $this->draft_token ), $response['data']['updateGfDraftEntry']['resumeUrl'], 'Field values dont match' );
+		$this->assertEquals( GFUtils::get_resume_url( $this->draft_token, $variables['entryMeta']['sourceUrl'] ), $response['data']['updateGfDraftEntry']['resumeUrl'], 'Field values dont match' );
 		$this->assertEquals( $variables['fieldValues'][0]['value'], $response['data']['updateGfDraftEntry']['draftEntry']['formFields']['nodes'][0]['value'], 'Field values dont match' );
 	}
 
