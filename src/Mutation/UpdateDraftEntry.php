@@ -119,7 +119,7 @@ class UpdateDraftEntry extends AbstractMutation {
 
 			return [
 				'resumeToken' => $resume_token,
-				'resumeUrl'   => GFUtils::get_resume_url( $entry_data['source_url'], $resume_token, $form ),
+				'resumeUrl'   => GFUtils::get_resume_url( $resume_token, $entry_data['source_url'], $form ),
 			];
 		};
 	}
@@ -146,6 +146,10 @@ class UpdateDraftEntry extends AbstractMutation {
 		// Update CreatedBy ID.
 		if ( isset( $input['entryMeta']['createdById'] ) ) {
 			$submission['partial_entry']['created_by'] = absint( $input['entryMeta']['createdById'] );
+		}
+				// Update Date created.
+		if ( isset( $input['entryMeta']['dateCreatedGmt'] ) ) {
+			$submission['partial_entry']['date_created'] = absint( $input['entryMeta']['dateCreatedGmt'] );
 		}
 
 		// Update IP Address.
