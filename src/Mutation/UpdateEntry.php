@@ -156,12 +156,12 @@ class UpdateEntry extends AbstractMutation {
 			if ( ! GFCommon::current_user_can_any( 'gravityforms_edit_entries' ) ) {
 				throw new UserError( __( 'Sorry, you do not have permission to change the Entry user', 'wp-graphql-gravity-forms' ) );
 			}
-			$entry['created_by'] = $input['entryMeta']['createdById'];
+			$entry['created_by'] = absint( $input['entryMeta']['createdById'] );
 		}
 
 		// Update Date created.
 		if ( isset( $input['entryMeta']['dateCreatedGmt'] ) ) {
-			$entry['date_created'] = $input['entryMeta']['dateCreatedGmt'];
+			$entry['date_created'] = sanitize_text_field( $input['entryMeta']['dateCreatedGmt'] );
 		}
 
 		// Update IP.
@@ -172,27 +172,27 @@ class UpdateEntry extends AbstractMutation {
 
 		// Update isRead.
 		if ( isset( $input['entryMeta']['isRead'] ) ) {
-			$entry['is_read'] = $input['entryMeta']['isRead'];
+			$entry['is_read'] = ! empty( $input['entryMeta']['isRead'] );
 		}
 
 		// Update isStarred.
 		if ( isset( $input['entryMeta']['isStarred'] ) ) {
-			$entry['is_starred'] = $input['entryMeta']['isStarred'];
+			$entry['is_starred'] = ! empty( $input['entryMeta']['isStarred'] );
 		}
 
 		// Update source url.
 		if ( isset( $input['entryMeta']['sourceUrl'] ) ) {
-			$entry['source_url'] = $input['entryMeta']['sourceUrl'];
+			$entry['source_url'] = sanitize_text_field( $input['entryMeta']['sourceUrl'] );
 		}
 
 		// Update status.
 		if ( isset( $input['entryMeta']['status'] ) ) {
-			$entry['status'] = $input['entryMeta']['status'];
+			$entry['status'] = sanitize_text_field( $input['entryMeta']['status'] );
 		}
 
 		// Update user agent.
 		if ( isset( $input['entryMeta']['userAgent'] ) ) {
-			$entry['user_agent'] = $input['entryMeta']['userAgent'];
+			$entry['user_agent'] = sanitize_text_field( $input['entryMeta']['userAgent'] );
 		}
 
 		return array_replace(
