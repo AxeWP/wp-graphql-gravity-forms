@@ -317,7 +317,6 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		foreach ( $field_settings as $setting ) {
 			if ( method_exists( $this, $setting ) ) {
-				codecept_debug( $setting );
 				$this->$setting( $field, $expected );
 			}
 		}

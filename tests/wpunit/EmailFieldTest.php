@@ -183,7 +183,7 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	public function update_entry_mutation() : string {
 		return '
 			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: EmailFieldInput! ){
-				updateGfEntry( input: { id: $entryId, fieldValues: {id: $fieldId, emailValues: $value} }) {
+				updateGfEntry( input: { id: $entryId, shouldValidate: true, fieldValues: {id: $fieldId, emailValues: $value} }) {
 					errors {
 						id
 						message
@@ -208,7 +208,7 @@ class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 	public function update_draft_entry_mutation() : string {
 		return '
 			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: EmailFieldInput! ){
-				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, fieldValues: {id: $fieldId, emailValues: $value} }) {
+				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, shouldValidate: true, fieldValues: {id: $fieldId, emailValues: $value} }) {
 					errors {
 						id
 						message

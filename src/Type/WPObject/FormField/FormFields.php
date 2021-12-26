@@ -182,10 +182,11 @@ class FormFields implements Registrable {
 			if ( in_array(
 				$setting,
 				[
+					'conditional_logic_nextbutton_setting',
 					'default_input_values_setting',
 					'gquiz_setting_field_type',
 					'input_placeholders_setting',
-					'conditional_logic_nextbutton_setting',
+					'name_prefix_choices_setting',
 					'post_author_setting',
 					'post_category_field_type_setting',
 					'post_category_setting',
@@ -197,6 +198,7 @@ class FormFields implements Registrable {
 					'post_title_template_setting',
 					'quantity_field_type_setting',
 					'sub_labels_setting',
+					'visibility_setting',
 				],
 				true
 			) ) {

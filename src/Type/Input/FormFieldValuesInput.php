@@ -79,7 +79,7 @@ class FormFieldValuesInput extends AbstractInput {
 				'type'        => [ 'list_of' => 'Upload' ],
 				'description' => __( 'The form field values for file upload fields.', 'wp-graphql-gravity-forms' ),
 			];
-			$fields['postImageValues']  = [
+			$fields['imageValues']      = [
 				'type'        => PostImageFieldInput::$type,
 				'description' => __( 'The form field values for post image fields.', 'wp-graphql-gravity-forms' ),
 			];
