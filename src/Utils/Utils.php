@@ -63,6 +63,7 @@ class Utils {
 		// Shim to map fields with existing PascalCase.
 		$fields_to_map = [
 			'chainedselect' => 'ChainedSelect',
+			'fileupload'    => 'FileUpload',
 			'multiselect'   => 'MultiSelect',
 			'textarea'      => 'TextArea',
 			// Regular mapping.

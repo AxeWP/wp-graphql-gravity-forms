@@ -162,6 +162,7 @@ Currently supported form fields:
 * `EmailField`
 * `HiddenField`
 * `HtmlField`
+* `FileUploadField`
 * `ListField`
 * `MultiSelectField`
 * `NameField`
@@ -187,7 +188,6 @@ These _Gravity Forms core-only_ fields are not yet explicitly supported by the p
 These forms are hidden **by default**:
 
 * `CreditcardField`
-* `FileuploadField` [@todo]
 * `OptionField`
 * `PasswordField` [@todo]
 * `PostCategoryField` [@todo]

@@ -20,6 +20,10 @@ class PropertyHelper extends GFHelpers {
 		return isset( $value ) ? $value : $this->dummy->yesno();
 	}
 
+	public function allowedExtensions( $value = null ) {
+		return $value ?: 'jpg,png';
+	}
+
 
 	public function autocompleteAttribute( $value = null ) {
 		return isset( $value ) ? $value : ( $this->dummy->text( 0, 8, true ) ?? null );
@@ -249,7 +253,11 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function maxFiles( $value = null ) {
-		return isset( $value ) ? $value : '';
+		return $value ?: 5;
+	}
+
+	public function maxFileSize( $value = null ) {
+		return $value ?: rand( 1, 4 );
 	}
 
 	public function maxLength( $value = null ) {

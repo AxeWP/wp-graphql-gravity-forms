@@ -389,6 +389,27 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for an email field.
+	 */
+	public function getFileUploadFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowedExtensions',
+			'cssClass',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'maxFiles',
+			'maxFileSize',
+			'multipleFiles',
+			[ 'type' => 'fileupload' ],
+		];
+	}
+
+	/**
 	 * Get the default args for a hidden field.
 	 */
 	public function getHiddenFieldArgs() : array {

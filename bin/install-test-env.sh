@@ -202,6 +202,15 @@ install_gravityforms_quiz() {
 	wp plugin activate gravityformsquiz
 }
 
+
+install_wpgraphql_upload() {
+	if [ ! -d $WP_CORE_DIR/wp-content/plugins/wp-graphql-upload ]; then
+		echo "Cloning WP GraphQL Upload"
+		git clone https://github.com/dre1080/wp-graphql-upload.git $WP_CORE_DIR/wp-content/plugins/wp-graphql-upload
+	fi
+	wp plugin activate wp-graphql-upload
+}
+
 setup_plugin() {
 
 	# Add this repo as a plugin to the repo
@@ -244,4 +253,5 @@ install_gravityforms
 install_gravityforms_signature
 install_gravityforms_chainedselects
 install_gravityforms_quiz
+install_wpgraphql_upload
 setup_plugin

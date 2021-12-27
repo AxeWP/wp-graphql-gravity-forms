@@ -43,15 +43,12 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 		// Let people know this is a workaround until there's native WPGraphQL support.
 		graphql_debug( __( 'File upload support is experimental, and current relies on WPGraphQL Upload.', 'wp-graphql-gravity-forms' ) );
 
-			$target = GFUtils::get_gravity_forms_upload_dir( $this->form['id'] );
+		$target = GFUtils::get_gravity_forms_upload_dir( $this->form['id'] );
 
 		// Gravity Forms uses $_gf_uploaded_files to store and validate multipleFile uploads.
 		global $_gf_uploaded_files;
 
 		$input_name = 'input_' . $this->field->id;
-		if ( isset( $_gf_uploaded_files[ $input_name ] ) ) {
-			return $_gf_uploaded_files[ $input_name ];
-		}
 
 		if ( empty( $_gf_uploaded_files ) ) {
 			$_gf_uploaded_files = [];
@@ -64,12 +61,19 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 				$single_value['error'] = 0;
 			}
 
+			if ( ! $this->field->multipleFiles ) {
+				$_FILES[ $input_name ] = $single_value;
+
+				if ( ! empty( $_gf_uploaded_files[ $input_name ] ) ) {
+					return $_gf_uploaded_files[ $input_name ];
+				}
+			}
 			$uploaded_file = GFUtils::handle_file_upload( $single_value, $target );
 
 			// Set values needed for validation.
 			if ( ! $this->field->multipleFiles ) {
-				$_FILES[ $input_name ]             = $single_value;
 				$_gf_uploaded_files[ $input_name ] = $uploaded_file['url'];
+
 				GFFormsModel::$uploaded_files[ $this->field->formId ][ $input_name ] = $_gf_uploaded_files[ $input_name ];
 
 				return $_gf_uploaded_files[ $input_name ];

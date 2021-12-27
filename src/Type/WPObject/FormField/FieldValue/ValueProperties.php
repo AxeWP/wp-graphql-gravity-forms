@@ -305,6 +305,11 @@ class ValueProperties {
 
 					$values = Utils::maybe_decode_json( $values );
 
+					// Sometimes GF likes to nest their jsons twice.
+					if ( is_string( $values ) ) { //@phpstan-ignore-line
+						$values = Utils::maybe_decode_json( $values );
+					}
+
 					return $values ?: null;
 				},
 			],
