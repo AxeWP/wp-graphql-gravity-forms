@@ -192,14 +192,12 @@ These forms are hidden **by default**:
 * `PasswordField` [@todo]
 * `PostCategoryField` [@todo]
 * `PostCustomField` [@todo]
-* `PostImageField` [@todo]
 * `PostTagsField` [@todo]
 * `PriceField`
 * `ProductField`
 * `QuantityField`
 * `ShippingField`
 * `TotalField`
-* `SignatureField`[@todo]
 
 To enable these plugins, you can define the `WPGRAPHQL_GF_EXPERIMENTAL_FIELDS` constant to true in wp-config.php[https://wordpress.org/support/article/editing-wp-config-php/].
 

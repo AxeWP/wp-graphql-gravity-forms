@@ -301,7 +301,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 									$this->expectedNode(
 										'nodes',
 										[
-											$this->expectedField( 'values', self::NOT_FALSY ),
+											$this->expectedField( 'values', static::NOT_FALSY ),
 										]
 									),
 								]

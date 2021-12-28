@@ -943,6 +943,32 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a signature field.
+	 */
+	public function getSignatureFieldArgs() : array {
+		return [
+			'adminLabel',
+			'backgroundColor',
+			'borderColor',
+			'borderStyle',
+			'borderWidth',
+			'boxWidth',
+			'cssClass',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			[ 'id' => 1 ],
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'penColor',
+			'penSize',
+			'size',
+			[ 'type' => 'signature' ],
+		];
+	}
+
+	/**
 	 * Get the default args for a text field.
 	 */
 	public function getTextFieldArgs() : array {
