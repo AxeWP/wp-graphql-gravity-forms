@@ -851,8 +851,8 @@ class FieldProperties {
 			'hasTitle' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Controls the visibility of the title metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => ! empty( $source->displayTitle ),
 			],
-			'resolve'  => fn( $source ) => ! empty( $source->displayTitle ),
 		];
 	}
 
