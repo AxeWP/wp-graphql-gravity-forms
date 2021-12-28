@@ -444,6 +444,7 @@ trait ExpectedFormFields {
 	}
 
 	public function post_image_setting( GF_Field $field, array &$properties ) : void {
+		$properties[] = $this->expectedField( 'allowedExtensions', explode( ',', $field->allowedExtensions ) );
 		$properties[] = $this->expectedField( 'hasAlt', ! empty( $field->displayAlt ) );
 		$properties[] = $this->expectedField( 'hasCaption', ! empty( $field->displayCaption ) );
 		$properties[] = $this->expectedField( 'hasDescription', ! empty( $field->displayDescription ) );
@@ -593,16 +594,22 @@ trait ExpectedFormFields {
 
 	public function expected_field_value( string $key, $values ) {
 		if ( empty( $values ) ) {
-			return $this->expectedField( $key, null );
+			return $this->expectedField( $key, static::IS_NULL );
 		}
 
 		if ( is_array( $values ) ) {
+			codecept_debug( $values );
 			$expected = [];
 			foreach ( $values as $name => $value ) {
-				if ( $name === 'amPm' ) {
+				switch ( (string) $name ) {
+					case 'amPm':
 						$expected[] = $this->expectedField( $name, isset( $value ) ? GFHelpers::get_enum_for_value( AmPmEnum::$type, $value ) : static::IS_NULL );
-				} else {
-					$expected[] = $this->expectedField( $name, $value );
+						break;
+					case 'url':
+						$expected[] = $this->expectedField( $name, static::NOT_FALSY );
+						break;
+					default:
+						$expected[] = $this->expectedField( $name, $value );
 				}
 			}
 

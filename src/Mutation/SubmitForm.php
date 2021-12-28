@@ -116,7 +116,7 @@ class SubmitForm extends AbstractMutation {
 			// Initialize $_FILES with fileupload inputs.
 			self::initialize_files( $form );
 
-			$field_values = self::prepare_field_values( $input['fieldValues'], $form );
+			$field_values = self::prepare_field_values( $input['fieldValues'], $form, $save_as_draft );
 
 			add_filter( 'gform_field_validation', [ EntryObjectMutation::class, 'disable_validation_for_unsupported_fields' ], 10, 4 );
 			$submission = GFUtils::submit_form(
@@ -185,12 +185,12 @@ class SubmitForm extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	private static function prepare_field_values( array $field_values, array $form ) : array {
+	private static function prepare_field_values( array $field_values, array $form, bool $save_as_draft ) : array {
 		$formatted_values = [];
 
 		// Prepares field values to a format GF can understand.
 		foreach ( $field_values as $values ) {
-			$field_value_input = EntryObjectMutation::get_field_value_input( $values, $form );
+			$field_value_input = EntryObjectMutation::get_field_value_input( $values, $form, $save_as_draft );
 
 			$field_value_input->add_value_to_submission( $formatted_values );
 		}

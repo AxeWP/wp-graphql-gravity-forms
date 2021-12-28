@@ -114,7 +114,13 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	 * The default form args.
 	 */
 	public function generate_form_args() {
-		return $this->tester->getFormDefaultArgs();
+		return $this->tester->getFormDefaultArgs(
+			[
+				'button'        => null,
+				'confirmations' => null,
+				'notifications' => null,
+			]
+		);
 	}
 
 	/**
@@ -323,5 +329,4 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		return $expected;
 	}
-
 }

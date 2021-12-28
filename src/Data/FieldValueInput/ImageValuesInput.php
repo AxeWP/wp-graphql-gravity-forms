@@ -38,42 +38,41 @@ class ImageValuesInput extends FileUploadValuesInput {
 		$value      = $this->input_value;
 		$prev_value = $this->entry[ $this->field->id ] ?? [];
 
-		$url         = parent::prepare_value() ?: $prev_value[0] ?? null;
+		// change input value for parent function.
+		$this->input_value = [ $value['image'] ];
+		$url               = parent::prepare_value() ?: $prev_value[0] ?? null;
+		$this->input_value = $value;
+
 		$title       = $value['title'] ?? $prev_value[1] ?? null;
 		$caption     = $value['caption'] ?? $prev_value[2] ?? null;
 		$description = $value['description'] ?? $prev_value[3] ?? null;
-		$alt         = $value['alt'] ?? $prev_value[4] ?? null;
+		$alt         = $value['altText'] ?? $prev_value[4] ?? null;
 
-		$_POST[ 'input_' . $this->field->id . '_0' ] = $url;
-		$_POST[ 'input_' . $this->field->id . '_1' ] = $title;
-		$_POST[ 'input_' . $this->field->id . '_4' ] = $caption;
-		$_POST[ 'input_' . $this->field->id . '_7' ] = $description;
-		$_POST[ 'input_' . $this->field->id . '_2' ] = $alt;
+		if ( $this->is_draft ) {
+			$_POST[ 'input_' . $this->field->id . '_0' ] = $url;
+			$_POST[ 'input_' . $this->field->id . '_1' ] = $title;
+			$_POST[ 'input_' . $this->field->id . '_4' ] = $caption;
+			$_POST[ 'input_' . $this->field->id . '_7' ] = $description;
+			$_POST[ 'input_' . $this->field->id . '_2' ] = $alt;
+		}
 
-		$values_to_return = [
+		return [
 			$this->field->id . '_0' => $url,
 			$this->field->id . '_1' => $title,
 			$this->field->id . '_4' => $caption,
 			$this->field->id . '_7' => $description,
 			$this->field->id . '_2' => $alt,
 		];
-
-		/**
-		 * Entry updates need a formatted string.
-		 *
-		 * Follows pattern: `$url |:| $title |:| $caption |:|$description |:| $alt`.
-		 */
-		if ( ! empty( $this->entry ) ) {
-			return [ (string) $this->field->id => implode( '|:|', array_values( $values_to_return ) ) ];
-		}
-
-		return $values_to_return;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function add_value_to_submission( array &$field_values ) : void {
-		$field_values += $this->value;
+		if ( ! $this->is_draft && empty( $this->entry ) ) {
+			$field_values += $this->value;
+		} else {
+			$field_values[ $this->field->id ] = implode( '|:|', array_values( $this->value ) );
+		}
 	}
 }

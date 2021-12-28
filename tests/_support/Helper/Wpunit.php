@@ -738,6 +738,30 @@ class Wpunit extends \Codeception\Module {
 		];
 	}
 
+
+	/**
+	 * Get the default args for an email field.
+	 */
+	public function getPostImageFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowedExtensions',
+			'cssClass',
+			'description',
+			'descriptionPlacement',
+			'displayAlt',
+			'displayCaption',
+			'displayDescription',
+			'displayTitle',
+			'errorMessage',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'postFeaturedImage',
+			[ 'type' => 'post_image' ],
+		];
+	}
+
 	/**
 	 * Get the default args for a PostTitle field.
 	 */

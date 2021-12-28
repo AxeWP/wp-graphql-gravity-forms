@@ -133,12 +133,29 @@ class PropertyHelper extends GFHelpers {
 		return ! empty( $value );
 	}
 
+	public function displayAlt( $value = null ) : bool {
+		return $value ?: true;
+	}
+
+
 	public function displayAllCategories( $value = null ) : bool {
 		return ! empty( $value );
 	}
 
+	public function displayCaption( $value = null ) : bool {
+		return $value ?: true;
+	}
+
+	public function displayDescription( $value = null ) : bool {
+		return $value ?: true;
+	}
+
 	public function displayOnly( $value = null ) : bool {
 		return ! empty( $value );
+	}
+
+	public function displayTitle( $value = null ) : bool {
+		return $value ?: true;
 	}
 
 	public function emailConfirmEnabled( $value = null ) : bool {
@@ -296,6 +313,10 @@ class PropertyHelper extends GFHelpers {
 
 	public function phoneFormat( $value = null ) {
 		return isset( $value ) ? $value : 'standard';
+	}
+
+	public function postFeaturedImage( $value = null ) {
+		return $value ?: true;
 	}
 
 	public function placeholder( $value = null ) {

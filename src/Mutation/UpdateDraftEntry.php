@@ -200,7 +200,7 @@ class UpdateDraftEntry extends AbstractMutation {
 		$formatted_values = [];
 
 		foreach ( $field_values as $values ) {
-			$field_value_input = EntryObjectMutation::get_field_value_input( $values, $form, $entry );
+			$field_value_input = EntryObjectMutation::get_field_value_input( $values, $form, true, $entry );
 
 			if ( $should_validate ) {
 				$field_value_input->validate_value( self::$errors );

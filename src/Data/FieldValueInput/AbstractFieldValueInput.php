@@ -38,6 +38,13 @@ abstract class AbstractFieldValueInput {
 	protected GF_Field $field;
 
 	/**
+	 * Whether this is for a draft mutation.
+	 *
+	 * @var boolean
+	 */
+	protected bool $is_draft;
+
+	/**
 	 * The GraphQL object key used by the Field's value input.
 	 *
 	 * @var string
@@ -63,14 +70,16 @@ abstract class AbstractFieldValueInput {
 	 *
 	 * @param array      $input_values .
 	 * @param array      $form .
+	 * @param bool       $is_draft .
 	 * @param GF_Field   $field .
 	 * @param array|null $entry .
 	 *
 	 * @throws UserError .
 	 */
-	public function __construct( array $input_values, array $form, GF_Field $field = null, array $entry = null ) {
-		$this->form  = $form;
-		$this->field = null !== $field ? $field : GFUtils::get_field_by_id( $form, $input_values['id'] );
+	public function __construct( array $input_values, array $form, bool $is_draft, GF_Field $field = null, array $entry = null ) {
+		$this->form     = $form;
+		$this->is_draft = $is_draft;
+		$this->field    = null !== $field ? $field : GFUtils::get_field_by_id( $form, $input_values['id'] );
 
 		$this->value_key = $this->get_value_key();
 
