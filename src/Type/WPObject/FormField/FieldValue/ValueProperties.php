@@ -302,10 +302,15 @@ class ValueProperties {
 						return $values;
 					}
 
+					if ( 'multiselect' === $source->inputType ) {
+						$values = $source->to_array( $values );
+					}
+
 					$values = Utils::maybe_decode_json( $values );
 
 					// Sometimes GF likes to nest their jsons twice.
 					if ( is_string( $values ) ) { // @phpstan-ignore-line
+
 						$values = Utils::maybe_decode_json( $values );
 					}
 

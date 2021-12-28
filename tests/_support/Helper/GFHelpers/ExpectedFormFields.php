@@ -598,7 +598,6 @@ trait ExpectedFormFields {
 		}
 
 		if ( is_array( $values ) ) {
-			codecept_debug( $values );
 			$expected = [];
 			foreach ( $values as $name => $value ) {
 				switch ( (string) $name ) {

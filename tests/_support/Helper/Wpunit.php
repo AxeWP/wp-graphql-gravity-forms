@@ -717,6 +717,29 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a PostContent field.
+	 */
+	public function getPostCategoryFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'description',
+			'descriptionPlacement',
+			'displayAllCategories',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'noDuplicates',
+			'maxLength',
+			'placeholder',
+			'size',
+			[ 'type' => 'post_category' ],
+		];
+	}
+
+	/**
 	 * Get the default args for a PostExcerpt field.
 	 */
 	public function getPostExcerptFieldArgs() : array {

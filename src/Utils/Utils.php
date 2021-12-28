@@ -217,7 +217,7 @@ class Utils {
 			case 'post_category':
 				$child_types = [
 					'checkbox'    => $prefix . 'CheckboxField',
-					'multiselect' => $prefix . 'MultiselectField',
+					'multiselect' => $prefix . 'MultiSelectField',
 					'radio'       => $prefix . 'RadioField',
 					'select'      => $prefix . 'SelectField',
 				];
@@ -230,7 +230,7 @@ class Utils {
 					'fileupload'  => $prefix . 'FileuploadField',
 					'hidden'      => $prefix . 'HiddenField',
 					'list'        => $prefix . 'ListField',
-					'multiselect' => $prefix . 'MultiselectField',
+					'multiselect' => $prefix . 'MultiSelectField',
 					'number'      => $prefix . 'NumberField',
 					'phone'       => $prefix . 'PhoneField',
 					'radio'       => $prefix . 'RadioField',
@@ -244,7 +244,7 @@ class Utils {
 			case 'post_tag':
 				$child_types = [
 					'checkbox'    => $prefix . 'CheckboxField',
-					'multiselect' => $prefix . 'MultiselectField',
+					'multiselect' => $prefix . 'MultiSelectField',
 					'radio'       => $prefix . 'RadioField',
 					'select'      => $prefix . 'SelectField',
 					'text'        => $prefix . 'TextField',

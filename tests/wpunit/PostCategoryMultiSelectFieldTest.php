@@ -1,32 +1,33 @@
 <?php
 /**
- * Test FileUploadField.
+ * Test PostCategoryMultiSelectField.
  *
  * @package Tests\WPGraphQL\GF
  */
 
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
-use WPGraphQL\GF\Utils\GFUtils;
 
 /**
- * Class -FileUploadFieldTest
+ * Class -PostCategoryMultiSelectFieldTest
  */
-class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
-	/**
-	 * Set up.
-	 */
-	public function setUp(): void {
-		// Before...
+class PostCategoryMultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+	public int $cat_id_1;
+	public int $cat_id_2;
 
-		copy( dirname( __FILE__ ) . '/../_support/files/img1.png', '/tmp/img1.png' );
-		copy( dirname( __FILE__ ) . '/../_support/files/img2.png', '/tmp/img2.png' );
+	public function setUp(): void
+	{
+		// Before...
+		$this->cat_id_1 = self::factory()->category->create();
+		$this->cat_id_2 = self::factory()->category->create();
 		parent::setUp();
-		add_filter( 'gform_save_field_value', [ $this, '_fake_move_uploaded_file' ], 10, 5 );
+
+		$this->clearSchema();
 	}
 
-	public function tearDown(): void {
-		remove_filter( 'gform_save_field_value', [ $this, '_fake_move_uploaded_file' ], 10 );
+	public function tearDown() : void {
+		wp_delete_category( $this->cat_id_1 );
+		wp_delete_category( $this->cat_id_2 );
 		parent::tearDown();
 	}
 
@@ -65,21 +66,50 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getPropertyHelper( 'FileUploadField' );
+		return $this->tester->getPropertyHelper( 'PostCategoryField' );
 	}
 
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
 	public function generate_fields() : array {
-		return [ $this->factory->field->create( $this->property_helper->values ) ];
+			return [
+			$this->factory->field->create(
+				array_merge(
+					$this->property_helper->values,
+					[ 'inputType' => 'multiselect' ],
+					[
+						'choices' => [
+							[
+								'text'           => self::factory()->category->get_object_by_id( $this->cat_id_1)->name,
+								'value'          => (string) self::factory()->category->get_object_by_id( $this->cat_id_1)->term_id,
+								'isSelected'     => false,
+							],
+							[
+								'text'           => self::factory()->category->get_object_by_id( $this->cat_id_2)->name,
+								'value'          => (string) self::factory()->category->get_object_by_id( $this->cat_id_2)->term_id,
+								'isSelected'     => false,
+							],
+							[
+								'text'           => 'Uncategorized',
+								'value'          => '1',
+								'isSelected'     => true,
+							],
+						],
+					],
+				)
+			),
+		];
 	}
 
 	/**
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return [ GFUtils::get_gravity_forms_upload_dir( 1 )['url'] . '/' . $this->field_value_input()[0]['name'] ];
+		return [
+			$this->fields[0]['choices'][0]['text'] . ':' . $this->fields[0]['choices'][0]['value'],
+			$this->fields[0]['choices'][1]['text'] . ':' . $this->fields[0]['choices'][1]['value'],
+		];
 	}
 
 	/**
@@ -87,60 +117,56 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 */
 	public function field_value_input() {
 		return [
-			[
-				'name'     => 'img1.png',
-				'type'     => 'image/png',
-				'size'     => filesize( '/tmp/img1.png' ),
-				'tmp_name' => '/tmp/img1.png',
-			],
+			$this->fields[0]['choices'][0]['value'],
+			$this->fields[0]['choices'][1]['value'],
 		];
 	}
-
 	/**
-	 * Sets the value as expected by Gravity Forms.
+	 * The graphql field value input.
 	 */
-	public function value() {
-		return [ $this->fields[0]['id'] => $this->field_value()[0] ];
+	public function updated_field_value_input() {
+		return [ $this->fields[0]['choices'][2]['value'] ];
 	}
+
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
 		return [
-			GFUtils::get_gravity_forms_upload_dir( 1 )['url'] . '/' . $this->updated_field_value_input()[0]['name'],
+			$this->fields[0]['choices'][2]['text'] . ':' . $this->fields[0]['choices'][2]['value'],
 		];
 	}
 
-		/**
-		 * The graphql field value input.
-		 */
-	public function updated_field_value_input() {
+	/**
+	 * The value as expected by Gravity Forms.
+	 */
+	public function value() {
 		return [
-			[
-				'name'     => 'img2.png',
-				'type'     => 'image/png',
-				'size'     => filesize( '/tmp/img2.png' ),
-				'tmp_name' => '/tmp/img2.png',
-			],
+			$this->fields[0]['id'] => $this->fields[0]->to_string( $this->field_value ),
 		];
 	}
+
 
 	/**
 	 * The GraphQL query string.
 	 *
 	 * @return string
 	 */
-	public function field_query() : string {
+	public function field_query():string {
 		return '
-			... on FileUploadField {
+			... on PostCategoryField {
 				adminLabel
-				allowedExtensions
-				canAcceptMultipleFiles
+				canPrepopulate
+				choices {
+					isSelected
+					text
+					value
+				}
 				conditionalLogic {
 					actionType
 					logicType
-					rules {
+					rules{
 						fieldId
 						operator
 						value
@@ -149,26 +175,31 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 				cssClass
 				description
 				descriptionPlacement
+				dropdownPlaceholder
 				errorMessage
+				hasAllCategories
+				hasChoiceValue
+				inputName
 				isRequired
 				label
 				labelPlacement
-				maxFileSize
-				maxFiles
-				values
+				pageNumber
+				shouldAllowDuplicates
+				size
+				... on PostCategoryMultiSelectField {
+					hasEnhancedUI
+					values
+				}
 			}
 		';
 	}
 
 	/**
 	 * SubmitForm mutation string.
-	 *
-	 * @return string
 	 */
-	public function submit_form_mutation() : string {
-		return '
-			mutation ($formId: ID!, $fieldId: Int!, $value: [Upload!], $draft: Boolean) {
-				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, fileUploadValues: $value}}) {
+	public function submit_form_mutation(): string {
+		return 'mutation ($formId: ID!, $fieldId: Int!, $value: [String]!, $draft: Boolean) {
+				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, values: $value}}) {
 					errors {
 						id
 						message
@@ -176,7 +207,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 					entry {
 						formFields {
 							nodes {
-								... on FileUploadField {
+								... on PostCategoryMultiSelectField {
 									values
 								}
 							}
@@ -195,13 +226,11 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 
 	/**
 	 * Returns the UpdateEntry mutation string.
-	 *
-	 * @return string
 	 */
 	public function update_entry_mutation(): string {
 		return '
-			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: [Upload!] ){
-				updateGfEntry( input: { id: $entryId, shouldValidate: true, fieldValues: {id: $fieldId, fileUploadValues: $value} }) {
+			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: [String]! ){
+				updateGfEntry( input: { id: $entryId, shouldValidate: true, fieldValues: {id: $fieldId, values: $value} }) {
 					errors {
 						id
 						message
@@ -209,7 +238,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 					entry {
 						formFields {
 							nodes {
-								... on FileUploadField {
+								... on PostCategoryMultiSelectField {
 									values
 								}
 							}
@@ -222,13 +251,11 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 
 	/**
 	 * Returns the UpdateDraftEntry mutation string.
-	 *
-	 * @return string
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
-			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: [Upload!] ){
-				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, shouldValidate: true, fieldValues: {id: $fieldId, fileUploadValues: $value} }) {
+			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: [String]! ){
+				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, shouldValidate: true, fieldValues: {id: $fieldId, values: $value} }) {
 					errors {
 						id
 						message
@@ -236,7 +263,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 					entry: draftEntry {
 						formFields {
 							nodes {
-								... on FileUploadField {
+								... on PostCategoryMultiSelectField {
 									values
 								}
 							}
@@ -246,21 +273,15 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 			}
 		';
 	}
+
 	/**
 	 * The expected WPGraphQL field response.
 	 *
 	 * @param array $form the current form instance.
-	 * @return array
 	 */
-	public function expected_field_response( array $form ) : array {
+	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
-		$expected[] = $this->expectedNode(
-			'values',
-			[
-				$this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ],
-			],
-			0,
-		);
+		$expected[] = $this->expected_field_value( 'values', $this->field_value );
 
 		return [
 			$this->expectedObject(
@@ -287,7 +308,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 * @param mixed  $value .
 	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ) : array {
+	public function expected_mutation_response( string $mutationName, $value ):array {
 		return [
 			$this->expectedObject(
 				$mutationName,
@@ -301,7 +322,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 									$this->expectedNode(
 										'nodes',
 										[
-											$this->expectedField( 'values', static::NOT_FALSY ),
+											$this->expected_field_value( 'values', self::NOT_FALSY ),
 										]
 									),
 								]
@@ -320,22 +341,8 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
-		$ends_with = preg_replace( '/(.*?)gravity_forms\/(.*?)\/(.*?)/', '$3', $this->field_value );
-		$this->assertStringEndsWith( $ends_with[0], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry value not equal.' );
-	}
-
-	/**
-	 * If temp file can't be copied during the test, fake a URL
-	 *
-	 * @used-by test_edit_entry_upload
-	 */
-	public function _fake_move_uploaded_file( $value, $lead, $field, $form, $input_id ) {
-		if ( $value === 'FAILED (Temporary file could not be copied.)' ) {
-			$target        = GFFormsModel::get_file_upload_path( $form['id'], $_FILES[ 'input_' . $input_id ]['name'] );
-			$this->_target = $target;
-			return $target['url'];
-		}
-
-		return $value;
+		$this->assertEquals(
+			$this->field_value,
+			$form['fields'][0]->to_array( $actual_entry[ $form['fields'][0]['id'] ]), 'Submit mutation entry value not equal.' );
 	}
 }

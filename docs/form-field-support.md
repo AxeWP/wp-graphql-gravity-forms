@@ -169,13 +169,16 @@ Currently supported form fields:
 * `NumberField`
 * `PageField`
 * `PhoneField`
+* `PostCategoryField`
 * `PostContentField`
 * `PostExcerptField`
+* `PostImageField`
 * `PostTitleField`
 * `QuizField`
 * `RadioField`
 * `SectionField`
 * `SelectField`
+* `SignatureField`
 * `TextAreaField`
 * `TextField`
 * `TimeField`
@@ -190,7 +193,6 @@ These forms are hidden **by default**:
 * `CreditcardField`
 * `OptionField`
 * `PasswordField` [@todo]
-* `PostCategoryField` [@todo]
 * `PostCustomField` [@todo]
 * `PostTagsField` [@todo]
 * `PriceField`
