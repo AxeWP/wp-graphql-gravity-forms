@@ -20,13 +20,13 @@ class SignatureFieldBorderStyleEnum extends AbstractEnum {
 	public static string $type = 'SignatureFieldBorderStyleEnum';
 
 	// Individual elements.
-	const DOTTED = 'dotted';
 	const DASHED = 'dashed';
+	const DOTTED = 'dotted';
+	const DOUBLE = 'double';
 	const GROOVE = 'groove';
-	const RIDGE  = 'ridge';
 	const INSET  = 'inset';
 	const OUTSET = 'outset';
-	const DOUBLE = 'double';
+	const RIDGE  = 'ridge';
 	const SOLID  = 'solid';
 
 	/**
@@ -49,9 +49,13 @@ class SignatureFieldBorderStyleEnum extends AbstractEnum {
 				'description' => __( 'A "dashed" border style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DASHED,
 			],
-			'RIDGE'  => [
-				'description' => __( 'A "ridge" border style.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::RIDGE,
+			'DOUBLE' => [
+				'description' => __( 'A "double" border style.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::DOUBLE,
+			],
+			'GROOVE' => [
+				'description' => __( 'A "dashed" border style.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::GROOVE,
 			],
 			'INSET'  => [
 				'description' => __( 'An "inset" border style.', 'wp-graphql-gravity-forms' ),
@@ -61,9 +65,9 @@ class SignatureFieldBorderStyleEnum extends AbstractEnum {
 				'description' => __( 'An "outset" border style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::OUTSET,
 			],
-			'DOUBLE' => [
-				'description' => __( 'A "double" border style.', 'wp-graphql-gravity-forms' ),
-				'value'       => self::DOUBLE,
+			'RIDGE'  => [
+				'description' => __( 'A "ridge" border style.', 'wp-graphql-gravity-forms' ),
+				'value'       => self::RIDGE,
 			],
 			'SOLID'  => [
 				'description' => __( 'A "solid" border style.', 'wp-graphql-gravity-forms' ),
