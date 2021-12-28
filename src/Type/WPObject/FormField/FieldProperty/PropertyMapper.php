@@ -884,6 +884,7 @@ class PropertyMapper {
 	 * @param array    $properties the existing properties array.
 	 */
 	public static function post_image_setting( GF_Field $field, array &$properties ) : void {
+		$properties += FieldProperties::allowed_extensions();
 		$properties += FieldProperties::has_alt();
 		$properties += FieldProperties::has_caption();
 		$properties += FieldProperties::has_description();
