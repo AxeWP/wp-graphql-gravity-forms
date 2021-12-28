@@ -1198,9 +1198,10 @@ class FieldProperties {
 	 */
 	public static function post_custom_field_name() : array {
 		return [
-			'postCustomFieldName' => [
+			'postMetaFieldName' => [
 				'type'        => 'String',
-				'description' => __( 'The name of the Post Custom Field that the submitted value should be assigned to.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The post meta key to which the value should be assigned.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source) => ! empty( $source->postCustomFieldName ) ? $source->postCustomFieldName : null,
 			],
 		];
 	}
