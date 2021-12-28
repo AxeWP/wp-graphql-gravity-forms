@@ -173,6 +173,7 @@ Currently supported form fields:
 * `PostContentField`
 * `PostExcerptField`
 * `PostImageField`
+* `PostTagsField`
 * `PostTitleField`
 * `QuizField`
 * `RadioField`
@@ -194,7 +195,6 @@ These forms are hidden **by default**:
 * `OptionField`
 * `PasswordField` [@todo]
 * `PostCustomField` [@todo]
-* `PostTagsField` [@todo]
 * `PriceField`
 * `ProductField`
 * `QuantityField`
