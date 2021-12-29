@@ -151,7 +151,7 @@ abstract class AbstractFieldValueInput {
 		 * @param string $field_name The GraphQL input field name. E.g. `nameValues`.
 		 */
 		$this->value = apply_filters(
-			'graphql_field_value_input_prepared_field_value',
+			'graphql_gf_field_value_input_prepared_value',
 			$this->prepare_value(),
 			$this->args,
 			$this->field,

@@ -117,12 +117,12 @@ apply_filters( 'graphql_gf_field_value_input_name', string $name, GF_Field $fiel
 * **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
 * **`$is_draft_mutation`** _(bool)_ : Whether the mutation is handling a Draft Entry, i.e. on `gfUpdateDraftEntry`, or `gfSubmitForm` with `saveAsDraft` is `true`).
 
-### `graphql_field_value_input_prepared_field_value`
+### `graphql_gf_field_value_input_prepared_value`
 
 Filters the prepared field value to be submitted to Gravity Forms. Useful for supporting custom Gravity Forms field value submissions.
 
 ```php
-apply_filters( 'graphql_field_value_input_prepared_field_value', array|string $prepared_field_value, array|string $args, GF_Field $field, array $form, array|null $entry, bool $is_draft_mutation, string $field_name );
+apply_filters( 'graphql_gf_field_value_input_prepared_value', array|string $prepared_field_value, array|string $args, GF_Field $field, array $form, array|null $entry, bool $is_draft_mutation, string $field_name );
 ```
 
 #### Parameters
