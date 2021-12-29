@@ -182,10 +182,11 @@ class FormFields implements Registrable {
 			if ( in_array(
 				$setting,
 				[
+					'conditional_logic_nextbutton_setting',
 					'default_input_values_setting',
 					'gquiz_setting_field_type',
 					'input_placeholders_setting',
-					'conditional_logic_nextbutton_setting',
+					'name_prefix_choices_setting',
 					'post_author_setting',
 					'post_category_field_type_setting',
 					'post_category_setting',
@@ -197,6 +198,7 @@ class FormFields implements Registrable {
 					'post_title_template_setting',
 					'quantity_field_type_setting',
 					'sub_labels_setting',
+					'visibility_setting',
 				],
 				true
 			) ) {
@@ -241,6 +243,9 @@ class FormFields implements Registrable {
 		switch ( $input_type ) {
 			// Ignore the quiz interface.
 			case 'quiz':
+			case 'post_category':
+			case 'post_custom':
+			case 'post_tags':
 				break;
 			case 'address':
 				$properties += ValueProperties::address_values();
@@ -268,9 +273,6 @@ class FormFields implements Registrable {
 				break;
 			case 'fileupload':
 			case 'multiselect':
-			case 'post_category':
-			case 'post_custom':
-			case 'post_tags':
 				$properties += ValueProperties::values();
 				break;
 			default:

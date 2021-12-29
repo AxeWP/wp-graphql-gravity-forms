@@ -313,7 +313,7 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	public function update_entry_mutation(): string {
 		return '
 			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: [CheckboxFieldInput]! ){
-				updateGfEntry( input: { id: $entryId, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
+				updateGfEntry( input: { id: $entryId, shouldValidate: true, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
 					errors {
 						id
 						message
@@ -342,7 +342,7 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	public function update_draft_entry_mutation(): string {
 		return '
 			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: [CheckboxFieldInput]! ){
-				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
+				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, shouldValidate: true, fieldValues: {id: $fieldId, checkboxValues: $value} }) {
 					errors {
 						id
 						message

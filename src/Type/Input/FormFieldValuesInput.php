@@ -79,11 +79,18 @@ class FormFieldValuesInput extends AbstractInput {
 				'type'        => [ 'list_of' => 'Upload' ],
 				'description' => __( 'The form field values for file upload fields.', 'wp-graphql-gravity-forms' ),
 			];
-			$fields['postImageValues']  = [
+			$fields['imageValues']      = [
 				'type'        => PostImageFieldInput::$type,
 				'description' => __( 'The form field values for post image fields.', 'wp-graphql-gravity-forms' ),
 			];
 		}
+
+		/**
+		 * Filters the possible input fields for the FormFieldValuesInput GraphQL type.
+		 *
+		 * Usefule for adding support for custom form fields.
+		 */
+		$fields = apply_filters( 'graphql_gf_form_field_values_input_fields', $fields );
 
 		ksort( $fields );
 

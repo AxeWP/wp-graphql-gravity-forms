@@ -265,8 +265,7 @@ class TypeRegistry {
 			WPObject\FormField\FieldValue\ValueProperty\CheckboxValueProperty::class,
 			WPObject\FormField\FieldValue\ValueProperty\ListValueProperty::class,
 			WPObject\FormField\FieldValue\ValueProperty\NameValueProperty::class,
-			WPObject\FormField\FieldValue\ValueProperty\PostImageValueProperty::class,
-			WPObject\FormField\FieldValue\ValueProperty\PostImageValueProperty::class,
+			WPObject\FormField\FieldValue\ValueProperty\ImageValueProperty::class,
 			WPObject\FormField\FieldValue\ValueProperty\TimeValueProperty::class,
 			// Form Fields.
 			WPObject\FormField\FormFields::class,

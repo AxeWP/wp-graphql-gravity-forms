@@ -191,7 +191,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function update_entry_mutation(): string {
 		return '
 			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: String! ){
-				updateGfEntry( input: { id: $entryId, fieldValues: {id: $fieldId, value: $value} }) {
+				updateGfEntry( input: { id: $entryId, shouldValidate: true, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
 						message
@@ -216,7 +216,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function update_draft_entry_mutation(): string {
 		return '
 			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: String! ){
-				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, fieldValues: {id: $fieldId, value: $value} }) {
+				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, shouldValidate: true, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
 						message

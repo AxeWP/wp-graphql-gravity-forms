@@ -389,6 +389,27 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for an email field.
+	 */
+	public function getFileUploadFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowedExtensions',
+			'cssClass',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'maxFiles',
+			'maxFileSize',
+			'multipleFiles',
+			[ 'type' => 'fileupload' ],
+		];
+	}
+
+	/**
 	 * Get the default args for a hidden field.
 	 */
 	public function getHiddenFieldArgs() : array {
@@ -696,6 +717,29 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a PostContent field.
+	 */
+	public function getPostCategoryFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'description',
+			'descriptionPlacement',
+			'displayAllCategories',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'noDuplicates',
+			'maxLength',
+			'placeholder',
+			'size',
+			[ 'type' => 'post_category' ],
+		];
+	}
+
+	/**
 	 * Get the default args for a PostExcerpt field.
 	 */
 	public function getPostExcerptFieldArgs() : array {
@@ -714,6 +758,51 @@ class Wpunit extends \Codeception\Module {
 			'placeholder',
 			'size',
 			[ 'type' => 'post_excerpt' ],
+		];
+	}
+
+
+	/**
+	 * Get the default args for an email field.
+	 */
+	public function getPostImageFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowedExtensions',
+			'cssClass',
+			'description',
+			'descriptionPlacement',
+			'displayAlt',
+			'displayCaption',
+			'displayDescription',
+			'displayTitle',
+			'errorMessage',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'postFeaturedImage',
+			[ 'type' => 'post_image' ],
+		];
+	}
+
+	/**
+	 * Get the default args for a PostContent field.
+	 */
+	public function getPostTagsFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'defaultValue',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'placeholder',
+			'size',
+			[ 'type' => 'post_tags' ],
 		];
 	}
 
@@ -894,6 +983,32 @@ class Wpunit extends \Codeception\Module {
 			'noDuplicates',
 			'size',
 			[ 'type' => 'select' ],
+		];
+	}
+
+	/**
+	 * Get the default args for a signature field.
+	 */
+	public function getSignatureFieldArgs() : array {
+		return [
+			'adminLabel',
+			'backgroundColor',
+			'borderColor',
+			'borderStyle',
+			'borderWidth',
+			'boxWidth',
+			'cssClass',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			[ 'id' => 1 ],
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'penColor',
+			'penSize',
+			'size',
+			[ 'type' => 'signature' ],
 		];
 	}
 

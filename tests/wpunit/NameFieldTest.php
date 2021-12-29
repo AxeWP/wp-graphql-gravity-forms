@@ -206,7 +206,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function update_entry_mutation(): string {
 		return '
 			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: NameFieldInput! ){
-				updateGfEntry( input: { id: $entryId, fieldValues: {id: $fieldId, nameValues: $value} }) {
+				updateGfEntry( input: { id: $entryId, shouldValidate: true, fieldValues: {id: $fieldId, nameValues: $value} }) {
 					errors {
 						id
 						message
@@ -239,7 +239,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function update_draft_entry_mutation(): string {
 		return '
 			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: NameFieldInput! ){
-				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, fieldValues: {id: $fieldId, nameValues: $value} }) {
+				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, shouldValidate: true, fieldValues: {id: $fieldId, nameValues: $value} }) {
 					errors {
 						id
 						message

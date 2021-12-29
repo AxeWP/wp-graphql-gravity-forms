@@ -23,6 +23,7 @@ parameters:
 		ignoreErrors:
 			- '#^Function apply_filters(_ref_array)? invoked with ([1-9]|1[0-2]) parameters, 2 required\.$#'
 			- '#^Function gf_apply_filters(_ref_array)? invoked with ([1-9]|1[0-2]) parameters, 2 required\.$#'
+			- '#^Function gf_do_action invoked with ([1-9]|1[0-2]) parameters, 1 required\.$#'
 
 
 

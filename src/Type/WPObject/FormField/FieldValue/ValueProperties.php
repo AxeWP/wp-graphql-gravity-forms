@@ -232,15 +232,14 @@ class ValueProperties {
 	public static function image_values() : array {
 		return [
 			'imageValues' => [
-				'type'        => ValueProperty\NameValueProperty::$type,
+				'type'        => ValueProperty\ImageValueProperty::$type,
 				'description' => __( 'Name field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
 
-					$value = array_pad( explode( '|:|', $context->gfEntry->entry[ $source->id ] ), 4, false );
-
+					$value = array_pad( explode( '|:|', $context->gfEntry->entry[ $source->id ] ), 5, false );
 					return [
 						'altText'     => $value[4] ?: null,
 						'caption'     => $value[2] ?: null,
@@ -297,13 +296,23 @@ class ValueProperties {
 						return null;
 					}
 
-					$values = $context->gfEntry->entry[ $source->id ] ?: null;
+					$values = ! empty( $context->gfEntry->entry[ $source->id ] ) ? $context->gfEntry->entry[ $source->id ] : null;
 
 					if ( null === $values ) {
 						return $values;
 					}
 
+					if ( 'multiselect' === $source->inputType ) {
+						$values = $source->to_array( $values );
+					}
+
 					$values = Utils::maybe_decode_json( $values );
+
+					// Sometimes GF likes to nest their jsons twice.
+					if ( is_string( $values ) ) { // @phpstan-ignore-line
+
+						$values = Utils::maybe_decode_json( $values );
+					}
 
 					return $values ?: null;
 				},

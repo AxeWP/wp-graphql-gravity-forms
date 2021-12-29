@@ -114,7 +114,13 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	 * The default form args.
 	 */
 	public function generate_form_args() {
-		return $this->tester->getFormDefaultArgs();
+		return $this->tester->getFormDefaultArgs(
+			[
+				'button'        => null,
+				'confirmations' => null,
+				'notifications' => null,
+			]
+		);
 	}
 
 	/**
@@ -174,6 +180,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$expected = $this->expected_field_response( $form );
 
+		codecept_debug( $expected );
 		$this->assertQuerySuccessful( $response, $expected, 'query not successful' );
 
 		// Test Draft entry.
@@ -317,12 +324,10 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		foreach ( $field_settings as $setting ) {
 			if ( method_exists( $this, $setting ) ) {
-				codecept_debug( $setting );
 				$this->$setting( $field, $expected );
 			}
 		}
 
 		return $expected;
 	}
-
 }

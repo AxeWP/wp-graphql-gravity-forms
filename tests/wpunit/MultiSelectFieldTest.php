@@ -162,7 +162,7 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	public function update_entry_mutation(): string {
 		return '
 			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: [String]! ){
-				updateGfEntry( input: { id: $entryId, fieldValues: {id: $fieldId, values: $value} }) {
+				updateGfEntry( input: { id: $entryId, shouldValidate: true, fieldValues: {id: $fieldId, values: $value} }) {
 					errors {
 						id
 						message
@@ -187,7 +187,7 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	public function update_draft_entry_mutation(): string {
 		return '
 			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: [String]! ){
-				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, fieldValues: {id: $fieldId, values: $value} }) {
+				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, shouldValidate: true, fieldValues: {id: $fieldId, values: $value} }) {
 					errors {
 						id
 						message

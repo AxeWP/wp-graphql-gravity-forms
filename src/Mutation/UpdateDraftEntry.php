@@ -13,6 +13,7 @@ namespace WPGraphQL\GF\Mutation;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Data\EntryObjectMutation;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Enum\DraftEntryIdTypeEnum;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
@@ -44,21 +45,25 @@ class UpdateDraftEntry extends AbstractMutation {
 	 */
 	public static function get_input_fields() : array {
 		return [
-			'id'          => [
+			'id'             => [
 				'type'        => [ 'non_null' => 'ID' ],
 				'description' => __( 'Either the global ID of the draft entry, or its resume token', 'wp-graphql-gravity-forms' ),
 			],
-			'idType'      => [
+			'idType'         => [
 				'type'        => DraftEntryIdTypeEnum::$type,
 				'description' => __( 'The ID type for the draft entry. Defaults to `ID` ', 'wp-graphql-gravity-forms' ),
 			],
-			'entryMeta'   => [
+			'entryMeta'      => [
 				'type'        => UpdateDraftEntryMetaInput::$type,
 				'description' => __( 'The entry meta values to update.', 'wp-graphql-gravity-forms' ),
 			],
-			'fieldValues' => [
+			'fieldValues'    => [
 				'type'        => [ 'list_of' => FormFieldValuesInput::$type ],
 				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
+			],
+			'shouldValidate' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the field values should be validated on submission. Defaults to false.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -132,15 +137,17 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * @param array $form .
 	 */
 	private static function prepare_draft_entry_data( array $input, array $submission, array $form ) : array {
+		$should_validate = isset( $input['shouldValidate'] ) ? (bool) $input['shouldValidate'] : true;
+
 		// Update field values.
 		if ( ! empty( $input['fieldValues'] ) ) {
-			$values = self::prepare_field_values( $input['fieldValues'], $form, $submission['partial_entry'], $submission );
+			$values = self::prepare_field_values( $input['fieldValues'], $form, $submission['partial_entry'], $submission, $should_validate );
 			if ( ! empty( self::$errors ) ) {
 				return [ 'errors' => self::$errors ];
 			}
 
 			$submission['partial_entry'] = array_replace( $submission['partial_entry'], $values );
-			$submission['field_values']  = array_replace( $submission['field_values'] ?? [], FormSubmissionHelper::rename_keys_for_field_values( $values ) );
+			$submission['field_values']  = array_replace( $submission['field_values'] ?? [], EntryObjectMutation::rename_field_names_for_submission( $values ) );
 		}
 
 		// Update CreatedBy ID.
@@ -187,25 +194,22 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * @param array $form .
 	 * @param array $entry .
 	 * @param array $submission .
+	 * @param bool  $should_validate .
 	 */
-	private static function prepare_field_values( array $field_values, array $form, array $entry, array &$submission ) : array {
+	private static function prepare_field_values( array $field_values, array $form, array $entry, array &$submission, bool $should_validate ) : array {
 		$formatted_values = [];
 
 		foreach ( $field_values as $values ) {
-			$field = GFUtils::get_field_by_id( $form, $values['id'] );
+			$field_value_input = EntryObjectMutation::get_field_value_input( $values, $form, true, $entry );
 
-			$prev_value = $entry[ $values['id'] ] ?? null;
-
-			$value = FormSubmissionHelper::prepare_single_field_value( $values, $field, $prev_value );
-
-			// Validate the field value.
-			FormSubmissionHelper::validate_field_value( $value, $field, $form, self::$errors );
+			if ( $should_validate ) {
+				$field_value_input->validate_value( self::$errors );
+			}
 
 			// Add field values to submitted values.
-			$submission['submitted_values'][ $field->id ] = $value;
+			$submission['submitted_values'][ $values['id'] ] = $field_value_input->value;
 
-			// Add values to array based on field type.
-			$formatted_values = FormSubmissionHelper::add_value_to_array( $formatted_values, $field, $value );
+			$field_value_input->add_value_to_submission( $formatted_values );
 		}
 
 		return $formatted_values;

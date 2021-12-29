@@ -62,12 +62,14 @@ class Utils {
 	public static function to_pascal_case( $string ) : string {
 		// Shim to map fields with existing PascalCase.
 		$fields_to_map = [
-			'chainedselect' => 'ChainedSelect',
-			'multiselect'   => 'MultiSelect',
-			'textarea'      => 'TextArea',
+			'chainedselect'     => 'ChainedSelect',
+			'fileupload'        => 'FileUpload',
+			'multiselect'       => 'MultiSelect',
+			'post_custom_field' => 'PostCustom',
+			'textarea'          => 'TextArea',
 			// Regular mapping.
-			'-'             => ' ',
-			'_'             => ' ',
+			'-'                 => ' ',
+			'_'                 => ' ',
 		];
 		return str_replace( ' ', '', ucwords( str_replace( array_keys( $fields_to_map ), array_values( $fields_to_map ), $string ) ) );
 	}
@@ -216,7 +218,7 @@ class Utils {
 			case 'post_category':
 				$child_types = [
 					'checkbox'    => $prefix . 'CheckboxField',
-					'multiselect' => $prefix . 'MultiselectField',
+					'multiselect' => $prefix . 'MultiSelectField',
 					'radio'       => $prefix . 'RadioField',
 					'select'      => $prefix . 'SelectField',
 				];
@@ -229,7 +231,7 @@ class Utils {
 					'fileupload'  => $prefix . 'FileuploadField',
 					'hidden'      => $prefix . 'HiddenField',
 					'list'        => $prefix . 'ListField',
-					'multiselect' => $prefix . 'MultiselectField',
+					'multiselect' => $prefix . 'MultiSelectField',
 					'number'      => $prefix . 'NumberField',
 					'phone'       => $prefix . 'PhoneField',
 					'radio'       => $prefix . 'RadioField',
@@ -240,10 +242,10 @@ class Utils {
 					'website'     => $prefix . 'WebsiteField',
 				];
 				break;
-			case 'post_tag':
+			case 'post_tags':
 				$child_types = [
 					'checkbox'    => $prefix . 'CheckboxField',
-					'multiselect' => $prefix . 'MultiselectField',
+					'multiselect' => $prefix . 'MultiSelectField',
 					'radio'       => $prefix . 'RadioField',
 					'select'      => $prefix . 'SelectField',
 					'text'        => $prefix . 'TextField',

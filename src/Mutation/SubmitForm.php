@@ -15,6 +15,7 @@ use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Data\EntryObjectMutation;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
 use WPGraphQL\GF\Type\Input\SubmitFormMetaInput;
@@ -115,9 +116,9 @@ class SubmitForm extends AbstractMutation {
 			// Initialize $_FILES with fileupload inputs.
 			self::initialize_files( $form );
 
-			$field_values = self::prepare_field_values( $input['fieldValues'], $form );
+			$field_values = self::prepare_field_values( $input['fieldValues'], $form, $save_as_draft );
 
-			add_filter( 'gform_field_validation', [ FormSubmissionHelper::class, 'disable_validation_for_unsupported_fields' ], 10, 4 );
+			add_filter( 'gform_field_validation', [ EntryObjectMutation::class, 'disable_validation_for_unsupported_fields' ], 10, 4 );
 			$submission = GFUtils::submit_form(
 				$input['id'],
 				self::get_input_values(
@@ -129,7 +130,7 @@ class SubmitForm extends AbstractMutation {
 				$target_page,
 				$source_page,
 			);
-			remove_filter( 'gform_field_validation', [ FormSubmissionHelper::class, 'disable_validation_for_unsupported_fields' ] );
+			remove_filter( 'gform_field_validation', [ EntryObjectMutation::class, 'disable_validation_for_unsupported_fields' ] );
 
 			$entry_data = self::prepare_entry_data( $input );
 
@@ -141,7 +142,7 @@ class SubmitForm extends AbstractMutation {
 				'entryId'     => ! empty( $submission['entry_id'] ) ? absint( $submission['entry_id'] ) : null,
 				'resumeToken' => $submission['resume_token'] ?? null,
 				'resumeUrl'   => isset( $submission['resume_token'] ) ? GFUtils::get_resume_url( $submission['resume_token'], $entry_data['source_url'] ?? '', $form ) : null,
-				'errors'      => isset( $submission['validation_messages'] ) ? FormSubmissionHelper::get_submission_errors( $submission['validation_messages'] ) : null,
+				'errors'      => isset( $submission['validation_messages'] ) ? EntryObjectMutation::get_submission_errors( $submission['validation_messages'] ) : null,
 			];
 		};
 	}
@@ -184,20 +185,17 @@ class SubmitForm extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	private static function prepare_field_values( array $field_values, array $form ) : array {
+	private static function prepare_field_values( array $field_values, array $form, bool $save_as_draft ) : array {
 		$formatted_values = [];
 
 		// Prepares field values to a format GF can understand.
 		foreach ( $field_values as $values ) {
-			$field = GFUtils::get_field_by_id( $form, $values['id'] );
+			$field_value_input = EntryObjectMutation::get_field_value_input( $values, $form, $save_as_draft );
 
-			$value = FormSubmissionHelper::prepare_single_field_value( $values, $field );
-
-			// Add values to array based on field type.
-			$formatted_values = FormSubmissionHelper::add_value_to_array( $formatted_values, $field, $value );
+			$field_value_input->add_value_to_submission( $formatted_values );
 		}
 
-		return FormSubmissionHelper::rename_keys_for_field_values( $formatted_values );
+		return EntryObjectMutation::rename_field_names_for_submission( $formatted_values );
 	}
 
 	/**

@@ -15,6 +15,7 @@ use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Data\EntryObjectMutation;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
@@ -46,17 +47,21 @@ class UpdateEntry extends AbstractMutation {
 	 */
 	public static function get_input_fields() : array {
 		return [
-			'id'          => [
+			'id'             => [
 				'type'        => [ 'non_null' => 'ID' ],
 				'description' => __( 'ID of the entry to delete, either a global or database ID', 'wp-graphql-gravity-forms' ),
 			],
-			'entryMeta'   => [
+			'entryMeta'      => [
 				'type'        => UpdateEntryMetaInput::$type,
 				'description' => __( 'The entry meta values to update.', 'wp-graphql-gravity-forms' ),
 			],
-			'fieldValues' => [
+			'fieldValues'    => [
 				'type'        => [ 'list_of' => FormFieldValuesInput::$type ],
 				'description' => __( 'The field ids and their values to update.', 'wp-graphql-gravity-forms' ),
+			],
+			'shouldValidate' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the field values should be validated on submission. Defaults to false.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -145,8 +150,11 @@ class UpdateEntry extends AbstractMutation {
 	 * @throws UserError .
 	 */
 	private static function prepare_entry_data( array $input, array $entry, array $form ) : array {
+		$should_validate = isset( $input['shouldValidate'] ) ? (bool) $input['shouldValidate'] : true;
+
 		// Update Field values.
-		$field_values = ! empty( $input['fieldValues'] ) ? self::prepare_field_values( $input['fieldValues'], $entry, $form ) : [];
+		$field_values = ! empty( $input['fieldValues'] ) ? self::prepare_field_values( $input['fieldValues'], $entry, $form, $should_validate ) : [];
+
 		if ( ! empty( self::$errors ) ) {
 			return [ 'errors' => self::$errors ];
 		}
@@ -207,38 +215,19 @@ class UpdateEntry extends AbstractMutation {
 	 * @param array $field_values .
 	 * @param array $entry .
 	 * @param array $form .
+	 * @param bool  $should_validate .
 	 */
-	private static function prepare_field_values( array $field_values, array $entry, array $form ) : array {
+	private static function prepare_field_values( array $field_values, array $entry, array $form, bool $should_validate ) : array {
 		$formatted_values = [];
 
 		foreach ( $field_values as $values ) {
-			$field = GFUtils::get_field_by_id( $form, $values['id'] );
+			$field_value_input = EntryObjectMutation::get_field_value_input( $values, $form, false, $entry );
 
-			$prev_value = $entry[ $values['id'] ] ?? null;
-
-			$value = FormSubmissionHelper::prepare_single_field_value( $values, $field, $prev_value );
-
-			// Signature field requires $_POST['input_{#}'] on update.
-			if ( 'signature' === $field->type ) {
-				$_POST[ 'input_' . $field->id ] = $value;
+			if ( $should_validate ) {
+				$field_value_input->validate_value( self::$errors );
 			}
 
-			if ( 'post_image' === $field->type ) {
-				// String follows pattern: `$url |:| $title |:| $caption |:|$description |:| $alt` .
-				$url         = $value[ $field->id . '_0' ];
-				$title       = $value[ $field->id . '_1' ];
-				$caption     = $value[ $field->id . '_4' ];
-				$description = $value[ $field->id . '_7' ];
-				$alt         = $value[ $field->id . '_2' ];
-
-				$formatted_values[ (string) $field->id ] = $url . '|:|' . $title . '|:|' . $caption . '|:|' . $description . '|:|' . $alt;
-			}
-
-			// Validate the field value.
-			FormSubmissionHelper::validate_field_value( $value, $field, $form, self::$errors );
-
-			// Add values to array based on field type.
-			$formatted_values = FormSubmissionHelper::add_value_to_array( $formatted_values, $field, $value );
+			$field_value_input->add_value_to_submission( $formatted_values );
 		}
 
 		$formatted_values = self::prepare_field_values_for_save( $formatted_values, $entry, $form );
