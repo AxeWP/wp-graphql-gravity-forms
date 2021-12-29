@@ -4,7 +4,7 @@
 
 While this plugin offers [basic support for custom Gravity Forms fields out of the box](../form-field-support.md), in many cases you will want to extend the GraphQL schema to provide your custom field data.
 
-The below methods can also be used to add support for core Gravity Form fields that are [not currently supported](../form-field-support.md#experimental-fields).
+The below methods can also be used to add extended support for core Gravity Form fields that are [not yet fully supported](../form-field-support.md#experimental-fields).
 
 ### Method 1: Quick and Dirty
 

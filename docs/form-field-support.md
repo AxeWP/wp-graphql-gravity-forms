@@ -6,9 +6,7 @@ By default, WPGraphQL for Gravity Forms adds basic query support for _all_ Form 
 
 These types inherit the `FormField` interface.
 
-*Note:* As of v0.10.0, [Experimental fields are hidden by default and must be enabled](#experimental-fields).
-
-Currently, only certain Form fields are supported by GraphQL mutations and [can be used to submit entries and draft entries](submitting-forms.md).
+*Note:* As of v0.10.0, [Experimental fields are hidden by default and must be enabled](#experimental-fields). To track implementation status of experimental fields, please review [this github issue](https://github.com/harness-software/wp-graphql-gravity-forms/issues/195)
 
 ## Form Field properties (GraphQL fields) <a name="form-field-properties" />
 
@@ -143,6 +141,10 @@ For an example of the PostCategory field:
 
 Developers wishing to support a custom Gravity Forms field that can resolve into multiple input types can make use of [the `graphql_gf_form_field_child_types` filter](recipes/register-custom-form-field.md).
 
+## Mutation Support
+
+Currently, only certain Form fields are supported by GraphQL mutations and [can be used to submit entries and draft entries](submitting-forms.md). Form fields without an explicitly registered `FormFieldValuesInput` are given the default `value` input, however most custom Gravity Forms fields will require [replacing that with a different `FieldValueInput` instance](recipes/register-custom-field-value-inputs.md)
+
 ## `Supported` , `Experimental` , and `Unsupported` fields
 
 At this stage of development, we category Gravity Forms fields into three types.
@@ -187,7 +189,7 @@ Currently supported form fields:
 
 ### Experimental fields
 
-These _Gravity Forms core-only_ fields are not yet explicitly supported by the plugin. The only properties they have are those registered by the [supported field settings](#form-field-properties) and the [string-formatted entry `value`](#form-field-entry-values) and they are untested. Further, they are not supported by [Form submissions](submitting-forms.md).
+These _Gravity Forms core-only_ fields are not yet explicitly supported by the plugin. The only properties they have are those registered by the [supported field settings](#form-field-properties) and the [string-formatted entry `value` ](#form-field-entry-values) and they are untested. Further, they are not supported by [Form submissions](submitting-forms.md).
 
 These forms are hidden **by default**:
 

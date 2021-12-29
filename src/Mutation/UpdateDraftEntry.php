@@ -147,7 +147,7 @@ class UpdateDraftEntry extends AbstractMutation {
 			}
 
 			$submission['partial_entry'] = array_replace( $submission['partial_entry'], $values );
-			$submission['field_values']  = array_replace( $submission['field_values'] ?? [], EntryObjectMutation::rename_value_keys_for_submission( $values ) );
+			$submission['field_values']  = array_replace( $submission['field_values'] ?? [], EntryObjectMutation::rename_field_names_for_submission( $values ) );
 		}
 
 		// Update CreatedBy ID.

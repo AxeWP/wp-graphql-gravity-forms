@@ -85,6 +85,13 @@ class FormFieldValuesInput extends AbstractInput {
 			];
 		}
 
+		/**
+		 * Filters the possible input fields for the FormFieldValuesInput GraphQL type.
+		 *
+		 * Usefule for adding support for custom form fields.
+		 */
+		$fields = apply_filters( 'graphql_gf_form_field_values_input_fields', $fields );
+
 		ksort( $fields );
 
 		return $fields;

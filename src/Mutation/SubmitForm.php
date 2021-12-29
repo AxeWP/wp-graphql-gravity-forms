@@ -195,7 +195,7 @@ class SubmitForm extends AbstractMutation {
 			$field_value_input->add_value_to_submission( $formatted_values );
 		}
 
-		return EntryObjectMutation::rename_value_keys_for_submission( $formatted_values );
+		return EntryObjectMutation::rename_field_names_for_submission( $formatted_values );
 	}
 
 	/**

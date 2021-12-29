@@ -15,8 +15,7 @@ class PostTagsTextFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	public int $tag_id_2;
 	public int $tag_id_3;
 
-	public function setUp(): void
-	{
+	public function setUp(): void {
 		// Before...
 		$this->tag_id_1 = self::factory()->tag->create();
 		$this->tag_id_2 = self::factory()->tag->create();
@@ -89,14 +88,14 @@ class PostTagsTextFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return (string) self::factory()->tag->get_object_by_id( $this->tag_id_1)->name . ',' .(string) self::factory()->tag->get_object_by_id( $this->tag_id_3)->name;
+		return (string) self::factory()->tag->get_object_by_id( $this->tag_id_1 )->name . ',' . (string) self::factory()->tag->get_object_by_id( $this->tag_id_3 )->name;
 	}
 
 	/**
 	 * The graphql field value input.
 	 */
 	public function updated_field_value() {
-		return (string) self::factory()->tag->get_object_by_id( $this->tag_id_2)->name;
+		return (string) self::factory()->tag->get_object_by_id( $this->tag_id_2 )->name;
 	}
 
 	/**
@@ -280,7 +279,7 @@ class PostTagsTextFieldTest extends FormFieldTestCase implements FormFieldTestCa
 									$this->expectedNode(
 										'nodes',
 										[
-											$this->expectedField( 'value', self::NOT_FALSY )
+											$this->expectedField( 'value', self::NOT_FALSY ),
 										]
 									),
 								]

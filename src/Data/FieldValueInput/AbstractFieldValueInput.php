@@ -17,18 +17,18 @@ use WPGraphQL\GF\Utils\GFUtils;
  */
 abstract class AbstractFieldValueInput {
 	/**
+	 * The GraphQL field input args provided to the mutation.
+	 *
+	 * @var array|string
+	 */
+	protected $args;
+
+	/**
 	 * The Gravity Forms entry object, if it exists.
 	 *
 	 * @var array|null
 	 */
 	protected ?array $entry;
-
-	/**
-	 * The Gravity Forms form object.
-	 *
-	 * @var array
-	 */
-	protected array $form;
 
 	/**
 	 * The Gravity Forms field object.
@@ -38,25 +38,32 @@ abstract class AbstractFieldValueInput {
 	protected GF_Field $field;
 
 	/**
-	 * Whether this is for a draft mutation.
+	 * The GraphQL input field name used by the Field's value input.
+	 *
+	 * @var string
+	 */
+	protected string $field_name;
+
+	/**
+	 * The Gravity Forms form object.
+	 *
+	 * @var array
+	 */
+	protected array $form;
+
+	/**
+	 * The GraphQL input args passed to `fieldValues`.
+	 *
+	 * @var array
+	 */
+	protected array $input_args;
+
+	/**
+	 * Whether this input is for a draft mutation.
 	 *
 	 * @var boolean
 	 */
 	protected bool $is_draft;
-
-	/**
-	 * The GraphQL object key used by the Field's value input.
-	 *
-	 * @var string
-	 */
-	protected string $value_key;
-
-	/**
-	 * The GraphQL field input value provided to the mutation.
-	 *
-	 * @var array|string
-	 */
-	protected $input_value;
 
 	/**
 	 * The field value for submission.
@@ -68,36 +75,91 @@ abstract class AbstractFieldValueInput {
 	/**
 	 * The class constructor.
 	 *
-	 * @param array      $input_values .
-	 * @param array      $form .
-	 * @param bool       $is_draft .
-	 * @param GF_Field   $field .
-	 * @param array|null $entry .
+	 * @param array      $input_args The GraphQL input args for the form field.
+	 * @param array      $form The current Gravity Forms form object.
+	 * @param bool       $is_draft Whether the mutation is handling a Draft Entry.
+	 * @param GF_Field   $field The current Gravity Forms field object.
+	 * @param array|null $entry The current Gravity Forms entry object.
 	 *
 	 * @throws UserError .
 	 */
-	public function __construct( array $input_values, array $form, bool $is_draft, GF_Field $field = null, array $entry = null ) {
-		$this->form     = $form;
-		$this->is_draft = $is_draft;
-		$this->field    = null !== $field ? $field : GFUtils::get_field_by_id( $form, $input_values['id'] );
+	public function __construct( array $input_args, array $form, bool $is_draft, GF_Field $field = null, array $entry = null ) {
+		$this->input_args = $input_args;
+		$this->form       = $form;
+		$this->is_draft   = $is_draft;
+		$this->field      = null !== $field ? $field : GFUtils::get_field_by_id( $form, $input_args['id'] );
+		$this->entry      = $entry ?: null;
 
-		$this->value_key = $this->get_value_key();
+		/**
+		 * Filters the accepted GraphQL input value key for the form field.
+		 *
+		 * @param string $name The GraphQL input value name to use. E.g. `nameValues`.
+		 * @param GF_Field $field The current Gravity Forms field object.
+		 * @param array $form The current Gravity Forms form object.
+		 * @param array|null $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+		 * @param bool $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
+		 */
+		$this->field_name = apply_filters(
+			'graphql_gf_field_value_input_name',
+			$this->get_field_name(),
+			$this->field,
+			$this->form,
+			$this->entry,
+			$this->is_draft
+		);
 
-		if ( ! $this->is_valid_input_type( $input_values ) ) {
+		if ( ! $this->is_valid_input_type() ) {
 			throw new UserError(
 				sprintf(
 					// translators: field ID, input key.
 					__( 'Mutation not processed. Field %1$s requires the use of `%2$s`.', 'wp-graphql-gravity-forms' ),
 					$this->field->id,
-					$this->value_key,
+					$this->field_name,
 				)
 			);
 		}
 
-		$this->input_value = $this->get_value_from_input( $input_values );
-		$this->entry       = $entry ?: null;
+		/**
+		 * Filters the GraphQL input args for the field value input.
+		 *
+		 * @param array|string $args field value input args.
+		 * @param GF_Field $field The current Gravity Forms field object.
+		 * @param array $form The current Gravity Forms form object.
+		 * @param array|null $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+		 * @param bool $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
+		 * @param string $field_name The GraphQL input field name. E.g. `nameValues`.
+		 */
+		$this->args = apply_filters(
+			'graphql_gf_field_value_input_args',
+			$this->get_args(),
+			$this->field,
+			$this->form,
+			$this->entry,
+			$this->is_draft,
+			$this->field_name,
+		);
 
-		$this->value = $this->prepare_value();
+		/**
+		 * Filters the prepared field value to be submitted to Gravity Forms.
+		 *
+		 * @param array|string $prepared_field_value The field value formatted in a way Gravity Forms can understand.
+		 * @param array|string $args field value input args.
+		 * @param GF_Field $field The current Gravity Forms field object.
+		 * @param array $form The current Gravity Forms form object.
+		 * @param array|null $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+		 * @param bool $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
+		 * @param string $field_name The GraphQL input field name. E.g. `nameValues`.
+		 */
+		$this->value = apply_filters(
+			'graphql_field_value_input_prepared_field_value',
+			$this->prepare_value(),
+			$this->args,
+			$this->field,
+			$this->form,
+			$this->entry,
+			$this->is_draft,
+			$this->field_name,
+		);
 	}
 
 	/**
@@ -105,19 +167,17 @@ abstract class AbstractFieldValueInput {
 	 *
 	 * E.g. `nameValues`.
 	 */
-	abstract public function get_value_key() : string;
+	abstract protected function get_field_name() : string;
 
 	/**
 	 * Checks whether the input values submitted to the mutation are using the correct field value input for the Gravity Forms field type.
-	 *
-	 * @param array $input_values The input values for the Gravity Forms field.
 	 */
-	protected function is_valid_input_type( $input_values ) : bool {
+	protected function is_valid_input_type() : bool {
 		$is_valid = false;
 
-		$key = $this->get_value_key();
+		$key = $this->field_name;
 
-		if ( isset( $input_values[ $key ] ) ) {
+		if ( isset( $this->input_args[ $key ] ) ) {
 			$is_valid = true;
 		}
 
@@ -125,22 +185,24 @@ abstract class AbstractFieldValueInput {
 	}
 
 	/**
-	 * Gets the specific input value, based on the field-specific input value key.
+	 * Gets the input args for the specified field value input.
 	 *
-	 * @param array $input_values .
 	 * @return string|array
 	 */
-	public function get_value_from_input( array $input_values ) {
-		return $input_values[ $this->get_value_key() ];
+	public function get_args() {
+		$key = $this->field_name;
+
+		return $this->input_args[ $key ];
 	}
 
 	/**
-	 * Sanitizes the input value and converts it to a format GravityForms can understand.
+	 * Converts the field value args to a format GravityForms can understand.
 	 *
 	 * @return string|array the sanitized value.
 	 */
 	protected function prepare_value() {
-		return $this->input_value;
+		// You probably want to replace this.
+		return $this->args;
 	}
 
 	/**

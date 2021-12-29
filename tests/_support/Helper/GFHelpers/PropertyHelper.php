@@ -42,11 +42,11 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function borderWidth( $value = null ) {
-		return $value ?? $this->dummy->number(0,3);
+		return $value ?? $this->dummy->number( 0, 3 );
 	}
 
 	public function boxWidth( $value = null ) {
-		return $value ?? $this->dummy->number(300,1000);
+		return $value ?? $this->dummy->number( 300, 1000 );
 	}
 
 	public function checkboxLabel( $value = null ) {
@@ -336,7 +336,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function penSize( $value = null ) {
-		return $value ?? $this->dummy->number(1,3);
+		return $value ?? $this->dummy->number( 1, 3 );
 	}
 
 	public function phoneFormat( $value = null ) {

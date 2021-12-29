@@ -16,8 +16,7 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 	public int $tag_id_2;
 	public int $tag_id_3;
 
-	public function setUp(): void
-	{
+	public function setUp(): void {
 		// Before...
 		$this->tag_id_1 = self::factory()->tag->create();
 		$this->tag_id_2 = self::factory()->tag->create();
@@ -77,32 +76,32 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 	 */
 	public function generate_fields() : array {
 			return [
-			$this->factory->field->create(
-				array_merge(
-					$this->property_helper->values,
-					[ 'inputType' => 'multiselect' ],
-					[
-						'choices' => [
-							[
-								'text'           => self::factory()->tag->get_object_by_id( $this->tag_id_1)->name,
-								'value'          => (string) self::factory()->tag->get_object_by_id( $this->tag_id_1)->term_id,
-								'isSelected'     => false,
-							],
-							[
-								'text'           => self::factory()->tag->get_object_by_id( $this->tag_id_2)->name,
-								'value'          => (string) self::factory()->tag->get_object_by_id( $this->tag_id_2)->term_id,
-								'isSelected'     => false,
-							],
-							[
-								'text'           => self::factory()->tag->get_object_by_id( $this->tag_id_3)->name,
-								'value'          => (string) self::factory()->tag->get_object_by_id( $this->tag_id_3)->term_id,
-								'isSelected'     => false,
+				$this->factory->field->create(
+					array_merge(
+						$this->property_helper->values,
+						[ 'inputType' => 'multiselect' ],
+						[
+							'choices' => [
+								[
+									'text'       => self::factory()->tag->get_object_by_id( $this->tag_id_1 )->name,
+									'value'      => (string) self::factory()->tag->get_object_by_id( $this->tag_id_1 )->term_id,
+									'isSelected' => false,
+								],
+								[
+									'text'       => self::factory()->tag->get_object_by_id( $this->tag_id_2 )->name,
+									'value'      => (string) self::factory()->tag->get_object_by_id( $this->tag_id_2 )->term_id,
+									'isSelected' => false,
+								],
+								[
+									'text'       => self::factory()->tag->get_object_by_id( $this->tag_id_3 )->name,
+									'value'      => (string) self::factory()->tag->get_object_by_id( $this->tag_id_3 )->term_id,
+									'isSelected' => false,
+								],
 							],
 						],
-					],
-				)
-			),
-		];
+					)
+				),
+			];
 	}
 
 	/**
@@ -345,6 +344,8 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 	public function check_saved_values( $actual_entry, $form ): void {
 		$this->assertEquals(
 			$this->field_value,
-			$form['fields'][0]->to_array( $actual_entry[ $form['fields'][0]['id'] ]), 'Submit mutation entry value not equal.' );
+			$form['fields'][0]->to_array( $actual_entry[ $form['fields'][0]['id'] ] ),
+			'Submit mutation entry value not equal.'
+		);
 	}
 }

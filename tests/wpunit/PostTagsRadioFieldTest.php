@@ -15,8 +15,7 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 	public int $tag_id_2;
 	public int $tag_id_3;
 
-	public function setUp(): void
-	{
+	public function setUp(): void {
 		// Before...
 		$this->tag_id_1 = self::factory()->tag->create();
 		$this->tag_id_2 = self::factory()->tag->create();
@@ -83,19 +82,19 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 					[
 						'choices' => [
 							[
-								'text'           => self::factory()->tag->get_object_by_id( $this->tag_id_1)->name,
-								'value'          => (string) self::factory()->tag->get_object_by_id( $this->tag_id_1)->term_id,
-								'isSelected'     => false,
+								'text'       => self::factory()->tag->get_object_by_id( $this->tag_id_1 )->name,
+								'value'      => (string) self::factory()->tag->get_object_by_id( $this->tag_id_1 )->term_id,
+								'isSelected' => false,
 							],
 							[
-								'text'           => self::factory()->tag->get_object_by_id( $this->tag_id_2)->name,
-								'value'          => (string) self::factory()->tag->get_object_by_id( $this->tag_id_2)->term_id,
-								'isSelected'     => false,
+								'text'       => self::factory()->tag->get_object_by_id( $this->tag_id_2 )->name,
+								'value'      => (string) self::factory()->tag->get_object_by_id( $this->tag_id_2 )->term_id,
+								'isSelected' => false,
 							],
 							[
-								'text'           => self::factory()->tag->get_object_by_id( $this->tag_id_3)->name,
-								'value'          => (string) self::factory()->tag->get_object_by_id( $this->tag_id_3)->term_id,
-								'isSelected'     => false,
+								'text'       => self::factory()->tag->get_object_by_id( $this->tag_id_3 )->name,
+								'value'      => (string) self::factory()->tag->get_object_by_id( $this->tag_id_3 )->term_id,
+								'isSelected' => false,
 							],
 						],
 					],
@@ -314,7 +313,7 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 									$this->expectedNode(
 										'nodes',
 										[
-											$this->expectedField( 'value', self::NOT_FALSY )
+											$this->expectedField( 'value', self::NOT_FALSY ),
 										]
 									),
 								]

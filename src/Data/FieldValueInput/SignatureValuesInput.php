@@ -20,13 +20,13 @@ class SignatureValuesInput extends ValueInput {
 	 *
 	 * @var string
 	 */
-	protected $input_value;
+	protected $args;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	protected function prepare_value() {
-		$value = $this->input_value;
+		$value = $this->args;
 
 		$this->ensure_signatures_folder_exists();
 

@@ -15,7 +15,7 @@ class ValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_value_key() : string {
+	protected function get_field_name() : string {
 		return 'value';
 	}
 }

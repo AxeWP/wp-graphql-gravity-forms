@@ -14,8 +14,7 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 	public int $cat_id_1;
 	public int $cat_id_2;
 
-	public function setUp(): void
-	{
+	public function setUp(): void {
 		// Before...
 		$this->cat_id_1 = self::factory()->category->create();
 		$this->cat_id_2 = self::factory()->category->create();
@@ -80,31 +79,31 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 					[
 						'choices' => [
 							[
-								'text'           => self::factory()->category->get_object_by_id( $this->cat_id_1)->name,
-								'value'          => (string) self::factory()->category->get_object_by_id( $this->cat_id_1)->term_id,
-								'isSelected'     => false,
+								'text'       => self::factory()->category->get_object_by_id( $this->cat_id_1 )->name,
+								'value'      => (string) self::factory()->category->get_object_by_id( $this->cat_id_1 )->term_id,
+								'isSelected' => false,
 							],
 							[
-								'text'           => self::factory()->category->get_object_by_id( $this->cat_id_2)->name,
-								'value'          => (string) self::factory()->category->get_object_by_id( $this->cat_id_2)->term_id,
-								'isSelected'     => false,
+								'text'       => self::factory()->category->get_object_by_id( $this->cat_id_2 )->name,
+								'value'      => (string) self::factory()->category->get_object_by_id( $this->cat_id_2 )->term_id,
+								'isSelected' => false,
 							],
 							[
-								'text'           => 'Uncategorized',
-								'value'          => '1',
-								'isSelected'     => true,
+								'text'       => 'Uncategorized',
+								'value'      => '1',
+								'isSelected' => true,
 							],
 						],
 					],
 					[
 						'inputs' => [
 							[
-								'label' => self::factory()->category->get_object_by_id( $this->cat_id_1)->name,
-								'name'  =>  null,
+								'label' => self::factory()->category->get_object_by_id( $this->cat_id_1 )->name,
+								'name'  => null,
 								'id'    => '1.1',
 							],
 							[
-								'label' => self::factory()->category->get_object_by_id( $this->cat_id_2)->name,
+								'label' => self::factory()->category->get_object_by_id( $this->cat_id_2 )->name,
 								'name'  => null,
 								'id'    => '1.2',
 							],
@@ -137,7 +136,7 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
-				'text'   => $this->fields[0]['choices'][2]['text'],
+				'text'    => $this->fields[0]['choices'][2]['text'],
 				'value'   => $this->fields[0]['choices'][2]['text'] . ':' . $this->fields[0]['choices'][2]['value'],
 			],
 		];

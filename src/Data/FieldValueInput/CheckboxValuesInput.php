@@ -19,7 +19,7 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 	 *
 	 * @var array
 	 */
-	protected $input_value;
+	protected $args;
 
 	/**
 	 * {@inheritDoc}
@@ -31,7 +31,7 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_value_key() : string {
+	protected function get_field_name() : string {
 		return 'checkboxValues';
 	}
 
@@ -50,7 +50,7 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 			[]
 		);
 
-		foreach ( $this->input_value as $single_value ) {
+		foreach ( $this->args as $single_value ) {
 			// Make sure the input ID passed in exists.
 			if ( ! isset( $values_to_save[ (string) $single_value['inputId'] ] ) ) {
 				throw new UserError(

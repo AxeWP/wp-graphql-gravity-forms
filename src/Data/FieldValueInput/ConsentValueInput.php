@@ -19,7 +19,7 @@ class ConsentValueInput extends AbstractFieldValueInput {
 	 *
 	 * @var string
 	 */
-	protected $input_value;
+	protected $args;
 
 	/**
 	 * {@inheritDoc}
@@ -31,7 +31,7 @@ class ConsentValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_value_key() : string {
+	protected function get_field_name() : string {
 		return 'value';
 	}
 
@@ -42,7 +42,7 @@ class ConsentValueInput extends AbstractFieldValueInput {
 		$field = $this->field;
 
 		$return = [
-			$field->inputs[0]['id'] => (bool) $this->input_value,
+			$field->inputs[0]['id'] => (bool) $this->args,
 			$field->inputs[1]['id'] => $field->checkboxLabel ?? null,
 			$field->inputs[2]['id'] => GFFormsModel::get_latest_form_revisions_id( $this->form['id'] ),
 		];

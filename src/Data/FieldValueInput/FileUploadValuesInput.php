@@ -22,11 +22,11 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 	 *
 	 * @var array
 	 */
-	protected $input_value;
+	protected $args;
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_value_key() : string {
+	protected function get_field_name() : string {
 		return 'fileUploadValues';
 	}
 
@@ -52,8 +52,8 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 			$_gf_uploaded_files = [];
 		}
 		if ( ! $this->field->multipleFiles && ! $this->is_draft ) {
-			$this->input_value[0]['error'] = $this->input_value[0]['error'] ?? 0;
-			$_FILES[ $input_name ]         = $this->input_value[0];
+			$this->args[0]['error'] = $this->args[0]['error'] ?? 0;
+			$_FILES[ $input_name ]  = $this->args[0];
 			return $_gf_uploaded_files[ $input_name ] ?? '';
 		}
 
@@ -61,7 +61,7 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 		$urls  = [];
 
 		$target = GFUtils::get_gravity_forms_upload_dir( $this->form['id'] );
-		foreach ( $this->input_value as $single_value ) {
+		foreach ( $this->args as $single_value ) {
 			if ( empty( $single_value['error'] ) ) {
 				$single_value['error'] = 0;
 			}

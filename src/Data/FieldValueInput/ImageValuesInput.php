@@ -18,7 +18,7 @@ class ImageValuesInput extends FileUploadValuesInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_value_key() : string {
+	protected function get_field_name() : string {
 		return 'imageValues';
 	}
 
@@ -35,13 +35,13 @@ class ImageValuesInput extends FileUploadValuesInput {
 	 * @throws UserError
 	 */
 	protected function prepare_value() {
-		$value      = $this->input_value;
+		$value      = $this->args;
 		$prev_value = $this->entry[ $this->field->id ] ?? [];
 
 		// change input value for parent function.
-		$this->input_value = [ $value['image'] ];
-		$url               = parent::prepare_value() ?: $prev_value[0] ?? null;
-		$this->input_value = $value;
+		$this->args = [ $value['image'] ];
+		$url        = parent::prepare_value() ?: $prev_value[0] ?? null;
+		$this->args = $value;
 
 		$title       = $value['title'] ?? $prev_value[1] ?? null;
 		$caption     = $value['caption'] ?? $prev_value[2] ?? null;

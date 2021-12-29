@@ -14,8 +14,7 @@ class PostCategoryFieldRadioTest extends FormFieldTestCase implements FormFieldT
 	public int $cat_id_1;
 	public int $cat_id_2;
 
-	public function setUp(): void
-	{
+	public function setUp(): void {
 		// Before...
 		$this->cat_id_1 = self::factory()->category->create();
 		$this->cat_id_2 = self::factory()->category->create();
@@ -80,19 +79,19 @@ class PostCategoryFieldRadioTest extends FormFieldTestCase implements FormFieldT
 					[
 						'choices' => [
 							[
-								'text'           => self::factory()->category->get_object_by_id( $this->cat_id_1)->name,
-								'value'          => (string) self::factory()->category->get_object_by_id( $this->cat_id_1)->term_id,
-								'isSelected'     => false,
+								'text'       => self::factory()->category->get_object_by_id( $this->cat_id_1 )->name,
+								'value'      => (string) self::factory()->category->get_object_by_id( $this->cat_id_1 )->term_id,
+								'isSelected' => false,
 							],
 							[
-								'text'           => self::factory()->category->get_object_by_id( $this->cat_id_2)->name,
-								'value'          => (string) self::factory()->category->get_object_by_id( $this->cat_id_2)->term_id,
-								'isSelected'     => false,
+								'text'       => self::factory()->category->get_object_by_id( $this->cat_id_2 )->name,
+								'value'      => (string) self::factory()->category->get_object_by_id( $this->cat_id_2 )->term_id,
+								'isSelected' => false,
 							],
 							[
-								'text'           => 'Uncategorized',
-								'value'          => '1',
-								'isSelected'     => true,
+								'text'       => 'Uncategorized',
+								'value'      => '1',
+								'isSelected' => true,
 							],
 						],
 					],
@@ -312,7 +311,7 @@ class PostCategoryFieldRadioTest extends FormFieldTestCase implements FormFieldT
 									$this->expectedNode(
 										'nodes',
 										[
-											$this->expectedField( 'value', self::NOT_FALSY )
+											$this->expectedField( 'value', self::NOT_FALSY ),
 										]
 									),
 								]

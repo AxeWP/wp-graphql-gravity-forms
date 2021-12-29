@@ -56,7 +56,7 @@ class SignatureFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 		return [ $this->factory->field->create( $this->property_helper->values ) ];
 	}
 
-/**
+	/**
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {

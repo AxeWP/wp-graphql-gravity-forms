@@ -15,8 +15,7 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 	public int $tag_id_2;
 	public int $tag_id_3;
 
-	public function setUp(): void
-	{
+	public function setUp(): void {
 		// Before...
 		$this->tag_id_1 = self::factory()->tag->create();
 		$this->tag_id_2 = self::factory()->tag->create();
@@ -83,36 +82,36 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 					[
 						'choices' => [
 							[
-								'text'           => self::factory()->tag->get_object_by_id( $this->tag_id_1)->name,
-								'value'          => (string) self::factory()->tag->get_object_by_id( $this->tag_id_1)->term_id,
-								'isSelected'     => false,
+								'text'       => self::factory()->tag->get_object_by_id( $this->tag_id_1 )->name,
+								'value'      => (string) self::factory()->tag->get_object_by_id( $this->tag_id_1 )->term_id,
+								'isSelected' => false,
 							],
 							[
-								'text'           => self::factory()->tag->get_object_by_id( $this->tag_id_2)->name,
-								'value'          => (string) self::factory()->tag->get_object_by_id( $this->tag_id_2)->term_id,
-								'isSelected'     => false,
+								'text'       => self::factory()->tag->get_object_by_id( $this->tag_id_2 )->name,
+								'value'      => (string) self::factory()->tag->get_object_by_id( $this->tag_id_2 )->term_id,
+								'isSelected' => false,
 							],
 							[
-								'text'           => self::factory()->tag->get_object_by_id( $this->tag_id_3)->name,
-								'value'          => (string) self::factory()->tag->get_object_by_id( $this->tag_id_3)->term_id,
-								'isSelected'     => false,
+								'text'       => self::factory()->tag->get_object_by_id( $this->tag_id_3 )->name,
+								'value'      => (string) self::factory()->tag->get_object_by_id( $this->tag_id_3 )->term_id,
+								'isSelected' => false,
 							],
 						],
 					],
 					[
 						'inputs' => [
 							[
-								'label' => self::factory()->tag->get_object_by_id( $this->tag_id_1)->name,
-								'name'  =>  null,
+								'label' => self::factory()->tag->get_object_by_id( $this->tag_id_1 )->name,
+								'name'  => null,
 								'id'    => '1.1',
 							],
 							[
-								'label' => self::factory()->tag->get_object_by_id( $this->tag_id_2)->name,
+								'label' => self::factory()->tag->get_object_by_id( $this->tag_id_2 )->name,
 								'name'  => null,
 								'id'    => '1.2',
 							],
 							[
-								'label' => self::factory()->tag->get_object_by_id( $this->tag_id_3)->name,
+								'label' => self::factory()->tag->get_object_by_id( $this->tag_id_3 )->name,
 								'name'  => null,
 								'id'    => '1.3',
 							],
@@ -140,7 +139,7 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
-				'text'   => $this->fields[0]['choices'][2]['text'],
+				'text'    => $this->fields[0]['choices'][2]['text'],
 				'value'   => $this->fields[0]['choices'][2]['value'],
 			],
 		];

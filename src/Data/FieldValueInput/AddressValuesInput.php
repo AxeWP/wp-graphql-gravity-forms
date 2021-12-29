@@ -17,7 +17,7 @@ class AddressValuesInput extends AbstractFieldValueInput {
 	 *
 	 * @var array
 	 */
-	protected $input_value;
+	protected $args;
 
 	/**
 	 * {@inheritDoc}
@@ -29,7 +29,7 @@ class AddressValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_value_key() : string {
+	protected function get_field_name() : string {
 		return 'addressValues';
 	}
 
@@ -37,7 +37,7 @@ class AddressValuesInput extends AbstractFieldValueInput {
 	 * {@inheritDoc}
 	 */
 	protected function prepare_value() {
-		$value = $this->input_value;
+		$value = $this->args;
 
 		return [
 			$this->field->inputs[0]['id'] => $value['street'] ?? null,

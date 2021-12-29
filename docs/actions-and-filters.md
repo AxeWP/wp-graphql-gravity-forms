@@ -64,6 +64,77 @@ apply_filters( 'graphql_gf_entries_connection_query_args', array $query_args, mi
 * **`$context`** _(AppContext)_ : Object passed down the GraphQL tree.
 * **`$info`** _(ResolveInfo)_ : The ResolveInfo passed down the GraphQL tree.
 
+### `graphql_gf_field_value_input`
+
+Filters the AbstractFieldValueInput instance used to process form field submissions.
+Useful for adding mutation support for custom Gravity Forms fields.
+
+```php
+apply_filters( 'graphql_gf_field_value_input', AbstractFieldValueInput $field_value_input, array $args, GF_Field $field, array $form, array|null $entry, bool $is_draft_mutation  );
+```
+
+#### Parameters
+
+* **`$field_value_input`** _(AbstractFieldValueInput)_ :  The instantianted FieldValueInput class. Must extend AbstractFieldValueInput.
+* **`$args`** _(array)_ : The GraphQL input value name to use. E.g. `checkboxValues`.
+* **`$field`** _(GF_Field)_ : The current Gravity Forms field object.
+* **`$form`** _(array)_ : The current Gravity Forms form object.
+* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+* **`$is_draft_mutation`** _(bool)_ : Whether the mutation is handling a Draft Entry, i.e. on `gfUpdateDraftEntry`, or `gfSubmitForm` with `saveAsDraft` is `true`).
+
+### `graphql_gf_field_value_input_args`
+
+Filters the GraphQL input args provided from the field value input.
+Useful for supporting custom Gravity Forms field value input types.
+
+```php
+apply_filters( 'graphql_gf_field_value_input_args', array|string $args, GF_Field $field, array $form, array|null $entry, bool $is_draft_mutation, string $field_name );
+```
+
+#### Parameters
+
+* **`$args`** _(string|array)_ : The input args from the field value input.
+* **`$field`** _(GF_Field)_ : The current Gravity Forms field object.
+* **`$form`** _(array)_ : The current Gravity Forms form object.
+* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+* **`$is_draft_mutation`** _(bool)_ : Whether the mutation is handling a Draft Entry, i.e. on `gfUpdateDraftEntry`, or `gfSubmitForm` with `saveAsDraft` is `true`).
+* **`$name`** _(string)_ : The GraphQL input value name to use. E.g. `checkboxValues`.
+
+### `graphql_gf_field_value_input_name`
+
+Filters the accepted GraphQL input value key for the form field.
+Useful for adding support for custom Gravity Forms field value inputs.
+
+```php
+apply_filters( 'graphql_gf_field_value_input_name', string $name, GF_Field $field, array $form, array|null $entry, bool $is_draft_mutation  );
+```
+
+#### Parameters
+
+* **`$name`** _(string)_ : The GraphQL input value name to use. E.g. `checkboxValues`.
+* **`$field`** _(GF_Field)_ : The current Gravity Forms field object.
+* **`$form`** _(array)_ : The current Gravity Forms form object.
+* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+* **`$is_draft_mutation`** _(bool)_ : Whether the mutation is handling a Draft Entry, i.e. on `gfUpdateDraftEntry`, or `gfSubmitForm` with `saveAsDraft` is `true`).
+
+### `graphql_field_value_input_prepared_field_value`
+
+Filters the prepared field value to be submitted to Gravity Forms. Useful for supporting custom Gravity Forms field value submissions.
+
+```php
+apply_filters( 'graphql_field_value_input_prepared_field_value', array|string $prepared_field_value, array|string $args, GF_Field $field, array $form, array|null $entry, bool $is_draft_mutation, string $field_name );
+```
+
+#### Parameters
+
+* **`$prepared_field_value`** : The field value formatted for use in Gravity Forms submissions.
+* **`$args`** _(string|array)_ : The input args from the field value input.
+* **`$field`** _(GF_Field)_ : The current Gravity Forms field object.
+* **`$form`** _(array)_ : The current Gravity Forms form object.
+* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+* **`$is_draft_mutation`** _(bool)_ : Whether the mutation is handling a Draft Entry, i.e. on `gfUpdateDraftEntry`, or `gfSubmitForm` with `saveAsDraft` is `true`).
+* **`$name`** _(string)_ : The GraphQL input value name to use. E.g. `checkboxValues`.
+
 ### `graphql_gf_forms_connection_query_args`
 
 Filter the Form $query_args to allow folks to customize queries programmatically.
@@ -122,13 +193,26 @@ apply_filters( 'graphql_gf_form_field_setting_properties', array $properties, st
 Filter to modify the Form Field value GraphQL fields.
 
 ```php
-apply_filters( 'graphql_gf_form_field_setting_properties', array $properties, GF_Field $field );
+apply_filters( 'graphql_gf_form_field_value_properties', array $properties, GF_Field $field );
 ```
 
 #### Parameters
 
 * **`$properties`** _(array)_ : An array of [WPGraphQL field `$config` arrays](https://www.wpgraphql.com/functions/register_graphql_fields/) .
 * **`$field`** _(GF_Field) : The Gravity Forms Field object.
+
+### `graphql_gf_form_field_values_input_fields`
+
+Filter to modify the Form Field value GraphQL fields.
+Useful for adding support for inputs used by custom Gravity Forms fields.
+
+```php
+apply_filters( 'graphql_gf_form_field_values_input_fields', array $fields );
+```
+
+#### Parameters
+
+* **`$fields`** _(array)_ : An array of [WPGraphQL field `$config` arrays](https://www.wpgraphql.com/functions/register_graphql_fields/) .
 
 ### `graphql_gf_form_object`
 
@@ -179,32 +263,3 @@ apply_filters( 'graphql_gf_registered_{$type}_classes', array $classes_to_regist
 #### Parameters
 
 * **`$entry_types`** _(array)_ : An array of Data Loader names => GraphQL Types. E.g: `[ [ 'gf_entry' => 'GfSubmittedEntry ] ]`
-
-### `wp_graphql_gf_field_value_type`
-
-Filter to modify the list of accepted `fieldValues` input types. Can be used to assign an expected `fieldValues` input type to a custom GF field.
-
-```php
-apply_filters( 'wp_graphql_gf_field_value_type', string $value_type_name, GF_Field $field, array $input_values );
-```
-
-#### Parameters
-
-* **`$value_type_name`** _(string)_ : The GraphQL input type name that must be included in `fieldValues`.
-* **`$field`** _(GF_Field)_ : The Gravity Forms [field object](https://docs.gravityforms.com/field-object/).
-* **`input_values`** _(array )_ : The `fieldValues` input array.
-
-### `wp_graphql_gf_prepare_field_value`
-
-Filter to modify the field value submitted to GF.
-
-```php
-apply_filters( 'wp_graphql_gf_prepare_field_value', mixed $value, array $input_values, GF_Field $field, mixed $prev_value = null );
-```
-
-#### Parameters
-
-* **`$value`** _(mixed)_ : The formatted value to be added to the [Gravity Forms submission object](https://docs.gravityforms.com/api-functions/#submit-form).
-* **`$input_values`** _(array)_ : The `fieldValues` input array submitted to the the GraphQL mutation.
-* **`$field`** _(GF_Field)_ : The Gravity Forms [field object](https://docs.gravityforms.com/field-object/).
-* **`$prev_value`** _( mixed)_ : The previous value saved to GF entry or draft entry., if it exists.

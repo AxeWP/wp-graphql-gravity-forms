@@ -15,8 +15,7 @@ class PostCategoryMultiSelectFieldTest extends FormFieldTestCase implements Form
 	public int $cat_id_1;
 	public int $cat_id_2;
 
-	public function setUp(): void
-	{
+	public function setUp(): void {
 		// Before...
 		$this->cat_id_1 = self::factory()->category->create();
 		$this->cat_id_2 = self::factory()->category->create();
@@ -74,32 +73,32 @@ class PostCategoryMultiSelectFieldTest extends FormFieldTestCase implements Form
 	 */
 	public function generate_fields() : array {
 			return [
-			$this->factory->field->create(
-				array_merge(
-					$this->property_helper->values,
-					[ 'inputType' => 'multiselect' ],
-					[
-						'choices' => [
-							[
-								'text'           => self::factory()->category->get_object_by_id( $this->cat_id_1)->name,
-								'value'          => (string) self::factory()->category->get_object_by_id( $this->cat_id_1)->term_id,
-								'isSelected'     => false,
-							],
-							[
-								'text'           => self::factory()->category->get_object_by_id( $this->cat_id_2)->name,
-								'value'          => (string) self::factory()->category->get_object_by_id( $this->cat_id_2)->term_id,
-								'isSelected'     => false,
-							],
-							[
-								'text'           => 'Uncategorized',
-								'value'          => '1',
-								'isSelected'     => true,
+				$this->factory->field->create(
+					array_merge(
+						$this->property_helper->values,
+						[ 'inputType' => 'multiselect' ],
+						[
+							'choices' => [
+								[
+									'text'       => self::factory()->category->get_object_by_id( $this->cat_id_1 )->name,
+									'value'      => (string) self::factory()->category->get_object_by_id( $this->cat_id_1 )->term_id,
+									'isSelected' => false,
+								],
+								[
+									'text'       => self::factory()->category->get_object_by_id( $this->cat_id_2 )->name,
+									'value'      => (string) self::factory()->category->get_object_by_id( $this->cat_id_2 )->term_id,
+									'isSelected' => false,
+								],
+								[
+									'text'       => 'Uncategorized',
+									'value'      => '1',
+									'isSelected' => true,
+								],
 							],
 						],
-					],
-				)
-			),
-		];
+					)
+				),
+			];
 	}
 
 	/**
@@ -343,6 +342,8 @@ class PostCategoryMultiSelectFieldTest extends FormFieldTestCase implements Form
 	public function check_saved_values( $actual_entry, $form ): void {
 		$this->assertEquals(
 			$this->field_value,
-			$form['fields'][0]->to_array( $actual_entry[ $form['fields'][0]['id'] ]), 'Submit mutation entry value not equal.' );
+			$form['fields'][0]->to_array( $actual_entry[ $form['fields'][0]['id'] ] ),
+			'Submit mutation entry value not equal.'
+		);
 	}
 }

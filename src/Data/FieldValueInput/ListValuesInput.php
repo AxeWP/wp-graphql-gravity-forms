@@ -19,7 +19,7 @@ class ListValuesInput extends AbstractFieldValueInput {
 	 *
 	 * @var array
 	 */
-	protected $input_value;
+	protected $args;
 
 	/**
 	 * {@inheritDoc}
@@ -31,7 +31,7 @@ class ListValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_value_key() : string {
+	protected function get_field_name() : string {
 		return 'listValues';
 	}
 
@@ -41,7 +41,7 @@ class ListValuesInput extends AbstractFieldValueInput {
 	 * @throws UserError .
 	 */
 	protected function prepare_value() {
-		$value = $this->input_value;
+		$value = $this->args;
 
 		$values_to_save = [];
 		foreach ( $value as $row ) {
