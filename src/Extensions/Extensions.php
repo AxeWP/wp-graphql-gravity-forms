@@ -8,6 +8,7 @@
 
 namespace WPGraphQL\GF\Extensions;
 
+use WPGraphQL\GF\Extensions\GFChainedSelects\GFChainedSelects;
 use WPGraphQL\GF\Extensions\GFSignature\GFSignature;
 
 /**
@@ -19,6 +20,7 @@ class Extensions {
 	 * Register Gravity Forms Extensions.
 	 */
 	public static function register() : void {
+		GFChainedSelects::register_hooks();
 		GFSignature::register_hooks();
 	}
 }

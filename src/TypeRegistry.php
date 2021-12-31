@@ -118,7 +118,6 @@ class TypeRegistry {
 			Enum\CaptchaFieldBadgePositionEnum::class,
 			Enum\CaptchaFieldThemeEnum::class,
 			Enum\CaptchaFieldTypeEnum::class,
-			Enum\ChainedSelectFieldAlignmentEnum::class,
 			Enum\ConditionalLogicActionTypeEnum::class,
 			Enum\ConditionalLogicLogicTypeEnum::class,
 			Enum\DateFieldFormatEnum::class,
@@ -176,7 +175,6 @@ class TypeRegistry {
 	private static function inputs() : array {
 		$classes_to_register = [
 			Input\AddressFieldInput::class,
-			Input\ChainedSelectFieldInput::class,
 			Input\CheckboxFieldInput::class,
 			Input\CreditCardFieldInput::class,
 			Input\EmailFieldInput::class,

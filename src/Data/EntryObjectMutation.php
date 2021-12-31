@@ -60,9 +60,6 @@ class EntryObjectMutation {
 			case 'checkbox':
 				$field_value_input = FieldValueInput\CheckboxValuesInput::class;
 				break;
-			case 'chainedselect':
-				$field_value_input = FieldValueInput\ChainedSelectValuesInput::class;
-				break;
 			case 'consent':
 				$field_value_input = FieldValueInput\ConsentValueInput::class;
 				break;

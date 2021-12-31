@@ -173,26 +173,6 @@ class PropertyMapper {
 	}
 
 	/**
-	 * Maps the `chained_selects_alignment_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function chained_selects_alignment_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::chained_selects_alignment();
-	}
-
-	/**
-	 * Maps the `chained_selects_hide_inactive_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function chained_selects_hide_inactive_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::should_hide_inactive_choices();
-	}
-
-	/**
 	 * Maps the `checkbox_label_setting` to its field properties.
 	 *
 	 * @param GF_Field $field .
@@ -223,31 +203,6 @@ class PropertyMapper {
 		$properties += ChoiceMapper::map_choices( $field, $choice_fields );
 	}
 
-	/**
-	 * Maps the `chained_choices_setting` to its field properties.
-	 *
-	 * @todo make nested choices flat.
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function chained_choices_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::has_choice_value();
-
-		$choice_fields  = FieldProperties::choice_text();
-		$choice_fields += FieldProperties::choice_value();
-		$choice_fields += FieldProperties::choice_is_selected();
-
-		// Nest choices.
-		$choice_fields += ChoiceMapper::map_choices( $field, $choice_fields );
-
-		$properties += ChoiceMapper::map_choices( $field, $choice_fields );
-
-		$input_fields  = FieldProperties::label();
-		$input_fields += FieldProperties::input_id();
-		$input_fields += FieldProperties::input_name();
-
-		$properties += InputMapper::map_inputs( $field, $input_fields );
-	}
 
 	/**
 	 * Maps the `columns_setting` to its field properties.

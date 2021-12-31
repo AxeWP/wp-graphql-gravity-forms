@@ -63,7 +63,7 @@ class FormFields implements Registrable {
 	 * @param TypeRegistry $type_registry .
 	 */
 	public static function register_gf_field( GF_Field $field, TypeRegistry $type_registry ) : void {
-		$name     = Utils::to_pascal_case( $field->type ) . 'Field';
+		$name     = Utils::get_safe_form_field_type_name( $field->type ) . 'Field';
 		$settings = self::get_field_settings( $field );
 
 		$possible_types = Utils::get_possible_form_field_child_types( $field->type );
@@ -249,9 +249,6 @@ class FormFields implements Registrable {
 				break;
 			case 'address':
 				$properties += ValueProperties::address_values();
-				break;
-			case 'chainedselect':
-				$properties += ValueProperties::chained_select_values();
 				break;
 			case 'checkbox':
 				$properties += ValueProperties::checkbox_values();

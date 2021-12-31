@@ -67,13 +67,6 @@ class FormFieldValuesInput extends AbstractInput {
 			],
 		];
 
-		if ( class_exists( 'GFChainedSelects' ) ) {
-			$fields['chainedSelectValues'] = [
-				'type'        => [ 'list_of' => ChainedSelectFieldInput::$type ],
-				'description' => __( 'The form field values for ChainedSelect fields', 'wp-graphql-gravity-forms' ),
-			];
-		}
-
 		if ( class_exists( 'WPGraphQL\Upload\Type\Upload' ) ) {
 			$fields['fileUploadValues'] = [
 				'type'        => [ 'list_of' => 'Upload' ],
@@ -88,7 +81,9 @@ class FormFieldValuesInput extends AbstractInput {
 		/**
 		 * Filters the possible input fields for the FormFieldValuesInput GraphQL type.
 		 *
-		 * Usefule for adding support for custom form fields.
+		 * Useful for adding support for custom form fields.
+		 *
+		 * @param array $fields The registered input fields.
 		 */
 		$fields = apply_filters( 'graphql_gf_form_field_values_input_fields', $fields );
 

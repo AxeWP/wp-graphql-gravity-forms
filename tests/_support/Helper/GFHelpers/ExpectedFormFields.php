@@ -9,6 +9,7 @@ namespace Helper\GFHelpers;
 
 use WPGraphQL\GF\Type\Enum;
 use GF_Field;
+use WPGraphQL\GF\Extensions\GFChainedSelects\Type\Enum\ChainedSelectFieldAlignmentEnum;
 use WPGraphQL\GF\Extensions\GFSignature\Type\Enum\SignatureFieldBorderStyleEnum;
 use WPGraphQL\GF\Extensions\GFSignature\Type\Enum\SignatureFieldBorderWidthEnum;
 use WPGraphQL\GF\Type\Enum\AmPmEnum;
@@ -113,7 +114,7 @@ trait ExpectedFormFields {
 	}
 
 	public function chained_selects_alignment_setting( GF_Field $field, array &$properties ) : void {
-		$properties[] = $this->expectedField( 'chainedSelectsAlignment', ! empty( $field->chainedSelectsAlignment ) ? GFHelpers::get_enum_for_value( Enum\ChainedSelectFieldAlignmentEnum::$type, $field->chainedSelectsAlignment ) : static::IS_NULL );
+		$properties[] = $this->expectedField( 'chainedSelectsAlignment', ! empty( $field->chainedSelectsAlignment ) ? GFHelpers::get_enum_for_value( ChainedSelectFieldAlignmentEnum::$type, $field->chainedSelectsAlignment ) : static::IS_NULL );
 	}
 
 	public function chained_selects_hide_inactive_setting( GF_Field $field, array &$properties ) : void {

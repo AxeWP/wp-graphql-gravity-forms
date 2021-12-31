@@ -2,11 +2,13 @@
 /**
  * Enum Type - ChainedSelectFieldAlignmentEnum
  *
- * @package WPGraphQL\GF\Type\Enum,
+ * @package WPGraphQL\GF\Extensions\GFChainedSelects\Type\Enum
  * @since   0.4.0
  */
 
-namespace WPGraphQL\GF\Type\Enum;
+namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\Enum;
+
+use WPGraphQL\GF\Type\Enum\AbstractEnum;
 
 /**
  * Class - ChainedSelectFieldAlignmentEnum

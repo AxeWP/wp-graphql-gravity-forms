@@ -3,11 +3,13 @@
  * GraphQL Input Type - ChainedSelectFieldInput
  * Input fields for a single ChainedSelect.
  *
- * @package WPGraphQL\GF\Type\Input
+ * @package WPGraphQL\GF\Extensions\GFChainedSelects\Type\Input
  * @since   0.3.0
  */
 
-namespace WPGraphQL\GF\Type\Input;
+namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\Input;
+
+use WPGraphQL\GF\Type\Input\AbstractInput;
 
 /**
  * Class - ChainedSelectFieldInput

@@ -218,18 +218,6 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'chainedSelectsAlignment' property.
-	 */
-	public static function chained_selects_alignment() : array {
-		return [
-			'chainedSelectsAlignment' => [
-				'type'        => Enum\ChainedSelectFieldAlignmentEnum::$type,
-				'description' => __( 'Alignment of the dropdown fields.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
 	 * Get 'checkboxLabel' property.
 	 */
 	public static function checkbox_label() : array {
@@ -1208,19 +1196,6 @@ class FieldProperties {
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates whether the copy values option can be used. This option allows users to skip filling out the field and use the same values as another. For example, if the mailing and billing address are the same.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $source ) => ! empty( $source->enableCopyValuesOption ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'shouldHideInactiveChoices' property.
-	 */
-	public static function should_hide_inactive_choices() : array {
-		return [
-			'shouldHideInactiveChoices' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Whether inactive dropdowns should be hidden.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->chainedSelectsHideInactive ),
 			],
 		];
 	}
