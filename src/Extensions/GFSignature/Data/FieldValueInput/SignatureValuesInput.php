@@ -1,15 +1,16 @@
 <?php
 /**
- * Manipulates input data for String field values.
+ * Manipulates input data for Signature field values.
  *
- * @package WPGraphQL\GF\Data\FieldValueInput
+ * @package WPGraphQL\GF\Extensions\GFSignature\Data\FieldValueInput
  * @since 0.10.0
  */
 
-namespace WPGraphQL\GF\Data\FieldValueInput;
+namespace WPGraphQL\GF\Extensions\GFSignature\Data\FieldValueInput;
 
 use GraphQL\Error\UserError;
 use GFCommon;
+use WPGraphQL\GF\Data\FieldValueInput\ValueInput;
 
 /**
  * Class - SignatureValuesInput

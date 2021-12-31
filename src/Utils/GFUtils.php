@@ -411,7 +411,7 @@ class GFUtils {
 		// Create upload directory if it doesnt exist.
 		if ( ! is_dir( $target_root ) ) {
 			if ( ! wp_mkdir_p( $target_root ) ) {
-				throw new UserError( __( 'Failed to upload file. The Gravity Forms Signatures directory could not be created.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( __( 'Failed to upload file. The Gravity Forms Upload directory could not be created.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			// Adding index.html files to all subfolders.

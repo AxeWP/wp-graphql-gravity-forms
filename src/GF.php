@@ -8,6 +8,8 @@
 
 namespace WPGraphQL\GF;
 
+use WPGraphQL\GF\Extensions\Extensions;
+
 if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 	/**
 	 * Class - GF
@@ -58,6 +60,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		 * Sets up the schema.
 		 */
 		private function setup() : void {
+			Extensions::register();
 			CoreSchemaFilters::register_hooks();
 
 			// Initialize GF type registry.

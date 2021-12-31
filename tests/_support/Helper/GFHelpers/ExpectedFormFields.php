@@ -9,6 +9,8 @@ namespace Helper\GFHelpers;
 
 use WPGraphQL\GF\Type\Enum;
 use GF_Field;
+use WPGraphQL\GF\Extensions\GFSignature\Type\Enum\SignatureFieldBorderStyleEnum;
+use WPGraphQL\GF\Extensions\GFSignature\Type\Enum\SignatureFieldBorderWidthEnum;
 use WPGraphQL\GF\Type\Enum\AmPmEnum;
 
 trait ExpectedFormFields {
@@ -65,11 +67,11 @@ trait ExpectedFormFields {
 	}
 
 	public function border_style_setting( GF_Field $field, array &$properties ) : void {
-		$properties[] = $this->expectedField( 'borderStyle', ! empty( $field->borderStyle ) ? GFHelpers::get_enum_for_value( Enum\SignatureFieldBorderStyleEnum::$type, $field->borderStyle ) : static::IS_NULL );
+		$properties[] = $this->expectedField( 'borderStyle', ! empty( $field->borderStyle ) ? GFHelpers::get_enum_for_value( SignatureFieldBorderStyleEnum::$type, $field->borderStyle ) : static::IS_NULL );
 	}
 
 	public function border_width_setting( GF_Field $field, array &$properties ) : void {
-		$properties[] = $this->expectedField( 'borderWidth', ! empty( $field->borderWidth ) ? GFHelpers::get_enum_for_value( Enum\SignatureFieldBorderWidthEnum::$type, $field->borderWidth ) : static::IS_NULL );
+		$properties[] = $this->expectedField( 'borderWidth', ! empty( $field->borderWidth ) ? GFHelpers::get_enum_for_value( SignatureFieldBorderWidthEnum::$type, $field->borderWidth ) : static::IS_NULL );
 	}
 
 	public function box_width_setting( GF_Field $field, array &$properties ) : void {

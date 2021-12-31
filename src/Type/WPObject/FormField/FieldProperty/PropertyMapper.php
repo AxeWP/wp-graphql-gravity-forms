@@ -74,15 +74,6 @@ class PropertyMapper {
 		}
 	}
 
-	/**
-	 * Maps the `background_color_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function background_color_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::background_color();
-	}
 
 	/**
 	 * Maps the `base_price_setting` to its field properties.
@@ -95,45 +86,8 @@ class PropertyMapper {
 		$properties += FieldProperties::formatted_price();
 	}
 
-	/**
-	 * Maps the `border_color_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function border_color_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::border_color();
-	}
 
-	/**
-	 * Maps the `border_style_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function border_style_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::border_style();
-	}
 
-	/**
-	 * Maps the `border_width_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function border_width_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::border_width();
-	}
-
-	/**
-	 * Maps the `box_width_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function box_width_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::box_width();
-	}
 
 
 	/**
@@ -787,25 +741,6 @@ class PropertyMapper {
 		$properties += FieldProperties::has_password_visibility_toggle();
 	}
 
-	/**
-	 * Maps the `pen_color_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function pen_color_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::pen_color();
-	}
-
-	/**
-	 * Maps the `pen_size_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function pen_size_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::pen_size();
-	}
 
 	/**
 	 * Maps the `phone_format_setting` to its field properties.

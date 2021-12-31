@@ -93,66 +93,6 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'backgroundColor' property.
-	 */
-	public static function background_color() : array {
-		return [
-			'backgroundColor' => [
-				'type'        => 'String',
-				'description' => __( 'Color to be used for the background of the signature area. Can be any valid CSS color value.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'borderColor' property.
-	 */
-	public static function border_color() : array {
-		return [
-			'borderColor' => [
-				'type'        => 'String',
-				'description' => __( 'Color to be used for the border around the signature area. Can be any valid CSS color value.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'borderStyle' property.
-	 */
-	public static function border_style() : array {
-		return [
-			'borderStyle' => [
-				'type'        => Enum\SignatureFieldBorderStyleEnum::$type,
-				'description' => __( 'Border style to be used around the signature area.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'borderWidth' property.
-	 */
-	public static function border_width() : array {
-		return [
-			'borderWidth' => [
-				'type'        => Enum\SignatureFieldBorderWidthEnum::$type,
-				'description' => __( 'Width of the border around the signature area.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'boxWidth' property.
-	 */
-	public static function box_width() : array {
-		return [
-			'boxWidth' => [
-				'type'        => 'Int',
-				'description' => __( 'Width of the signature field in pixels.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
 	 * Get 'calculationFormula' property.
 	 */
 	public static function calculation_formula() : array {
@@ -1141,30 +1081,6 @@ class FieldProperties {
 			'numberFormat' => [
 				'type'        => Enum\NumberFieldFormatEnum::$type,
 				'description' => __( 'Specifies the format allowed for the number field.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'penColor' property.
-	 */
-	public static function pen_color() : array {
-		return [
-			'penColor' => [
-				'type'        => 'String',
-				'description' => __( 'Color of the pen to be used for the signature. Can be any valid CSS color value.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'penSize' property.
-	 */
-	public static function pen_size() : array {
-		return [
-			'penSize' => [
-				'type'        => 'Int',
-				'description' => __( 'Size of the pen cursor.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

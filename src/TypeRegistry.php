@@ -156,8 +156,6 @@ class TypeRegistry {
 			Enum\PostFormatTypeEnum::class,
 			Enum\QuizFieldGradingTypeEnum::class,
 			Enum\QuizFieldTypeEnum::class,
-			Enum\SignatureFieldBorderStyleEnum::class,
-			Enum\SignatureFieldBorderWidthEnum::class,
 			Enum\SubmittedEntryIdTypeEnum::class,
 			Enum\TimeFieldFormatEnum::class,
 		];
