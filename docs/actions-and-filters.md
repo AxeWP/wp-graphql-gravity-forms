@@ -64,18 +64,18 @@ apply_filters( 'graphql_gf_entries_connection_query_args', array $query_args, mi
 * **`$context`** _(AppContext)_ : Object passed down the GraphQL tree.
 * **`$info`** _(ResolveInfo)_ : The ResolveInfo passed down the GraphQL tree.
 
-### `graphql_gf_field_value_input`
+### `graphql_gf_field_value_input_class`
 
-Filters the AbstractFieldValueInput instance used to process form field submissions.
+Filters the AbstractFieldValueInput class used to process form field submissions.
 Useful for adding mutation support for custom Gravity Forms fields.
 
 ```php
-apply_filters( 'graphql_gf_field_value_input', AbstractFieldValueInput $field_value_input, array $args, GF_Field $field, array $form, array|null $entry, bool $is_draft_mutation  );
+apply_filters( 'graphql_gf_field_value_input_class', string $input_class, array $args, GF_Field $field, array $form, array|null $entry, bool $is_draft_mutation  );
 ```
 
 #### Parameters
 
-* **`$field_value_input`** _(AbstractFieldValueInput)_ :  The instantianted FieldValueInput class. Must extend AbstractFieldValueInput.
+* **`$input_class`** _(string)_ :  The FieldValueInput class to use. The class must extend AbstractFieldValueInput.
 * **`$args`** _(array)_ : The GraphQL input value name to use. E.g. `checkboxValues`.
 * **`$field`** _(GF_Field)_ : The current Gravity Forms field object.
 * **`$form`** _(array)_ : The current Gravity Forms form object.

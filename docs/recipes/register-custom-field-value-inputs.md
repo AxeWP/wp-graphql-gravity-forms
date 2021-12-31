@@ -45,7 +45,7 @@ add_filter(
 
 WPGraphQL for Gravity Forms passes the GraphQL input args through [the `AbstractFieldValueInput` class](https://github.com/harness-software/wp-graphql-gravity-forms/blob/develop/src/Data/FieldValueInput/AbstractFieldValueInput.php) to make it easy to process the data for Gravity Forms.
 
-For custom fields, we recommend extending the above class, and then instantiating it with [the `graphql_gf_field_value_input` filter](../actions-and-filters.md#graphql_gf_field_value_input). If you wish to change the behavior of one of the default `FieldValueInput` s, you can make use of several WordPress filters.
+For custom fields, we recommend extending the above class, and then registering it with [the `graphql_gf_field_value_input_class` filter](../actions-and-filters.md#graphql_gf_field_value_input). If you wish to change the behavior of one of the default `FieldValueInput` s, you can make use of several WordPress filters.
 
 #### Example 1: Extending `AbstractFieldValueInput`
 
@@ -88,11 +88,11 @@ class MyCustomFieldValueInput extends \WPGraphQL\GF\Data\FieldValueInput\Abstrac
 }
 ```
 
-To begin using your new `FieldValueInput` with your custom field, you call [the `graphql_gf_field_value_input` filter](../actions-and-filters.md#graphql_gf_field_value_input).
+To begin using your new `FieldValueInput` with your custom field, use [the `graphql_gf_field_value_input_class` filter](../actions-and-filters.md#graphql_gf_field_value_input_class).
 
 ```php
 add_filter(
-	'graphql_gf_field_value_input',
+	'graphql_gf_field_value_input_class',
 	function( $field_value_input, array $args, \GF_Field $field, array $form, $entry, bool $is_draft_mutation ) {
 		// Use MyCustomFieldValuesInput for `my_custom_field` Gravity Forms fields.
 		if( 'my_custom_field' === $field->type ){
@@ -114,11 +114,11 @@ The following examples show different ways to use WordPress filters to modify th
 
 [By default](../form-field-support.md), all custom Gravity Forms fields without a core `$inputType` use [the `ValueInput` class](../submitting-forms.md) for processing.
 
-To use a different `AbstractFieldValueInput` class instance you can use [the `graphql_gf_field_value_input` filter](../actions-and-filters.md#graphql_gf_field_value_input):
+To use a different `AbstractFieldValueInput` class instance you can use [the `graphql_gf_field_value_input_class` filter](../actions-and-filters.md#graphql_gf_field_value_input_class):
 
 ```php
 add_filter(
-	'graphql_gf_field_value_input',
+	'graphql_gf_field_value_input_class',
 	function( $field_value_input, array $args, \GF_Field $field, array $form, $entry, bool $is_draft_mutation ) {
 		// Check out the plugin source to see the included core FieldValueInput classes to chose from.
 		if( 'my_custom_field' === $field->type ){

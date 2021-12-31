@@ -8,14 +8,11 @@
 
 namespace WPGraphQL\GF\Data;
 
+use Exception;
 use GF_Field;
-use GFCommon;
-use GFFormsModel;
-use GraphQL\Error\UserError;
 use WPGraphQL\GF\Data\FieldValueInput;
 use WPGraphQL\GF\Data\FieldValueInput\AbstractFieldValueInput;
 use WPGraphQL\GF\Utils\GFUtils;
-use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - EntryObjectMutation
@@ -48,6 +45,8 @@ class EntryObjectMutation {
 	 * @param array $form The GF form object.
 	 * @param bool  $is_draft If the mutation is for a draft entry.
 	 * @param array $entry The GF entry object. Used when updating.
+	 *
+	 * @throws Exception .
 	 */
 	public static function get_field_value_input( array $args, array $form, bool $is_draft, array $entry = null ) : FieldValueInput\AbstractFieldValueInput {
 		$field = GFUtils::get_field_by_id( $form, $args['id'] );
@@ -56,37 +55,34 @@ class EntryObjectMutation {
 
 		switch ( $input_type ) {
 			case 'address':
-				$field_value_input = new FieldValueInput\AddressValuesInput( $args, $form, $is_draft, $field );
+				$field_value_input = FieldValueInput\AddressValuesInput::class;
 				break;
 			case 'checkbox':
-				$field_value_input = new FieldValueInput\CheckboxValuesInput( $args, $form, $is_draft, $field );
+				$field_value_input = FieldValueInput\CheckboxValuesInput::class;
 				break;
 			case 'chainedselect':
-				$field_value_input = new FieldValueInput\ChainedSelectValuesInput( $args, $form, $is_draft, $field );
+				$field_value_input = FieldValueInput\ChainedSelectValuesInput::class;
 				break;
 			case 'consent':
-				$field_value_input = new FieldValueInput\ConsentValueInput( $args, $form, $is_draft, $field );
+				$field_value_input = FieldValueInput\ConsentValueInput::class;
 				break;
 			case 'email':
-				$field_value_input = new FieldValueInput\EmailValuesInput( $args, $form, $is_draft, $field );
+				$field_value_input = FieldValueInput\EmailValuesInput::class;
 				break;
 			case 'fileupload':
-				$field_value_input = new FieldValueInput\FileUploadValuesInput( $args, $form, $is_draft, $field );
+				$field_value_input = FieldValueInput\FileUploadValuesInput::class;
 				break;
 			case 'list':
-				$field_value_input = new FieldValueInput\ListValuesInput( $args, $form, $is_draft, $field );
+				$field_value_input = FieldValueInput\ListValuesInput::class;
 				break;
 			case 'multiselect':
-				$field_value_input = new FieldValueInput\ValuesInput( $args, $form, $is_draft, $field );
+				$field_value_input = FieldValueInput\ValuesInput::class;
 				break;
 			case 'name':
-				$field_value_input = new FieldValueInput\NameValuesInput( $args, $form, $is_draft, $field );
+				$field_value_input = FieldValueInput\NameValuesInput::class;
 				break;
 			case 'post_image':
-				$field_value_input = new FieldValueInput\ImageValuesInput( $args, $form, $is_draft, $field );
-				break;
-			case 'signature':
-				$field_value_input = new FieldValueInput\SignatureValuesInput( $args, $form, $is_draft, $field, $entry );
+				$field_value_input = FieldValueInput\ImageValuesInput::class;
 				break;
 			case 'date':
 			case 'hidden':
@@ -102,7 +98,7 @@ class EntryObjectMutation {
 			case 'time':
 			case 'website':
 			default:
-				$field_value_input = new FieldValueInput\ValueInput( $args, $form, $is_draft, $field );
+				$field_value_input = FieldValueInput\ValueInput::class;
 		}
 
 		/**
@@ -110,14 +106,20 @@ class EntryObjectMutation {
 		 *
 		 * Useful for adding mutation support for custom fields.
 		 *
-		 * @param AbstractFieldValueInput $field_value_input  The instantianted FieldValueInput class. Must extend AbstractFieldValueInput.
+		 * @param string $field_value_input_class  The FieldValueInput class to use. The referenced class must extend AbstractFieldValueInput.
 		 * @param array    $args The GraphQL input args for the form field.
 		 * @param GF_Field $field The current Gravity Forms field object.
 		 * @param array $form The current Gravity Forms form object.
 		 * @param array|null $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
 		 * @param bool $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
 		 */
-		return apply_filters( 'graphql_gf_field_value_input', $field_value_input, $args, $field, $form, $entry, $is_draft );
+		$field_value_input = apply_filters( 'graphql_gf_field_value_input_class', $field_value_input, $args, $field, $form, $entry, $is_draft );
+
+		if ( ! is_a( $field_value_input, AbstractFieldValueInput::class, true ) ) {
+			throw new Exception( __( 'Invalid FieldValueInput class. Classes must extend AbstractFieldValueInput.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		return new $field_value_input( $args, $form, $is_draft, $field, $entry );
 	}
 
 	/**
