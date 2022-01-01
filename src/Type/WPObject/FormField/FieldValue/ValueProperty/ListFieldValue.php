@@ -20,7 +20,7 @@ class ListFieldValue extends AbstractObject {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'ListValueProperty';
+	public static string $type = 'ListFieldValue';
 
 	/**
 	 * {@inheritDoc}

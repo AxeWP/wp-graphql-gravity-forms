@@ -20,7 +20,7 @@ class CheckboxFieldValue extends AbstractObject {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'CheckboxValueProperty';
+	public static string $type = 'CheckboxFieldValue';
 
 	/**
 	 * {@inheritDoc}

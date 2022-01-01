@@ -21,7 +21,7 @@ class TimeFieldValue extends AbstractObject {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'TimeValueProperty';
+	public static string $type = 'TimeFieldValue';
 
 	/**
 	 * {@inheritDoc}

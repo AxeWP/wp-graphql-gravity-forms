@@ -21,7 +21,7 @@ class AddressFieldValue extends AbstractObject {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'AddressValueProperty';
+	public static string $type = 'AddressFieldValue';
 
 	/**
 	 * {@inheritDoc}

@@ -20,7 +20,7 @@ class NameFieldValue extends AbstractObject {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'NameValueProperty';
+	public static string $type = 'NameFieldValue';
 
 	/**
 	 * {@inheritDoc}

@@ -20,7 +20,7 @@ class ImageFieldValue extends AbstractObject {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'ImageValueProperty';
+	public static string $type = 'ImageFieldValue';
 
 	/**
 	 * {@inheritDoc}
