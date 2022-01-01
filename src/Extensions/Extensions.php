@@ -11,6 +11,7 @@ namespace WPGraphQL\GF\Extensions;
 use WPGraphQL\GF\Extensions\GFChainedSelects\GFChainedSelects;
 use WPGraphQL\GF\Extensions\GFQuiz\GFQuiz;
 use WPGraphQL\GF\Extensions\GFSignature\GFSignature;
+use WPGraphQL\GF\Extensions\WPGatsby\WPGatsby;
 
 /**
  * Class - GFSignature
@@ -24,5 +25,6 @@ class Extensions {
 		GFChainedSelects::register_hooks();
 		GFQuiz::register_hooks();
 		GFSignature::register_hooks();
+		WPGatsby::register_hooks();
 	}
 }
