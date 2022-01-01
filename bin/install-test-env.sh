@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
 if [[ ! -f ".env" ]]; then
-  echo "No .env file was detected. .env.dist has been copied to .env"
-  echo "Open the .env file and enter values to match your local environment"
-  cp .env.dist .env
+	echo "No .env file was detected. .env.dist has been copied to .env"
+	echo "Open the .env file and enter values to match your local environment"
+	cp .env.dist .env
 fi
 
 source .env
 
 print_usage_instruction() {
-  echo "ERROR!"
-  echo "Values in the .env file are missing or incorrect."
-  echo "Open the .env file at the root of this plugin and enter values to match your local environment settings"
+	echo "ERROR!"
+	echo "Values in the .env file are missing or incorrect."
+	echo "Open the .env file at the root of this plugin and enter values to match your local environment settings"
 	exit 1
 }
 
@@ -40,11 +40,11 @@ DB_SERVE_NAME=${DB_SERVE_NAME-wpgatsby_serve}
 SKIP_DB_CREATE=${SKIP_DB_CREATE-false}
 
 download() {
-    if [ `which curl` ]; then
-        curl -s "$1" > "$2";
-    elif [ `which wget` ]; then
-        wget -nv -O "$2" "$1"
-    fi
+		if [ `which curl` ]; then
+				curl -s "$1" > "$2";
+		elif [ `which wget` ]; then
+				wget -nv -O "$2" "$1"
+		fi
 }
 
 if [[ $WP_VERSION =~ ^[0-9]+\.[0-9]+\-(beta|RC)[0-9]+$ ]]; then
@@ -85,7 +85,7 @@ install_wp() {
 
 	if [[ $WP_VERSION == 'nightly' || $WP_VERSION == 'trunk' ]]; then
 		mkdir -p $TMPDIR/wordpress-nightly
-		download https://wordpress.org/nightly-builds/wordpress-latest.zip  $TMPDIR/wordpress-nightly/wordpress-nightly.zip
+		download https://wordpress.org/nightly-builds/wordpress-latest.zip	$TMPDIR/wordpress-nightly/wordpress-nightly.zip
 		unzip -q $TMPDIR/wordpress-nightly/wordpress-nightly.zip -d $TMPDIR/wordpress-nightly/
 		mv $TMPDIR/wordpress-nightly/wordpress/* $WP_CORE_DIR
 	else
@@ -110,7 +110,7 @@ install_wp() {
 		else
 			local ARCHIVE_NAME="wordpress-$WP_VERSION"
 		fi
-		download https://wordpress.org/${ARCHIVE_NAME}.tar.gz  $TMPDIR/wordpress.tar.gz
+		download https://wordpress.org/${ARCHIVE_NAME}.tar.gz	$TMPDIR/wordpress.tar.gz
 		tar --strip-components=1 -zxmf $TMPDIR/wordpress.tar.gz -C $WP_CORE_DIR
 	fi
 
@@ -147,10 +147,10 @@ install_db() {
 }
 
 configure_wordpress() {
-    cd $WP_CORE_DIR
-    wp config create --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$DB_PASS" --dbhost="$DB_HOST" --skip-check --force=true
-    wp core install --url=$WP_DOMAIN --title=GFTests --admin_user=$ADMIN_USERNAME --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL
-    wp rewrite structure '/%year%/%monthnum%/%postname%/'
+		cd $WP_CORE_DIR
+		wp config create --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$DB_PASS" --dbhost="$DB_HOST" --skip-check --force=true
+		wp core install --url=$WP_DOMAIN --title=GFTests --admin_user=$ADMIN_USERNAME --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL
+		wp rewrite structure '/%year%/%monthnum%/%postname%/'
 }
 
 install_gravityforms() {
@@ -227,16 +227,19 @@ setup_plugin() {
 
 	cd $WP_CORE_DIR
 
-  wp plugin list
+	wp plugin list
 
-  # Install WPGraphQL
-  wp plugin install wp-graphql
-
-	# Activate WPGraphQL
+	# Install WPGraphQL and Activate
+	wp plugin install wp-graphql
 	wp plugin activate wp-graphql
+
+	# Install WPGatsby and Activate
+	wp plugin install wp-gatsby
+	wp plugin activate wp-gatsby
 
 	# activate the plugin
 	wp plugin activate wp-graphql-gravity-forms
+
 
 	# Flush the permalinks
 	wp rewrite flush
