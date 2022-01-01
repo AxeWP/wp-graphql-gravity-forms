@@ -10,6 +10,8 @@
 
 namespace WPGraphQL\GF\Type\Input;
 
+use WPGraphQL\GF\Utils\Utils;
+
 /**
  * Class - FormFieldValuesInput
  */
@@ -67,7 +69,7 @@ class FormFieldValuesInput extends AbstractInput {
 			],
 		];
 
-		if ( class_exists( 'WPGraphQL\Upload\Type\Upload' ) ) {
+		if ( Utils::is_graphql_upload_enabled() ) {
 			$fields['fileUploadValues'] = [
 				'type'        => [ 'list_of' => 'Upload' ],
 				'description' => __( 'The form field values for file upload fields.', 'wp-graphql-gravity-forms' ),
