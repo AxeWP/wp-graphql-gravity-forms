@@ -1,16 +1,63 @@
 # Actions & Filters
 
+## Actions
+
+* [`graphql_gf_init`](#graphql_gf_init)
+* [`graphql_gf_before_register_types`](#graphql_gf_before_register_types)
+* [`graphql_gf_after_register_types`](#graphql_gf_after_register_types)
+
+### `graphql_gf_init`
+
+Fires after the plugin has been initialized.
+
+```php
+apply_filters( 'graphql_gf_can_view_draft_entries', $instance );
+```
+
+#### Parameters
+
+* **`$instance`** _(GF)_ : The plugin instance.
+
+### `graphql_gf_before_register_types`
+
+Fires before plugin registers types to the GraphQL schema
+
+```php
+apply_filters( 'graphql_gf_before_register_types', $type_registry );
+```
+
+#### Parameters
+
+* **`$type_registry`** _(WPGraphQL\Registry\TypeRegistry)_ : The WPGraphQL registry of Types used in the GraphQL schema.
+
+### `graphql_gf_after_register_types`
+
+Fires after plugin registers types to the GraphQL schema
+
+```php
+apply_filters( 'graphql_gf_after_register_types', $type_registry );
+```
+
+#### Parameters
+
+* **`$type_registry`** _(WPGraphQL\Registry\TypeRegistry)_ : The WPGraphQL registry of Types used in the GraphQL schema.
+
 ## Filters
 
-* [`graphql_gf_can_view_draft_entries`](#wp_graphql_gf_can_view_entries)
-* [`graphql_gf_can_view_entries`](#wp_graphql_gf_can_view_entries)
+* [`graphql_gf_can_view_draft_entries`](#graphql_gf_can_view_entries)
+* [`graphql_gf_can_view_entries`](#graphql_gf_can_view_entries)
 * [`graphql_gf_entries_connection_query_args`](#graphql_gf_entries_connection_query_args)
+* [`graphql_gf_field_value_input_class`](#graphql_gf_field_value_input_class)
+* [`graphql_gf_field_value_input_args`](#graphql_gf_field_value_input_args)
+* [`graphql_gf_field_value_input_name`](#graphql_gf_field_value_input_name)
+* [`graphql_gf_field_value_input_prepared_value`](#graphql_gf_field_value_input_prepared_value)
+* [`graphql_gf_forms_connection_query_args`](#graphql_gf_forms_connection_query_args)
 * [`graphql_gf_form_field_child_types`](#graphql_gf_form_field_child_types)
+* [`graphql_gf_form_field_name_map`](#graphql_gf_form_fields_name_map)
 * [`graphql_gf_form_field_setting_properties`](#graphql_gf_form_field_setting_properties)
 * [`graphql_gf_form_field_value_properties`](#graphql_gf_form_field_value_properties)
-* [`graphql_gf_form_fields_name_map`](#graphql_gf_form_fields_name_map)
+* [`graphql_gf_form_field_value_input_fields`](#graphql_gf_form_field_value_input_fields)
 * [`graphql_gf_form_object`](#graphql_gf_form_object)
-* [`graphql_gf_forms_connection_query_args`](#graphql_gf_forms_connection_query_args)
 * [`graphql_gf_ignored_field_types`](#graphql_gf_ignored_field_types)
 * [`graphql_gf_registered_connection_classes`](#graphql_gf_registered_{type}_classes)
 * [`graphql_gf_registered_entry_types`](#graphql_gf_registered_entry_types)
@@ -20,8 +67,6 @@
 * [`graphql_gf_registered_interface_classes`](#graphql_gf_registered_{type}_classes)
 * [`graphql_gf_registered_mutation_classes`](#graphql_gf_registered_{type}_classes)
 * [`graphql_gf_registered_object_classes`](#graphql_gf_registered_{type}_classes)
-* [`wp_graphql_gf_field_value_type`](#wp_graphql_gf_field_value_type)
-* [`wp_graphql_gf_prepare_field_value`](#wp_graphql_gf_prepare_field_value)
 
 ### `graphql_gf_can_view_draft_entries`
 
@@ -80,7 +125,7 @@ apply_filters( 'graphql_gf_field_value_input_class', string $input_class, array 
 * **`$args`** _(array)_ : The GraphQL input value name to use. E.g. `checkboxValues`.
 * **`$field`** _(GF_Field)_ : The current Gravity Forms field object.
 * **`$form`** _(array)_ : The current Gravity Forms form object.
-* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`,  `gfUpdateDraftEntry`) mutations.
 * **`$is_draft_mutation`** _(bool)_ : Whether the mutation is handling a Draft Entry, i.e. on `gfUpdateDraftEntry`, or `gfSubmitForm` with `saveAsDraft` is `true`).
 
 ### `graphql_gf_field_value_input_args`
@@ -97,7 +142,7 @@ apply_filters( 'graphql_gf_field_value_input_args', array|string $args, GF_Field
 * **`$args`** _(string|array)_ : The input args from the field value input.
 * **`$field`** _(GF_Field)_ : The current Gravity Forms field object.
 * **`$form`** _(array)_ : The current Gravity Forms form object.
-* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`,  `gfUpdateDraftEntry`) mutations.
 * **`$is_draft_mutation`** _(bool)_ : Whether the mutation is handling a Draft Entry, i.e. on `gfUpdateDraftEntry`, or `gfSubmitForm` with `saveAsDraft` is `true`).
 * **`$name`** _(string)_ : The GraphQL input value name to use. E.g. `checkboxValues`.
 
@@ -115,7 +160,7 @@ apply_filters( 'graphql_gf_field_value_input_name', string $name, GF_Field $fiel
 * **`$name`** _(string)_ : The GraphQL input value name to use. E.g. `checkboxValues`.
 * **`$field`** _(GF_Field)_ : The current Gravity Forms field object.
 * **`$form`** _(array)_ : The current Gravity Forms form object.
-* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`,  `gfUpdateDraftEntry`) mutations.
 * **`$is_draft_mutation`** _(bool)_ : Whether the mutation is handling a Draft Entry, i.e. on `gfUpdateDraftEntry`, or `gfSubmitForm` with `saveAsDraft` is `true`).
 
 ### `graphql_gf_field_value_input_prepared_value`
@@ -132,7 +177,7 @@ apply_filters( 'graphql_gf_field_value_input_prepared_value', array|string $prep
 * **`$args`** _(string|array)_ : The input args from the field value input.
 * **`$field`** _(GF_Field)_ : The current Gravity Forms field object.
 * **`$form`** _(array)_ : The current Gravity Forms form object.
-* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+* **`$entry`** _(array|null)_ : The current Gravity Forms entry object. Only set when using update (`gfUpdateEntry`,  `gfUpdateDraftEntry`) mutations.
 * **`$is_draft_mutation`** _(bool)_ : Whether the mutation is handling a Draft Entry, i.e. on `gfUpdateDraftEntry`, or `gfSubmitForm` with `saveAsDraft` is `true`).
 * **`$name`** _(string)_ : The GraphQL input value name to use. E.g. `checkboxValues`.
 
