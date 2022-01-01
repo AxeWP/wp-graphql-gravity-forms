@@ -72,7 +72,7 @@ trait ExpectedFormFields {
 	}
 
 	public function border_width_setting( GF_Field $field, array &$properties ) : void {
-		$properties[] = $this->expectedField( 'borderWidth', ! empty( $field->borderWidth ) ? GFHelpers::get_enum_for_value( SignatureFieldBorderWidthEnum::$type, $field->borderWidth ) : static::IS_NULL );
+		$properties[] = $this->expectedField( 'borderWidth', GFHelpers::get_enum_for_value( SignatureFieldBorderWidthEnum::$type, $field->borderWidth ?? 0 ) );
 	}
 
 	public function box_width_setting( GF_Field $field, array &$properties ) : void {

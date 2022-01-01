@@ -594,7 +594,7 @@ class PropertyMapper {
 		$choice_fields = FieldProperties::choice_is_other();
 
 		/**
-		 * Quiz fields are registered on the QuizChoiceProperty object.
+		 * Quiz fields are registered on the QuizFieldChoice object.
 		 *
 		 * @todo move to GFExtensions.
 		 */

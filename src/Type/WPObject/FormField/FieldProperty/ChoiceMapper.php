@@ -27,7 +27,7 @@ class ChoiceMapper {
 	public static function map_choices( GF_Field $field, array $choice_fields ) : array {
 		$input_type = ! empty( $field->inputType ) ? $field->inputType : $field->type;
 
-		$name = Utils::get_safe_form_field_type_name( ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'ChoiceProperty' );
+		$name = Utils::get_safe_form_field_type_name( ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'FieldChoice' );
 
 		register_graphql_object_type(
 			$name,
@@ -59,7 +59,7 @@ class ChoiceMapper {
 	 * @param array    $choice_fields .
 	 */
 	public static function add_fields_to_choice( GF_Field $field, array $choice_fields ) : void {
-		$name = Utils::get_safe_form_field_type_name( ( $field->type !== $field->inputType ? $field->type . '_' . $field->inputType : $field->type ) . 'ChoiceProperty' );
+		$name = Utils::get_safe_form_field_type_name( ( $field->type !== $field->inputType ? $field->type . '_' . $field->inputType : $field->type ) . 'FieldChoice' );
 
 		register_graphql_fields( $name, $choice_fields );
 	}
