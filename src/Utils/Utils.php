@@ -274,13 +274,6 @@ class Utils {
 					'select'   => $prefix . 'SelectField',
 				];
 				break;
-			case 'quiz':
-				$child_types = [
-					'checkbox' => $prefix . 'CheckboxField',
-					'radio'    => $prefix . 'RadioField',
-					'select'   => $prefix . 'SelectField',
-				];
-				break;
 			case 'donation':
 				$child_types = [
 					'donation' => $prefix . 'DonationField',

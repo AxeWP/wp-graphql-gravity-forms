@@ -135,7 +135,6 @@ class Form extends Model {
 						'shouldUseCurrentUserAsAuthor' => ! empty( $this->data['useCurrentUserAsAuthor'] ),
 					];
 				},
-				'quiz'                         => fn() : ?array => ! empty( $this->data['gravityformsquiz'] ) ? $this->data['gravityformsquiz'] : null,
 				'requiredIndicator'            => fn() : ?string => $this->data['requiredIndicator'] ?? null,
 				'saveAndContinue'              => fn() : ?array => ! empty( $this->data['save'] ) ? $this->data['save'] : null,
 				'scheduling'                   => function() : array {
@@ -164,6 +163,13 @@ class Form extends Model {
 				'hasValidationSummary'         => fn() : bool => ! empty( $this->data['validationSummary'] ),
 				'version'                      => fn() : ?string => ! empty( $this->data['version'] ) ? $this->data['version'] : null,
 			];
+
+			/**
+			 * Internal Filter for modifying the model.
+			 *
+			 * To be replaced by https://github.com/wp-graphql/wp-graphql/issues/2198
+			 */
+			$this->fields = apply_filters( 'graphql_gf_form_modeled_data_experimental', $this->fields, $this->data, );
 		}
 	}
 }

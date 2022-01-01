@@ -93,13 +93,6 @@ class SubmittedEntry extends AbstractObject implements Field {
 				'type'        => 'Int',
 				'description' => __( 'For forms with Post fields, this property contains the Id of the Post that was created.', 'wp-graphql-gravity-forms' ),
 			],
-			'quizResults'    => [
-				'type'        => EntryQuizResults::$type,
-				'description' => __( 'The quiz results for the entry. Requires Gravity Forms Quiz to be enabled.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function( $root ) {
-					return class_exists( 'GFQuiz' ) ? $root : null;
-				},
-			],
 			'status'         => [
 				'type'        => EntryStatusEnum::$type,
 				'description' => __( 'The current status of the entry.', 'wp-graphql-gravity-forms' ),

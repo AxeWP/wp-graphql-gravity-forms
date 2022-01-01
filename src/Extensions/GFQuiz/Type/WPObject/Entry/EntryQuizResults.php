@@ -2,24 +2,50 @@
 /**
  * GraphQL Object Type - EntryQuizResults
  *
- * @package WPGraphQL\GF\Type\WPObject\EntryQuizResults
+ * @package WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\EntryQuizResults
  * @since   0.9.1
  */
 
-namespace WPGraphQL\GF\Type\WPObject\Entry;
+namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\Entry;
 
+use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
+use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
+use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - EntryQuizResults
  */
-class EntryQuizResults extends AbstractObject {
+class EntryQuizResults extends AbstractObject implements Field {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
 	public static string $type = 'EntryQuizResults';
+
+	/**
+	 * Field registered in WPGraphQL.
+	 *
+	 * @var string
+	 */
+	public static string $field_name = 'quizResults';
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function register( TypeRegistry $type_registry = null ) : void {
+		register_graphql_object_type(
+			static::$type,
+			[
+				'description'     => static::get_description(),
+				'fields'          => static::get_fields(),
+				'eagerlyLoadType' => static::$should_load_eagerly,
+			]
+		);
+
+		self::register_field();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -62,5 +88,22 @@ class EntryQuizResults extends AbstractObject {
 				},
 			],
 		];
+	}
+
+	/**
+	 * Register quizResults.
+	 */
+	public static function register_field() : void {
+		register_graphql_field(
+			SubmittedEntry::$type,
+			self::$field_name,
+			[
+				'type'        => static::$type,
+				'description' => __( 'The quiz results for the entry. Requires Gravity Forms Quiz to be enabled.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function ( $source ) {
+					return $source;
+				},
+			]
+		);
 	}
 }

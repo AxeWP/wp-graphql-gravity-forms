@@ -184,7 +184,6 @@ class FormFields implements Registrable {
 				[
 					'conditional_logic_nextbutton_setting',
 					'default_input_values_setting',
-					'gquiz_setting_field_type',
 					'input_placeholders_setting',
 					'name_prefix_choices_setting',
 					'post_author_setting',
@@ -241,12 +240,6 @@ class FormFields implements Registrable {
 		$input_type = $field->get_input_type();
 
 		switch ( $input_type ) {
-			// Ignore the quiz interface.
-			case 'quiz':
-			case 'post_category':
-			case 'post_custom':
-			case 'post_tags':
-				break;
 			case 'address':
 				$properties += ValueProperties::address_values();
 				break;
@@ -272,6 +265,9 @@ class FormFields implements Registrable {
 			case 'multiselect':
 				$properties += ValueProperties::values();
 				break;
+			case 'post_category':
+			case 'post_custom':
+			case 'post_tags':
 			default:
 				break;
 		}

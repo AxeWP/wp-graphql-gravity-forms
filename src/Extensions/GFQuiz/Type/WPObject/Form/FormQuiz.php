@@ -4,20 +4,23 @@
  *
  * @see https://docs.gravityforms.com/configure-quiz-settings/
  *
- * @package WPGraphQL\GF\Type\WPObject\Form
+ * @package WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\Form
  * @since   0.9.1
  */
 
-namespace WPGraphQL\GF\Type\WPObject\Form;
+namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\Form;
 
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Type\Enum\QuizFieldGradingTypeEnum;
+use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum\QuizFieldGradingTypeEnum;
+use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
+use WPGraphQL\GF\Type\WPObject\Form\Form;
+use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FormConfirmation
  */
-class FormQuiz extends AbstractObject {
+class FormQuiz extends AbstractObject implements Field {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -33,12 +36,35 @@ class FormQuiz extends AbstractObject {
 	}
 
 	/**
+	 * Field registered in WPGraphQL.
+	 *
+	 * @var string
+	 */
+	public static string $field_name = 'quiz';
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function register( TypeRegistry $type_registry = null ) : void {
+		register_graphql_object_type(
+			static::$type,
+			[
+				'description'     => static::get_description(),
+				'fields'          => static::get_fields(),
+				'eagerlyLoadType' => static::$should_load_eagerly,
+			]
+		);
+
+		self::register_field();
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public static function get_fields() : array {
 		return [
 			'failConfirmation'               => [
-				'type'        => QuizConfirmation::$type,
+				'type'        => FormQuizConfirmation::$type,
 				'description' => __( 'The message to display if the quiz grade is below the Pass Percentage. Only used if grading is set to `PASSFAIL`.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source ) {
 					return [
@@ -48,7 +74,7 @@ class FormQuiz extends AbstractObject {
 				},
 			],
 			'grades'                         => [
-				'type'        => [ 'list_of' => QuizGrades::$type ],
+				'type'        => [ 'list_of' => FormQuizGrades::$type ],
 				'description' => __( 'The letter grades to be assigned based on the percentage score achieved. Only used if `grading` is set to `LETTER`.', 'wp-graphql-gravity-forms' ),
 			],
 			'gradingType'                    => [
@@ -77,7 +103,7 @@ class FormQuiz extends AbstractObject {
 				'resolve'     => fn( $source ) => ! empty( $source['shuffleFields'] ),
 			],
 			'letterConfirmation'             => [
-				'type'        => QuizConfirmation::$type,
+				'type'        => FormQuizConfirmation::$type,
 				'description' => __( 'The confirmation message to display if `grading` is set to `LETTER`.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source ) {
 					return [
@@ -90,10 +116,6 @@ class FormQuiz extends AbstractObject {
 				'type'        => 'Float',
 				'description' => __( 'The maximum score for this form.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) : ?float {
-					if ( ! class_exists( 'GFQuiz' ) ) {
-						return null;
-					}
-
 					return ( gf_quiz() )->get_max_score( $context->gfForm ) ?: null;
 				},
 			],
@@ -102,7 +124,7 @@ class FormQuiz extends AbstractObject {
 				'description' => __( "The percentage score the user must equal or exceed to be considered to have 'passed.' Only used if `grading` is set to `PASSFAIL`.", 'wp-graphql-gravity-forms' ),
 			],
 			'passConfirmation'               => [
-				'type'        => QuizConfirmation::$type,
+				'type'        => FormQuizConfirmation::$type,
 				'description' => __( 'The message to display if the quiz grade is above or equal to the Pass Percentage. Only used if grading is set to `PASSFAIL`.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source ) {
 					return [
@@ -112,5 +134,23 @@ class FormQuiz extends AbstractObject {
 				},
 			],
 		];
+	}
+
+	/**
+	 * Register quiz.
+	 */
+	public static function register_field() : void {
+		register_graphql_field(
+			Form::$type,
+			self::$field_name,
+			[
+				'type'        => static::$type,
+				'description' => __( 'Quiz-specific settings that will affect ALL Quiz fields in the form. Requires Gravity Forms Quiz addon.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function( $source, array $args, AppContext $context ) : ?array {
+					$context->gfForm = $source;
+					return ! empty( $source['quizSettings'] ) ? $source['quizSettings'] : null;
+				},
+			]
+		);
 	}
 }

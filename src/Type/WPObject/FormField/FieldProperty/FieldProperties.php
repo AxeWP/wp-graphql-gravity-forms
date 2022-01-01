@@ -68,19 +68,6 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'answerExplanation' property.
-	 */
-	public static function answer_explanation() : array {
-		return [
-			'answerExplanation' => [
-				'type'        => 'String',
-				'description' => __( 'The explanation for the correct answer and/or incorrect answers.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn ( $source ) : ?string => ! empty( $source->gquizAnswerExplanation ) ? $source->gquizAnswerExplanation : null,
-			],
-		];
-	}
-
-	/**
 	 * Get 'autocompleteAttribute' property.
 	 */
 	public static function autocomplete_attribute() : array {
@@ -230,19 +217,6 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'isCorrect' choice property.
-	 */
-	public static function choice_is_correct() : array {
-		return [
-			'isCorrect' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Indicates the choice item is the correct answer.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source->gquizIsCorrect ),
-			],
-		];
-	}
-
-	/**
 	 * Get 'isOtherChoice' choice property.
 	 */
 	public static function choice_is_other() : array {
@@ -313,25 +287,6 @@ class FieldProperties {
 			'value' => [
 				'type'        => 'String',
 				'description' => __( 'The value to be stored in the database when this choice is selected. Note: This property is only supported by the Drop Down and Post Category fields. Checkboxes and Radio fields will store the text property in the database regardless of the value property.', 'wp-graphql-gravity-forms' ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'weight' choice property.
-	 */
-	public static function choice_weight() : array {
-		return [
-			'weight' => [
-				'type'        => 'Float',
-				'description' => __( 'The weighted score awarded for the choice.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source, array $args, AppContext $context ) {
-					if ( isset( $context->gfField->gquizWeightedScoreEnabled ) && false === $context->gfField->gquizWeightedScoreEnabled ) {
-						return (float) $source['gquizIsCorrect'];
-					}
-
-					return is_numeric( $source['gquizWeight'] ) ? (float) $source['gquizWeight'] : null;
-				},
 			],
 		];
 	}
@@ -785,19 +740,6 @@ class FieldProperties {
 	}
 
 	/**
-	 * Get 'hasWeightedScore' property.
-	 */
-	public static function has_weighted_score() : array {
-		return [
-			'hasWeightedScore' => [
-				'type'        => 'Boolean',
-				'description' => __( 'If this setting is disabled then the response will be awarded a score of 1 if correct and 0 if incorrect.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source->gquizWeightedScoreEnabled ),
-			],
-		];
-	}
-
-	/**
 	 * Get 'customLabel' property for input.
 	 */
 	public static function input_custom_label() : array {
@@ -1196,32 +1138,6 @@ class FieldProperties {
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates whether the copy values option can be used. This option allows users to skip filling out the field and use the same values as another. For example, if the mailing and billing address are the same.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $source ) => ! empty( $source->enableCopyValuesOption ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'shouldRandomizeQuizChoices' property.
-	 */
-	public static function should_randomize_quiz_choices() : array {
-		return [
-			'shouldRandomizeQuizChoices' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Whether to randomize the order in which the answers are displayed to the user.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source->gquizEnableRandomizeQuizChoices ),
-			],
-		];
-	}
-
-	/**
-	 * Get 'shouldShowAnswerExplanation' property.
-	 */
-	public static function should_show_answer_explanation() : array {
-		return [
-			'shouldShowAnswerExplanation' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Whether to show an answer explanation.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source->gquizShowAnswerExplanation ),
 			],
 		];
 	}

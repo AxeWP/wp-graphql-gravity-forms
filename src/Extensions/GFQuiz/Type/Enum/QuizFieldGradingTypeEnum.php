@@ -2,11 +2,13 @@
 /**
  * Enum Type - QuizFieldGradingTypeEnum
  *
- * @package WPGraphQL\GF\Type\Enum,
+ * @package WPGraphQL\GF\Extensions\GFQuiz\Type\Enum,
  * @since   0.9.1
  */
 
-namespace WPGraphQL\GF\Type\Enum;
+namespace WPGraphQL\GF\Extensions\GFQuiz\Type\Enum;
+
+use WPGraphQL\GF\Type\Enum\AbstractEnum;
 
 /**
  * Class - QuizFieldGradingTypeEnum

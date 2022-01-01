@@ -197,14 +197,6 @@ class Form extends AbstractObject implements Field {
 				'type'        => FormPostCreation::$type,
 				'description' => __( 'Post creation data', 'wp-graphql-gravity-forms' ),
 			],
-			'quiz'                         => [
-				'type'        => FormQuiz::$type,
-				'description' => __( 'Quiz-specific settings that will affect ALL Quiz fields in the form. Requires Gravity Forms Quiz addon.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function( $source, array $args, AppContext $context ) : ?array {
-					$context->gfForm = $source;
-					return ! empty( $source['quizSettings'] ) ? $source['quizSettings'] : null;
-				},
-			],
 			'requiredIndicator'            => [
 				'type'        => Enum\FormFieldRequiredIndicatorEnum::$type,
 				'description' => __( 'Type of indicator to use when field is required.', 'wp-graphql-gravity-forms' ),

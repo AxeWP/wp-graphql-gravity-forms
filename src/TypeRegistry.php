@@ -153,8 +153,6 @@ class TypeRegistry {
 			Enum\PasswordFieldMinStrengthEnum::class,
 			Enum\PhoneFieldFormatEnum::class,
 			Enum\PostFormatTypeEnum::class,
-			Enum\QuizFieldGradingTypeEnum::class,
-			Enum\QuizFieldTypeEnum::class,
 			Enum\SubmittedEntryIdTypeEnum::class,
 			Enum\TimeFieldFormatEnum::class,
 		];
@@ -240,7 +238,6 @@ class TypeRegistry {
 			// Entries.
 			WPObject\Entry\DraftEntry::class,
 			WPObject\Entry\SubmittedEntry::class,
-			WPObject\Entry\EntryQuizResults::class,
 			// Forms.
 			WPObject\Form\Form::class,
 			WPObject\Form\FormConfirmation::class,
@@ -250,9 +247,6 @@ class TypeRegistry {
 			WPObject\Form\FormNotificationRouting::class,
 			WPObject\Form\FormPagination::class,
 			WPObject\Form\FormPostCreation::class,
-			WPObject\Form\QuizGrades::class,
-			WPObject\Form\QuizConfirmation::class,
-			WPObject\Form\FormQuiz::class,
 			WPObject\Form\FormScheduleDetails::class,
 			WPObject\Form\FormSchedule::class,
 			WPObject\Form\FormSaveAndContinue::class,

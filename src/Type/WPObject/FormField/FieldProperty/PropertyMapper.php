@@ -470,52 +470,6 @@ class PropertyMapper {
 	}
 
 	/**
-	 * Maps the `gquiz_setting_choices` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function gquiz_setting_choices( GF_Field $field, array &$properties ) : void {
-		$properties    += FieldProperties::has_weighted_score();
-		$choice_fields  = FieldProperties::choice_is_correct();
-		$choice_fields += FieldProperties::choice_weight();
-		$choice_fields += FieldProperties::choice_is_other();
-
-		ChoiceMapper::add_fields_to_choice( $field, $choice_fields );
-	}
-
-	/**
-	 * Maps the `gquiz_setting_show_answer_explanation` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function gquiz_setting_show_answer_explanation( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::should_show_answer_explanation();
-		$properties += FieldProperties::answer_explanation();
-	}
-
-	/**
-	 * Maps the `gquiz_setting_randomize_quiz_choices` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function gquiz_setting_randomize_quiz_choices( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::should_randomize_quiz_choices();
-	}
-
-	/**
-	 * Maps the `gquiz_setting_question` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function gquiz_setting_question( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::label();
-	}
-
-	/**
 	 * Maps the `input_mask_setting` to its field properties.
 	 *
 	 * @param GF_Field $field .
@@ -639,7 +593,11 @@ class PropertyMapper {
 		$properties   += FieldProperties::has_other_choice();
 		$choice_fields = FieldProperties::choice_is_other();
 
-		// Quiz fields are registered on the QuizChoiceProperty object.
+		/**
+		 * Quiz fields are registered on the QuizChoiceProperty object.
+		 *
+		 * @todo move to GFExtensions.
+		 */
 		if ( 'quiz' === $field->type ) {
 			return;
 		}
