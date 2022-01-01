@@ -40,7 +40,7 @@ class AmPmEnum extends AbstractEnum {
 				'value'       => self::AM,
 			],
 			'PM' => [
-				'description' => __( 'PM. The second 12-hour cycle of the day', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'PM. The second 12-hour cycle of the day.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::PM,
 			],
 		];

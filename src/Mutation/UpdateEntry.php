@@ -49,7 +49,7 @@ class UpdateEntry extends AbstractMutation {
 		return [
 			'id'             => [
 				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'ID of the entry to delete, either a global or database ID', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'ID of the entry to delete, either a global or database ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'entryMeta'      => [
 				'type'        => UpdateEntryMetaInput::$type,
@@ -107,7 +107,7 @@ class UpdateEntry extends AbstractMutation {
 				! empty( $entry['created_by'] )
 				&& get_current_user_id() !== absint( $entry['created_by'] )
 			) {
-				throw new UserError( __( 'Sorry, you are not allowed to edit entries', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( __( 'Sorry, you are not allowed to edit entries.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			// Prepare the entry data.
@@ -162,7 +162,7 @@ class UpdateEntry extends AbstractMutation {
 		// Update Created by id.
 		if ( isset( $input['entryMeta']['createdById'] ) ) {
 			if ( ! GFCommon::current_user_can_any( 'gravityforms_edit_entries' ) ) {
-				throw new UserError( __( 'Sorry, you do not have permission to change the Entry user', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( __( 'Sorry, you do not have permission to change the Entry user.', 'wp-graphql-gravity-forms' ) );
 			}
 			$entry['created_by'] = absint( $input['entryMeta']['createdById'] );
 		}

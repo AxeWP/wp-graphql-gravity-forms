@@ -27,7 +27,7 @@ class FormFieldTypeEnum extends AbstractEnum {
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'Gravity Forms Field Type', 'wp-graphql-gravity-forms' );
+		return __( 'Gravity Forms Field Type.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**

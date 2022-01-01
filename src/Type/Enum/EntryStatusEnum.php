@@ -41,7 +41,7 @@ class EntryStatusEnum extends AbstractEnum {
 				'value'       => self::ACTIVE,
 			],
 			'SPAM'   => [
-				'description' => __( 'Spam entries', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Spam entries.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::SPAM,
 			],
 			'TRASH'  => [

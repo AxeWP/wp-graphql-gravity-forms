@@ -27,7 +27,7 @@ class AddressFieldCountryEnum extends AbstractEnum {
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'Countries supported by Gravity Forms Address Field', 'wp-graphql-gravity-forms' );
+		return __( 'Countries supported by Gravity Forms Address Field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**

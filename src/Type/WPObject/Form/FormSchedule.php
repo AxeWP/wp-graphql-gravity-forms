@@ -35,7 +35,7 @@ class FormSchedule extends AbstractObject {
 		return [
 			'closedMessage'  => [
 				'type'        => 'String',
-				'description' => __( 'Message to be displayed when form is no longer available', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Message to be displayed when form is no longer available.', 'wp-graphql-gravity-forms' ),
 			],
 			'endDetails'     => [
 				'type'        => FormScheduleDetails::$type,

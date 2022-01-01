@@ -44,7 +44,7 @@ class FieldFiltersOperatorInputEnum extends AbstractEnum {
 				'value'       => self::CONTAINS,
 			],
 			'IN'       => [
-				'description' => __( 'Default. Find field values that are equal to one of the values in the passed array. Default', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Default. Find field values that are equal to one of the values in the passed array. Default.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::IN,
 			],
 			'IS'       => [

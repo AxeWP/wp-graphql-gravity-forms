@@ -40,7 +40,7 @@ class SubmitFormMetaInput extends AbstractInput {
 			],
 			'dateCreatedGmt' => [
 				'type'        => 'String',
-				'description' => __( 'The UTC date the entry was created, in `Y-m-d H:i:s` format', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The UTC date the entry was created, in `Y-m-d H:i:s` format.', 'wp-graphql-gravity-forms' ),
 			],
 			'ip'             => [
 				'type'        => 'String',

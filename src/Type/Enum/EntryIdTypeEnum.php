@@ -41,11 +41,11 @@ class EntryIdTypeEnum extends AbstractEnum {
 				'value'       => self::ID,
 			],
 			'DATABASE_ID'  => [
-				'description' => __( 'The database ID assigned by Gravity Forms. Used by submitted entries', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The database ID assigned by Gravity Forms. Used by submitted entries.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DATABASE_ID,
 			],
 			'RESUME_TOKEN' => [
-				'description' => __( 'The resume token assigned by Gravity Forms. Used by draft entries', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The resume token assigned by Gravity Forms. Used by draft entries.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::RESUME_TOKEN,
 			],
 		];

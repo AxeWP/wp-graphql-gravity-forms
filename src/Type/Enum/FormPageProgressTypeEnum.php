@@ -28,7 +28,7 @@ class FormPageProgressTypeEnum extends AbstractEnum {
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'Type of page progress indicator to be displayed', 'wp-graphql-gravity-forms' );
+		return __( 'Type of page progress indicator to be displayed.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**

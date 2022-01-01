@@ -131,7 +131,7 @@ class GFChainedSelects {
 		if ( ! isset( $fields['chainedSelectValues'] ) ) {
 			$fields['chainedSelectValues'] = [
 				'type'        => [ 'list_of' => Input\ChainedSelectFieldInput::$type ],
-				'description' => __( 'The form field values for ChainedSelect fields', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The form field values for ChainedSelect fields.', 'wp-graphql-gravity-forms' ),
 			];
 		}
 

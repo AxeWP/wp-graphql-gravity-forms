@@ -40,7 +40,7 @@ class FieldFiltersModeEnum extends AbstractEnum {
 				'value'       => self::ALL,
 			],
 			'ANY' => [
-				'description' => __( 'Any field filters', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Any field filters.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ANY,
 			],
 		];

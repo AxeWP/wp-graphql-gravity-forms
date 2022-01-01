@@ -211,7 +211,7 @@ class FieldProperties {
 		return [
 			'checkboxLabel' => [
 				'type'        => 'String',
-				'description' => __( 'Text of the consent checkbox', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Text of the consent checkbox.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -458,7 +458,7 @@ class FieldProperties {
 		return [
 			'dropdownPlaceholder' => [
 				'type'        => 'String',
-				'description' => __( 'The dropdown placeholder for the field', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The dropdown placeholder for the field.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $source ) => ! empty( $source->categoryInitialItem ) ? $source->categoryInitialItem : null,
 			],
 		];

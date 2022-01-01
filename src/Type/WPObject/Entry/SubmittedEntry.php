@@ -73,7 +73,7 @@ class SubmittedEntry extends AbstractObject implements Field {
 			'entryId'        => [
 				'type'              => 'Int',
 				'description'       => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Deprecated in favor of the databaseId field', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Deprecated in favor of the databaseId field.', 'wp-graphql-gravity-forms' ),
 				'resolve'           => fn( $source ) => $source->databaseId ?? null,
 			],
 			'isStarred'      => [
@@ -117,7 +117,7 @@ class SubmittedEntry extends AbstractObject implements Field {
 					],
 					'idType' => [
 						'type'        => SubmittedEntryIdTypeEnum::$type,
-						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID', 'wp-graphql-gravity-forms' ),
+						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 					],
 				],
 				'resolve'     => function( $root, array $args, AppContext $context, ResolveInfo $info ) {

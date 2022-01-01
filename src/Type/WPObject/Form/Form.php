@@ -105,7 +105,7 @@ class Form extends AbstractObject implements Field {
 			],
 			'confirmations'                => [
 				'type'        => [ 'list_of' => FormConfirmation::$type ],
-				'description' => __( 'Contains the form confirmation settings such as confirmation text or redirect URL', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Contains the form confirmation settings such as confirmation text or redirect URL.', 'wp-graphql-gravity-forms' ),
 			],
 			'cssClass'                     => [
 				'type'        => 'String',
@@ -133,7 +133,7 @@ class Form extends AbstractObject implements Field {
 			],
 			'entryLimits'                  => [
 				'type'        => FormEntryLimits::$type,
-				'description' => __( 'The entry limit settings', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The entry limit settings.', 'wp-graphql-gravity-forms' ),
 			],
 			'hasConditionalLogicAnimation' => [
 				'type'        => 'Boolean',
@@ -150,7 +150,7 @@ class Form extends AbstractObject implements Field {
 			'formId'                       => [
 				'type'              => 'Int',
 				'description'       => __( 'Form ID.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Deprecated in favor of the databaseId field', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Deprecated in favor of the databaseId field.', 'wp-graphql-gravity-forms' ),
 				'resolve'           => fn( $source ) => $source->databaseId,
 			],
 			'hasValidationSummary'         => [
@@ -175,7 +175,7 @@ class Form extends AbstractObject implements Field {
 			],
 			'login'                        => [
 				'type'        => FormLogin::$type,
-				'description' => __( 'Login requirements data', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Login requirements data.', 'wp-graphql-gravity-forms' ),
 			],
 			'markupVersion'                => [
 				'type'        => 'Int',
@@ -195,7 +195,7 @@ class Form extends AbstractObject implements Field {
 			],
 			'postCreation'                 => [
 				'type'        => FormPostCreation::$type,
-				'description' => __( 'Post creation data', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Post creation data.', 'wp-graphql-gravity-forms' ),
 			],
 			'requiredIndicator'            => [
 				'type'        => Enum\FormFieldRequiredIndicatorEnum::$type,
@@ -241,7 +241,7 @@ class Form extends AbstractObject implements Field {
 					],
 					'idType' => [
 						'type'        => Enum\FormIdTypeEnum::$type,
-						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID', 'wp-graphql-gravity-forms' ),
+						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 					],
 				],
 				'resolve'     => function( $root, array $args, AppContext $context ) {

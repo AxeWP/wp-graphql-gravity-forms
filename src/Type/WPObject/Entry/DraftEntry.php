@@ -92,7 +92,7 @@ class DraftEntry extends AbstractObject implements Field {
 					],
 					'idType' => [
 						'type'        => DraftEntryIdTypeEnum::$type,
-						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID', 'wp-graphql-gravity-forms' ),
+						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 					],
 				],
 				'resolve'     => function( $root, array $args, AppContext $context ) {

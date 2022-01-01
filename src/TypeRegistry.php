@@ -353,7 +353,7 @@ class TypeRegistry {
 		foreach ( $classes_to_register as $class ) {
 			if ( ! is_a( $class, Registrable::class, true ) ) {
 				// translators: PHP class.
-				throw new Exception( sprintf( __( 'To be registered to the GF GraphQL schema, %s needs to implement WPGraphQL\Interfaces\Registrable', 'wp-graphql-gravity-forms' ), $class ) );
+				throw new Exception( sprintf( __( 'To be registered to the GF GraphQL schema, %s needs to implement WPGraphQL\Interfaces\Registrable.', 'wp-graphql-gravity-forms' ), $class ) );
 			}
 
 			// Register the type to the GraphQL schema. Skipped if we're trying to get the type registry beforehand.

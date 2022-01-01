@@ -87,7 +87,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		 */
 		public function __wakeup() : void {
 			// De-serializing instances of the class is forbidden.
-			_doing_it_wrong( __FUNCTION__, esc_html__( 'De-serializing instances of the GF class is not allowed', 'wp-graphql-gravity-forms' ), '0.10.0' );
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'De-serializing instances of the GF class is not allowed.', 'wp-graphql-gravity-forms' ), '0.10.0' );
 		}
 	}
 endif;

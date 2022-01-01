@@ -100,7 +100,7 @@ function gf_graphql_init() {
 						<?php
 							printf(
 								/* translators: dependency not ready error message */
-								esc_html__( '%1$s must be active for WPGraphQL for Gravity Forms to work', 'wp-graphql-gravity-forms' ),
+								esc_html__( '%1$s must be active for WPGraphQL for Gravity Forms to work.', 'wp-graphql-gravity-forms' ),
 								esc_html( $dep )
 							);
 						?>

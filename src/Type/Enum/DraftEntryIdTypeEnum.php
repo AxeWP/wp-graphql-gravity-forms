@@ -40,7 +40,7 @@ class DraftEntryIdTypeEnum extends AbstractEnum {
 				'value'       => self::ID,
 			],
 			'RESUME_TOKEN' => [
-				'description' => __( 'The resume token assigned by Gravity Forms. Used by draft entries', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The resume token assigned by Gravity Forms. Used by draft entries.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::RESUME_TOKEN,
 			],
 		];

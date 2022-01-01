@@ -43,7 +43,7 @@ class FormFieldValuesInput extends AbstractInput {
 			],
 			'checkboxValues' => [
 				'type'        => [ 'list_of' => CheckboxFieldInput::$type ],
-				'description' => __( 'The form field values for Checkbox fields', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The form field values for Checkbox fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'emailValues'    => [
 				'type'        => EmailFieldInput::$type,
@@ -51,11 +51,11 @@ class FormFieldValuesInput extends AbstractInput {
 			],
 			'listValues'     => [
 				'type'        => [ 'list_of' => ListFieldInput::$type ],
-				'description' => __( 'The form field values for List fields', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The form field values for List fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'nameValues'     => [
 				'type'        => NameFieldInput::$type,
-				'description' => __( 'The form field values for Name fields', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The form field values for Name fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'values'         => [
 				'type'        => [ 'list_of' => 'String' ],
@@ -63,7 +63,7 @@ class FormFieldValuesInput extends AbstractInput {
 			],
 			'value'          => [
 				'type'        => 'String',
-				'description' => __( 'The form field values for basic fields', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The form field values for basic fields.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 
