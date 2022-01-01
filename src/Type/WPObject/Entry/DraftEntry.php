@@ -5,7 +5,7 @@
  * @see https://docs.gravityforms.com/entry-object/
  *
  * @package WPGraphQL\GF\Type\WPObject\Entry
- * @since   0.0.1
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\Entry;

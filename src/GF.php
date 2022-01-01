@@ -3,7 +3,7 @@
  * Initializes a singleton instance of WPGraphQL\GF.
  *
  * @package WPGraphQL\GF
- * @since 0.0.1
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF;

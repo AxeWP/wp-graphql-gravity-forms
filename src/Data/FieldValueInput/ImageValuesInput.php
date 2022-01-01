@@ -1,6 +1,6 @@
 <?php
 /**
- * Manipulates input data for String field values.
+ * Manipulates input data for Image field values.
  *
  * @package WPGraphQL\GF\Data\FieldValueInput
  * @since 0.10.0
@@ -9,7 +9,6 @@
 namespace WPGraphQL\GF\Data\FieldValueInput;
 
 use GraphQL\Error\UserError;
-use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - ImageValuesInput

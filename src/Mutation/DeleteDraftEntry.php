@@ -5,7 +5,7 @@
  * Registers mutation to delete a Gravity Forms draft entry.
  *
  * @package WPGraphQL\GF\Mutation
- * @since 0.0.1
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Mutation;
@@ -14,9 +14,7 @@ use GFCommon;
 use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
-use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Model\DraftEntry as ModelDraftEntry;
 use WPGraphQL\GF\Type\Enum\DraftEntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPObject\Entry\DraftEntry;

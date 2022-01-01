@@ -4,7 +4,7 @@
  * An individual property for the 'value' List field property.
  *
  * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperties\ValueProperty
- * @since   0.5.0
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;

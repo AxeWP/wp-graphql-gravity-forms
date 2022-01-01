@@ -3,7 +3,7 @@
  * Interface - Node with Gravity Forms form
  *
  * @package WPGraphQL\GF\Type\Interface
- * @since   0.4.0
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface;
@@ -13,7 +13,6 @@ use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Registrable;
 use WPGraphQL\GF\Interfaces\Type;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
-use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
 use WPGraphQL\Registry\TypeRegistry;
 

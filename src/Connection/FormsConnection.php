@@ -4,7 +4,7 @@
  * Registers all connections TO Gravity Forms Form.
  *
  * @package WPGraphQL\GF\Connection
- * @since 0.0.1
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Connection;

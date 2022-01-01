@@ -5,7 +5,7 @@
  * Updates a Gravity Forms entry.
  *
  * @package WPGraphQL\GF\Mutation
- * @since 0.4.0
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Mutation;
@@ -17,7 +17,6 @@ use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\EntryObjectMutation;
 use WPGraphQL\GF\Data\Factory;
-use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
 use WPGraphQL\GF\Type\Input\UpdateEntryMetaInput;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;

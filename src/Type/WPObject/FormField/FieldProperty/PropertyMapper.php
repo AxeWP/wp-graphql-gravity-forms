@@ -3,7 +3,7 @@
  * Maps the Gravity Forms Field setting to the appropriate field settings.
  *
  * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
- * @since   0.0.1
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;

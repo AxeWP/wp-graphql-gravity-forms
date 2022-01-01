@@ -55,7 +55,6 @@ return array(
     'WPGraphQL\\GF\\Extensions\\WPGatsby\\Settings' => $baseDir . '/src/Extensions/WPGatsby/Settings.php',
     'WPGraphQL\\GF\\Extensions\\WPGatsby\\WPGatsby' => $baseDir . '/src/Extensions/WPGatsby/WPGatsby.php',
     'WPGraphQL\\GF\\GF' => $baseDir . '/src/GF.php',
-    'WPGraphQL\\GF\\Interfaces\\DataManipulator' => $baseDir . '/src/Interfaces/DataManipulator.php',
     'WPGraphQL\\GF\\Interfaces\\Enum' => $baseDir . '/src/Interfaces/Enum.php',
     'WPGraphQL\\GF\\Interfaces\\Field' => $baseDir . '/src/Interfaces/Field.php',
     'WPGraphQL\\GF\\Interfaces\\FieldProperty' => $baseDir . '/src/Interfaces/FieldProperty.php',

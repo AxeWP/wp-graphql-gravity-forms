@@ -3,7 +3,7 @@
  * GraphQL Object Type - EntryQuizResults
  *
  * @package WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\EntryQuizResults
- * @since   0.9.1
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\Entry;

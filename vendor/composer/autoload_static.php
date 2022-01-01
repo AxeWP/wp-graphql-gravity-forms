@@ -70,7 +70,6 @@ class ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488
         'WPGraphQL\\GF\\Extensions\\WPGatsby\\Settings' => __DIR__ . '/../..' . '/src/Extensions/WPGatsby/Settings.php',
         'WPGraphQL\\GF\\Extensions\\WPGatsby\\WPGatsby' => __DIR__ . '/../..' . '/src/Extensions/WPGatsby/WPGatsby.php',
         'WPGraphQL\\GF\\GF' => __DIR__ . '/../..' . '/src/GF.php',
-        'WPGraphQL\\GF\\Interfaces\\DataManipulator' => __DIR__ . '/../..' . '/src/Interfaces/DataManipulator.php',
         'WPGraphQL\\GF\\Interfaces\\Enum' => __DIR__ . '/../..' . '/src/Interfaces/Enum.php',
         'WPGraphQL\\GF\\Interfaces\\Field' => __DIR__ . '/../..' . '/src/Interfaces/Field.php',
         'WPGraphQL\\GF\\Interfaces\\FieldProperty' => __DIR__ . '/../..' . '/src/Interfaces/FieldProperty.php',

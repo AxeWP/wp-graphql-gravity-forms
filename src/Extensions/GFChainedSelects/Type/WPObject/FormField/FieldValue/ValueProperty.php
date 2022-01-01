@@ -1,9 +1,9 @@
 <?php
 /**
- * Array configs for all field properties.
+ * Array configs for the Value property.
  *
- * @package WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldValue;
- * @since   0.0.1
+ * @package WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldValue
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldValue;

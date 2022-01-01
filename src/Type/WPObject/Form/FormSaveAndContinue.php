@@ -3,7 +3,7 @@
  * GraphQL Object Type - Gravity Forms 'Save and Continue' data.
  *
  * @package WPGraphQL\GF\Type\WPObject\Form
- * @since   0.0.1
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\Form;

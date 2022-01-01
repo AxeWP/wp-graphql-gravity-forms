@@ -3,7 +3,7 @@
  * Abstract GraphQL Object Type.
  *
  * @package WPGraphQL\GF\Type
- * @since 0.7.0
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject;
@@ -11,7 +11,6 @@ namespace WPGraphQL\GF\Type\WPObject;
 use WPGraphQL\GF\Interfaces\Registrable;
 use WPGraphQL\GF\Interfaces\Type;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
-use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**

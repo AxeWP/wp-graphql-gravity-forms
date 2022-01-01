@@ -3,7 +3,7 @@
  * Interface for a GraphQL TypeWithFields.
  *
  * @package WPGraphQL\GF\Interfaces
- * @since 0.0.1
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Interfaces;

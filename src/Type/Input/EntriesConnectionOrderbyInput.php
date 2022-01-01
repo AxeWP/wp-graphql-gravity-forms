@@ -4,7 +4,7 @@
  * Sorting input type for Entries queries.
  *
  * @package WPGraphQL\GF\Type\Input
- * @since   0.0.1
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Type\Input;

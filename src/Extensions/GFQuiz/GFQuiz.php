@@ -9,7 +9,6 @@
 namespace WPGraphQL\GF\Extensions\GFQuiz;
 
 use GF_Field;
-use WPGraphQL\GF\Extensions\GFQuiz\Data\FieldValueInput\SignatureValuesInput;
 use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum;
 use WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject;
 use WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\FormField\FieldProperty\PropertyMapper;

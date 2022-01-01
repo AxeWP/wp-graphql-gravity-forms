@@ -4,8 +4,7 @@
  * Input fields for a single List field item.
  *
  * @package WPGraphQL\GF\Type\Input
- * @since   0.0.1
- * @since   0.3.0 Deprecate `values` in favor of `rowValues`.
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Type\Input;

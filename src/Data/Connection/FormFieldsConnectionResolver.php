@@ -1,11 +1,11 @@
 <?php
 /**
- * ConnectionResolver - RootQueryEntry
+ * ConnectionResolver - FormFields
  *
  * Resolves connections to FormFields.
  *
  * @package WPGraphQL\GF\Data\Connection
- * @since 0.0.1
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Data\Connection;

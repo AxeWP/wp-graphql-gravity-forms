@@ -3,7 +3,7 @@
  * Abstract GraphQL Connection
  *
  * @package WPGraphQL\GF\Connection;
- * @since 0.7.0
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Connection;

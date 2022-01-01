@@ -3,7 +3,7 @@
  * Array configs for all field properties.
  *
  * @package WPGraphQL\GF\Type\WPObject\FormField\FieldValue;
- * @since   0.0.1
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue;
