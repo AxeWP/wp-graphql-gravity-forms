@@ -3,7 +3,7 @@
  * Abstract class for Mutations
  *
  * @package WPGraphQL\GF\Mutation
- * @since 0.4.0
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Mutation;

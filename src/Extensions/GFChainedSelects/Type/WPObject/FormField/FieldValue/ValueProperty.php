@@ -1,20 +1,20 @@
 <?php
 /**
- * Array configs for all field properties.
+ * Array configs for the Value property.
  *
- * @package WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldValue;
- * @since   0.0.1
+ * @package WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldValue
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldValue;
 
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperties;
+use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\FieldValues;
 
 /**
  * Class - ValueProperty
  */
-class ValueProperty extends ValueProperties {
+class ValueProperty extends FieldValues {
 	/**
 	 * Get `values` property for Chained Select field.
 	 */

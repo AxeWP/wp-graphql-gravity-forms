@@ -3,7 +3,7 @@
  * Enum Type - FormFieldTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
- * @since   0.0.1
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Type\Enum;

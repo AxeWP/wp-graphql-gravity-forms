@@ -6,7 +6,7 @@
  * @see https://docs.gravityforms.com/gf_field/
  *
  * @package WPGraphQL\GF\Type\Interface
- * @since   0.4.0
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface;
@@ -15,7 +15,6 @@ use GraphQL\Error\UserError;
 use WPGraphQL\GF\Interfaces\Registrable;
 use WPGraphQL\GF\Interfaces\Type;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
-use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
 use WPGraphQL\GF\Type\Enum\FormFieldVisibilityEnum;
 use WPGraphQL\GF\Utils\Utils;

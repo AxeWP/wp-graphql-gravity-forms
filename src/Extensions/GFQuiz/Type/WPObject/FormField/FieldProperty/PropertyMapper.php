@@ -2,15 +2,14 @@
 /**
  * Maps the Gravity Forms Field setting to the appropriate field settings.
  *
- * @package WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\FormField\FieldProperty;
- * @since   0.10
+ * @package WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\FormField\FieldProperty
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\FormField\FieldProperty;
 
 use GF_Field;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty\ChoiceMapper;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty\FieldProperties;
 

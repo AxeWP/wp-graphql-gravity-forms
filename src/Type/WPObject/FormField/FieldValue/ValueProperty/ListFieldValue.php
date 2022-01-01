@@ -3,8 +3,8 @@
  * GraphQL Object Type - ListValuePropery
  * An individual property for the 'value' List field property.
  *
- * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperties\ValueProperty
- * @since   0.5.0
+ * @package WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
@@ -14,13 +14,13 @@ use WPGraphQL\GF\Type\WPObject\AbstractObject;
 /**
  * Class - ListValueProperty
  */
-class ListValueProperty extends AbstractObject {
+class ListFieldValue extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'ListValueProperty';
+	public static string $type = 'ListFieldValue';
 
 	/**
 	 * {@inheritDoc}

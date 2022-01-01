@@ -3,7 +3,7 @@
  * Maps the Gravity Forms Field setting to the appropriate field settings.
  *
  * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
- * @since   0.0.1
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
@@ -594,7 +594,7 @@ class PropertyMapper {
 		$choice_fields = FieldProperties::choice_is_other();
 
 		/**
-		 * Quiz fields are registered on the QuizChoiceProperty object.
+		 * Quiz fields are registered on the QuizFieldChoice object.
 		 *
 		 * @todo move to GFExtensions.
 		 */

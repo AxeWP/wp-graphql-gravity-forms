@@ -6,7 +6,7 @@
  * @see https://docs.gravityforms.com/gf_field/
  *
  * @package WPGraphQL\GF\Type\WPObject\FormField
- * @since   0.7.0
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\FormField;
@@ -17,7 +17,7 @@ use GraphQL\Error\UserError;
 use WPGraphQL\GF\Interfaces\Registrable;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty\PropertyMapper;
-use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperties;
+use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\FieldValues;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -235,35 +235,35 @@ class FormFields implements Registrable {
 			return $properties;
 		}
 
-		$properties += ValueProperties::value();
+		$properties += FieldValues::value();
 
 		$input_type = $field->get_input_type();
 
 		switch ( $input_type ) {
 			case 'address':
-				$properties += ValueProperties::address_values();
+				$properties += FieldValues::address_values();
 				break;
 			case 'checkbox':
-				$properties += ValueProperties::checkbox_values();
+				$properties += FieldValues::checkbox_values();
 				break;
 			case 'consent':
-				$properties += ValueProperties::consent_value();
+				$properties += FieldValues::consent_value();
 				break;
 			case 'list':
-				$properties += ValueProperties::list_values();
+				$properties += FieldValues::list_values();
 				break;
 			case 'name':
-				$properties += ValueProperties::name_values();
+				$properties += FieldValues::name_values();
 				break;
 			case 'post_image':
-				$properties += ValueProperties::image_values();
+				$properties += FieldValues::image_values();
 				break;
 			case 'time':
-				$properties += ValueProperties::time_values();
+				$properties += FieldValues::time_values();
 				break;
 			case 'fileupload':
 			case 'multiselect':
-				$properties += ValueProperties::values();
+				$properties += FieldValues::values();
 				break;
 			case 'post_category':
 			case 'post_custom':

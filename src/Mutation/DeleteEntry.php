@@ -5,7 +5,7 @@
  * Registers mutation to delete a Gravity Forms entry.
  *
  * @package WPGraphQL\GF\Mutation
- * @since 0.0.1
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Mutation;
@@ -14,9 +14,7 @@ use GFAPI;
 use GFCommon;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
-use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Model\SubmittedEntry as ModelSubmittedEntry;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
 use WPGraphQL\GF\Utils\GFUtils;

@@ -2,8 +2,8 @@
 /**
  * Maps the Gravity Forms Field setting to the appropriate field settings.
  *
- * @package WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldProperty;
- * @since   0.10
+ * @package WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldProperty
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldProperty;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Manipulates input data for String field values.
+ * Manipulates input data for FileUpload field values.
  *
  * @package WPGraphQL\GF\Data\FieldValueInput
  * @since 0.10.0

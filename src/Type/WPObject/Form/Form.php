@@ -5,8 +5,7 @@
  * @see https://docs.gravityforms.com/form-object/
  *
  * @package WPGraphQL\GF\Type\WPObject\Form
- * @since   0.0.1
- * @since   0.4.0 Accept database Ids in query.
+ * @since   0.10.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\Form;

@@ -4,7 +4,7 @@
  * Input fields for a single ChainedSelect.
  *
  * @package WPGraphQL\GF\Extensions\GFChainedSelects\Type\Input
- * @since   0.3.0
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\Input;

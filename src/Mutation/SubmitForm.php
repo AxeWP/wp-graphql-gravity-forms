@@ -5,7 +5,7 @@
  * Submits a Gravity Forms form.
  *
  * @package WPGraphQL\GF\Mutation
- * @since 0.4.0
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Mutation;

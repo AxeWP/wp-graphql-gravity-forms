@@ -3,7 +3,7 @@
  * Abstract Enum Type
  *
  * @package WPGraphQL\GF\Type\Enum
- * @since 0.4.0
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Type\Enum;
@@ -11,7 +11,6 @@ namespace WPGraphQL\GF\Type\Enum;
 use WPGraphQL\GF\Interfaces\Enum;
 use WPGraphQL\GF\Interfaces\Registrable;
 use WPGraphQL\GF\Interfaces\Type;
-use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**

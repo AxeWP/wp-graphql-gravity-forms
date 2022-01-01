@@ -195,8 +195,6 @@ These forms are hidden **by default**:
 
 * `CreditcardField`
 * `OptionField`
-* `PasswordField` [@todo]
-* `PostCustomField` [@todo]
 * `PriceField`
 * `ProductField`
 * `QuantityField`

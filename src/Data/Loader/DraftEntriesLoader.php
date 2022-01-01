@@ -5,7 +5,7 @@
  * Loads Models for Gravity Forms DraftEntries.
  *
  * @package WPGraphQL\GF\Data\Loader
- * @since 0.0.1
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Data\Loader;

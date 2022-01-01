@@ -3,7 +3,7 @@
  * Enum Type - SignatureFieldBorderWidthEnum
  *
  * @package WPGraphQL\GF\Extensions\GFSignature\Type\Enum,
- * @since   0.4.0
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Extensions\GFSignature\Type\Enum;

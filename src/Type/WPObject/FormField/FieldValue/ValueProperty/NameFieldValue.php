@@ -3,7 +3,7 @@
  * GraphQL Object Type - NameValuePropery
  * An individual property for the 'value' Name field property.
  *
- * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperties\ValueProperty
+ * @package WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty
  * @since   0.5.0
  */
 
@@ -14,13 +14,13 @@ use WPGraphQL\GF\Type\WPObject\AbstractObject;
 /**
  * Class - NameValueProperty
  */
-class NameValueProperty extends AbstractObject {
+class NameFieldValue extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'NameValueProperty';
+	public static string $type = 'NameFieldValue';
 
 	/**
 	 * {@inheritDoc}

@@ -3,7 +3,7 @@
  * Abstract Input Type
  *
  * @package WPGraphQL\GF\Type\Input;
- * @since 0.7.0
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Type\Input;

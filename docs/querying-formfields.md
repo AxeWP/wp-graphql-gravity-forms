@@ -54,7 +54,7 @@ Entry values can be accessed similarly to other Gravity Forms Field properties, 
 
 **Note**: Due to GraphQL limitations regarding Union types, you must use the specific value type specific to that field. A full list of field value types and their corresponding field fragments are below.
 
-As of v0.10.0, all `formFields` have access to the `value` GraphQL field, which provides the string representation of the entry value, created by `GF_Field::get_value_export()` . Certain [supported `formFields` ] provide a value type specific to that field, as follows:
+As of v0.10.0, all `formFields` have access to the `value` GraphQL field, which provides the string representation of the entry value, created by `GF_Field::get_value_export()` . Certain [supported `formFields`](form-field-support.md) provide a value type specific to that field, as follows:
 
 | Field Value Type               | Used by                                                                                                                                                                                                                                                                  | Available subfields                                              |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |

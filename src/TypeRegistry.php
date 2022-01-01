@@ -251,12 +251,12 @@ class TypeRegistry {
 			WPObject\Form\FormSchedule::class,
 			WPObject\Form\FormSaveAndContinue::class,
 			// Form Field Value properties.
-			WPObject\FormField\FieldValue\ValueProperty\AddressValueProperty::class,
-			WPObject\FormField\FieldValue\ValueProperty\CheckboxValueProperty::class,
-			WPObject\FormField\FieldValue\ValueProperty\ListValueProperty::class,
-			WPObject\FormField\FieldValue\ValueProperty\NameValueProperty::class,
-			WPObject\FormField\FieldValue\ValueProperty\ImageValueProperty::class,
-			WPObject\FormField\FieldValue\ValueProperty\TimeValueProperty::class,
+			WPObject\FormField\FieldValue\ValueProperty\AddressFieldValue::class,
+			WPObject\FormField\FieldValue\ValueProperty\CheckboxFieldValue::class,
+			WPObject\FormField\FieldValue\ValueProperty\ListFieldValue::class,
+			WPObject\FormField\FieldValue\ValueProperty\NameFieldValue::class,
+			WPObject\FormField\FieldValue\ValueProperty\ImageFieldValue::class,
+			WPObject\FormField\FieldValue\ValueProperty\TimeFieldValue::class,
 			// Form Fields.
 			WPObject\FormField\FormFields::class,
 			// Field Error.

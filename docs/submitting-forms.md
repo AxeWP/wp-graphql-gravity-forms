@@ -34,7 +34,10 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
   submitGfForm(
     input: {
       formId: 50
-      createdBy: 1 # The user ID.
+      entryMeta {
+        createdById: 1 # The user ID.
+        ip: "" # IP address
+      }
       fieldValues: [
         {
           # Text field value
@@ -99,7 +102,6 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
           }
         }
       ]
-      ip: "" # IP address
       saveAsDraft: false # If true, the submission will be saved as a draft entry.
       # Set the following to validate part of a multipage form without saving the submission.
       sourcePage: 1
@@ -110,11 +112,15 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
       id # The field that failed validation.
       message
     }
-    databaseId # Will return null if submitting a draft entry
-    resumeToken # Will return null if submitting an entry.
     entry {
       # See docs on querying Entries.
       id
+      ... on GfSubmittedEntry {
+        databaseId
+      }
+      ... on GfDraftEntry {
+        resumeToken
+      }
     }
   }
 }

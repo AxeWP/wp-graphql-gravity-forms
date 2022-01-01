@@ -3,7 +3,7 @@
  * GraphQL Object Type - ImageValueProperty
  * An individual property for the 'value' PostImage field property.
  *
- * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperties\ValueProperty
+ * @package WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty
  * @since   0.5.0
  */
 
@@ -14,13 +14,13 @@ use WPGraphQL\GF\Type\WPObject\AbstractObject;
 /**
  * Class - ImageValueProperty
  */
-class ImageValueProperty extends AbstractObject {
+class ImageFieldValue extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'ImageValueProperty';
+	public static string $type = 'ImageFieldValue';
 
 	/**
 	 * {@inheritDoc}

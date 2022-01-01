@@ -2,7 +2,7 @@
 
 ## Update an Entry
 
-You can update a [Gravity Forms entry](https://docs.gravityforms.com/entry-object/) with the `updateGfEntry` mutation. This mutation works similarly to [`submitGfForm`](submitting-forms.md).
+You can update a [Gravity Forms entry](https://docs.gravityforms.com/entry-object/) with the `updateGfEntry` mutation. This mutation works similarly to [ `submitGfForm` ](submitting-forms.md).
 
 ### Example Mutation
 
@@ -10,10 +10,12 @@ You can update a [Gravity Forms entry](https://docs.gravityforms.com/entry-objec
 {
   updateGfEntry(
     input: {
-      entryId: 1
-      isRead: false # Optional. Used to mark the entry as read.
-      isStarred: false # Optional. Used to mark the entry as 'starred'.
-      status: ACTIVE # Optional. Can be used to mark an entry as trash or spam.
+      id: 1 # Either a DatabaseId or global Id.
+      entryMeta: {
+        isRead: false # Used to mark the entry as read.
+        isStarred: false # Used to mark the entry as 'starred'.
+        status: ACTIVE # Can be used to mark an entry as trash or spam.
+      }
       fieldValues: [
         {
           # See the above section on using `submitGfForm`
@@ -21,13 +23,13 @@ You can update a [Gravity Forms entry](https://docs.gravityforms.com/entry-objec
           value: "This is a text field value."
         }
       ]
+      shouldValidate: true # Whether to validate the form field values.
     }
   ) {
     errors {
       id # The field that failed validation.
       message
     }
-    entryId
     entry {
       # See above section on querying Entries.
       id
@@ -44,9 +46,13 @@ Updating a [Gravity Forms draft entry](https://docs.gravityforms.com/database-st
 
 ```graphql
 {
-  updateGfEntry(
+  updateGfDraftEntry(
     input: {
-      resumeToken: "f82a5d986f4d4f199893f751adee98e9"
+      id: "f82a5d986f4d4f199893f751adee98e9"
+      idType: 'RESUME_TOKEN',
+      entryMeta: {
+        dateCreatedGmt: 2021-12-31 23:59:59
+      }
       fieldValues: [
         {
           # See the above section on using `submitGfForm`
@@ -56,14 +62,9 @@ Updating a [Gravity Forms draft entry](https://docs.gravityforms.com/database-st
       ]
     }
   ) {
-    errors {
-      id # The field that failed validation.
-      message
-    }
-    entryId
-    entry {
-      # See above section on querying Entries.
-      id
+    draftEntry {
+      # See docs querying Entries.
+      resumeToken
     }
   }
 }

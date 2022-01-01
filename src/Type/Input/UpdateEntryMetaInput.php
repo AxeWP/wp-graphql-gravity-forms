@@ -1,10 +1,10 @@
 <?php
 /**
  * GraphQL Input Type - UpdateEntryMetaInput
- * Input fields for address field.
+ * Input fields for entry meta.
  *
  * @package WPGraphQL\GF\Type\Input
- * @since   0.0.1
+ * @since 0.10.0
  */
 
 namespace WPGraphQL\GF\Type\Input;
