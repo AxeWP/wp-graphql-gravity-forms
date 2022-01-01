@@ -45,7 +45,7 @@ class AddressFieldTypeEnum extends AbstractEnum {
 				'value'       => self::US,
 			],
 			'CANADA'        => [
-				'description' => __( 'Canada address type', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Canada address type.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::CANADIAN,
 			],
 		];

@@ -36,7 +36,7 @@ class FormDescriptionPlacementEnum extends AbstractEnum {
 	public static function get_values() : array {
 		return [
 			'ABOVE' => [
-				'description' => __( 'The field description is displayed above the field input (i.e. immediately after the field label)', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The field description is displayed above the field input (i.e. immediately after the field label).', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ABOVE,
 			],
 			'BELOW' => [

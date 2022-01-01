@@ -86,7 +86,7 @@ class FormField implements Registrable, Type, TypeWithFields {
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'Gravity Forms field', 'wp-graphql-gravity-forms' );
+		return __( 'Gravity Forms field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**

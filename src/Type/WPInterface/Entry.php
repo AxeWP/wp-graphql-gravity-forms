@@ -121,7 +121,7 @@ class Entry implements Field, Registrable, Type, TypeWithFields {
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'Gravity Forms entry interface', 'wp-graphql-gravity-forms' );
+		return __( 'Gravity Forms entry interface.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
@@ -209,7 +209,7 @@ class Entry implements Field, Registrable, Type, TypeWithFields {
 					],
 					'idType' => [
 						'type'        => EntryIdTypeEnum::$type,
-						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID', 'wp-graphql-gravity-forms' ),
+						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 					],
 				],
 				'resolve'     => function( $root, array $args, AppContext $context ) {

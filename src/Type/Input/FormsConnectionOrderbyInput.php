@@ -24,7 +24,7 @@ class FormsConnectionOrderbyInput extends AbstractInput {
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'Options for ordering the connection', 'wp-graphql-gravity-forms' );
+		return __( 'Options for ordering the connection.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**

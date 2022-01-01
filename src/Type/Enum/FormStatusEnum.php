@@ -42,7 +42,7 @@ class FormStatusEnum extends AbstractEnum {
 				'value'       => self::ACTIVE,
 			],
 			self::INACTIVE         => [
-				'description' => __( 'Inactive forms', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Inactive forms.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::INACTIVE,
 			],
 			self::TRASHED          => [

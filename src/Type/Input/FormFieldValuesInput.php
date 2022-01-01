@@ -10,6 +10,8 @@
 
 namespace WPGraphQL\GF\Type\Input;
 
+use WPGraphQL\GF\Utils\Utils;
+
 /**
  * Class - FormFieldValuesInput
  */
@@ -43,7 +45,7 @@ class FormFieldValuesInput extends AbstractInput {
 			],
 			'checkboxValues' => [
 				'type'        => [ 'list_of' => CheckboxFieldInput::$type ],
-				'description' => __( 'The form field values for Checkbox fields', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The form field values for Checkbox fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'emailValues'    => [
 				'type'        => EmailFieldInput::$type,
@@ -51,11 +53,11 @@ class FormFieldValuesInput extends AbstractInput {
 			],
 			'listValues'     => [
 				'type'        => [ 'list_of' => ListFieldInput::$type ],
-				'description' => __( 'The form field values for List fields', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The form field values for List fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'nameValues'     => [
 				'type'        => NameFieldInput::$type,
-				'description' => __( 'The form field values for Name fields', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The form field values for Name fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'values'         => [
 				'type'        => [ 'list_of' => 'String' ],
@@ -63,18 +65,11 @@ class FormFieldValuesInput extends AbstractInput {
 			],
 			'value'          => [
 				'type'        => 'String',
-				'description' => __( 'The form field values for basic fields', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The form field values for basic fields.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 
-		if ( class_exists( 'GFChainedSelects' ) ) {
-			$fields['chainedSelectValues'] = [
-				'type'        => [ 'list_of' => ChainedSelectFieldInput::$type ],
-				'description' => __( 'The form field values for ChainedSelect fields', 'wp-graphql-gravity-forms' ),
-			];
-		}
-
-		if ( class_exists( 'WPGraphQL\Upload\Type\Upload' ) ) {
+		if ( Utils::is_graphql_upload_enabled() ) {
 			$fields['fileUploadValues'] = [
 				'type'        => [ 'list_of' => 'Upload' ],
 				'description' => __( 'The form field values for file upload fields.', 'wp-graphql-gravity-forms' ),
@@ -88,7 +83,9 @@ class FormFieldValuesInput extends AbstractInput {
 		/**
 		 * Filters the possible input fields for the FormFieldValuesInput GraphQL type.
 		 *
-		 * Usefule for adding support for custom form fields.
+		 * Useful for adding support for custom form fields.
+		 *
+		 * @param array $fields The registered input fields.
 		 */
 		$fields = apply_filters( 'graphql_gf_form_field_values_input_fields', $fields );
 

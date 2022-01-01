@@ -85,30 +85,6 @@ class ValueProperties {
 	}
 
 	/**
-	 * Get `values` property for Chained Select field.
-	 */
-	public static function chained_select_values() : array {
-		return [
-			'values' => [
-				'type'        => [ 'list_of' => 'String' ],
-				'description' => __( 'ChainedSelect field value.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
-						return null;
-					}
-
-					return array_map(
-						function( $input ) use ( $context ) {
-							return $context->gfEntry->entry[ $input['id'] ] ?: null;
-						},
-						$source->inputs
-					);
-				},
-			],
-		];
-	}
-
-	/**
 	 * Get `checkboxValues` property.
 	 */
 	public static function checkbox_values() : array {
@@ -326,7 +302,7 @@ class ValueProperties {
 	 * @param mixed      $source .
 	 * @param AppContext $context .
 	 */
-	private static function is_field_and_entry( $source, AppContext $context ) : bool {
+	protected static function is_field_and_entry( $source, AppContext $context ) : bool {
 		return $source instanceof GF_Field
 			&& isset( $context->gfEntry )
 			&& isset( $context->gfEntry->entry );

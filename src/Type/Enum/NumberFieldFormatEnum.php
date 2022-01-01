@@ -28,7 +28,7 @@ class NumberFieldFormatEnum extends AbstractEnum {
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'The format allowed for the number field. ', 'wp-graphql-gravity-forms' );
+		return __( 'The format allowed for the number field. .', 'wp-graphql-gravity-forms' );
 	}
 
 	/**

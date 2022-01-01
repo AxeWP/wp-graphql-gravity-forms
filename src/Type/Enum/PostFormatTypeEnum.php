@@ -37,7 +37,7 @@ class PostFormatTypeEnum extends AbstractEnum {
 		$values = [
 			'STANDARD' => [
 				'value'       => '0',
-				'description' => __( 'A standard post format', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'A standard post format.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 

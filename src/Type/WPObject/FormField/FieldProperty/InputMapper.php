@@ -23,7 +23,7 @@ class InputMapper {
 	 * @param array    $input_fields .
 	 */
 	public static function map_inputs( GF_Field $field, array $input_fields ) : array {
-		$name = Utils::to_pascal_case( $field->type . 'InputProperty' );
+		$name = Utils::get_safe_form_field_type_name( $field->type . 'InputProperty' );
 
 		register_graphql_object_type(
 			$name,
@@ -55,7 +55,7 @@ class InputMapper {
 	 * @param array    $input_fields .
 	 */
 	public static function add_fields_to_input( GF_Field $field, array $input_fields ) : void {
-		$name = Utils::to_pascal_case( $field->type . 'InputProperty' );
+		$name = Utils::get_safe_form_field_type_name( $field->type . 'InputProperty' );
 
 		register_graphql_fields( $name, $input_fields );
 	}

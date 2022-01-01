@@ -2,11 +2,13 @@
 /**
  * Enum Type - SignatureFieldBorderWidthEnum
  *
- * @package WPGraphQL\GF\Type\Enum,
+ * @package WPGraphQL\GF\Extensions\GFSignature\Type\Enum,
  * @since   0.4.0
  */
 
-namespace WPGraphQL\GF\Type\Enum;
+namespace WPGraphQL\GF\Extensions\GFSignature\Type\Enum;
+
+use WPGraphQL\GF\Type\Enum\AbstractEnum;
 
 /**
  * Class - SignatureFieldBorderWidthEnum
@@ -42,15 +44,15 @@ class SignatureFieldBorderWidthEnum extends AbstractEnum {
 				'value'       => self::NONE,
 			],
 			'SMALL'  => [
-				'description' => __( 'A small border width', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'A small border width.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::SMALL,
 			],
 			'MEDIUM' => [
-				'description' => __( 'A medium border width', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'A medium border width.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::MEDIUM,
 			],
 			'LARGE'  => [
-				'description' => __( 'A large border width', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'A large border width.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::LARGE,
 			],
 		];

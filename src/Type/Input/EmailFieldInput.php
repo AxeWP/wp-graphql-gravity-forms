@@ -34,7 +34,7 @@ class EmailFieldInput extends AbstractInput {
 		return [
 			'value'             => [
 				'type'        => 'String',
-				'description' => __( 'Email input value', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Email input value.', 'wp-graphql-gravity-forms' ),
 			],
 			'confirmationValue' => [
 				'type'        => 'String',

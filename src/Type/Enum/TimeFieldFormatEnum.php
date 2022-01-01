@@ -40,7 +40,7 @@ class TimeFieldFormatEnum extends AbstractEnum {
 				'value'       => self::H12,
 			],
 			'H24' => [
-				'description' => __( '24-hour time format', 'wp-graphql-gravity-forms' ),
+				'description' => __( '24-hour time format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::H24,
 			],
 		];

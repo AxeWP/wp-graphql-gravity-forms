@@ -40,7 +40,7 @@ class FormIdTypeEnum extends AbstractEnum {
 				'value'       => self::ID,
 			],
 			'DATABASE_ID' => [
-				'description' => __( 'The database ID assigned by Gravity Forms', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The database ID assigned by Gravity Forms.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DATABASE_ID,
 			],
 		];

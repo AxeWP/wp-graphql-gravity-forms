@@ -24,7 +24,7 @@ class UpdateDraftEntryMetaInput extends AbstractInput {
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'Entry meta input fields for updating draft Gravity Forms entries', 'wp-graphql-gravity-forms' );
+		return __( 'Entry meta input fields for updating draft Gravity Forms entries.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
@@ -38,7 +38,7 @@ class UpdateDraftEntryMetaInput extends AbstractInput {
 			],
 			'dateCreatedGmt' => [
 				'type'        => 'String',
-				'description' => __( 'The UTC date the entry was created, in `Y-m-d H:i:s` format', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The UTC date the entry was created, in `Y-m-d H:i:s` format.', 'wp-graphql-gravity-forms' ),
 			],
 			'ip'             => [
 				'type'        => 'String',

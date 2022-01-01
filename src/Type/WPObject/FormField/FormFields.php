@@ -63,7 +63,7 @@ class FormFields implements Registrable {
 	 * @param TypeRegistry $type_registry .
 	 */
 	public static function register_gf_field( GF_Field $field, TypeRegistry $type_registry ) : void {
-		$name     = Utils::to_pascal_case( $field->type ) . 'Field';
+		$name     = Utils::get_safe_form_field_type_name( $field->type ) . 'Field';
 		$settings = self::get_field_settings( $field );
 
 		$possible_types = Utils::get_possible_form_field_child_types( $field->type );
@@ -184,7 +184,6 @@ class FormFields implements Registrable {
 				[
 					'conditional_logic_nextbutton_setting',
 					'default_input_values_setting',
-					'gquiz_setting_field_type',
 					'input_placeholders_setting',
 					'name_prefix_choices_setting',
 					'post_author_setting',
@@ -241,17 +240,8 @@ class FormFields implements Registrable {
 		$input_type = $field->get_input_type();
 
 		switch ( $input_type ) {
-			// Ignore the quiz interface.
-			case 'quiz':
-			case 'post_category':
-			case 'post_custom':
-			case 'post_tags':
-				break;
 			case 'address':
 				$properties += ValueProperties::address_values();
-				break;
-			case 'chainedselect':
-				$properties += ValueProperties::chained_select_values();
 				break;
 			case 'checkbox':
 				$properties += ValueProperties::checkbox_values();
@@ -275,6 +265,9 @@ class FormFields implements Registrable {
 			case 'multiselect':
 				$properties += ValueProperties::values();
 				break;
+			case 'post_category':
+			case 'post_custom':
+			case 'post_tags':
 			default:
 				break;
 		}

@@ -36,27 +36,27 @@ class CreditCardFieldInput extends AbstractInput {
 		return [
 			'cardNumber'      => [
 				'type'        => 'Int',
-				'description' => __( 'Credit card number', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Credit card number.', 'wp-graphql-gravity-forms' ),
 			],
 			'expirationMonth' => [
 				'type'        => 'Int',
-				'description' => __( 'Credit card expiration month', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Credit card expiration month.', 'wp-graphql-gravity-forms' ),
 			],
 			'expirationYear'  => [
 				'type'        => 'Int',
-				'description' => __( 'Credit Card expiration year', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Credit Card expiration year.', 'wp-graphql-gravity-forms' ),
 			],
 			'securityCode'    => [
 				'type'        => 'ID',
-				'description' => __( 'Credit card security code', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Credit card security code.', 'wp-graphql-gravity-forms' ),
 			],
 			'cardholderName'  => [
 				'type'        => 'String',
-				'description' => __( 'Credit Card cardholder name', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Credit Card cardholder name.', 'wp-graphql-gravity-forms' ),
 			],
 			'cardType'        => [
 				'type'        => FormCreditCardTypeEnum::$type,
-				'description' => __( 'The credit card type', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The credit card type.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

@@ -40,11 +40,11 @@ class SubmitDraftEntry extends AbstractMutation {
 		return [
 			'id'     => [
 				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'Either the global ID of the draft entry, or its resume token', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Either the global ID of the draft entry, or its resume token.', 'wp-graphql-gravity-forms' ),
 			],
 			'idType' => [
 				'type'        => DraftEntryIdTypeEnum::$type,
-				'description' => __( 'The ID type for the draft entry. Defaults to `ID` ', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The ID type for the draft entry. Defaults to `ID` .', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

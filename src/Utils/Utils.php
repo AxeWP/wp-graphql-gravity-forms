@@ -53,13 +53,13 @@ class Utils {
 	}
 
 	/**
-	 * Converts a string to snake_case.
+	 * Converts a string to PascalCase.
 	 *
 	 * @since 0.10.0
 	 *
 	 * @param string $string the original string.
 	 */
-	public static function to_pascal_case( $string ) : string {
+	public static function get_safe_form_field_type_name( $string ) : string {
 		// Shim to map fields with existing PascalCase.
 		$fields_to_map = [
 			'chainedselect'     => 'ChainedSelect',
@@ -71,6 +71,14 @@ class Utils {
 			'-'                 => ' ',
 			'_'                 => ' ',
 		];
+
+		/**
+		 * Filter to map the Gravity Forms Field type to a safe GraphQL type (in PascalCase ).
+		 *
+		 * @param array $fields_to_map An array of GF field types to GraphQL type names. E.g. ` 'fileupload' => 'FileUpload'`.
+		 */
+		$fields_to_map = apply_filters( 'graphql_gf_form_field_name_map', $fields_to_map );
+
 		return str_replace( ' ', '', ucwords( str_replace( array_keys( $fields_to_map ), array_values( $fields_to_map ), $string ) ) );
 	}
 
@@ -160,15 +168,6 @@ class Utils {
 	}
 
 	/**
-	 * Returns whether Gravity Forms Signature is enabled.
-	 *
-	 * @return boolean
-	 */
-	public static function is_gf_signature_enabled() : bool {
-		return class_exists( 'GFSignature' );
-	}
-
-	/**
 	 * Gets an array of all GF type names paired with their GraphQL type names.
 	 *
 	 * E.g. `[ 'text' => 'TextField' ]`.
@@ -179,7 +178,7 @@ class Utils {
 		$fields = GF_Fields::get_all();
 		foreach ( $fields as $field ) {
 			if ( ! in_array( $field->type, self::get_ignored_gf_field_types(), true ) ) {
-				$types[ $field->type ] = self::to_pascal_case( $field->type ) . 'Field';
+				$types[ $field->type ] = self::get_safe_form_field_type_name( $field->type ) . 'Field';
 			}
 		}
 
@@ -213,7 +212,7 @@ class Utils {
 	 * @param string $type The current GF field type.
 	 */
 	public static function get_possible_form_field_child_types( string $type ) : ?array {
-		$prefix = self::to_pascal_case( $type );
+		$prefix = self::get_safe_form_field_type_name( $type );
 		switch ( $type ) {
 			case 'post_category':
 				$child_types = [
@@ -269,13 +268,6 @@ class Utils {
 				];
 				break;
 			case 'option':
-				$child_types = [
-					'checkbox' => $prefix . 'CheckboxField',
-					'radio'    => $prefix . 'RadioField',
-					'select'   => $prefix . 'SelectField',
-				];
-				break;
-			case 'quiz':
 				$child_types = [
 					'checkbox' => $prefix . 'CheckboxField',
 					'radio'    => $prefix . 'RadioField',

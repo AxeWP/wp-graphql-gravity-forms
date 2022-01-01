@@ -118,7 +118,6 @@ class TypeRegistry {
 			Enum\CaptchaFieldBadgePositionEnum::class,
 			Enum\CaptchaFieldThemeEnum::class,
 			Enum\CaptchaFieldTypeEnum::class,
-			Enum\ChainedSelectFieldAlignmentEnum::class,
 			Enum\ConditionalLogicActionTypeEnum::class,
 			Enum\ConditionalLogicLogicTypeEnum::class,
 			Enum\DateFieldFormatEnum::class,
@@ -154,10 +153,6 @@ class TypeRegistry {
 			Enum\PasswordFieldMinStrengthEnum::class,
 			Enum\PhoneFieldFormatEnum::class,
 			Enum\PostFormatTypeEnum::class,
-			Enum\QuizFieldGradingTypeEnum::class,
-			Enum\QuizFieldTypeEnum::class,
-			Enum\SignatureFieldBorderStyleEnum::class,
-			Enum\SignatureFieldBorderWidthEnum::class,
 			Enum\SubmittedEntryIdTypeEnum::class,
 			Enum\TimeFieldFormatEnum::class,
 		];
@@ -178,7 +173,6 @@ class TypeRegistry {
 	private static function inputs() : array {
 		$classes_to_register = [
 			Input\AddressFieldInput::class,
-			Input\ChainedSelectFieldInput::class,
 			Input\CheckboxFieldInput::class,
 			Input\CreditCardFieldInput::class,
 			Input\EmailFieldInput::class,
@@ -244,7 +238,6 @@ class TypeRegistry {
 			// Entries.
 			WPObject\Entry\DraftEntry::class,
 			WPObject\Entry\SubmittedEntry::class,
-			WPObject\Entry\EntryQuizResults::class,
 			// Forms.
 			WPObject\Form\Form::class,
 			WPObject\Form\FormConfirmation::class,
@@ -254,9 +247,6 @@ class TypeRegistry {
 			WPObject\Form\FormNotificationRouting::class,
 			WPObject\Form\FormPagination::class,
 			WPObject\Form\FormPostCreation::class,
-			WPObject\Form\QuizGrades::class,
-			WPObject\Form\QuizConfirmation::class,
-			WPObject\Form\FormQuiz::class,
 			WPObject\Form\FormScheduleDetails::class,
 			WPObject\Form\FormSchedule::class,
 			WPObject\Form\FormSaveAndContinue::class,
@@ -363,7 +353,7 @@ class TypeRegistry {
 		foreach ( $classes_to_register as $class ) {
 			if ( ! is_a( $class, Registrable::class, true ) ) {
 				// translators: PHP class.
-				throw new Exception( sprintf( __( 'To be registered to the GF GraphQL schema, %s needs to implement WPGraphQL\Interfaces\Registrable', 'wp-graphql-gravity-forms' ), $class ) );
+				throw new Exception( sprintf( __( 'To be registered to the GF GraphQL schema, %s needs to implement WPGraphQL\Interfaces\Registrable.', 'wp-graphql-gravity-forms' ), $class ) );
 			}
 
 			// Register the type to the GraphQL schema. Skipped if we're trying to get the type registry beforehand.

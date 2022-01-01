@@ -74,15 +74,6 @@ class PropertyMapper {
 		}
 	}
 
-	/**
-	 * Maps the `background_color_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function background_color_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::background_color();
-	}
 
 	/**
 	 * Maps the `base_price_setting` to its field properties.
@@ -95,45 +86,8 @@ class PropertyMapper {
 		$properties += FieldProperties::formatted_price();
 	}
 
-	/**
-	 * Maps the `border_color_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function border_color_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::border_color();
-	}
 
-	/**
-	 * Maps the `border_style_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function border_style_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::border_style();
-	}
 
-	/**
-	 * Maps the `border_width_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function border_width_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::border_width();
-	}
-
-	/**
-	 * Maps the `box_width_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function box_width_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::box_width();
-	}
 
 
 	/**
@@ -219,26 +173,6 @@ class PropertyMapper {
 	}
 
 	/**
-	 * Maps the `chained_selects_alignment_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function chained_selects_alignment_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::chained_selects_alignment();
-	}
-
-	/**
-	 * Maps the `chained_selects_hide_inactive_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function chained_selects_hide_inactive_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::should_hide_inactive_choices();
-	}
-
-	/**
 	 * Maps the `checkbox_label_setting` to its field properties.
 	 *
 	 * @param GF_Field $field .
@@ -269,31 +203,6 @@ class PropertyMapper {
 		$properties += ChoiceMapper::map_choices( $field, $choice_fields );
 	}
 
-	/**
-	 * Maps the `chained_choices_setting` to its field properties.
-	 *
-	 * @todo make nested choices flat.
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function chained_choices_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::has_choice_value();
-
-		$choice_fields  = FieldProperties::choice_text();
-		$choice_fields += FieldProperties::choice_value();
-		$choice_fields += FieldProperties::choice_is_selected();
-
-		// Nest choices.
-		$choice_fields += ChoiceMapper::map_choices( $field, $choice_fields );
-
-		$properties += ChoiceMapper::map_choices( $field, $choice_fields );
-
-		$input_fields  = FieldProperties::label();
-		$input_fields += FieldProperties::input_id();
-		$input_fields += FieldProperties::input_name();
-
-		$properties += InputMapper::map_inputs( $field, $input_fields );
-	}
 
 	/**
 	 * Maps the `columns_setting` to its field properties.
@@ -561,52 +470,6 @@ class PropertyMapper {
 	}
 
 	/**
-	 * Maps the `gquiz_setting_choices` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function gquiz_setting_choices( GF_Field $field, array &$properties ) : void {
-		$properties    += FieldProperties::has_weighted_score();
-		$choice_fields  = FieldProperties::choice_is_correct();
-		$choice_fields += FieldProperties::choice_weight();
-		$choice_fields += FieldProperties::choice_is_other();
-
-		ChoiceMapper::add_fields_to_choice( $field, $choice_fields );
-	}
-
-	/**
-	 * Maps the `gquiz_setting_show_answer_explanation` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function gquiz_setting_show_answer_explanation( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::should_show_answer_explanation();
-		$properties += FieldProperties::answer_explanation();
-	}
-
-	/**
-	 * Maps the `gquiz_setting_randomize_quiz_choices` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function gquiz_setting_randomize_quiz_choices( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::should_randomize_quiz_choices();
-	}
-
-	/**
-	 * Maps the `gquiz_setting_question` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function gquiz_setting_question( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::label();
-	}
-
-	/**
 	 * Maps the `input_mask_setting` to its field properties.
 	 *
 	 * @param GF_Field $field .
@@ -730,7 +593,11 @@ class PropertyMapper {
 		$properties   += FieldProperties::has_other_choice();
 		$choice_fields = FieldProperties::choice_is_other();
 
-		// Quiz fields are registered on the QuizChoiceProperty object.
+		/**
+		 * Quiz fields are registered on the QuizChoiceProperty object.
+		 *
+		 * @todo move to GFExtensions.
+		 */
 		if ( 'quiz' === $field->type ) {
 			return;
 		}
@@ -787,25 +654,6 @@ class PropertyMapper {
 		$properties += FieldProperties::has_password_visibility_toggle();
 	}
 
-	/**
-	 * Maps the `pen_color_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function pen_color_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::pen_color();
-	}
-
-	/**
-	 * Maps the `pen_size_setting` to its field properties.
-	 *
-	 * @param GF_Field $field .
-	 * @param array    $properties the existing properties array.
-	 */
-	public static function pen_size_setting( GF_Field $field, array &$properties ) : void {
-		$properties += FieldProperties::pen_size();
-	}
 
 	/**
 	 * Maps the `phone_format_setting` to its field properties.

@@ -45,7 +45,7 @@ class FormFieldsConnection extends AbstractConnection {
 			],
 			'pageNumber'  => [
 				'type'        => 'Int',
-				'description' => __( 'The form page number to return', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The form page number to return.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

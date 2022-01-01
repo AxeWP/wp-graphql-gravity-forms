@@ -4,24 +4,24 @@
  *
  * @see https://docs.gravityforms.com/configure-quiz-settings/
  *
- * @package WPGraphQL\GF\Type\WPObject\Form
+ * @package WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\Form
  * @since   0.9.1
  */
 
-namespace WPGraphQL\GF\Type\WPObject\Form;
+namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\Form;
 
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 /**
- * Class - FormConfirmation
+ * Class - FormQuizGrades
  */
-class QuizGrades extends AbstractObject {
+class FormQuizGrades extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'QuizGrades';
+	public static string $type = 'FormQuizGrades';
 
 	/**
 	 * {@inheritDoc}

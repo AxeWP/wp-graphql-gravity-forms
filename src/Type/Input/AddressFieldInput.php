@@ -52,7 +52,7 @@ class AddressFieldInput extends AbstractInput {
 			],
 			'zip'     => [
 				'type'        => 'String',
-				'description' => __( 'Address zip code', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Address zip code.', 'wp-graphql-gravity-forms' ),
 			],
 			'country' => [
 				'type'        => AddressFieldCountryEnum::$type,

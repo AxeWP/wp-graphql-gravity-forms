@@ -2,11 +2,13 @@
 /**
  * Manipulates input data for String field values.
  *
- * @package WPGraphQL\GF\Data\FieldValueInput
+ * @package WPGraphQL\GF\Extensions\GFChainedSelects\Data\FieldValueInput
  * @since 0.10.0
  */
 
-namespace WPGraphQL\GF\Data\FieldValueInput;
+namespace WPGraphQL\GF\Extensions\GFChainedSelects\Data\FieldValueInput;
+
+use WPGraphQL\GF\Data\FieldValueInput\CheckboxValuesInput;
 
 /**
  * Class - ChainedSelectValuesInput

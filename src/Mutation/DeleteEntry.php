@@ -39,11 +39,11 @@ class DeleteEntry extends AbstractMutation {
 		return [
 			'id'          => [
 				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'ID of the entry to delete, either a global or database ID', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'ID of the entry to delete, either a global or database ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'forceDelete' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the entry should be force deleted instead of being moved to the trash', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Whether the entry should be force deleted instead of being moved to the trash.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -63,7 +63,7 @@ class DeleteEntry extends AbstractMutation {
 			],
 			'entry'     => [
 				'type'        => SubmittedEntry::$type,
-				'description' => __( 'The entry object before it was deleted', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The entry object before it was deleted.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $payload ) => $payload['deletedEntry'] ?? null,
 			],
 		];
@@ -75,7 +75,7 @@ class DeleteEntry extends AbstractMutation {
 	public static function mutate_and_get_payload() : callable {
 		return function( $input, AppContext $context, ResolveInfo $info ) : array {
 			if ( ! GFCommon::current_user_can_any( 'gravityforms_delete_entries' ) ) {
-				throw new UserError( __( 'Sorry, you are not allowed to delete entries', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( __( 'Sorry, you are not allowed to delete entries.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			$entry_id = self::get_entry_id_from_id( $input['id'] );
@@ -89,7 +89,7 @@ class DeleteEntry extends AbstractMutation {
 			}
 
 			if ( is_wp_error( $result ) ) {
-				throw new UserError( __( 'An error occurred while deleting the entry. Error: ', 'wp-graphql-gravity-forms' ) . $result->get_error_message() );
+				throw new UserError( __( 'An error occurred while deleting the entry. Error: .', 'wp-graphql-gravity-forms' ) . $result->get_error_message() );
 			}
 
 			return [

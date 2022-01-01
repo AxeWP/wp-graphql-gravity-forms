@@ -36,7 +36,7 @@ class FieldError extends AbstractObject {
 		return [
 			'id'      => [
 				'type'        => 'Float',
-				'description' => __( 'The field with the associated error message', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The field with the associated error message.', 'wp-graphql-gravity-forms' ),
 			],
 			'message' => [
 				'type'        => 'String',

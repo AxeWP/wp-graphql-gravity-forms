@@ -50,7 +50,7 @@ class GFUtils {
 		if ( ! $form ) {
 			throw new UserError(
 				// translators: Gravity Forms form id.
-				sprintf( __( 'Unable to retrieve the form for the given ID %s', 'wp-graphql-gravity-forms' ), $form_id ),
+				sprintf( __( 'Unable to retrieve the form for the given ID %s.', 'wp-graphql-gravity-forms' ), $form_id ),
 			);
 		}
 
@@ -175,7 +175,7 @@ class GFUtils {
 		if ( is_wp_error( $entry ) ) {
 			throw new UserError(
 				// translators: Gravity Forms form id.
-				sprintf( __( 'The entry for the given ID %s was not found. Error: ', 'wp-graphql-gravity-forms' ), $entry_id ) . $entry->get_error_message()
+				sprintf( __( 'The entry for the given ID %s was not found. Error: .', 'wp-graphql-gravity-forms' ), $entry_id ) . $entry->get_error_message()
 			);
 		}
 
@@ -203,7 +203,7 @@ class GFUtils {
 		if ( is_wp_error( ( $is_entry_updated ) ) ) {
 			throw new UserError(
 				// translators: Gravity Forms entry id.
-				sprintf( __( 'An error occured while trying to update the entry (ID: %s). Error: ', 'wp-graphql-gravity-forms' ), $entry_data['id'] ) . $is_entry_updated->get_error_message()
+				sprintf( __( 'An error occured while trying to update the entry (ID: %s). Error: .', 'wp-graphql-gravity-forms' ), $entry_data['id'] ) . $is_entry_updated->get_error_message()
 			);
 		}
 
@@ -335,7 +335,7 @@ class GFUtils {
 		);
 		if ( false === $new_resume_token ) {
 			global $wpdb;
-			throw new UserError( __( 'An error occured while trying to save the draft entry. Database Error: ', 'wp-graphql-gravity-forms' ) . $wpdb->print_error() );
+			throw new UserError( __( 'An error occured while trying to save the draft entry. Database Error: .', 'wp-graphql-gravity-forms' ) . $wpdb->print_error() );
 		}
 
 		return $new_resume_token ? (string) $new_resume_token : $resume_token;
@@ -367,7 +367,7 @@ class GFUtils {
 		);
 
 		if ( is_wp_error( $submission ) ) {
-			throw new UserError( __( 'There was an error while processing the form. Error: ', 'wp-graphql-gravity-forms' ) . $submission->get_error_message() );
+			throw new UserError( __( 'There was an error while processing the form. Error: .', 'wp-graphql-gravity-forms' ) . $submission->get_error_message() );
 		}
 
 		return $submission;
@@ -411,7 +411,7 @@ class GFUtils {
 		// Create upload directory if it doesnt exist.
 		if ( ! is_dir( $target_root ) ) {
 			if ( ! wp_mkdir_p( $target_root ) ) {
-				throw new UserError( __( 'Failed to upload file. The Gravity Forms Signatures directory could not be created.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( __( 'Failed to upload file. The Gravity Forms Upload directory could not be created.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			// Adding index.html files to all subfolders.
@@ -473,7 +473,7 @@ class GFUtils {
 
 		// Return error if file type not allowed.
 		if ( ( ! $type || ! $ext ) && ! current_user_can( 'unfiltered_upload' ) ) {
-			throw new UserError( __( 'This file type is not permitted for security reasons', 'wp-graphql-gravity-forms' ) );
+			throw new UserError( __( 'This file type is not permitted for security reasons.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		$type = ! $type ? $file['type'] : $type;
