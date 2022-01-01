@@ -48,7 +48,7 @@ class UpdateEntry extends AbstractMutation {
 		return [
 			'id'             => [
 				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'ID of the entry to delete, either a global or database ID.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'ID of the entry to update, either a global or database ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'entryMeta'      => [
 				'type'        => UpdateEntryMetaInput::$type,

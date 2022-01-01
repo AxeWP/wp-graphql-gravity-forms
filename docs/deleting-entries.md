@@ -8,8 +8,8 @@ You can use the `deleteGfEntry` mutation to delete a [Gravity Forms entry](https
 
 ```graphql
 mutation {
-  deleteGfEntry(input: { entryId: 5 }) {
-    entryId
+  deleteGfEntry(input: { id: 5 }) {
+    deletedId
   }
 }
 ```
@@ -23,9 +23,9 @@ Similarly, you can use `deleteGfDraftEntry` to delete a [Gravity Forms draft ent
 ```graphql
 mutation {
   deleteGfDraftEntry(
-    input: { resumeToken: "524d5f3a30c845b29a8db35c9f2aaf29" }
+    input: { id: "524d5f3a30c845b29a8db35c9f2aaf29", idType: 'RESUME_TOKEN' }
   ) {
-    resumeToken
+    deletedId
   }
 }
 ```

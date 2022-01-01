@@ -117,7 +117,7 @@ By default, WPGraphQL sets the maximum query amount to 100. This can be overridd
         { stringValues: "somevalue", operator: CONTAINS }
       ]
       # Sort fields in ascending order by "date_created"
-      sort: { direction: ASC, isNumeric: false, key: "date_created" }
+      orderby: { order: ASC, isNumeric: false, field: "date_created" }
       # Show only active entries.
       status: ACTIVE
     }

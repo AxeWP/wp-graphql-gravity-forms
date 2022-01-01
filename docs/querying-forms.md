@@ -49,8 +49,8 @@ The code comments in the example query below shows how you can fetch and filter 
     where: { 
       # List of all the form IDs to include.
       formIds: [1]
-      # Sort fields in ascending order by "title
-      sort: { direction: ASC, key: "title }
+      # Sort fields in ascending order by title
+      orderby: { order: ASC, field: "title" }
       # Show only active forms.
       status: ACTIVE 
       }
