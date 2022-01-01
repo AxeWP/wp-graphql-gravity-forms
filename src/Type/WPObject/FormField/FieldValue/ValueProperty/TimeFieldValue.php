@@ -3,7 +3,7 @@
  * GraphQL Object Type - TimeValuePropery
  * An individual property for the 'value' Time field property.
  *
- * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperties\ValueProperty
+ * @package WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty
  * @since   0.5.0
  */
 
@@ -15,7 +15,7 @@ use WPGraphQL\GF\Type\WPObject\AbstractObject;
 /**
  * Class - TimeValueProperty
  */
-class TimeValueProperty extends AbstractObject {
+class TimeFieldValue extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

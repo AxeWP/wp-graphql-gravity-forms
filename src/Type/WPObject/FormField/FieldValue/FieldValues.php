@@ -14,9 +14,9 @@ use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
- * Class - ValueProperties
+ * Class - FieldValues
  */
-class ValueProperties {
+class FieldValues {
 	/**
 	 * Get `value` property.
 	 */
@@ -64,7 +64,7 @@ class ValueProperties {
 	public static function address_values() : array {
 		return [
 			'addressValues' => [
-				'type'        => ValueProperty\AddressValueProperty::$type,
+				'type'        => ValueProperty\AddressFieldValue::$type,
 				'description' => __( 'Address field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
@@ -90,7 +90,7 @@ class ValueProperties {
 	public static function checkbox_values() : array {
 		return [
 			'checkboxValues' => [
-				'type'        => [ 'list_of' => ValueProperty\CheckboxValueProperty::$type ],
+				'type'        => [ 'list_of' => ValueProperty\CheckboxFieldValue::$type ],
 				'description' => __( 'Checkbox field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
@@ -125,7 +125,7 @@ class ValueProperties {
 	public static function list_values() : array {
 		return [
 			'listValues' => [
-				'type'        => [ 'list_of' => ValueProperty\ListValueProperty::$type ],
+				'type'        => [ 'list_of' => ValueProperty\ListFieldValue::$type ],
 				'description' => __( 'List field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
@@ -183,7 +183,7 @@ class ValueProperties {
 	public static function name_values() : array {
 		return [
 			'nameValues' => [
-				'type'        => ValueProperty\NameValueProperty::$type,
+				'type'        => ValueProperty\NameFieldValue::$type,
 				'description' => __( 'Name field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
@@ -208,7 +208,7 @@ class ValueProperties {
 	public static function image_values() : array {
 		return [
 			'imageValues' => [
-				'type'        => ValueProperty\ImageValueProperty::$type,
+				'type'        => ValueProperty\ImageFieldValue::$type,
 				'description' => __( 'Name field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
@@ -234,7 +234,7 @@ class ValueProperties {
 	public static function time_values() : array {
 		return [
 			'timeValues' => [
-				'type'        => ValueProperty\TimeValueProperty::$type,
+				'type'        => ValueProperty\TimeFieldValue::$type,
 				'description' => __( 'Time field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {

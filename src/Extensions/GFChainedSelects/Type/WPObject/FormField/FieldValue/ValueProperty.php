@@ -9,12 +9,12 @@
 namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldValue;
 
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperties;
+use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\FieldValues;
 
 /**
  * Class - ValueProperty
  */
-class ValueProperty extends ValueProperties {
+class ValueProperty extends FieldValues {
 	/**
 	 * Get `values` property for Chained Select field.
 	 */

@@ -3,7 +3,7 @@
  * GraphQL Object Type - CheckboxValuePropery
  * An individual property for the 'value' Checkbox field property.
  *
- * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperties\ValueProperty
+ * @package WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty
  * @since   0.5.0
  */
 
@@ -14,7 +14,7 @@ use WPGraphQL\GF\Type\WPObject\AbstractObject;
 /**
  * Class - CheckboxValueProperty
  */
-class CheckboxValueProperty extends AbstractObject {
+class CheckboxFieldValue extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
