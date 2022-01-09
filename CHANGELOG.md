@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.9.2.1 - Hotfix
+This hotfix release fixes an issue where `EntryUser` would throw an error if the WordPress user who submitted the entry no longer exists. The field now resolves to `null` instead.
+
+- fix: resolve missing `EntryUser` to `[]` instead of throwing UserError
+
 ## v0.9.2 - Bugfix and Test
 This minor release addresses an issue where `PostImageInput` would be registered to the schema even if WPGraphQL Upload wasn't enabled, breaking gqty and Gatsby schema generation. We also fixed a few other bugs and some overlooked items in the docs, and added some more WPUnit tests.
 
