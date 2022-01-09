@@ -138,7 +138,7 @@ class SubmitForm extends AbstractMutation {
 			$source_page   = $input['sourcePage'] ?? 0;
 			$save_as_draft = $input['saveAsDraft'] ?? false;
 			$ip            = empty( $this->form['personalData']['preventIP'] ) ? GFUtils::get_ip( $input['ip'] ?? '' ) : '';
-			$created_by    = isset( $input['createdBy'] ) ? absint( $input['createdBy'] ) : null;
+			$created_by    = ! empty( $input['createdBy'] ) ? absint( $input['createdBy'] ) : null;
 			$source_url    = $input['sourceUrl'] ?? '';
 
 			// Initialize $_FILES with fileupload inputs.
@@ -213,8 +213,11 @@ class SubmitForm extends AbstractMutation {
 			}
 		}
 
-		if ( null !== $created_by ) {
+		if ( ! empty( $created_by ) ) {
 			$is_updated = GFAPI::update_entry_property( $submission['entry_id'], 'created_by', $created_by );
+			// Leave for testing.
+			graphql_debug( $created_by );
+
 			if ( false === $is_updated ) {
 				throw new UserError( __( 'Unable to update the entry createdBy id.', 'wp-graphql-gravity-forms' ) );
 			}
