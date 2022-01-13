@@ -120,7 +120,7 @@ class FormField implements Registrable, Type, TypeWithFields {
 				'description' => __( 'The form page this field is located on. Default is 1.', 'wp-graphql-gravity-forms' ),
 			],
 			'type'                       => [
-				'type'        => [ 'non_null' => FormFieldTypeEnum::$type ],
+				'type'        => FormFieldTypeEnum::$type,
 				'description' => __( 'The type of field to be displayed.', 'wp-graphql-gravity-forms' ),
 			],
 			'visibility'                 => [
