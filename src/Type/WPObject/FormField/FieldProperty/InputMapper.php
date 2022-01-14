@@ -17,6 +17,15 @@ use WPGraphQL\GF\Utils\Utils;
  */
 class InputMapper {
 	/**
+	 * An array of GraphQL type names registered by the class.
+	 *
+	 * Used to prevent reregistering duplicate types.
+	 *
+	 * @var array
+	 */
+	public static array $registered_types = [];
+
+	/**
 	 * Registers a GraphQL object type for the input, and returns the GF Field `inputs`.
 	 *
 	 * @param GF_Field $field .
@@ -25,19 +34,23 @@ class InputMapper {
 	public static function map_inputs( GF_Field $field, array $input_fields ) : array {
 		$name = Utils::get_safe_form_field_type_name( $field->type . 'InputProperty' );
 
-		register_graphql_object_type(
-			$name,
-			[
-				// translators: GF field type.
-				'description' => sprintf( __( '%s input values.', 'wp-graphql-gravity-forms' ), ucfirst( $field->type ) ),
-				'fields'      => $input_fields,
-				'resolve'     => function( GF_Field $source, array $args, AppContext $context ) {
-					$context->gfField = $source;
+		if ( ! in_array( $name, self::$registered_types, true ) ) {
+			register_graphql_object_type(
+				$name,
+				[
+					// translators: GF field type.
+					'description' => sprintf( __( '%s input values.', 'wp-graphql-gravity-forms' ), ucfirst( $field->type ) ),
+					'fields'      => $input_fields,
+					'resolve'     => function( GF_Field $source, array $args, AppContext $context ) {
+						$context->gfField = $source;
 
-					return ! empty( $source->inputs ) ? $source->inputs : null;
-				},
-			]
-		);
+						return ! empty( $source->inputs ) ? $source->inputs : null;
+					},
+				]
+			);
+
+			self::$registered_types[] = $name;
+		}
 
 		return [
 			'inputs' => [
