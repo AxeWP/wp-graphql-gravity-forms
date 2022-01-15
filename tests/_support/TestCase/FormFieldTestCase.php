@@ -54,6 +54,15 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	public function setUp(): void {
 		// Before...
 		parent::setUp();
+
+		// Reset static properties.
+		$choices = new ReflectionProperty( ChoiceMapper::class, 'registered_types' );
+		$choices->setAccessible( true );
+		$choices->setValue( null, [] );
+		$inputs = new ReflectionProperty( InputMapper::class, 'registered_types' );
+		$inputs->setAccessible( true );
+		$inputs->setValue( null, [] );
+
 		wp_set_current_user( $this->admin->ID );
 
 		$this->property_helper = $this->field_helper();
@@ -109,14 +118,6 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$this->factory->draft_entry->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
 		GFFormsModel::set_current_lead( null );
-
-		// Reset static properties.
-		$choices = new ReflectionProperty( ChoiceMapper::class, 'registered_types' );
-		$choices->setAccessible( true );
-		$choices->setValue( null, [] );
-		$inputs = new ReflectionProperty( InputMapper::class, 'registered_types' );
-		$inputs->setAccessible( true );
-		$inputs->setValue( null, [] );
 
 		// Then...
 		parent::tearDown();
