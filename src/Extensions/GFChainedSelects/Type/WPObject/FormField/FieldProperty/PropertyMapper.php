@@ -64,9 +64,11 @@ class PropertyMapper {
 		$choice_fields += FieldProperties::choice_value();
 		$choice_fields += FieldProperties::choice_is_selected();
 
+		// Create the `choices` property.
 		$mapped_choice = ChoiceMapper::map_choices( $field, $choice_fields );
 		$properties   += $mapped_choice;
 
+		// Add field `choices.choices`.
 		ChoiceMapper::add_fields_to_choice( $field, $mapped_choice );
 
 		$input_fields  = FieldProperties::label();

@@ -4,6 +4,8 @@
  *
  * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
  * @since   0.10.0
+ *
+ * @todo maybe refactor to Trait?
  */
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
@@ -19,7 +21,7 @@ class InputMapper {
 	/**
 	 * An array of GraphQL type names registered by the class.
 	 *
-	 * Used to prevent reregistering duplicate types.
+	 * Used to prevent reregistering duplicate types, since `graphql_register_types()` doesn't run until later.
 	 *
 	 * @var array
 	 */
@@ -34,6 +36,7 @@ class InputMapper {
 	public static function map_inputs( GF_Field $field, array $input_fields ) : array {
 		$name = Utils::get_safe_form_field_type_name( $field->type . 'InputProperty' );
 
+		// Don't register duplicate fields.
 		if ( ! in_array( $name, self::$registered_types, true ) ) {
 			register_graphql_object_type(
 				$name,

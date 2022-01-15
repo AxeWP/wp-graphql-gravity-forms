@@ -4,6 +4,8 @@
  *
  * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
  * @since   0.10.0
+ *
+ * @todo maybe refactor to Trait?
  */
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
@@ -38,6 +40,7 @@ class ChoiceMapper {
 
 		$name = Utils::get_safe_form_field_type_name( ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'FieldChoice' );
 
+		// Don't register duplicate fields.
 		if ( ! in_array( $name, self::$registered_types, true ) ) {
 			register_graphql_object_type(
 				$name,
