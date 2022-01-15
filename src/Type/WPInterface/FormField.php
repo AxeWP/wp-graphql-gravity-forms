@@ -119,6 +119,7 @@ class FormField implements Registrable, Type, TypeWithFields {
 				'type'        => 'Int',
 				'description' => __( 'The form page this field is located on. Default is 1.', 'wp-graphql-gravity-forms' ),
 			],
+			// @todo make non-null once gatsby-source-wordpress supports it: https://github.com/gatsbyjs/gatsby/issues/34489 .
 			'type'                       => [
 				'type'        => FormFieldTypeEnum::$type,
 				'description' => __( 'The type of field to be displayed.', 'wp-graphql-gravity-forms' ),
