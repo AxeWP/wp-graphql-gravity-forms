@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.10.0.1 - Hotfix
+
+This _hotfix_ release fixes compatibility issues with `gatsby-source-wordpress`  introduced in the previous release and `WPGraphQL v1.6.11`.
+
+- fix: don't reregister duplicate generated `{type}FieldChoice` and `{type}InputProperty` object types.
+- dev: Field `type` on interface `FormField` was changed from `FormFieldTypeEnum!` to `FormFieldTypeEnum`, since `gatsby-source-wordpress` doesn't support non-nullable Enums (h/t @sarah-wfaa).
+
 ## v0.10.0 - Major Plugin & Schema Refactor
 
 **:warning: This release contains multiple breaking changes.**
