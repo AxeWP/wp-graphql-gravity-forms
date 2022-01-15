@@ -11,7 +11,8 @@ use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 /**
  * Class -EmailFieldTest.
  */
-class EmailFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInterface {
+class EmailFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+
 	/**
 	 * Tests the field properties and values.
 	 */
