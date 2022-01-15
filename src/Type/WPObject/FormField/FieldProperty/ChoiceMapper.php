@@ -4,6 +4,8 @@
  *
  * @package WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
  * @since   0.10.0
+ *
+ * @todo maybe refactor to Trait?
  */
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldProperty;
@@ -17,6 +19,15 @@ use WPGraphQL\GF\Utils\Utils;
  */
 class ChoiceMapper {
 	/**
+	 * An array of GraphQL type names registered by the class.
+	 *
+	 * Used to prevent reregistering duplicate types.
+	 *
+	 * @var array
+	 */
+	public static array $registered_types = [];
+
+	/**
 	 * Registers a GraphQL object type for the choice, and returns the GF Field `choices`.
 	 *
 	 * @todo use inputType names for inherited fields. Needs a way to handle unknown input types at registration.
@@ -29,19 +40,24 @@ class ChoiceMapper {
 
 		$name = Utils::get_safe_form_field_type_name( ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'FieldChoice' );
 
-		register_graphql_object_type(
-			$name,
-			[
-				// translators: GF field type.
-				'description' => sprintf( __( '%s choice values.', 'wp-graphql-gravity-forms' ), ucfirst( $field->type ) ),
-				'fields'      => $choice_fields,
-				'resolve'     => function( GF_Field $source, array $args, AppContext $context ) {
-					$context->gfField = $source;
+		// Don't register duplicate fields.
+		if ( ! in_array( $name, self::$registered_types, true ) ) {
+			register_graphql_object_type(
+				$name,
+				[
+					// translators: GF field type.
+					'description' => sprintf( __( '%s choice values.', 'wp-graphql-gravity-forms' ), ucfirst( $field->type ) ),
+					'fields'      => $choice_fields,
+					'resolve'     => function( GF_Field $source, array $args, AppContext $context ) {
+						$context->gfField = $source;
 
-					return ! empty( $source->choices ) ? $source->choices : null;
-				},
-			]
-		);
+						return ! empty( $source->choices ) ? $source->choices : null;
+					},
+				]
+			);
+
+			self::$registered_types[] = $name;
+		}
 
 		return [
 			'choices' => [

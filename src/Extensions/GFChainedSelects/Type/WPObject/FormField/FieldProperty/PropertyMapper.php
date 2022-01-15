@@ -64,10 +64,12 @@ class PropertyMapper {
 		$choice_fields += FieldProperties::choice_value();
 		$choice_fields += FieldProperties::choice_is_selected();
 
-		// Nest choices.
-		$choice_fields += ChoiceMapper::map_choices( $field, $choice_fields );
+		// Create the `choices` property.
+		$mapped_choice = ChoiceMapper::map_choices( $field, $choice_fields );
+		$properties   += $mapped_choice;
 
-		$properties += ChoiceMapper::map_choices( $field, $choice_fields );
+		// Add field `choices.choices`.
+		ChoiceMapper::add_fields_to_choice( $field, $mapped_choice );
 
 		$input_fields  = FieldProperties::label();
 		$input_fields += FieldProperties::input_id();
