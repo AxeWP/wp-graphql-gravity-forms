@@ -56,7 +56,7 @@ apply_filters( 'graphql_gf_after_register_types', $type_registry );
 * [`graphql_gf_form_field_name_map`](#graphql_gf_form_fields_name_map)
 * [`graphql_gf_form_field_setting_properties`](#graphql_gf_form_field_setting_properties)
 * [`graphql_gf_form_field_value_properties`](#graphql_gf_form_field_value_properties)
-* [`graphql_gf_form_field_value_input_fields`](#graphql_gf_form_field_value_input_fields)
+* [`graphql_gf_form_field_values_input_fields`](#graphql_gf_form_field_value_input_fields)
 * [`graphql_gf_form_object`](#graphql_gf_form_object)
 * [`graphql_gf_gatsby_enabled_actions`](#graphql_gf_gatsby_enabled_actions)
 * [`graphql_gf_ignored_field_types`](#graphql_gf_ignored_field_types)
