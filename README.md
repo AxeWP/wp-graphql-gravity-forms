@@ -63,6 +63,7 @@ Our hope for this open source project is that it will enable more teams to lever
 
 ### Recipes
 
-* [Register a Gravity Forms Form to a custom GraphQL field](docs/register-form-to-custom-field.md)
-* [Register custom connections to Gravity Forms Entries](docs/recipes/register-custom-entries-connection.md)
-* [Register custom Gravity Forms fields](docs/recipes/register-custom-form-field.md)
+* [Register a Gravity Forms Form to a custom GraphQL field](docs/recipes/register-form-to-custom-field.md)
+* [Register a custom GraphQL connection to Gravity Forms entries](docs/recipes/register-custom-entries-connection.md)
+* [Register a custom Gravity Forms field to the GraphQL schema](docs/recipes/register-custom-form-field.md)
+* [Add GraphQL mutation support for a custom Gravity Forms field](docs/recipes/register-custom-field-value-inputs.md) 

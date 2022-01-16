@@ -16,7 +16,7 @@ To fetch the form with the WPGraphQL Loader, we use the `(AppContext) $context` 
 
 *Note:* `AppContext::get_loader()` takes a `string` name of the data Loader, in our case `gf_form`. We recommend using the `FormsLoader::$name` variable for future compatibility.
 
-### Example: Resolving a Gravity Forms from a custom Post meta field
+### Example: Resolving a Gravity Forms form from a custom Post meta field
 
 ```php
 add_action( 'graphql_register_types', 'my_add_form_to_post' );

@@ -1,6 +1,6 @@
 # Recipes
 
-## How to add mutation support from a custom Gravity Forms field.
+## How to: add mutation support from a custom Gravity Forms field.
 
 When adding mutation support for custom Gravity Forms fields, we need to tell GraphQL what input data to accept, and then transform that data into a format that Gravity Forms understands.
 
@@ -26,7 +26,9 @@ register_graphql_input_type(
 );
 ```
 
-You would then add the GraphQL input field to `FormFieldValuesInput` with [the `graphql_gf_form_field_values_input_fields` filter](../actions-and-filters.md#graphql_gf_form_field_values_input_fields):
+### Step 2: Add the Input Field to `FormFieldValuesInput`.
+
+Once your custom GraphQL Input exists, then add the GraphQL input field to `FormFieldValuesInput` with [the `graphql_gf_form_field_values_input_fields` filter](../actions-and-filters.md#graphql_gf_form_field_values_input_fields):
 
 ```php
 // Add the custom input field to the mutation `fieldValues` input.

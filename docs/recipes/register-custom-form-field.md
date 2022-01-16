@@ -6,6 +6,8 @@ While this plugin offers [basic support for custom Gravity Forms fields out of t
 
 The below methods can also be used to add extended support for core Gravity Form fields that are [not yet fully supported](../form-field-support.md#experimental-fields).
 
+Note: You will need to [add a FormFieldValueInput](./register-custom-field-value-inputs.md) in order to be able submit/update your Gravity Forms field.
+
 ### Method 1: Quick and Dirty
 
 If you're only adding a few fields to the schema, WPGraphQL's native `register_graphql_field()` should do the trick.
