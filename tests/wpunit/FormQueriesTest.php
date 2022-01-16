@@ -552,6 +552,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						'confirmations',
 						[
 							$this->expectedField( 'id', $form['confirmations'][ $confirmation_key ]['id'] ),
+							$this->expectedField( 'isActive', true ),
 							$this->expectedField( 'isDefault', $form['confirmations'][ $confirmation_key ]['isDefault'] ),
 							$this->expectedField( 'message', $form['confirmations'][ $confirmation_key ]['message'] ),
 							$this->expectedField( 'name', $form['confirmations'][ $confirmation_key ]['name'] ),
