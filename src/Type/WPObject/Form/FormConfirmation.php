@@ -45,6 +45,10 @@ class FormConfirmation extends AbstractObject {
 				'type'        => 'String',
 				'description' => __( 'ID.', 'wp-graphql-gravity-forms' ),
 			],
+			'isActive'         => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the confirmation is active or inactive. The default confirmation is always active.', 'wp-graphql-gravity-forms' ),
+			],
 			'isDefault'        => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is the default confirmation.', 'wp-graphql-gravity-forms' ),
