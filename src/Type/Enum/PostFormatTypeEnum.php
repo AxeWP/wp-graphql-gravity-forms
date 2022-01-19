@@ -32,8 +32,6 @@ class PostFormatTypeEnum extends AbstractEnum {
 	 * {@inheritDoc}
 	 */
 	public static function get_values() : array {
-		$post_formats = get_theme_support( 'post-formats' );
-
 		$values = [
 			'STANDARD' => [
 				'value'       => '0',
@@ -41,12 +39,17 @@ class PostFormatTypeEnum extends AbstractEnum {
 			],
 		];
 
-		foreach ( $post_formats[0] as $type ) {
-			$values[ WPEnumType::get_safe_name( $type ) ] = [
-				'value'       => $type,
-				// translators: Post format.
-				'description' => sprintf( __( 'A %s post format.', 'wp-graphql-gravity-forms' ), $type ),
-			];
+		// If post formats are enabled for the site, add them as enum values.
+		$post_formats = get_theme_support( 'post-formats' );
+
+		if ( isset( $post_formats[0] ) && is_array( $post_formats[0] ) ) {
+			foreach ( $post_formats[0] as $type ) {
+				$values[ WPEnumType::get_safe_name( $type ) ] = [
+					'value'       => $type,
+					// translators: Post format.
+					'description' => sprintf( __( 'A %s post format.', 'wp-graphql-gravity-forms' ), $type ),
+				];
+			}
 		}
 
 		return $values;
