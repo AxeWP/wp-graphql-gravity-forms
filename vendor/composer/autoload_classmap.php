@@ -156,6 +156,7 @@ return array(
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\ListFieldValue' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/ListFieldValue.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\NameFieldValue' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/NameFieldValue.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\TimeFieldValue' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/TimeFieldValue.php',
+    'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FormFieldDataPolicy' => $baseDir . '/src/Type/WPObject/FormField/FormFieldDataPolicy.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FormFields' => $baseDir . '/src/Type/WPObject/FormField/FormFields.php',
     'WPGraphQL\\GF\\Type\\WPObject\\Form\\Form' => $baseDir . '/src/Type/WPObject/Form/Form.php',
     'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormConfirmation' => $baseDir . '/src/Type/WPObject/Form/FormConfirmation.php',

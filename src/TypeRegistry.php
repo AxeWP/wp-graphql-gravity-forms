@@ -254,6 +254,7 @@ class TypeRegistry {
 			WPObject\Form\FormScheduleDetails::class,
 			WPObject\Form\FormSchedule::class,
 			WPObject\Form\FormSaveAndContinue::class,
+			WPObject\FormField\FormFieldDataPolicy::class,
 			// Form Field Value properties.
 			WPObject\FormField\FieldValue\ValueProperty\AddressFieldValue::class,
 			WPObject\FormField\FieldValue\ValueProperty\CheckboxFieldValue::class,
