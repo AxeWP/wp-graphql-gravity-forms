@@ -127,6 +127,44 @@ class Form extends Model {
 
 					return $pagination;
 				},
+				'personalData'                 => function() : ?array {
+					$personal_data = $this->data['personalData'] ?? null;
+
+					if ( ! is_array( $personal_data ) ) {
+						return $personal_data;
+					}
+
+					if ( isset( $personal_data['preventIP'] ) ) {
+						$personal_data['shouldSaveIP'] = empty( $personal_data['preventIP'] );
+						unset( $personal_data['preventIP'] );
+					}
+
+					if ( isset( $personal_data['retention']['policy'] ) ) {
+						$personal_data['retentionPolicy'] = $personal_data['retention']['policy'];
+					}
+
+					if ( isset( $personal_data['retention']['retain_entries_days'] ) ) {
+						$personal_data['daysToRetain'] = 'retain' !== $personal_data['retentionPolicy'] ? $personal_data['retention']['retain_entries_days'] : null;
+					}
+					unset( $personal_data['retention'] );
+
+					if ( isset( $personal_data['exportingAndErasing'] ) ) {
+						$personal_data['dataPolicies']['canExportAndErase'] = ! empty( $personal_data['exportingAndErasing']['enabled'] );
+
+						$personal_data['dataPolicies']['identificationFieldDatabaseId'] = $personal_data['exportingAndErasing']['identificationField'];
+
+						foreach ( $personal_data['exportingAndErasing']['columns'] as $field => $settings ) {
+							$personal_data['dataPolicies']['entryData'][] = [
+								'key'          => $field,
+								'shouldExport' => ! empty( $settings['export'] ),
+								'shouldErase'  => ! empty( $settings['erase'] ),
+							];
+						}
+						unset( $personal_data['exportingAndErasing'] );
+					}
+
+					return $personal_data;
+				},
 				'postCreation'                 => function() : array {
 					return [
 						'authorDatabaseId'             => isset( $this->data['postAuthor'] ) ? (int) $this->data['postAuthor'] : null,

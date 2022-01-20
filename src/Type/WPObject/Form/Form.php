@@ -192,6 +192,10 @@ class Form extends AbstractObject implements Field {
 				'type'        => FormPagination::$type,
 				'description' => __( 'Pagination data.', 'wp-graphql-gravity-forms' ),
 			],
+			'personalData'                 => [
+				'type'        => FormPersonalData::$type,
+				'description' => __( 'Personal data settings.', 'wp-graphql-gravity-forms' ),
+			],
 			'postCreation'                 => [
 				'type'        => FormPostCreation::$type,
 				'description' => __( 'Post creation data.', 'wp-graphql-gravity-forms' ),
