@@ -240,13 +240,14 @@ class FieldValues {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
+						$display_value = $context->gfEntry->entry[ $source->id ];
 
-						$display_value  = $context->gfEntry->entry[ $source->id ];
 						$parts_by_colon = explode( ':', $display_value );
-						$hours          = $parts_by_colon[0] ?? '';
-						$parts_by_space = explode( ' ', $display_value );
-						$am_pm          = $parts_by_space[1] ?? '';
-						$minutes        = rtrim( ltrim( $display_value, "{$hours}:" ), " {$am_pm}" );
+						$parts_by_space = explode( ' ', $parts_by_colon[1] ?? '' );
+
+						$hours   = $parts_by_colon[0] ?? '';
+						$minutes = $parts_by_space[0] ?? '';
+						$am_pm   = $parts_by_space[1] ?? '';
 
 						return [
 							'displayValue' => $display_value ?: null,
