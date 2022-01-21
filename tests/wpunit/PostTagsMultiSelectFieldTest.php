@@ -180,6 +180,11 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 				labelPlacement
 				placeholder
 				pageNumber
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				size
 				... on PostTagsMultiSelectField {
 					choices {
@@ -294,6 +299,7 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

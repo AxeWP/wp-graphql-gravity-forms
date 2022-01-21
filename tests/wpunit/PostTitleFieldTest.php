@@ -108,6 +108,11 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 				label
 				labelPlacement
 				placeholder
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				size
 				value
 			}
@@ -214,6 +219,7 @@ class PostTitleFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

@@ -5,19 +5,19 @@ namespace Helper\GFHelpers;
 class PropertyHelper extends GFHelpers {
 
 	public function addIconUrl( $value = null ) {
-		return $value ?? 'someurl.test';
+		return ! empty( $value ) ? $value : 'someurl.test';
 	}
 
 	public function addressType( $value = null ) {
-		return $value ?? 'international';
+		return ! empty( $value ) ? $value : 'international';
 	}
 
 	public function adminLabel( $value = null ) {
-		return $value ?? ( $this->dummy->text( 0, 8, true ) ?? null );
+		return ! empty( $value ) ? $value : $this->dummy->text( 1, 8, true );
 	}
 
 	public function allowsPrepopulate( $value = null ) {
-		return $value ?? $this->dummy->yesno();
+		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();
 	}
 
 	public function allowedExtensions( $value = null ) {
@@ -26,67 +26,67 @@ class PropertyHelper extends GFHelpers {
 
 
 	public function autocompleteAttribute( $value = null ) {
-		return $value ?? ( $this->dummy->text( 0, 8, true ) ?? null );
+		return ! empty( $value ) ? $value : ( $this->dummy->text( 0, 8, true ) ?? null );
 	}
 
 	public function backgroundColor( $value = null ) {
-		return $value ?? '#7ca6d8';
+		return ! empty( $value ) ? $value : '#7ca6d8';
 	}
 
 	public function borderColor( $value = null ) {
-		return $value ?? '#7ca6d8';
+		return ! empty( $value ) ? $value : '#7ca6d8';
 	}
 
 	public function borderStyle( $value = null ) {
-		return $value ?? 'groove';
+		return ! empty( $value ) ? $value : 'groove';
 	}
 
 	public function borderWidth( $value = null ) {
-		return $value ?? $this->dummy->number( 0, 3 );
+		return ! empty( $value ) ? $value : $this->dummy->number( 0, 3 );
 	}
 
 	public function boxWidth( $value = null ) {
-		return $value ?? $this->dummy->number( 300, 1000 );
+		return ! empty( $value ) ? $value : $this->dummy->number( 300, 1000 );
 	}
 
 	public function checkboxLabel( $value = null ) {
-		return $value ?? $this->dummy->text( 1, 8, true );
+		return ! empty( $value ) ? $value : $this->dummy->text( 1, 8, true );
 	}
 
 	public function calculationFormula( $value = null ) {
-		return $value ?? '';
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function calculationRounding( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function calendarIconType( $value = null ) {
-		return $value ?? 'none';
+		return ! empty( $value ) ? $value : 'none';
 	}
 
 	public function calendarIconUrl( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function captchaBadgePosition( $value = null ) {
-		return $value ?? 'bottomright';
+		return ! empty( $value ) ? $value : 'bottomright';
 	}
 
 	public function captchaLanguage( $value = null ) {
-		return $value ?? 'iw';
+		return ! empty( $value ) ? $value : 'iw';
 	}
 
 	public function captchaTheme( $value = null ) {
-		return $value ?? 'dark';
+		return ! empty( $value ) ? $value : 'dark';
 	}
 
 	public function captchaType( $value = null ) {
-		return $value ?? 'recaptcha';
+		return ! empty( $value ) ? $value : 'recaptcha';
 	}
 
 	public function chainedSelectsAlignment( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function chainedSelectsHideInactive( $value = null ) : bool {
@@ -94,7 +94,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function choices( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function copyValuesOptionDefault( $value = null ) : bool {
@@ -102,59 +102,59 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function copyValuesOptionField( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function cssClass( $value = null ) {
-		return $value ?? ( $this->dummy->text( 0, 8, true ) ?? null );
+		return ! empty( $value ) ? $value : ( $this->dummy->text( 0, 8, true ) ?? null );
 	}
 
 	public function dateFormat( $value = null ) {
-		return $value ?? 'ymd_dash';
+		return null !== $value ? $value : 'ymd_dash';
 	}
 
 	public function dateType( $value = null ) {
-		return $value ?? 'datepicker';
+		return ! empty( $value ) ? $value : 'datepicker';
 	}
 
 	public function defaultCountry( $value = null ) {
-		return $value ?? 'United States';
+		return ! empty( $value ) ? $value : 'United States';
 	}
 
 	public function defaultProvince( $value = null ) {
-		return $value ?? '';
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function defaultState( $value = null ) {
-		return $value ?? '';
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function defaultValue( $value = null ) {
-		return $value ?? ( $this->dummy->text( 0, 8, true ) ?? null );
+		return ! empty( $value ) ? $value : ( $this->dummy->text( 0, 8, true ) ?? null );
 	}
 
 	public function deleteIconUrl( $value = null ) {
-		return $value ?? 'someurl.test';
+		return ! empty( $value ) ? $value : 'someurl.test';
 	}
 
 	public function description( $value = null ) {
-		return $value ?? $this->dummy->text();
+		return ! empty( $value ) ? $value : $this->dummy->text();
 	}
 
 	public function descriptionPlacement( $value = null ) : string {
-		return ! empty( $value ) ?: 'inherit';
+		return null !== $value ? $value : 'above';
 	}
 
 	public function disableQuantity( $value = null ) : bool {
-		return ! empty( $value );
+		return null !== $value ? $value : $this->dummy->yesno();
 	}
 
 	public function disableMargins( $value = null ) : bool {
-		return ! empty( $value );
+		return null !== $value ? $value : $this->dummy->yesno();
 	}
 
 	public function displayAlt( $value = null ) : bool {
-		return $value ?: true;
+		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
 
@@ -163,11 +163,11 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function displayCaption( $value = null ) : bool {
-		return $value ?: true;
+		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
 	public function displayDescription( $value = null ) : bool {
-		return $value ?: true;
+		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
 	public function displayOnly( $value = null ) : bool {
@@ -175,7 +175,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function displayTitle( $value = null ) : bool {
-		return $value ?: true;
+		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
 	public function emailConfirmEnabled( $value = null ) : bool {
@@ -183,7 +183,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function enableAutocomplete( $value = null ) : bool {
-		return ! empty( $value ) ?: $this->dummy->yesno();
+		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();
 	}
 
 	public function enableCalculation( $value = null ) : bool {
@@ -191,102 +191,100 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function enableChoiceValue( $value = null ) : bool {
-		return ! empty( $value ) ?: $this->dummy->yesno();
+		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();
 	}
 
 	public function enableCopyValuesOption( $value = null ) : bool {
-		return ! empty( $value );
+		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
 	public function enableEnhancedUI( $value = null ) : bool {
-		return ! empty( $value );
+		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
 	public function enableOtherChoice( $value = null ) : bool {
-		return ! empty( $value );
+		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
 	public function enablePasswordInput( $value = null ) : bool {
-		return ! empty( $value );
+		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
 	public function gquizEnableRandomizeQuizChoices( bool $value = null ) : bool {
-		return ! empty( $value );
+		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
 	public function enableSelectAll( $value = null ) : bool {
-		return ! empty( $value );
+		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 	public function enableColumns( $value = null ) : bool {
-		return ! empty( $value );
+		return null !== $value ? ! empty( $value ) : false;
 	}
 
 	public function gquizWeightedScoreEnabled( bool $value = null ) : ?bool {
-		return $value ?? true;
+		return null !== $value ? $value : $this->dummy->yesno();
 	}
 
 	public function errorMessage( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : 'Some error message';
 	}
 
 	public function id( $value = null ) {
-		return $value ?? 1;
+		return ! empty( $value ) ? $value : 1;
 	}
 
 	public function inputMaskValue( $value = null ) {
-		return $value ?? '?****************************************************';
+		return ! empty( $value ) ? $value : '?****************************************************';
 	}
 
 	public function inputName( $value = null ) {
-		return $value ?? ( $this->dummy->text( 0, 4, true ) ?? null );
+		return ! empty( $value ) ? $value : ( $this->dummy->text( 0, 4, true ) ?? null );
 	}
 
 	public function inputs( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function inputType( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function gquizAnswerExplanation( string $value = null ) : ?string {
-		return $value ?? $this->dummy->sentence( 1, 3 );
+		return ! empty( $value ) ? $value : $this->dummy->sentence( 1, 3 );
 	}
 
 	public function gquizIsCorrect( bool $value = null ) : ?bool {
-		return $value ?? $this->dummy - yesno();
-	}
+		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();  }
 
 	public function hasInputMask( bool $value = null ) : ?bool {
-		return $value ?? true;
+		return null !== $value ? $value : $this->dummy->yesno();
 	}
 
 	public function isRequired( $value = null ) {
-		return $value ?? false;
+		return null !== $value ? $value : false;
 	}
 
 	public function isSelected( $value = null ) {
-		return $value ?? $this->dummy->yesno();
-	}
+		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();  }
 
 	public function label( $value = null ) {
-		return $value ?? ( $this->dummy->words( 1, 3 ) );
+		return null !== $value ? $value : ( $this->dummy->words( 1, 3 ) );
 	}
 
 	public function labelPlacement( $value = null ) {
-		return $value ?? 'inherit';
+		return ! empty( $value ) ? $value : 'top_label';
 	}
 
 	public function layoutGridColumnSpan( $value = null ) {
-		return $value ?? ( rand( 0, 12 ) ?: null );
+		return ! empty( $value ) ? $value : ( rand( 0, 12 ) ?: null );
 	}
 
 	public function layoutSpacerGridColumnSpan( $value = null ) {
-		return $value ?? ( rand( 0, 12 ) ?: null );
+		return ! empty( $value ) ? $value : ( rand( 0, 12 ) ?: null );
 	}
 
 	public function listValues( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function maxFiles( $value = null ) {
@@ -298,10 +296,10 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function maxLength( $value = null ) {
-		return $value ?? ( rand( 100, 550 ) ?: null );
+		return ! empty( $value ) ? $value : ( rand( 100, 550 ) ?: null );
 	}
 	public function maxRows( $value = null ) {
-		return $value ?? ( rand( 3, 10 ) ?: null );
+		return ! empty( $value ) ? $value : ( rand( 3, 10 ) ?: null );
 	}
 
 	public function multipleFiles( $value = null ) : bool {
@@ -309,7 +307,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function nextButton( $value = null ) {
-		return $value ?? [
+		return ! empty( $value ) ? $value : [
 			'type'     => 'text',
 			'text'     => $this->dummy->words( 2 ),
 			'imageUrl' => null,
@@ -317,42 +315,50 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function nameFormat( $value = null ) {
-		return $value ?? 'advanced';
+		return ! empty( $value ) ? $value : 'advanced';
 	}
 
-	public function noDuplicates( $value = null ) : bool {
-		return ! empty( $value );
+	public function noDuplicates( bool $value = null ) : bool {
+		return null !== $value ? $value : false;
 	}
+
 	public function numberFormat( $value = null ) {
-		return $value ?? 'decimal_comma';
+		return ! empty( $value ) ? $value : 'decimal_comma';
 	}
 
 	public function pageNumber( $value = null ) {
-		return $value ?? 1;
+		return ! empty( $value ) ? $value : 1;
 	}
 
 	public function penColor( $value = null ) {
-		return $value ?? '#855fa8';
+		return ! empty( $value ) ? $value : '#855fa8';
 	}
 
 	public function penSize( $value = null ) {
-		return $value ?? $this->dummy->number( 1, 3 );
+		return ! empty( $value ) ? $value : $this->dummy->number( 1, 3 );
+	}
+
+	public function personalDataErase( $value = null ) : bool {
+		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();  }
+
+	public function personalDataExport( $value = null ) : bool {
+		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();
 	}
 
 	public function phoneFormat( $value = null ) {
-		return $value ?? 'standard';
+		return ! empty( $value ) ? $value : 'standard';
 	}
 
 	public function postFeaturedImage( $value = null ) {
-		return $value ?: true;
+		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
 	public function placeholder( $value = null ) {
-		return $value ?? ( $this->dummy->words( 2 ) );
+		return ! empty( $value ) ? $value : ( $this->dummy->words( 2 ) );
 	}
 
 	public function previousButton( $value = null ) {
-		return $value ?? [
+		return ! empty( $value ) ? $value : [
 			'type'     => 'text',
 			'text'     => null,
 			'imageUrl' => '/path/to/image.jpg',
@@ -360,31 +366,31 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function productField( $value = null ) {
-		return $value ?? '';
+		return ! empty( $value ) ? $value : '';
 	}
 
 	public function gquizFieldType( string $value = null ) : string {
-		return $value ?? 'CHECKBOX';
+		return ! empty( $value ) ? $value : 'CHECKBOX';
 	}
 
 	public function rangeMin( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function rangeMax( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function gquizShowAnswerExplanation( bool $value = null ): ?bool {
-		return $value ?? $this->dummy->yesno();
+		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();
 	}
 
 	public function simpleCaptchaBackgroundColor( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function simpleCaptchaFontColor( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function simpleCaptchaSize( $value = null ) {
@@ -392,19 +398,19 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function size( $value = null ) : string {
-		return ! empty( $value ) ?: 'medium';
+		return $value ?: 'medium';
 	}
 
 	public function storageType( $value = null ) {
-		return $value ?? 'json';
+		return ! empty( $value ) ? $value : 'json';
 	}
 
 	public function subLabelPlacement( $value = null ) {
-		return $this->labelPlacement( $value );
+		return ! empty( $value ) ? $value : 'inherit';
 	}
 
 	public function text( $value = null ) {
-		return $value ?? $this->dummy->words( 3, 0, 0 );
+		return ! empty( $value ) ? $value : $this->dummy->words( 3, 0, 0 );
 	}
 
 	public function type( $value = null ) {
@@ -412,23 +418,22 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function useRichTextEditor( $value = null ) {
-		return $value ?? $this->dummy->yesno();
-	}
+		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();  }
 
 	public function value( $value = null ) {
-		return $value ?? $this->dummy->text( 1, 4, true );
+		return ! empty( $value ) ? $value : $this->dummy->text( 1, 4, true );
 	}
 
 	public function visibility( $value = null ) {
-		return ! empty( $value ) ?: 'visible';
+		return ! empty( $value ) ? $value : 'visible';
 	}
 
 	public function conditionalLogic( $value = null ) {
-		return $value ?? null;
+		return ! empty( $value ) ? $value : null;
 	}
 
 	public function content( $value = null ) {
-		return $value ?? '<div>' . $this->text( 140, 600 ) . '</div>';
+		return ! empty( $value ) ? $value : '<div>' . $this->text( 140, 600 ) . '</div>';
 	}
 
 	public function streetInput( array $keys ) {
@@ -436,19 +441,18 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function customLabel( $value = null ) {
-		return $value ?? ( $this->dummy->words( 1, 3 ) ?? null );
+		return ! empty( $value ) ? $value : ( $this->dummy->words( 1, 3 ) ?? null );
 	}
 
 	public function isHidden( $value = null ) {
-		return $value ?? $this->dummy->yesno();
-	}
+		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();  }
 
 	public function name( $value = null ) {
-		return $value ?? ( $this->dummy->text( 1, 8, true ) ?? '' );
+		return ! empty( $value ) ? $value : ( $this->dummy->text( 1, 8, true ) ?? '' );
 	}
 
 	public function gquizWeight( $value = null ) {
-		return $value ?? $this->dummy->number( 0, 5 );
+		return ! empty( $value ) ? $value : $this->dummy->number( 0, 5 );
 	}
 
 }

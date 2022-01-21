@@ -174,6 +174,11 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldAllowDuplicates
 				shouldHideInactiveChoices
 				subLabelPlacement
@@ -282,6 +287,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

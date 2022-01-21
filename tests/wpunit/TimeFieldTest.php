@@ -131,6 +131,11 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldAllowDuplicates
 				subLabelPlacement
 				timeFormat
@@ -259,6 +264,7 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

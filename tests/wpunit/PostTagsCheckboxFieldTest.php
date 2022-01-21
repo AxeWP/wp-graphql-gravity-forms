@@ -249,8 +249,13 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 				isRequired
 				label
 				labelPlacement
-				placeholder
 				pageNumber
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
+				placeholder
 				size
 				... on PostTagsCheckboxField {
 					checkboxValues {
@@ -387,6 +392,7 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

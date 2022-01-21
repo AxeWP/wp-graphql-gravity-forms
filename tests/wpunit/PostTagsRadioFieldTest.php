@@ -168,6 +168,11 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 				labelPlacement
 				placeholder
 				pageNumber
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				size
 				... on PostTagsRadioField {
 					choices {
@@ -284,6 +289,7 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

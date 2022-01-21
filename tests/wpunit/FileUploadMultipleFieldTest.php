@@ -166,6 +166,11 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 				labelPlacement
 				maxFileSize
 				maxFiles
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				values
 			}
 		';
@@ -266,19 +271,13 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 	public function expected_field_response( array $form ) : array {
 		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
 
-		$expected[] = $this->expectedNode(
-			'values',
-			[
-				$this->field_value[0],
-			],
-			0,
+		$expected[] = $this->expectedField(
+			'values.0',
+			$this->field_value[0]
 		);
-		$expected[] = $this->expectedNode(
-			'values',
-			[
-				$this->field_value[1],
-			],
-			1,
+		$expected[] = $this->expectedField(
+			'values.1',
+			$this->field_value[1]
 		);
 
 		return [
@@ -291,6 +290,7 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

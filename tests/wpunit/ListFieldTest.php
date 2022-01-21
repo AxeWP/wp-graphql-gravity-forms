@@ -147,6 +147,11 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					values
 				}
 				maxRows
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 			}
 		';
 	}
@@ -257,6 +262,7 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

@@ -109,6 +109,11 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				phoneFormat
 				placeholder
 				shouldAllowDuplicates
@@ -218,6 +223,7 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

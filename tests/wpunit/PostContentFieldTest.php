@@ -109,6 +109,11 @@ class PostContentFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 				label
 				labelPlacement
 				maxLength
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				placeholder
 				size
 				value
@@ -216,6 +221,7 @@ class PostContentFieldTest  extends FormFieldTestCase implements FormFieldTestCa
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

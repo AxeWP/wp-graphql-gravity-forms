@@ -109,6 +109,11 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 				labelPlacement
 				maxLength
 				placeholder
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldAllowDuplicates
 				size
 				value
@@ -216,6 +221,7 @@ class TextAreaFieldTest  extends FormFieldTestCase implements FormFieldTestCaseI
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

@@ -80,18 +80,18 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertQuerySuccessful( $actual, $expected );
 
-		// // Test with global ID.
-		// $actual = $this->graphql(
-		// [
-		// 'query'     => $query,
-		// 'variables' => [
-		// 'id'     => $global_id,
-		// 'idType' => 'ID',
-		// ],
-		// ]
-		// );
-		// $this->assertArrayNotHasKey( 'errors', $actual );
-		// $this->assertQuerySuccessful( $actual, $expected );
+		// Test with global ID.
+		$actual = $this->graphql(
+			[
+				'query'     => $query,
+				'variables' => [
+					'id'     => $global_id,
+					'idType' => 'ID',
+				],
+			]
+		);
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertQuerySuccessful( $actual, $expected );
 	}
 
 	/**
@@ -361,6 +361,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 					}
 					confirmations {
 						id
+						isActive
 						isDefault
 						message
 						name
@@ -455,6 +456,20 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						progressbarCompletionText
 						style
 						type
+					}
+					personalData {
+						daysToRetain
+						retentionPolicy
+						shouldSaveIP
+						dataPolicies {
+							canExportAndErase
+							identificationFieldDatabaseId
+							entryData {
+								key
+								shouldErase
+								shouldExport
+							}
+						}
 					}
 					postCreation {
 						authorDatabaseId
@@ -675,6 +690,39 @@ class FormQueriesTest extends GFGraphQLTestCase {
 							$this->expectedField( 'progressbarCompletionText', $form['pagination']['progressbar_completion_text'] ),
 							$this->expectedField( 'style', GFHelpers::get_enum_for_value( Enum\FormPageProgressStyleEnum::$type, $form['pagination']['style'] ) ),
 							$this->expectedField( 'type', GFHelpers::get_enum_for_value( Enum\FormPageProgressTypeEnum::$type, $form['pagination']['type'] ) ),
+						]
+					),
+					$this->expectedObject(
+						'personalData',
+						[
+							$this->expectedField( 'daysToRetain', $form['personalData']['retention']['retain_entries_days'] ),
+							$this->expectedField( 'retentionPolicy', GFHelpers::get_enum_for_value( Enum\FormRetentionPolicyEnum::$type, $form['personalData']['retention']['policy'] ) ),
+							$this->expectedField( 'shouldSaveIP', empty( $form['personalData']['preventIP'] ) ),
+							$this->expectedObject(
+								'dataPolicies',
+								[
+									$this->expectedField( 'canExportAndErase', $form['personalData']['exportingAndErasing']['enabled'] ),
+									$this->expectedField( 'identificationFieldDatabaseId', $form['personalData']['exportingAndErasing']['identificationField'] ),
+									$this->expectedNode(
+										'entryData',
+										[
+											$this->expectedField( 'key', array_keys( $form['personalData']['exportingAndErasing']['columns'] )[0] ),
+											$this->expectedField( 'shouldErase', ! empty( $form['personalData']['exportingAndErasing']['columns'][ array_keys( $form['personalData']['exportingAndErasing']['columns'] )[0] ]['erase'] ) ),
+											$this->expectedField( 'shouldExport', ! empty( $form['personalData']['exportingAndErasing']['columns'][ array_keys( $form['personalData']['exportingAndErasing']['columns'] )[0] ]['export'] ) ),
+										],
+										0
+									),
+									$this->expectedNode(
+										'entryData',
+										[
+											$this->expectedField( 'key', array_keys( $form['personalData']['exportingAndErasing']['columns'] )[1] ),
+											$this->expectedField( 'shouldErase', ! empty( $form['personalData']['exportingAndErasing']['columns'][ array_keys( $form['personalData']['exportingAndErasing']['columns'] )[1] ]['erase'] ) ),
+											$this->expectedField( 'shouldExport', ! empty( $form['personalData']['exportingAndErasing']['columns'][ array_keys( $form['personalData']['exportingAndErasing']['columns'] )[1] ]['export'] ) ),
+										],
+										1
+									),
+								]
+							),
 						]
 					),
 					$this->expectedObject(

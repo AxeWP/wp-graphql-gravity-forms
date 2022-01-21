@@ -183,6 +183,11 @@ class PostCategoryMultiSelectFieldTest extends FormFieldTestCase implements Form
 				label
 				labelPlacement
 				pageNumber
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldAllowDuplicates
 				size
 				... on PostCategoryMultiSelectField {
@@ -292,6 +297,7 @@ class PostCategoryMultiSelectFieldTest extends FormFieldTestCase implements Form
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

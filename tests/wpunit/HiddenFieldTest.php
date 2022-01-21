@@ -89,6 +89,11 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 				inputName
 				label
 				value
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 			}
 		';
 	}
@@ -194,6 +199,7 @@ class HiddenFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

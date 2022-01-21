@@ -252,7 +252,8 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 						[
 							$this->expectedNode(
 								'nodes',
-								$expected
+								$expected,
+								1
 							),
 						]
 					),

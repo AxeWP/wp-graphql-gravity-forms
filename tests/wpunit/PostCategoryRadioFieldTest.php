@@ -171,6 +171,11 @@ class PostCategoryFieldRadioTest extends FormFieldTestCase implements FormFieldT
 				label
 				labelPlacement
 				pageNumber
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldAllowDuplicates
 				size
 				... on PostCategoryRadioField {
@@ -282,6 +287,7 @@ class PostCategoryFieldRadioTest extends FormFieldTestCase implements FormFieldT
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

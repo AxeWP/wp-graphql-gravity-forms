@@ -172,6 +172,11 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldRandomizeQuizChoices
 				shouldShowAnswerExplanation
 				... on QuizRadioField {
@@ -283,6 +288,7 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

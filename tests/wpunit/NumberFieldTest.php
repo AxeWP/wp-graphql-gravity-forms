@@ -113,6 +113,11 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 				label
 				labelPlacement
 				numberFormat
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				placeholder
 				rangeMax
 				rangeMin
@@ -223,6 +228,7 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

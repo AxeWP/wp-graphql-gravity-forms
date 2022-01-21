@@ -254,6 +254,11 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 				label
 				labelPlacement
 				pageNumber
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldAllowDuplicates
 				size
 				... on PostCategoryCheckboxField {
@@ -385,6 +390,7 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

@@ -253,6 +253,11 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldRandomizeQuizChoices
 				shouldShowAnswerExplanation
 				... on QuizCheckboxField {
@@ -384,6 +389,7 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),
