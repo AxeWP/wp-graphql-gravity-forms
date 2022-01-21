@@ -33,6 +33,10 @@ class FormDataPolicies extends AbstractObject {
 	 */
 	public static function get_fields() : array {
 		return [
+			'canExportAndErase'             => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether entry data from this form is included when erasing and exporting personal data.', 'wp-graphql-gravity-forms' ),
+			],
 			'identificationFieldDatabaseId' => [
 				'type'        => 'Int',
 				'description' => __( 'The database ID of the Gravity Forms field used to identify the user.', 'wp-graphql-gravity-forms' ),
