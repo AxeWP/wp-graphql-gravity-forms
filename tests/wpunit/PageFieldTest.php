@@ -140,6 +140,7 @@ class PageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

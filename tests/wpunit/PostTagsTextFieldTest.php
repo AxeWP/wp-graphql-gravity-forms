@@ -135,6 +135,11 @@ class PostTagsTextFieldTest extends FormFieldTestCase implements FormFieldTestCa
 				labelPlacement
 				placeholder
 				pageNumber
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				size
 				... on PostTagsTextField {
 					autocompleteAttribute
@@ -250,6 +255,7 @@ class PostTagsTextFieldTest extends FormFieldTestCase implements FormFieldTestCa
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

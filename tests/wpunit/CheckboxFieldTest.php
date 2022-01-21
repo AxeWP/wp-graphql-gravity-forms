@@ -195,6 +195,11 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 			}
 		';
 	}
@@ -311,6 +316,7 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

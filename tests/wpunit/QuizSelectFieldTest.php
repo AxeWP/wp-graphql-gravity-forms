@@ -157,6 +157,11 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldRandomizeQuizChoices
 				shouldShowAnswerExplanation
 				... on QuizSelectField {
@@ -273,6 +278,7 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

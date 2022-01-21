@@ -171,6 +171,11 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 				label
 				labelPlacement
 				pageNumber
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldAllowDuplicates
 				size
 				... on PostCategorySelectField {
@@ -285,6 +290,7 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

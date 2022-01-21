@@ -125,15 +125,15 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					}
 				}
 				copyValuesOptionFieldId
+				copyValuesOptionLabel
 				cssClass
 				defaultCountry
 				defaultProvince
 				defaultState
 				description
 				descriptionPlacement
-				hasAutocomplete
-				shouldCopyValuesOption
 				errorMessage
+				hasAutocomplete
 				inputs {
 					customLabel
 					defaultValue
@@ -148,6 +148,12 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
+				shouldCopyValuesOption
 				subLabelPlacement
 				type
 				addressValues {
@@ -289,6 +295,7 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0,
 							),
 						]
 					),
@@ -319,7 +326,8 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 										'nodes',
 										[
 											$this->expected_field_value( 'addressValues', $value ),
-										]
+										],
+										0
 									),
 								]
 							),

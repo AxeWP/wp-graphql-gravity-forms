@@ -115,6 +115,11 @@ class SignatureFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				penColor
 				penSize
 				value
@@ -222,6 +227,7 @@ class SignatureFieldTest  extends FormFieldTestCase implements FormFieldTestCase
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

@@ -182,6 +182,11 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				subLabelPlacement
 			}
 		';
@@ -311,6 +316,7 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

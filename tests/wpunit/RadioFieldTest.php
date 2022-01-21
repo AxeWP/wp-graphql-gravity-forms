@@ -113,6 +113,11 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldAllowDuplicates
 				value
 			}
@@ -219,6 +224,7 @@ class RadioFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInte
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

@@ -119,6 +119,11 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				size
 				type
 				values
@@ -225,6 +230,7 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

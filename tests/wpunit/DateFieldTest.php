@@ -117,6 +117,11 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				placeholder
 				shouldAllowDuplicates
 				subLabelPlacement
@@ -225,6 +230,7 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

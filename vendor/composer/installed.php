@@ -6,19 +6,19 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'e58ae7c5c4e4be99cf24e5f07ed9fc7e0314e1a8',
+    'reference' => '2f743546174e928fa966bd56bf2100356a46857c',
     'name' => 'harness-software/wp-graphql-gravity-forms',
   ),
   'versions' => 
   array (
     'antecedent/patchwork' => 
     array (
-      'pretty_version' => '2.1.17',
-      'version' => '2.1.17.0',
+      'pretty_version' => '2.1.19',
+      'version' => '2.1.19.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'df5aba175a44c2996ced4edf8ec9f9081b5348c0',
+      'reference' => '94fe587cb0a6c1695b1ddc650e877231be80b8bc',
     ),
     'behat/gherkin' => 
     array (
@@ -246,7 +246,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'e58ae7c5c4e4be99cf24e5f07ed9fc7e0314e1a8',
+      'reference' => '2f743546174e928fa966bd56bf2100356a46857c',
     ),
     'hautelook/phpass' => 
     array (
@@ -257,26 +257,26 @@
     ),
     'illuminate/collections' => 
     array (
-      'pretty_version' => 'v8.79.0',
-      'version' => '8.79.0.0',
+      'pretty_version' => 'v8.80.0',
+      'version' => '8.80.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'cfa88a486e04c3531d997b5f6e0a95cc148a5cd5',
+      'reference' => 'ed630f15e937c5c928a9454748ff727ce5ea01ec',
     ),
     'illuminate/contracts' => 
     array (
-      'pretty_version' => 'v8.79.0',
-      'version' => '8.79.0.0',
+      'pretty_version' => 'v8.80.0',
+      'version' => '8.80.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '9baa9f781071e67d7b171775bd3be7ead13ddd29',
+      'reference' => '5e0fd287a1b22a6b346a9f7cd484d8cf0234585d',
     ),
     'illuminate/macroable' => 
     array (
-      'pretty_version' => 'v8.79.0',
-      'version' => '8.79.0.0',
+      'pretty_version' => 'v8.80.0',
+      'version' => '8.80.0.0',
       'aliases' => 
       array (
       ),
@@ -284,12 +284,12 @@
     ),
     'illuminate/support' => 
     array (
-      'pretty_version' => 'v8.79.0',
-      'version' => '8.79.0.0',
+      'pretty_version' => 'v8.80.0',
+      'version' => '8.80.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '250fd3002747e7fe3a78d802b091c867e321087d',
+      'reference' => '69afbd89e6b6bf847e3df59e0f72cd820b18e8da',
     ),
     'justinrainbow/json-schema' => 
     array (
@@ -333,12 +333,12 @@
     ),
     'mustache/mustache' => 
     array (
-      'pretty_version' => 'v2.14.0',
-      'version' => '2.14.0.0',
+      'pretty_version' => 'v2.14.1',
+      'version' => '2.14.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '4e2724dd40ae9499a55e7db7df82665be0ab7e34',
+      'reference' => '579ffa5c96e1d292c060b3dd62811ff01ad8c24e',
     ),
     'myclabs/deep-copy' => 
     array (
@@ -472,12 +472,12 @@
     ),
     'phpstan/phpstan' => 
     array (
-      'pretty_version' => '1.4.0',
-      'version' => '1.4.0.0',
+      'pretty_version' => '1.4.2',
+      'version' => '1.4.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '72b04d97b5e6e60a081f17c416fef35bd521120b',
+      'reference' => '1dd8f3e40bf7aa30031a75c65cece99220a161b8',
     ),
     'phpunit/php-code-coverage' => 
     array (
@@ -526,12 +526,12 @@
     ),
     'phpunit/phpunit' => 
     array (
-      'pretty_version' => '8.5.22',
-      'version' => '8.5.22.0',
+      'pretty_version' => '8.5.23',
+      'version' => '8.5.23.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'ddd05b9d844260353895a3b950a9258126c11503',
+      'reference' => 'efb20ff3623b9d09bf190a68fdfe574538a8d496',
     ),
     'poolshark/wp-graphql-stubs' => 
     array (

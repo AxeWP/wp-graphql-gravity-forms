@@ -113,6 +113,11 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				labelPlacement
 				maxLength
 				placeholder
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldAllowDuplicates
 				size
 				value
@@ -220,6 +225,7 @@ class TextFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

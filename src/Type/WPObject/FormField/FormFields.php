@@ -14,10 +14,12 @@ namespace WPGraphQL\GF\Type\WPObject\FormField;
 use GF_Field;
 use GF_Fields;
 use GraphQL\Error\UserError;
+use WPGraphQL\AppContext;
 use WPGraphQL\GF\Interfaces\Registrable;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty\PropertyMapper;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\FieldValues;
+use WPGraphQL\GF\Type\WPObject\FormField\FormFieldDataPolicy;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -208,6 +210,9 @@ class FormFields implements Registrable {
 				PropertyMapper::$setting( $field, $properties );
 			}
 
+			// Add Personal data properties to relevant fields.
+			$properties = self::map_personal_data_properties( $field, $properties );
+
 			/**
 			 * Filter to modify the Form Field GraphQL fields based on GF_Field::form_editor_field_settings().
 			 *
@@ -279,6 +284,37 @@ class FormFields implements Registrable {
 		 * @param GF_Field $field The Gravity Forms Field object.
 		 */
 		$properties = apply_filters( 'graphql_gf_form_field_value_properties', $properties, $field );
+
+		return $properties;
+	}
+
+	/**
+	 * Adds the Gravity Forms field-specific personal data policies.
+	 *
+	 * @param GF_Field $field .
+	 * @param array    $properties .
+	 */
+	public static function map_personal_data_properties( GF_Field $field, array $properties ) : array {
+		if ( ! empty( $field->displayOnly ) || in_array( $field->type, [ 'html', 'page', 'section', 'captcha' ], true ) ) {
+			return $properties;
+		}
+
+		$properties['personalData'] = [
+			'type'        => FormFieldDataPolicy::$type,
+			'description' => __( 'The form field-specifc policies for exporting and erasing personal data.', 'wp-graphql-gravity-forms' ),
+			'resolve'     => function( GF_Field $source, array $args, AppContext $context ) {
+				if ( empty( $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] ) ) {
+					return null;
+				}
+
+				return [
+					'id'                    => $source->id ?? null,
+					'isIdentificationField' => isset( $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] ) && $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] === $source->id,
+					'shouldErase'           => ! empty( $source->personalDataErase ),
+					'shouldExport'          => ! empty( $source->personalDataExport ),
+				];
+			},
+		];
 
 		return $properties;
 	}

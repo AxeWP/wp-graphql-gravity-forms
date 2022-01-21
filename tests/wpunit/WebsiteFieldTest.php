@@ -107,6 +107,11 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				label
 				labelPlacement
 				placeholder
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldAllowDuplicates
 				size
 				value
@@ -214,6 +219,7 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

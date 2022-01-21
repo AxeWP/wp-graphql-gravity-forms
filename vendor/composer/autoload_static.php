@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488
+class ComposerStaticInit0e8f6c0730ce438688b3484326e9667b
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -123,6 +123,7 @@ class ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488
         'WPGraphQL\\GF\\Type\\Enum\\FormNotificationToTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormNotificationToTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormPageProgressStyleEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormPageProgressStyleEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormPageProgressTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormPageProgressTypeEnum.php',
+        'WPGraphQL\\GF\\Type\\Enum\\FormRetentionPolicyEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormRetentionPolicyEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormRuleOperatorEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormRuleOperatorEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormStatusEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormStatusEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormSubLabelPlacementEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormSubLabelPlacementEnum.php',
@@ -170,14 +171,18 @@ class ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\ListFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/ListFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\NameFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/NameFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\TimeFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/TimeFieldValue.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FormFieldDataPolicy' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FormFieldDataPolicy.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FormFields' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FormFields.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\Form' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/Form.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormConfirmation' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormConfirmation.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormDataPolicies' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormDataPolicies.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormEntryDataPolicy' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormEntryDataPolicy.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormEntryLimits' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormEntryLimits.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormLogin' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormLogin.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormNotification' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormNotification.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormNotificationRouting' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormNotificationRouting.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormPagination' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormPagination.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormPersonalData' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormPersonalData.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormPostCreation' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormPostCreation.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormSaveAndContinue' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormSaveAndContinue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormSchedule' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormSchedule.php',
@@ -189,9 +194,9 @@ class ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit4bd9f01cc0b77c11bc8413f515ba2488::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0e8f6c0730ce438688b3484326e9667b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0e8f6c0730ce438688b3484326e9667b::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit0e8f6c0730ce438688b3484326e9667b::$classMap;
 
         }, null, ClassLoader::class);
     }

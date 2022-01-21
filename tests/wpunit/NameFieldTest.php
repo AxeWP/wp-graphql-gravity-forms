@@ -110,8 +110,8 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function field_query() : string {
 		return '
 			... on NameField {
-				canPrepopulate
 				adminLabel
+				canPrepopulate
 				conditionalLogic {
 					actionType
 					logicType
@@ -147,6 +147,12 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				isRequired
 				labelPlacement
 				label
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
+				subLabelPlacement
 				nameValues {
 					first
 					last
@@ -154,7 +160,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					prefix
 					suffix
 				}
-				subLabelPlacement
 			}
 		';
 	}
@@ -283,6 +288,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

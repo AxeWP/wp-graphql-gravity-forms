@@ -45,6 +45,8 @@ class Wpunit extends \Codeception\Module {
 			'layoutSpacerGridColumnSpan',
 			'pageNumber',
 			'visibility',
+			'personalDataErase',
+			'personalDataExport',
 		];
 	}
 
@@ -1155,6 +1157,7 @@ class Wpunit extends \Codeception\Module {
 				'confirmations'              => [
 					'5cfec9464e7d7' => [
 						'id'               => '5cfec9464e7d7',
+						'isActive'         => true,
 						'isDefault'        => true,
 						'message'          => 'Thanks for contacting us! We will get in touch with you shortly.',
 						'name'             => 'Default Confirmation',
@@ -1243,6 +1246,27 @@ class Wpunit extends \Codeception\Module {
 					'progressbar_completion_text'         => 'Completed!',
 					'style'                               => 'custom',
 					'type'                                => 'percentage',
+				],
+				'personalData'               => [
+					'preventIP'           => false,
+					'retention'           => [
+						'policy'              => 'delete',
+						'retain_entries_days' => 30,
+					],
+					'exportingAndErasing' => [
+						'enabled'             => true,
+						'identificationField' => 1,
+						'columns'             => [
+							'ip'        => [
+								'export' => true,
+								'erase'  => false,
+							],
+							'userAgent' => [
+								'export' => false,
+								'erase'  => true,
+							],
+						],
+					],
 				],
 				'postAuthor'                 => 1,
 				'postCategory'               => 1,

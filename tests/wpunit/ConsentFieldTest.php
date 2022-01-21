@@ -131,6 +131,11 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				isRequired
 				label
 				labelPlacement
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 			}
 		';
 	}
@@ -235,6 +240,7 @@ class ConsentFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

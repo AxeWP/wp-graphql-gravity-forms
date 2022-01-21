@@ -58,10 +58,9 @@ class Dummy {
 
 	public function yesno( $w = 5 ) {
 		if ( rand( 0, 10 ) > $w ) {
-			return( true );
-		} else {
-			return( false );
+			return true;
 		}
+		return false;
 	}
 
 	public function mdy() {

@@ -25,7 +25,7 @@ trait ExpectedFormFields {
 
 		$properties[] = $this->expectedField( 'defaultCountry', ! empty( $field->defaultCountry ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldCountryEnum::$type, $field->defaultCountry ) : static::IS_NULL );
 		$properties[] = $this->expectedField( 'defaultProvince', ! empty( $field->defaultProvince ) ? $field->defaultProvince : static::IS_NULL );
-		$properties[] = $this->expectedField( 'defaultState', ! empty( $field->defaultState ) ? $field->defaultstate : static::IS_NULL );
+		$properties[] = $this->expectedField( 'defaultState', ! empty( $field->defaultState ) ? $field->defaultState : static::IS_NULL );
 
 		$input_keys = [
 			'autocompleteAttribute' => 'autocompleteAttribute',
@@ -55,7 +55,7 @@ trait ExpectedFormFields {
 	}
 
 	public function background_color_setting( GF_Field $field, array &$properties ) : void {
-		$properties[] = $this->expectedField( 'backgroundColor', ! empty( $field->backgroundColor ) );
+		$properties[] = $this->expectedField( 'backgroundColor', ! empty( $field->backgroundColor ) ? $field->backgroundColor : static::IS_NULL );
 	}
 
 	public function base_price_setting( GF_Field $field, array &$properties ) : void {
@@ -239,6 +239,7 @@ trait ExpectedFormFields {
 
 	public function description_setting( GF_Field $field, array &$properties ) : void {
 		$properties[] = $this->expectedField( 'description', ! empty( $field->description ) ? $field->description : static::IS_NULL );
+		$properties[] = $this->expectedField( 'descriptionPlacement', ! empty( $field->descriptionPlacement ) ? GFHelpers::get_enum_for_value( Enum\FormFieldDescriptionPlacementEnum::$type, $field->descriptionPlacement ) : static::IS_NULL );
 	}
 
 	public function disable_margins_setting( GF_Field $field, array &$properties ) : void {
@@ -530,7 +531,7 @@ trait ExpectedFormFields {
 	public function expected_choices( array $keys, array $choices ) : ?array {
 		$expected_nodes = [];
 		if ( empty( $choices ) ) {
-			return $this->expectedField( 'choices', null );
+			return $this->expectedField( 'choices', static::IS_NULL );
 		}
 
 		foreach ( $choices as $index => $choice ) {

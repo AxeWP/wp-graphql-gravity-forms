@@ -113,7 +113,8 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 						[
 							$this->expectedNode(
 								'nodes',
-								$expected
+								$expected,
+								0,
 							),
 						]
 					),

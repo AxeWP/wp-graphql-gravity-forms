@@ -139,6 +139,11 @@ class EmailFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 				label
 				labelPlacement
 				placeholder
+				personalData {
+					isIdentificationField
+					shouldErase
+					shouldExport
+				}
 				shouldAllowDuplicates
 				size
 				subLabelPlacement
@@ -247,6 +252,7 @@ class EmailFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),

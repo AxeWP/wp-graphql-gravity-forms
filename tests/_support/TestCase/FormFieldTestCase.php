@@ -193,8 +193,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$expected = $this->expected_field_response( $form );
 
-		codecept_debug( $expected );
-		$this->assertQuerySuccessful( $response, $expected, 'query not successful' );
+		$this->assertQuerySuccessful( $response, $expected );
 
 		// Test Draft entry.
 		if ( $this->test_draft ) {
@@ -340,6 +339,14 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 				$this->$setting( $field, $expected );
 			}
 		}
+
+		$expected[] = $this->expectedObject(
+			'personalData',
+			[
+				$this->expectedField( 'shouldErase', ! empty( $field['personalDataErase'] ) ),
+				$this->expectedField( 'shouldExport', ! empty( $field['personalDataExport'] ) ),
+			]
+		);
 
 		return $expected;
 	}

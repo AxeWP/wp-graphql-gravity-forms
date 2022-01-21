@@ -113,6 +113,7 @@ class SectionFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 							$this->expectedNode(
 								'nodes',
 								$expected,
+								0
 							),
 						]
 					),
