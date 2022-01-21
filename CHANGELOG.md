@@ -2,7 +2,7 @@
 
 ## v0.10.1 - Personal Data Settings
 
-This _minor_ release adds query support for Gravity Forms Personal Data settings, an `isActive` field to `FormConfirmation` objects, and a couple of bugs.
+This _minor_ release adds query support for Gravity Forms Personal Data settings and the `isActive` field to `FormConfirmation` objects, and fixes a couple of bugs.
 
 - feat: Add `personalData` settings to `GfForm` and relevant `FormField` objects.
 - feat: Add field `isActive` to the `FormConfirmation` object (h/t @natac13).
