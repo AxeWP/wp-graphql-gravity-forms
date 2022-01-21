@@ -45,9 +45,6 @@ class FormFieldDataPolicy extends AbstractObject {
 			'isIdentificationField' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this field is used to identify the user\'s personal data.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source, array $args, AppContext $context ) {
-					return $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] === $source['id'];
-				},
 			],
 		];
 	}
