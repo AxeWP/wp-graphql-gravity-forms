@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.10.1 - Personal Data Settings
+
+This _minor_ release adds query support for Gravity Forms Personal Data settings, an `isActive` field to `FormConfirmation` objects, and a couple of bugs.
+
+- feat: Add `personalData` settings to `GfForm` and relevant `FormField` objects.
+- feat: Add field `isActive` to the `FormConfirmation` object (h/t @natac13).
+- fix: Prevent PHP notice caused by the `PostFormatTypeEnum` enum on sites without `post-formats` support (h/t @noshoesplease ).
+- fix: Ensure `timeValues.minutes` returns the 2-digit (`mm`) string.
+- tests: Fix tests incorrectly passing when a node index isn't explicitly set.
+- dev: Update composer dependencies.
+- docs: Fix missing/broken links and wording regarding custom mutation support.
+
 ## v0.10.0.1 - Hotfix
 
 This _hotfix_ release fixes compatibility issues with `gatsby-source-wordpress`  introduced in the previous release and `WPGraphQL v1.6.11`.
