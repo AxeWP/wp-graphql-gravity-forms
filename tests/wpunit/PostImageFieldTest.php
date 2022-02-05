@@ -45,8 +45,6 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdate(): void {
-		// see: https://core.trac.wordpress.org/ticket/54701#ticket
-		remove_filter( 'wp_get_attachment_image_attributes', 'twenty_twenty_one_get_attachment_image_attributes', 10, 3 );
 		$this->runTestUpdate();
 	}
 	/**
