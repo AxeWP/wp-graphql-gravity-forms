@@ -36,7 +36,7 @@
     "squizlabs/php_codesniffer": "^3.6",
     "szepeviktor/phpstan-wordpress": "^1.0",
     "wp-coding-standards/wpcs": "^2.3",
-    "wp-graphql/wp-graphql-testcase": "~2.1"
+    "wp-graphql/wp-graphql-testcase": "dev-develop"
   },
   "config": {
     "optimize-autoloader": true,
