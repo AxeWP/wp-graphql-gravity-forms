@@ -3,7 +3,7 @@
  * Enum Type - CurrencyEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
- * @since 0.10.0
+ * @since 0.10.2
  */
 
 namespace WPGraphQL\GF\Type\Enum;
