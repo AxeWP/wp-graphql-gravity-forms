@@ -82,6 +82,7 @@ return array(
     'WPGraphQL\\GF\\Type\\Enum\\CaptchaFieldTypeEnum' => $baseDir . '/src/Type/Enum/CaptchaFieldTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\ConditionalLogicActionTypeEnum' => $baseDir . '/src/Type/Enum/ConditionalLogicActionTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\ConditionalLogicLogicTypeEnum' => $baseDir . '/src/Type/Enum/ConditionalLogicLogicTypeEnum.php',
+    'WPGraphQL\\GF\\Type\\Enum\\CurrencyEnum' => $baseDir . '/src/Type/Enum/CurrencyEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\DateFieldFormatEnum' => $baseDir . '/src/Type/Enum/DateFieldFormatEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\DateFieldTypeEnum' => $baseDir . '/src/Type/Enum/DateFieldTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\DraftEntryIdTypeEnum' => $baseDir . '/src/Type/Enum/DraftEntryIdTypeEnum.php',
@@ -172,6 +173,9 @@ return array(
     'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormSaveAndContinue' => $baseDir . '/src/Type/WPObject/Form/FormSaveAndContinue.php',
     'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormSchedule' => $baseDir . '/src/Type/WPObject/Form/FormSchedule.php',
     'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormScheduleDetails' => $baseDir . '/src/Type/WPObject/Form/FormScheduleDetails.php',
+    'WPGraphQL\\GF\\Type\\WPObject\\Settings\\Logger' => $baseDir . '/src/Type/WPObject/Settings/Logger.php',
+    'WPGraphQL\\GF\\Type\\WPObject\\Settings\\Settings' => $baseDir . '/src/Type/WPObject/Settings/Settings.php',
+    'WPGraphQL\\GF\\Type\\WPObject\\Settings\\SettingsLogging' => $baseDir . '/src/Type/WPObject/Settings/SettingsLogging.php',
     'WPGraphQL\\GF\\Utils\\GFUtils' => $baseDir . '/src/Utils/GFUtils.php',
     'WPGraphQL\\GF\\Utils\\Utils' => $baseDir . '/src/Utils/Utils.php',
 );

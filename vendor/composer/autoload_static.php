@@ -97,6 +97,7 @@ class ComposerStaticInit0e8f6c0730ce438688b3484326e9667b
         'WPGraphQL\\GF\\Type\\Enum\\CaptchaFieldTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/CaptchaFieldTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\ConditionalLogicActionTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/ConditionalLogicActionTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\ConditionalLogicLogicTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/ConditionalLogicLogicTypeEnum.php',
+        'WPGraphQL\\GF\\Type\\Enum\\CurrencyEnum' => __DIR__ . '/../..' . '/src/Type/Enum/CurrencyEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\DateFieldFormatEnum' => __DIR__ . '/../..' . '/src/Type/Enum/DateFieldFormatEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\DateFieldTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/DateFieldTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\DraftEntryIdTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/DraftEntryIdTypeEnum.php',
@@ -187,6 +188,9 @@ class ComposerStaticInit0e8f6c0730ce438688b3484326e9667b
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormSaveAndContinue' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormSaveAndContinue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormSchedule' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormSchedule.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormScheduleDetails' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormScheduleDetails.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\Settings\\Logger' => __DIR__ . '/../..' . '/src/Type/WPObject/Settings/Logger.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\Settings\\Settings' => __DIR__ . '/../..' . '/src/Type/WPObject/Settings/Settings.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\Settings\\SettingsLogging' => __DIR__ . '/../..' . '/src/Type/WPObject/Settings/SettingsLogging.php',
         'WPGraphQL\\GF\\Utils\\GFUtils' => __DIR__ . '/../..' . '/src/Utils/GFUtils.php',
         'WPGraphQL\\GF\\Utils\\Utils' => __DIR__ . '/../..' . '/src/Utils/Utils.php',
     );

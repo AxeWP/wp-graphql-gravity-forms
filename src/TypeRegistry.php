@@ -118,6 +118,7 @@ class TypeRegistry {
 			Enum\CaptchaFieldBadgePositionEnum::class,
 			Enum\CaptchaFieldThemeEnum::class,
 			Enum\CaptchaFieldTypeEnum::class,
+			Enum\CurrencyEnum::class,
 			Enum\ConditionalLogicActionTypeEnum::class,
 			Enum\ConditionalLogicLogicTypeEnum::class,
 			Enum\DateFieldFormatEnum::class,
@@ -266,6 +267,10 @@ class TypeRegistry {
 			WPObject\FormField\FormFields::class,
 			// Field Error.
 			WPObject\FieldError::class,
+			// GF Settings.
+			WPObject\Settings\Logger::class,
+			WPObject\Settings\SettingsLogging::class,
+			WPObject\Settings\Settings::class,
 		];
 
 		/**
