@@ -188,7 +188,9 @@ class ComposerStaticInit0e8f6c0730ce438688b3484326e9667b
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormSaveAndContinue' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormSaveAndContinue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormSchedule' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormSchedule.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormScheduleDetails' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormScheduleDetails.php',
-        'WPGraphQL\\GF\\Type\\WPObject\\Settings' => __DIR__ . '/../..' . '/src/Type/WPObject/Settings.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\Settings\\Logger' => __DIR__ . '/../..' . '/src/Type/WPObject/Settings/Logger.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\Settings\\Settings' => __DIR__ . '/../..' . '/src/Type/WPObject/Settings/Settings.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\Settings\\SettingsLogging' => __DIR__ . '/../..' . '/src/Type/WPObject/Settings/SettingsLogging.php',
         'WPGraphQL\\GF\\Utils\\GFUtils' => __DIR__ . '/../..' . '/src/Utils/GFUtils.php',
         'WPGraphQL\\GF\\Utils\\Utils' => __DIR__ . '/../..' . '/src/Utils/Utils.php',
     );

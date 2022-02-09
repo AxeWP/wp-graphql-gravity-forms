@@ -268,7 +268,9 @@ class TypeRegistry {
 			// Field Error.
 			WPObject\FieldError::class,
 			// GF Settings.
-			WPObject\Settings::class,
+			WPObject\Settings\Logger::class,
+			WPObject\Settings\SettingsLogging::class,
+			WPObject\Settings\Settings::class,
 		];
 
 		/**

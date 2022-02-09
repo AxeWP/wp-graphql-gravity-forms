@@ -63,8 +63,14 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 					hasDefaultCss
 					hasToolbar
 					isHtml5Enabled
-					isLoggingEnabled
 					isNoConflictModeEnabled
+					logging {
+						isLoggingEnabled
+						loggers {
+							isEnabled
+							name
+						}
+					}
 				}
 			}
 		';
@@ -87,8 +93,14 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 					$this->expectedField( 'hasDefaultCss', ! $this->options['hasDefaultCss']['rg_gforms_disable_css'] ),
 					$this->expectedField( 'hasToolbar', $this->options['hasToolbar']['gform_enable_toolbar_menu'] ),
 					$this->expectedField( 'isHtml5Enabled', $this->options['isHtml5Enabled']['rg_gforms_enable_html5'] ),
-					$this->expectedField( 'isLoggingEnabled', $this->options['isLoggingEnabled']['gform_enable_logging'] ),
 					$this->expectedField( 'isNoConflictModeEnabled', $this->options['isNoConflictModeEnabled']['gform_enable_noconflict'] ),
+					$this->expectedObject(
+						'logging',
+						[
+							$this->expectedField( 'isLoggingEnabled', $this->options['isLoggingEnabled']['gform_enable_logging'] ),
+						]
+					),
+					
 				]
 			),
 		];

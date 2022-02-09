@@ -173,7 +173,9 @@ return array(
     'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormSaveAndContinue' => $baseDir . '/src/Type/WPObject/Form/FormSaveAndContinue.php',
     'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormSchedule' => $baseDir . '/src/Type/WPObject/Form/FormSchedule.php',
     'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormScheduleDetails' => $baseDir . '/src/Type/WPObject/Form/FormScheduleDetails.php',
-    'WPGraphQL\\GF\\Type\\WPObject\\Settings' => $baseDir . '/src/Type/WPObject/Settings.php',
+    'WPGraphQL\\GF\\Type\\WPObject\\Settings\\Logger' => $baseDir . '/src/Type/WPObject/Settings/Logger.php',
+    'WPGraphQL\\GF\\Type\\WPObject\\Settings\\Settings' => $baseDir . '/src/Type/WPObject/Settings/Settings.php',
+    'WPGraphQL\\GF\\Type\\WPObject\\Settings\\SettingsLogging' => $baseDir . '/src/Type/WPObject/Settings/SettingsLogging.php',
     'WPGraphQL\\GF\\Utils\\GFUtils' => $baseDir . '/src/Utils/GFUtils.php',
     'WPGraphQL\\GF\\Utils\\Utils' => $baseDir . '/src/Utils/Utils.php',
 );

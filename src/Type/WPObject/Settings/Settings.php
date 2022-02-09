@@ -6,7 +6,7 @@
  * @since 0.10.2
  */
 
-namespace WPGraphQL\GF\Type\WPObject;
+namespace WPGraphQL\GF\Type\WPObject\Settings;
 
 use GFCommon;
 use WPGraphQL\GF\Interfaces\Field;
@@ -82,10 +82,10 @@ class Settings extends AbstractObject implements Field {
 				'description' => __( 'Enable to prevent extraneous scripts and styles from being printed on a Gravity Forms admin pages, reducing conflicts with other plugins and themes.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn() : bool => (bool) get_option( 'gform_enable_noconflict' ),
 			],
-			'isLoggingEnabled'        => [
-				'type'        => 'Boolean',
-				'description' => __( 'Whether Gravity Forms internal logging is enabled. Logging allows you to easily debug the inner workings of Gravity Forms to solve any possible issues.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn() : bool => (bool) get_option( 'gform_enable_logging' ),
+			'logging'                 => [
+				'type'        => SettingsLogging::$type,
+				'description' => __( 'Logging settings.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn() => [],
 			],
 		];
 	}
