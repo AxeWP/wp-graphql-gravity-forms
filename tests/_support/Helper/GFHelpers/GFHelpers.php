@@ -8,8 +8,6 @@
 namespace Helper\GFHelpers;
 
 use Dummy;
-use GF_Field;
-use WPGraphQL\GF\Type\WPObject\FormField\FormFields;
 
 /**
  * Abstract Class - GFHelpers.

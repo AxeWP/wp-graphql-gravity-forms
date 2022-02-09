@@ -5,7 +5,7 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'eea13e859bf672d9b130a92f94459e548dbfd568',
+        'reference' => '8e02073b18fc7373e2c262e5c78fc1ded6b17bae',
         'name' => 'harness-software/wp-graphql-gravity-forms',
         'dev' => true,
     ),
@@ -241,7 +241,7 @@
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'eea13e859bf672d9b130a92f94459e548dbfd568',
+            'reference' => '8e02073b18fc7373e2c262e5c78fc1ded6b17bae',
             'dev_requirement' => false,
         ),
         'hautelook/phpass' => array(
@@ -303,9 +303,6 @@
             'aliases' => array(),
             'reference' => '5225c95f75aa0a5ad4040ec2074d1c8d7f10b5f4',
             'dev_requirement' => true,
-            'replaced' => array(
-                0 => '2.0.3',
-            ),
         ),
         'mustache/mustache' => array(
             'pretty_version' => 'v2.14.1',
@@ -324,9 +321,6 @@
             'aliases' => array(),
             'reference' => '776f831124e9c62e1a2c601ecc52e776d8bb7220',
             'dev_requirement' => true,
-            'replaced' => array(
-                0 => '1.10.2',
-            ),
         ),
         'paragonie/random_compat' => array(
             'pretty_version' => 'v2.0.20',
