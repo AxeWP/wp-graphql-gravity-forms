@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.10.2 - PHP 8 Support
+
+This _minor_ release adds official support for PHP v8.0. We also added Gravity Forms Settings to the schema.
+
+- feat: Add support for PHP v8.0.
+- feat: Add `gfSettings` to GraphQL schema.
+- dev: Restore `env.dist` to the repo, and add `.devcontainer` to `.gitignore`.
+- chore: Update composer deps.
+
 ## v0.10.1 - Personal Data Settings
 
 This _minor_ release adds query support for Gravity Forms Personal Data settings and the `isActive` field to `FormConfirmation` objects, and fixes a couple of bugs.

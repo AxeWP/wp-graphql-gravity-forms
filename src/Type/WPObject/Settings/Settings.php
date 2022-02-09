@@ -3,7 +3,7 @@
  * GraphQL Object Type - Gravity Forms Settings.
  *
  * @package WPGraphQL\GF\Type\WPObject
- * @since 0.10.2
+ * @since   0.10.2
  */
 
 namespace WPGraphQL\GF\Type\WPObject\Settings;
