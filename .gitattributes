@@ -12,5 +12,6 @@
 /.github export-ignore
 /.coveralls export-ignore
 /.dockerignore export-ignore
+/.env.dist export-ignore
 /.gitattributes export-ignore
 /.gitignore export-ignore
