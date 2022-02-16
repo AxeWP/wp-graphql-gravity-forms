@@ -1,4 +1,5 @@
-# 🚀📄 WPGraphQL for Gravity Forms
+![alt text](./.wordpress-org/icon-128x128.png "WPGraphQL for Gravity Forms Logo")
+# WPGraphQL for Gravity Forms
 
 [![Project Status: Active.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) ![Packagist License](https://img.shields.io/packagist/l/harness-software/wp-graphql-gravity-forms?color=green)![Packagist Version](https://img.shields.io/packagist/v/harness-software/wp-graphql-gravity-forms?label=stable) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/harness-software/wp-graphql-gravity-forms/v0.10.2) ![GitHub forks](https://img.shields.io/github/forks/harness-software/wp-graphql-gravity-forms?style=social) ![GitHub Repo stars](https://img.shields.io/github/stars/harness-software/wp-graphql-gravity-forms?style=social)
 
@@ -21,7 +22,7 @@ Our hope for this open source project is that it will enable more teams to lever
 
 ## System Requirements
 
-* PHP 7.4+
+* PHP 7.4+ | 8.0
 * WordPress 5.4.1+
 * WPGraphQL 1.6.4+
 * Gravity Forms 2.5+
