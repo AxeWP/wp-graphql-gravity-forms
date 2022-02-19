@@ -66,9 +66,11 @@ class DraftEntry extends Model {
 		 * @since 0.10.0
 		 *
 		 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
-		 * @param int|int[] $form_ids List of he specific form ID being queried.
+		 * @param int  $form_ids The specific form ID being queried.
+		 * @param string $resume_token The specific resume token being queried.
+		 * @param array $draft_entry the current draft entry.
 		 */
-		$can_view = apply_filters( 'graphql_gf_can_view_draft_entries', $can_view, $this->data['form_id'] );
+		$can_view = apply_filters( 'graphql_gf_can_view_draft_entries', $can_view, $this->data['form_id'], $this->resume_token, $this->data );
 
 		return ! $can_view;
 	}

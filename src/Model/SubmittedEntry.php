@@ -54,10 +54,12 @@ class SubmittedEntry extends Model {
 		 *
 		 * @since 0.10.0
 		 *
-		 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
-		 * @param int|int[] $form_ids List of he specific form ID being queried.
+		 * @param bool      $can_view_entries Whether the current user should be allowed to view form entries.
+		 * @param int       $form_id The specific form ID being queried.
+		 * @param int       $entry_id The specific entry ID being queried.
+		 * @param array     $entry the current entry.
 		 */
-		$can_view = apply_filters( 'graphql_gf_can_view_entries', $can_view, $this->data['form_id'] );
+		$can_view = apply_filters( 'graphql_gf_can_view_entries', $can_view, $this->data['form_id'], (int) $this->data['id'], $this->data );
 
 		return ! $can_view;
 	}
