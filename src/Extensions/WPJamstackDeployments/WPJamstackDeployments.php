@@ -3,7 +3,7 @@
  * Enables and initializes the Gravity Forms Action Monitor
  *
  * @package WPGraphQL\GF\Extensions\WPJamstackDeployments
- * @since @todo
+ * @since 0.10.3
  */
 
 namespace WPGraphQL\GF\Extensions\WPJamstackDeployments;
