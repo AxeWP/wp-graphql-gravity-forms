@@ -10,7 +10,6 @@
 
 namespace WPGraphQL\GF\Mutation;
 
-use Exception;
 use GFAPI;
 use GFFormsModel;
 use GraphQL\Error\UserError;
@@ -18,8 +17,6 @@ use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\EntryObjectMutation;
 use WPGraphQL\GF\Data\Factory;
-use WPGraphQL\GF\Data\Loader\EntriesLoader;
-use WPGraphQL\GF\Model\DraftEntry;
 use WPGraphQL\GF\Model\SubmittedEntry;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
 use WPGraphQL\GF\Type\Input\SubmitFormMetaInput;
