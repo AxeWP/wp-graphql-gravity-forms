@@ -59,12 +59,12 @@ class Settings {
 				'label'   => __( 'Monitor Gravity Forms Actions', 'wp-graphql-gravity-forms' ),
 				'type'    => 'multicheck',
 				'options' => [
-					'create_form'        => 'Form Creation',
-					'update_form'        => 'Form Updates',
-					'delete_form'        => 'Form Deletions',
-					'create_entry'       => 'Entry Submission',
-					'update_entry'       => 'Entry Updates',
-					'create_draft_entry' => 'Draft Entry Creation',
+					'create_form'        => __( 'Form Creation', 'wp-graphql-gravity-forms' ),
+					'update_form'        => __( 'Form Updates', 'wp-graphql-gravity-forms' ),
+					'delete_form'        => __( 'Form Deletions', 'wp-graphql-gravity-forms' ),
+					'create_entry'       => __( 'Entry Submission', 'wp-graphql-gravity-forms' ),
+					'update_entry'       => __( 'Entry Updates', 'wp-graphql-gravity-forms' ),
+					'create_draft_entry' => __( 'Draft Entry Creation', 'wp-graphql-gravity-forms' ),
 				],
 				'default' => [
 					'create_form'        => 'create_form',

@@ -12,12 +12,12 @@ use WPGraphQL\GF\Extensions\GFChainedSelects\GFChainedSelects;
 use WPGraphQL\GF\Extensions\GFQuiz\GFQuiz;
 use WPGraphQL\GF\Extensions\GFSignature\GFSignature;
 use WPGraphQL\GF\Extensions\WPGatsby\WPGatsby;
+use WPGraphQL\GF\Extensions\WPJamstackDeployments\WPJamstackDeployments;
 
 /**
  * Class - GFSignature
  */
 class Extensions {
-
 	/**
 	 * Register Gravity Forms Extensions.
 	 */
@@ -26,5 +26,6 @@ class Extensions {
 		GFQuiz::register_hooks();
 		GFSignature::register_hooks();
 		WPGatsby::register_hooks();
+		WPJamstackDeployments::register_hooks();
 	}
 }
