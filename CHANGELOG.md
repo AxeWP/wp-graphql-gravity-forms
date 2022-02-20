@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.10.3 - WP Jamstack Deployments Support
+
+This _minor_ release adds support for [WP Jamstack Deployments](https://github.com/crgeary/wp-jamstack-deployments). We also fixed a bug where non-authenticated users could not access their own `entry` on the `submitGfForm` payload.
+
+- feat: Add support for WP Jamstack Deployments. 
+- fix: Use `graphql_gf_can_view_entries` filter to expose `submitGfFormMutation.entry` to non-authenticated users. (h/t @robmarshall and @IlirBajrami )
+- fix: Change WPGatsby Trigger from deprecated `gform_after_duplicate_form` action to `gform_post_form_duplicated`.
+- dev: add `$resume_token` and `$draft_entry arguments` to `graphql_gf_can_view_draft_entries`.
+- dev: add `$entry_id` and `$entry arguments` to `graphql_gf_can_view_entries`.
+- tests: use `databaseId` instead of deprecated `formId` when testing `FormQueriesTest`
+- chore: Add new plugin logo and banner ✨
+
 ## v0.10.2 - PHP 8 Support
 
 This _minor_ release adds official support for PHP v8.0. We also added Gravity Forms Settings to the schema.
