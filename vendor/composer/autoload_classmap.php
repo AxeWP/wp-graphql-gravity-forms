@@ -54,6 +54,7 @@ return array(
     'WPGraphQL\\GF\\Extensions\\WPGatsby\\GravityFormsMonitor' => $baseDir . '/src/Extensions/WPGatsby/GravityFormsMonitor.php',
     'WPGraphQL\\GF\\Extensions\\WPGatsby\\Settings' => $baseDir . '/src/Extensions/WPGatsby/Settings.php',
     'WPGraphQL\\GF\\Extensions\\WPGatsby\\WPGatsby' => $baseDir . '/src/Extensions/WPGatsby/WPGatsby.php',
+    'WPGraphQL\\GF\\Extensions\\WPJamstackDeployments\\WPJamstackDeployments' => $baseDir . '/src/Extensions/WPJamstackDeployments/WPJamstackDeployments.php',
     'WPGraphQL\\GF\\GF' => $baseDir . '/src/GF.php',
     'WPGraphQL\\GF\\Interfaces\\Enum' => $baseDir . '/src/Interfaces/Enum.php',
     'WPGraphQL\\GF\\Interfaces\\Field' => $baseDir . '/src/Interfaces/Field.php',

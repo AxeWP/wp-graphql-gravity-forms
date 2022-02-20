@@ -180,7 +180,7 @@ install_gravityforms_signature() {
 
 install_gravityforms_chainedselects() {
 	if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityformschainedselects ]; then
-		echo "Cloning Gravity Forms Signature"
+		echo "Cloning Gravity Forms Chained Selects"
 			if [ -n "$GIT_USER" ] && [ -n "$GIT_TOKEN" ] && [ -n "$GF_CHAINEDSELECTS_REPO" ]; then
 		git clone https://$GIT_USER:$GIT_TOKEN@$GF_CHAINEDSELECTS_REPO $WP_CORE_DIR/wp-content/plugins/gravityformschainedselects
 		else
@@ -192,7 +192,7 @@ install_gravityforms_chainedselects() {
 
 install_gravityforms_quiz() {
 	if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityformsquiz ]; then
-		echo "Cloning Gravity Forms Signature"
+		echo "Cloning Gravity Forms Quiz"
 			if [ -n "$GIT_USER" ] && [ -n "$GIT_TOKEN" ] && [ -n "$GF_CHAINEDSELECTS_REPO" ]; then
 		git clone https://$GIT_USER:$GIT_TOKEN@$GF_QUIZ_REPO $WP_CORE_DIR/wp-content/plugins/gravityformsquiz
 		else
@@ -236,6 +236,10 @@ setup_plugin() {
 	# Install WPGatsby and Activate
 	wp plugin install wp-gatsby
 	wp plugin activate wp-gatsby
+
+	# Install WPJamstack Deployments and Activate
+	wp plugin install wp-jamstack-deployments
+	wp plugin activate wp-jamstack-deployments
 
 	# activate the plugin
 	wp plugin activate wp-graphql-gravity-forms

@@ -22,7 +22,7 @@ Our hope for this open source project is that it will enable more teams to lever
 
 ## System Requirements
 
-* PHP 7.4+ | 8.0
+* PHP 7.4+ || 8.0
 * WordPress 5.4.1+
 * WPGraphQL 1.6.4+
 * Gravity Forms 2.5+
@@ -40,6 +40,7 @@ Our hope for this open source project is that it will enable more teams to lever
 * Submitting forms.
 * Updating entries and draft entries.
 * Deleting entries and draft entries.
+* Triggering builds with [WPGatsby](https://wordpress.org/plugins/wp-gatsby/) and [Jamstack Deployments](https://wordpress.org/plugins/wp-jamstack-deployments/)
 
 ## Future Feature Enhancements
 

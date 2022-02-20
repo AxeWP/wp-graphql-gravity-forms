@@ -46,7 +46,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 */
 	public function init() : void {
 		// Create form.
-		add_action( 'gform_after_duplicate_form', [ $this, 'after_save_form' ], 10, 2 );
+		add_action( 'gform_post_form_duplicated', [ $this, 'after_duplicate_form' ], 10, 2 );
 		// Create or update form.
 		add_action( 'gform_after_save_form', [ $this, 'after_save_form' ], 10, 2 );
 		// Update form.

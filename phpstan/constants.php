@@ -4,3 +4,4 @@
  */
 
 define( 'WPGRAPHQL_GF_AUTOLOAD', true );
+define( 'CRGEARY_JAMSTACK_DEPLOYMENTS_OPTIONS_KEY', 'wp-jamstack-deployments' );

@@ -69,6 +69,7 @@ class ComposerStaticInit0e8f6c0730ce438688b3484326e9667b
         'WPGraphQL\\GF\\Extensions\\WPGatsby\\GravityFormsMonitor' => __DIR__ . '/../..' . '/src/Extensions/WPGatsby/GravityFormsMonitor.php',
         'WPGraphQL\\GF\\Extensions\\WPGatsby\\Settings' => __DIR__ . '/../..' . '/src/Extensions/WPGatsby/Settings.php',
         'WPGraphQL\\GF\\Extensions\\WPGatsby\\WPGatsby' => __DIR__ . '/../..' . '/src/Extensions/WPGatsby/WPGatsby.php',
+        'WPGraphQL\\GF\\Extensions\\WPJamstackDeployments\\WPJamstackDeployments' => __DIR__ . '/../..' . '/src/Extensions/WPJamstackDeployments/WPJamstackDeployments.php',
         'WPGraphQL\\GF\\GF' => __DIR__ . '/../..' . '/src/GF.php',
         'WPGraphQL\\GF\\Interfaces\\Enum' => __DIR__ . '/../..' . '/src/Interfaces/Enum.php',
         'WPGraphQL\\GF\\Interfaces\\Field' => __DIR__ . '/../..' . '/src/Interfaces/Field.php',
