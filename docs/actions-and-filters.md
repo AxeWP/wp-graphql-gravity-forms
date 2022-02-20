@@ -11,7 +11,7 @@
 Fires after the plugin has been initialized.
 
 ```php
-apply_filters( 'graphql_gf_can_view_draft_entries', $instance );
+apply_filters( 'graphql_gf_init', $instance );
 ```
 
 #### Parameters
@@ -74,26 +74,31 @@ apply_filters( 'graphql_gf_after_register_types', $type_registry );
 Filter to control whether the user should be allowed to view draft entries.
 
 ```php
-apply_filters( 'graphql_gf_can_view_draft_entries', bool $can_view_entries, int|int[] $form_ids );
+apply_filters( 'graphql_gf_can_view_draft_entries', bool $can_view_entries, int $form_id, string $resume_token, array $draft_entry );
 ```
 
 #### Parameters
 
 * **`$can_view_entries`** _(bool)_ : Whether the user can view draft entries. By default this anyone. 
-* **`$form_ids`** _(array|int)_ : An array of the GF form ids being queried by GraphQL.
+* **`$form_id`** _(int)_ : The GF form ID being queried by GraphQL.
+* **`$resume_token`** _(string)_ : The draft entry resume token being queried by GraphQL.
+* **`$draft_entry`** _(array)_ : The Gravity Forms draft entry data array.
 
 ### `graphql_gf_can_view_entries`
 
 Filter to control whether the user should be allowed to view submitted entries.
 
 ```php
-apply_filters( 'graphql_gf_can_view_entries', bool $can_view_entries, int|int[] $form_ids );
+apply_filters( 'graphql_gf_can_view_entries', bool $can_view_entries, int $form_id, int $entry_id, array $entry );
 ```
 
 #### Parameters
 
 * **`$can_view_entries`** _(bool)_ : Whether the user can view draft entries. By default this is the user who submitted the entry, and any user with the `gravityforms_view_entries` and `gform_full_access` capabilities.
-* **`$form_ids`** _(array|int)_ : An array of the GF form ids being queried by GraphQL. `0` if all forms are being queried for entries.
+* **`$form_id`** _(int)_ : The GF form ID being queried by GraphQL.
+* **`$entry_id`** _(string)_ : The entry ID being queried by GraphQL.
+* **`$draft_entry`** _(array)_ : The Gravity Forms entry data array.
+
 
 ### `graphql_gf_entries_connection_query_args`
 

@@ -10,6 +10,7 @@
 
 namespace WPGraphQL\GF\Mutation;
 
+use Exception;
 use GFAPI;
 use GFFormsModel;
 use GraphQL\Error\UserError;
@@ -17,6 +18,9 @@ use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\EntryObjectMutation;
 use WPGraphQL\GF\Data\Factory;
+use WPGraphQL\GF\Data\Loader\EntriesLoader;
+use WPGraphQL\GF\Model\DraftEntry;
+use WPGraphQL\GF\Model\SubmittedEntry;
 use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
 use WPGraphQL\GF\Type\Input\SubmitFormMetaInput;
 use WPGraphQL\GF\Type\WPInterface\Entry;
@@ -75,15 +79,38 @@ class SubmitForm extends AbstractMutation {
 				'type'        => Entry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload, array $args, AppContext $context ) {
+					// Return early if bad or nonexistent entry.
 					if ( ! empty( $payload['errors'] ) || ( ! $payload['entryId'] && ! $payload['resumeToken'] ) ) {
 						return null;
 					}
+
 					if ( ! empty( $payload['resumeToken'] ) ) {
 						return Factory::resolve_draft_entry( $payload['resumeToken'], $context );
 					}
 
 					if ( ! empty( $payload['entryId'] ) ) {
-						return Factory::resolve_entry( $payload['entryId'], $context );
+						/**
+						 * Allow non-authenticated users to view their own entries.
+						 *
+						 * The callback checks if the model is for the current id, and then it's applied
+						 * to the model as a filter.
+						 */
+						$is_private_callback = function( bool $can_view, int $form_id, $entry_id ) use ( $payload ) {
+							if ( $payload['entryId'] === $entry_id ) {
+								return true;
+							}
+
+							return $can_view;
+						};
+						add_filter( 'graphql_gf_can_view_entries', $is_private_callback, 10, 3 );
+
+						// Create the model directly, since the filter will be removed by the time Deferred would resolve.
+						$entry       = GFUtils::get_entry( $payload['entryId'] );
+						$entry_model = new SubmittedEntry( $entry );
+
+						remove_filter( 'graphql_gf_can_view_entries', $is_private_callback, 10 );
+
+						return $entry_model;
 					}
 				},
 			],
@@ -139,6 +166,7 @@ class SubmitForm extends AbstractMutation {
 			}
 
 			return [
+				'submission'  => $submission,
 				'entryId'     => ! empty( $submission['entry_id'] ) ? absint( $submission['entry_id'] ) : null,
 				'resumeToken' => $submission['resume_token'] ?? null,
 				'resumeUrl'   => isset( $submission['resume_token'] ) ? GFUtils::get_resume_url( $submission['resume_token'], $entry_data['source_url'] ?? '', $form ) : null,
