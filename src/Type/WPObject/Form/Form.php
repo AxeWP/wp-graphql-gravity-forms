@@ -10,6 +10,7 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
+use GF_Query;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
@@ -17,6 +18,7 @@ use WPGraphQL\AppContext;
 use WPGraphQL\GF\Connection\EntriesConnection;
 use WPGraphQL\GF\Connection\FormFieldsConnection;
 use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
+use WPGraphQL\GF\Data\Connection\EntriesConnectionResolver;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\Enum;
@@ -54,9 +56,30 @@ class Form extends AbstractObject implements Field {
 				'description'     => static::get_description(),
 				'connections'     => [
 					'entries'    => [
-						'toType'         => Entry::$type,
-						'connectionArgs' => EntriesConnection::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby' ] ),
-						'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
+						'toType'           => Entry::$type,
+						'connectionArgs'   => EntriesConnection::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby' ] ),
+						'connectionFields' => [
+							'count' => [
+								'type'        => 'Int',
+								'description' => __( 'The number of (filtered) entries submitted to the form.', 'wp-graphql-gravity-forms' ),
+								'resolve'     => static function ( $root ) {
+									/**
+									 * The current entry query.
+									 *
+									 * @todo get the connection resolver directly, once supported by WPGraphQL AppContext::get_current_connection();
+									 *
+									 * @var GF_Query
+									 */
+									$connection = $root['edges'][0]['connection'] instanceof EntriesConnectionResolver ? $root['edges'][0]['connection']->get_query() : null;
+
+									// Needed to resolve the counts.
+									$ids = $connection->get_ids();
+
+									return $connection->total_found;
+								},
+							],
+						],
+						'resolve'          => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
 							$context->gfForm = $source;
 
 							$args['where']['formIds'] = $source->formId ?? null;
