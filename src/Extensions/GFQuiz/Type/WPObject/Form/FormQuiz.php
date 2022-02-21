@@ -29,13 +29,6 @@ class FormQuiz extends AbstractObject implements Field {
 	public static string $type = 'FormQuiz';
 
 	/**
-	 * {@inheritDoc}
-	 */
-	public static function get_description() : string {
-		return __( 'Quiz-specific settings that will affect ALL Quiz fields in the form.', 'wp-graphql-gravity-forms' );
-	}
-
-	/**
 	 * Field registered in WPGraphQL.
 	 *
 	 * @var string
@@ -46,18 +39,18 @@ class FormQuiz extends AbstractObject implements Field {
 	 * {@inheritDoc}
 	 */
 	public static function register( TypeRegistry $type_registry = null ) : void {
-		register_graphql_object_type(
-			static::$type,
-			[
-				'description'     => static::get_description(),
-				'fields'          => static::get_fields(),
-				'eagerlyLoadType' => static::$should_load_eagerly,
-			]
-		);
-
+		parent::register( $type_registry );
 		self::register_field();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_description() : string {
+		return __( 'Quiz-specific settings that will affect ALL Quiz fields in the form.', 'wp-graphql-gravity-forms' );
+	}
+
+	
 	/**
 	 * {@inheritDoc}
 	 */
