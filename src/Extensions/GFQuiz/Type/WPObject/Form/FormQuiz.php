@@ -50,7 +50,6 @@ class FormQuiz extends AbstractObject implements Field {
 		return __( 'Quiz-specific settings that will affect ALL Quiz fields in the form.', 'wp-graphql-gravity-forms' );
 	}
 
-	
 	/**
 	 * {@inheritDoc}
 	 */
