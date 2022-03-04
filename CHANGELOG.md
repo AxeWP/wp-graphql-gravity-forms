@@ -1,5 +1,46 @@
 # Changelog
 
+## v0.10.4 - Entry Counts and Quiz Results
+
+This _minor_ release adds the a form's total entries `count` and its `quizResults` to the `GfFormToGfEntryConnection` connection.
+
+E.g.: 
+```graphql
+query {
+  gfForm(id: $id, idType: $idType) {
+    entries {
+      count # the number of entries submitted
+      quizResults { # The quiz results summary
+        averagePercentage
+          passRate
+          gradeCounts { # the frequency of each grade
+            count
+            grade
+          }
+          fieldCounts { ## the individual field breakdown
+            correctCount
+            formField {
+              node {
+                label
+              }
+            }
+            choiceCounts { ## the frequency of each answer
+              count
+              text
+            }
+          }
+      }
+    }
+  }
+}
+```
+
+- feat: Add `count` to `GfFormToGfEntryConnection`.
+- feat: Add `quizResults` to `GfFormToGfEntryConnection`.
+- dev: Make original form data available via the Form model.
+- chore: Update Composer deps.
+- chore: Fix a few GraphQL descriptions that were missing a closing `.`.
+
 ## v0.10.3 - WP Jamstack Deployments Support
 
 This _minor_ release adds support for [WP Jamstack Deployments](https://github.com/crgeary/wp-jamstack-deployments). We also fixed a bug where non-authenticated users could not access their own `entry` on the `submitGfForm` payload.
