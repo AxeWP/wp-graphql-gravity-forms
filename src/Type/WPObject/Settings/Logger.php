@@ -8,7 +8,6 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Settings;
 
-use GFLogging;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 /**
@@ -36,7 +35,7 @@ class Logger extends AbstractObject {
 		return [
 			'isEnabled' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the logger is enabled', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Whether the logger is enabled.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $source ) => ! empty( $source['enable'] ),
 			],
 			'name'      => [

@@ -3,7 +3,7 @@
  * GraphQL Object Type - Gravity Forms Quiz Results Grade Count
  *
  * @package WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\QuizResults
- * @since   @todo
+ * @since   0.10.4
  */
 
 namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\QuizResults;
@@ -33,13 +33,13 @@ class QuizResultsGradeCount extends AbstractObject {
 	 */
 	public static function get_fields() : array {
 		return [
+			'count' => [
+				'type'        => 'Int',
+				'description' => __( 'The number of entries that received this grade across all entries received.', 'wp-graphql-gravity-forms' ),
+			],
 			'grade' => [
 				'type'        => 'String',
 				'description' => __( 'The quiz grade.', 'wp-graphql-gravity-forms' ),
-			],
-			'count' => [
-				'type'        => 'Int',
-				'description' => __( 'The number of entries that received this Grade.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
