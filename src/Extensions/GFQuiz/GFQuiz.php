@@ -119,6 +119,11 @@ class GFQuiz {
 		$classes[] = WPObject\Form\FormQuizGrades::class;
 		$classes[] = WPObject\Form\FormQuizConfirmation::class;
 		$classes[] = WPObject\Form\FormQuiz::class;
+		$classes[] = WPObject\QuizResults\QuizResultsGradeCount::class;
+		$classes[] = WPObject\QuizResults\QuizResultsScoreCount::class;
+		$classes[] = WPObject\QuizResults\QuizResultsChoiceCount::class;
+		$classes[] = WPObject\QuizResults\QuizResultsFieldCount::class;
+		$classes[] = WPObject\QuizResults\QuizResults::class;
 
 		return $classes;
 	}

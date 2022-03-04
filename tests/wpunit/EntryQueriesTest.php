@@ -202,24 +202,24 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		$entry_ids = array_reverse( $this->entry_ids );
 
 		$query = '
-				query( $first: Int, $after: String, $last:Int, $before: String ) {
-					gfEntries( first: $first, after: $after, last: $last, before: $before ) {
-						pageInfo{
-							hasNextPage
-							hasPreviousPage
-							startCursor
-							endCursor
-						}
-						edges {
-							cursor
-						}
-						nodes {
-							... on GfSubmittedEntry {
-								databaseId
-							}
+			query( $first: Int, $after: String, $last:Int, $before: String ) {
+				gfEntries( first: $first, after: $after, last: $last, before: $before ) {
+					pageInfo{
+						hasNextPage
+						hasPreviousPage
+						startCursor
+						endCursor
+					}
+					edges {
+						cursor
+					}
+					nodes {
+						... on GfSubmittedEntry {
+							databaseId
 						}
 					}
 				}
+			}
 		';
 
 		$variables = [
@@ -321,6 +321,45 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		$this->assertSame( $entry_ids[1], $response['data']['gfEntries']['nodes'][1]['databaseId'], 'last/before #2 - node 1 is not same' );
 		$this->assertTrue( $response['data']['gfEntries']['pageInfo']['hasNextPage'], 'Last/before #2 does not have next page.' );
 		$this->assertFalse( $response['data']['gfEntries']['pageInfo']['hasPreviousPage'], 'Last/before #2 has previous page.' );
+	}
+
+	/**
+	 * Test entries count.
+	 */
+	public function testEntriesCount() {
+		wp_set_current_user( $this->admin->ID );
+
+		$entry_ids = array_reverse( $this->entry_ids );
+
+		$query = '
+			query testEntryCount( $status: EntryStatusEnum ) {
+				gfForms {
+					nodes {
+						entries( where: {status: $status} ) {
+							count
+						}
+					}
+				}
+			}
+		';
+
+		$response = $this->graphql( compact( 'query' ) );
+
+		$this->assertArrayNotHasKey( 'errors', $response, 'First array has errors' );
+
+		$this->assertSame( count( $entry_ids ), $response['data']['gfForms']['nodes'][0]['entries']['count'] );
+
+		$result = GFAPI::update_entry_property( $entry_ids[0], 'status', 'trash' );
+
+		$variables = [
+			'status' => 'TRASH',
+		];
+
+		$response = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertArrayNotHasKey( 'errors', $response, 'Second array has errors' );
+
+		$this->assertSame( 1, $response['data']['gfForms']['nodes'][0]['entries']['count'] );
 	}
 
 	/**
