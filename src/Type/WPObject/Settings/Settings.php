@@ -54,7 +54,7 @@ class Settings extends AbstractObject implements Field {
 		return [
 			'currency'                => [
 				'type'        => CurrencyEnum::$type,
-				'description' => __( 'The default currency for your forms. Used for product, credit card, and other fields. ', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'The default currency for your forms. Used for product, credit card, and other fields.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn() : string => GFCommon::get_currency(),
 			],
 			'hasDefaultCss'           => [

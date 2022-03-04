@@ -41,7 +41,7 @@ class SettingsLogging extends AbstractObject {
 			],
 			'loggers'          => [
 				'type'        => [ 'list_of' => Logger::$type ],
-				'description' => __( 'A list of registered Gravity Forms loggers and their configurations', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'A list of registered Gravity Forms loggers and their configurations.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function() {
 					$logging_instance  = GFLogging::get_instance();
 					$settings          = $logging_instance->get_plugin_settings();
