@@ -33,13 +33,13 @@ class QuizResultsGradeCount extends AbstractObject {
 	 */
 	public static function get_fields() : array {
 		return [
+			'count' => [
+				'type'        => 'Int',
+				'description' => __( 'The number of entries that received this grade across all entries received.', 'wp-graphql-gravity-forms' ),
+			],
 			'grade' => [
 				'type'        => 'String',
 				'description' => __( 'The quiz grade.', 'wp-graphql-gravity-forms' ),
-			],
-			'count' => [
-				'type'        => 'Int',
-				'description' => __( 'The number of entries that received this Grade.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

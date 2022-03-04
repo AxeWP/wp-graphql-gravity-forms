@@ -8,10 +8,10 @@
 
 namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\QuizResults;
 
-use GFQuiz;
-use GFCommon;
 use GFAPI;
+use GFCommon;
 use GFFormsModel;
+use GFQuiz;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPInterface\Entry;
@@ -57,33 +57,33 @@ class QuizResults extends AbstractObject implements Field {
 	 */
 	public static function get_fields() : array {
 		return [
-			'entryCount'        => [
-				'type'        => 'Int',
-				'description' => __( 'Total entries.', 'wp-graphql-gravity-forms' ),
+			'averagePercentage' => [
+				'type'        => 'Float',
+				'description' => __( 'Average percentage score as calculated across all entries received.', 'wp-graphql-gravity-forms' ),
 			],
 			'averageScore'      => [
 				'type'        => 'Float',
-				'description' => __( 'The average score.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Average score as calculated across all entries received.', 'wp-graphql-gravity-forms' ),
 			],
-			'averagePercentage' => [
-				'type'        => 'Float',
-				'description' => __( 'The average percent.', 'wp-graphql-gravity-forms' ),
-			],
-			'passRate'          => [
-				'type'        => 'Float',
-				'description' => __( 'The pass-fail rate.', 'wp-graphql-gravity-forms' ),
+			'entryCount'        => [
+				'type'        => 'Int',
+				'description' => __( 'Quantity of all the entries received for this quiz.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldCounts'       => [
 				'type'        => [ 'list_of' => QuizResultsFieldCount::$type ],
-				'description' => __( 'A list of fields and their associated result data', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'A list of fields and frequency of each answer provided.', 'wp-graphql-gravity-forms' ),
 			],
 			'gradeCounts'       => [
 				'type'        => [ 'list_of' => QuizResultsGradeCount::$type ],
-				'description' => __( 'A list of possible quiz scores, and number of entries with that score.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'If using letter grades, will show the frequency of each letter grade across all entries received.', 'wp-graphql-gravity-forms' ),
+			],
+			'passRate'          => [
+				'type'        => 'Float',
+				'description' => __( 'The pass-fail rate for all the entries received for this quiz.', 'wp-graphql-gravity-forms' ),
 			],
 			'scoreCounts'       => [
 				'type'        => [ 'list_of' => QuizResultsScoreCount::$type ],
-				'description' => __( 'A list of possible quiz scores, and number of entries with that score.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Displays a frequency bar chart showing the spread of each quiz score.', 'wp-graphql-gravity-forms' ),
 			],
 			'sum'               => [
 				'type'        => 'Float',
@@ -138,6 +138,7 @@ class QuizResults extends AbstractObject implements Field {
 
 		$fields = $results_config['callbacks']['fields']( $form );
 
+		// @todo grab search criteria from connection args.
 		$search_criteria = [ 'status' => 'active' ];
 
 		return $gf_results->get_results_data( $form, $fields, $search_criteria );
@@ -168,7 +169,7 @@ class QuizResults extends AbstractObject implements Field {
 
 		$field_counts = ! empty( $data['field_data'] ) ? self::map_field_data( $data['field_data'], $form, $entry_count, ) : null;
 
-		$return = [
+		return [
 			'averagePercentage' => $average_percent,
 			'averageScore'      => $average_score,
 			'entryCount'        => $entry_count,
@@ -178,7 +179,6 @@ class QuizResults extends AbstractObject implements Field {
 			'scoreCounts'       => $score_frequencies,
 			'sum'               => $sum,
 		];
-		return $return;
 	}
 
 	/**
@@ -223,10 +223,11 @@ class QuizResults extends AbstractObject implements Field {
 	private static function map_field_data( array $field_data, array $form, int $entry_count ) : array {
 		return array_map(
 			function( $id, $data ) use ( $entry_count, $form ) {
+				$field = GFAPI::get_field( $form, $id );
+
+				// Move the totals out of $data, since we  dont need them in the choice array.
 				$totals = $data['totals'];
 				unset( $data['totals'] );
-
-				$field = GFAPI::get_field( $form, $id );
 
 				$choice_counts = array_map(
 					function ( $count, $value ) use ( $field ) {
@@ -241,11 +242,11 @@ class QuizResults extends AbstractObject implements Field {
 				);
 
 				return [
-					'fieldId'        => $id,
-					'field'          => $field,
-					'correctCount'   => $totals['correct'],
-					'incorrectCount' => $entry_count - $totals['correct'],
 					'choiceCounts'   => $choice_counts,
+					'correctCount'   => $totals['correct'],
+					'field'          => $field,
+					'fieldId'        => $id,
+					'incorrectCount' => $entry_count - $totals['correct'],
 				];
 			},
 			array_keys( $field_data ),
