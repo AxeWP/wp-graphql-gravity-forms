@@ -3,7 +3,7 @@
  * GraphQL Object Type - Gravity Forms Quiz Results Score Count
  *
  * @package WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\QuizResults
- * @since   @todo
+ * @since   0.10.4
  */
 
 namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\QuizResults;
