@@ -148,8 +148,6 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 
 		$nodes = [];
 
-		$ids = $this->ids;
-
 		if ( ! empty( $this->get_offset() ) ) {
 			// Determine if the offset is in the array.
 			$key = array_search( (string) $this->get_offset(), $ids, true );
@@ -160,12 +158,12 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 			}
 		}
 
-		$ids = array_slice( $ids, 0, $this->query_amount, true );
-
-				// Flip the direction on `last` query.
+		// Flip the direction on `last` query.
 		if ( ! empty( $this->args['last'] ) ) {
 			$ids = array_reverse( $ids, true );
 		}
+
+		$ids = array_slice( $ids, 0, $this->query_amount, true );
 
 		foreach ( $ids as $id ) {
 			$model = $this->get_node_by_id( $id );
