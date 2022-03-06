@@ -187,23 +187,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$this->assertCount( 2, $response['data']['gfForms']['nodes'], 'First/after #2 does not return correct amount.' );
 		$this->assertSame( $form_ids[4], $response['data']['gfForms']['nodes'][0]['databaseId'], 'First/after #2 - node 0 is not same' );
 		$this->assertSame( $form_ids[5], $response['data']['gfForms']['nodes'][1]['databaseId'], 'First/after #2 - node 1 is not same.' );
-		$this->assertTrue( $response['data']['gfForms']['pageInfo']['hasNextPage'], 'First/after #1 does not have next page.' );
-		$this->assertTrue( $response['data']['gfForms']['pageInfo']['hasPreviousPage'], 'First/after #1 does not have previous page.' );
-
-		$variables = [
-			'first'  => 2,
-			'after'  => $response['data']['gfForms']['pageInfo']['endCursor'],
-			'last'   => null,
-			'before' => null,
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$this->assertArrayNotHasKey( 'errors', $response, 'First/after #2 array has errors.' );
-		$this->assertCount( 2, $response['data']['gfForms']['nodes'], 'First/after #2 does not return correct amount.' );
-		$this->assertSame( $form_ids[4], $response['data']['gfForms']['nodes'][0]['databaseId'], 'First/after #2 - node 0 is not same' );
-		$this->assertSame( $form_ids[5], $response['data']['gfForms']['nodes'][1]['databaseId'], 'First/after #2 - node 1 is not same.' );
-		$this->assertFalse( $response['data']['gfForms']['pageInfo']['hasNextPage'], 'First/after #2 has next page.' );
+		$this->assertTrue( $response['data']['gfForms']['pageInfo']['hasNextPage'], 'First/after #2 does not have next page.' );
 		$this->assertTrue( $response['data']['gfForms']['pageInfo']['hasPreviousPage'], 'First/after #2 does not have previous page.' );
 
 		// Check last argument.
