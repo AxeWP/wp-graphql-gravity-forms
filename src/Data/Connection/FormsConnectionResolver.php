@@ -42,7 +42,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 * {@inheritDoc}
 	 */
 	public function is_valid_offset( $offset ) {
-		return (bool) GFAPI::get_form( $offset );
+		return GFAPI::form_id_exists( $offset );
 	}
 
 	/**
@@ -130,7 +130,22 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 * {@inheritDoc}
 	 */
 	public function get_ids() : array {
-		return ! empty( $this->query ) ? array_keys( $this->query ) : [];
+		if ( empty( $this->query ) ) {
+			return [];
+		}
+
+		$ids = array_keys( $this->query );
+
+		// Slice here to mimic WP queries that only query the subset.
+		if ( ! empty( $this->get_offset() ) ) {
+			// Determine if the offset is in the array.
+			$key = array_search( $this->get_offset(), $ids, true );
+			// If the offset is in the array.
+			$key ++;
+			$ids = array_slice( $ids, $key, null, true );
+		}
+
+		return $ids;
 	}
 
 	/**
@@ -142,16 +157,8 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 		}
 
 		$nodes = [];
-		$ids   = $this->ids;
 
-		if ( ! empty( $this->get_offset() ) ) {
-			// Determine if the offset is in the array.
-			$key = array_search( $this->get_offset(), $ids, true );
-			// If the offset is in the array.
-			$key ++;
-			$ids = array_slice( $ids, $key, null, true );
-		}
-
+		$ids = $this->ids;
 		$ids = array_slice( $ids, 0, $this->query_amount, true );
 
 		// Reverse the array if were going backwards.
