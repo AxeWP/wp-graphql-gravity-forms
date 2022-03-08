@@ -42,7 +42,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 * {@inheritDoc}
 	 */
 	public function is_valid_offset( $offset ) {
-		return (bool) GFAPI::get_form( $offset );
+		return GFAPI::form_id_exists( $offset );
 	}
 
 	/**
@@ -98,7 +98,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 * @return array
 	 */
 	public function get_query() : array {
-		$form_ids    = $this->get_ids();
+		$form_ids    = $this->query_args['form_ids'];
 		$active      = $this->query_args['status']['active'];
 		$sort_column = $this->query_args['sort']['key'];
 		$sort_dir    = $this->query_args['sort']['direction'];
@@ -130,39 +130,38 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 * {@inheritDoc}
 	 */
 	public function get_ids() : array {
-		$form_ids    = $this->query_args['form_ids'];
-		$active      = $this->query_args['status']['active'];
-		$trash       = $this->query_args['status']['trash'];
-		$sort_column = $this->query_args['sort']['key'];
-		$sort_dir    = $this->query_args['sort']['direction'];
+		if ( empty( $this->query ) ) {
+			return [];
+		}
 
-		return ! empty( $form_ids ) ? $form_ids : GFFormsModel::get_form_ids( $active, $trash, $sort_column, $sort_dir );
+		$ids = array_keys( $this->query );
+
+		// Slice here to mimic WP queries that only query the subset.
+		if ( ! empty( $this->get_offset() ) ) {
+			// Determine if the offset is in the array.
+			$key = array_search( $this->get_offset(), $ids, true );
+			// If the offset is in the array.
+			$key ++;
+			$ids = array_slice( $ids, $key, null, true );
+		}
+
+		return $ids;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_nodes() : array {
-		$ids = $this->get_ids();
-		$ids = $ids ?: [];
+		if ( empty( $this->ids ) ) {
+			return [];
+		}
 
 		$nodes = [];
 
 		$ids = $this->ids;
-
-		if ( ! empty( $this->get_offset() ) ) {
-			// Determine if the offset is in the array.
-			$key = array_search( (string) $this->get_offset(), $ids, true );
-			// If the offset is in the array.
-			if ( false !== $key ) {
-				$key = absint( $key );
-				$ids = array_slice( $ids, $key + 1, null, true );
-			}
-		}
-
 		$ids = array_slice( $ids, 0, $this->query_amount, true );
 
-				// Flip the direction on `last` query.
+		// Reverse the array if were going backwards.
 		if ( ! empty( $this->args['last'] ) ) {
 			$ids = array_reverse( $ids, true );
 		}
