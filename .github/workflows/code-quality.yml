@@ -51,6 +51,9 @@ jobs:
         run: composer install --no-progress
 
       - name: Setup WordPress
+        env:
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GIT_USER: ${{ secrets.GIT_USER }}
         run: |
           cp .env.dist .env
           echo GIT_TOKEN=${{ secrets.GIT_TOKEN }} >> .env
