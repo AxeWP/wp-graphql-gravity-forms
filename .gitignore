@@ -14,6 +14,7 @@
 build/
 coverage/*
 node_modules/
+composer.lock
 phpcs.xml
 phpunit.xml
 schema.graphql

@@ -201,7 +201,7 @@ class Utils {
 		/**
 		 * Filter for modifying the Gravity Forms Entry types supported by WPGraphQL.
 		 *
-		 * @param $entry_types An array of Data Loader names => GraphQL Types.
+		 * @param array $entry_types An array of Data Loader names => GraphQL Types.
 		 */
 		return apply_filters( 'graphql_gf_registered_entry_types', $types );
 	}
