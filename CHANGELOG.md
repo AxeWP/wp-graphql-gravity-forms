@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.10.5 - Bugfix
+
+This _minor_ release fixes a few bugs in the `FormsConnectionResolver`. We've also added GitHub Actions for PHPStan and GraphQL schema linting.
+
+- fix: Prevent `gfForms` queries with the `last` argument from truncating the final node.
+- fix: Correctly return `hasNextPage` and `hasPreviousPage` values on `gfForms` connections.
+- dev: Refactor `bin/install-test-env` into resuable functions.
+- chore: Update Composer dependencies.
+- chore: Add GH action to save GraphQL artifact to release.
+- tests: Add GH Action for GraphQL schema linting.
+- tests: Add GH Action for PHPStan
+
 ## v0.10.4 - Entry Counts and Quiz Results
 
 This _minor_ release adds the a form's total entries `count` and its `quizResults` to the `GfFormToGfEntryConnection` connection.
