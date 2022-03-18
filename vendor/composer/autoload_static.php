@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit0e8f6c0730ce438688b3484326e9667b
 {
+    public static $files = array (
+        '49a1299791c25c6fd83542c6fedacddd' => __DIR__ . '/..' . '/yahnis-elsts/plugin-update-checker/load-v4p11.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'W' => 
         array (
@@ -197,6 +201,7 @@ class ComposerStaticInit0e8f6c0730ce438688b3484326e9667b
         'WPGraphQL\\GF\\Type\\WPObject\\Settings\\Logger' => __DIR__ . '/../..' . '/src/Type/WPObject/Settings/Logger.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Settings\\Settings' => __DIR__ . '/../..' . '/src/Type/WPObject/Settings/Settings.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Settings\\SettingsLogging' => __DIR__ . '/../..' . '/src/Type/WPObject/Settings/SettingsLogging.php',
+        'WPGraphQL\\GF\\UpdateChecker' => __DIR__ . '/../..' . '/src/UpdateChecker.php',
         'WPGraphQL\\GF\\Utils\\GFUtils' => __DIR__ . '/../..' . '/src/Utils/GFUtils.php',
         'WPGraphQL\\GF\\Utils\\Utils' => __DIR__ . '/../..' . '/src/Utils/Utils.php',
     );
