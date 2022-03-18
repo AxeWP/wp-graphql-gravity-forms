@@ -62,6 +62,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		private function setup() : void {
 			Extensions::register();
 			CoreSchemaFilters::register_hooks();
+			UpdateChecker::register_hooks();
 
 			// Initialize GF type registry.
 			add_action( get_graphql_register_action(), [ TypeRegistry::class, 'init' ] );
