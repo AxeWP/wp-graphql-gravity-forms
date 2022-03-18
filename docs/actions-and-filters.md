@@ -68,6 +68,7 @@ apply_filters( 'graphql_gf_after_register_types', $type_registry );
 * [`graphql_gf_registered_interface_classes`](#graphql_gf_registered_{type}_classes)
 * [`graphql_gf_registered_mutation_classes`](#graphql_gf_registered_{type}_classes)
 * [`graphql_gf_registered_object_classes`](#graphql_gf_registered_{type}_classes)
+* [`graphql_gf_update_repo_url`](#graphql_gf_update_repo_url)
 
 ### `graphql_gf_can_view_draft_entries`
 
@@ -333,9 +334,23 @@ apply_filters( 'graphql_gf_registered_{$type}_classes', array $classes_to_regist
 Filter for modifying the Gravity Forms Entry types supported by WPGraphQL.
 
 ```php
-apply_filters( 'graphql_gf_registered_{$type}_classes', array $classes_to_register );
+apply_filters( 'graphql_gf_registered_entry_types', array $entry_types );
 ```
 
 #### Parameters
 
 * **`$entry_types`** _(array)_ : An array of Data Loader names => GraphQL Types. E.g: `[ [ 'gf_entry' => 'GfSubmittedEntry ] ]`
+
+### `graphql_gf_update_repo_url`
+
+Filters the repo url used in the update checker.
+
+Useful for checking updates against a fork.
+
+```php
+apply_filters( 'graphql_gf_update_repo_url', string $repo_link );
+```
+
+#### Parameters
+
+* **`$repo_link`** _(string)_ : The url to the repo, [as required by `plugin-update-checker`](https://github.com/YahnisElsts/plugin-update-checker#github-integration).
