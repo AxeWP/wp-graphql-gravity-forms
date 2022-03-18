@@ -21,7 +21,7 @@ class UpdateChecker {
 	public static function register_hooks() : void {
 		add_filter( 'auto_update_plugin', [ __CLASS__, 'disable_autoupdates' ], 10, 2 );
 		add_action( 'admin_init', [ __CLASS__, 'check_updates' ] );
-		add_action( 'plugin_update_message-wp-graphql-gravity-forms/wp-graphql-gravity-forms.php', [ __CLASS__, 'in_plugin_update_message' ], 10, 2 );
+		add_action( 'in_plugin_update_message-wp-graphql-gravity-forms/wp-graphql-gravity-forms.php', [ __CLASS__, 'in_plugin_update_message' ], 10, 2 );
 	}
 
 	/**
@@ -90,6 +90,6 @@ class UpdateChecker {
 		// translators: %s: version number.
 		$message = sprintf( __( '<strong>Warning!</strong> Version %s may contain breaking changes. Please review the <a href="https://github.com/harness-software/wp-graphql-gravity-forms/releases" target="_blank">release notes</a> before upgrading.', 'wp-graphql-gravity-forms', ), $new_version );
 
-		echo '<p>' . wp_kses_post( $message ) . '</p>';
+		echo '</p></div><div class="notice inline notice-error notice-alt"><p>' . wp_kses_post( $message );
 	}
 }
