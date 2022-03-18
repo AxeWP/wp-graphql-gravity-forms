@@ -142,7 +142,6 @@ class SubmitForm extends AbstractMutation {
 
 			$field_values = self::prepare_field_values( $input['fieldValues'], $form, $save_as_draft );
 
-			add_filter( 'gform_field_validation', [ EntryObjectMutation::class, 'disable_validation_for_unsupported_fields' ], 10, 4 );
 			$submission = GFUtils::submit_form(
 				$input['id'],
 				self::get_input_values(
@@ -154,7 +153,6 @@ class SubmitForm extends AbstractMutation {
 				$target_page,
 				$source_page,
 			);
-			remove_filter( 'gform_field_validation', [ EntryObjectMutation::class, 'disable_validation_for_unsupported_fields' ] );
 
 			$entry_data = self::prepare_entry_data( $input );
 

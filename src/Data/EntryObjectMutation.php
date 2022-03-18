@@ -19,26 +19,6 @@ use WPGraphQL\GF\Utils\GFUtils;
  */
 class EntryObjectMutation {
 	/**
-	 * Disables validation for unsupported fields when submitting a form.
-	 * Applied using the 'gform_field_validation' filter.
-	 * Currently unsupported fields: captcha
-	 *
-	 * @param array    $result .
-	 * @param mixed    $value .
-	 * @param array    $form .
-	 * @param GF_Field $field .
-	 */
-	public static function disable_validation_for_unsupported_fields( array $result, $value, array $form, GF_Field $field ) : array {
-		if ( in_array( $field->get_input_type(), [ 'captcha' ], true ) ) {
-			$result = [
-				'is_valid' => true,
-				'message'  => __( 'This field type is not (yet) supported.', 'wp-graphql-gravity-forms' ),
-			];
-		}
-		return $result;
-	}
-
-	/**
 	 * Returns the FieldValueInput object relative to the field type.
 	 *
 	 * @param array $args The GraphQL mutation input args for the field.
@@ -56,6 +36,9 @@ class EntryObjectMutation {
 		switch ( $input_type ) {
 			case 'address':
 				$field_value_input = FieldValueInput\AddressValuesInput::class;
+				break;
+			case 'captcha':
+				$field_value_input = FieldValueInput\CaptchaValueInput::class;
 				break;
 			case 'checkbox':
 				$field_value_input = FieldValueInput\CheckboxValuesInput::class;

@@ -86,13 +86,11 @@ class SubmitDraftEntry extends AbstractMutation {
 
 			$submission['page_number'] = GFUtils::get_last_form_page( $form );
 
-			add_filter( 'gform_field_validation', [ EntryObjectMutation::class, 'disable_validation_for_unsupported_fields' ], 10, 4 );
 			$result = GFUtils::submit_form(
 				$submission['partial_entry']['form_id'],
 				$submission['field_values'], // $input_values,
 				$submission['field_values'],
 			);
-			remove_filter( 'gform_field_validation', [ EntryObjectMutation::class, 'disable_validation_for_unsupported_fields' ] );
 
 			if ( ! empty( $result['entry_id'] ) ) {
 				GFFormsModel::delete_draft_submission( $resume_token );

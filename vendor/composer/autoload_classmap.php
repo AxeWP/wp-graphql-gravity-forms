@@ -19,6 +19,7 @@ return array(
     'WPGraphQL\\GF\\Data\\Factory' => $baseDir . '/src/Data/Factory.php',
     'WPGraphQL\\GF\\Data\\FieldValueInput\\AbstractFieldValueInput' => $baseDir . '/src/Data/FieldValueInput/AbstractFieldValueInput.php',
     'WPGraphQL\\GF\\Data\\FieldValueInput\\AddressValuesInput' => $baseDir . '/src/Data/FieldValueInput/AddressValuesInput.php',
+    'WPGraphQL\\GF\\Data\\FieldValueInput\\CaptchaValueInput' => $baseDir . '/src/Data/FieldValueInput/CaptchaValueInput.php',
     'WPGraphQL\\GF\\Data\\FieldValueInput\\CheckboxValuesInput' => $baseDir . '/src/Data/FieldValueInput/CheckboxValuesInput.php',
     'WPGraphQL\\GF\\Data\\FieldValueInput\\ConsentValueInput' => $baseDir . '/src/Data/FieldValueInput/ConsentValueInput.php',
     'WPGraphQL\\GF\\Data\\FieldValueInput\\EmailValuesInput' => $baseDir . '/src/Data/FieldValueInput/EmailValuesInput.php',
