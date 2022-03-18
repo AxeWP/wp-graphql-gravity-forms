@@ -15,16 +15,18 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
 | `addressValues` _( obj )_                                               | `AddressField` | `city` <br> `country` <br> `lineTwo` <br> `state` <br> `street` <br> `zip` |
 | `chainedSelectValues` _( [ obj ] )_ <sup>[1](#chainedSelectsNote)</sup> | `ChainedSelectField` | `inputId` <br> `value` |
 | `checkboxValues` _( [ obj ] )_                                          | `CheckboxField` <br> `QuizField` <sup>[3](#quizNote)</sup>                                                                                                                                                                                                                                          | `inputId` <br> `value` |
+| `consentValue` _( boolean )_                                                 | `ConsentField` | |
 | `emailValues` _( obj )_                                                 | `EmailField` | `confirmationValue` <br/> `value` |
 | `fileUploadValues` _( [ Upload ] )_<sup>[2](#uploadNote)</sup>          | `FileUploadField` | `name` <br> `type` <br> `size` <br> `tmp_name` <br>                                                              |
 | `listValues` _( [ obj ] )_                                              | `ListField` | `rowValues` _( [ String ] )_                                     |
 | `nameValues` _( obj )_                                                  | `NameField` | `first` <br> `last` <br> `midele` <br> `prefix` <br> `suffix` |
 | `postImageValues` _( obj )_ <sup>[2](#uploadNote)</sup>                 | `PostImageField` | `altText` <br> `caption` <br> `description` <br> `image` <br> `title` |
-| `value` _( string )_                                                    | `ConsentField` <br> `DateField` <br> `HiddenField` <br> `NumberField` <br> `PhoneField` <br> `PostContentField` <br> `PostExcerptField` <br> `PostTitleField` <br> `QuizField` <sup>[3](#quizNote)</sup><br> `RadioField` <br> `SelectField` <br> `SignatureField` <br> `TextAreaField` <br> `TextField` <br> `TimeField` <br> `WebsiteField` <br> _Also used by default for custom fields._| n/a                                                              |
+| `value` _( string )_                                                    | `CaptchaField` <sup>[3](#captchaNote)</sup><br> `ConsentField` <br> `DateField` <br> `HiddenField` <br> `NumberField` <br> `PhoneField` <br> `PostContentField` <br> `PostExcerptField` <br> `PostTitleField` <br> `QuizField` <sup>[4](#quizNote)</sup><br> `RadioField` <br> `SelectField` <br> `SignatureField` <br> `TextAreaField` <br> `TextField` <br> `TimeField` <br> `WebsiteField` <br> _Also used by default for custom fields._| n/a                                                              |
 | `values` _( [ string ] )_                                               | `MultiSelectField` <br> `PostCategoryField` <br> `PostCustomField` <br> `PostTagsField` | n/a                                                              |
 
 <a name="chainedSelectNote">1</a>: In order to use `chainedSelectValues` you must install and activate [Gravity Forms Chained Selects](https://www.gravityforms.com/add-ons/chained-selects/).<br>
 <a name="uploadNote">2</a>: In order to use `fileUploadValues` or `postImageValues` , you must install and activate [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload).<br>
+<a name="captchaNote">2</a>: The `value` for a `Captcha` field is its validation token. See [Captcha Validation](#captcha-validation) below.<br>
 <a name="quizNote">3</a>: [Gravity Forms Quiz Fields](https://docs.gravityforms.com/quiz-field/) can be either a Checkbox, Radio, or Select field. The field value input type is assigned accordingly.
 
 ### Example Mutation
@@ -141,4 +143,34 @@ If the field is NOT updated successfully, such as when a field validation error 
     "message": "The text entered exceeds the maximum number of characters."
   }
 ]
+```
+
+## Captcha Validation
+
+As of @todo, WPGraphQL for Gravity Forms supports server-side captcha validation. This is particularly useful with Google reCAPTCHA, as it keeps your API secret key hidden.
+
+To validate a reCAPTCHA field, you need to [fetch the captcha response token](https://developers.google.com/recaptcha/docs/verify), and pass that to the field's `value` input argument:
+
+```graphql
+submitGfForm( $token: String )
+  input: {
+    formId: 50
+    fieldValues: [
+      # other form fields would go here.
+      {
+        # Captcha Field
+        id: 1
+        value: $token # The google reCAPTCHA response token.
+      }
+    }
+  }
+) {
+  errors {
+    id
+    message
+  }
+  entry {
+    databaseId
+  }
+}
 ```

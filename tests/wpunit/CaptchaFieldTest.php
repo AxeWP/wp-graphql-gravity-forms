@@ -15,6 +15,14 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	protected $test_draft = false;
 	protected $captcha_field_helper;
 
+	public function setUp(): void {
+		// Before...
+		parent::setUp();
+
+		update_option( 'rg_gforms_captcha_private_key', GF_RECAPTCHA_PRIVATE_KEY );
+		update_option( 'rg_gforms_captcha_public_key', GF_RECAPTCHA_PUBLIC_KEY );
+	}
+
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -51,7 +59,14 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 */
 	public function field_helper() {
 		$this->captcha_field_helper = $this->tester->getPropertyHelper( 'CaptchaField' );
-		return $this->tester->getPropertyHelper( 'TextField', [ 'id' => 2 ] );
+		return $this->tester->getPropertyHelper( 
+			'TextField', [
+			'id' => 2, 
+			'inputMaskValue' => '',
+			'hasInputMask' => false,
+			'noDuplicates' => false,
+			'errorMessage' => null,
+		] );
 	}
 
 	/**
@@ -154,13 +169,15 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 
 	/**
 	 * Returns the SubmitForm graphQL query.
+	 * 
+	 * The $value can be anything since we're using google's test keys.
 	 *
 	 * @return string
 	 */
 	public function submit_form_mutation() : string {
 		return '
 			mutation ($formId: ID!, $fieldId: Int!, $value: String!, $draft: Boolean) {
-				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
+				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: [{id: $fieldId, value: $value}, {id:'. $this->fields[1]->id .' value:"123456"}]}) {
 					errors {
 						id
 						message

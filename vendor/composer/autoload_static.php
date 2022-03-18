@@ -38,6 +38,7 @@ class ComposerStaticInit0e8f6c0730ce438688b3484326e9667b
         'WPGraphQL\\GF\\Data\\Factory' => __DIR__ . '/../..' . '/src/Data/Factory.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\AbstractFieldValueInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/AbstractFieldValueInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\AddressValuesInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/AddressValuesInput.php',
+        'WPGraphQL\\GF\\Data\\FieldValueInput\\CaptchaValueInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/CaptchaValueInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\CheckboxValuesInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/CheckboxValuesInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\ConsentValueInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/ConsentValueInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\EmailValuesInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/EmailValuesInput.php',
