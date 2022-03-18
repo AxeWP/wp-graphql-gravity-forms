@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'ce5932a01e528d339ee0125cd8ce3321a213f764',
+        'reference' => '5b46be77d04b669023e1ad808e724a052b4913d5',
         'name' => 'harness-software/wp-graphql-gravity-forms',
         'dev' => true,
     ),
@@ -317,12 +317,12 @@
             'dev_requirement' => true,
         ),
         'harness-software/wp-graphql-gravity-forms' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'ce5932a01e528d339ee0125cd8ce3321a213f764',
+            'reference' => '5b46be77d04b669023e1ad808e724a052b4913d5',
             'dev_requirement' => false,
         ),
         'hautelook/phpass' => array(
@@ -620,12 +620,12 @@
             'dev_requirement' => true,
         ),
         'phpunit/phpunit' => array(
-            'pretty_version' => '8.5.24',
-            'version' => '8.5.24.0',
+            'pretty_version' => '8.5.25',
+            'version' => '8.5.25.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/phpunit',
             'aliases' => array(),
-            'reference' => '293cb0099d75407d971a73f41e51f35b664667ed',
+            'reference' => '9ff23f4dfde040ccd3b8db876192d1184b934158',
             'dev_requirement' => true,
         ),
         'poolshark/wp-graphql-stubs' => array(
