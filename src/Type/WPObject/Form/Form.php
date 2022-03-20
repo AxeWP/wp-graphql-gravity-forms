@@ -194,8 +194,10 @@ class Form extends AbstractObject implements Field {
 				'description' => __( 'Determines where the field labels should be placed in relation to the field.', 'wp-graphql-gravity-forms' ),
 			],
 			'lastPageButton'               => [
-				'type'        => Button\FormLastPageButton::$type,
-				'description' => __( 'Last page button data.', 'wp-graphql-gravity-forms' ),
+				'type'              => Button\FormLastPageButton::$type,
+				'description'       => __( 'Last page button data.', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Use `pagination.lastPageButton` instead', 'wp-graphql-gravity-forms' ),
+				'resolve'           => fn( $source ) => ! empty( $source->pagination ) ? $source->pagination['lastPageButton'] : null,
 			],
 			'login'                        => [
 				'type'        => FormLogin::$type,

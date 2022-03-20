@@ -98,7 +98,6 @@ class Form extends Model {
 				'isActive'                     => fn() : bool => $this->data['is_active'] ?? true,
 				'isTrash'                      => fn() : bool => $this->data['is_trash'] ?? false,
 				'labelPlacement'               => fn() : ?string => $this->data['labelPlacement'] ?? null,
-				'lastPageButton'               => fn() : ?array => ! empty( $this->data['lastPageButton'] ) ? $this->data['lastPageButton'] : null,
 				'login'                        => function() : array {
 					return [
 						'isLoginRequired'      => ! empty( $this->data['requireLogin'] ),
@@ -124,6 +123,8 @@ class Form extends Model {
 						$pagination['progressbarCompletionText'] = $pagination['progressbar_completion_text'];
 						unset( $pagination['progressbar_completion_text'] );
 					}
+					// Relocate logically.
+					$pagination['lastPageButton'] = ! empty( $this->data['lastPageButton'] ) ? $this->data['lastPageButton'] : null;
 
 					return $pagination;
 				},
