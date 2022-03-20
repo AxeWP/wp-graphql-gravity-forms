@@ -122,8 +122,10 @@ class Form extends AbstractObject implements Field {
 	public static function get_fields() : array {
 		return [
 			'button'                       => [
-				'type'        => Button\FormButton::$type,
-				'description' => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
+				'type'              => FormSubmitButton::$type,
+				'description'       => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Use `submitButton` field instead', 'wp-graphql-gravity-forms' ),
+				'resolve'           => fn( $source ) => $source->submitButton,
 			],
 			'confirmations'                => [
 				'type'        => [ 'list_of' => FormConfirmation::$type ],
@@ -238,6 +240,10 @@ class Form extends AbstractObject implements Field {
 			'subLabelPlacement'            => [
 				'type'        => Enum\FormSubLabelPlacementEnum::$type,
 				'description' => __( 'How sub-labels are aligned.', 'wp-graphql-gravity-forms' ),
+			],
+			'submitButton'                 => [
+				'type'        => FormSubmitButton::$type,
+				'description' => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
 			],
 			'title'                        => [
 				'type'        => 'String',

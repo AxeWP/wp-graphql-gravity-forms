@@ -52,7 +52,6 @@ class Form extends Model {
 	protected function init() : void {
 		if ( empty( $this->fields ) ) {
 			$this->fields = [
-				'button'                       => fn() : ?array => isset( $this->data['button'] ) ? $this->data['button'] : null,
 				'confirmations'                => function() : ?array {
 					if ( empty( $this->data['confirmations'] ) ) {
 						return null;
@@ -204,6 +203,14 @@ class Form extends Model {
 					];
 				},
 				'subLabelPlacement'            => fn() : ?string => ! empty( $this->data['subLabelPlacement'] ) ? $this->data['subLabelPlacement'] : null,
+				'submitButton'                 => function() : ?array {
+					$button = isset( $this->data['button'] ) ? $this->data['button'] : null;
+					// Coax types.
+					$button['layoutGridColumnSpan'] = ! empty( $button['layoutGridColumnSpan'] ) ? (int) $button['layoutGridColumnSpan'] : null;
+					$button['imageUrl']             = ! empty( $button['imageUrl'] ) ? $button['imageUrl'] : null;
+					$button['text']                 = ! empty( $button['text'] ) ? $button['text'] : null;
+					return $button;
+				},
 				'title'                        => fn() : ?string => ! empty( $this->data['title'] ) ? $this->data['title'] : null,
 				'hasValidationSummary'         => fn() : bool => ! empty( $this->data['validationSummary'] ),
 				'version'                      => fn() : ?string => ! empty( $this->data['version'] ) ? $this->data['version'] : null,
