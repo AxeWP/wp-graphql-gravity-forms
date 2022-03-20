@@ -13,6 +13,7 @@ namespace WPGraphQL\GF\Type\WPObject\Form;
 use WPGraphQL\GF\Type\Enum\FormPageProgressStyleEnum;
 use WPGraphQL\GF\Type\Enum\FormPageProgressTypeEnum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
+use WPGraphQL\GF\Type\WPObject\Button\FormLastPageButton;
 
 /**
  * Class - FormPagination
@@ -49,6 +50,10 @@ class FormPagination extends AbstractObject {
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the confirmation bar should be displayed with the confirmation text.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn( $source) => ! empty( $source['displayProgressbarOnConfirmation'] ),
+			],
+			'lastPageButton'               => [
+				'type'        => FormLastPageButton::$type,
+				'description' => __( 'Last page button data.', 'wp-graphql-gravity-forms' ),
 			],
 			'pageNames'                    => [
 				'type'        => [ 'list_of' => 'String' ],

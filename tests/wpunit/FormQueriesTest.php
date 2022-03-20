@@ -331,20 +331,6 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		return '
 			query getForm( $id: ID!, $idType: FormIdTypeEnum ) {
 				gfForm( id: $id, idType: $idType ) {
-					button {
-						conditionalLogic {
-							actionType
-							logicType
-							rules {
-								fieldId
-								operator
-								value
-							}
-						}
-						imageUrl
-						text
-						type
-					}
 					confirmations {
 						id
 						isActive
@@ -391,11 +377,6 @@ class FormQueriesTest extends GFGraphQLTestCase {
 					isActive
 					isTrash
 					labelPlacement
-					lastPageButton {
-						imageUrl
-						text
-						type
-					}
 					login {
 						isLoginRequired
 						loginRequiredMessage
@@ -438,6 +419,11 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						backgroundColor
 						color
 						hasProgressbarOnConfirmation
+						lastPageButton {
+							imageUrl
+							text
+							type
+						}
 						pageNames
 						progressbarCompletionText
 						style
@@ -522,6 +508,23 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						}
 					}
 					subLabelPlacement
+					submitButton {
+						conditionalLogic {
+							actionType
+							logicType
+							rules {
+								fieldId
+								operator
+								value
+							}
+						}
+						imageUrl
+						layoutGridColumnSpan
+						location
+						text
+						type
+						width
+					}
 					title
 					version
 				}
@@ -541,12 +544,15 @@ class FormQueriesTest extends GFGraphQLTestCase {
 				'gfForm',
 				[
 					$this->expectedObject(
-						'button',
+						'submitButton',
 						[
 							$this->get_expected_conditional_logic_fields( $form['button']['conditionalLogic'] ?? [] ),
 							$this->expectedField( 'imageUrl', $form['button']['imageUrl'] ),
+							$this->expectedField( 'layoutGridColumnSpan', (int) $form['button']['layoutGridColumnSpan'] ),
+							$this->expectedField( 'location', GFHelpers::get_enum_for_value( Enum\FormSubmitButtonLocationEnum::$type, $form['button']['location'] ) ),
 							$this->expectedField( 'text', $form['button']['text'] ),
 							$this->expectedField( 'type', GFHelpers::get_enum_for_value( Enum\FormButtonTypeEnum::$type, $form['button']['type'] ) ),
+							$this->expectedField( 'width', GFHelpers::get_enum_for_value( Enum\FormSubmitButtonWidthEnum::$type, $form['button']['width'] ) ),
 						]
 					),
 					$this->expectedNode(
@@ -609,14 +615,6 @@ class FormQueriesTest extends GFGraphQLTestCase {
 					$this->expectedField( 'isTrash', (bool) $form['is_trash'] ),
 					$this->expectedField( 'labelPlacement', GFHelpers::get_enum_for_value( Enum\FormLabelPlacementEnum::$type, $form['labelPlacement'] ) ),
 					$this->expectedObject(
-						'lastPageButton',
-						[
-							$this->expectedField( 'imageUrl', $form['lastPageButton']['imageUrl'] ),
-							$this->expectedField( 'text', $form['lastPageButton']['text'] ),
-							$this->expectedField( 'type', GFHelpers::get_enum_for_value( Enum\FormButtonTypeEnum::$type, $form['lastPageButton']['type'] ) ),
-						]
-					),
-					$this->expectedObject(
 						'login',
 						[
 							$this->expectedField( 'isLoginRequired', $form['requireLogin'] ),
@@ -672,6 +670,14 @@ class FormQueriesTest extends GFGraphQLTestCase {
 							$this->expectedField( 'backgroundColor', $form['pagination']['backgroundColor'] ),
 							$this->expectedField( 'color', $form['pagination']['color'] ),
 							$this->expectedField( 'hasProgressbarOnConfirmation', ! empty( $form['pagination']['display_progressbar_on_confirmation'] ) ),
+							$this->expectedObject(
+								'lastPageButton',
+								[
+									$this->expectedField( 'imageUrl', $form['lastPageButton']['imageUrl'] ),
+									$this->expectedField( 'text', $form['lastPageButton']['text'] ),
+									$this->expectedField( 'type', GFHelpers::get_enum_for_value( Enum\FormButtonTypeEnum::$type, $form['lastPageButton']['type'] ) ),
+								]
+							),
 							$this->expectedField( 'pageNames', $form['pagination']['pages'] ),
 							$this->expectedField( 'progressbarCompletionText', $form['pagination']['progressbar_completion_text'] ),
 							$this->expectedField( 'style', GFHelpers::get_enum_for_value( Enum\FormPageProgressStyleEnum::$type, $form['pagination']['style'] ) ),

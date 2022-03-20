@@ -151,6 +151,8 @@ class TypeRegistry {
 			Enum\FormRuleOperatorEnum::class,
 			Enum\FormStatusEnum::class,
 			Enum\FormSubLabelPlacementEnum::class,
+			Enum\FormSubmitButtonLocationEnum::class,
+			Enum\FormSubmitButtonWidthEnum::class,
 			Enum\NumberFieldFormatEnum::class,
 			Enum\PasswordFieldMinStrengthEnum::class,
 			Enum\PhoneFieldFormatEnum::class,
@@ -255,6 +257,7 @@ class TypeRegistry {
 			WPObject\Form\FormScheduleDetails::class,
 			WPObject\Form\FormSchedule::class,
 			WPObject\Form\FormSaveAndContinue::class,
+			WPObject\Form\FormSubmitButton::class,
 			WPObject\FormField\FormFieldDataPolicy::class,
 			// Form Field Value properties.
 			WPObject\FormField\FieldValue\ValueProperty\AddressFieldValue::class,

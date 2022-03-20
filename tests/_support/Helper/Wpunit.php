@@ -1151,8 +1151,11 @@ class Wpunit extends \Codeception\Module {
 						],
 					],
 					'imageUrl'         => 'https://example.com',
+					'layoutGridColumnSpan' => '12',
+					'location'         => 'bottom',
 					'text'             => 'Submit',
 					'type'             => 'text',
+					'width'            => 'full',
 				],
 				'confirmations'              => [
 					'5cfec9464e7d7' => [
