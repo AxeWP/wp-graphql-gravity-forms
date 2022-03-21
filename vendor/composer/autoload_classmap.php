@@ -162,6 +162,7 @@ return array(
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\FieldValues' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/FieldValues.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\AddressFieldValue' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/AddressFieldValue.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\CheckboxFieldValue' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/CheckboxFieldValue.php',
+    'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\FileUploadFieldValue' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/FileUploadFieldValue.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\ImageFieldValue' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/ImageFieldValue.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\ListFieldValue' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/ListFieldValue.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\NameFieldValue' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/NameFieldValue.php',

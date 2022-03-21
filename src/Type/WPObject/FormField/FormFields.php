@@ -268,7 +268,12 @@ class FormFields implements Registrable {
 				break;
 			case 'fileupload':
 			case 'multiselect':
-				$properties += FieldValues::values();
+				// Deprecate values field.
+				$values                                = FieldValues::values();
+				$values['values']['deprecationReason'] = __( 'Use `fileUploadValues` instead.', 'wp-graphql-gravity-forms' );
+				$properties                           += $values;
+
+				$properties += FieldValues::file_upload_values();
 				break;
 			case 'post_category':
 			case 'post_custom':

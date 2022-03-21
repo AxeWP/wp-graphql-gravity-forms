@@ -8,7 +8,9 @@
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue;
 
+use GFCommon;
 use GF_Field;
+use GF_Field_FileUpload;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
 use WPGraphQL\GF\Utils\Utils;
@@ -203,26 +205,67 @@ class FieldValues {
 	}
 
 	/**
+	 * Get `fileUploadValue` property.
+	 *
+	 * @return array
+	 */
+	public static function file_upload_values() : array {
+		return [
+			'fileUploadValues' => [
+				'type'        => [ 'list_of' => ValueProperty\FileUploadFieldValue::$type ],
+				'description' => __( 'File upload value', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $source, array $args, AppContext $context ) {
+					if ( ! self::is_field_and_entry( $source, $context ) ) {
+						return null;
+					}
+
+					// @todo 2.5 compat
+					return self::get_file_upload_extra_entry_metadata( $source, $context->gfEntry->entry, $context->gfForm->form ) ?: null;
+				},
+			],
+		];
+	}
+
+	/**
 	 * Get `imageValues` property.
 	 */
 	public static function image_values() : array {
 		return [
 			'imageValues' => [
 				'type'        => ValueProperty\ImageFieldValue::$type,
-				'description' => __( 'Name field value.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Image field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
 
-					$value = array_pad( explode( '|:|', $context->gfEntry->entry[ $source->id ] ), 5, false );
-					return [
-						'altText'     => $value[4] ?: null,
-						'caption'     => $value[2] ?: null,
-						'description' => $value[3] ?: null,
-						'title'       => $value[1] ?: null,
-						'url'         => $value[0] ?: null,
+					$image_data = array_pad( explode( '|:|', $context->gfEntry->entry[ $source->id ] ), 5, false );
+
+					$values_to_return = [
+						'altText'     => $image_data[4] ?: null,
+						'caption'     => $image_data[2] ?: null,
+						'description' => $image_data[3] ?: null,
+						'title'       => $image_data[1] ?: null,
+						'url'         => $image_data[0] ?: null,
 					];
+
+					/**
+					 * Strip out the meta from the entry value.
+					 *
+					 * @see GF_Field_PostImage::get_extra_entry_metadata().
+					 */
+					$file_values = [];
+
+					// Draft entries don't upload files.
+					if ( ! $context->gfEntry->isDraft ) {
+						$entry                = $context->gfEntry->entry;
+						$entry[ $source->id ] = $image_data[0];
+						$file_values          = self::get_file_upload_extra_entry_metadata( $source, $entry, $context->gfForm->form );
+						// Add the file values if they exist.
+						$values_to_return = array_merge( $file_values[ $image_data[0] ] ?? [], $values_to_return );
+					}
+
+					return $values_to_return;
 				},
 			],
 		];
@@ -267,7 +310,7 @@ class FieldValues {
 		return [
 			'values' => [
 				'type'        => [ 'list_of' => 'String' ],
-				'description' => __( 'Checkbox field value.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'An array of field values.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
@@ -307,5 +350,68 @@ class FieldValues {
 		return $source instanceof GF_Field
 			&& isset( $context->gfEntry )
 			&& isset( $context->gfEntry->entry );
+	}
+
+	/**
+	 * Gets the file data meta saved to the entry.
+	 *
+	 * Shim GF_Field_FileUpload::get_extra_entry_metadata().
+	 *
+	 * @param GF_Field_FileUpload $field .
+	 * @param array               $entry .
+	 * @param array               $form .
+	 */
+	protected static function get_file_upload_extra_entry_metadata( GF_Field_FileUpload $field, array $entry, array $form ) : array {
+		// Bail early if unsupported.
+		if ( version_compare( GFCommon::$version, '2.6.0', '<' ) ) {
+			return [];
+		}
+
+		$file_values = $entry[ $field->id ] ?? null;
+
+		// Corerce files into an array.
+		if ( $field->multipleFiles && ! empty( $file_values ) ) {
+			$file_values = json_decode( $file_values, true );
+		} else {
+			$file_values = [ $file_values ];
+		}
+
+		// Bail if no files.
+		if ( empty( $file_values ) ) {
+			return [];
+		}
+
+		$info = [];
+
+		// Generate the file info for all files.
+		foreach ( $file_values as $file_value ) {
+			$stored_path_info = gform_get_meta( $entry['id'], $field::get_file_upload_path_meta_key_hash( $file_value ) );
+
+			if ( empty( $stored_path_info ) ) {
+				// Use the filtered path to get the actual file path.
+				$upload_root_info = $field::get_upload_root_info( rgar( $form, 'id' ) );
+
+				// Default upload path to fall back to.
+				$default_upload_root_info = $field::get_default_upload_roots( rgar( $form, 'id' ) );
+
+				$url              = rgar( $upload_root_info, 'url', $default_upload_root_info['url'] );
+				$path             = rgar( $upload_root_info, 'path', $default_upload_root_info['path'] );
+				$stored_path_info = [
+					'path'      => $path,
+					'url'       => $url,
+					'file_name' => wp_basename( $file_value ),
+				];
+			}
+
+			$info[ $file_value ] = [
+				'basePath' => $stored_path_info['path'] ?? null,
+				'baseUrl'  => $stored_path_info['url'] ?? null,
+				'filename' => $stored_path_info['file_name'] ?? null,
+				'hash'     => $field::get_file_upload_path_meta_key_hash( $file_value ),
+				'url'      => $file_value,
+			];
+		}
+
+		return $info;
 	}
 }

@@ -181,6 +181,7 @@ class ComposerStaticInit0e8f6c0730ce438688b3484326e9667b
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\FieldValues' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/FieldValues.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\AddressFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/AddressFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\CheckboxFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/CheckboxFieldValue.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\FileUploadFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/FileUploadFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\ImageFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/ImageFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\ListFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/ListFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\NameFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/NameFieldValue.php',
