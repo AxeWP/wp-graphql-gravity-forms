@@ -11,7 +11,6 @@
 namespace WPGraphQL\GF\Data\Connection;
 
 use GFAPI;
-use GFFormsModel;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
