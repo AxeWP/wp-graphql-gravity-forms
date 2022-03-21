@@ -609,7 +609,7 @@ trait ExpectedFormFields {
 						$expected[] = $this->expectedField( $name, isset( $value ) ? GFHelpers::get_enum_for_value( AmPmEnum::$type, $value ) : static::IS_NULL );
 						break;
 					case 'url':
-						$expected[] = $this->expectedField( $name, static::NOT_FALSY );
+						$expected[] = $this->expectedField( $name, $this->is_draft_mutation ? static::IS_NULL : static::NOT_FALSY );
 						break;
 					default:
 						$expected[] = $this->expectedField( $name, $value );

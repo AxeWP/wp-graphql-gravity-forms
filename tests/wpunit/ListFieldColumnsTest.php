@@ -132,8 +132,9 @@ class ListFieldColumnsTest  extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function value() {
 		$field_value = $this->field_value;
+		codecept_debug( $this->fields[0] );
 		return [
-			$this->fields[0]['id'] => serialize(
+			(string) $this->fields[0]->id => serialize(
 				[
 					[
 						'firstCol'  => $field_value[0]['values'][0],

@@ -4,7 +4,9 @@
  *
  * @package Tests\WPGraphQL\GF
  */
+namespace Tests\WPGraphQL\GF;
 
+use GFFormsModel;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 use WPGraphQL\GF\Utils\GFUtils;
@@ -24,6 +26,14 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 		copy( dirname( __FILE__ ) . '/../_support/files/img2.png', '/tmp/img3.png' );
 		copy( dirname( __FILE__ ) . '/../_support/files/img2.png', '/tmp/img4.png' );
 		parent::setUp();
+
+		global $_gf_uploaded_files;
+		$_gf_uploaded_files = [];
+	}
+
+	public function tearDown(): void {
+		GFFormsModel::delete_files( $this->entry_id, $this->factory->form->get_object_by_id( $this->form_id ) );
+		parent::tearDown();
 	}
 	/**
 	 * Tests the field properties and values.
@@ -342,7 +352,7 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 		$ends_with    = preg_replace( '/(.*?)gravity_forms\/(.*?)\/(.*?)/', '$3', $this->field_value );
 		$actual_files = json_decode( $actual_entry[ $form['fields'][0]['id'] ], true );
 
-		foreach ( $ends_with as $index => $filename ) {
+		foreach ( array_filter($ends_with) as $index => $filename ) {
 			$this->assertStringEndsWith( $filename, $actual_files[ $index ], 'Submit mutation entry value not equal.' );
 		}
 	}

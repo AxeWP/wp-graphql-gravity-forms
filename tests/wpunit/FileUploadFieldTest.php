@@ -79,7 +79,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return [ GFUtils::get_gravity_forms_upload_dir( 1 )['url'] . '/' . $this->field_value_input()[0]['name'] ];
+		return [ GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $this->field_value_input()[0]['name'] ];
 	}
 
 	/**
@@ -108,7 +108,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 */
 	public function updated_field_value() {
 		return [
-			GFUtils::get_gravity_forms_upload_dir( 1 )['url'] . '/' . $this->updated_field_value_input()[0]['name'],
+			GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $this->updated_field_value_input()[0]['name'],
 		];
 	}
 
