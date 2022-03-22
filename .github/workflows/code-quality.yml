@@ -47,14 +47,13 @@ jobs:
           restore-keys: php-${{ matrix.php }}N-${{ runner.os }}-composer
 
       - name: Install dependencies
-        run: composer install --no-
-
-      - name: Add HTTP basic auth credentials
-        run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
+        run: composer install
 
       - name: Setup WordPress
         run: |
           cp .env.dist .env
+          echo GIT_TOKEN=${{ secrets.GIT_TOKEN }} >> .env
+          echo GIT_USER=${{ secrets.GIT_USER }} >> .env
           composer run install-stan-env
           cp -R . /tmp/wordpress/wp-content/plugins/wp-graphql-gravity-forms
 
