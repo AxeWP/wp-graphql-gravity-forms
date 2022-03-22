@@ -24,9 +24,11 @@ The `id` input accepts either the Gravity Forms form ID (`idType: DATABASE_ID`) 
         }
       }
     }
-    lastPageButton {
-      text
-      type
+    pagination{
+      lastPageButton {
+        text
+        type
+      }
     }
     title
   }

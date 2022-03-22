@@ -60,11 +60,12 @@ As of v0.10.0, all `formFields` have access to the `value` GraphQL field, which 
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
 | `addressValues` _( obj )_      | `AddressField` | `city` <br> `country` <br> `lineTwo` <br> `state` <br> `street` <br> `zip` |
 | `checkboxValues` _( [ obj ] )_ | `CheckboxField` | `inputId` <br> `text` <br> `value` |
-| `imageValues` _( obj )_        | `ImageField` | `altText` <br> `caption` <br> `description` <br> `title` <br> `url` <br>  |
+| `fileUploadValues` _( [ obj ] )_ | `FileUploadField` | `basePath` <br> `baseUrl` <br> `filename` <br> `url` |
+| `imageValues` _( obj )_        | `ImageField` | `altText` <br> `basePath` <br> `baseUrl` <br> `caption` <br> `description` <br> `filename` <br>  `title` <br> `url` <br>  |
 | `listValues` _( [ obj ] )_     | `ListField` | `values` _( [ string ] )_                                        |
 | `nameValues` _( obj )_         | `NameField` | `first` <br> `last` <br> `middle` <br> `prefix` <br> `suffix` |
 | `timeValues` _( obj )_         | `TimeField` | `amPm` <br> `displayValue` <br> `hours` <br> `minutes` |
-| `values` _( [ string] )_       | `ChainedSelectField` <br> `FileUploadField` <br> `MultiSelectField` <br> `PostCategoryField` <br> `PostCustomField` <br> `PostTagsField` <br> `QuizField` | n/a                                                              |
+| `values` _( [ string] )_       | `ChainedSelectField` <br> `MultiSelectField` <br> `PostCategoryField` <br> `PostTagsField` <br> `QuizField` | n/a                                                              |
 
 ### Example Query
 
