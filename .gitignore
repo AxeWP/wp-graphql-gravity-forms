@@ -14,7 +14,6 @@
 build/
 coverage/*
 node_modules/
-composer.lock
 phpcs.xml
 phpunit.xml
 schema.graphql
@@ -28,5 +27,5 @@ wp-cli.local.yml
 vendor/*
 !vendor/autoload.php
 !vendor/composer
-vendor/composer/installed.json
 vendor/composer/*/
+!vendor/yahnis-elsts
