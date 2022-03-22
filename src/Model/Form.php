@@ -89,12 +89,8 @@ class Form extends Model {
 				'hasHoneypot'                  => fn() : bool => $this->data['enableHoneypot'] ?? false,
 				'firstPageCssClass'            => fn() : ?string => $this->data['firstPageCssClass'] ?? null,
 				'form'                         => fn() : array => $this->data,
-				'formFields'                   => function() : ?array {
-					$return = ! empty( $this->data['fields'] ) ? $this->data['fields'] : null;
-					return $return;
-				},
+				'formFields'                   => fn() : ?array => ! empty( $this->data['fields'] ) ? $this->data['fields'] : null,
 				'id'                           => fn() : string => Relay::toGlobalId( FormsLoader::$name, $this->data['id'] ),
-
 				'isActive'                     => fn() : bool => $this->data['is_active'] ?? true,
 				'isTrash'                      => fn() : bool => $this->data['is_trash'] ?? false,
 				'labelPlacement'               => fn() : ?string => $this->data['labelPlacement'] ?? null,

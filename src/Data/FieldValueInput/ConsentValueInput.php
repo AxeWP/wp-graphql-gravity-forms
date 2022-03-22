@@ -41,13 +41,11 @@ class ConsentValueInput extends AbstractFieldValueInput {
 	protected function prepare_value() {
 		$field = $this->field;
 
-		$return = [
+		return [
 			$field->inputs[0]['id'] => (bool) $this->args,
 			$field->inputs[1]['id'] => $field->checkboxLabel ?? null,
 			$field->inputs[2]['id'] => GFFormsModel::get_latest_form_revisions_id( $this->form['id'] ),
 		];
-
-		return $return;
 	}
 
 	/**

@@ -111,9 +111,7 @@ class QuizResults extends AbstractObject implements Field {
 
 					$results = self::get_quiz_results_data( $form, $results_config );
 
-					$return = self::prepare_results_data( $results, $form );
-
-					return $return;
+					return self::prepare_results_data( $results, $form );
 				},
 			]
 		);
