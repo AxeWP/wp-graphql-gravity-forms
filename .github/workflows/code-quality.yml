@@ -47,7 +47,7 @@ jobs:
           restore-keys: php-${{ matrix.php }}N-${{ runner.os }}-composer
 
       - name: Install dependencies
-        run: composer install --no-
+        run: composer install
 
       - name: Add HTTP basic auth credentials
         run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
