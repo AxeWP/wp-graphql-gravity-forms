@@ -5,6 +5,9 @@
  * @package Tests\WPGraphQL\GF
  */
 
+namespace Tests\WPGraphQL\GF;
+
+use GFFormsModel;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 use WPGraphQL\GF\Utils\GFUtils;
@@ -20,13 +23,21 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 		// Before...
 
 		copy( dirname( __FILE__ ) . '/../_support/files/img1.png', '/tmp/img1.png' );
-		copy( dirname( __FILE__ ) . '/../_support/files/img2.png', '/tmp/img2.png' );
+		$stat  = stat( dirname( '/tmp/img1.png' ) );
+		$perms = $stat['mode'] & 0000666;
+		chmod( '/tmp/img1.png', $perms );
+		copy( dirname( __FILE__ ) . '/../_support/files/img1.png', '/tmp/img1.png' );
+		$stat  = stat( dirname( '/tmp/img2.png' ) );
+		$perms = $stat['mode'] & 0000666;
+		chmod( '/tmp/img2.png', $perms );
 		parent::setUp();
-		add_filter( 'gform_save_field_value', [ $this, '_fake_move_uploaded_file' ], 10, 5 );
+
+		global $_gf_uploaded_files;
+		$_gf_uploaded_files = [];
 	}
 
 	public function tearDown(): void {
-		remove_filter( 'gform_save_field_value', [ $this, '_fake_move_uploaded_file' ], 10 );
+		GFFormsModel::delete_files( $this->entry_id, $this->factory->form->get_object_by_id( $this->form_id ) );
 		parent::tearDown();
 	}
 
@@ -79,7 +90,14 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return [ GFUtils::get_gravity_forms_upload_dir( 1 )['url'] . '/' . $this->field_value_input()[0]['name'] ];
+		$field_value_input = $this->field_value_input();
+		return [
+			[
+				'baseUrl'  => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/',
+				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[0]['name'],
+				'filename' => $field_value_input[0]['name'],
+			],
+		];
 	}
 
 	/**
@@ -100,15 +118,20 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 * Sets the value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ $this->fields[0]['id'] => $this->field_value()[0] ];
+		return [ $this->fields[0]['id'] => $this->field_value()[0]['url'] ];
 	}
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
+		$field_value_input = $this->updated_field_value_input();
 		return [
-			GFUtils::get_gravity_forms_upload_dir( 1 )['url'] . '/' . $this->updated_field_value_input()[0]['name'],
+			[
+				'baseUrl'  => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/',
+				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[0]['name'],
+				'filename' => $field_value_input[0]['name'],
+			],
 		];
 	}
 
@@ -160,7 +183,11 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 					shouldErase
 					shouldExport
 				}
-				values
+				fileUploadValues {
+					baseUrl
+					filename
+					url
+				}
 			}
 		';
 	}
@@ -182,7 +209,11 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 						formFields {
 							nodes {
 								... on FileUploadField {
-									values
+									fileUploadValues {
+										baseUrl
+										filename
+										url
+									}
 								}
 							}
 						}
@@ -215,7 +246,11 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 						formFields {
 							nodes {
 								... on FileUploadField {
-									values
+									fileUploadValues {
+										baseUrl
+										filename
+										url
+									}
 								}
 							}
 						}
@@ -242,7 +277,11 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 						formFields {
 							nodes {
 								... on FileUploadField {
-									values
+									fileUploadValues {
+										baseUrl
+										filename
+										url
+									}
 								}
 							}
 						}
@@ -258,13 +297,17 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 * @return array
 	 */
 	public function expected_field_response( array $form ) : array {
-		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
-		$expected[] = $this->expectedField(
-			'values',
+		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
+
+		$expected_field_value    = $this->field_value;
+		$expected_field_value[0] = array_merge(
+			$expected_field_value[0],
 			[
-				$this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ],
+				'url' => $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ],
 			]
 		);
+
+		$expected[] = $this->expected_field_value( 'fileUploadValues', $expected_field_value );
 
 		return [
 			$this->expectedObject(
@@ -293,6 +336,16 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 * @return array
 	 */
 	public function expected_mutation_response( string $mutationName, $value ) : array {
+		$form = $this->factory->form->get_object_by_id( $this->form_id );
+
+		$url = ! $this->is_draft_mutation ? $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] : null;
+
+		$value[0]   = array_merge(
+			$value[0],
+			[ 'url' => $url ?: self::IS_NULL ]
+		);
+		$expected[] = $this->expected_field_value( 'fileUploadValues.0', $value[0] );
+
 		return [
 			$this->expectedObject(
 				$mutationName,
@@ -305,9 +358,8 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 								[
 									$this->expectedNode(
 										'nodes',
-										[
-											$this->expectedField( 'values', static::NOT_FALSY ),
-										]
+										$expected,
+										0
 									),
 								]
 							),
@@ -325,22 +377,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
-		$ends_with = preg_replace( '/(.*?)gravity_forms\/(.*?)\/(.*?)/', '$3', $this->field_value );
-		$this->assertStringEndsWith( $ends_with[0], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry value not equal.' );
-	}
-
-	/**
-	 * If temp file can't be copied during the test, fake a URL
-	 *
-	 * @used-by test_edit_entry_upload
-	 */
-	public function _fake_move_uploaded_file( $value, $lead, $field, $form, $input_id ) {
-		if ( $value === 'FAILED (Temporary file could not be copied.)' ) {
-			$target        = GFFormsModel::get_file_upload_path( $form['id'], $_FILES[ 'input_' . $input_id ]['name'] );
-			$this->_target = $target;
-			return $target['url'];
-		}
-
-		return $value;
+		$ends_with = preg_replace( '/(.*?)gravity_forms\/(.*?)\/(.*?)/', '$3', $this->field_value[0]['url'] );
+		$this->assertStringEndsWith( $ends_with, $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry value not equal.' );
 	}
 }

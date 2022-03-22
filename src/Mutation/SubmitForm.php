@@ -11,7 +11,7 @@
 namespace WPGraphQL\GF\Mutation;
 
 use GFAPI;
-use GFFormsModel;
+use GF_Field;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
@@ -137,9 +137,6 @@ class SubmitForm extends AbstractMutation {
 			$source_page   = isset( $input['sourcePage'] ) ? absint( $input['sourcePage'] ) : 0;
 			$save_as_draft = ! empty( $input['saveAsDraft'] );
 
-			// Initialize $_FILES with fileupload inputs.
-			self::initialize_files( $form );
-
 			$field_values = self::prepare_field_values( $input['fieldValues'], $form, $save_as_draft );
 
 			$submission = GFUtils::submit_form(
@@ -147,7 +144,7 @@ class SubmitForm extends AbstractMutation {
 				self::get_input_values(
 					$save_as_draft,
 					$field_values,
-					GFFormsModel::$uploaded_files[ $input['id'] ] ?? []
+					EntryObjectMutation::initialize_files( $form['fields'], $input['fieldValues'], $save_as_draft ),
 				),
 				$field_values,
 				$target_page,
@@ -278,30 +275,14 @@ class SubmitForm extends AbstractMutation {
 	 * @return array
 	 */
 	private static function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ) : array {
-		return [
-			'gform_save'           => $is_draft,
-			'gform_uploaded_files' => wp_json_encode( $file_upload_values ),
-		] + $field_values;
-	}
+		$input_values = [
+			'gform_save' => $is_draft,
+		];
 
-
-	/**
-	 * Initializes the $_FILES array with the fileupload `input_{id}`.
-	 * This prevents any notices about missing array keys.
-	 *
-	 * @param array $form .
-	 */
-	private static function initialize_files( $form ) : void {
-		foreach ( $form['fields'] as $field ) {
-			if ( 'post_image' === $field->type || ( 'fileupload' === $field->type && ! $field->multipleFiles ) ) {
-				$_FILES[ 'input_' . $field->id ] = [
-					'name'     => null,
-					'type'     => null,
-					'size'     => null,
-					'tmp_name' => null,
-					'error'    => null,
-				];
-			}
+		if ( ! empty( $file_upload_values ) ) {
+			$input_values['gform_uploaded_files'] = wp_json_encode( $file_upload_values );
 		}
+
+		return $input_values + $field_values;
 	}
 }

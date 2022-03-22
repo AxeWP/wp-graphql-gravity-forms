@@ -12,7 +12,7 @@ use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
  * Class -CaptchaFieldTest
  */
 class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
-	protected $test_draft = false;
+	protected $test_draft = true;
 	protected $captcha_field_helper;
 
 	public function setUp(): void {

@@ -457,6 +457,8 @@ class GFUtils {
 	 * @throws UserError .
 	 */
 	public static function handle_file_upload( $file, $target ) {
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'GFUtils::handle_file_upload() is deprecated. Please use native WP/GF methods instead.', 'wp-graphql-gravity-forms' ), '@todo' );
+
 		// Default to uploads dir if alternative not provided.
 		$target = $target ?: wp_upload_dir();
 

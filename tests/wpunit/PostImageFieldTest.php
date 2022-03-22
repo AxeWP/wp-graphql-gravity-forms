@@ -5,6 +5,9 @@
  * @package Tests\WPGraphQL\GF
  */
 
+namespace Tests\WPGraphQL\GF;
+
+use GFFormsModel;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 use WPGraphQL\GF\Utils\GFUtils;
@@ -17,11 +20,28 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * Set up.
 	 */
 	public function setUp(): void {
-		// Before...
 
+		// Before...
 		copy( dirname( __FILE__ ) . '/../_support/files/img1.png', '/tmp/img1.png' );
+		$stat  = stat( dirname( '/tmp/img1.png' ) );
+		$perms = $stat['mode'] & 0000666;
+		chmod( '/tmp/img1.png', $perms );
 		copy( dirname( __FILE__ ) . '/../_support/files/img2.png', '/tmp/img2.png' );
+		$stat  = stat( dirname( '/tmp/img2.png' ) );
+		$perms = $stat['mode'] & 0000666;
+		chmod( '/tmp/img2.png', $perms );
 		parent::setUp();
+
+		global $_gf_uploaded_files;
+		$_gf_uploaded_files = [];
+	}
+
+	/**
+	 * Tear down
+	 */
+	public function tearDown(): void {
+		GFFormsModel::delete_files( $this->entry_id, $this->factory->form->get_object_by_id( $this->form_id ) );
+		parent::tearDown();
 	}
 	/**
 	 * Tests the field properties and values.
@@ -75,10 +95,11 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 		$field_value_input = $this->field_value_input();
 		return [
 			'altText'     => $field_value_input['altText'],
+			'baseUrl'     => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/',
 			'caption'     => $field_value_input['caption'],
 			'description' => $field_value_input['description'],
 			'title'       => $field_value_input['title'],
-			'url'         => GFUtils::get_gravity_forms_upload_dir( 1 )['url'] . '/' . $field_value_input['image']['name'],
+			'url'         => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input['image']['name'],
 		];
 	}
 
@@ -113,13 +134,14 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		$field_value_input = $this->field_value_input();
+		$field_value_input = $this->updated_field_value_input();
 		return [
 			'altText'     => $field_value_input['altText'],
 			'caption'     => $field_value_input['caption'],
 			'description' => $field_value_input['description'],
 			'title'       => $field_value_input['title'],
-			'url'         => GFUtils::get_gravity_forms_upload_dir( 1 )['url'] . '/' . $field_value_input['image']['name'],
+			'baseUrl'     => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/',
+			'url'         => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input['image']['name'],
 		];
 	}
 
@@ -171,8 +193,10 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 				hasTitle
 				imageValues {
 					altText
+					baseUrl
 					caption
 					description
+					filename
 					title
 					url
 				}
@@ -209,6 +233,7 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 								... on PostImageField {
 									imageValues {
 										altText
+										baseUrl
 										caption
 										description
 										title
@@ -248,6 +273,7 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 								... on PostImageField {
 									imageValues {
 										altText
+										baseUrl
 										caption
 										description
 										title
@@ -281,6 +307,7 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 								... on PostImageField {
 									imageValues {
 										altText
+										baseUrl
 										caption
 										description
 										title
@@ -301,8 +328,15 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * @return array
 	 */
 	public function expected_field_response( array $form ) : array {
-		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
-		$expected[] = $this->expected_field_value( 'imageValues', $this->field_value );
+		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
+
+		$expected[] = $this->expected_field_value(
+			'imageValues',
+			array_merge(
+				$this->field_value,
+				[ 'url' => $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] ] ?: null
+			)
+		);
 
 		return [
 			$this->expectedObject(
@@ -331,6 +365,18 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * @return array
 	 */
 	public function expected_mutation_response( string $mutationName, $value ) : array {
+		$form = $this->factory->form->get_object_by_id( $this->form_id );
+
+		$url = ! $this->is_draft_mutation ? $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] : null;
+
+		$expected[] = $this->expected_field_value(
+			'imageValues',
+			array_merge(
+				$value,
+				[ 'url' => $url ?: self::IS_NULL ]
+			)
+		);
+
 		return [
 			$this->expectedObject(
 				$mutationName,
@@ -343,9 +389,8 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 								[
 									$this->expectedNode(
 										'nodes',
-										[
-											$this->expectedField( 'values', static::NOT_FALSY ),
-										]
+										$expected,
+										0
 									),
 								]
 							),
@@ -364,10 +409,10 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
 		$ends_with = preg_replace( '/(.*?)gravity_forms\/(.*?)\/(.*?)/', '$3', $this->field_value['url'] );
-		$this->assertStringContainsString( $ends_with, $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry Url value not equal.' );
-		$this->assertStringContainsString( $this->field_value['altText'], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry Url value not equal.' );
-		$this->assertStringContainsString( $this->field_value['caption'], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry Url value not equal.' );
-		$this->assertStringContainsString( $this->field_value['description'], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry Url value not equal.' );
+		$this->assertStringContainsString( $ends_with, $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry id value not equal.' );
+		$this->assertStringContainsString( $this->field_value['altText'], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry altText value not equal.' );
+		$this->assertStringContainsString( $this->field_value['caption'], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry caption value not equal.' );
+		$this->assertStringContainsString( $this->field_value['description'], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry description value not equal.' );
 		$this->assertStringContainsString( $this->field_value['title'], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry Url value not equal.' );
 	}
 }

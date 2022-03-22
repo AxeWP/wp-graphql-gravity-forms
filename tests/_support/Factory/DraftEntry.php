@@ -9,7 +9,6 @@ namespace Tests\WPGraphQL\GF\Factory;
 
 use GFAPI;
 use GFFormsModel;
-use WP_UnitTest_Generator_Sequence;
 
 /**
  * Class - Entry

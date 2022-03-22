@@ -262,6 +262,7 @@ class TypeRegistry {
 			// Form Field Value properties.
 			WPObject\FormField\FieldValue\ValueProperty\AddressFieldValue::class,
 			WPObject\FormField\FieldValue\ValueProperty\CheckboxFieldValue::class,
+			WPObject\FormField\FieldValue\ValueProperty\FileUploadFieldValue::class,
 			WPObject\FormField\FieldValue\ValueProperty\ListFieldValue::class,
 			WPObject\FormField\FieldValue\ValueProperty\NameFieldValue::class,
 			WPObject\FormField\FieldValue\ValueProperty\ImageFieldValue::class,
