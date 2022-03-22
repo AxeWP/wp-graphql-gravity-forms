@@ -221,8 +221,10 @@ class Form extends Model {
 			 * Internal Filter for modifying the model.
 			 *
 			 * To be replaced by https://github.com/wp-graphql/wp-graphql/issues/2198
+			 *
+			 * @deprecated @todo use "graphql_model_prepare_fields"
 			 */
-			$this->fields = apply_filters( 'graphql_gf_form_modeled_data_experimental', $this->fields, $this->data, );
+			$this->fields = apply_filters_deprecated( 'graphql_gf_form_modeled_data_experimental', [ $this->fields, $this->data ], '@todo', 'graphql_model_prepare_fields' );
 		}
 	}
 }
