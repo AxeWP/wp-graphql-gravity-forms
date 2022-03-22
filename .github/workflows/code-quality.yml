@@ -5,7 +5,7 @@ on:
     branches:
       - develop
       - main
-  pull_request:
+  pull_request_target:
     branches:
       - develop
       - main
@@ -47,7 +47,7 @@ jobs:
           restore-keys: php-${{ matrix.php }}N-${{ runner.os }}-composer
 
       - name: Install dependencies
-        run: composer install
+        run: composer install --no-
 
       - name: Add HTTP basic auth credentials
         run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
