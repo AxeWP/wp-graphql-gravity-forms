@@ -11,6 +11,7 @@ namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue;
 use GFCommon;
 use GF_Field;
 use GF_Field_FileUpload;
+use GFFormsModel;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
 use WPGraphQL\GF\Utils\Utils;
@@ -362,29 +363,44 @@ class FieldValues {
 	 * @param array               $form .
 	 */
 	protected static function get_file_upload_extra_entry_metadata( GF_Field_FileUpload $field, array $entry, array $form ) : array {
-		// Bail early if unsupported.
-		if ( version_compare( GFCommon::$version, '2.6.0', '<' ) ) {
-			return [];
-		}
-
 		$file_values = $entry[ $field->id ] ?? null;
-
-		// Corerce files into an array.
-		if ( $field->multipleFiles && ! empty( $file_values ) ) {
-			$file_values = json_decode( $file_values, true );
-		} else {
-			$file_values = [ $file_values ];
-		}
 
 		// Bail if no files.
 		if ( empty( $file_values ) ) {
 			return [];
 		}
 
+		// Corerce files into an array.
+		if ( $field->multipleFiles ) {
+			$file_values = json_decode( $file_values, true );
+		} else {
+			$file_values = [ $file_values ];
+		}
+
 		$info = [];
 
 		// Generate the file info for all files.
 		foreach ( $file_values as $file_value ) {
+			// Backcompat with v2.5x.
+			if ( version_compare( GFCommon::$version, '2.6.0', '<' ) ) {
+				$time                    = current_time( 'mysql' );
+				$y                       = substr( $time, 0, 4 );
+				$m                       = substr( $time, 5, 2 );
+				$default_target_root     = GFFormsModel::get_upload_path( $form['id'] ) . "/$y/$m/";
+				$default_target_root_url = GFFormsModel::get_upload_url( $form['id'] ) . "/$y/$m/";
+
+				$filename = explode( '/', $file_value );
+
+				$info[ $file_value ] = [
+					'url'      => $file_value,
+					'basePath' => $default_target_root,
+					'baseUrl'  => $default_target_root_url,
+					'filename' => end( $filename ),
+					'hash'     => wp_hash( $form['id'] ),
+				];
+				continue;
+			}
+
 			$stored_path_info = gform_get_meta( $entry['id'], $field::get_file_upload_path_meta_key_hash( $file_value ) );
 
 			if ( empty( $stored_path_info ) ) {
