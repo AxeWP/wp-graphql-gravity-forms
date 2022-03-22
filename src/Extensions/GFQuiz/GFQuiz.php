@@ -35,7 +35,7 @@ class GFQuiz {
 		add_filter( 'graphql_gf_form_field_child_types', [ __CLASS__, 'field_child_types' ], 10, 2 );
 
 		// Add quiz to Form Model.
-		add_filter( 'graphql_gf_form_modeled_data_experimental', [ __CLASS__, 'form_model' ], 10, 2 );
+		add_filter( 'graphql_model_prepare_fields', [ __CLASS__, 'form_model' ], 10, 3 );
 
 		// // Register field_settings.
 		add_filter( 'graphql_gf_form_field_setting_properties', [ __CLASS__, 'field_setting_properties' ], 10, 3 );
@@ -100,11 +100,14 @@ class GFQuiz {
 	/**
 	 * Adds quiz to model
 	 *
-	 * @param array $fields .
-	 * @param array $data .
+	 * @param array  $fields .
+	 * @param string $model_name .
+	 * @param array  $data .
 	 */
-	public static function form_model( array $fields, array $data ) : array {
-		$fields['quiz'] = fn() : ?array => ! empty( $data['gravityformsquiz'] ) ? $data['gravityformsquiz'] : null;
+	public static function form_model( $fields, string $model_name, $data ) : array {
+		if ( 'FormObject' === $model_name ) {
+			$fields['quiz'] = fn() : ?array => ! empty( $data['gravityformsquiz'] ) ? $data['gravityformsquiz'] : null;
+		}
 
 		return $fields;
 	}

@@ -108,7 +108,7 @@ class FormQuiz extends AbstractObject implements Field {
 				'type'        => 'Float',
 				'description' => __( 'The maximum score for this form.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) : ?float {
-					return ( gf_quiz() )->get_max_score( $context->gfForm ) ?: null;
+					return ( gf_quiz() )->get_max_score( $context->gfForm->form ) ?: null;
 				},
 			],
 			'passPercent'                    => [
@@ -140,7 +140,7 @@ class FormQuiz extends AbstractObject implements Field {
 				'description' => __( 'Quiz-specific settings that will affect ALL Quiz fields in the form. Requires Gravity Forms Quiz addon.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function( $source, array $args, AppContext $context ) : ?array {
 					$context->gfForm = $source;
-					return ! empty( $source['quizSettings'] ) ? $source['quizSettings'] : null;
+					return ! empty( $source->form['quizSettings'] ) ? $source->form['quizSettings'] : null;
 				},
 			]
 		);
