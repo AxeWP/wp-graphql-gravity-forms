@@ -4,7 +4,7 @@
  * An individual property for the 'fileUpload' field property.
  *
  * @package WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty
- * @since   @todo
+ * @since   0.11.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;

@@ -3,7 +3,7 @@
  * Enum Type - FormSubmitButtonLocationEnum
  *
  * @package WPGraphQL\GF\Type\Enum
- * @since   @todo
+ * @since   0.11.0
  */
 
 namespace WPGraphQL\GF\Type\Enum;

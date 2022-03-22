@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - develop
-  pull_request:
+  pull_request_target:
     branches:
       - develop
       - main
@@ -41,11 +41,12 @@ jobs:
       - name: Setup GraphQL Schema Linter
         run: npm install -g graphql-schema-linter
 
+      - name: Add HTTP basic auth credentials
+        run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
+
       - name: Setup WordPress
         run: |
           cp .env.dist .env
-          echo GIT_TOKEN=${{ secrets.GIT_TOKEN }} >> .env
-          echo GIT_USER=${{ secrets.GIT_USER }} >> .env
           composer run install-test-env
 
       - name: Generate the Static Schema

@@ -89,12 +89,8 @@ class Form extends Model {
 				'hasHoneypot'                  => fn() : bool => $this->data['enableHoneypot'] ?? false,
 				'firstPageCssClass'            => fn() : ?string => $this->data['firstPageCssClass'] ?? null,
 				'form'                         => fn() : array => $this->data,
-				'formFields'                   => function() : ?array {
-					$return = ! empty( $this->data['fields'] ) ? $this->data['fields'] : null;
-					return $return;
-				},
+				'formFields'                   => fn() : ?array => ! empty( $this->data['fields'] ) ? $this->data['fields'] : null,
 				'id'                           => fn() : string => Relay::toGlobalId( FormsLoader::$name, $this->data['id'] ),
-
 				'isActive'                     => fn() : bool => $this->data['is_active'] ?? true,
 				'isTrash'                      => fn() : bool => $this->data['is_trash'] ?? false,
 				'labelPlacement'               => fn() : ?string => $this->data['labelPlacement'] ?? null,
@@ -222,9 +218,9 @@ class Form extends Model {
 			 *
 			 * To be replaced by https://github.com/wp-graphql/wp-graphql/issues/2198
 			 *
-			 * @deprecated @todo use "graphql_model_prepare_fields"
+			 * @deprecated 0.11.0 use "graphql_model_prepare_fields"
 			 */
-			$this->fields = apply_filters_deprecated( 'graphql_gf_form_modeled_data_experimental', [ $this->fields, $this->data ], '@todo', 'graphql_model_prepare_fields' );
+			$this->fields = apply_filters_deprecated( 'graphql_gf_form_modeled_data_experimental', [ $this->fields, $this->data ], '0.11.0', 'graphql_model_prepare_fields' );
 		}
 	}
 }

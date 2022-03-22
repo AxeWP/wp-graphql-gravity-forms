@@ -220,7 +220,6 @@ class FieldValues {
 						return null;
 					}
 
-					// @todo 2.5 compat
 					return self::get_file_upload_extra_entry_metadata( $source, $context->gfEntry->entry, $context->gfForm->form ) ?: null;
 				},
 			],
@@ -284,21 +283,22 @@ class FieldValues {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
-						$display_value = $context->gfEntry->entry[ $source->id ];
 
-						$parts_by_colon = explode( ':', $display_value );
-						$parts_by_space = explode( ' ', $parts_by_colon[1] ?? '' );
+					$display_value = $context->gfEntry->entry[ $source->id ];
 
-						$hours   = $parts_by_colon[0] ?? '';
-						$minutes = $parts_by_space[0] ?? '';
-						$am_pm   = $parts_by_space[1] ?? '';
+					$parts_by_colon = explode( ':', $display_value );
+					$parts_by_space = explode( ' ', $parts_by_colon[1] ?? '' );
 
-						return [
-							'displayValue' => $display_value ?: null,
-							'hours'        => $hours ?: null,
-							'minutes'      => $minutes ?: null,
-							'amPm'         => $am_pm ?: null,
-						];
+					$hours   = $parts_by_colon[0] ?? '';
+					$minutes = $parts_by_space[0] ?? '';
+					$am_pm   = $parts_by_space[1] ?? '';
+
+					return [
+						'displayValue' => $display_value ?: null,
+						'hours'        => $hours ?: null,
+						'minutes'      => $minutes ?: null,
+						'amPm'         => $am_pm ?: null,
+					];
 				},
 			],
 		];

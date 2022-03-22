@@ -1,11 +1,11 @@
 <?php
 /**
- * GraphQL Object Type - Button
+ * GraphQL Object Type - FormSubmitButton
  *
- * @see https://docs.gravityforms.com/button/
+ * @see https://docs.gravityforms.com/submit-button
  *
  * @package WPGraphQL\GF\Type\WPObject\Form\FormSubmitButton
- * @since   0.0.1
+ * @since   0.11.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\Form;

@@ -11,6 +11,7 @@
 *.tar.gz
 .scannerwork
 *.zip
+auth.json
 build/
 coverage/*
 node_modules/
