@@ -308,14 +308,6 @@ class Utils {
 	public static function get_ignored_gf_field_types() : array {
 		$ignored_fields = [];
 
-		// These fields are registered as child types of a field interface, and should always be skipped.
-		$duplicate_fields = [
-			'calculation',
-			'hiddenproduct',
-			'singleproduct',
-			'singleshipping',
-		];
-
 		// These fields are no longer supported by GF.
 		$ignored_fields[] = 'donation';
 		// This field is still in beta.
@@ -341,6 +333,6 @@ class Utils {
 		 */
 		$ignored_fields = apply_filters( 'graphql_gf_ignored_field_types', $ignored_fields );
 
-		return array_merge( $ignored_fields, $duplicate_fields );
+		return $ignored_fields;
 	}
 }

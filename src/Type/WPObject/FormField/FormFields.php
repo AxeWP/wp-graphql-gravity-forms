@@ -52,7 +52,20 @@ class FormFields implements Registrable {
 		$fields = GF_Fields::get_all();
 
 		foreach ( $fields as $field ) {
-			if ( ! in_array( $field->type, Utils::get_ignored_gf_field_types(), true ) ) {
+			if ( ! in_array(
+				$field->type,
+				array_merge(
+					Utils::get_ignored_gf_field_types(),
+					[
+						// These fields are registered as child types of a field interface, and should always be skipped.
+						'calculation',
+						'hiddenproduct',
+						'singleproduct',
+						'singleshipping',
+					]
+				),
+				true
+			) ) {
 				self::register_gf_field( $field, $type_registry );
 			}
 		}
