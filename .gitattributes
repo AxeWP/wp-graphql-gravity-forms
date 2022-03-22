@@ -5,9 +5,9 @@
 /docs export-ignore
 /phpstan export-ignore
 /codeception.yml export-ignore
+/composer.lock export-ignore
 /phpstan.neon.dist export-ignore
 /phpunit.xml.dist export-ignore
-/.composer.lock export-ignore
 /.coveralls export-ignore
 /.distignore export-ignore
 /.dockerignore export-ignore
