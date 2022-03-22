@@ -436,4 +436,78 @@ class GFUtils {
 			'baseurl' => untrailingslashit( GFFormsModel::get_upload_url_root() ),
 		];
 	}
+
+	/**
+	 * Handle custom file upload.
+	 *
+	 * This mimics WP Core upload functionality but allows for uploading file to a custom directory rather than the standard WP uploads dir.
+	 * Slightly modified from source.
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/_wp_handle_upload/
+	 *
+	 * @todo mimic GFFieldUpload::validate().
+	 *
+	 * @author WebDevStudios
+	 * @source https://github.com/WebDevStudios/wds-headless-wordpress/blob/5a8e84a2dbb7a0bb537422223ab409ecd2568b00/themes/wds_headless/inc/wp-graphql.php#L452
+	 * @param array $file   File data to upload.
+	 * @param array $target Target upload directory; WP uploads dir will be used if none provided.
+	 *
+	 * @return array        Uploaded file data.
+	 *
+	 * @throws UserError .
+	 */
+	public static function handle_file_upload( $file, $target ) {
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'GFUtils::handle_file_upload() is deprecated. Please use native WP/GF methods instead.', 'wp-graphql-gravity-forms' ), '@todo' );
+
+		// Default to uploads dir if alternative not provided.
+		$target = $target ?: wp_upload_dir();
+
+		// Check if filetype & ext are valid.
+		$wp_filetype     = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
+		$ext             = empty( $wp_filetype['ext'] ) ? '' : $wp_filetype['ext'];
+		$type            = empty( $wp_filetype['type'] ) ? '' : $wp_filetype['type'];
+		$proper_filename = empty( $wp_filetype['proper_filename'] ) ? '' : $wp_filetype['proper_filename'];
+
+		// Check to see if wp_check_filetype_and_ext() determined the filename was incorrect.
+		if ( $proper_filename ) {
+			$file['name'] = $proper_filename;
+		}
+
+		// Return error if file type not allowed.
+		if ( ( ! $type || ! $ext ) && ! current_user_can( 'unfiltered_upload' ) ) {
+			throw new UserError( __( 'This file type is not permitted for security reasons.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		$type = ! $type ? $file['type'] : $type;
+
+		$filename = wp_unique_filename( $target['path'], $file['name'] );
+
+		// Move the file to the GF uploads dir.
+		$new_file = $target['path'] . "/{$filename}";
+
+		// Use copy and unlink because rename breaks streams.
+	// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- duplicating default WP Core functionality.
+		$move_new_file = @copy( $file['tmp_name'], $new_file );
+		unlink( $file['tmp_name'] );
+
+		if ( ! $move_new_file ) {
+			throw new UserError( __( 'Failed to copy the file to the server.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		// Set correct file permissions.
+		$stat = stat( dirname( $new_file ) );
+		if ( is_array( $stat ) ) {
+			$perms = $stat['mode'] & 0000666;
+			chmod( $new_file, $perms );
+		}
+
+		// Compute the URL.
+		$url = $target['url'] . "/{$filename}";
+
+		return [
+			'file' => $new_file,
+			'url'  => $url,
+			'type' => $type,
+		];
+	}
 }
