@@ -147,7 +147,7 @@ If the field is NOT updated successfully, such as when a field validation error 
 
 ## Captcha Validation
 
-As of @todo, WPGraphQL for Gravity Forms supports server-side captcha validation. This is particularly useful with Google reCAPTCHA, as it keeps your API secret key hidden.
+As of v0.11.0, WPGraphQL for Gravity Forms supports server-side captcha validation. This is particularly useful with Google reCAPTCHA, as it keeps your API secret key hidden.
 
 To validate a reCAPTCHA field, you need to [fetch the captcha response token](https://developers.google.com/recaptcha/docs/verify), and pass that to the field's `value` input argument:
 

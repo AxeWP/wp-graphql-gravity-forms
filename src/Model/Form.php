@@ -222,9 +222,9 @@ class Form extends Model {
 			 *
 			 * To be replaced by https://github.com/wp-graphql/wp-graphql/issues/2198
 			 *
-			 * @deprecated @todo use "graphql_model_prepare_fields"
+			 * @deprecated 0.11.0 use "graphql_model_prepare_fields"
 			 */
-			$this->fields = apply_filters_deprecated( 'graphql_gf_form_modeled_data_experimental', [ $this->fields, $this->data ], '@todo', 'graphql_model_prepare_fields' );
+			$this->fields = apply_filters_deprecated( 'graphql_gf_form_modeled_data_experimental', [ $this->fields, $this->data ], '0.11.0', 'graphql_model_prepare_fields' );
 		}
 	}
 }

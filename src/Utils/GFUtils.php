@@ -445,8 +445,6 @@ class GFUtils {
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/_wp_handle_upload/
 	 *
-	 * @todo mimic GFFieldUpload::validate().
-	 *
 	 * @author WebDevStudios
 	 * @source https://github.com/WebDevStudios/wds-headless-wordpress/blob/5a8e84a2dbb7a0bb537422223ab409ecd2568b00/themes/wds_headless/inc/wp-graphql.php#L452
 	 * @param array $file   File data to upload.
@@ -454,10 +452,12 @@ class GFUtils {
 	 *
 	 * @return array        Uploaded file data.
 	 *
+	 * @deprecated 0.11.0
+	 *
 	 * @throws UserError .
 	 */
 	public static function handle_file_upload( $file, $target ) {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'GFUtils::handle_file_upload() is deprecated. Please use native WP/GF methods instead.', 'wp-graphql-gravity-forms' ), '@todo' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'GFUtils::handle_file_upload() is deprecated. Please use native WP/GF methods instead.', 'wp-graphql-gravity-forms' ), '0.11.0' );
 
 		// Default to uploads dir if alternative not provided.
 		$target = $target ?: wp_upload_dir();

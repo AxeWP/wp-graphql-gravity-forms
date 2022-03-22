@@ -220,7 +220,6 @@ class FieldValues {
 						return null;
 					}
 
-					// @todo 2.5 compat
 					return self::get_file_upload_extra_entry_metadata( $source, $context->gfEntry->entry, $context->gfForm->form ) ?: null;
 				},
 			],

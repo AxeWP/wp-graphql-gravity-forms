@@ -3,7 +3,7 @@
  * Checks updates via Github Releases.
  *
  * @package WPGraphQL\GF
- * @since   0.10.6
+ * @since   0.11.0
  */
 
 namespace WPGraphQL\GF;
