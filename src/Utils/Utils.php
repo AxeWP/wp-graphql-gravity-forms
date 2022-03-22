@@ -213,6 +213,7 @@ class Utils {
 	 */
 	public static function get_possible_form_field_child_types( string $type ) : ?array {
 		$prefix = self::get_safe_form_field_type_name( $type );
+
 		switch ( $type ) {
 			case 'post_category':
 				$child_types = [
@@ -253,18 +254,18 @@ class Utils {
 			case 'product':
 				$child_types = [
 					'calculation'   => $prefix . 'CalculationField',
-					'hiddenproduct' => $prefix . 'HiddenProductField',
+					'hiddenproduct' => $prefix . 'HiddenField',
 					'price'         => $prefix . 'PriceField',
 					'radio'         => $prefix . 'RadioField',
 					'select'        => $prefix . 'SelectField',
-					'singleproduct' => $prefix . 'SingleProductField',
+					'singleproduct' => $prefix . 'SingleField',
 				];
 				break;
 			case 'shipping':
 				$child_types = [
 					'radio'          => $prefix . 'RadioField',
 					'select'         => $prefix . 'SelectField',
-					'singleshipping' => $prefix . 'SingleShippingField',
+					'singleshipping' => $prefix . 'SingleField',
 				];
 				break;
 			case 'option':
@@ -308,14 +309,6 @@ class Utils {
 	public static function get_ignored_gf_field_types() : array {
 		$ignored_fields = [];
 
-		// These fields are registered as child types of a field interface, and should always be skipped.
-		$duplicate_fields = [
-			'calculation',
-			'hiddenproduct',
-			'singleproduct',
-			'singleshipping',
-		];
-
 		// These fields are no longer supported by GF.
 		$ignored_fields[] = 'donation';
 		// This field is still in beta.
@@ -341,6 +334,6 @@ class Utils {
 		 */
 		$ignored_fields = apply_filters( 'graphql_gf_ignored_field_types', $ignored_fields );
 
-		return array_merge( $ignored_fields, $duplicate_fields );
+		return $ignored_fields;
 	}
 }

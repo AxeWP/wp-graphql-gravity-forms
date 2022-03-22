@@ -19,6 +19,7 @@ phpunit.xml
 schema.graphql
 sonar-project.properties
 sonar-scanner
+composer.lock
 !tests
 tests/*.suite.yml
 Thumbs.db
