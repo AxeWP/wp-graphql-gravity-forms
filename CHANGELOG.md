@@ -1,5 +1,35 @@
 # Changelog
 
+## v0.11.0 - reCAPTCHA Validation, Plugin Updates, and GF 2.6 Support
+
+**:warning: This release contains breaking changes.**
+
+This _major_ release adds support for server-side captcha validation, plugin updates from the WordPress backend, and new features from Gravity Forms v2.6. We've also refactored the internal file upload mechanism to better integrate with GF's form submission lifecycle, leading to more reliable (and in some cases, more performant) results.
+
+Lastly, we fixed the GraphQL type names on some of the Product and Shipping fields, so we can hopefully add mutation support in future minor releases (and not break back-compat).
+
+**Note**: The minimum version of WPGraphQL has been bumped to v1.7.0.
+
+### What's new
+* **🚨 Breaking**: We've added support for server-side captcha validation with reCAPTCHA. **Note**: If you are already using captcha fields in your form, you will need to modify your code to to pass the validation token to `fieldValues`.
+* **🚨 Breaking**: The `button` field on `GfForm` has been _deprecated_ in favor of `form.submitButon`. Both now use the new `FormSubmitButton` GraphQL type (instead of the old `FormButton`), which adds support for `layoutGridColumnSpan`, `location` and `width` properties added in GF v2.6.
+* We've added support for plugin updates on the WordPress backend. A warning is displayed along with the update notice when upgrading to a version with possible breaking changes (e.g. v0.**X**.y ).
+* We've added a new `FileUploadValues` GraphQL type to the `FileUploadField` which includes the `basePath`, `baseUrl`, and `filename` fields in addition to the existing `url`. These fields have also been added to `ImageFieldValues`.
+
+### Behind the scenes
+* Added the `graphql_gf_update_repo_url` filter to control the source of the Update Checker.
+* Reworked the logic handling file uploads to use the native GF form submission lifecycle whenever possible.
+
+### Misc
+* chore!: The minimum version of WPGraphQL is now v1.7.0.
+* fix!: The `ProductHiddenProductField`, `ProductSingleProductField`, and `ShippingSingleShippingField` have been renamed to `ProductHiddenField`, `ProductSingleField`, and `ShippingSingleField`, respectively, in line with other child fields.
+* fix: Don't hide the `CALCULATION`, `HIDDENPRODUCT`, `SINGLEPRODUCT` and `SINGLESHIPPING` values from the `FormFieldTypeEnum`.
+* fix: Resolve `FormQuiz` data using the unmodeled `form` data instead of the `FormObject` model.
+* dev: The `lastPageButton` field on `GFForm` has been _deprecated_ in favor of `form.pagination.lastPageButton`, where the other pagination fields live.
+* dev: The `values` field on `FileUploadField` has been _deprecated_ in favor of `fileUploadValues`.
+* dev: The `GFUtils::handle_file_upload()` method has been _deprecated_.
+* dev: The `graphql_gf_form_modeled_data_experimental` filter has been _deprecated_ in favor of WPGraphQL's native `graphql_model_prepare_fields`.
+
 ## v0.10.5 - Bugfix
 
 This _minor_ release fixes a few bugs in the `FormsConnectionResolver`. We've also added GitHub Actions for PHPStan and GraphQL schema linting.
