@@ -213,6 +213,7 @@ class Utils {
 	 */
 	public static function get_possible_form_field_child_types( string $type ) : ?array {
 		$prefix = self::get_safe_form_field_type_name( $type );
+
 		switch ( $type ) {
 			case 'post_category':
 				$child_types = [
@@ -253,18 +254,18 @@ class Utils {
 			case 'product':
 				$child_types = [
 					'calculation'   => $prefix . 'CalculationField',
-					'hiddenproduct' => $prefix . 'HiddenProductField',
+					'hiddenproduct' => $prefix . 'HiddenField',
 					'price'         => $prefix . 'PriceField',
 					'radio'         => $prefix . 'RadioField',
 					'select'        => $prefix . 'SelectField',
-					'singleproduct' => $prefix . 'SingleProductField',
+					'singleproduct' => $prefix . 'SingleField',
 				];
 				break;
 			case 'shipping':
 				$child_types = [
 					'radio'          => $prefix . 'RadioField',
 					'select'         => $prefix . 'SelectField',
-					'singleshipping' => $prefix . 'SingleShippingField',
+					'singleshipping' => $prefix . 'SingleField',
 				];
 				break;
 			case 'option':
