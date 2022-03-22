@@ -202,6 +202,22 @@ class UpdateEntry extends AbstractMutation {
 			$entry['user_agent'] = sanitize_text_field( $input['entryMeta']['userAgent'] );
 		}
 
+		// Update multiselect files.
+		if ( isset( $input['fieldValues'] ) ) {
+			$all_files = EntryObjectMutation::initialize_files( $form['fields'], $input['fieldValues'], false );
+
+			if ( ! empty( $all_files ) ) {
+				foreach ( $all_files as $input_name => $files ) {
+					$urls = array_map(
+						fn( $file ) => GFFormsModel::get_file_upload_path( $form['id'], $file ),
+						array_column( $files, 'uploaded_filename' )
+					);
+
+					$field_values[ (int) str_replace( 'input_', '', $input_name ) ] = wp_json_encode( array_column( $urls, 'url' ) );
+				}
+			}
+		}
+
 		return array_replace(
 			$entry,
 			$field_values,

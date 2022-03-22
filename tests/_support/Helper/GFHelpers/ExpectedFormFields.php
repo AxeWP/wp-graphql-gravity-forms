@@ -604,11 +604,26 @@ trait ExpectedFormFields {
 		if ( is_array( $values ) ) {
 			$expected = [];
 			foreach ( $values as $name => $value ) {
+				switch ( $value ) {
+					case 'codecept_field_value_is_null':
+						$value = static::IS_NULL;
+						break;
+					case 'codecept_field_value_not_null':
+						$value = static::NOT_NULL;
+						break;
+					case 'codecept_field_value_not_falsy':
+						$value = static::NOT_FALSY;
+						break;
+					case 'codecept_field_value_is_falsy':
+						$value = static::IS_FALSY;
+						break;
+				}
 				switch ( (string) $name ) {
 					case 'amPm':
 						$expected[] = $this->expectedField( $name, isset( $value ) ? GFHelpers::get_enum_for_value( AmPmEnum::$type, $value ) : static::IS_NULL );
 						break;
 					case 'url':
+					case 'basePath':
 						$expected[] = $this->expectedField( $name, $this->is_draft_mutation ? static::IS_NULL : static::NOT_FALSY );
 						break;
 					default:

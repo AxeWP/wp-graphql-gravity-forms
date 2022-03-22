@@ -133,4 +133,65 @@ class EntryObjectMutation {
 		}
 		return $formatted;
 	}
+
+	/**
+	 * Initializes the globals needed for file uploads to work.
+	 * This prevents any notices about missing array keys.
+	 *
+	 * @param GF_Field[] $form_fields .
+	 * @param array      $input_field_values .
+	 * @param bool       $save_as_draft .
+	 */
+	public static function initialize_files( array $form_fields, array $input_field_values, bool $save_as_draft ) : array {
+		$files = [];
+
+		// Loop through all the fields to see if there are any upload types.
+		foreach ( $form_fields as $field ) {
+			// Bail early if not a file field.
+			if ( 'post_image' !== $field->get_input_type() && 'fileupload' !== $field->get_input_type() ) {
+				continue;
+			}
+
+			$input_name = 'input_' . $field->id;
+
+			// Single files need to be in $_FILES.
+			if ( ! $field->multipleFiles ) {
+				// We only need to initialize this once.
+				if ( ! isset( $_FILES[ $input_name ] ) ) {
+					$_FILES[ $input_name ] = [
+						'name'     => null,
+						'type'     => null,
+						'size'     => null,
+						'tmp_name' => null,
+						'error'    => null,
+					];
+				}
+				continue;
+			}
+
+			// Even though draft entries don't upload anything, GF still needs the $_FILES array.
+			if ( $save_as_draft ) {
+				break;
+			}
+
+			// Build multiupload filedata so the parent can save them to $_POST[`gform_uploaded_files`].
+			$file_payloads = [];
+			foreach ( $input_field_values as $value ) {
+				if ( $value['id'] !== $field->id ) {
+					continue;
+				}
+
+				foreach ( $value['fileUploadValues'] as $file ) {
+					$file_payloads[] = [
+						'uploaded_filename' => $file['name'],
+					];
+				}
+			}
+			if ( ! empty( $file_payloads ) ) {
+				$files[ $input_name ] = $file_payloads;
+			}
+		}
+
+		return $files;
+	}
 }

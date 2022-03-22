@@ -4,6 +4,7 @@
  *
  * @package Tests\WPGraphQL\GF
  */
+
 namespace Tests\WPGraphQL\GF;
 
 use GFFormsModel;
@@ -35,6 +36,9 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 		$_gf_uploaded_files = [];
 	}
 
+	/**
+	 * Tear down
+	 */
 	public function tearDown(): void {
 		GFFormsModel::delete_files( $this->entry_id, $this->factory->form->get_object_by_id( $this->form_id ) );
 		parent::tearDown();
@@ -324,9 +328,15 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * @return array
 	 */
 	public function expected_field_response( array $form ) : array {
-		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
+		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
 
-		$expected[] = $this->expected_field_value( 'imageValues', array_merge( $this->field_value, [ 'url' => $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ]] ?: null ) );
+		$expected[] = $this->expected_field_value(
+			'imageValues',
+			array_merge(
+				$this->field_value,
+				[ 'url' => $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] ] ?: null
+			)
+		);
 
 		return [
 			$this->expectedObject(
@@ -357,14 +367,15 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	public function expected_mutation_response( string $mutationName, $value ) : array {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
-		codecept_debug( 'starting ' . ($this->is_draft_mutation ? 'draft' : 'not draft') .' mutation.' );
-
 		$url = ! $this->is_draft_mutation ? $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] : null;
-		codecept_debug( 'url' . $url );
 
-		$image_values = array_merge($value, ['url' => $url ?: SELF::IS_NULL]);
-		codecept_debug( $image_values);
-		$expected[] = $this->expected_field_value('imageValues', $image_values );
+		$expected[] = $this->expected_field_value(
+			'imageValues',
+			array_merge(
+				$value,
+				[ 'url' => $url ?: self::IS_NULL ]
+			)
+		);
 
 		return [
 			$this->expectedObject(
