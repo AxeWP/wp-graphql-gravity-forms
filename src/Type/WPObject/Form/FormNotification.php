@@ -64,11 +64,12 @@ class FormNotification extends AbstractObject {
 			'isActive'              => [
 				'type'        => 'Boolean',
 				'description' => __( 'Is the notification active or inactive. The default is true (active).', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => isset( $source['isActive'] ) ? (bool) $source['isActive'] : true,
 			],
 			'isAutoformatted'       => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the email message should be formatted so that paragraphs are automatically added for new lines.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source) => empty( $source['disableAutoformat'] ),
+				'resolve'     => fn( $source ) => empty( $source['disableAutoformat'] ),
 			],
 			'message'               => [
 				'type'        => 'String',
