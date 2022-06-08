@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-develop',
-        'version' => 'dev-develop',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '5ad32a26e742d1ef2e043bf7fcf44ac12db8c2c5',
+        'reference' => 'ef3a9bca50337c1d36007c361d8b47b28faec806',
         'name' => 'harness-software/wp-graphql-gravity-forms',
         'dev' => false,
     ),
     'versions' => array(
         'harness-software/wp-graphql-gravity-forms' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '5ad32a26e742d1ef2e043bf7fcf44ac12db8c2c5',
+            'reference' => 'ef3a9bca50337c1d36007c361d8b47b28faec806',
             'dev_requirement' => false,
         ),
         'yahnis-elsts/plugin-update-checker' => array(
