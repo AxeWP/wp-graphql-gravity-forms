@@ -56,12 +56,12 @@ class Form extends Model {
 					if ( empty( $this->data['confirmations'] ) ) {
 						return null;
 					}
-
 					// Set necessary fields before returning.
 					return array_map(
 						function( $confirmation ) {
-							// Default fields don't have the `isActive` array key.
-							$confirmation['isActive'] = ! empty( $confirmation['isDefault'] ) ? true : ! empty( $confirmation['isActive'] );
+							// By default confirmations don't have the `isActive` array key.
+							$confirmation['isActive']  = isset( $confirmation['isActive'] ) ? (bool) $confirmation['isActive'] : true;
+							$confirmation['isDefault'] = ! empty( $confirmation['isDefault'] );
 
 							// Set empty pageIds to null.
 							$confirmation['pageId'] = $confirmation['pageId'] ?: null;
