@@ -11,6 +11,7 @@
 
 namespace WPGraphQLGravityForms\Types\Field;
 
+use GFCommon;
 use GF_Field_Number;
 use WPGraphQLGravityForms\Types\Enum\NumberFieldFormatEnum;
 use WPGraphQLGravityForms\Types\Field\FieldProperty;
@@ -84,22 +85,26 @@ class NumberField extends AbstractFormField {
 					'type'        => 'Float',
 					'description' => __( 'Minimum allowed value for a number field. Values lower than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms' ),
 					'resolve'     => function( GF_Field_Number $root ) {
-						if ( '' === $root['rangeMin'] ) {
+						if ( ! isset( $root->rangeMin ) ) {
 							return null;
 						}
 
-						return (float) $root['rangeMin'];
+						$numeric_min = isset( $root->numberFormat ) && 'decimal_comma' === $root->numberFormat ? GFCommon::clean_number( $root->rangeMin, 'decimal_comma' ) : $root->rangeMin;
+
+						return is_numeric( $numeric_min ) ? (float) $numeric_min : null;
 					},
 				],
 				'rangeMax'            => [
 					'type'        => 'Float',
 					'description' => __( 'Maximum allowed value for a number field. Values higher than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms' ),
 					'resolve'     => function( GF_Field_Number $root ) {
-						if ( '' === $root['rangeMax'] ) {
+						if ( ! isset( $root->rangeMin ) ) {
 							return null;
 						}
 
-						return (float) $root['rangeMax'];
+						$numeric_min = isset( $root->numberFormat ) && 'decimal_comma' === $root->numberFormat ? GFCommon::clean_number( $root->rangeMin, 'decimal_comma' ) : $root->rangeMin;
+
+						return is_numeric( $numeric_min ) ? (float) $numeric_min : null;
 					},
 				],
 			]
