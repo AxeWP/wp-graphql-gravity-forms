@@ -1,37 +1,86 @@
----
 name: Bug report
-about: Create a bug report for WPGraphQL for Gravity Forms
-title: "[Bug]"
-labels: ''
-assignees: ''
+description: Create a bug report for WPGraphQL for Gravity Forms
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Thank you for taking the time to report a possible bug!
 
----
+        Please remember, a bug report is not the place to ask questions. You can
+        use Slack for that, or start a topic in [GitHub
+        Discussions](https://github.com/harness-software/wp-graphql-gravity-forms/discussions).
+  - type: input
+    attributes:
+      label: Description
+      description: >-
+        Please write a brief description of the bug, including what you expected
+        and what actually happened.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: >-
+        Please list the all the steps needed to reproduce the bug. Ideally, this
+        should be in the form of a GraphQL snippet that can be used in
+        WPGraphiQL IDE.
+      placeholder: >-
+        1. Go to "..."
+        2. Query:
+        ```graphql
+        query {
 
-<!--
-Thank you for taking the time to report a possible bug. Remember, an issue is not the place to ask questions. You can use Slack for that, or start a topic in Github Discussions.
--->
-
-## Describe the bug
-<!-- Please write a clear and concise description of the bug. -->
-
-
-## To Reproduce
-<!-- 
-Please list the all the steps needed to reproduce the bug. Ideally, this should be in the form of a GraphQL snippet that can be used in GraphiQL IDE.
--->
-
-
-## Expected behavior
-<!--- Please write a clear and concise description of what you expected to happen. -->
-
-
-## Additional context
-Add any other context about the problem here.
-
-
-### Technical Info
-* WordPress version:
-* WPGraphQL version:
-* Gravity Forms version:
-* WPGraphQL for Gravity Forms version:
-* Other relevant frameworks/plugins: <!-- E.g. Next.js@^10.0.0, gatsby-source-wordpress@^4.0.0 -->
+        }
+        3. Result show X but should be Y
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: >-
+        Add any other context about the problem here, such as screenshots, error
+        logs, etc.
+  - type: input
+    attributes:
+      label: Plugin Version
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Gravity Forms Version
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: WordPress Version
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: WPGraphQL Version
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional enviornmental details
+      description: PHP version, React framework, additional plugins, etc.
+  - type: checkboxes
+    attributes:
+      label: Please confirm that you have searched existing issues in the repo.
+      description: >-
+        You can do this by searching
+        https://github.com/AxeWP/wp-graphql-rank-math/issues and making sure the
+        bug is not related to another plugin.
+      options:
+        - label: 'Yes'
+          required: true
+  - type: checkboxes
+    attributes:
+      label: >-
+        Please confirm that you have disabled ALL plugins except for RankMath
+        SEO, WPGraphQL, and WPGraphQL for Rank Math
+      options:
+        - label: 'Yes'
+          required: false
+        - label: My issue is with a specific 3rd-party plugin.
+          required: false
