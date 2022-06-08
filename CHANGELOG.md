@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.9.2.2 - Hotfix
+This hotfix release fixes an issue where the `rangeMin` and `rangeMax` fields on `NumberField` would not always return the correct float value.
+
+- fix: correctly return float values for `rangeMin` and `rangeMax` properties.
+
 ## v0.9.2.1 - Hotfix
 This hotfix release fixes an issue where `EntryUser` would throw an error if the WordPress user who submitted the entry no longer exists. The field now resolves to `null` instead.
 
