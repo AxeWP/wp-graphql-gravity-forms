@@ -16,6 +16,7 @@ use WPGraphQL\GF\Utils\GFUtils;
  * Class -PostImageFieldTest
  */
 class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+	// Since we cant detect if draft field is queried.
 	/**
 	 * Set up.
 	 */
@@ -34,6 +35,7 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 
 		global $_gf_uploaded_files;
 		$_gf_uploaded_files = [];
+		$_POST              = [];
 	}
 
 	/**
@@ -103,6 +105,13 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 		];
 	}
 
+	public function draft_field_value() {
+		$field_value = $this->field_value;
+		unset( $field_value['baseUrl'] );
+
+		return $field_value;
+	}
+
 	/**
 	 * The graphql field value input.
 	 */
@@ -145,6 +154,14 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 		];
 	}
 
+	public function updated_draft_field_value() {
+		$field_value = $this->updated_field_value();
+
+		unset( $field_value['baseUrl'] );
+
+		return $field_value;
+	}
+
 		/**
 		 * The graphql field value input.
 		 */
@@ -154,7 +171,6 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 			'caption'     => 'upated Caption',
 			'description' => 'upated Desc',
 			'title'       => 'upated Title',
-
 			'image'       => [
 				'name'     => 'img2.png',
 				'type'     => 'image/png',
@@ -330,12 +346,11 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	public function expected_field_response( array $form ) : array {
 		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
 
+		$value = $this->is_draft ? $this->draft_field_value : $this->field_value;
+
 		$expected[] = $this->expected_field_value(
 			'imageValues',
-			array_merge(
-				$this->field_value,
-				[ 'url' => $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] ] ?: null
-			)
+			$value
 		);
 
 		return [
@@ -365,16 +380,13 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 * @return array
 	 */
 	public function expected_mutation_response( string $mutationName, $value ) : array {
-		$form = $this->factory->form->get_object_by_id( $this->form_id );
-
-		$url = ! $this->is_draft_mutation ? $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] : null;
+		if ( empty( $value['url'] ) || $this->is_draft ) {
+			unset( $value['url'] );
+		}
 
 		$expected[] = $this->expected_field_value(
 			'imageValues',
-			array_merge(
-				$value,
-				[ 'url' => $url ?: self::IS_NULL ]
-			)
+			$value
 		);
 
 		return [

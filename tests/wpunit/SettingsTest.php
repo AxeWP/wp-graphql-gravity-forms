@@ -100,7 +100,7 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 							$this->expectedField( 'isLoggingEnabled', $this->options['isLoggingEnabled']['gform_enable_logging'] ),
 						]
 					),
-					
+
 				]
 			),
 		];

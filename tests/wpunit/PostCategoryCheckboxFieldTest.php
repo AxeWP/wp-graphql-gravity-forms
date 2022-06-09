@@ -56,9 +56,9 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	// public function testUpdateDraft():void {
-	// 	$this->runTestUpdateDraft();
-	// }
+	public function testUpdateDraft():void {
+		$this->runTestUpdateDraft();
+	}
 
 	/**
 	 * Sets the correct Field Helper.
@@ -80,12 +80,12 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 						'choices' => [
 							[
 								'text'       => self::factory()->category->get_object_by_id( $this->cat_id_1 )->name,
-								'value'      => (string) (self::factory()->category->get_object_by_id( $this->cat_id_1 )->term_id),
+								'value'      => (string) ( self::factory()->category->get_object_by_id( $this->cat_id_1 )->term_id ),
 								'isSelected' => false,
 							],
 							[
 								'text'       => self::factory()->category->get_object_by_id( $this->cat_id_2 )->name,
-								'value'      => (string) (self::factory()->category->get_object_by_id( $this->cat_id_2 )->term_id),
+								'value'      => (string) ( self::factory()->category->get_object_by_id( $this->cat_id_2 )->term_id ),
 								'isSelected' => false,
 							],
 							[
@@ -123,6 +123,11 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
+		foreach ( $this->fields as $field ) {
+			if ( 'post_category' === $field->type ) {
+				GFCommon::add_categories_as_choices( $field, '' );
+			}
+		}
 		return [
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
@@ -170,15 +175,35 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 		return [
 			[
 				'inputId' => $field_value[0]['inputId'],
-				'value'   => (string) $field_value[0]['value'],
+				'value'   => $field_value[0]['value'],
 			],
 			[
 				'inputId' => $field_value[1]['inputId'],
-				'value'   => (string) $field_value[1]['value'],
+				'value'   => (string) $this->fields[0]['choices'][1]['value'],
 			],
 			[
 				'inputId' => $field_value[2]['inputId'],
-				'value'   => (string) $field_value[2]['value'],
+				'value'   => (string) $this->fields[0]['choices'][2]['value'],
+			],
+		];
+	}
+
+	public function updated_draft_field_value() {
+		return [
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
+				'text'    => $this->fields[0]['choices'][0]['text'],
+				'value'   => null,
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
+				'text'    => $this->fields[0]['choices'][1]['text'],
+				'value'   => (string) $this->fields[0]['choices'][1]['value'],
+			],
+			[
+				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
+				'text'    => $this->fields[0]['choices'][2]['text'],
+				'value'   => (string) $this->fields[0]['choices'][2]['value'],
 			],
 		];
 	}
@@ -189,6 +214,12 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
+		foreach ( $this->fields as $field ) {
+			if ( 'post_category' === $field->type ) {
+				GFCommon::add_categories_as_choices( $field, '' );
+			}
+		}
+
 		return [
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],

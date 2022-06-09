@@ -1139,7 +1139,7 @@ class Wpunit extends \Codeception\Module {
 		return array_merge(
 			[
 				'button'                     => [
-					'conditionalLogic' => [
+					'conditionalLogic'     => [
 						'actionType' => 'hide',
 						'logicType'  => 'any',
 						'rules'      => [
@@ -1150,12 +1150,12 @@ class Wpunit extends \Codeception\Module {
 							],
 						],
 					],
-					'imageUrl'         => 'https://example.com',
+					'imageUrl'             => 'https://example.com',
 					'layoutGridColumnSpan' => '12',
-					'location'         => 'bottom',
-					'text'             => 'Submit',
-					'type'             => 'text',
-					'width'            => 'full',
+					'location'             => 'bottom',
+					'text'                 => 'Submit',
+					'type'                 => 'text',
+					'width'                => 'full',
 				],
 				'confirmations'              => [
 					'5cfec9464e7d7' => [

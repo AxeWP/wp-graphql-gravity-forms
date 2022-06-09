@@ -381,12 +381,11 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 	public function expected_mutation_response( string $mutationName, $value ) : array {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
-		$urls = ! $this->is_draft_mutation ? json_decode( $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] ) : [];
+		$urls = ! $this->is_draft ? json_decode( $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] ) : [];
 
-		if( $this->is_draft_mutation ) {
+		if ( $this->is_draft ) {
 			$expected[] = $this->expected_field_value( 'fileUploadValues.0', null );
 		} else {
-
 			$value[0]   = array_merge(
 				$value[0],
 				[ 'url' => ! empty( $urls[0] ) ? $urls[0] : self::IS_NULL ]
