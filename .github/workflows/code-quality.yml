@@ -52,6 +52,7 @@ jobs:
       - name: Setup WordPress
         run: |
           cp .env.dist .env
+          echo GF_KEY=${{ secrets.GF_KEY }} >> .env
           composer run install-stan-env
           cp -R . /tmp/wordpress/wp-content/plugins/wp-graphql-gravity-forms
 

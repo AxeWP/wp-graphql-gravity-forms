@@ -44,6 +44,7 @@ jobs:
       - name: Setup WordPress
         run: |
           cp .env.dist .env
+          echo GF_KEY=${{ secrets.GF_KEY }} >> .env
           composer run install-test-env
 
       - name: Generate the Static Schema
