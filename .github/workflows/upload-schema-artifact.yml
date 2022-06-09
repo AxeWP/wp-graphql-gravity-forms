@@ -32,8 +32,6 @@ jobs:
       - name: Setup WordPress
         run: |
           cp .env.dist .env
-          echo GIT_TOKEN=${{ secrets.GIT_TOKEN }} >> .env
-          echo GIT_USER=${{ secrets.GIT_USER }} >> .env
           composer run install-test-env
 
       - name: Generate the Static Schema
