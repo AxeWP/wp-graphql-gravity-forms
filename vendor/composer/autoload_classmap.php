@@ -153,6 +153,7 @@ return array(
     'WPGraphQL\\GF\\Type\\WPObject\\ConditionalLogic\\ConditionalLogic' => $baseDir . '/src/Type/WPObject/ConditionalLogic/ConditionalLogic.php',
     'WPGraphQL\\GF\\Type\\WPObject\\ConditionalLogic\\ConditionalLogicRule' => $baseDir . '/src/Type/WPObject/ConditionalLogic/ConditionalLogicRule.php',
     'WPGraphQL\\GF\\Type\\WPObject\\Entry\\DraftEntry' => $baseDir . '/src/Type/WPObject/Entry/DraftEntry.php',
+    'WPGraphQL\\GF\\Type\\WPObject\\Entry\\EntryConfirmation' => $baseDir . '/src/Type/WPObject/Entry/EntryConfirmation.php',
     'WPGraphQL\\GF\\Type\\WPObject\\Entry\\SubmittedEntry' => $baseDir . '/src/Type/WPObject/Entry/SubmittedEntry.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FieldError' => $baseDir . '/src/Type/WPObject/FieldError.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\ChoiceMapper' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/ChoiceMapper.php',

@@ -25,14 +25,22 @@ class SubmittedEntry extends Model {
 	protected $data;
 
 	/**
+	 * Stores the submitted response from the api.
+	 *
+	 * @var array $submit_confirmation;
+	 */
+	protected $submit_confirmation;
+
+	/**
 	 * Entry constructor.
 	 *
 	 * @param array $entry The incoming entry to be modeled.
 	 *
 	 * @throws \Exception .
 	 */
-	public function __construct( $entry ) {
+	public function __construct( $entry, $payload = array() ) {
 		$this->data = $entry;
+		$this->submit_confirmation = $payload;
 		parent::__construct();
 	}
 
@@ -71,6 +79,16 @@ class SubmittedEntry extends Model {
 		if ( empty( $this->fields ) ) {
 			$this->fields = [
 				// Interface fields.
+				'confirmation'        => function() {
+
+					if ( $this->submit_confirmation ) {
+						return array(
+							'type' => $this->submit_confirmation['submission']['confirmation_type'],
+							'message' => $this->submit_confirmation['submission']['confirmation_message'],
+							'url' => $this->submit_confirmation['submission']['confirmation_redirect'],
+						);
+					}
+				},
 				'createdByDatabaseId' => fn() : ?int => ! empty( $this->data['created_by'] ) ? (int) $this->data['created_by'] : null,
 				'createdById'         => fn() : ?string => ! empty( $this->data['created_by'] ) ? Relay::toGlobalId( 'user', $this->data['created_by'] ) : null,
 				'dateCreated'         => fn() : ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,

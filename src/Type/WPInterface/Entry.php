@@ -22,6 +22,7 @@ use WPGraphQL\GF\Interfaces\Type;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Model\Form;
 use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
+use WPGraphQL\GF\Type\WPObject\Entry\EntryConfirmation;
 use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
@@ -129,6 +130,10 @@ class Entry implements Field, Registrable, Type, TypeWithFields {
 	 */
 	public static function get_fields() : array {
 		return [
+			'confirmation'                => [
+				'type'        => EntryConfirmation::$type,
+				'description' => __( 'Contains the form confirmation such as confirmation text or redirect URL.', 'wp-graphql-gravity-forms' ),
+			],
 			'createdBy'           => [
 				'type'        => 'User',
 				'description' => __( 'The user who created the entry.', 'wp-graphql-gravity-forms' ),

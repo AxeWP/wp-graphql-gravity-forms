@@ -103,7 +103,7 @@ class SubmitForm extends AbstractMutation {
 
 						// Create the model directly, since the filter will be removed by the time Deferred would resolve.
 						$entry       = GFUtils::get_entry( $payload['entryId'] );
-						$entry_model = new SubmittedEntry( $entry );
+						$entry_model = new SubmittedEntry( $entry, $payload );
 
 						remove_filter( 'graphql_gf_can_view_entries', $is_private_callback, 10 );
 

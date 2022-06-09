@@ -11,14 +11,14 @@ class ComposerStaticInitd0272bb70fdbba1665567db9f447b274
     );
 
     public static $prefixLengthsPsr4 = array (
-        'W' => 
+        'W' =>
         array (
             'WPGraphQL\\GF\\' => 13,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'WPGraphQL\\GF\\' => 
+        'WPGraphQL\\GF\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
@@ -172,6 +172,7 @@ class ComposerStaticInitd0272bb70fdbba1665567db9f447b274
         'WPGraphQL\\GF\\Type\\WPObject\\ConditionalLogic\\ConditionalLogic' => __DIR__ . '/../..' . '/src/Type/WPObject/ConditionalLogic/ConditionalLogic.php',
         'WPGraphQL\\GF\\Type\\WPObject\\ConditionalLogic\\ConditionalLogicRule' => __DIR__ . '/../..' . '/src/Type/WPObject/ConditionalLogic/ConditionalLogicRule.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Entry\\DraftEntry' => __DIR__ . '/../..' . '/src/Type/WPObject/Entry/DraftEntry.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\Entry\\EntryConfirmation' => __DIR__ . '/../..' . '/src/Type/WPObject/Entry/EntryConfirmation.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Entry\\SubmittedEntry' => __DIR__ . '/../..' . '/src/Type/WPObject/Entry/SubmittedEntry.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FieldError' => __DIR__ . '/../..' . '/src/Type/WPObject/FieldError.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\ChoiceMapper' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/ChoiceMapper.php',
