@@ -56,9 +56,9 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
-		$this->runTestUpdateDraft();
-	}
+	// public function testUpdateDraft():void {
+	// 	$this->runTestUpdateDraft();
+	// }
 
 	/**
 	 * Sets the correct Field Helper.
@@ -80,12 +80,12 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 						'choices' => [
 							[
 								'text'       => self::factory()->category->get_object_by_id( $this->cat_id_1 )->name,
-								'value'      => (string) self::factory()->category->get_object_by_id( $this->cat_id_1 )->term_id,
+								'value'      => (string) (self::factory()->category->get_object_by_id( $this->cat_id_1 )->term_id),
 								'isSelected' => false,
 							],
 							[
 								'text'       => self::factory()->category->get_object_by_id( $this->cat_id_2 )->name,
-								'value'      => (string) self::factory()->category->get_object_by_id( $this->cat_id_2 )->term_id,
+								'value'      => (string) (self::factory()->category->get_object_by_id( $this->cat_id_2 )->term_id),
 								'isSelected' => false,
 							],
 							[
@@ -127,17 +127,17 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
 				'text'    => $this->fields[0]['choices'][0]['text'],
-				'value'   => $this->fields[0]['choices'][0]['text'] . ':' . $this->fields[0]['choices'][0]['value'],
+				'value'   => (string) $this->fields[0]['choices'][0]['text'] . ':' . $this->fields[0]['choices'][0]['value'],
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
 				'text'    => $this->fields[0]['choices'][1]['text'],
-				'value'   => (string) null,
+				'value'   => null,
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
 				'text'    => $this->fields[0]['choices'][2]['text'],
-				'value'   => $this->fields[0]['choices'][2]['text'] . ':' . $this->fields[0]['choices'][2]['value'],
+				'value'   => (string) $this->fields[0]['choices'][2]['text'] . ':' . $this->fields[0]['choices'][2]['value'],
 			],
 		];
 	}
@@ -154,7 +154,7 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 			],
 			[
 				'inputId' => $field_value[1]['inputId'],
-				'value'   => $field_value[1]['value'],
+				'value'   => (string) $field_value[1]['value'],
 			],
 			[
 				'inputId' => $field_value[2]['inputId'],
@@ -170,15 +170,15 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 		return [
 			[
 				'inputId' => $field_value[0]['inputId'],
-				'value'   => $field_value[0]['value'],
+				'value'   => (string) $field_value[0]['value'],
 			],
 			[
 				'inputId' => $field_value[1]['inputId'],
-				'value'   => $field_value[1]['value'],
+				'value'   => (string) $field_value[1]['value'],
 			],
 			[
 				'inputId' => $field_value[2]['inputId'],
-				'value'   => $field_value[2]['value'],
+				'value'   => (string) $field_value[2]['value'],
 			],
 		];
 	}
@@ -192,18 +192,18 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 		return [
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
-				'value'   => null,
 				'text'    => $this->fields[0]['choices'][0]['text'],
+				'value'   => null,
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
 				'text'    => $this->fields[0]['choices'][1]['text'],
-				'value'   => $this->fields[0]['choices'][1]['value'],
+				'value'   => (string) $this->fields[0]['choices'][1]['text'] . ':' . (string) $this->fields[0]['choices'][1]['value'],
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
 				'text'    => $this->fields[0]['choices'][2]['text'],
-				'value'   => $this->fields[0]['choices'][2]['value'],
+				'value'   => (string) $this->fields[0]['choices'][2]['text'] . ':' . (string) $this->fields[0]['choices'][2]['value'],
 			],
 		];
 	}
@@ -213,8 +213,8 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 	 */
 	public function value() {
 		return [
-			(string) $this->field_value[0]['inputId'] => $this->field_value[0]['value'],
-			(string) $this->field_value[2]['inputId'] => $this->field_value[2]['value'],
+			(string) $this->field_value[0]['inputId'] => (string) $this->field_value[0]['value'],
+			(string) $this->field_value[2]['inputId'] => (string) $this->field_value[2]['value'],
 		];
 	}
 
@@ -439,8 +439,8 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
-		$this->assertEquals( $this->field_value[0]['value'], $actual_entry[ $form['fields'][0]['inputs'][0]['id'] ] );
-		$this->assertEquals( $this->field_value[1]['value'], $actual_entry[ $form['fields'][0]['inputs'][1]['id'] ] );
-		$this->assertEquals( $this->field_value[2]['value'], $actual_entry[ $form['fields'][0]['inputs'][2]['id'] ] );
+		$this->assertEquals( (string) $this->field_value[0]['value'], $actual_entry[ $form['fields'][0]['inputs'][0]['id'] ] );
+		$this->assertEquals( (string) $this->field_value[1]['value'], $actual_entry[ $form['fields'][0]['inputs'][1]['id'] ] );
+		$this->assertEquals( (string) $this->field_value[2]['value'], $actual_entry[ $form['fields'][0]['inputs'][2]['id'] ] );
 	}
 }

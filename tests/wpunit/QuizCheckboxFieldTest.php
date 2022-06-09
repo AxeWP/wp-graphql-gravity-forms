@@ -133,8 +133,8 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
-				'value'   => $this->fields[0]['choices'][2]['value'],
 				'text'    => $this->fields[0]['choices'][2]['text'],
+				'value'   => $this->fields[0]['choices'][2]['value'],
 			],
 		];
 	}
@@ -189,8 +189,8 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 		return [
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
-				'value'   => null,
 				'text'    => $this->fields[0]['choices'][0]['text'],
+				'value'   => null,
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],

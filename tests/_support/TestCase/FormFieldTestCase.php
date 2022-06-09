@@ -82,6 +82,8 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$this->field_value               = $this->field_value();
 		$this->field_value_input         = $this->field_value_input();
+		$this->draft_field_value         = $this->draft_field_value();
+		$this->draft_field_value_input   = $this->draft_field_value_input();
 		$this->updated_field_value       = $this->updated_field_value();
 		$this->updated_field_value_input = $this->updated_field_value_input();
 		$this->value                     = $this->value();
@@ -127,6 +129,8 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$this->is_draft_mutation = null;
 		$this->updated_field_value_input = null;
 		$this->updated_field_value = null;
+		$this->draft_field_value_input = null;
+		$this->draft_field_value = null;
 
 		// Then...
 		parent::tearDown();
@@ -145,11 +149,30 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		);
 	}
 
+	public function field_value() {
+		return $this->field_value;
+	}
+
+	public function draft_field_value() {
+		return $this->field_value;
+	}
+
+	public function updated_field_value() {
+		return $this->updated_field_value;
+	}
+
 	/**
 	 * The graphql field value input.
 	 */
 	public function field_value_input() {
 		return $this->field_value;
+	}
+
+	/**
+	 * The graphql field value input.
+	 */
+	public function draft_field_value_input() {
+		return $this->field_value_input;
 	}
 
 	/**
@@ -231,12 +254,12 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 			'draft'   => true,
 			'formId'  => $this->form_id,
 			'fieldId' => $form['fields'][0]->id,
-			'value'   => $this->field_value_input,
+			'value'   => $this->draft_field_value_input,
 		];
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
-		$expected = $this->expected_mutation_response( 'submitGfForm', $this->field_value );
+		$expected = $this->expected_mutation_response( 'submitGfForm', $this->draft_field_value );
 
 		$this->assertQuerySuccessful( $response, $expected );
 
@@ -353,13 +376,16 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 			}
 		}
 
-		$expected[] = $this->expectedObject(
-			'personalData',
-			[
-				$this->expectedField( 'shouldErase', ! empty( $field['personalDataErase'] ) ),
-				$this->expectedField( 'shouldExport', ! empty( $field['personalDataExport'] ) ),
-			]
-		);
+		if( ! in_array( $field->get_input_type(), ['captcha', 'html', 'page', 'section'], true ) ) {
+			$expected[] = $this->expectedObject(
+				'personalData',
+				[
+					$this->expectedField( 'shouldErase', ! empty( $field['personalDataErase'] ) ),
+					$this->expectedField( 'shouldExport', ! empty( $field['personalDataExport'] ) ),
+				]
+			);
+		}
+
 
 		return $expected;
 	}

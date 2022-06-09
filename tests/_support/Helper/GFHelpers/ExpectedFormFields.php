@@ -545,8 +545,11 @@ trait ExpectedFormFields {
 					case 'choices':
 						$expected_fields[] = $this->expected_choices( $keys, $choice['choices'] ?? [] );
 						break;
+					case 'value':
+						$expected_fields[] = $this->expectedField( $name, (string) $choice[$key] );
+						break;
 					default:
-						$expected_fields[] = $this->expectedField( $name, $choice[ $key ] ?? null );
+						$expected_fields[] = $this->expectedField( $name, $choice[ $key ] ?? static::IS_NULL );
 						break;
 				}
 			}
@@ -597,7 +600,7 @@ trait ExpectedFormFields {
 	}
 
 	public function expected_field_value( string $key, $values ) {
-		if ( empty( $values ) ) {
+		if ( null === $values ) {
 			return $this->expectedField( $key, static::IS_NULL );
 		}
 

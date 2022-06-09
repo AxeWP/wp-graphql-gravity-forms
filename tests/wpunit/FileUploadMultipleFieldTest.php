@@ -100,15 +100,19 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 		return [
 			[
 				'baseUrl'  => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/',
-				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[0]['name'],
 				'filename' => $field_value_input[0]['name'],
+				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[0]['name'],
 			],
 			[
 				'baseUrl'  => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/',
-				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[1]['name'],
 				'filename' => $field_value_input[1]['name'],
+				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[1]['name'],
 			],
 		];
+	}
+
+	public function draft_field_value() {
+		return null;
 	}
 
 	/**
@@ -153,13 +157,13 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 		return [
 			[
 				'baseUrl'  => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/',
-				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[0]['name'],
 				'filename' => $field_value_input[0]['name'],
+				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[0]['name'],
 			],
 			[
 				'baseUrl'  => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/',
-				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[1]['name'],
 				'filename' => $field_value_input[1]['name'],
+				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[1]['name'],
 			],
 		];
 	}
@@ -379,11 +383,16 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 
 		$urls = ! $this->is_draft_mutation ? json_decode( $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] ) : [];
 
-		$value[0]   = array_merge(
-			$value[0],
-			[ 'url' => ! empty( $urls[0] ) ? $urls[0] : self::IS_NULL ]
-		);
-		$expected[] = $this->expected_field_value( 'fileUploadValues.0', $value[0] );
+		if( $this->is_draft_mutation ) {
+			$expected[] = $this->expected_field_value( 'fileUploadValues.0', null );
+		} else {
+
+			$value[0]   = array_merge(
+				$value[0],
+				[ 'url' => ! empty( $urls[0] ) ? $urls[0] : self::IS_NULL ]
+			);
+			$expected[] = $this->expected_field_value( 'fileUploadValues.0', $value[0] );
+		}
 
 		return [
 			$this->expectedObject(
