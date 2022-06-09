@@ -35,10 +35,13 @@ class ImageValuesInput extends FileUploadValuesInput {
 	 */
 	protected function prepare_value() {
 		$value      = $this->args;
-		$prev_value = $this->entry[ $this->field->id ] ?? [];
+		$prev_value = $this->entry[ $this->field->id ] ?? '';
+		if ( is_string( $prev_value ) ) {
+			$prev_value = explode( '|:|', $prev_value );
+		}
 
 		// change input value for parent function.
-		$this->args = [ $value['image'] ];
+		$this->args = isset( $value['image'] ) ? [ $value['image'] ] : [];
 		$url        = parent::prepare_value() ?: $prev_value[0] ?? null;
 		$this->args = $value;
 

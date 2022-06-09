@@ -263,7 +263,10 @@ class UpdateEntry extends AbstractMutation {
 			$field_id   = strtok( $id, '.' );
 			$field      = GFUtils::get_field_by_id( $form, (int) $field_id );
 
-			$value = GFFormsModel::prepare_value( $form, $field, $value, $input_name, $entry['id'], $entry );
+			// Post images can sometimes already be prepared.
+			if ( 'post_image' !== $field->type || is_array( $value ) ) {
+				$value = GFFormsModel::prepare_value( $form, $field, $value, $input_name, $entry['id'], $entry );
+			}
 		}
 
 		return $values;
