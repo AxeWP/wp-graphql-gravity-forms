@@ -100,6 +100,11 @@ class FieldValues {
 						return null;
 					}
 
+					// Category choices aren't saved to the field by default.
+					if ( 'post_category' === $source->type ) {
+						GFCommon::add_categories_as_choices( $source, '' );
+					}
+
 					$field_input_ids = wp_list_pluck( $source->inputs, 'id' );
 					$checkboxValues  = [];
 

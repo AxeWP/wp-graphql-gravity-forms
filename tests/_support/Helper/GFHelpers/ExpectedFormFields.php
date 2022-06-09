@@ -545,8 +545,11 @@ trait ExpectedFormFields {
 					case 'choices':
 						$expected_fields[] = $this->expected_choices( $keys, $choice['choices'] ?? [] );
 						break;
+					case 'value':
+						$expected_fields[] = $this->expectedField( $name, (string) $choice[ $key ] );
+						break;
 					default:
-						$expected_fields[] = $this->expectedField( $name, $choice[ $key ] ?? null );
+						$expected_fields[] = $this->expectedField( $name, $choice[ $key ] ?? static::IS_NULL );
 						break;
 				}
 			}
@@ -597,7 +600,7 @@ trait ExpectedFormFields {
 	}
 
 	public function expected_field_value( string $key, $values ) {
-		if ( empty( $values ) ) {
+		if ( null === $values ) {
 			return $this->expectedField( $key, static::IS_NULL );
 		}
 
@@ -623,8 +626,10 @@ trait ExpectedFormFields {
 						$expected[] = $this->expectedField( $name, isset( $value ) ? GFHelpers::get_enum_for_value( AmPmEnum::$type, $value ) : static::IS_NULL );
 						break;
 					case 'url':
+						$expected[] = $this->expectedField( $name, ! empty( $value ) ? static::NOT_FALSY : static::IS_NULL );
+						break;
 					case 'basePath':
-						$expected[] = $this->expectedField( $name, $this->is_draft_mutation ? static::IS_NULL : static::NOT_FALSY );
+						$expected[] = $this->expectedField( $name, $this->is_draft ? static::IS_NULL : static::NOT_FALSY );
 						break;
 					default:
 						$expected[] = $this->expectedField( $name, $value );

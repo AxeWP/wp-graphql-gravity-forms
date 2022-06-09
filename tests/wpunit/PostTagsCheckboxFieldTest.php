@@ -135,7 +135,7 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
 				'text'    => $this->fields[0]['choices'][1]['text'],
-				'value'   => (string) null,
+				'value'   => null,
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
@@ -195,8 +195,8 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 		return [
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
-				'value'   => null,
 				'text'    => $this->fields[0]['choices'][0]['text'],
+				'value'   => null,
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],

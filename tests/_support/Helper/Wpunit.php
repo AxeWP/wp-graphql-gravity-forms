@@ -135,39 +135,39 @@ class Wpunit extends \Codeception\Module {
 					[
 						'text'       => '2015',
 						'value'      => '2015',
-						'isSelected' => null,
+						'isSelected' => false,
 						'choices'    => [
 							[
 								'text'       => 'Acura',
 								'value'      => 'Acura',
-								'isSelected' => null,
+								'isSelected' => true,
 								'choices'    => [
 									[
 										'text'       => 'ILX',
 										'value'      => 'ILX',
-										'isSelected' => null,
+										'isSelected' => true,
 									],
 									[
 										'text'       => 'MDX',
 										'value'      => 'MDX',
-										'isSelected' => null,
+										'isSelected' => false,
 									],
 								],
 							],
 							[
 								'text'       => 'Alfa Romeo',
 								'value'      => 'Alfa Romeo',
-								'isSelected' => null,
+								'isSelected' => false,
 								'choices'    => [
 									[
 										'text'       => '4C',
 										'value'      => '4c',
-										'isSelected' => null,
+										'isSelected' => false,
 									],
 									[
 										'text'       => '4C Spider',
 										'value'      => '$C Spider',
-										'isSelected' => null,
+										'isSelected' => false,
 									],
 								],
 							],
@@ -176,39 +176,39 @@ class Wpunit extends \Codeception\Module {
 					[
 						'text'       => '2016',
 						'value'      => '2016',
-						'isSelected' => null,
+						'isSelected' => false,
 						'choices'    => [
 							[
 								'text'       => 'Acura',
 								'value'      => 'Acura',
-								'isSelected' => null,
+								'isSelected' => false,
 								'choices'    => [
 									[
 										'text'       => 'ILX',
 										'value'      => 'ILX',
-										'isSelected' => null,
+										'isSelected' => false,
 									],
 									[
 										'text'       => 'MDX 2016',
 										'value'      => 'MDX 2016',
-										'isSelected' => null,
+										'isSelected' => false,
 									],
 								],
 							],
 							[
 								'text'       => 'Alfa Romeo',
 								'value'      => 'Alfa Romeo',
-								'isSelected' => null,
+								'isSelected' => false,
 								'choices'    => [
 									[
 										'text'       => '4C',
 										'value'      => '4c',
-										'isSelected' => null,
+										'isSelected' => false,
 									],
 									[
 										'text'       => '4C Spider',
 										'value'      => '$C Spider',
-										'isSelected' => null,
+										'isSelected' => false,
 									],
 								],
 							],
@@ -303,7 +303,7 @@ class Wpunit extends \Codeception\Module {
 					[
 						'text'       => 'Checked',
 						'value'      => 1,
-						'isSelected' => null,
+						'isSelected' => false,
 					],
 				],
 			],
@@ -554,7 +554,7 @@ class Wpunit extends \Codeception\Module {
 								'value'      => 'Dr.',
 							],
 							[
-								'isSelected' => null,
+								'isSelected' => false,
 								'text'       => 'Prof.',
 								'value'      => 'Prof.',
 							],
@@ -1139,7 +1139,7 @@ class Wpunit extends \Codeception\Module {
 		return array_merge(
 			[
 				'button'                     => [
-					'conditionalLogic' => [
+					'conditionalLogic'     => [
 						'actionType' => 'hide',
 						'logicType'  => 'any',
 						'rules'      => [
@@ -1150,12 +1150,12 @@ class Wpunit extends \Codeception\Module {
 							],
 						],
 					],
-					'imageUrl'         => 'https://example.com',
+					'imageUrl'             => 'https://example.com',
 					'layoutGridColumnSpan' => '12',
-					'location'         => 'bottom',
-					'text'             => 'Submit',
-					'type'             => 'text',
-					'width'            => 'full',
+					'location'             => 'bottom',
+					'text'                 => 'Submit',
+					'type'                 => 'text',
+					'width'                => 'full',
 				],
 				'confirmations'              => [
 					'5cfec9464e7d7' => [

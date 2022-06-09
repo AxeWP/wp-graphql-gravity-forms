@@ -94,47 +94,19 @@ configure_wordpress() {
 	wp rewrite structure '/%year%/%monthnum%/%postname%/'
 }
 
-install_gravityforms() {
-	if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityforms ]; then
-		echo "Cloning Gravity Forms"
-		git clone -b master --single-branch https://$GIT_USER:$GIT_TOKEN@$GF_REPO $WP_CORE_DIR/wp-content/plugins/gravityforms
-	fi
-	echo "Cloning Gravity Forms"
-	wp plugin activate gravityforms --allow-root
-}
-
-install_gravityforms_signature() {
-	if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityformssignature ]; then
-		echo "Cloning Gravity Forms Signature"
-		git clone -b master --single-branch https://$GIT_USER:$GIT_TOKEN@$GF_SIGNATURE_REPO $WP_CORE_DIR/wp-content/plugins/gravityformssignature
-	fi
-	wp plugin activate gravityformssignature --allow-root
-}
-
-install_gravityforms_chainedselects() {
-	if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityformschainedselects ]; then
-		echo "Cloning Gravity Forms Chained Selects"
-		git clone -b master --single-branch https://$GIT_USER:$GIT_TOKEN@$GF_CHAINEDSELECTS_REPO $WP_CORE_DIR/wp-content/plugins/gravityformschainedselects
-	fi
-	wp plugin activate gravityformschainedselects --allow-root
-}
-
-install_gravityforms_quiz() {
-	if [ ! -d $WP_CORE_DIR/wp-content/plugins/gravityformsquiz ]; then
-		echo "Cloning Gravity Forms Quiz"
-		git clone -b master --single-branch https://$GIT_USER:$GIT_TOKEN@$GF_QUIZ_REPO $WP_CORE_DIR/wp-content/plugins/gravityformsquiz
-	fi
-	wp plugin activate gravityformsquiz --allow-root
-}
-
 install_plugins() {
 	cd $WP_CORE_DIR
 
 	wp plugin list --allow-root
-	install_gravityforms
-	install_gravityforms_signature
-	install_gravityforms_chainedselects
-	install_gravityforms_quiz
+
+	# Install GF plugins and Activate.
+	wp plugin install gravityformscli --activate --allow-root
+
+	echo "Installing and Activating Gravity Forms + extensions";
+	wp gf install --key=$GF_KEY --activate --allow-root --quiet
+	wp gf install gravityformssignature --key=$GF_KEY --activate --allow-root --quiet
+	wp gf install gravityformschainedselects --key=$GF_KEY --activate --allow-root --quiet
+	wp gf install gravityformsquiz --key=$GF_KEY --activate --allow-root --quiet
 
 	# Install WPGraphQL Upload and Activate
 	wp plugin install https://github.com/dre1080/wp-graphql-upload/archive/refs/heads/master.zip --allow-root

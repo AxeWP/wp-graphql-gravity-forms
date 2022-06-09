@@ -94,10 +94,14 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 		return [
 			[
 				'baseUrl'  => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/',
-				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[0]['name'],
 				'filename' => $field_value_input[0]['name'],
+				'url'      => GFUtils::get_gravity_forms_upload_dir( $this->form_id )['url'] . '/' . $field_value_input[0]['name'],
 			],
 		];
+	}
+
+	public function draft_field_value() {
+		return null;
 	}
 
 	/**
@@ -338,13 +342,17 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	public function expected_mutation_response( string $mutationName, $value ) : array {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
-		$url = ! $this->is_draft_mutation ? $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] : null;
+		$url = ! $this->is_draft ? $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] : null;
 
-		$value[0]   = array_merge(
-			$value[0],
-			[ 'url' => $url ?: self::IS_NULL ]
-		);
-		$expected[] = $this->expected_field_value( 'fileUploadValues.0', $value[0] );
+		if ( $this->is_draft ) {
+			$expected[] = $this->expected_field_value( 'fileUploadValues.0', null );
+		} else {
+			$value[0]   = array_merge(
+				$value[0],
+				[ 'url' => $url ?: self::IS_NULL ]
+			);
+			$expected[] = $this->expected_field_value( 'fileUploadValues.0', $value[0] );
+		}
 
 		return [
 			$this->expectedObject(
