@@ -38,7 +38,7 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
       formId: 50
       entryMeta {
         createdById: 1 # The user ID.
-        ip: "" # IP address
+        ip: ""         # IP address
       }
       fieldValues: [
         {
@@ -110,6 +110,11 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
       targetPage: 0
     }
   ) {
+    confirmation {
+      type    
+      message # The message HTML - if the confirmation type is a "MESSAGE".
+      url     # The redirect URL - if the confirmation type is a "REDIRECT".
+    }
     errors {
       id # The field that failed validation.
       message
@@ -128,13 +133,13 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
 }
 ```
 
-## Validation and Submission
+## Submission Validation and Confirmation.
 
 In addition to any frontend, or GraphQL validation checks, Gravity Forms validates the values of each `formField` , and returns them in the `errors` field.
 
-If the field is updated successfully, the `errors` field will be `null` , and the `entry` in the response will be the newly updated entry object. Depending on whether `saveAsDraft` is `true` , you will either get the new `entryId` or the `resumeToken` , with the other value set to `null` .
+If the field is updated successfully, the `errors` field will be `null`, the `confirmation` field will be a `SubmissionConfirmation` object, and the `entry` in the response will be the newly updated `GfEntry` object which resolves to either a `GfSubmittedEntry` or `GfDraftEntry`.
 
-If the field is NOT updated successfully, such as when a field validation error occurs, the `entry` object in the response will be `null` , and the `errors` field will provide data about the error. Example:
+If the field is NOT updated successfully, such as when a field validation error occurs, the `confirmation` and `entry` objects in the response will be `null` , and the `errors` field will provide data about the error. Example:
 
 ```json
 "errors": [
