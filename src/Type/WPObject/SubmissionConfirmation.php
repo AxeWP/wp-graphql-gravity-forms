@@ -11,7 +11,7 @@
 namespace WPGraphQL\GF\Type\WPObject;
 
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-use WPGraphQL\GF\Type\Enum\FormConfirmationTypeEnum;
+use WPGraphQL\GF\Type\Enum\SubmissionConfirmationTypeEnum;
 
 /**
  * Class - Submission Confirmation
@@ -28,7 +28,7 @@ class SubmissionConfirmation extends AbstractObject {
 	 * {@inheritDoc}
 	 */
 	public static function get_description() : string {
-		return __( 'The Confirmation object returned on submission.', 'wp-graphql-gravity-forms' );
+		return __( 'The Confirmation object returned on submission. Null if the submission was not successful.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
@@ -38,10 +38,10 @@ class SubmissionConfirmation extends AbstractObject {
 		return [
 			'message' => [
 				'type'        => 'String',
-				'description' => __( 'Contains the confirmation message that will be displayed. Only applicable when type is set to `MESSAGE`.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Contains the confirmation message HTML to display. Only applicable when type is set to `MESSAGE`.', 'wp-graphql-gravity-forms' ),
 			],
 			'type'    => [
-				'type'        => FormConfirmationTypeEnum::$type,
+				'type'        => SubmissionConfirmationTypeEnum::$type,
 				'description' => __( 'Determines the type of confirmation to be used.', 'wp-graphql-gravity-forms' ),
 			],
 			'url'     => [

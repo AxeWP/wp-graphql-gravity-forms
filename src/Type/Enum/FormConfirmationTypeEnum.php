@@ -2,7 +2,7 @@
 /**
  * Enum Type - FormConfirmationTypeEnum
  *
- * @package WPGraphQL\GF\Type\Enum,
+ * @package WPGraphQL\GF\Type\Enum
  * @since   0.4.0
  */
 

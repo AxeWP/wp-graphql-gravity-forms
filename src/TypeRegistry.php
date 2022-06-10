@@ -157,6 +157,7 @@ class TypeRegistry {
 			Enum\PasswordFieldMinStrengthEnum::class,
 			Enum\PhoneFieldFormatEnum::class,
 			Enum\PostFormatTypeEnum::class,
+			Enum\SubmissionConfirmationTypeEnum::class,
 			Enum\SubmittedEntryIdTypeEnum::class,
 			Enum\TimeFieldFormatEnum::class,
 		];
