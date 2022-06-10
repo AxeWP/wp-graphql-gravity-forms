@@ -75,7 +75,8 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 		$this->assertEquals( $actual_entry['id'], $response['data']['submitGfDraftEntry']['entry']['databaseId'] );
 
 		$this->assertEquals( 'value1', $response['data']['submitGfDraftEntry']['entry']['formFields']['nodes'][0]['value'] );
-
+		$this->assertEquals( "MESSAGE", $response['data']['submitGfDraftEntry']['confirmation']['type'] );
+		$this->assertNotEmpty( $response['data']['submitGfDraftEntry']['confirmation']['message'] );
 		$this->factory->entry->delete( $actual_entry['id'] );
 	}
 
@@ -104,11 +105,16 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 							}
 						}
 					}
-					errors{
+					errors {
 						id
 						message
 					}
-  			}
+					confirmation {
+						message
+						type
+						url
+					}
+				}
 			}
 		';
 	}
