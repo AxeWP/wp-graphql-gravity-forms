@@ -21,7 +21,6 @@ use WPGraphQL\GF\Type\Enum\SubmittedEntryIdTypeEnum;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-use WPGraphQL\GF\Type\WPObject\Form\FormConfirmation;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -71,10 +70,6 @@ class SubmittedEntry extends AbstractObject implements Field {
 	 */
 	public static function get_fields() : array {
 		return [
-			'confirmation'                => [
-				'type'        => EntryConfirmation::$type,
-				'description' => __( 'Contains the form confirmation such as confirmation text or redirect URL.', 'wp-graphql-gravity-forms' ),
-			],
 			'entryId'        => [
 				'type'              => 'Int',
 				'description'       => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),

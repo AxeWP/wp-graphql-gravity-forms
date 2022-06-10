@@ -22,6 +22,7 @@ use WPGraphQL\GF\Type\Input\FormFieldValuesInput;
 use WPGraphQL\GF\Type\Input\SubmitFormMetaInput;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
+use WPGraphQL\GF\Type\WPObject\SubmissionConfirmation;
 use WPGraphQL\GF\Utils\GFUtils;
 
 /**
@@ -72,7 +73,11 @@ class SubmitForm extends AbstractMutation {
 	 */
 	public static function get_output_fields() : array {
 		return [
-			'entry'     => [
+			'confirmation' => [
+				'type'        => SubmissionConfirmation::$type,
+				'description' => __( 'The form confirmation data. Null if the submission has `errors`', 'wp-graphql-gravity-forms' ),
+			],
+			'entry'        => [
 				'type'        => Entry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload, array $args, AppContext $context ) {
@@ -103,7 +108,7 @@ class SubmitForm extends AbstractMutation {
 
 						// Create the model directly, since the filter will be removed by the time Deferred would resolve.
 						$entry       = GFUtils::get_entry( $payload['entryId'] );
-						$entry_model = new SubmittedEntry( $entry, $payload );
+						$entry_model = new SubmittedEntry( $entry );
 
 						remove_filter( 'graphql_gf_can_view_entries', $is_private_callback, 10 );
 
@@ -111,11 +116,11 @@ class SubmitForm extends AbstractMutation {
 					}
 				},
 			],
-			'errors'    => [
+			'errors'       => [
 				'type'        => [ 'list_of' => FieldError::$type ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
-			'resumeUrl' => [
+			'resumeUrl'    => [
 				'type'        => 'String',
 				'description' => __( 'Draft resume URL. Null if submitting an entry. If the "Referer" header is not included in the request, this will be an empty string.', 'wp-graphql-gravity-forms' ),
 			],
@@ -158,11 +163,12 @@ class SubmitForm extends AbstractMutation {
 			}
 
 			return [
-				'submission'  => $submission,
-				'entryId'     => ! empty( $submission['entry_id'] ) ? absint( $submission['entry_id'] ) : null,
-				'resumeToken' => $submission['resume_token'] ?? null,
-				'resumeUrl'   => isset( $submission['resume_token'] ) ? GFUtils::get_resume_url( $submission['resume_token'], $entry_data['source_url'] ?? '', $form ) : null,
-				'errors'      => isset( $submission['validation_messages'] ) ? EntryObjectMutation::get_submission_errors( $submission['validation_messages'] ) : null,
+				'confirmation' => isset( $submission['confirmation_type'] ) ? EntryObjectMutation::get_submission_confirmation( $submission ) : null,
+				'entryId'      => ! empty( $submission['entry_id'] ) ? absint( $submission['entry_id'] ) : null,
+				'errors'       => isset( $submission['validation_messages'] ) ? EntryObjectMutation::get_submission_errors( $submission['validation_messages'] ) : null,
+				'resumeToken'  => $submission['resume_token'] ?? null,
+				'resumeUrl'    => isset( $submission['resume_token'] ) ? GFUtils::get_resume_url( $submission['resume_token'], $entry_data['source_url'] ?? '', $form ) : null,
+				'submission'   => $submission,
 			];
 		};
 	}

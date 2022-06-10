@@ -242,7 +242,6 @@ class TypeRegistry {
 			// Entries.
 			WPObject\Entry\DraftEntry::class,
 			WPObject\Entry\SubmittedEntry::class,
-			WPObject\Entry\EntryConfirmation::class,
 			// Forms.
 			WPObject\Form\Form::class,
 			WPObject\Form\FormConfirmation::class,
@@ -272,6 +271,8 @@ class TypeRegistry {
 			WPObject\FormField\FormFields::class,
 			// Field Error.
 			WPObject\FieldError::class,
+			// Submission Confirmation.
+			WPObject\SubmissionConfirmation::class,
 			// GF Settings.
 			WPObject\Settings\Logger::class,
 			WPObject\Settings\SettingsLogging::class,

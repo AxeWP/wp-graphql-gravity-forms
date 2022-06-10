@@ -19,6 +19,7 @@ use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Enum\DraftEntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
+use WPGraphQL\GF\Type\WPObject\SubmissionConfirmation;
 use WPGraphQL\GF\Utils\GFUtils;
 
 /**
@@ -53,7 +54,11 @@ class SubmitDraftEntry extends AbstractMutation {
 	 */
 	public static function get_output_fields() : array {
 		return [
-			'entry'  => [
+			'confirmation' => [
+				'type'        => SubmissionConfirmation::$type,
+				'description' => __( 'The form confirmation data. Null if the submission has `errors`', 'wp-graphql-gravity-forms' ),
+			],
+			'entry'        => [
 				'type'        => SubmittedEntry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( array $payload, array $args, AppContext $context ) {
@@ -64,7 +69,7 @@ class SubmitDraftEntry extends AbstractMutation {
 					return Factory::resolve_entry( (int) $payload['entryId'], $context );
 				},
 			],
-			'errors' => [
+			'errors'       => [
 				'type'        => [ 'list_of' => FieldError::$type ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
@@ -98,8 +103,9 @@ class SubmitDraftEntry extends AbstractMutation {
 			}
 
 			return [
-				'entryId' => ! empty( $result['entry_id'] ) ? absint( $result['entry_id'] ) : null,
-				'errors'  => isset( $result['validation_messages'] ) ? EntryObjectMutation::get_submission_errors( $result['validation_messages'] ) : null,
+				'confirmation' => isset( $submission['confirmation_type'] ) ? EntryObjectMutation::get_submission_confirmation( $submission ) : null,
+				'entryId'      => ! empty( $result['entry_id'] ) ? absint( $result['entry_id'] ) : null,
+				'errors'       => isset( $result['validation_messages'] ) ? EntryObjectMutation::get_submission_errors( $result['validation_messages'] ) : null,
 			];
 		};
 	}
