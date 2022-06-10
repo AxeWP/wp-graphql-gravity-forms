@@ -157,6 +157,7 @@ class TypeRegistry {
 			Enum\PasswordFieldMinStrengthEnum::class,
 			Enum\PhoneFieldFormatEnum::class,
 			Enum\PostFormatTypeEnum::class,
+			Enum\SubmissionConfirmationTypeEnum::class,
 			Enum\SubmittedEntryIdTypeEnum::class,
 			Enum\TimeFieldFormatEnum::class,
 		];
@@ -271,6 +272,8 @@ class TypeRegistry {
 			WPObject\FormField\FormFields::class,
 			// Field Error.
 			WPObject\FieldError::class,
+			// Submission Confirmation.
+			WPObject\SubmissionConfirmation::class,
 			// GF Settings.
 			WPObject\Settings\Logger::class,
 			WPObject\Settings\SettingsLogging::class,

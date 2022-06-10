@@ -121,6 +121,23 @@ class EntryObjectMutation {
 	}
 
 	/**
+	 * Gets the submission confirmation information in an array formated for WPGraphQL.
+	 *
+	 * @param array $payload the submission response.
+	 */
+	public static function get_submission_confirmation( array $payload ) : ?array {
+		if ( empty( $payload['confirmation_type'] ) ) {
+			return null;
+		}
+
+		return [
+			'type'    => $payload['confirmation_type'] ?? null,
+			'message' => $payload['confirmation_message'] ?? null,
+			'url'     => $payload['confirmation_redirect'] ?? null,
+		];
+	}
+
+	/**
 	 * Renames $field_value keys to input_{id}_{sub_id}, so Gravity Forms can read them.
 	 *
 	 * @param array $field_values .
