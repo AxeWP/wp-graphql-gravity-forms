@@ -157,6 +157,7 @@ class TypeRegistry {
 			Enum\PasswordFieldMinStrengthEnum::class,
 			Enum\PhoneFieldFormatEnum::class,
 			Enum\PostFormatTypeEnum::class,
+			Enum\RecaptchaTypeEnum::class,
 			Enum\SubmissionConfirmationTypeEnum::class,
 			Enum\SubmittedEntryIdTypeEnum::class,
 			Enum\TimeFieldFormatEnum::class,
@@ -277,6 +278,7 @@ class TypeRegistry {
 			// GF Settings.
 			WPObject\Settings\Logger::class,
 			WPObject\Settings\SettingsLogging::class,
+			WPObject\Settings\SettingsRecaptcha::class,
 			WPObject\Settings\Settings::class,
 		];
 

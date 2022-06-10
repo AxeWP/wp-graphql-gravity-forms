@@ -1,6 +1,8 @@
 <?php
 
+use Helper\GFHelpers\GFHelpers;
 use WPGraphQL\GF\GF;
+use WPGraphQL\GF\Type\Enum\RecaptchaTypeEnum;
 
 class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	/**
@@ -31,6 +33,8 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 			'isHtml5Enabled'          => [ 'rg_gforms_enable_html5' => $this->dummy->yesno() ],
 			'isLoggingEnabled'        => [ 'gform_enable_logging' => $this->dummy->yesno() ],
 			'isNoConflictModeEnabled' => [ 'gform_enable_noconflict' => $this->dummy->yesno() ],
+			'recaptchaType' => [ 'rg_gforms_captcha_type' => 'invisible' ],
+			'publicKey' => [ 'rg_gforms_captcha_public_key' => '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' ],
 		];
 
 		foreach ( $this->options as $key => $setting ) {
@@ -71,6 +75,10 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 							name
 						}
 					}
+					recaptcha {
+						publicKey
+						type
+					}
 				}
 			}
 		';
@@ -100,7 +108,13 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 							$this->expectedField( 'isLoggingEnabled', $this->options['isLoggingEnabled']['gform_enable_logging'] ),
 						]
 					),
-
+					$this->expectedObject(
+						'recaptcha',
+						[
+							$this->expectedField( 'publicKey', $this->options['publicKey']['rg_gforms_captcha_public_key'] ),
+							$this->expectedField( 'type', GFHelpers::get_enum_for_value( RecaptchaTypeEnum::$type, $this->options['recaptchaType']['rg_gforms_captcha_type'] ) ),
+						]
+					),
 				]
 			),
 		];
