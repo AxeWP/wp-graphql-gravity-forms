@@ -126,6 +126,7 @@ return array(
     'WPGraphQL\\GF\\Type\\Enum\\PasswordFieldMinStrengthEnum' => $baseDir . '/src/Type/Enum/PasswordFieldMinStrengthEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\PhoneFieldFormatEnum' => $baseDir . '/src/Type/Enum/PhoneFieldFormatEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\PostFormatTypeEnum' => $baseDir . '/src/Type/Enum/PostFormatTypeEnum.php',
+    'WPGraphQL\\GF\\Type\\Enum\\SubmissionConfirmationTypeEnum' => $baseDir . '/src/Type/Enum/SubmissionConfirmationTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\SubmittedEntryIdTypeEnum' => $baseDir . '/src/Type/Enum/SubmittedEntryIdTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\TimeFieldFormatEnum' => $baseDir . '/src/Type/Enum/TimeFieldFormatEnum.php',
     'WPGraphQL\\GF\\Type\\Input\\AbstractInput' => $baseDir . '/src/Type/Input/AbstractInput.php',

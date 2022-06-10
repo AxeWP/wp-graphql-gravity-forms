@@ -145,6 +145,7 @@ class ComposerStaticInitd0272bb70fdbba1665567db9f447b274
         'WPGraphQL\\GF\\Type\\Enum\\PasswordFieldMinStrengthEnum' => __DIR__ . '/../..' . '/src/Type/Enum/PasswordFieldMinStrengthEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\PhoneFieldFormatEnum' => __DIR__ . '/../..' . '/src/Type/Enum/PhoneFieldFormatEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\PostFormatTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/PostFormatTypeEnum.php',
+        'WPGraphQL\\GF\\Type\\Enum\\SubmissionConfirmationTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/SubmissionConfirmationTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\SubmittedEntryIdTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/SubmittedEntryIdTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\TimeFieldFormatEnum' => __DIR__ . '/../..' . '/src/Type/Enum/TimeFieldFormatEnum.php',
         'WPGraphQL\\GF\\Type\\Input\\AbstractInput' => __DIR__ . '/../..' . '/src/Type/Input/AbstractInput.php',
