@@ -87,6 +87,11 @@ class Settings extends AbstractObject implements Field {
 				'description' => __( 'Logging settings.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => fn() => [],
 			],
+			'recaptcha'               => [
+				'type'        => SettingsRecaptcha::$type,
+				'description' => __( 'Recaptcha settings.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn() => [],
+			],
 		];
 	}
 
