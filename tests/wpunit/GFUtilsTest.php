@@ -220,8 +220,8 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	 * Tests GFUtils::get_resume_url().
 	 */
 	public function testGetResumeUrl() : void {
-		$url      = 'wptest.test';
-		$expected = 'http://' . $url . '?gf_token=' . $this->draft_token;
+		$url      = site_url();
+		$expected = $url . '?gf_token=' . $this->draft_token;
 		$actual   = GFUtils::get_resume_url( $this->draft_token, $url );
 
 		// Test empty source_url.
