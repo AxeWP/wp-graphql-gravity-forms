@@ -36,6 +36,20 @@ class Settings {
 	public static string $section_name = 'wpgatsby_settings';
 
 	/**
+	 * The default GF Action monitor keys.
+	 *
+	 * @var string[]
+	 */
+	public static array $default_action_keys = [
+		'create_form',
+		'update_form',
+		'delete_form',
+		'create_entry',
+		'update_entry',
+		'create_draft_entry',
+	];
+
+	/**
 	 * Gets an instance of the WPGraphQL settings api.
 	 */
 	public static function get_settings_api() : WPGraphQL_Settings_API {
@@ -66,14 +80,7 @@ class Settings {
 					'update_entry'       => __( 'Entry Updates', 'wp-graphql-gravity-forms' ),
 					'create_draft_entry' => __( 'Draft Entry Creation', 'wp-graphql-gravity-forms' ),
 				],
-				'default' => [
-					'create_form'        => 'create_form',
-					'update_form'        => 'update_form',
-					'delete_form'        => 'delete_form',
-					'create_entry'       => 'create_entry',
-					'update_entry'       => 'update_entry',
-					'create_draft_entry' => 'create_draft_entry',
-				],
+				'default' => array_combine( self::$default_action_keys, self::$default_action_keys ),
 			]
 		);
 
@@ -84,22 +91,17 @@ class Settings {
 	 * Gets an array of Gravity Forms actions that should be monitored.
 	 */
 	public static function get_enabled_actions() : array {
-		$options = get_option( self::$section_name );
+		/** @var array $options */
+		$options = get_option( self::$section_name, [] );
 
+		// By default monitor everything.
 		if ( ! isset( $options[ self::$option_name ] ) ) {
-			$options[ self::$option_name ] = [
-				'create_form'        => 'create_form',
-				'update_form'        => 'update_form',
-				'delete_form'        => 'delete_form',
-				'create_entry'       => 'create_entry',
-				'update_entry'       => 'update_entry',
-				'create_draft_entry' => 'create_draft_entry',
-			];
+			$options[ self::$option_name ] = array_combine( self::$default_action_keys, self::$default_action_keys );
 
 			update_option( self::$section_name, $options );
 		}
 
-		$enabled_actions = $options[ self::$option_name ];
+		$enabled_actions = is_array( $options[ self::$option_name ] ) ? $options[ self::$option_name ] : [];
 
 		/**
 		 * Filter for overriding the list of enabled actions.
@@ -107,7 +109,7 @@ class Settings {
 		 *
 		 * @param array $enabled_actions. An array of enabled actions.
 		 */
-		return apply_filters( 'graphql_gf_gatsby_enabled_actions', array_keys( $enabled_actions ) );
+		return apply_filters( 'graphql_gf_gatsby_enabled_actions', array_values( $enabled_actions ) ?: [] );
 	}
 
 	/**
