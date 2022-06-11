@@ -7,14 +7,14 @@
  * Author: Harness Software
  * Author URI: https://www.harnessup.com
  * Update URI: https://github.com/harness-software/wp-graphql-gravity-forms/releases
- * Version: 0.9.2.2
+ * Version: 0.9.2.3
  * Text Domain: wp-graphql-gravity-forms
  * Domain Path: /languages
  * Requires at least: 5.4.1
- * Tested up to: 5.8.2
- * Requires PHP: 7.4+
- * WPGraphQL requires at least: 1.0.0+
- * GravityForms requires at least: 2.5.0+
+ * Tested up to: 6.0
+ * Requires PHP: 7.4
+ * WPGraphQL requires at least: 1.0.0
+ * GravityForms requires at least: 2.5.0
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  *

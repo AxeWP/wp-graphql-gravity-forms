@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.9.2.3 - Hotfix
+
+- fix: `rangeMax` should use `GF_Number_Field::$rangeMax`.
+
 ## v0.9.2.2 - Hotfix
 This hotfix release fixes an issue where the `rangeMin` and `rangeMax` fields on `NumberField` would not always return the correct float value.
 
