@@ -1098,7 +1098,15 @@ class FieldProperties {
 			'rangeMax' => [
 				'type'        => 'Float',
 				'description' => __( 'Maximum allowed value for a number field. Values higher than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->rangeMax ) ? (float) $source->rangeMax : null,
+				'resolve'     => function( $source ) : ?float {
+					if ( ! isset( $source->rangeMax ) ) {
+						return null;
+					}
+
+					$numeric_max = isset( $source->numberFormat ) && 'decimal_comma' === $source->numberFormat ? GFCommon::clean_number( $source->rangeMax, 'decimal_comma' ) : $source->rangeMax;
+
+					return is_numeric( $numeric_max ) ? (float) $numeric_max : null;
+				},
 			],
 		];
 	}
@@ -1111,7 +1119,15 @@ class FieldProperties {
 			'rangeMin' => [
 				'type'        => 'Float',
 				'description' => __( 'Minimum allowed value for a number field. Values lower than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->rangeMin ) ? (float) $source->rangeMin : null,
+				'resolve'     => function( $source ) : ?float {
+					if ( ! isset( $source->rangeMin ) ) {
+						return null;
+					}
+
+					$numeric_min = isset( $source->numberFormat ) && 'decimal_comma' === $source->numberFormat ? GFCommon::clean_number( $source->rangeMin, 'decimal_comma' ) : $source->rangeMin;
+
+					return is_numeric( $numeric_min ) ? (float) $numeric_min : null;
+				},
 			],
 		];
 	}
