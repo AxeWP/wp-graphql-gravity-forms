@@ -25,7 +25,7 @@ Our hope for this open source project is that it will enable more teams to lever
 
 * PHP 7.4+ || 8.0
 * WordPress 5.4.1+
-* WPGraphQL 1.6.4+
+* WPGraphQL 1.7.0+
 * Gravity Forms 2.5+
 * **Recommended**: [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload) - used for [File Upload and Post Image submissions](docs/submitting-forms.md).
 
