@@ -3,7 +3,7 @@
  * Enum Type - RecaptchaTypeEnum
  *
  * @package WPGraphQL\GF\Type\Enum
- * @since   @todo
+ * @since   0.11.1
  */
 
 namespace WPGraphQL\GF\Type\Enum;
