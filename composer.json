@@ -38,7 +38,8 @@
 		"szepeviktor/phpstan-wordpress": "^1.0",
 		"wp-coding-standards/wpcs": "^2.3",
 		"wp-graphql/wp-graphql-testcase": "~2.3",
-		"wp-cli/wp-cli-bundle": "^2.6"
+		"wp-cli/wp-cli-bundle": "^2.6",
+		"php-coveralls/php-coveralls": "^2.5"
 	},
 	"config": {
 		"optimize-autoloader": true,
@@ -61,6 +62,17 @@
 	"scripts": {
 		"install-test-env": "bash bin/install-test-env.sh",
 		"install-stan-env": "bash bin/install-stan-env.sh",
+		"docker-build": "bash bin/run-docker.sh build",
+		"docker-run": "bash bin/run-docker.sh run",
+		"docker-destroy": "docker-compose down",
+		"build-and-run": [
+			"@docker-build",
+			"@docker-run"
+		],
+		"build-app": "@docker-build -a",
+		"build-test": "@docker-build -t",
+		"run-app": "@docker-run -a",
+		"run-test": "@docker-run -t",
 		"lint": "vendor/bin/phpcs",
 		"phpcs-i": [
 			"php ./vendor/bin/phpcs -i"
