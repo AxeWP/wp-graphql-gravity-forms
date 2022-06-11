@@ -22,11 +22,11 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	public function setUp(): void {
 		// Before...
 
-		copy( dirname( __FILE__ ) . '/../_support/files/img1.png', '/tmp/img1.png' );
+		copy( dirname( __DIR__ ) . '/_support/files/img1.png', '/tmp/img1.png' );
 		$stat  = stat( dirname( '/tmp/img1.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img1.png', $perms );
-		copy( dirname( __FILE__ ) . '/../_support/files/img1.png', '/tmp/img1.png' );
+		copy( dirname( __DIR__ ) . '/_support/files/img2.png', '/tmp/img2.png' );
 		$stat  = stat( dirname( '/tmp/img2.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img2.png', $perms );

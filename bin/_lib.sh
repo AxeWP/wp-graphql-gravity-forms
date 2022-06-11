@@ -89,9 +89,11 @@ configure_wordpress() {
 	cd $WP_CORE_DIR
 
 	echo "Setting up WordPress..."
+	export WP_CLI_CONFIG_PATH=${WP_CLI_CONFIG_PATH};
+	
 	wp config create --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$DB_PASS" --dbhost="$DB_HOST" --skip-check --force=true
-	wp core install --url=$WP_DOMAIN --title=GFTests --admin_user=$ADMIN_USERNAME --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL
-	wp rewrite structure '/%year%/%monthnum%/%postname%/'
+	wp core install --url=$WP_DOMAIN --title=Test --admin_user=$ADMIN_USERNAME --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL
+	wp rewrite structure '/%year%/%monthnum%/%postname%/' --hard
 }
 
 install_plugins() {

@@ -1,0 +1,117 @@
+name: Integration Testing
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - develop
+      - main
+    paths:
+      - '**.php'
+      - '.github/workflows/*.yml'
+      - '!docs/**'
+
+jobs:
+  continuous_integration:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [ '7.4' ]
+        wordpress: [ '6.0', '5.9', '5.8', '5.7' ]
+        include:
+          - php: '8.0'
+            wordpress: '6.0'
+            coverage: 1
+          - php: '8.0'
+            wordpress: '5.9'
+          - php: '8.0'
+            wordpress: '5.8'
+      fail-fast: false
+    name: WordPress ${{ matrix.wordpress }} on PHP ${{ matrix.php }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: json, mbstring
+          tools: composer, wp-cli
+
+      - name: Get Composer Cache Directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: php-${{ matrix.php }}-${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: php-${{ matrix.php }}-${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --no-dev
+
+      - name: Build "testing" Docker Image
+        env:
+          PHP_VERSION: ${{ matrix.php }}
+          WP_VERSION: ${{ matrix.wordpress }}
+          GF_KEY: ${{ secrets.GF_KEY }}
+        run: |
+          cp .env.dist .env
+          echo GF_KEY=${{ secrets.GF_KEY }} >> .env
+          composer build-test
+
+      - name: Run Acceptance Tests w/ Docker
+        env:
+          COVERAGE: ${{ matrix.coverage }}
+          USING_XDEBUG: ${{ matrix.coverage }}
+          DEBUG: ${{ matrix.debug }}
+          SKIP_TESTS_CLEANUP: ${{ matrix.coverage }}
+          SUITES: acceptance
+          PHP_VERSION: ${{ matrix.php }}
+          WP_VERSION: ${{ matrix.wordpress }}
+          GF_KEY: ${{ secrets.GF_KEY }}
+        run: |
+          cp .env.dist .env
+          echo GF_KEY=${{ secrets.GF_KEY }} >> .env
+          composer run-test
+
+      - name: Run Unit Tests w/ Docker
+        env:
+          COVERAGE: ${{ matrix.coverage }}
+          USING_XDEBUG: ${{ matrix.coverage }}
+          DEBUG: ${{ matrix.debug }}
+          SKIP_TESTS_CLEANUP: ${{ matrix.coverage }}
+          SUITES: unit
+          PHP_VERSION: ${{ matrix.php }}
+          WP_VERSION: ${{ matrix.wordpress }}
+          GF_KEY: ${{ secrets.GF_KEY }}
+        run: |
+          cp .env.dist .env
+          echo GF_KEY=${{ secrets.GF_KEY }} >> .env
+          composer run-test
+
+      - name: Run WPUnit Tests w/ Docker
+        env:
+          COVERAGE: ${{ matrix.coverage }}
+          USING_XDEBUG: ${{ matrix.coverage }}
+          DEBUG: ${{ matrix.debug }}
+          SKIP_TESTS_CLEANUP: ${{ matrix.coverage }}
+          PHP_VERSION: ${{ matrix.php }}
+          WP_VERSION: ${{ matrix.wordpress }}
+          GF_KEY: ${{ secrets.GF_KEY }}
+        run: |
+          cp .env.dist .env
+          echo GF_KEY=${{ secrets.GF_KEY }} >> .env
+          composer run-test
+
+      - name: Push Codecoverage to Coveralls.io
+        if: ${{ matrix.coverage == 1 }}
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: vendor/bin/php-coveralls -v

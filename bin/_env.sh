@@ -30,4 +30,11 @@ TMPDIR=$(echo $TMPDIR | sed -e "s/\/$//")
 WP_TESTS_DIR=${WP_TESTS_DIR-$TMPDIR/wordpress-tests-lib}
 WP_CORE_DIR=${TEST_WP_ROOT_FOLDER-$TMPDIR/wordpress/}
 PLUGIN_DIR=$(pwd)
+if [[ ! -z "$PLUGIN_SLUG" ]]; then
+	PLUGIN_DIR="${PLUGIN_DIR}/${PLUGIN_SLUG}"
+	echo "Using $PLUGIN_DIR as source"
+fi
+
+WP_CLI_CONFIG_PATH="${PLUGIN_DIR}/bin/wp-cli.yml"
+
 SKIP_DB_CREATE=${SKIP_DB_CREATE-false}

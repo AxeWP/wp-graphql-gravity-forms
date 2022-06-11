@@ -4,11 +4,11 @@
 /docker export-ignore
 /docs export-ignore
 /phpstan export-ignore
-/codeception.yml export-ignore
+/codeception.dist.yml export-ignore
 /composer.lock export-ignore
 /phpstan.neon.dist export-ignore
 /phpunit.xml.dist export-ignore
-/.coveralls export-ignore
+/.coveralls.yml export-ignore
 /.distignore export-ignore
 /.dockerignore export-ignore
 /.env.dist export-ignore
