@@ -98,13 +98,13 @@ class NumberField extends AbstractFormField {
 					'type'        => 'Float',
 					'description' => __( 'Maximum allowed value for a number field. Values higher than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms' ),
 					'resolve'     => function( GF_Field_Number $root ) {
-						if ( ! isset( $root->rangeMin ) ) {
+						if ( ! isset( $root->rangeMax ) ) {
 							return null;
 						}
 
-						$numeric_min = isset( $root->numberFormat ) && 'decimal_comma' === $root->numberFormat ? GFCommon::clean_number( $root->rangeMin, 'decimal_comma' ) : $root->rangeMin;
+						$numeric_max = isset( $root->numberFormat ) && 'decimal_comma' === $root->numberFormat ? GFCommon::clean_number( $root->rangeMax, 'decimal_comma' ) : $root->rangeMax;
 
-						return is_numeric( $numeric_min ) ? (float) $numeric_min : null;
+						return is_numeric( $numeric_max ) ? (float) $numeric_max : null;
 					},
 				],
 			]
