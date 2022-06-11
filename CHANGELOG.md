@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.11.1 - reCAPTCHA Settings & Submission Confirmations
+
+This _minor_ release adds the reCaptcha V2 `type` and `publicKey` to `gfSettings.recaptcha`, the validated `confirmation` response to form submission mutation payloads, and fixes a handful of bugs.
+
+- feat: Add `recaptcha` settings to `GFSettings` GraphQL object.
+- feat: Add `SubmissionConfirmation` object to `submitGfForm` and `submitGfDraftEntry` mutation responses. Props: @KoduVaal
+- fix: `isActive` should default to true for new Confirmations / Notifications.
+- fix: Correctly resolve the `rangeMin` and `rangeMax` GraphQL fields on `NumberField`. H/t @natac13
+- fix: Ensure GF Action Monitor setting keys are populated.
+- fix: Ensure `checkboxValues` load the Post Category choices before attempting to process.
+- fix: Prevent reprocessing the `imageValueInput.url` when updating `PostImage` field values.
+- tests: Fix broken test asserts exposed by PHPUnit v9 + WPGraphQL Test Case v2.3
+- tests: Use `gravityformscli` for installing GF plugins in test envs.
+- chore: Upgrade composer deps
+
+
 ## v0.11.0 - reCAPTCHA Validation, Plugin Updates, and GF 2.6 Support
 
 **:warning: This release contains breaking changes.**
