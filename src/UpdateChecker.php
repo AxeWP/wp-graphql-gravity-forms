@@ -37,11 +37,11 @@ class UpdateChecker {
 		 *
 		 * @param string           $repo_link The url to the repo.
 		 */
-		$repo_link = apply_filters( 'graphql_gf_update_repo_url', 'https://github.com/harness-software/wp-graphql-gravity-forms' );
+		$repo_link = apply_filters( 'graphql_gf_update_repo_url', 'https://github.com/harness-software/wp-graphql-gravity-forms/' );
 
 		/** @var Puc_v4p11_Vcs_PluginUpdateChecker */
 		$update_checker = Puc_v4_Factory::buildUpdateChecker(
-			$repo_link,
+			trailingslashit( $repo_link ),
 			WPGRAPHQL_GF_PLUGIN_FILE,
 			'wp-graphql-gravity-forms',
 		);
