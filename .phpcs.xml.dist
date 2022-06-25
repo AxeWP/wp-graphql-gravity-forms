@@ -19,8 +19,10 @@
 	<arg name="parallel" value="8"/>
 
 	<!-- Tests for PHP version compatibility -->
+		<!-- Tests for PHP version compatibility -->
+	<config name="testVersion" value="7.4-"/>
 	<rule ref="PHPCompatibilityWP">
-		<config name="testVersion" value="7.0-"/>
+		<include-pattern>*\.php$</include-pattern>
 	</rule>
 
 	<!-- Rules: WordPress Coding Standards -->

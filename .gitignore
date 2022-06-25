@@ -16,6 +16,7 @@ Thumbs.db
 # Ruleset Overrides
 phpcs.xml
 phpunit.xml
+phpstan.neon
 
 # Directory to generate the dist zipfile
 plugin-build
