@@ -1,33 +1,45 @@
+# Hidden files
+.DS_Store
+Thumbs.db
+
+# IDE Files
 .devcontainer/*
 .devcontainer.json
-.DS_Store
+.vscode
+.idea
+
+# Environment variables for testing
 .env
 .env.*
 !.env.dist
-.idea
-.log/
-.vscode
-*.sql
-*.tar.gz
-.scannerwork
-*.zip
-auth.json
-build/
-coverage/*
-node_modules/
+
+# Ruleset Overrides
 phpcs.xml
 phpunit.xml
-schema.graphql
-sonar-project.properties
-sonar-scanner
+
+# Directory to generate the dist zipfile
+plugin-build
+
+# Composer auth
+auth.json
+
+# Composer deps
 composer.lock
-!tests
-tests/*.suite.yml
-Thumbs.db
-wp-cli.local.yml
 !vendor
 vendor/*
 !vendor/autoload.php
 !vendor/composer
 vendor/composer/*/
 !vendor/yahnis-elsts
+
+# Generated Schema used in some tooling. Versioned Schema is uploaded as a Release artifact to Github.
+schema.graphql
+
+# WP CLI config overrides
+wp-cli.local.yml
+
+# Tests
+*.sql
+!tests
+tests/*.suite.yml
+coverage/*
