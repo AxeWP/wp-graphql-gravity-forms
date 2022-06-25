@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.11.1.1 - Hotfix
+This _hotfix_ release fixes issues with the Github Updater attempting to install plugin updates from the wrong release asset.
+
+- fix: ensure results of graphql_gf_update_repo_url are always trailing-slashed.
+- chore: add Composer command for generating plugin .zip
+- chore: add Github Action for adding plugin .zip to release.
+
 ## v0.11.1 - reCAPTCHA Settings & Submission Confirmations
 
 This _minor_ release adds the reCaptcha V2 `type` and `publicKey` to `gfSettings.recaptcha`, the validated `confirmation` response to form submission mutation payloads, and fixes a handful of bugs.
