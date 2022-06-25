@@ -3,13 +3,18 @@
 	"description": "WPGraphQL for Gravity Forms",
 	"type": "wordpress-plugin",
 	"license": "GPL-3.0-or-later",
+	"support": {
+		"issues": "https://github.com/harness-software/wp-graphql-gravity-forms/issues",
+		"source": "https://github.com/harness-software/wp-graphql-gravity-forms"
+	},
 	"authors": [
 		{
 			"name": "Harness Software",
 			"email": "info@harnessup.com"
 		},
 		{
-			"name": "Dovid Levine"
+			"name": "Dovid Levine",
+			"role": "Lead Developer"
 		}
 	],
 	"require": {
@@ -85,6 +90,28 @@
 		],
 		"phpstan": [
 			"phpstan analyze --ansi --memory-limit=1G"
+		]
+	},
+	"archive": {
+		"name": "wp-graphql-gravity-forms",
+		"exclude": [
+			"/.*",
+			"bin",
+			"docker",
+			"docs",
+			"phpstan",
+			"plugin-build",
+			"tests",
+			"!vendor",
+			"!.wordpress-org",
+			"/codeception.dist.yml",
+			"/codeception.yml",
+			"/composer.json",
+			"/composer.lock",
+			"/docker-compose.yml",
+			"/phpstan.neon.dist",
+			"/phpunit.xml.dist",
+			"README.md"
 		]
 	}
 }
