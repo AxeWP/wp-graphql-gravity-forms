@@ -49,6 +49,11 @@ class FormConfirmation extends AbstractObject {
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the confirmation is active or inactive. The default confirmation is always active.', 'wp-graphql-gravity-forms' ),
 			],
+			'isAutoformatted'  => [
+				'type'        => 'Boolean',
+				'description' => __( 'Whether the confirmation message should be formatted so that paragraphs are automatically added for new lines.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => fn( $source ) => empty( $source['disableAutoformat'] ),
+			],
 			'isDefault'        => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is the default confirmation.', 'wp-graphql-gravity-forms' ),
