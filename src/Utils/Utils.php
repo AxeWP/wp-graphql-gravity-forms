@@ -127,38 +127,6 @@ class Utils {
 	}
 
 	/**
-	 * Preprocessing for apply filters.
-	 *
-	 * Allows additional filters based on the object type to be defined easliy.
-	 *
-	 * @param array $filters .
-	 * @param mixed $value .
-	 *
-	 * @return mixed
-	 */
-	public static function apply_filters( $filters, $value ) {
-		$args = func_get_args();
-
-		$modifiers = array_splice( $filters, 1, count( $filters ) );
-		$filter    = $filters[0];
-		$args      = array_slice( $args, 2 );
-
-		// Add an empty modifier so the base filter will be applied as well.
-		array_unshift( $modifiers, '' );
-
-		$args = array_pad( $args, 10, null );
-
-			// Apply modified versions of filter.
-		foreach ( $modifiers as $modifier ) {
-			$modifier = empty( $modifier ) ? '' : sprintf( '_%s', $modifier );
-			$filter  .= $modifier;
-			$value    = apply_filters( $filter, $value, ...$args ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
-		}
-
-		return $value;
-	}
-
-	/**
 	 * Returns whether WPGraphQL Upload is enabled.
 	 *
 	 * @return boolean
