@@ -6,7 +6,6 @@
  */
 
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
-use GFAPI;
 
 /**
  * Class - SubmitDraftEntryMutationTest
