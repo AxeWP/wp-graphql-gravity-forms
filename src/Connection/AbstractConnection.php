@@ -8,18 +8,26 @@
 
 namespace WPGraphQL\GF\Connection;
 
+use WPGraphQL\GF\Interfaces\Hookable;
 use WPGraphQL\GF\Interfaces\Registrable;
 
 /**
  * Class - AbstractConnection
  */
-abstract class AbstractConnection implements Registrable {
+abstract class AbstractConnection implements Hookable, Registrable {
 	/**
 	 * GraphQL field name in node tree.
 	 *
 	 * @var string
 	 */
 	public static $from_field_name;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function register_hooks() : void {
+		add_action( 'graphql_register_types', [ static::class, 'register' ] );
+	}
 
 	/**
 	 * Gets custom connection configuration arguments, such as the resolver, edgeFields, connectionArgs, etc.

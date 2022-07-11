@@ -9,14 +9,14 @@
 namespace WPGraphQL\GF\Type\Enum;
 
 use WPGraphQL\GF\Interfaces\Enum;
-use WPGraphQL\GF\Interfaces\Registrable;
-use WPGraphQL\GF\Interfaces\Type;
+use WPGraphQL\GF\Interfaces\TypeWithDescription;
+use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Abstract Class - Abstract Enum
  */
-abstract class AbstractEnum implements Enum, Registrable, Type {
+abstract class AbstractEnum extends AbstractType implements Enum, TypeWithDescription {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -28,12 +28,18 @@ abstract class AbstractEnum implements Enum, Registrable, Type {
 	 * {@inheritDoc}
 	 */
 	public static function register( TypeRegistry $type_registry = null ) : void {
-		register_graphql_enum_type(
-			static::$type,
-			[
-				'description' => static::get_description(),
-				'values'      => static::get_values(),
-			]
-		);
+		$config = static::get_type_config();
+
+		register_graphql_enum_type( static::$type, $config );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_type_config() : array {
+		return [
+			'description' => static::get_description(),
+			'values'      => static::get_values(),
+		];
 	}
 }

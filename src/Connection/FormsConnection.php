@@ -31,7 +31,7 @@ class FormsConnection extends AbstractConnection {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
+	public static function register() : void {
 		// RootQuery to Form.
 		register_graphql_connection(
 			[

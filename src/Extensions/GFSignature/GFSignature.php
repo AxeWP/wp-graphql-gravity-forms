@@ -12,11 +12,12 @@ use GF_Field;
 use WPGraphQL\GF\Extensions\GFSignature\Data\FieldValueInput\SignatureValuesInput;
 use WPGraphQL\GF\Extensions\GFSignature\Type\Enum;
 use WPGraphQL\GF\Extensions\GFSignature\Type\WPObject\FormField\FieldProperty\PropertyMapper;
+use WPGraphQL\GF\Interfaces\Hookable;
 
 /**
  * Class - GFSignature
  */
-class GFSignature {
+class GFSignature implements Hookable {
 	/**
 	 * Hook extension into plugin.
 	 */

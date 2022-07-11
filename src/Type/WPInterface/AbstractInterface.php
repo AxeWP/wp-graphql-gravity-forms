@@ -1,21 +1,22 @@
 <?php
 /**
- * Abstract GraphQL Object Type.
+ * Abstract GraphQL Interface Type.
  *
  * @package WPGraphQL\GF\Type
- * @since   0.10.0
+ * @since   @todo
  */
 
-namespace WPGraphQL\GF\Type\WPObject;
+namespace WPGraphQL\GF\Type\WPInterface;
 
 use WPGraphQL\GF\Interfaces\TypeWithDescription;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
+use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - AbstractType
  */
-abstract class AbstractObject extends AbstractType implements TypeWithDescription, TypeWithFields {
+abstract class AbstractInterface extends AbstractType implements TypeWithDescription, TypeWithFields {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -34,17 +35,19 @@ abstract class AbstractObject extends AbstractType implements TypeWithDescriptio
 
 	/**
 	 * Register Object type to GraphQL schema.
+	 *
+	 * @param  TypeRegistry $type_registry .
 	 */
-	public static function register() : void {
-		$config = static::get_type_config();
+	public static function register( TypeRegistry $type_registry = null ) : void {
+		$config = static::get_type_config( $type_registry );
 
-		register_graphql_object_type( static::$type, $config );
+		register_graphql_interface_type( static::$type, $config );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config(): array {
+	public static function get_type_config( TypeRegistry $type_registry = null ): array {
 		return [
 			'description'     => static::get_description(),
 			'fields'          => static::get_fields(),
