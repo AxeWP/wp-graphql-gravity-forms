@@ -17,16 +17,16 @@ use WPGraphQL\AppContext;
 use WPGraphQL\Data\DataSource;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
+use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\Enum\SubmittedEntryIdTypeEnum;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - Submitted
  */
-class SubmittedEntry extends AbstractObject implements Field {
+class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -44,18 +44,20 @@ class SubmittedEntry extends AbstractObject implements Field {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
-		register_graphql_object_type(
-			static::$type,
-			[
-				'description'     => static::get_description(),
-				'eagerlyLoadType' => static::$should_load_eagerly,
-				'fields'          => static::get_fields(),
-				'interfaces'      => [ 'DatabaseIdentifier', Entry::$type ],
-			]
-		);
-
+	public static function register() : void {
+		parent::register();
 		self::register_field();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_type_config(): array {
+		$config = parent::get_type_config();
+
+		$config['interfaces'] = self::get_interfaces();
+
+		return $config;
 	}
 
 	/**
@@ -98,6 +100,13 @@ class SubmittedEntry extends AbstractObject implements Field {
 				'description' => __( 'The current status of the entry.', 'wp-graphql-gravity-forms' ),
 			],
 		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_interfaces() : array {
+		return [ 'DatabaseIdentifier', Entry::$type ];
 	}
 
 	/**

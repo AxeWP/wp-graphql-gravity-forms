@@ -11,7 +11,7 @@ namespace WPGraphQL\GF\Interfaces;
 /**
  * Interface - Type.
  */
-interface Type {
+interface TypeWithDescription {
 	/**
 	 * Gets the Field type description.
 	 */

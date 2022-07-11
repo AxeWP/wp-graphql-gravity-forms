@@ -65,7 +65,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 			UpdateChecker::register_hooks();
 
 			// Initialize GF type registry.
-			add_action( get_graphql_register_action(), [ TypeRegistry::class, 'init' ] );
+			TypeRegistry::init();
 		}
 
 		/**

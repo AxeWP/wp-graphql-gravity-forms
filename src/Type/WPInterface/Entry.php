@@ -17,11 +17,11 @@ use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Interfaces\Field;
-use WPGraphQL\GF\Interfaces\Registrable;
-use WPGraphQL\GF\Interfaces\Type;
-use WPGraphQL\GF\Interfaces\TypeWithFields;
+use WPGraphQL\GF\Interfaces\TypeWithConnections;
+use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Model\Form;
 use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
+use WPGraphQL\GF\Type\WPInterface\AbstractInterface;
 use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
@@ -29,7 +29,7 @@ use WPGraphQL\Registry\TypeRegistry;
 /**
  * Class - FormEntry
  */
-class Entry implements Field, Registrable, Type, TypeWithFields {
+class Entry extends AbstractInterface implements TypeWithConnections, TypeWithInterfaces, Field {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -45,76 +45,54 @@ class Entry implements Field, Registrable, Type, TypeWithFields {
 	public static string $field_name = 'gfEntry';
 
 	/**
-	 * Whether the type should be loaded eagerly by WPGraphQL. Defaults to false.
-	 *
-	 * Eager load should only be necessary for types that are not referenced directly (e.g. in Unions, Interfaces ).
-	 *
-	 * @var boolean
-	 */
-	public static bool $should_load_eagerly = false;
-
-	/**
-	 * Register Object type to GraphQL schema.
+	 * {@in}
 	 *
 	 * @param TypeRegistry $type_registry Instance of the WPGraphQL TypeRegistry.
 	 */
 	public static function register( TypeRegistry $type_registry = null ) : void {
-		// Bail early if no type registry.
-		if ( null === $type_registry ) {
-			return;
+		parent::register( $type_registry );
+		self::register_field();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_type_config( TypeRegistry $type_registry = null ) : array {
+		$config = parent::get_type_config();
+
+		$config['connections'] = self::get_connections();
+		$config['interfaces']  = self::get_interfaces();
+
+		if ( null !== $type_registry ) {
+			$config['resolveType'] = self::resolve_type( $type_registry );
 		}
 
-		register_graphql_interface_type(
-			static::$type,
-			[
-				'description'     => self::get_description(),
-				'connections'     => [
-					'formFields' => [
-						'toType'         => FormField::$type,
-						'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
-						'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
-							$context->gfEntry = $source;
+		return $config;
+	}
 
-							if ( empty( $context->gfForm ) ) {
-								$context->gfForm = new Form( GFUtils::get_form( $source->formDatabaseId, false ) );
-							}
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_connections() : array {
+		return [
+			'formFields' => [
+				'toType'         => FormField::$type,
+				'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
+				'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+					$context->gfEntry = $source;
 
-							if ( empty( $context->gfForm->formFields ) ) {
-								return null;
-							}
-
-							return FormFieldsConnectionResolver::resolve( $context->gfForm->formFields, $args, $context, $info );
-						},
-					],
-				],
-				'interfaces'      => [ 'Node', NodeWithForm::$type ],
-				'fields'          => self::get_fields(),
-				'resolveType'     => function( $value ) use ( $type_registry ) {
-					$possible_types = Utils::get_registered_entry_types();
-
-					$id_parts = Relay::fromGlobalId( $value->id );
-
-					if ( empty( $id_parts['type'] ) ) {
-						throw new UserError( __( 'The entry type cannot be resolved.', 'wp-graphql-gravity-forms' ) );
+					if ( empty( $context->gfForm ) ) {
+						$context->gfForm = new Form( GFUtils::get_form( $source->formDatabaseId, false ) );
 					}
 
-					if ( isset( $possible_types[ $id_parts['type'] ] ) ) {
-						return $type_registry->get_type( $possible_types[ $id_parts['type'] ] );
+					if ( empty( $context->gfForm->formFields ) ) {
+						return null;
 					}
 
-					throw new UserError(
-						sprintf(
-							/* translators: %s: GF entry type */
-							__( 'The Gravity Forms "%s" type is not supported by the schema.', 'wp-graphql-gravity-forms' ),
-							$id_parts['type']
-						)
-					);
+					return FormFieldsConnectionResolver::resolve( $context->gfForm->formFields, $args, $context, $info );
 				},
-				'eagerlyLoadType' => static::$should_load_eagerly,
-			]
-		);
-
-		self::register_field();
+			],
+		];
 	}
 
 	/**
@@ -190,6 +168,42 @@ class Entry implements Field, Registrable, Type, TypeWithFields {
 			 * https://docs.gravityforms.com/entry-object/#pricing-properties
 			 */
 		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_interfaces() : array {
+		return [ 'Node', NodeWithForm::$type ];
+	}
+
+	/**
+	 * Resolves the interface to the GraphQL type.
+	 *
+	 * @param TypeRegistry $type_registry The WPGraphQL type registry.
+	 */
+	public static function resolve_type( TypeRegistry $type_registry ) : callable {
+		return function( $value ) use ( $type_registry ) {
+			$possible_types = Utils::get_registered_entry_types();
+
+			$id_parts = Relay::fromGlobalId( $value->id );
+
+			if ( empty( $id_parts['type'] ) ) {
+				throw new UserError( __( 'The entry type cannot be resolved.', 'wp-graphql-gravity-forms' ) );
+			}
+
+			if ( isset( $possible_types[ $id_parts['type'] ] ) ) {
+				return $type_registry->get_type( $possible_types[ $id_parts['type'] ] );
+			}
+
+			throw new UserError(
+				sprintf(
+					/* translators: %s: GF entry type */
+					__( 'The Gravity Forms "%s" type is not supported by the schema.', 'wp-graphql-gravity-forms' ),
+					$id_parts['type']
+				)
+			);
+		};
 	}
 
 	/**

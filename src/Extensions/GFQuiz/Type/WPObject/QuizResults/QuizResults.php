@@ -40,8 +40,8 @@ class QuizResults extends AbstractObject implements Field {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
-		parent::register( $type_registry );
+	public static function register() : void {
+		parent::register();
 		self::register_field();
 	}
 

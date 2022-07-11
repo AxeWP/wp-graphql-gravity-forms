@@ -8,7 +8,6 @@
 
 namespace WPGraphQL\GF\Type\WPObject\FormField;
 
-use WPGraphQL\AppContext;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 /**

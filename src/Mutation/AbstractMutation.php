@@ -14,13 +14,12 @@ use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Interfaces\Mutation;
-use WPGraphQL\GF\Interfaces\Registrable;
-use WPGraphQL\Registry\TypeRegistry;
+use WPGraphQL\GF\Type\AbstractType;
 
 /**
  * Class - AbstractMutation
  */
-abstract class AbstractMutation implements Mutation, Registrable {
+abstract class AbstractMutation extends AbstractType implements Mutation {
 	/**
 	 * Mutation Name
 	 *
@@ -31,15 +30,20 @@ abstract class AbstractMutation implements Mutation, Registrable {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
-		register_graphql_mutation(
-			static::$name,
-			[
-				'inputFields'         => static::get_input_fields(),
-				'outputFields'        => static::get_output_fields(),
-				'mutateAndGetPayload' => static::mutate_and_get_payload(),
-			]
-		);
+	public static function register() : void {
+		$config = static::get_type_config();
+		register_graphql_mutation( static::$name, $config );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_type_config() : array {
+		return [
+			'inputFields'         => static::get_input_fields(),
+			'outputFields'        => static::get_output_fields(),
+			'mutateAndGetPayload' => static::mutate_and_get_payload(),
+		];
 	}
 
 	/**

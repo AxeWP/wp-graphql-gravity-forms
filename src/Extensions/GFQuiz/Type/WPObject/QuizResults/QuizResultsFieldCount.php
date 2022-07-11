@@ -8,13 +8,14 @@
 
 namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\QuizResults;
 
+use WPGraphQL\GF\Interfaces\TypeWithConnections;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - QuizResultsFieldCount
  */
-class QuizResultsFieldCount extends AbstractObject {
+class QuizResultsFieldCount extends AbstractObject implements TypeWithConnections {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -23,28 +24,29 @@ class QuizResultsFieldCount extends AbstractObject {
 	public static string $type = 'GfQuizResultsFieldCount';
 
 	/**
-	 * Register Object type to GraphQL schema.
-	 *
-	 * @param  TypeRegistry $type_registry .
+	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
-		register_graphql_object_type(
-			static::$type,
-			[
-				'connections'     => [
-					'formField' => [
-						'toType'   => 'QuizField',
-						'oneToOne' => true,
-						'resolve'  => static function( $source ) {
-							return [ 'node' => $source['field'] ];
-						},
-					],
-				],
-				'description'     => static::get_description(),
-				'fields'          => static::get_fields(),
-				'eagerlyLoadType' => static::$should_load_eagerly,
-			]
-		);
+	public static function get_type_config(): array {
+		$config = parent::get_type_config();
+
+		$config['connections'] = self::get_connections();
+
+		return $config;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_connections() : array {
+		return [
+			'formField' => [
+				'toType'   => 'QuizField',
+				'oneToOne' => true,
+				'resolve'  => static function( $source ) {
+					return [ 'node' => $source['field'] ];
+				},
+			],
+		];
 	}
 
 	/**

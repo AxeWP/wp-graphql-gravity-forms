@@ -8,6 +8,8 @@
 
 namespace WPGraphQL\GF\Extensions\WPJamstackDeployments;
 
+use WPGraphQL\GF\Interfaces\Hookable;
+
 /**
  * Class - WPJamstackDeployments
  */

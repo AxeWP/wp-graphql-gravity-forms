@@ -17,10 +17,11 @@ use WPGraphQL\Registry\TypeRegistry;
  * Class - FormFieldsConnection
  */
 class FormFieldsConnection extends AbstractConnection {
+	public static function register_hooks() : void {}
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
+	public static function register() : void {
 		// @todo register to rootQuery.
 	}
 

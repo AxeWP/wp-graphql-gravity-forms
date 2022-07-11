@@ -8,16 +8,12 @@
 
 namespace WPGraphQL\GF\Interfaces;
 
-use WPGraphQL\Registry\TypeRegistry;
-
 /**
  * Interface - registrable
  */
 interface Registrable {
 	/**
 	 * Register connections to the GraphQL Schema.
-	 *
-	 * @param TypeRegistry $type_registry The GraphQL type registry.
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void;
+	public static function register() : void;
 }

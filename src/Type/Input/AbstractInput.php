@@ -8,15 +8,15 @@
 
 namespace WPGraphQL\GF\Type\Input;
 
-use WPGraphQL\GF\Interfaces\Registrable;
-use WPGraphQL\GF\Interfaces\Type;
+use WPGraphQL\GF\Interfaces\TypeWithDescription;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
+use WPGraphQL\GF\Type\AbstractType;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - AbstractInput
  */
-abstract class AbstractInput implements Registrable, Type, TypeWithFields {
+abstract class AbstractInput extends AbstractType implements TypeWithDescription, TypeWithFields {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -28,12 +28,18 @@ abstract class AbstractInput implements Registrable, Type, TypeWithFields {
 	 * {@inheritDoc}
 	 */
 	public static function register( TypeRegistry $type_registry = null ) : void {
-		register_graphql_input_type(
-			static::$type,
-			[
-				'description' => static::get_description(),
-				'fields'      => static::get_fields(),
-			]
-		);
+		$config = static::get_type_config();
+
+		register_graphql_input_type( static::$type, $config );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_type_config() : array {
+		return [
+			'description' => static::get_description(),
+			'fields'      => static::get_fields(),
+		];
 	}
 }

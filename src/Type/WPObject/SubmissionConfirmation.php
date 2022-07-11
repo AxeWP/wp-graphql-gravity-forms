@@ -13,6 +13,7 @@ namespace WPGraphQL\GF\Type\WPObject;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\Data\Connection\PostObjectConnectionResolver;
+use WPGraphQL\GF\Interfaces\TypeWithConnections;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\Enum\SubmissionConfirmationTypeEnum;
 use WPGraphQL\Registry\TypeRegistry;
@@ -20,7 +21,7 @@ use WPGraphQL\Registry\TypeRegistry;
 /**
  * Class - Submission Confirmation
  */
-class SubmissionConfirmation extends AbstractObject {
+class SubmissionConfirmation extends AbstractObject implements TypeWithConnections {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -31,31 +32,35 @@ class SubmissionConfirmation extends AbstractObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
-		register_graphql_object_type(
-			static::$type,
-			[
-				'connections'     => [
-					'page' => [
-						'toType'   => 'Page',
-						'oneToOne' => true,
-						'resolve'  => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
-							$page_id = url_to_postid( $source['url'] );
+	public static function get_type_config(): array {
+		$config = parent::get_type_config();
 
-							$resolver = new PostObjectConnectionResolver( $source, $args, $context, $info, 'page' );
+		$config['connections'] = self::get_connections();
 
-							$resolver->set_query_arg( 'p', $page_id );
-
-							return $resolver->one_to_one()->get_connection();
-						},
-					],
-				],
-				'description'     => static::get_description(),
-				'fields'          => static::get_fields(),
-				'eagerlyLoadType' => static::$should_load_eagerly,
-			]
-		);
+		return $config;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_connections() : array {
+		return [
+			'page' => [
+				'toType'   => 'Page',
+				'oneToOne' => true,
+				'resolve'  => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+					$page_id = url_to_postid( $source['url'] );
+
+					$resolver = new PostObjectConnectionResolver( $source, $args, $context, $info, 'page' );
+
+					$resolver->set_query_arg( 'p', $page_id );
+
+					return $resolver->one_to_one()->get_connection();
+				},
+			],
+		];
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
