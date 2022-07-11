@@ -78,6 +78,7 @@ ENV USING_XDEBUG=0
 
 # Set up entrypoint
 WORKDIR    /var/www/html
+COPY       bin/_lib.sh /usr/local/bin/_lib.sh
 COPY       docker/app.setup.sh /usr/local/bin/app-setup.sh
 COPY       docker/app.post-setup.sh /usr/local/bin/app-post-setup.sh
 COPY       docker/app.entrypoint.sh /usr/local/bin/app-entrypoint.sh

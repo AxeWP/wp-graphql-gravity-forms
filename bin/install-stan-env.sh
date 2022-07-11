@@ -15,5 +15,8 @@ source ${BASEDIR}/_lib.sh
 install_wordpress
 install_db
 configure_wordpress
+
+cd $WP_CORE_DIR
 install_plugins
+
 post_setup

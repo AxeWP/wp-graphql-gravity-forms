@@ -13,6 +13,8 @@ set +u
 # Ensure mysql is loaded
 dockerize -wait tcp://${DB_HOST}:${DB_HOST_PORT:-3306} -timeout 1m
 
+source _lib.sh
+
 # Config WordPress
 if [ ! -f "${WP_ROOT_FOLDER}/wp-config.php" ]; then
 	wp config create \
@@ -44,3 +46,7 @@ if ! $(wp core is-installed --allow-root); then
 fi
 
 echo "Running WordPress version: $(wp core version --allow-root) at $(wp option get home --allow-root)"
+
+ls -l /var/www/html/wp-content/plugins/
+cd "${WP_ROOT_FOLDER}"
+install_plugins

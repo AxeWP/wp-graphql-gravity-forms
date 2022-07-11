@@ -6,6 +6,7 @@ services:
       - app_db
     image: wp-graphql-gravity-forms:latest-wp${WP_VERSION-6.0}-php${PHP_VERSION-8.0}
     volumes:
+      - wpdata:/var/www/html
       - .:/var/www/html/wp-content/plugins/wp-graphql-gravity-forms
       - ./.log/app:/var/log/apache2
     env_file:
@@ -35,9 +36,11 @@ services:
 
   testing:
     depends_on:
+      - app
       - app_db
     image: wp-graphql-gravity-forms-testing:latest-wp${WP_VERSION-6.0}-php${PHP_VERSION-8.0}
     volumes:
+      - wpdata:/var/www/html
       - .:/var/www/html/wp-content/plugins/wp-graphql-gravity-forms
       - ./.log/testing:/var/log/apache2
     env_file:
@@ -52,3 +55,6 @@ services:
 networks:
   local:
   testing:
+
+volumes:
+  wpdata:
