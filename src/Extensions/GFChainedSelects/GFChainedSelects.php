@@ -14,11 +14,12 @@ use WPGraphQL\GF\Extensions\GFChainedSelects\Type\Enum;
 use WPGraphQL\GF\Extensions\GFChainedSelects\Type\Input;
 use WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldProperty\PropertyMapper;
 use WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldValue\ValueProperty;
+use WPGraphQL\GF\Interfaces\Hookable;
 
 /**
  * Class - GFChainedSelects
  */
-class GFChainedSelects {
+class GFChainedSelects implements Hookable {
 	/**
 	 * Hook extension into plugin.
 	 */

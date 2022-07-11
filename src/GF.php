@@ -60,7 +60,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		 * Sets up the schema.
 		 */
 		private function setup() : void {
-			Extensions::register();
+			Extensions::register_hooks();
 			CoreSchemaFilters::register_hooks();
 			UpdateChecker::register_hooks();
 

@@ -8,10 +8,12 @@
 
 namespace WPGraphQL\GF\Extensions\WPGatsby;
 
+use WPGraphQL\GF\Interfaces\Hookable;
+
 /**
  * Class - WPGatsby
  */
-class WPGatsby {
+class WPGatsby implements Hookable {
 	/**
 	 * {@inheritDoc}
 	 */

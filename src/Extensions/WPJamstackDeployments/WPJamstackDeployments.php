@@ -11,7 +11,7 @@ namespace WPGraphQL\GF\Extensions\WPJamstackDeployments;
 /**
  * Class - WPJamstackDeployments
  */
-class WPJamstackDeployments {
+class WPJamstackDeployments implements Hookable {
 	/**
 	 * The option named used in the settings API.
 	 *
