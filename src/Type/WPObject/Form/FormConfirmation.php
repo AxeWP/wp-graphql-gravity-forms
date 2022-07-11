@@ -13,11 +13,43 @@ namespace WPGraphQL\GF\Type\WPObject\Form;
 use WPGraphQL\GF\Type\Enum\FormConfirmationTypeEnum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
+use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FormConfirmation
  */
 class FormConfirmation extends AbstractObject {
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function register( TypeRegistry $type_registry = null ) : void {
+		register_graphql_object_type(
+			static::$type,
+			[
+				'connections'     => [
+					'page' => [
+						'toType'   => 'Page',
+						'oneToOne' => true,
+						'resolve'  => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+							$page_id = $source['pageId'];
+
+							$resolver = new PostObjectConnectionResolver( $source, $args, $context, $info, 'page' );
+
+							$resolver->set_query_arg( 'p', $page_id );
+
+							return $resolver->one_to_one()->get_connection();
+						},
+					],
+				],
+				'description'     => static::get_description(),
+				'fields'          => static::get_fields(),
+				'eagerlyLoadType' => static::$should_load_eagerly,
+			]
+		);
+	}
+
 	/**
 	 * Type registered in WPGraphQL.
 	 *
