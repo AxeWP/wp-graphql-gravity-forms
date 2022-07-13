@@ -194,28 +194,7 @@ class FormFields implements Registrable {
 
 		foreach ( $settings as $setting ) {
 			// Skip properties registered elsewhere.
-			if ( in_array(
-				$setting,
-				[
-					'conditional_logic_nextbutton_setting',
-					'default_input_values_setting',
-					'input_placeholders_setting',
-					'name_prefix_choices_setting',
-					'post_author_setting',
-					'post_category_field_type_setting',
-					'post_category_setting',
-					'post_content_template_setting',
-					'post_custom_field_type_setting',
-					'post_format_setting',
-					'post_status_setting',
-					'post_tag_type_setting',
-					'post_title_template_setting',
-					'quantity_field_type_setting',
-					'sub_labels_setting',
-					'visibility_setting',
-				],
-				true
-			) ) {
+			if ( in_array( $setting, self::ignored_gf_settings(), true ) ) {
 				continue;
 			}
 
@@ -337,5 +316,31 @@ class FormFields implements Registrable {
 		];
 
 		return $properties;
+	}
+
+	/**
+	 * Returns an array of Gravity Forms field settings to ignore.
+	 *
+	 * @return array
+	 */
+	public static function ignored_gf_settings() : array {
+		return [
+			'conditional_logic_nextbutton_setting',
+			'default_input_values_setting',
+			'input_placeholders_setting',
+			'name_prefix_choices_setting',
+			'post_author_setting',
+			'post_category_field_type_setting',
+			'post_category_setting',
+			'post_content_template_setting',
+			'post_custom_field_type_setting',
+			'post_format_setting',
+			'post_status_setting',
+			'post_tag_type_setting',
+			'post_title_template_setting',
+			'quantity_field_type_setting',
+			'sub_labels_setting',
+			'visibility_setting',
+		];
 	}
 }

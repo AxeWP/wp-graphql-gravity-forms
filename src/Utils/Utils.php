@@ -179,7 +179,7 @@ class Utils {
 	 *
 	 * @param string $type The current GF field type.
 	 */
-	public static function get_possible_form_field_child_types( string $type ) : ?array {
+	public static function get_possible_form_field_child_types( string $type ) : array {
 		$prefix = self::get_safe_form_field_type_name( $type );
 
 		switch ( $type ) {
