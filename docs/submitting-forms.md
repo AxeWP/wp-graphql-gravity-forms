@@ -188,7 +188,10 @@ mutation submit( $token: String ) {
 ## Submitting File Uploads
 To enable WPGraphQL support for submitting files (via the `fileUploadValues` or `postImageValues` inputs ), you must first install and activate the [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload) extension, which will add the `Upload` scalar type to the GraphQL schema.
 
-Once enabled, you can then use the `Upload` type to submit forms that accept file uploads as so:
+**Note**: The GraphQL Spec - and many GraphQL clients - does not natively implement support the [`graphql-multipart-request-spec`](https://github.com/jaydenseric/graphql-multipart-request-spec), and may require an additional dependency such as [apollo-upload-client](https://github.com/jaydenseric/apollo-upload-client).
+
+### Example Mutation
+
 ```graphql
 mutation submit( $exampleUploads: [ Upload ], $exampleImageUpload: Upload ){ 
   submitGfForm(
@@ -228,5 +231,3 @@ mutation submit( $exampleUploads: [ Upload ], $exampleImageUpload: Upload ){
   }
 }
 ```
-
-**Note**: The GraphQL Spec - and many GraphQL clients - does not natively implement support the [`graphql-multipart-request-spec`](https://github.com/jaydenseric/graphql-multipart-request-spec), and may require an additional dependency such as [apollo-upload-client](https://github.com/jaydenseric/apollo-upload-client).
