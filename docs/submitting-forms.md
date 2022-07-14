@@ -17,15 +17,15 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
 | `checkboxValues` _( [ obj ] )_                                          | `CheckboxField` <br> `QuizField` <sup>[3](#quizNote)</sup>                                                                                                                                                                                                                                          | `inputId` <br> `value` |
 | `consentValue` _( boolean )_                                                 | `ConsentField` | |
 | `emailValues` _( obj )_                                                 | `EmailField` | `confirmationValue` <br/> `value` |
-| `fileUploadValues` _( [ Upload ] )_<sup>[2](#uploadNote)</sup>          | `FileUploadField` | `name` <br> `type` <br> `size` <br> `tmp_name` <br>                                                              |
+| `fileUploadValues` _( [ Upload ] )_<sup>[2](#uploadNote)</sup>          | `FileUploadField` | See [Submitting File Uploads](#submitting-file-uploads)                                                              |
 | `listValues` _( [ obj ] )_                                              | `ListField` | `rowValues` _( [ String ] )_                                     |
 | `nameValues` _( obj )_                                                  | `NameField` | `first` <br> `last` <br> `midele` <br> `prefix` <br> `suffix` |
-| `postImageValues` _( obj )_ <sup>[2](#uploadNote)</sup>                 | `PostImageField` | `altText` <br> `caption` <br> `description` <br> `image` <br> `title` |
+| `postImageValues` _( obj )_ <sup>[2](#uploadNote)</sup>                 | `PostImageField` | `altText` <br> `caption` <br> `description` <br> `image` _(Upload)<sup>[2](#uploadNote)</sup>_ <br> `title` |
 | `value` _( string )_                                                    | `CaptchaField` <sup>[3](#captchaNote)</sup><br> `ConsentField` <br> `DateField` <br> `HiddenField` <br> `NumberField` <br> `PhoneField` <br> `PostContentField` <br> `PostExcerptField` <br> `PostTitleField` <br> `QuizField` <sup>[4](#quizNote)</sup><br> `RadioField` <br> `SelectField` <br> `SignatureField` <br> `TextAreaField` <br> `TextField` <br> `TimeField` <br> `WebsiteField` <br> _Also used by default for custom fields._| n/a                                                              |
 | `values` _( [ string ] )_                                               | `MultiSelectField` <br> `PostCategoryField` <br> `PostCustomField` <br> `PostTagsField` | n/a                                                              |
 
 <a name="chainedSelectNote">1</a>: In order to use `chainedSelectValues` you must install and activate [Gravity Forms Chained Selects](https://www.gravityforms.com/add-ons/chained-selects/).<br>
-<a name="uploadNote">2</a>: In order to use `fileUploadValues` or `postImageValues` , you must install and activate [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload).<br>
+<a name="uploadNote">2</a>: In order to use `fileUploadValues` or `postImageValues` , you must install and activate [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload). See [Submitting File Uploads](#submitting-file-uploads) below.<br>
 <a name="captchaNote">2</a>: The `value` for a `Captcha` field is its validation token. See [Captcha Validation](#captcha-validation) below.<br>
 <a name="quizNote">3</a>: [Gravity Forms Quiz Fields](https://docs.gravityforms.com/quiz-field/) can be either a Checkbox, Radio, or Select field. The field value input type is assigned accordingly.
 
@@ -174,8 +174,55 @@ submitGfForm( $token: String )
     id
     message
   }
+  confirmation {
+    message
+  }
   entry {
     databaseId
   }
 }
 ```
+
+## Submitting File Uploads
+To enable WPGraphQL support for submitting files (via the `fileUploadValues` or `postImageValues` inputs ), you must first install and activate the [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload) extension, which will add the `Upload` scalar type to the GraphQL schema.
+
+Once enabled, you can then use the `Upload` type to submit forms that accept file uploads as so:
+```graphql
+submitGfForm( $exampleUploads: [ Upload ], $exampleImageUpload: Upload )
+  input: {
+    formId: 50
+    fieldValues: [
+      # other form fields would go here.
+      {
+        # FileUpload field
+        id: 1
+        fileUploadValues: $exampleUploads # An array of Upload objects. 
+      }
+      {
+        # PostImage field
+        id: 2
+        postImageValues {
+          altText: "Some alt text"
+          caption: "Some caption"
+          image: $exampleImageUpload # The Upload object
+          description: "Some description"
+          title: "Some title"
+        }
+      }
+    }
+  }
+) {
+  errors {
+    id
+    message
+  }
+  confirmation {
+    message
+  }
+  entry {
+    databaseId
+  }
+}
+```
+
+**Note**: The GraphQL Spec - and many GraphQL clients - does not natively implement support the [`graphql-multipart-request-spec`](https://github.com/jaydenseric/graphql-multipart-request-spec), and may require an additional dependency such as [apollo-upload-client](https://github.com/jaydenseric/apollo-upload-client).
