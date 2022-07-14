@@ -157,28 +157,30 @@ As of v0.11.0, WPGraphQL for Gravity Forms supports server-side captcha validati
 To validate a reCAPTCHA field, you need to [fetch the captcha response token](https://developers.google.com/recaptcha/docs/verify), and pass that to the field's `value` input argument:
 
 ```graphql
-submitGfForm( $token: String )
-  input: {
-    formId: 50
-    fieldValues: [
-      # other form fields would go here.
-      {
-        # Captcha Field
-        id: 1
-        value: $token # The google reCAPTCHA response token.
+mutation submit( $token: String ) {
+  submitGfForm(
+    input: {
+      formId: 50
+      fieldValues: [
+        # other form fields would go here.
+        {
+          # Captcha Field
+          id: 1
+          value: $token # The google reCAPTCHA response token.
+        }
       }
     }
-  }
-) {
-  errors {
-    id
-    message
-  }
-  confirmation {
-    message
-  }
-  entry {
-    databaseId
+  ) {
+    errors {
+      id
+      message
+    }
+    confirmation {
+      message
+    }
+    entry {
+      databaseId
+    }
   }
 }
 ```
@@ -188,39 +190,41 @@ To enable WPGraphQL support for submitting files (via the `fileUploadValues` or 
 
 Once enabled, you can then use the `Upload` type to submit forms that accept file uploads as so:
 ```graphql
-submitGfForm( $exampleUploads: [ Upload ], $exampleImageUpload: Upload )
-  input: {
-    formId: 50
-    fieldValues: [
-      # other form fields would go here.
-      {
-        # FileUpload field
-        id: 1
-        fileUploadValues: $exampleUploads # An array of Upload objects. 
-      }
-      {
-        # PostImage field
-        id: 2
-        postImageValues {
-          altText: "Some alt text"
-          caption: "Some caption"
-          image: $exampleImageUpload # The Upload object
-          description: "Some description"
-          title: "Some title"
+mutation submit( $exampleUploads: [ Upload ], $exampleImageUpload: Upload ){ 
+  submitGfForm(
+    input: {
+      formId: 50
+      fieldValues: [
+        # other form fields would go here.
+        {
+          # FileUpload field
+          id: 1
+          fileUploadValues: $exampleUploads # An array of Upload objects. 
+        }
+        {
+          # PostImage field
+          id: 2
+          postImageValues {
+            altText: "Some alt text"
+            caption: "Some caption"
+            image: $exampleImageUpload # The Upload object
+            description: "Some description"
+            title: "Some title"
+          }
         }
       }
     }
-  }
-) {
-  errors {
-    id
-    message
-  }
-  confirmation {
-    message
-  }
-  entry {
-    databaseId
+  ) {
+    errors {
+      id
+      message
+    }
+    confirmation {
+      message
+    }
+    entry {
+      databaseId
+    }
   }
 }
 ```
