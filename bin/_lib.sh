@@ -99,31 +99,62 @@ configure_wordpress() {
 install_plugins() {
 	cd $WP_CORE_DIR
 
-	wp plugin list --allow-root
-
 	# Install GF plugins and Activate.
-	wp plugin install gravityformscli --activate --allow-root
-
 	echo "Installing and Activating Gravity Forms + extensions";
-	wp gf install --key=$GF_KEY --activate --allow-root --quiet
-	wp gf install gravityformssignature --key=$GF_KEY --activate --allow-root --quiet
-	wp gf install gravityformschainedselects --key=$GF_KEY --activate --allow-root --quiet
-	wp gf install gravityformsquiz --key=$GF_KEY --activate --allow-root --quiet
+	if ! $( wp plugin is-installed gravityformscli --allow-root ); then
+		wp plugin install gravityformscli --allow-root
+	fi
+	wp plugin activate gravityformscli --allow-root
 
-	# Install WPGraphQL Upload and Activate
-	wp plugin install https://github.com/dre1080/wp-graphql-upload/archive/refs/heads/master.zip --allow-root
-	wp plugin activate wp-graphql-upload --allow-root
+	
+	if ! $( wp plugin is-installed gravityforms --allow-root ); then
+
+		echo "Installing Gravity Forms..."
+		wp gf install --key=$GF_KEY --allow-root --quiet
+	fi
+	wp plugin activate gravityforms --allow-root
+
+	if ! $( wp plugin is-installed gravityformssignature --allow-root ); then
+		echo "Installing Gravity Forms Signature..."
+		wp gf install gravityformssignature --key=$GF_KEY --allow-root --quiet
+	fi
+	wp plugin activate gravityformssignature --allow-root
+
+	if ! $( wp plugin is-installed gravityformschainedselects --allow-root ); then
+		echo "Installing Gravity Forms Chained Selects..."
+		wp gf install gravityformschainedselects --key=$GF_KEY --allow-root --quiet
+	fi
+	wp plugin activate gravityformschainedselects --allow-root
+
+	if ! $( wp plugin is-installed gravityformsquiz --allow-root ); then
+		echo "Installing Gravity Forms Quiz..."
+		wp gf install gravityformsquiz --key=$GF_KEY --allow-root --quiet
+	fi
+	wp plugin activate gravityformsquiz --allow-root
 
 	# Install WPGraphQL and Activate
-	wp plugin install wp-graphql --allow-root
+	if ! $( wp plugin is-installed wp-graphql --allow-root ); then
+		wp plugin install wp-graphql --allow-root
+	fi
 	wp plugin activate wp-graphql --allow-root
 
+	# Install WPGraphQL Upload and Activate
+	if ! $( wp plugin is-installed wp-graphql-upload --allow-root ); then
+		wp plugin install https://github.com/dre1080/wp-graphql-upload/archive/refs/heads/master.zip --allow-root
+	fi
+	wp plugin activate wp-graphql-upload --allow-root
+
+
 	# Install WPGatsby and Activate
-	wp plugin install wp-gatsby --allow-root
+	if ! $( wp plugin is-installed wp-gatsby --allow-root ); then
+		wp plugin install wp-gatsby --allow-root
+	fi
 	wp plugin activate wp-gatsby --allow-root
 
 	# Install WPJamstack Deployments and Activate
-	wp plugin install wp-jamstack-deployments --allow-root
+	if ! $( wp plugin is-installed wp-jamstack-deployments --allow-root ); then
+		wp plugin install wp-jamstack-deployments --allow-root
+	fi
 	wp plugin activate wp-jamstack-deployments --allow-root
 }
 
@@ -144,7 +175,6 @@ setup_plugin() {
 	cd $PLUGIN_DIR
 
 	composer install
-	
 }
 
 post_setup() {
