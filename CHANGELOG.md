@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.11.2 - Build Scripts, Confirmations, & DataLoaders
+
+This _minor_ release fixes a bug where querying for a non-existent Form/Entry id would throw an error instead of returning `null`.
+
+We also added some new GraphQL fields and connections to the `FormConfirmation` and `SubmissionConfirmation` types, and made some under-the-hood improvements to both the code and our build scripts.
+
+- feat: Add `isAutoformatted` to the `FormConfirmation` object.
+- feat: Add `Page` connection to the `FormConfirmation` object. (h/t @robmarshall )
+- feat: Add `pageId` and `queryString` fields and `Page` connection to the `SubmissionConfirmation` object.
+- fix: Ensure DataLoader keys return null on non-existent objects, instead of throwing errors. (h/t 6x x6 and Jonathan Ng )
+- dev: Fix return type for `Utils::get_possible_form_field_child_types()`.
+- dev: Refactor ignored Gravity Forms settings to `FormFields::ignored_gf_settings()`.
+- dev: Ensure composer deps are built for PHP 7.4.
+- chore: Update Composer deps.
+- docs: Add usage example for file uploads.
+- ci: Various improvements to workflows.
+
 ## v0.11.1.1 - Hotfix
 This _hotfix_ release fixes issues with the Github Updater attempting to install plugin updates from the wrong release asset.
 
@@ -14,7 +31,7 @@ This _minor_ release adds the reCaptcha V2 `type` and `publicKey` to `gfSettings
 - feat: Add `recaptcha` settings to `GFSettings` GraphQL object.
 - feat: Add `SubmissionConfirmation` object to `submitGfForm` and `submitGfDraftEntry` mutation responses. Props: @KoduVaal
 - fix: `isActive` should default to true for new Confirmations / Notifications.
-- fix: Correctly resolve the `rangeMin` and `rangeMax` GraphQL fields on `NumberField`. H/t @natac13
+- fix: Correctly resolve the `rangeMin` and `rangeMax` GraphQL fields on `NumberField`. (h/t @natac13 )
 - fix: Ensure GF Action Monitor setting keys are populated.
 - fix: Ensure `checkboxValues` load the Post Category choices before attempting to process.
 - fix: Prevent reprocessing the `imageValueInput.url` when updating `PostImage` field values.
