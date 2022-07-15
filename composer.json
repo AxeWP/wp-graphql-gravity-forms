@@ -49,6 +49,9 @@
 	"config": {
 		"optimize-autoloader": true,
 		"process-timeout": 0,
+		"platform": {
+			"php": "7.4"
+		},
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"phpstan/extension-installer": true
