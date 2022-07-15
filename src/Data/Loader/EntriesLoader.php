@@ -10,7 +10,7 @@
 
 namespace WPGraphQL\GF\Data\Loader;
 
-use GF_Query;
+use GFAPI;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
 use WPGraphQL\GF\Model\SubmittedEntry;
 
@@ -52,14 +52,13 @@ class EntriesLoader extends AbstractDataLoader {
 			return $keys;
 		}
 
-		$gf_query        = new GF_Query();
-		$entries_from_db = $gf_query->get_entries( $keys );
-		// GF doesn't cache form queries so we're going to use the fetched array.
+		// Associate the requested keys with their loaded entry.
 		$loaded_entries = [];
-		foreach ( $entries_from_db as $entry ) {
-			$loaded_entries [ $entry['id'] ] = $entry;
+		foreach ( $keys as $key ) {
+			$entry                  = GFAPI::get_entry( $key );
+			$loaded_entries[ $key ] = ! is_wp_error( $entry ) ? $entry : null;
 		}
 
-		return array_combine( $keys, $loaded_entries );
+		return $loaded_entries;
 	}
 }

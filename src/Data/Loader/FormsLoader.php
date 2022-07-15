@@ -10,9 +10,9 @@
 
 namespace WPGraphQL\GF\Data\Loader;
 
+use GFAPI;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
 use WPGraphQL\GF\Model\Form;
-use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - FormsLoader
@@ -52,15 +52,11 @@ class FormsLoader extends AbstractDataLoader {
 			return $keys;
 		}
 
-		$forms_from_db = GFUtils::get_forms( $keys, false );
-
 		$loaded_forms = [];
-		// GF doesn't cache form queries so we're going to use the fetched array.
-		foreach ( $forms_from_db as $form ) {
-			$loaded_forms [ $form['id'] ] = $form;
+		foreach ( $keys as $key ) {
+			$loaded_forms[ $key ] = GFAPI::get_form( $key ) ?: null;
 		}
 
-		// Order the forms by the provided keys.
-		return array_replace( array_flip( $keys ), $loaded_forms );
+		return $loaded_forms;
 	}
 }
