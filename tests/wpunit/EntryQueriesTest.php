@@ -8,8 +8,8 @@
 use GraphQLRelay\Relay;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 use WPGraphQL\GF\Type\Enum;
-use WPGraphQL\GF\Type\WPObject\Form\Form;
 use Helper\GFHelpers\GFHelpers;
+use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
 
 /**
@@ -76,28 +76,41 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		$query = $this->get_entry_query();
 
+		// Test with bad ID.
 		$variables = [
-			'id'     => $this->entry_ids[0],
-			'idType' => 'DATABASE_ID',
+			'id' => 99999999,
+			'idType' => 'DATABASE_ID'
 		];
 
-		$response = $this->graphql( compact( 'query', 'variables' ) );
+		$actual = $this->graphql( compact( 'query', 'variables') );
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertNull( $actual['data']['gfEntry'] );
+
+		// Test with Database ID.
+		$variables['id'] =$this->entry_ids[0];
+
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 
 		$expected = $this->expected_field_response( $entry, $form );
 
-		// Test with Database Id.
-		$this->assertArrayNotHasKey( 'errors', $response );
-		$this->assertQuerySuccessful( $response, $expected );
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertQuerySuccessful( $actual, $expected );
 
-		// Test with Global Id.
+		// Test with bad global ID.
 		$variables = [
-			'id'     => $global_id,
+			'id'     => 'not-a-real-id',
 			'idType' => 'ID',
 		];
-		$response  = $this->graphql( compact( 'query', 'variables' ) );
 
-		$this->assertArrayNotHasKey( 'errors', $response );
-		$this->assertQuerySuccessful( $response, $expected );
+		$actual  = $this->graphql( compact( 'query', 'variables' ) );
+		$this->assertArrayHasKey( 'errors', $actual );
+
+		// Test with Global Id.
+		$variables['id'] = $global_id;
+		$actual  = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertQuerySuccessful( $actual, $expected );
 	}
 
 	/**
@@ -134,8 +147,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	public function testEntryQuery_draft() : void {
 		wp_set_current_user( $this->admin->ID );
 
-		$draft_tokens = $this->factory->draft_entry->create_many(
-			2,
+		$draft_token = $this->factory->draft_entry->create(
 			[
 				'form_id'    => $this->form_id,
 				'created_by' => $this->admin->ID,
@@ -152,19 +164,40 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 			}
 		';
 
-		$actual = $this->graphql(
-			[
-				'query'     => $query,
-				'variables' => [
-					'id'     => $draft_tokens[0],
-					'idType' => 'RESUME_TOKEN',
-				],
-			]
-		);
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertEquals( $draft_tokens[0], $actual['data']['gfEntry']['resumeToken'] );
+		// Test with bad resume token.
+		$variables = [
+			'id' => 'not-a-real-id',
+			'idType' => 'RESUME_TOKEN',
+		];
 
-		$this->factory->draft_entry->delete( $draft_tokens );
+		$actual = $this->graphql( compact( 'query', 'variables') );
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertNull( $actual['data']['gfEntry'] );
+
+		// Test with draft token
+		$variables['id'] = $draft_token;
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertEquals( $draft_token, $actual['data']['gfEntry']['resumeToken'] );
+
+				// Test with bad global ID.
+		$variables = [
+			'id'     => 'not-a-real-id',
+			'idType' => 'ID',
+		];
+
+		$actual  = $this->graphql( compact( 'query', 'variables' ) );
+		$this->assertArrayHasKey( 'errors', $actual );
+
+		// Test with Global Id.
+		$variables['id'] = Relay::toGlobalId( DraftEntriesLoader::$name, $draft_token );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertArrayNotHasKey( 'errors', $actual );
+		$this->assertEquals( $draft_token, $actual['data']['gfEntry']['resumeToken'] );
+
+		$this->factory->draft_entry->delete( $draft_token );
 	}
 
 	/**
