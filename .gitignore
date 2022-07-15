@@ -25,7 +25,6 @@ plugin-build
 auth.json
 
 # Composer deps
-composer.lock
 !vendor
 vendor/*
 !vendor/autoload.php
