@@ -54,7 +54,7 @@ jobs:
           restore-keys: php-${{ matrix.php }}-${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --no-dev
+        run: composer install
 
       - name: Build "testing" Docker Image
         env:
