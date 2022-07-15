@@ -11,10 +11,10 @@
 namespace WPGraphQL\GF\Data\Loader;
 
 use Exception;
+use GFFormsModel;
 use GraphQL\Deferred;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
 use WPGraphQL\GF\Model\DraftEntry;
-use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - DraftEntriesLoader
@@ -54,10 +54,9 @@ class DraftEntriesLoader extends AbstractDataLoader {
 			return $keys;
 		}
 
-		// GF doesn't cache form queries so we're going to use the fetched array.
 		$loaded_entries = [];
 		foreach ( $keys as $key ) {
-			$loaded_entries[ $key ] = GFUtils::get_draft_entry( $key );
+			$loaded_entries[ $key ] = GFFormsModel::get_draft_submission_values( $key ) ?: null;
 		}
 
 		return $loaded_entries;
