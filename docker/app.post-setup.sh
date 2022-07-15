@@ -64,6 +64,9 @@ if ! $( wp plugin is-installed wp-jamstack-deployments --allow-root ); then
 fi
 wp plugin activate wp-jamstack-deployments --allow-root
 
+# activate the plugin
+wp plugin activate wp-graphql-gravity-forms --allow-root
+
 # Set pretty permalinks.
 wp rewrite structure '/%year%/%monthnum%/%postname%/' --allow-root
 
