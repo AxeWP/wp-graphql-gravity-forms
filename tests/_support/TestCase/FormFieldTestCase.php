@@ -14,9 +14,6 @@ use GFFormsModel;
 use GFAPI;
 use GF_Field;
 use Helper\GFHelpers\ExpectedFormFields;
-use ReflectionProperty;
-use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty\ChoiceMapper;
-use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty\InputMapper;
 use WPGraphQL\GF\Type\WPObject\FormField\FormFields;
 
 /**
@@ -59,14 +56,6 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	public function setUp(): void {
 		// Before...
 		parent::setUp();
-
-		// Reset static properties.
-		$choices = new ReflectionProperty( ChoiceMapper::class, 'registered_types' );
-		$choices->setAccessible( true );
-		$choices->setValue( null, [] );
-		$inputs = new ReflectionProperty( InputMapper::class, 'registered_types' );
-		$inputs->setAccessible( true );
-		$inputs->setValue( null, [] );
 
 		wp_set_current_user( $this->admin->ID );
 		$this->is_draft = false;
