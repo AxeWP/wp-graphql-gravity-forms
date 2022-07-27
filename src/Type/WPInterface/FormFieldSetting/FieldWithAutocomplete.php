@@ -63,7 +63,7 @@ class FieldWithAutocomplete extends AbstractFormFieldSetting {
 		// Bail early.
 		if (
 			! in_array( self::$type, $interfaces, true ) ||
-			! in_array( $field->type, [ 'address', 'email', 'name' ], true )
+			in_array( $field->type, [ 'address', 'email', 'name' ], true )
 		) {
 			return $fields;
 		}

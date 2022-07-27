@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd0272bb70fdbba1665567db9f447b274
+class ComposerStaticInit407664321485b405639c6d14baff7059
 {
     public static $files = array (
         '49a1299791c25c6fd83542c6fedacddd' => __DIR__ . '/..' . '/yahnis-elsts/plugin-update-checker/load-v4p11.php',
@@ -114,7 +114,10 @@ class ComposerStaticInitd0272bb70fdbba1665567db9f447b274
         'WPGraphQL\\GF\\Mutation\\SubmitForm' => __DIR__ . '/../..' . '/src/Mutation/SubmitForm.php',
         'WPGraphQL\\GF\\Mutation\\UpdateDraftEntry' => __DIR__ . '/../..' . '/src/Mutation/UpdateDraftEntry.php',
         'WPGraphQL\\GF\\Mutation\\UpdateEntry' => __DIR__ . '/../..' . '/src/Mutation/UpdateEntry.php',
-        'WPGraphQL\\GF\\TypeRegistry' => __DIR__ . '/../..' . '/src/TypeRegistry.php',
+        'WPGraphQL\\GF\\Registry\\FormFieldChoiceRegistry' => __DIR__ . '/../..' . '/src/Registry/FormFieldChoiceRegistry.php',
+        'WPGraphQL\\GF\\Registry\\FormFieldInputRegistry' => __DIR__ . '/../..' . '/src/Registry/FormFieldInputRegistry.php',
+        'WPGraphQL\\GF\\Registry\\FormFieldRegistry' => __DIR__ . '/../..' . '/src/Registry/FormFieldRegistry.php',
+        'WPGraphQL\\GF\\Registry\\TypeRegistry' => __DIR__ . '/../..' . '/src/Registry/TypeRegistry.php',
         'WPGraphQL\\GF\\Type\\AbstractType' => __DIR__ . '/../..' . '/src/Type/AbstractType.php',
         'WPGraphQL\\GF\\Type\\Enum\\AbstractEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AbstractEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\AddressFieldCountryEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AddressFieldCountryEnum.php',
@@ -286,9 +289,7 @@ class ComposerStaticInitd0272bb70fdbba1665567db9f447b274
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\ListFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/ListFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\NameFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/NameFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\TimeFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/TimeFieldValue.php',
-        'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FormFieldChoices' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FormFieldChoices.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FormFieldDataPolicy' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FormFieldDataPolicy.php',
-        'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FormFieldInputs' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FormFieldInputs.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FormFields' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FormFields.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\Form' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/Form.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\FormConfirmation' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/FormConfirmation.php',
@@ -318,9 +319,9 @@ class ComposerStaticInitd0272bb70fdbba1665567db9f447b274
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd0272bb70fdbba1665567db9f447b274::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd0272bb70fdbba1665567db9f447b274::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd0272bb70fdbba1665567db9f447b274::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit407664321485b405639c6d14baff7059::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit407664321485b405639c6d14baff7059::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit407664321485b405639c6d14baff7059::$classMap;
 
         }, null, ClassLoader::class);
     }

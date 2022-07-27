@@ -9,7 +9,7 @@
 namespace WPGraphQL\GF\Type\WPInterface\FormFieldSetting;
 
 use GF_Field;
-use WPGraphQL\GF\Type\WPObject\FormField\FormFieldInputs;
+use WPGraphQL\GF\Registry\FormFieldInputRegistry;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -32,6 +32,15 @@ class FieldWithPassword extends AbstractFormFieldSetting {
 
 	/**
 	 * {@inheritDoc}
+	 */
+	public static function register_hooks(): void {
+		add_action( 'graphql_gf_register_form_field_inputs', [ __CLASS__, 'add_inputs' ], 11, 2 );
+
+		parent::register_hooks();
+	}
+
+	/**
+	 * {@inheritDoc}
 	 *
 	 * There is no Field interface for the setting.
 	 */
@@ -45,14 +54,19 @@ class FieldWithPassword extends AbstractFormFieldSetting {
 	}
 
 	/**
-	 * Register GraphQL fields to the FormField objects that implement this interface.
+	 * Registers a GraphQL field to the GraphQL type that implements this interface.
 	 *
-	 * @param GF_Field     $field The Gravity forms field.
-	 * @param array        $settings The GF settings for the field.
-	 * @param TypeRegistry $registry The WPGraphQL type registry.
+	 * @param GF_Field $field The Gravity Forms Field object.
+	 * @param array    $settings The `form_editor_field_settings()` key.
 	 */
-	public static function register_object_fields( GF_Field $field, array $settings, TypeRegistry $registry ) : void {
-		// Register the InputProperty for the object.
-		FormFieldInputs::register( $field, $settings, $registry );
+	public static function add_inputs( GF_Field $field, array $settings ) : void {
+		if (
+			! in_array( self::$field_setting, $settings, true )
+		) {
+			return;
+		}
+
+		// Register the FieldChoice for the object.
+		FormFieldInputRegistry::register( $field, $settings );
 	}
 }

@@ -223,8 +223,8 @@ class TypeRegistry {
 		// Add interfaces for GF Field Settings.
 		$classes_to_register = array_merge(
 			$classes_to_register,
-			// array_values( self::form_field_setting_inputs() ),
-			// array_values( self::form_field_setting_choices() ),
+			array_values( self::form_field_setting_inputs() ),
+			array_values( self::form_field_setting_choices() ),
 			array_values( self::form_field_settings() ),
 		);
 

@@ -9,9 +9,7 @@
 namespace WPGraphQL\GF\Type\WPInterface\FormFieldSetting;
 
 use GF_Field;
-use WPGraphQL\GF\Type\WPObject\FormField\FormFieldChoices;
-use WPGraphQL\Registry\TypeRegistry;
-
+use WPGraphQL\GF\Registry\FormFieldChoiceRegistry;
 /**
  * Class - FieldWithColumns
  */
@@ -33,6 +31,15 @@ class FieldWithColumns extends AbstractFormFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
+	public static function register_hooks(): void {
+		add_action( 'graphql_gf_register_form_field_choices', [ __CLASS__, 'add_choices' ], 10, 2 );
+
+		parent::register_hooks();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public static function get_fields() : array {
 		return [
 			'hasColumns' => [
@@ -44,14 +51,19 @@ class FieldWithColumns extends AbstractFormFieldSetting {
 	}
 
 	/**
-	 * Register GraphQL fields to the FormField objects that implement this interface.
+	 * Registers a GraphQL field to the GraphQL type that implements this interface.
 	 *
-	 * @param GF_Field     $field The Gravity forms field.
-	 * @param array        $settings The GF settings for the field.
-	 * @param TypeRegistry $registry The WPGraphQL type registry.
+	 * @param GF_Field $field The Gravity Forms Field object.
+	 * @param array    $settings The `form_editor_field_settings()` key.
 	 */
-	public static function register_object_fields( GF_Field $field, array $settings, TypeRegistry $registry ) : void {
+	public static function add_choices( GF_Field $field, array $settings ) : void {
+		if (
+			! in_array( self::$field_setting, $settings, true )
+		) {
+			return;
+		}
+
 		// Register the FieldChoice for the object.
-		FormFieldChoices::register( $field, $settings, $registry );
+		FormFieldChoiceRegistry::register( $field, $settings );
 	}
 }

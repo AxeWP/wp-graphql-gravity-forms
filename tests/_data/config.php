@@ -12,4 +12,3 @@ define( 'GF_RECAPTCHA_PRIVATE_KEY', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe' )
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_LOG', true );
 define( 'GRAPHQL_DEBUG', true );
-

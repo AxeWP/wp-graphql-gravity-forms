@@ -14,6 +14,7 @@ use GFFormsModel;
 use GFAPI;
 use GF_Field;
 use Helper\GFHelpers\ExpectedFormFields;
+use WPGraphQL\GF\Registry\FormFieldRegistry;
 use WPGraphQL\GF\Type\WPObject\FormField\FormFields;
 
 /**
@@ -376,7 +377,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	protected function getExpectedFormFieldValues( GF_Field $field ) {
 		$expected = [];
 
-		$field_settings = str_replace( '-', '_', FormFields::get_field_settings( $field ) );
+		$field_settings = str_replace( '-', '_', FormFieldRegistry::get_field_settings( $field ) );
 
 		foreach ( $field_settings as $setting ) {
 			if ( method_exists( $this, $setting ) ) {
