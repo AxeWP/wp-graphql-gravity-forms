@@ -35,7 +35,7 @@ abstract class AbstractFormFieldInputSetting extends AbstractInterface {
 	 *
 	 * @var boolean
 	 */
-	public static bool $should_load_eagerly = true;
+	public static bool $should_load_eagerly = false;
 
 	/**
 	 * {@inheritDoc}

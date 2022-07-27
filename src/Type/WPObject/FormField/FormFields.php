@@ -26,7 +26,7 @@ class FormFields implements Hookable, Registrable {
 	 *
 	 * @var boolean
 	 */
-	public static bool $should_load_eagerly = true;
+	public static bool $should_load_eagerly = false;
 
 	/**
 	 * {@inheritDoc}

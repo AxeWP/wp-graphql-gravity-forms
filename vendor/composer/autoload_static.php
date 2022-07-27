@@ -280,7 +280,6 @@ class ComposerStaticInit407664321485b405639c6d14baff7059
         'WPGraphQL\\GF\\Type\\WPObject\\Entry\\DraftEntry' => __DIR__ . '/../..' . '/src/Type/WPObject/Entry/DraftEntry.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Entry\\SubmittedEntry' => __DIR__ . '/../..' . '/src/Type/WPObject/Entry/SubmittedEntry.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FieldError' => __DIR__ . '/../..' . '/src/Type/WPObject/FieldError.php',
-        'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\FieldProperties' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldProperty/FieldProperties.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\FieldValues' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/FieldValues.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\AddressFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/AddressFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\CheckboxFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/CheckboxFieldValue.php',

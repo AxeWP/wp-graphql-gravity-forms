@@ -10,9 +10,6 @@ namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPInterface\FormFieldCho
 
 use GF_Field;
 use WPGraphQL\GF\Type\WPInterface\FormFieldChoiceSetting\AbstractFormFieldChoiceSetting;
-use WPGraphQL\GF\Utils\Utils;
-use WPGraphQL\Registry\TypeRegistry;
-
 /**
  * Class - ChoiceWithChainedChoices
  */
@@ -59,11 +56,10 @@ class ChoiceWithChainedChoices extends AbstractFormFieldChoiceSetting {
 	 * @param string   $choice_name The name of the choice type.
 	 * @param GF_Field $field The Gravity Forms Field object.
 	 * @param array    $settings The `form_editor_field_settings()` key.
-	 * @param array    $interfaces The list of interfaces for the GraphQL type.
 	 */
-	public static function add_fields_to_child_type( array $fields, string $choice_name, GF_Field $field, array $settings, array $interfaces ) : array {
+	public static function add_fields_to_child_type( array $fields, string $choice_name, GF_Field $field, array $settings ) : array {
 		if (
-			! in_array( self::$type, $interfaces, true )
+			! in_array( self::$field_setting, $settings, true )
 		) {
 			return $fields;
 		}

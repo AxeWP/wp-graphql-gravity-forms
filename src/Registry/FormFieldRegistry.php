@@ -38,6 +38,7 @@ class FormFieldRegistry {
 
 		$possible_types = Utils::get_possible_form_field_child_types( $field->type );
 
+		// If there are no possible types, then this can be registered directly as a GraphQL object.
 		if ( empty( $possible_types ) ) {
 			$config = self::get_config_from_settings( $field, $field_settings );
 
@@ -47,8 +48,18 @@ class FormFieldRegistry {
 
 			self::register_object_type( $field, $field_settings, $config );
 		} else {
+			// If there are possible types, then we need to register the parent interface and all the child types as objects.
 			self::register_interface_and_types( $field, $field_settings, $possible_types );
 		}
+
+		/**
+		 * Fires after the Gravity Forms field has been hooked to be registered WPGraphQL schema.
+		 *
+		 * The fields themselves will only be registered on the next get_graphql_register_action() call.
+		 *
+		 * @param GF_Field $field The Gravity Forms field object.
+		 * @param array    $field_settings The field settings.
+		 */
 		do_action( 'graphql_gf_after_register_form_field', $field, $field_settings );
 		do_action( 'graphql_gf_after_register_form_field_' . $field->graphql_single_name, $field, $field_settings );
 	}
@@ -70,17 +81,17 @@ class FormFieldRegistry {
 
 				// Register the FormField to the schema.
 				register_graphql_object_type( $field->graphql_single_name, $config );
-				if ( $field->inputType === 'checkbox' ) {
-					// error_log( 'before ' . $field->graphql_single_name );
-					// error_log( print_r($field_settings, true) );
-					// error_log( print_r($config, true) );
-				}
 
-				do_action( 'graphql_gf_register_form_field_choices', $field, $field_settings, $config );
-				do_action( 'graphql_gf_register_form_field_choices_', $field->graphql_single_name, $field, $field_settings, $config );
-				do_action( 'graphql_gf_register_form_field_inputs', $field, $field_settings, $config );
-				do_action( 'graphql_gf_register_form_field_inputs_', $field->graphql_single_name, $field, $field_settings, $config );
+				// Register any choices and inputs to the type.
+				self::maybe_register_choices_and_inputs( $field, $field_settings, $config );
 
+				/**
+				 * Fires after the Gravity Forms field object has been registered to WPGraphQL schema.
+				 *
+				 * @param GF_Field $field The Gravity Forms field object.
+				 * @param array    $field_settings The field settings.
+				 * @param array    $config The config array as expected by WPGraphQL.
+				 */
 				do_action( 'graphql_gf_after_register_form_field_object', $field, $field_settings, $config );
 				do_action( 'graphql_gf_after_register_form_field_object_' . $field->graphql_single_name, $field, $field_settings, $config );
 			}
@@ -89,7 +100,7 @@ class FormFieldRegistry {
 
 
 	/**
-	 * Runs before a Gravity Forms Form field is registered to the GraphQL schema.
+	 * Registers the GF Form Field as a GraphQL interface before registering it's child types as objects.
 	 *
 	 * @uses FormFields::register_gf_field_object() to register the child types.
 	 *
@@ -101,6 +112,9 @@ class FormFieldRegistry {
 		// Store these for later use.
 		$possible_settings = [];
 
+		/**
+		 * To get the interface settings, we want the shared settings for each of the possible types.
+		 */
 		foreach ( $possible_types as $gf_type => $graphql_type ) {
 			$child_field = GF_Fields::get( $gf_type );
 			if ( ! $child_field instanceof GF_Field ) {
@@ -109,11 +123,8 @@ class FormFieldRegistry {
 
 			$possible_settings[ $gf_type ] = $child_field->get_form_editor_field_settings();
 		}
-		/**
-		 * To get the interface settings, we want the shared settings for each of the possible types.
-		 *
-		 * We flip the arrays and compare the keys for performance.
-		 */
+
+		// We flip the arrays and compare the keys for performance.
 		$interface_settings = array_keys(
 			array_intersect_key(
 				... array_map( 'array_flip', array_values( $possible_settings ) )
@@ -121,14 +132,6 @@ class FormFieldRegistry {
 		);
 
 		$interface_settings = array_merge( $settings, $interface_settings );
-
-		if ( $field::class === 'GF_Field_Post_Category' ) {
-			// error_log($field->type);
-			// error_log( 'first pass' . print_r($first, true ) );
-			// error_log( 'second pass' . print_r($second, true ) );
-			// error_log( 'interface_settings' . print_r($interface_settings, true) );
-			// error_log( 'possible_settings' . print_r($possible_settings, true) );
-		}
 
 		// Register the interface.
 		add_action(
@@ -143,8 +146,7 @@ class FormFieldRegistry {
 
 				$config['description'] = self::get_description( $field->type );
 
-				$config['eagerlyLoadType'] = true;
-				$config['resolveType']     = function( $value ) use ( $type_registry, $possible_types ) {
+				$config['resolveType'] = function( $value ) use ( $type_registry, $possible_types ) {
 					$input_type = $value->get_input_type();
 					if ( isset( $possible_types[ $input_type ] ) ) {
 						$type = $type_registry->get_type( $possible_types[ $value->$input_type ] );
@@ -164,10 +166,9 @@ class FormFieldRegistry {
 				};
 
 				register_graphql_interface_type( $field->graphql_single_name, $config );
-				do_action( 'graphql_gf_register_form_field_choices', $field, $interface_settings, $config );
-				do_action( 'graphql_gf_register_form_field_choices_', $field->graphql_single_name, $field, $interface_settings, $config );
-				do_action( 'graphql_gf_register_form_field_inputs', $field, $interface_settings, $config );
-				do_action( 'graphql_gf_register_form_field_inputs_', $field->graphql_single_name, $field, $interface_settings, $config );
+
+				// Register any choices and inputs to the type.
+				self::maybe_register_choices_and_inputs( $field, $interface_settings, $config );
 			}
 		);
 
@@ -175,15 +176,11 @@ class FormFieldRegistry {
 		foreach ( $possible_types as $gf_type => $graphql_type ) {
 			$field_to_register = clone( $field );
 
-			// Override the field config inherited field with those from the inherited field.
+			// Override the field config from the inherited GF field with those from the child type.
 			$field_to_register->inputType           = $gf_type;
 			$field_to_register->graphql_single_name = $graphql_type;
 
 			$field_settings = array_diff( $possible_settings[ $gf_type ], $interface_settings );
-			if ( $field::class === 'GF_Field_Post_Category' ) {
-				// error_log($field->type);
-				// error_log( 'field_settings' . print_r($field_settings, true) );
-			}
 
 			$config                    = self::get_config_from_settings( $field_to_register, $field_settings );
 			$config['description']     = self::get_description( $gf_type . ' ' . $field_to_register->type );
@@ -200,16 +197,17 @@ class FormFieldRegistry {
 	 * @param GF_Field $field .
 	 */
 	public static function get_field_settings( GF_Field $field ) : array {
-		$settings           = $field->get_form_editor_field_settings();
-		$inherited_settings = [];
-
+		$settings   = $field->get_form_editor_field_settings();
 		$input_type = $field->get_input_type();
 
-		if ( $input_type !== $field->type ) {
-			$inherited_field = GF_Fields::get( $input_type );
-
-			$inherited_settings = $inherited_field->get_form_editor_field_settings();
+		// Bail early if the types are the same.
+		if ( $input_type === $field->type ) {
+			return $settings;
 		}
+
+		// Get the settings from the inherited field.
+		$inherited_field    = GF_Fields::get( $input_type );
+		$inherited_settings = $inherited_field->get_form_editor_field_settings();
 
 		return array_merge( $settings, $inherited_settings );
 	}
@@ -240,6 +238,7 @@ class FormFieldRegistry {
 				continue;
 			}
 
+			// Get the class for the GraphQL Interface class for the setting.
 			$interface_class = self::get_setting_interface_class( $field, $setting );
 
 			// Skip if no interface, or if interface was already added.
@@ -250,6 +249,7 @@ class FormFieldRegistry {
 			$interfaces[] = $interface_class::$type;
 		}
 
+		// Get any GraphQL fields fields specific to the settings.
 		$fields = self::get_fields( $field, $settings, $interfaces );
 
 		// Add field values.
@@ -400,11 +400,38 @@ class FormFieldRegistry {
 		}
 
 		/**
-		 * Filter to modify the Form Field value GraphQL field.
+		 * Filter to modify the Form Field value GraphQL fields.
+		 *
+		 * @deprecated @todo
 		 *
 		 * @param array $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
 		 * @param GF_Field $field The Gravity Forms Field object.
 		 */
-		return apply_filters( 'graphql_gf_form_field_value_properties', $fields, $field );
+		$fields = apply_filters_deprecated( 'graphql_gf_form_field_value_properties', [ $fields, $field ], '@todo', 'graphql_gf_form_field_value_fields' );
+
+		/**
+		 * Filter to modify the Form Field Value GraphQL fields.
+		 *
+		 * @param array    $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
+		 * @param GF_Field $field The Gravity Forms Field object.
+		 */
+		$fields = apply_filters( 'graphql_gf_form_field_value_fields', $fields, $field );
+		$fields = apply_filters( 'graphql_gf_form_field_value_fields_' . $field->graphql_single_name, $fields, $field );
+
+		return $fields;
+	}
+
+	/**
+	 * Calls the actions to register the choices and inputs to the type.
+	 *
+	 * @param GF_Field $field The Gravity Forms field object.
+	 * @param array    $field_settings The Gravity Forms field settings.
+	 * @param array    $config The config array as expected by WPGraphQL.
+	 */
+	protected static function maybe_register_choices_and_inputs( GF_Field $field, array $field_settings, array $config ) : void {
+		do_action( 'graphql_gf_register_form_field_choices', $field, $field_settings, $config );
+		do_action( 'graphql_gf_register_form_field_choices_', $field->graphql_single_name, $field, $field_settings, $config );
+		do_action( 'graphql_gf_register_form_field_inputs', $field, $field_settings, $config );
+		do_action( 'graphql_gf_register_form_field_inputs_', $field->graphql_single_name, $field, $field_settings, $config );
 	}
 }

@@ -8,7 +8,6 @@
 
 namespace WPGraphQL\GF\Type\WPInterface\FormFieldInputSetting;
 
-use GF_Field;
 use WPGraphQL\GF\Type\WPInterface\FormFieldInputSetting\AbstractFormFieldInputSetting;
 
 /**

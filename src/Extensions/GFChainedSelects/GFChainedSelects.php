@@ -30,8 +30,10 @@ class GFChainedSelects implements Hookable {
 
 		// Register Enums.
 		add_filter( 'graphql_gf_registered_enum_classes', [ __CLASS__, 'enums' ] );
+
 		// Register Inputs.
 		add_filter( 'graphql_gf_registered_input_classes', [ __CLASS__, 'inputs' ] );
+
 		// Register Form Field Settings interfaces.
 		add_filter( 'graphql_gf_registered_form_field_setting_classes', [ __CLASS__, 'form_field_settings' ] );
 		add_filter( 'graphql_gf_registered_form_field_setting_choice_classes', [ __CLASS__, 'form_field_setting_choices' ] );

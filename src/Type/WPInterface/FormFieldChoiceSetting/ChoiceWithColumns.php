@@ -8,10 +8,8 @@
 
 namespace WPGraphQL\GF\Type\WPInterface\FormFieldChoiceSetting;
 
-use GF_Field;
 use WPGraphQL\GF\Type\WPInterface\FormFieldChoice;
 use WPGraphQL\GF\Type\WPInterface\FormFieldChoiceSetting\AbstractFormFieldChoiceSetting;
-use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - ChoiceWithColumns
@@ -35,6 +33,7 @@ class ChoiceWithColumns extends AbstractFormFieldChoiceSetting {
 	 * {@inheritDoc}
 	 */
 	public static function get_fields() : array {
+		// All types need to have fields, so we explicitly list the interface fields.
 		return FormFieldChoice::get_fields();
 	}
 }

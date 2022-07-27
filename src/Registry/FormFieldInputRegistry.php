@@ -37,7 +37,7 @@ class FormFieldInputRegistry {
 
 		register_graphql_object_type( $input_name, $config );
 
-		// Register the input field.
+		// Register the inputs field.
 		register_graphql_field(
 			$field->graphql_single_name,
 			'inputs',

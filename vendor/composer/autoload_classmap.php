@@ -261,7 +261,6 @@ return array(
     'WPGraphQL\\GF\\Type\\WPObject\\Entry\\DraftEntry' => $baseDir . '/src/Type/WPObject/Entry/DraftEntry.php',
     'WPGraphQL\\GF\\Type\\WPObject\\Entry\\SubmittedEntry' => $baseDir . '/src/Type/WPObject/Entry/SubmittedEntry.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FieldError' => $baseDir . '/src/Type/WPObject/FieldError.php',
-    'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldProperty\\FieldProperties' => $baseDir . '/src/Type/WPObject/FormField/FieldProperty/FieldProperties.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\FieldValues' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/FieldValues.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\AddressFieldValue' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/AddressFieldValue.php',
     'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\CheckboxFieldValue' => $baseDir . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/CheckboxFieldValue.php',

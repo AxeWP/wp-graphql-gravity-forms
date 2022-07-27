@@ -9,7 +9,6 @@
 namespace WPGraphQL\GF\Type\WPInterface\FormFieldSetting;
 
 use GF_Field;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FieldWithAutocomplete

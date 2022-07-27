@@ -34,6 +34,7 @@ class FormFieldChoiceRegistry {
 		$choice_name = Utils::get_safe_form_field_type_name( $choice_name );
 
 		$config = self::get_config_from_settings( $choice_name, $field, $settings );
+
 		register_graphql_object_type( $choice_name, $config );
 
 		// Register the choices field.

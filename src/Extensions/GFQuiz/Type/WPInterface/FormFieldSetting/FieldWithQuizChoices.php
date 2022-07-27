@@ -8,8 +8,6 @@
 
 namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPInterface\FormFieldSetting;
 
-use GF_Field;
-use WPGraphQL\GF\Registry\FormFieldChoiceRegistry;
 use WPGraphQL\GF\Type\WPInterface\FormFieldSetting\AbstractFormFieldSetting;
 
 /**
@@ -29,13 +27,6 @@ class FieldWithQuizChoices extends AbstractFormFieldSetting {
 	 * @var string
 	 */
 	public static string $field_setting = 'gquiz-setting-choices';
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public static function register_hooks(): void {
-		parent::register_hooks();
-	}
 
 	/**
 	 * {@inheritDoc}
