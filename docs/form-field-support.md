@@ -96,7 +96,7 @@ Below is a list of supported editor settings:
 * `sub_label_placement_setting`
 * `time_format_setting`
 
-Form fields that implement the above settings will have their GraphQL fields automatically registered to the type. Custom field settings can be registered with [the `graphql_gf_form_field_setting_properties` filter](recipes/register-custom-form-field.md).
+Form fields that implement the above settings will have their GraphQL fields automatically registered to the type. Custom field settings can be registered with [the `graphql_gf_form_field_setting_fields` filter](recipes/register-custom-form-field.md).
 
 ## Form Field entry values
 

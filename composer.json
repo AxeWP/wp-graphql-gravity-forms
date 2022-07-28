@@ -19,7 +19,7 @@
 	],
 	"require": {
 		"php": ">=7.4 || ^8.0",
-		"yahnis-elsts/plugin-update-checker": "^4.11"
+		"yahnis-elsts/plugin-update-checker": "~4.11.0"
 	},
 	"require-dev": {
 		"codeception/lib-innerbrowser": "^1.0",
