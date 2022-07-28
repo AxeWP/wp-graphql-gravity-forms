@@ -19,7 +19,7 @@ class FieldDataPolicy extends AbstractObject {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldDataPolicy';
+	public static string $type = 'FormFieldDataPolicy';
 
 	/**
 	 * {@inheritDoc}
