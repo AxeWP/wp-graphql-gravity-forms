@@ -379,14 +379,11 @@ class TypeRegistry {
 		];
 
 		/**
-		 * Filters the list of connection classes to register.
-		 *
-		 * Useful for adding/removing GF specific connections to the schema.
+		 * Filters the list of PHP classes that register GraphQL Interfaces based on a particular Gravity Forms field setting.
 		 *
 		 * @param array           $classes_to_register Array of classes to be registered to the schema.
-		 * @param array           $gf_settings Array of recognized Gravity Forms field settings that have an explicit GraphQL interface.
 		 */
-		$classes_to_register = apply_filters( 'graphql_gf_registered_form_field_setting_classes', $classes_to_register, array_keys( $classes_to_register ) );
+		$classes_to_register = apply_filters( 'graphql_gf_registered_form_field_setting_classes', $classes_to_register );
 
 		return $classes_to_register;
 	}
@@ -409,14 +406,11 @@ class TypeRegistry {
 		];
 
 		/**
-		 * Filters the list of connection classes to register.
-		 *
-		 * Useful for adding/removing GF specific connections to the schema.
+		 * Filters the list of PHP classes that register GraphQL Interfaces for Form Field choices based on a particular Gravity Forms field setting.
 		 *
 		 * @param array           $classes_to_register Array of classes to be registered to the schema.
-		 * @param array           $gf_settings Array of recognized Gravity Forms field settings that have an explicit GraphQL interface.
 		 */
-		$classes_to_register = apply_filters( 'graphql_gf_registered_form_field_setting_input_classes', $classes_to_register, array_keys( $classes_to_register ) );
+		$classes_to_register = apply_filters( 'graphql_gf_registered_form_field_setting_input_classes', $classes_to_register );
 
 		return $classes_to_register;
 	}
@@ -436,14 +430,11 @@ class TypeRegistry {
 		];
 
 		/**
-		 * Filters the list of connection classes to register.
-		 *
-		 * Useful for adding/removing GF specific connections to the schema.
+		 * Filters the list of PHP classes that register GraphQL Interfaces for Form Field choices based on a particular Gravity Forms field setting.
 		 *
 		 * @param array           $classes_to_register Array of classes to be registered to the schema.
-		 * @param array           $gf_settings Array of recognized Gravity Forms field settings that have an explicit GraphQL interface.
 		 */
-		$classes_to_register = apply_filters( 'graphql_gf_registered_form_field_setting_choice_classes', $classes_to_register, array_keys( $classes_to_register ) );
+		$classes_to_register = apply_filters( 'graphql_gf_registered_form_field_setting_choice_classes', $classes_to_register );
 
 		return $classes_to_register;
 	}
