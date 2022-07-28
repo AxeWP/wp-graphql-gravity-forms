@@ -71,7 +71,7 @@ class FormFieldRegistry {
 	 * @param array    $field_settings The Gravity Forms field settings.
 	 * @param array    $config The config array as expected by WPGraphQL.
 	 */
-	protected static function register_object_type( GF_Field $field, array $field_settings, array $config, ) : void {
+	protected static function register_object_type( GF_Field $field, array $field_settings, array $config ) : void {
 		add_action(
 			get_graphql_register_action(),
 			function( TypeRegistry $type_registry ) use ( $field, $config, $field_settings ) {
