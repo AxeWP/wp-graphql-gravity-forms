@@ -8,10 +8,9 @@
 
 namespace WPGraphQL\GF\Extensions\GFQuiz;
 
-use GF_Field;
 use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum;
 use WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject;
-use WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\FormField\FieldProperty\PropertyMapper;
+use WPGraphQL\GF\Extensions\GFQuiz\Type\WPInterface;
 use WPGraphQL\GF\Interfaces\Hookable;
 use WPGraphQL\GF\Utils\Utils;
 
@@ -29,6 +28,11 @@ class GFQuiz implements Hookable {
 
 		// Register Enums.
 		add_filter( 'graphql_gf_registered_enum_classes', [ __CLASS__, 'enums' ] );
+
+		// Register Form Field Settings interfaces.
+		add_filter( 'graphql_gf_registered_form_field_setting_classes', [ __CLASS__, 'form_field_settings' ] );
+		add_filter( 'graphql_gf_registered_form_field_setting_choice_classes', [ __CLASS__, 'form_field_setting_choices' ] );
+
 		// Register Objects.
 		add_filter( 'graphql_gf_registered_object_classes', [ __CLASS__, 'objects' ] );
 
@@ -37,9 +41,6 @@ class GFQuiz implements Hookable {
 
 		// Add quiz to Form Model.
 		add_filter( 'graphql_model_prepare_fields', [ __CLASS__, 'form_model' ], 10, 3 );
-
-		// // Register field_settings.
-		add_filter( 'graphql_gf_form_field_setting_properties', [ __CLASS__, 'field_setting_properties' ], 10, 3 );
 	}
 
 	/**
@@ -64,18 +65,47 @@ class GFQuiz implements Hookable {
 	}
 
 	/**
-	 * Registers Signature field settings mapper.
+	 * Registers the mapped list of GF form field settings to their interface classes.
 	 *
-	 * @param array    $properties .
-	 * @param string   $setting .
-	 * @param GF_Field $field .
+	 * @param array $classes .
 	 */
-	public static function field_setting_properties( array $properties, string $setting, GF_Field $field ) : array {
-		if ( method_exists( PropertyMapper::class, $setting ) ) {
-			PropertyMapper::$setting( $field, $properties );
-		}
+	public static function form_field_settings( array $classes ) : array {
+		$classes['gquiz-setting-choices']                 = WPInterface\FieldSetting\FieldWithQuizChoices::class;
+		$classes['gquiz-setting-question']                = WPInterface\FieldSetting\FieldWithQuizQuestion::class;
+		$classes['gquiz-setting-randomize-quiz-choices']  = WPInterface\FieldSetting\FieldWithQuizRandomizeQuizChoices::class;
+		$classes['gquiz-setting-show-answer-explanation'] = WPInterface\FieldSetting\FieldWithQuizShowAnswerExplanation::class;
 
-		return $properties;
+		return $classes;
+	}
+
+	/**
+	 * Registers the mapped list of GF form field settings to their choice interface classes.
+	 *
+	 * @param array $classes .
+	 */
+	public static function form_field_setting_choices( array $classes ) : array {
+		$classes['gquiz-setting-choices'] = WPInterface\FieldChoiceSetting\ChoiceWithQuizChoices::class;
+
+		return $classes;
+	}
+
+	/**
+	 * Register object classes.
+	 *
+	 * @param array $classes .
+	 */
+	public static function objects( array $classes ) : array {
+		$classes[] = WPObject\Entry\EntryQuizResults::class;
+		$classes[] = WPObject\Form\FormQuizGrades::class;
+		$classes[] = WPObject\Form\FormQuizConfirmation::class;
+		$classes[] = WPObject\Form\FormQuiz::class;
+		$classes[] = WPObject\QuizResults\QuizResultsGradeCount::class;
+		$classes[] = WPObject\QuizResults\QuizResultsScoreCount::class;
+		$classes[] = WPObject\QuizResults\QuizResultsChoiceCount::class;
+		$classes[] = WPObject\QuizResults\QuizResultsFieldCount::class;
+		$classes[] = WPObject\QuizResults\QuizResults::class;
+
+		return $classes;
 	}
 
 	/**
@@ -112,24 +142,4 @@ class GFQuiz implements Hookable {
 
 		return $fields;
 	}
-
-	/**
-	 * Register object classes.
-	 *
-	 * @param array $classes .
-	 */
-	public static function objects( array $classes ) : array {
-		$classes[] = WPObject\Entry\EntryQuizResults::class;
-		$classes[] = WPObject\Form\FormQuizGrades::class;
-		$classes[] = WPObject\Form\FormQuizConfirmation::class;
-		$classes[] = WPObject\Form\FormQuiz::class;
-		$classes[] = WPObject\QuizResults\QuizResultsGradeCount::class;
-		$classes[] = WPObject\QuizResults\QuizResultsScoreCount::class;
-		$classes[] = WPObject\QuizResults\QuizResultsChoiceCount::class;
-		$classes[] = WPObject\QuizResults\QuizResultsFieldCount::class;
-		$classes[] = WPObject\QuizResults\QuizResults::class;
-
-		return $classes;
-	}
-
 }

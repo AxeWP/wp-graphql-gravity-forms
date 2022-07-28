@@ -11,7 +11,6 @@ namespace WPGraphQL\GF\Type\Input;
 use WPGraphQL\GF\Interfaces\TypeWithDescription;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - AbstractInput
@@ -27,7 +26,7 @@ abstract class AbstractInput extends AbstractType implements TypeWithDescription
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
+	public static function register() : void {
 		$config = static::get_type_config();
 
 		register_graphql_input_type( static::$type, $config );

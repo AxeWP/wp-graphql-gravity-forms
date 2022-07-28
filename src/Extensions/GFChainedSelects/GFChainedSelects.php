@@ -12,7 +12,7 @@ use GF_Field;
 use WPGraphQL\GF\Extensions\GFChainedSelects\Data\FieldValueInput\ChainedSelectValuesInput;
 use WPGraphQL\GF\Extensions\GFChainedSelects\Type\Enum;
 use WPGraphQL\GF\Extensions\GFChainedSelects\Type\Input;
-use WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldProperty\PropertyMapper;
+use WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPInterface;
 use WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\FieldValue\ValueProperty;
 use WPGraphQL\GF\Interfaces\Hookable;
 
@@ -34,11 +34,13 @@ class GFChainedSelects implements Hookable {
 		// Register Inputs.
 		add_filter( 'graphql_gf_registered_input_classes', [ __CLASS__, 'inputs' ] );
 
-		// Register SignatureFieldValueInput.
-		add_filter( 'graphql_gf_field_value_input_class', [ __CLASS__, 'field_value_input' ], 10, 3 );
+		// Register Form Field Settings interfaces.
+		add_filter( 'graphql_gf_registered_form_field_setting_classes', [ __CLASS__, 'form_field_settings' ] );
+		add_filter( 'graphql_gf_registered_form_field_setting_choice_classes', [ __CLASS__, 'form_field_setting_choices' ] );
+		add_filter( 'graphql_gf_registered_form_field_setting_input_classes', [ __CLASS__, 'form_field_setting_inputs' ] );
 
-		// Register field_settings.
-		add_filter( 'graphql_gf_form_field_setting_properties', [ __CLASS__, 'field_setting_properties' ], 10, 3 );
+		// Register FieldValueInput.
+		add_filter( 'graphql_gf_field_value_input_class', [ __CLASS__, 'field_value_input' ], 10, 3 );
 
 		// Register field value property.
 		add_filter( 'graphql_gf_form_field_value_properties', [ __CLASS__, 'field_value_properties' ], 10, 2 );
@@ -80,6 +82,41 @@ class GFChainedSelects implements Hookable {
 	}
 
 	/**
+	 * Registers the mapped list of GF form field settings to their interface classes.
+	 *
+	 * @param array $classes .
+	 */
+	public static function form_field_settings( array $classes ) : array {
+		$classes['chained_choices_setting']               = WPInterface\FieldSetting\FieldWithChainedChoices::class;
+		$classes['chained_selects_alignment_setting']     = WPInterface\FieldSetting\FieldWithChainedSelectsAlignment::class;
+		$classes['chained_selects_hide_inactive_setting'] = WPInterface\FieldSetting\FieldWithChainedSelectsHideInactive::class;
+
+		return $classes;
+	}
+
+	/**
+	 * Registers the mapped list of GF form field settings to their choice interface classes.
+	 *
+	 * @param array $classes .
+	 */
+	public static function form_field_setting_choices( array $classes ) : array {
+		$classes['chained_choices_setting'] = WPInterface\FieldChoiceSetting\ChoiceWithChainedChoices::class;
+
+		return $classes;
+	}
+
+	/**
+	 * Registers the mapped list of GF form field settings to their choice interface classes.
+	 *
+	 * @param array $classes .
+	 */
+	public static function form_field_setting_inputs( array $classes ) : array {
+		$classes['chained_choices_setting'] = WPInterface\FieldInputSetting\InputWithChainedChoices::class;
+
+		return $classes;
+	}
+
+	/**
 	 * Registers the SignatureValuesInput class.
 	 *
 	 * @param string   $input_class .
@@ -94,20 +131,6 @@ class GFChainedSelects implements Hookable {
 		return $input_class;
 	}
 
-	/**
-	 * Registers Signature field settings mapper.
-	 *
-	 * @param array    $properties .
-	 * @param string   $setting .
-	 * @param GF_Field $field .
-	 */
-	public static function field_setting_properties( array $properties, string $setting, GF_Field $field ) : array {
-		if ( method_exists( PropertyMapper::class, $setting ) ) {
-			PropertyMapper::$setting( $field, $properties );
-		}
-
-		return $properties;
-	}
 
 	/**
 	 * Registers Signature field settings mapper.

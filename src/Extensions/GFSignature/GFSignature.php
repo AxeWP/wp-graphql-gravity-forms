@@ -11,8 +11,8 @@ namespace WPGraphQL\GF\Extensions\GFSignature;
 use GF_Field;
 use WPGraphQL\GF\Extensions\GFSignature\Data\FieldValueInput\SignatureValuesInput;
 use WPGraphQL\GF\Extensions\GFSignature\Type\Enum;
-use WPGraphQL\GF\Extensions\GFSignature\Type\WPObject\FormField\FieldProperty\PropertyMapper;
 use WPGraphQL\GF\Interfaces\Hookable;
+use WPGraphQL\GF\Extensions\GFSignature\Type\WPInterface;
 
 /**
  * Class - GFSignature
@@ -28,12 +28,11 @@ class GFSignature implements Hookable {
 
 		// Register Enums.
 		add_filter( 'graphql_gf_registered_enum_classes', [ __CLASS__, 'enums' ] );
+		// Register Form Field Settings interfaces.
+		add_filter( 'graphql_gf_registered_form_field_setting_classes', [ __CLASS__, 'form_field_settings' ] );
 
-		// Register SignatureFieldValueInput.
+		// Register FieldValueInput.
 		add_filter( 'graphql_gf_field_value_input_class', [ __CLASS__, 'field_value_input' ], 10, 3 );
-
-		// Register field_settings.
-		add_filter( 'graphql_gf_form_field_setting_properties', [ __CLASS__, 'field_setting_properties' ], 10, 3 );
 	}
 
 	/**
@@ -57,6 +56,23 @@ class GFSignature implements Hookable {
 	}
 
 	/**
+	 * Registers the mapped list of GF form field settings to their interface classes.
+	 *
+	 * @param array $classes .
+	 */
+	public static function form_field_settings( array $classes ) : array {
+		$classes['background_color_setting'] = WPInterface\FieldSetting\FieldWithBackgroundColor::class;
+		$classes['border_color_setting']     = WPInterface\FieldSetting\FieldWithBorderColor::class;
+		$classes['border_style_setting']     = WPInterface\FieldSetting\FieldWithBorderStyle::class;
+		$classes['border_width_setting']     = WPInterface\FieldSetting\FieldWithBorderWidth::class;
+		$classes['box_width_setting']        = WPInterface\FieldSetting\FieldWithBoxWidth::class;
+		$classes['pen_color_setting']        = WPInterface\FieldSetting\FieldWithPenColor::class;
+		$classes['pen_size_setting']         = WPInterface\FieldSetting\FieldWithPenSize::class;
+
+		return $classes;
+	}
+
+	/**
 	 * Registers the SignatureValuesInput class.
 	 *
 	 * @param string   $input_class .
@@ -69,21 +85,6 @@ class GFSignature implements Hookable {
 		}
 
 		return $input_class;
-	}
-
-	/**
-	 * Registers Signature field settings mapper.
-	 *
-	 * @param array    $properties .
-	 * @param string   $setting .
-	 * @param GF_Field $field .
-	 */
-	public static function field_setting_properties( array $properties, string $setting, GF_Field $field ) : array {
-		if ( method_exists( PropertyMapper::class, $setting ) ) {
-			PropertyMapper::$setting( $field, $properties );
-		}
-
-		return $properties;
 	}
 
 }

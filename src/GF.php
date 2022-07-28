@@ -9,6 +9,7 @@
 namespace WPGraphQL\GF;
 
 use WPGraphQL\GF\Extensions\Extensions;
+use WPGraphQL\GF\Registry\TypeRegistry;
 
 if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 	/**
