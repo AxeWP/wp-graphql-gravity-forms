@@ -10,7 +10,7 @@ namespace WPGraphQL\GF\Type\WPInterface;
 
 use GF_Field;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Type\WPObject\FormField\FormFieldDataPolicy;
+use WPGraphQL\GF\Type\WPObject\FormField\FieldDataPolicy;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -37,7 +37,7 @@ class FieldWithPersonalData extends AbstractInterface {
 	public static function get_fields() : array {
 		return [
 			'personalData' => [
-				'type'        => FormFieldDataPolicy::$type,
+				'type'        => FieldDataPolicy::$type,
 				'description' => __( 'The form field-specifc policies for exporting and erasing personal data.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( GF_Field $source, array $args, AppContext $context ) {
 					if ( empty( $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] ) ) {

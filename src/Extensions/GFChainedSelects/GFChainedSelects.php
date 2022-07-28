@@ -87,9 +87,9 @@ class GFChainedSelects implements Hookable {
 	 * @param array $classes .
 	 */
 	public static function form_field_settings( array $classes ) : array {
-		$classes['chained_choices_setting']               = WPInterface\FormFieldSetting\FieldWithChainedChoices::class;
-		$classes['chained_selects_alignment_setting']     = WPInterface\FormFieldSetting\FieldWithChainedSelectsAlignment::class;
-		$classes['chained_selects_hide_inactive_setting'] = WPInterface\FormFieldSetting\FieldWithChainedSelectsHideInactive::class;
+		$classes['chained_choices_setting']               = WPInterface\FieldSetting\FieldWithChainedChoices::class;
+		$classes['chained_selects_alignment_setting']     = WPInterface\FieldSetting\FieldWithChainedSelectsAlignment::class;
+		$classes['chained_selects_hide_inactive_setting'] = WPInterface\FieldSetting\FieldWithChainedSelectsHideInactive::class;
 
 		return $classes;
 	}
@@ -100,7 +100,7 @@ class GFChainedSelects implements Hookable {
 	 * @param array $classes .
 	 */
 	public static function form_field_setting_choices( array $classes ) : array {
-		$classes['chained_choices_setting'] = WPInterface\FormFieldChoiceSetting\ChoiceWithChainedChoices::class;
+		$classes['chained_choices_setting'] = WPInterface\FieldChoiceSetting\ChoiceWithChainedChoices::class;
 
 		return $classes;
 	}
@@ -111,7 +111,7 @@ class GFChainedSelects implements Hookable {
 	 * @param array $classes .
 	 */
 	public static function form_field_setting_inputs( array $classes ) : array {
-		$classes['chained_choices_setting'] = WPInterface\FormFieldInputSetting\InputWithChainedChoices::class;
+		$classes['chained_choices_setting'] = WPInterface\FieldInputSetting\InputWithChainedChoices::class;
 
 		return $classes;
 	}

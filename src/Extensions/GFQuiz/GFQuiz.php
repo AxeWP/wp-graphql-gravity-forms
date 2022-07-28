@@ -70,10 +70,10 @@ class GFQuiz implements Hookable {
 	 * @param array $classes .
 	 */
 	public static function form_field_settings( array $classes ) : array {
-		$classes['gquiz-setting-choices']                 = WPInterface\FormFieldSetting\FieldWithQuizChoices::class;
-		$classes['gquiz-setting-question']                = WPInterface\FormFieldSetting\FieldWithQuizQuestion::class;
-		$classes['gquiz-setting-randomize-quiz-choices']  = WPInterface\FormFieldSetting\FieldWithQuizRandomizeQuizChoices::class;
-		$classes['gquiz-setting-show-answer-explanation'] = WPInterface\FormFieldSetting\FieldWithQuizShowAnswerExplanation::class;
+		$classes['gquiz-setting-choices']                 = WPInterface\FieldSetting\FieldWithQuizChoices::class;
+		$classes['gquiz-setting-question']                = WPInterface\FieldSetting\FieldWithQuizQuestion::class;
+		$classes['gquiz-setting-randomize-quiz-choices']  = WPInterface\FieldSetting\FieldWithQuizRandomizeQuizChoices::class;
+		$classes['gquiz-setting-show-answer-explanation'] = WPInterface\FieldSetting\FieldWithQuizShowAnswerExplanation::class;
 
 		return $classes;
 	}
@@ -84,7 +84,7 @@ class GFQuiz implements Hookable {
 	 * @param array $classes .
 	 */
 	public static function form_field_setting_choices( array $classes ) : array {
-		$classes['gquiz-setting-choices'] = WPInterface\FormFieldChoiceSetting\ChoiceWithQuizChoices::class;
+		$classes['gquiz-setting-choices'] = WPInterface\FieldChoiceSetting\ChoiceWithQuizChoices::class;
 
 		return $classes;
 	}

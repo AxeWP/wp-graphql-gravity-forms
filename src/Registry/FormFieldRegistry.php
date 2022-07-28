@@ -429,8 +429,23 @@ class FormFieldRegistry {
 	 * @param array    $config The config array as expected by WPGraphQL.
 	 */
 	protected static function maybe_register_choices_and_inputs( GF_Field $field, array $field_settings, array $config ) : void {
+		/**
+		 * Fires after the Gravity Forms field choices have been registered to WPGraphQL schema.
+		 *
+		 * @param GF_Field $field The Gravity Forms field object.
+		 * @param array    $field_settings The field settings.
+		 * @param array    $config The config array as expected by WPGraphQL.
+		 */
 		do_action( 'graphql_gf_register_form_field_choices', $field, $field_settings, $config );
 		do_action( 'graphql_gf_register_form_field_choices_', $field->graphql_single_name, $field, $field_settings, $config );
+
+		/**
+		 * Fires after the Gravity Forms field inputs have been registered to WPGraphQL schema.
+		 *
+		 * @param GF_Field $field The Gravity Forms field object.
+		 * @param array    $field_settings The field settings.
+		 * @param array    $config The config array as expected by WPGraphQL.
+		 */
 		do_action( 'graphql_gf_register_form_field_inputs', $field, $field_settings, $config );
 		do_action( 'graphql_gf_register_form_field_inputs_', $field->graphql_single_name, $field, $field_settings, $config );
 	}

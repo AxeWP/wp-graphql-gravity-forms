@@ -61,13 +61,13 @@ class GFSignature implements Hookable {
 	 * @param array $classes .
 	 */
 	public static function form_field_settings( array $classes ) : array {
-		$classes['background_color_setting'] = WPInterface\FormFieldSetting\FieldWithBackgroundColor::class;
-		$classes['border_color_setting']     = WPInterface\FormFieldSetting\FieldWithBorderColor::class;
-		$classes['border_style_setting']     = WPInterface\FormFieldSetting\FieldWithBorderStyle::class;
-		$classes['border_width_setting']     = WPInterface\FormFieldSetting\FieldWithBorderWidth::class;
-		$classes['box_width_setting']        = WPInterface\FormFieldSetting\FieldWithBoxWidth::class;
-		$classes['pen_color_setting']        = WPInterface\FormFieldSetting\FieldWithPenColor::class;
-		$classes['pen_size_setting']         = WPInterface\FormFieldSetting\FieldWithPenSize::class;
+		$classes['background_color_setting'] = WPInterface\FieldSetting\FieldWithBackgroundColor::class;
+		$classes['border_color_setting']     = WPInterface\FieldSetting\FieldWithBorderColor::class;
+		$classes['border_style_setting']     = WPInterface\FieldSetting\FieldWithBorderStyle::class;
+		$classes['border_width_setting']     = WPInterface\FieldSetting\FieldWithBorderWidth::class;
+		$classes['box_width_setting']        = WPInterface\FieldSetting\FieldWithBoxWidth::class;
+		$classes['pen_color_setting']        = WPInterface\FieldSetting\FieldWithPenColor::class;
+		$classes['pen_size_setting']         = WPInterface\FieldSetting\FieldWithPenSize::class;
 
 		return $classes;
 	}
