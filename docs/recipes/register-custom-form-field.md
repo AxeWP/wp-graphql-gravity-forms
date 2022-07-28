@@ -2,6 +2,8 @@
 
 ## How to: register query support for a custom Gravity Forms Field
 
+__To see this patterns in action, take a look in [`src/Extensions`](https://github.com/harness-software/wp-graphql-gravity-forms/tree/main/src/Extensions).
+
 While this plugin offers [basic support for custom Gravity Forms fields out of the box](../form-field-support.md), in many cases you will want to extend the GraphQL schema to provide your custom field data.
 
 The below methods can also be used to add extended support for core Gravity Form fields that are [not yet fully supported](../form-field-support.md#experimental-fields).
@@ -55,62 +57,47 @@ register_graphql_field(
 
 ```
 
-### Method 2: Mapping Gravity Forms Field Settings
+### Method 2: Registering a specific field based on the Form Field settings.
 
 For complex Form fields, or groups of Form fields that share the a similar set of properties, it may often be a better practice to have your custom GraphQL fields registered automatically using `GF_Field::get_form_editor_field_settings()` .
 
-To add support for your custom field settings, you can make use of [the `graphql_gf_form_field_setting_properties` filter](../actions-and-filters.md):
+To add support for your custom field settings, you can make use of [the `graphql_gf_form_field_setting_fields` filter](../actions-and-filters.md#graphql_gf_form_field_setting_fields):
 
 ```php
 add_filter(
-  'graphql_gf_form_field_setting_properties',
-  function( array $properties, string $setting_key, \GF_Field $field ) {
-    // All GF_Fields that register this setting will have the following GraphQL fields assigned.
-    if ('my_custom_setting' === $setting_key ) {
-      $properties += [
-        'myCustomFormFieldProperty' => [ // The field name to register.
-          'type' => 'String',
-          'description' => __( 'This is a custom property that exists on my custom GF field', 'my-plugin' ),
-          'resolve' => fn( $source ) => $source->my_custom_property // if the GF_Field property is the same name as the GraphQL field, this can be ommitted.
-        ]
-      ];
-
-      /**
-       * Conditionally add a custom field value to only some fields that use this setting.
-       * 
-       * For illustration purposes only. When registering custom form field values, we recommend the `graphql_gf_form_field_value_properties` filter, which works the same way.
-       */
-      if( 'myothercustom' === $field->type ){
-        $properties += [
-          'myOtherCustomFormFieldProperty',
-          [
-            'type' => 'MyCustomFormFieldValueObject',
-            'description' => __( 'The Field Value object for my custom GF field.', 'my-plugin'),
-            'resolve' => function( $source ){
-              /**
-               * Usually, the entry is saved in the formField's context/
-               * If you are fetching this field in a custom setup, you may need to use GFAPI::get_entry().
-               */
-              if( ! isset( $context->gfEntry->entry ) ){
-                return null;
-              }
-
-              // Grab the field value from the entry, null if it isnt set.
-              $value = $context->gfEntry->entry[ $source->id ] ?? null;
-
-              // This will be resolved by `MyCustomFieldFieldValueObject`.
-              return process_my_custom_field_value($value);
-            }
-          ]
-        ]
-      }
+  'graphql_gf_form_field_setting_fields',
+  function( array $fields, \GF_Field $field, array $settings, array $interfaces ) {
+    // Bail early if the GF_Field doesn't meet certain conditions.
+    if (
+      ! in_array( self::$type, $interfaces, true ) ||
+      in_array( $field->type, [ 'address', 'email', 'name' ], true )
+    ) {
+      return $fields;
     }
+
+    // Add `myCustomField` to the GraphQL type.
+    $fields['myCustomField'] = [
+      'type'        => 'String',
+      'description' => __( 'The autocomplete attribute for the field.', 'wp-graphql-gravity-forms' ),
+    ];
+
+    return $fields;
+
   },
   10,
-  3
+  4
 );
 
 ```
+
+### Method 3: Registering a GraphQL Interface that represents the Form Field setting.
+You can automatically register a unique set of GraphQL fields representing a Form Field setting, that will get applied automatically to any Gravity Forms field that implements the particular setting.
+
+With this method, you can also register specific GraphQL fields directly onto the GraphQL object types that inherit this Interface, which can be particularly useful when creating complex Gravity Forms fields that can have several possible input types.
+
+To do so, create a PHP Class that extends `WPGraphQL\GF\Type\WPInterface\FieldSetting\AbstractFieldSetting`, and then hook the interface into WordPress using the [`graphql_gf_registered_form_field_setting_classes` filter](../actions-and-filters.md#graphql_gf_registered_form_field_setting_classes).
+
+A similar method can be used for extending `GfFieldChoice` and `GfFieldInputProperty` types.
 
 ### Form Fields with dynamic types
 
