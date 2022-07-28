@@ -12,7 +12,6 @@ use GFCommon;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\Enum\CurrencyEnum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - Settings
@@ -35,8 +34,8 @@ class Settings extends AbstractObject implements Field {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
-		parent::register( $type_registry );
+	public static function register() : void {
+		parent::register();
 		self::register_field();
 	}
 

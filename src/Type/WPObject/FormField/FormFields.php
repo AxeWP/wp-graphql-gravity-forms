@@ -15,6 +15,7 @@ use GF_Field;
 use GF_Fields;
 use GraphQL\Error\UserError;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Interfaces\Hookable;
 use WPGraphQL\GF\Interfaces\Registrable;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldProperty\PropertyMapper;
@@ -26,7 +27,7 @@ use WPGraphQL\Registry\TypeRegistry;
 /**
  * Class - FormFields
  */
-class FormFields implements Registrable {
+class FormFields implements Hookable, Registrable {
 	/**
 	 * Type registered in Gravity Forms.
 	 *
@@ -40,6 +41,13 @@ class FormFields implements Registrable {
 	 * @var boolean
 	 */
 	public static bool $should_load_eagerly = true;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function register_hooks() : void {
+		add_action( 'graphql_register_types', [ __CLASS__, 'register' ] );
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -150,8 +158,6 @@ class FormFields implements Registrable {
 			]
 		);
 	}
-
-
 
 	/**
 	 * {@inheritDoc}

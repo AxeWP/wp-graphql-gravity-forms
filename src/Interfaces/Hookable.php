@@ -11,9 +11,9 @@ namespace WPGraphQL\GF\Interfaces;
 /**
  * Interface - registrable
  */
-interface Registrable {
+interface Hookable {
 	/**
-	 * Register connections to the GraphQL Schema.
+	 * Hooks class into WordPress.
 	 */
-	public static function register() : void;
+	public static function register_hooks() : void;
 }

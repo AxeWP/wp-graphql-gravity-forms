@@ -12,18 +12,16 @@
 namespace WPGraphQL\GF\Type\WPInterface;
 
 use GraphQL\Error\UserError;
-use WPGraphQL\GF\Interfaces\Registrable;
-use WPGraphQL\GF\Interfaces\Type;
-use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
 use WPGraphQL\GF\Type\Enum\FormFieldVisibilityEnum;
+use WPGraphQL\GF\Type\WPInterface\AbstractInterface;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FormField
  */
-class FormField implements Registrable, Type, TypeWithFields {
+class FormField extends AbstractInterface {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -32,53 +30,16 @@ class FormField implements Registrable, Type, TypeWithFields {
 	public static string $type = 'FormField';
 
 	/**
-	 * Whether the type should be loaded eagerly by WPGraphQL. Defaults to false.
-	 *
-	 * Eager load should only be necessary for types that are not referenced directly (e.g. in Unions, Interfaces ).
-	 *
-	 * @var boolean
+	 * {@inheritDoc}
 	 */
-	public static bool $should_load_eagerly = false;
+	public static function get_type_config( TypeRegistry $type_registry = null ) : array {
+		$config = parent::get_type_config( $type_registry );
 
-	/**
-	 * Register Object type to GraphQL schema.
-	 *
-	 * @param TypeRegistry $type_registry Instance of the WPGraphQL TypeRegistry.
-	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
-		// Bail early if no type registry.
-		if ( null === $type_registry ) {
-			return;
+		if ( null !== $type_registry ) {
+			$config['resolveType'] = static::resolve_type( $type_registry );
 		}
 
-		register_graphql_interface_type(
-			static::$type,
-			[
-				'description'     => self::get_description(),
-				'fields'          => self::get_fields(),
-				'resolveType'     => function( $value ) use ( $type_registry ) {
-					$possible_types    = Utils::get_registered_form_field_types();
-					$possible_subtypes = Utils::get_possible_form_field_child_types( $value->type );
-
-					if ( isset( $possible_subtypes[ $value->inputType ] ) ) {
-						return $possible_subtypes[ $value->inputType ];
-					}
-
-					if ( isset( $possible_types[ $value->type ] ) ) {
-						return $type_registry->get_type( $possible_types[ $value->type ] );
-					}
-
-					throw new UserError(
-						sprintf(
-						/* translators: %s: GF field type */
-							__( 'The "%s" Gravity Forms field type is not (yet) supported by the schema.', 'wp-graphql-gravity-forms' ),
-							$value->type
-						)
-					);
-				},
-				'eagerlyLoadType' => static::$should_load_eagerly,
-			]
-		);
+		return $config;
 	}
 
 	/**
@@ -130,5 +91,33 @@ class FormField implements Registrable, Type, TypeWithFields {
 				'resolve'     => fn( $source ) : string => ! empty( $source->visibility ) ? $source->visibility : ( ! empty( $source->adminOnly ) ? 'administrative' : 'visible' ),
 			],
 		];
+	}
+
+	/**
+	 * Resolves the interface to the GraphQL type.
+	 *
+	 * @param TypeRegistry $type_registry The WPGraphQL type registry.
+	 */
+	public static function resolve_type( TypeRegistry $type_registry ) : callable {
+		return function( $value ) use ( $type_registry ) {
+			$possible_types    = Utils::get_registered_form_field_types();
+			$possible_subtypes = Utils::get_possible_form_field_child_types( $value->type );
+
+			if ( isset( $possible_subtypes[ $value->inputType ] ) ) {
+				return $possible_subtypes[ $value->inputType ];
+			}
+
+			if ( isset( $possible_types[ $value->type ] ) ) {
+				return $type_registry->get_type( $possible_types[ $value->type ] );
+			}
+
+			throw new UserError(
+				sprintf(
+				/* translators: %s: GF field type */
+					__( 'The "%s" Gravity Forms field type is not (yet) supported by the schema.', 'wp-graphql-gravity-forms' ),
+					$value->type
+				)
+			);
+		};
 	}
 }

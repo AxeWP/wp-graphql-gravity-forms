@@ -15,6 +15,7 @@ use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
+use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\Enum\DraftEntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
@@ -23,7 +24,7 @@ use WPGraphQL\Registry\TypeRegistry;
 /**
  * Class - Draft
  */
-class DraftEntry extends AbstractObject implements Field {
+class DraftEntry extends AbstractObject implements TypeWithInterfaces, Field {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -42,18 +43,20 @@ class DraftEntry extends AbstractObject implements Field {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
-		register_graphql_object_type(
-			static::$type,
-			[
-				'description'     => static::get_description(),
-				'eagerlyLoadType' => static::$should_load_eagerly,
-				'fields'          => static::get_fields(),
-				'interfaces'      => [ Entry::$type ],
-			]
-		);
-
+	public static function register() : void {
+		parent::register();
 		self::register_field();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_type_config() : array {
+		$config = parent::get_type_config();
+
+		$config['interfaces'] = self::get_interfaces();
+
+		return $config;
 	}
 
 	/**
@@ -73,6 +76,13 @@ class DraftEntry extends AbstractObject implements Field {
 				'description' => __( 'The resume token. Only applies to draft entries.', 'wp-graphql-gravity-forms' ),
 			],
 		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_interfaces() : array {
+		return [ Entry::$type ];
 	}
 
 	/**

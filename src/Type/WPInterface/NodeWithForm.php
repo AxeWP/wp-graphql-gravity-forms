@@ -10,42 +10,19 @@ namespace WPGraphQL\GF\Type\WPInterface;
 
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
-use WPGraphQL\GF\Interfaces\Registrable;
-use WPGraphQL\GF\Interfaces\Type;
-use WPGraphQL\GF\Interfaces\TypeWithFields;
+use WPGraphQL\GF\Type\WPInterface\AbstractInterface;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - NodeWithForm
  */
-class NodeWithForm implements Registrable, Type, TypeWithFields {
+class NodeWithForm extends AbstractInterface {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
 	public static string $type = 'NodeWithForm';
-
-	/**
-	 * Register Object type to GraphQL schema.
-	 *
-	 * @param TypeRegistry $type_registry Instance of the WPGraphQL TypeRegistry.
-	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
-		// Bail early if no type registry.
-		if ( null === $type_registry ) {
-			return;
-		}
-
-		register_graphql_interface_type(
-			static::$type,
-			[
-				'description' => self::get_description(),
-				'fields'      => self::get_fields(),
-			]
-		);
-	}
 
 	/**
 	 * {@inheritDoc}

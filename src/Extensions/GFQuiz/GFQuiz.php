@@ -12,12 +12,13 @@ use GF_Field;
 use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum;
 use WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject;
 use WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\FormField\FieldProperty\PropertyMapper;
+use WPGraphQL\GF\Interfaces\Hookable;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - GFQuiz
  */
-class GFQuiz {
+class GFQuiz implements Hookable {
 	/**
 	 * Hook extension into plugin.
 	 */
