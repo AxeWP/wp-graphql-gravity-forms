@@ -73,7 +73,7 @@ class ChoiceWithName extends AbstractFieldChoiceSetting {
 		$input_name = Utils::get_safe_form_field_type_name( $name . 'InputProperty' );
 
 		$config = [
-			'type'        => $choice_name,
+			'type'        => [ 'list_of' => $choice_name ],
 			'description' => sprintf(
 				// translators: The choice object GraphQL name.
 				__( 'The nested %s choice.', 'wp-graphql-gravity-forms' ),
