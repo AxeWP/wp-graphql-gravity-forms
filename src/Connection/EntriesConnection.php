@@ -22,7 +22,6 @@ use WPGraphQL\GF\Type\Input\EntriesDateFiltersInput;
 use WPGraphQL\GF\Type\Input\EntriesFieldFiltersInput;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - EntriesConnection
@@ -31,7 +30,7 @@ class EntriesConnection extends AbstractConnection {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
+	public static function register() : void {
 		// RootQuery to Entry.
 		register_graphql_connection(
 			[

@@ -10,11 +10,12 @@ namespace WPGraphQL\GF;
 
 use Puc_v4_Factory;
 use Puc_v4p11_Vcs_PluginUpdateChecker;
+use WPGraphQL\GF\Interfaces\Hookable;
 
 /**
  * Class - Update Checker
  */
-class UpdateChecker {
+class UpdateChecker implements Hookable {
 	/**
 	 * Registers hooks to WordPress.
 	 */

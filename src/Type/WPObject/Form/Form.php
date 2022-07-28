@@ -21,6 +21,8 @@ use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
 use WPGraphQL\GF\Data\Connection\EntriesConnectionResolver;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
+use WPGraphQL\GF\Interfaces\TypeWithConnections;
+use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\Enum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPInterface\FormField;
@@ -31,7 +33,7 @@ use WPGraphQL\Registry\TypeRegistry;
 /**
  * Class - Form
  */
-class Form extends AbstractObject implements Field {
+class Form extends AbstractObject implements TypeWithConnections, TypeWithInterfaces, Field {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -49,64 +51,73 @@ class Form extends AbstractObject implements Field {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
-		register_graphql_object_type(
-			static::$type,
-			[
-				'description'     => static::get_description(),
-				'connections'     => [
-					'entries'    => [
-						'toType'           => Entry::$type,
-						'connectionArgs'   => EntriesConnection::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby' ] ),
-						'connectionFields' => [
-							'count' => [
-								'type'        => 'Int',
-								'description' => __( 'The number of (filtered) entries submitted to the form.', 'wp-graphql-gravity-forms' ),
-								'resolve'     => static function ( $root ) {
-									/**
-									 * The current entry query.
-									 *
-									 * @todo get the connection resolver directly, once supported by WPGraphQL AppContext::get_current_connection();
-									 *
-									 * @var GF_Query
-									 */
-									$connection = $root['edges'][0]['connection'] instanceof EntriesConnectionResolver ? $root['edges'][0]['connection']->get_query() : null;
+	public static function register() : void {
+		parent::register();
+		self::register_field();
+	}
 
-									// Needed to resolve the counts.
-									$ids = $connection->get_ids();
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_type_config() : array {
+		$config = parent::get_type_config();
 
-									return $connection->total_found;
-								},
-							],
-						],
-						'resolve'          => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
-							$context->gfForm = $source;
+		$config['connections'] = static::get_connections();
+		$config['interfaces']  = static::get_interfaces();
 
-							$args['where']['formIds'] = $source->formId ?? null;
-							return Factory::resolve_entries_connection( $source, $args, $context, $info );
-						},
-					],
-					'formFields' => [
-						'toType'         => FormField::$type,
-						'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
-						'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
-							$context->gfForm = $source;
+		return $config;
+	}
 
-							if ( empty( $source->formFields ) ) {
-								return null;
-							}
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_connections() : array {
+		return [
+			'entries'    => [
+				'toType'           => Entry::$type,
+				'connectionArgs'   => EntriesConnection::get_filtered_connection_args( [ 'status', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby' ] ),
+				'connectionFields' => [
+					'count' => [
+						'type'        => 'Int',
+						'description' => __( 'The number of (filtered) entries submitted to the form.', 'wp-graphql-gravity-forms' ),
+						'resolve'     => static function ( $root ) {
+							/**
+							 * The current entry query.
+							 *
+							 * @todo get the connection resolver directly, once supported by WPGraphQL AppContext::get_current_connection();
+							 *
+							 * @var GF_Query
+							 */
+							$connection = $root['edges'][0]['connection'] instanceof EntriesConnectionResolver ? $root['edges'][0]['connection']->get_query() : null;
 
-							return FormFieldsConnectionResolver::resolve( $source->formFields, $args, $context, $info );
+							// Needed to resolve the counts.
+							$ids = $connection->get_ids();
+
+							return $connection->total_found;
 						},
 					],
 				],
-				'eagerlyLoadType' => static::$should_load_eagerly,
-				'fields'          => static::get_fields(),
-				'interfaces'      => [ 'Node', 'DatabaseIdentifier' ],
-			]
-		);
+				'resolve'          => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
+					$context->gfForm = $source;
 
-		self::register_field();
+					$args['where']['formIds'] = $source->formId ?? null;
+					return Factory::resolve_entries_connection( $source, $args, $context, $info );
+				},
+			],
+			'formFields' => [
+				'toType'         => FormField::$type,
+				'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
+				'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+					$context->gfForm = $source;
+
+					if ( empty( $source->formFields ) ) {
+						return null;
+					}
+
+					return FormFieldsConnectionResolver::resolve( $source->formFields, $args, $context, $info );
+				},
+			],
+		];
 	}
 
 	/**
@@ -256,6 +267,13 @@ class Form extends AbstractObject implements Field {
 				'description' => __( 'The version of Gravity Forms used to create this form.', 'wp-graphql-gravity-forms' ),
 			],
 		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_interfaces() : array {
+		return [ 'Node', 'DatabaseIdentifier' ];
 	}
 
 	/**

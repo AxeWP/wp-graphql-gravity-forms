@@ -1,6 +1,6 @@
 <?php
 /**
- * Disable autoloading while running tests, as the test
+ * Disable autoloading while running tests, as the sest
  * suite already bootstraps the autoloader and creates
  * fatal errors when the autoloader is loaded twice
  */

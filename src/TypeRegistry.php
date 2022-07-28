@@ -10,6 +10,7 @@ namespace WPGraphQL\GF;
 
 use Exception;
 use WPGraphQL\GF\Connection;
+use WPGraphQL\GF\Interfaces\Hookable;
 use WPGraphQL\GF\Interfaces\Registrable;
 use WPGraphQL\GF\Mutation;
 use WPGraphQL\GF\Type\Enum;
@@ -62,33 +63,25 @@ class TypeRegistry {
 
 	/**
 	 * Registers types, connections, unions, and mutations to GraphQL schema.
-	 *
-	 * @param GraphQLRegistry $type_registry Instance of the WPGraphQL TypeRegistry.
 	 */
-	public static function init( GraphQLRegistry $type_registry ) : void {
+	public static function init() : void {
 		/**
 		 * Fires before all types have been registered.
-		 *
-		 * @param GraphQLRegistry $type_registry Instance of the WPGraphQL TypeRegistry.
 		 */
-		do_action( 'graphql_gf_before_register_types', $type_registry );
+		do_action( 'graphql_gf_before_register_types' );
 
-		self::initialize_registry( $type_registry );
+		self::initialize_registry();
 
 		/**
 		 * Fires after all types have been registered.
-		 *
-		 * @param GraphQLRegistry $type_registry Instance of the WPGraphQL TypeRegistry.
 		 */
-		do_action( 'graphql_gf_after_register_types', $type_registry );
+		do_action( 'graphql_gf_after_register_types' );
 	}
 
 	/**
 	 * Initializes the GF type registry. If $type_registry is nulled, these fields wont be (re)-registered to WPGraphQL.
-	 *
-	 * @param GraphQLRegistry $type_registry .
 	 */
-	private static function initialize_registry( GraphQLRegistry $type_registry = null ) : void {
+	private static function initialize_registry() : void {
 		$classes_to_register = array_merge(
 			self::enums(),
 			self::inputs(),
@@ -101,7 +94,7 @@ class TypeRegistry {
 
 		self::$registered_classes = $classes_to_register;
 
-		self::register_types( self::$registered_classes, $type_registry );
+		self::register_types( self::$registered_classes );
 	}
 
 
@@ -358,27 +351,23 @@ class TypeRegistry {
 	 *
 	 * Classes must extend WPGraphQL\Type\AbstractType.
 	 *
-	 * @param array           $classes_to_register .
-	 * @param GraphQLRegistry $type_registry .
+	 * @param array $classes_to_register .
 	 *
 	 * @throws Exception .
 	 */
-	private static function register_types( array $classes_to_register, GraphQLRegistry $type_registry = null ) : void {
+	private static function register_types( array $classes_to_register ) : void {
 		// Bail if there are no classes to register.
 		if ( empty( $classes_to_register ) ) {
 			return;
 		}
 
 		foreach ( $classes_to_register as $class ) {
-			if ( ! is_a( $class, Registrable::class, true ) ) {
+			if ( ! is_a( $class, Hookable::class, true ) ) {
 				// translators: PHP class.
 				throw new Exception( sprintf( __( 'To be registered to the GF GraphQL schema, %s needs to implement WPGraphQL\Interfaces\Registrable.', 'wp-graphql-gravity-forms' ), $class ) );
 			}
 
-			// Register the type to the GraphQL schema. Skipped if we're trying to get the type registry beforehand.
-			if ( null !== $type_registry ) {
-				$class::register( $type_registry );
-			}
+			$class::register_hooks();
 
 			// Saves the Type => ClassName to the local registry.
 			if ( isset( $class::$type ) ) {

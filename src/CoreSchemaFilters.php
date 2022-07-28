@@ -9,11 +9,12 @@
 namespace WPGraphQL\GF;
 
 use WPGraphQL\GF\Data\Factory;
+use WPGraphQL\GF\Interfaces\Hookable;
 
 /**
  * Class - CoreSchemaFilters
  */
-class CoreSchemaFilters {
+class CoreSchemaFilters implements Hookable {
 	/**
 	 * {@inheritDoc}
 	 */
