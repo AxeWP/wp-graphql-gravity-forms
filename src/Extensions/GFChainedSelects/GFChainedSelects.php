@@ -43,7 +43,7 @@ class GFChainedSelects implements Hookable {
 		add_filter( 'graphql_gf_field_value_input_class', [ __CLASS__, 'field_value_input' ], 10, 3 );
 
 		// Register field value property.
-		add_filter( 'graphql_gf_form_field_value_properties', [ __CLASS__, 'field_value_properties' ], 10, 2 );
+		add_filter( 'graphql_gf_form_field_value_fields', [ __CLASS__, 'field_value_fields' ], 10, 2 );
 
 		// Register fieldValues input.
 		add_filter( 'graphql_gf_form_field_values_input_fields', [ __CLASS__, 'field_values_input_fields' ] );
@@ -133,17 +133,17 @@ class GFChainedSelects implements Hookable {
 
 
 	/**
-	 * Registers Signature field settings mapper.
+	 * Registers ChainedSelect field value.
 	 *
-	 * @param array    $properties .
+	 * @param array    $fields .
 	 * @param GF_Field $field .
 	 */
-	public static function field_value_properties( array $properties, GF_Field $field ) : array {
+	public static function field_value_fields( array $fields, GF_Field $field ) : array {
 		if ( 'chainedselect' === $field->get_input_type() ) {
-			$properties += ValueProperty::chained_select_values();
+			$fields = array_merge( $fields, ValueProperty::chained_select_values() );
 		}
 
-		return $properties;
+		return $fields;
 	}
 
 	/**
