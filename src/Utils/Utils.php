@@ -284,12 +284,6 @@ class Utils {
 		// These fields are experimental, and don't have unit testing in place.
 		if ( ! defined( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS' ) || false === WPGRAPHQL_GF_EXPERIMENTAL_FIELDS ) {
 			$ignored_fields[] = 'creditcard';
-			// $ignored_fields[] = 'product';
-			$ignored_fields[] = 'option';
-			$ignored_fields[] = 'price';
-			$ignored_fields[] = 'quantity';
-			$ignored_fields[] = 'shipping';
-			$ignored_fields[] = 'total';
 		}
 
 		/**
