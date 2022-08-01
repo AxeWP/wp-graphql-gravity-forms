@@ -8,6 +8,7 @@
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue;
 
+use GFAPI;
 use GFCommon;
 use GF_Field;
 use GF_Field_FileUpload;
@@ -36,28 +37,6 @@ class FieldValues {
 					}
 
 					return $source->get_value_export( $context->gfEntry->entry, $source->id ) ?: null;
-				},
-			],
-		];
-	}
-
-	/**
-	 * Get `consentValue` property.
-	 *
-	 * @return array
-	 */
-	public static function consent_value() : array {
-		return [
-			'consentValue' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Consent field value. This is `true` when consent is given, `false` when it is not.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
-						return null;
-					}
-
-					$input_key = $source->inputs[0]['id'];
-					return isset( $context->gfEntry->entry[ $input_key ] ) ? (bool) $context->gfEntry->entry[ $input_key ] : null;
 				},
 			],
 		];
@@ -126,6 +105,94 @@ class FieldValues {
 					}
 
 					return $checkboxValues;
+				},
+			],
+		];
+	}
+
+	/**
+	 * Get `consentValue` property.
+	 *
+	 * @return array
+	 */
+	public static function consent_value() : array {
+		return [
+			'consentValue' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Consent field value. This is `true` when consent is given, `false` when it is not.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function ( $source, array $args, AppContext $context ) {
+					if ( ! self::is_field_and_entry( $source, $context ) ) {
+						return null;
+					}
+
+					$input_key = $source->inputs[0]['id'];
+					return isset( $context->gfEntry->entry[ $input_key ] ) ? (bool) $context->gfEntry->entry[ $input_key ] : null;
+				},
+			],
+		];
+	}
+
+	/**
+	 * Get `fileUploadValue` property.
+	 *
+	 * @return array
+	 */
+	public static function file_upload_values() : array {
+		return [
+			'fileUploadValues' => [
+				'type'        => [ 'list_of' => ValueProperty\FileUploadFieldValue::$type ],
+				'description' => __( 'File upload value', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $source, array $args, AppContext $context ) {
+					if ( ! self::is_field_and_entry( $source, $context ) ) {
+						return null;
+					}
+
+					return self::get_file_upload_extra_entry_metadata( $source, $context->gfEntry->entry, $context->gfForm->form ) ?: null;
+				},
+			],
+		];
+	}
+
+	/**
+	 * Get `imageValues` property.
+	 */
+	public static function image_values() : array {
+		return [
+			'imageValues' => [
+				'type'        => ValueProperty\ImageFieldValue::$type,
+				'description' => __( 'Image field value.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function ( $source, array $args, AppContext $context ) {
+					if ( ! self::is_field_and_entry( $source, $context ) ) {
+						return null;
+					}
+
+					$image_data = array_pad( explode( '|:|', $context->gfEntry->entry[ $source->id ] ), 5, false );
+
+					$values_to_return = [
+						'altText'     => $image_data[4] ?: null,
+						'caption'     => $image_data[2] ?: null,
+						'description' => $image_data[3] ?: null,
+						'title'       => $image_data[1] ?: null,
+						'url'         => $image_data[0] ?: null,
+					];
+
+					/**
+					 * Strip out the meta from the entry value.
+					 *
+					 * @see GF_Field_PostImage::get_extra_entry_metadata().
+					 */
+					$file_values = [];
+
+					// Draft entries don't upload files.
+					if ( ! $context->gfEntry->isDraft ) {
+						$entry                = $context->gfEntry->entry;
+						$entry[ $source->id ] = $image_data[0];
+						$file_values          = self::get_file_upload_extra_entry_metadata( $source, $entry, $context->gfForm->form );
+						// Add the file values if they exist.
+						$values_to_return = array_merge( $file_values[ $image_data[0] ] ?? [], $values_to_return );
+					}
+
+					return $values_to_return;
 				},
 			],
 		];
@@ -209,72 +276,6 @@ class FieldValues {
 						'last'   => $context->gfEntry->entry[ $source->inputs[3]['id'] ] ?: null,
 						'suffix' => $context->gfEntry->entry[ $source->inputs[4]['id'] ] ?: null,
 					];
-				},
-			],
-		];
-	}
-
-	/**
-	 * Get `fileUploadValue` property.
-	 *
-	 * @return array
-	 */
-	public static function file_upload_values() : array {
-		return [
-			'fileUploadValues' => [
-				'type'        => [ 'list_of' => ValueProperty\FileUploadFieldValue::$type ],
-				'description' => __( 'File upload value', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
-						return null;
-					}
-
-					return self::get_file_upload_extra_entry_metadata( $source, $context->gfEntry->entry, $context->gfForm->form ) ?: null;
-				},
-			],
-		];
-	}
-
-	/**
-	 * Get `imageValues` property.
-	 */
-	public static function image_values() : array {
-		return [
-			'imageValues' => [
-				'type'        => ValueProperty\ImageFieldValue::$type,
-				'description' => __( 'Image field value.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
-						return null;
-					}
-
-					$image_data = array_pad( explode( '|:|', $context->gfEntry->entry[ $source->id ] ), 5, false );
-
-					$values_to_return = [
-						'altText'     => $image_data[4] ?: null,
-						'caption'     => $image_data[2] ?: null,
-						'description' => $image_data[3] ?: null,
-						'title'       => $image_data[1] ?: null,
-						'url'         => $image_data[0] ?: null,
-					];
-
-					/**
-					 * Strip out the meta from the entry value.
-					 *
-					 * @see GF_Field_PostImage::get_extra_entry_metadata().
-					 */
-					$file_values = [];
-
-					// Draft entries don't upload files.
-					if ( ! $context->gfEntry->isDraft ) {
-						$entry                = $context->gfEntry->entry;
-						$entry[ $source->id ] = $image_data[0];
-						$file_values          = self::get_file_upload_extra_entry_metadata( $source, $entry, $context->gfForm->form );
-						// Add the file values if they exist.
-						$values_to_return = array_merge( $file_values[ $image_data[0] ] ?? [], $values_to_return );
-					}
-
-					return $values_to_return;
 				},
 			],
 		];
