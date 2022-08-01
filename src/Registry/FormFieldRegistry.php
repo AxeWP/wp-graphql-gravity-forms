@@ -174,7 +174,12 @@ class FormFieldRegistry {
 
 		// Loop through the child fields and register each one.
 		foreach ( $possible_types as $gf_type => $graphql_type ) {
-			$field_to_register = clone( $field );
+			if ( in_array( $gf_type, [ 'calculation', 'hiddenproduct', 'singleproduct', 'singleshipping' ], true ) ) {
+				// These possible types are actually their own GF_Field classes that were skipped in the register() loop.
+				$field_to_register = GF_Fields::get( $gf_type );
+			} else {
+				$field_to_register = clone( $field );
+			}
 
 			// Override the field config from the inherited GF field with those from the child type.
 			$field_to_register->inputType           = $gf_type;
