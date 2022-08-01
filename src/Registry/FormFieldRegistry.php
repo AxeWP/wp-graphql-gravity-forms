@@ -121,7 +121,7 @@ class FormFieldRegistry {
 				continue;
 			}
 
-			$possible_settings[ $gf_type ] = $child_field->get_form_editor_field_settings();
+			$possible_settings[ $gf_type ] = self::get_field_settings( $child_field );
 		}
 
 		// We flip the arrays and compare the keys for performance.
@@ -202,7 +202,13 @@ class FormFieldRegistry {
 	 * @param GF_Field $field .
 	 */
 	public static function get_field_settings( GF_Field $field ) : array {
-		$settings   = $field->get_form_editor_field_settings();
+		$settings = $field->get_form_editor_field_settings();
+
+		// Product inputs are not stored as a setting, so we're going to fake it.
+		if ( 'singleproduct' === $field->type ) {
+			$settings[] = 'single_product_inputs';
+		}
+
 		$input_type = $field->get_input_type();
 
 		// Bail early if the types are the same.
@@ -394,6 +400,10 @@ class FormFieldRegistry {
 				break;
 			case 'post_image':
 				$fields += FieldValues::image_values();
+				break;
+			case 'singleproduct':
+			case 'product':
+				$fields += FieldValues::product_values();
 				break;
 			case 'time':
 				$fields += FieldValues::time_values();

@@ -276,10 +276,11 @@ class TypeRegistry {
 			// Form Field Value properties.
 			WPObject\FormField\FieldValue\ValueProperty\AddressFieldValue::class,
 			WPObject\FormField\FieldValue\ValueProperty\CheckboxFieldValue::class,
+			WPObject\FormField\FieldValue\ValueProperty\ImageFieldValue::class,
 			WPObject\FormField\FieldValue\ValueProperty\FileUploadFieldValue::class,
 			WPObject\FormField\FieldValue\ValueProperty\ListFieldValue::class,
 			WPObject\FormField\FieldValue\ValueProperty\NameFieldValue::class,
-			WPObject\FormField\FieldValue\ValueProperty\ImageFieldValue::class,
+			WPObject\FormField\FieldValue\ValueProperty\ProductFieldValue::class,
 			WPObject\FormField\FieldValue\ValueProperty\TimeFieldValue::class,
 			// Form Fields.
 			WPObject\FormField\FormFields::class,
@@ -375,6 +376,7 @@ class TypeRegistry {
 			'rich_text_editor_setting'           => WPInterface\FieldSetting\FieldWithRichTextEditor::class,
 			'rules_setting'                      => WPInterface\FieldSetting\FieldWithRules::class,
 			'select_all_choices_setting'         => WPInterface\FieldSetting\FieldWithSelectAllChoices::class,
+			'single_product_inputs'              => WPInterface\FieldSetting\FieldWithSingleProductInputs::class,
 			'size_setting'                       => WPInterface\FieldSetting\FieldWithSize::class,
 			'sub_label_placement_setting'        => WPInterface\FieldSetting\FieldWithSubLabelPlacement::class,
 			'time_format_setting'                => WPInterface\FieldSetting\FieldWithTimeFormat::class,
@@ -405,6 +407,7 @@ class TypeRegistry {
 			'password_setting'           => WPInterface\FieldInputSetting\InputWithPassword::class,
 			'select_all_choices_setting' => WPInterface\FieldInputSetting\InputWithSelectAllChoices::class,
 			'time_format_setting'        => WPInterface\FieldInputSetting\InputWithTimeFormat::class,
+			'single_product_inputs'      => WPInterface\FieldInputSetting\InputWithSingleProduct::class,
 		];
 
 		/**

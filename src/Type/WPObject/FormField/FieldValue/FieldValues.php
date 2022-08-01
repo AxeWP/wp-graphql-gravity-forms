@@ -282,6 +282,67 @@ class FieldValues {
 	}
 
 	/**
+	 * Get `productValues` property.
+	 */
+	public static function product_values() : array {
+		return [
+			'productValues' => [
+				'type'        => ValueProperty\ProductFieldValue::$type,
+				'description' => __( 'Product field values.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $source, array $args, AppContext $context ) {
+					if ( ! self::is_field_and_entry( $source, $context ) ) {
+						return null;
+					}
+
+					// Initialize values.
+					$product_name = null;
+					$price        = null;
+					$quantity     = null;
+
+					switch ( true ) {
+						case $source instanceof \GF_Field_SingleProduct:
+						case $source instanceof \GF_Field_HiddenProduct:
+						case $source instanceof \GF_Field_Calculation:
+							$product_name = trim( $context->gfEntry->entry[ $source->id . '.1' ] ?? '' );
+							$price        = trim( $context->gfEntry->entry[ $source->id . '.2' ] ?? '' );
+							$quantity     = trim( $context->gfEntry->entry[ $source->id . '.3' ] ?? '' );
+							break;
+						case $source instanceof \GF_Field_Select:
+						case $source instanceof \GF_Field_Radio:
+							$value        = explode( '|', $context->gfEntry->entry[ $source->id ] ?? '' );
+							$product_name = trim( $value[0] ?? '' );
+							$price        = trim( $value[1] ?? '' );
+							break;
+						case $source instanceof \GF_Field_Price:
+							$price = trim( $context->gfEntry->entry[ $source->id ] ?? '' );
+					}
+
+					// Get quantity from quantity field.
+					if ( empty( $quantity ) ) {
+						$quantity_fields = GFAPI::get_fields_by_type( $context->gfForm->form, 'quantity' );
+
+						foreach ( $quantity_fields as $field ) {
+							if ( ! isset( $field->productField ) || (int) $field->productField !== $source->id ) {
+								continue;
+							}
+
+							if ( isset( $context->gfEntry->entry[ $field->id ] ) ) {
+								$quantity = $context->gfEntry->entry[ $field->id ];
+							}
+						}
+					}
+
+					return [
+						'name'     => $product_name ?: null,
+						'price'    => GFCommon::format_number( $price, 'currency', $context->gfEntry->entry['currency'] ?? '' ) ?: null,
+						'quantity' => $quantity ?: null,
+					];
+				},
+			],
+		];
+	}
+
+	/**
 	 * Get `timeValues` property.
 	 */
 	public static function time_values() : array {
