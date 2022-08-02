@@ -335,7 +335,7 @@ class FieldValues {
 					return [
 						'name'     => $product_name ?: null,
 						'price'    => GFCommon::format_number( $price, 'currency', $context->gfEntry->entry['currency'] ?? '' ) ?: null,
-						'quantity' => $quantity ?: null,
+						'quantity' => $quantity ?: 1,
 					];
 				},
 			],
