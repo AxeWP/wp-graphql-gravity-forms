@@ -9,8 +9,9 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldChoiceSetting;
 
 use GF_Field;
+use WPGraphQL\GF\Registry\FieldChoiceRegistry;
+use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Type\WPInterface\FieldChoiceSetting\AbstractFieldChoiceSetting;
-use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - ChoiceWithName
@@ -64,13 +65,8 @@ class ChoiceWithName extends AbstractFieldChoiceSetting {
 			return;
 		}
 
-		$input_type = $field->get_input_type();
-
-		$name = ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type );
-
-		$choice_name = Utils::get_safe_form_field_type_name( $name . 'FieldChoice' );
-
-		$input_name = Utils::get_safe_form_field_type_name( $name . 'InputProperty' );
+		$choice_name = FieldChoiceRegistry::get_type_name( $field );
+		$input_name = FieldInputRegistry::get_type_name( $field );
 
 		$config = [
 			'type'        => [ 'list_of' => $choice_name ],

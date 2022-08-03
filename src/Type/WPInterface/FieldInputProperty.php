@@ -9,7 +9,7 @@
 namespace WPGraphQL\GF\Type\WPInterface;
 
 use GraphQL\Error\UserError;
-use WPGraphQL\GF\Utils\Utils;
+use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -65,10 +65,8 @@ class FieldInputProperty extends AbstractInterface {
 	 */
 	public static function resolve_type( TypeRegistry $type_registry ) : callable {
 		return function( $value ) use ( $type_registry ) {
-			$input_type = $value->get_input_type();
 
-			$name = ( $value->type !== $input_type ? $value->type . '_' . $input_type : $value->type ) . 'InputProperty';
-			$name = Utils::get_safe_form_field_type_name( $name );
+			$name = FieldInputRegistry::get_type_name( $value );
 
 			$type = $type_registry->get_type( $name );
 
@@ -76,7 +74,7 @@ class FieldInputProperty extends AbstractInterface {
 				throw new UserError(
 					sprintf(
 					/* translators: %s: The Choice Field name */
-						__( 'The "%s" field does not exist in the schema.', 'wp-graphql-gravity-forms' ),
+						__( 'The "%s" type does not exist in the schema.', 'wp-graphql-gravity-forms' ),
 						$name
 					)
 				);

@@ -20,6 +20,18 @@ use WPGraphQL\GF\Utils\Utils;
  * Class - FieldInputRegistry
  */
 class FieldInputRegistry {
+	/**
+	 * Gets the GraphQL type name for the generated GF Field input.
+	 *
+	 * @param GF_Field $field The Gravity Forms field object.
+	 */
+	public static function get_type_name( GF_Field $field ) : string {
+		$input_type = $field->get_input_type();
+
+		$input_name = ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'InputProperty';
+
+		return Utils::get_safe_form_field_type_name( $input_name );
+	}
 
 	/**
 	 * Registers the Input property for the GF Form Field as a GraphQL object.
@@ -28,10 +40,7 @@ class FieldInputRegistry {
 	 * @param array    $settings The Gravity Forms field settings used to define the GraphQL object.
 	 */
 	public static function register( GF_Field $field, $settings ) : void {
-		$input_type = $field->get_input_type();
-
-		$input_name = ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'InputProperty';
-		$input_name = Utils::get_safe_form_field_type_name( $input_name );
+		$input_name = self::get_type_name( $field );
 
 		$config = self::get_config_from_settings( $input_name, $field, $settings );
 
