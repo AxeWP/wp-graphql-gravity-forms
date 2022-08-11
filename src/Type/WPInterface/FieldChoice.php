@@ -65,7 +65,13 @@ class FieldChoice extends AbstractInterface {
 	 */
 	public static function resolve_type( TypeRegistry $type_registry ) : callable {
 		return function( $value ) use ( $type_registry ) {
-			$name = FieldChoiceRegistry::get_type_name( $value );
+			$name = '';
+
+			if ( is_array( $value ) && isset( $value['graphql_type'] ) ) {
+				$name = $value['graphql_type'];
+			} elseif ( $value instanceof \GF_Field ) {
+				$name = FieldChoiceRegistry::get_type_name( $value );
+			}
 
 			$type = $type_registry->get_type( $name );
 

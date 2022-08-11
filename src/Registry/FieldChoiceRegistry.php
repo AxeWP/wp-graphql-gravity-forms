@@ -28,7 +28,14 @@ class FieldChoiceRegistry {
 	public static function get_type_name( GF_Field $field ) : string {
 		$input_type = $field->get_input_type();
 
-		$input_name = ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'FieldChoice';
+		switch ( true ) {
+			// Post Category choices are on the interface.
+			case 'post_category' === $field->type:
+				$input_name = 'PostCategoryFieldChoice';
+				break;
+			default:
+				$input_name = ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'FieldChoice';
+		}
 
 		return Utils::get_safe_form_field_type_name( $input_name );
 	}

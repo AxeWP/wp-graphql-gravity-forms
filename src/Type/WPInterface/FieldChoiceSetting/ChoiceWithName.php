@@ -66,7 +66,7 @@ class ChoiceWithName extends AbstractFieldChoiceSetting {
 		}
 
 		$choice_name = FieldChoiceRegistry::get_type_name( $field );
-		$input_name = FieldInputRegistry::get_type_name( $field );
+		$input_name  = FieldInputRegistry::get_type_name( $field );
 
 		$config = [
 			'type'        => [ 'list_of' => $choice_name ],

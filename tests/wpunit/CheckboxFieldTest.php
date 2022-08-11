@@ -65,16 +65,46 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
 				'text'    => $this->fields[0]['choices'][0]['text'],
 				'value'   => $this->fields[0]['choices'][0]['value'],
+				'connectedChoice' => [
+					'text' => $this->fields[0]['choices'][0]['text'],
+					'value' => $this->fields[0]['choices'][0]['value'],
+					'isSelected' => $this->fields[0]['choices'][0]['isSelected'],
+				],
+				'connectedInput' => [
+					'id' => (float) $this->fields[0]['inputs'][0]['id'],
+					'label' => $this->fields[0]['inputs'][0]['label'],
+					'name' => $this->fields[0]['inputs'][0]['name'],
+				]
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
 				'text'    => $this->fields[0]['choices'][1]['text'],
 				'value'   => null,
+				'connectedChoice' => [
+					'text' => $this->fields[0]['choices'][1]['text'],
+					'value' => $this->fields[0]['choices'][1]['value'],
+					'isSelected' => $this->fields[0]['choices'][1]['isSelected'],
+				],
+				'connectedInput' => [
+					'id' => (float) $this->fields[0]['inputs'][1]['id'],
+					'label' => $this->fields[0]['inputs'][1]['label'],
+					'name' => $this->fields[0]['inputs'][1]['name'],
+				]
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
 				'text'    => $this->fields[0]['choices'][2]['text'],
 				'value'   => $this->fields[0]['choices'][2]['value'],
+				'connectedChoice' => [
+					'text' => $this->fields[0]['choices'][2]['text'],
+					'value' => $this->fields[0]['choices'][2]['value'],
+					'isSelected' => $this->fields[0]['choices'][2]['isSelected'],
+				],
+				'connectedInput' => [
+					'id' => (float) $this->fields[0]['inputs'][2]['id'],
+					'label' => $this->fields[0]['inputs'][2]['label'],
+					'name' => $this->fields[0]['inputs'][2]['name'],
+				]
 			],
 		];
 	}
@@ -164,6 +194,20 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					inputId
 					text
 					value
+					connectedChoice {
+						text
+						value
+						... on CheckboxFieldChoice {
+							isSelected
+						}
+					}
+					connectedInput {
+						id
+						label
+						... on CheckboxInputProperty {
+							name
+						}
+					}
 				}
 				choices {
 					isSelected
@@ -223,6 +267,20 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 										inputId
 										text
 										value
+										connectedChoice {
+											text
+											value
+											... on CheckboxFieldChoice {
+												isSelected
+											}
+										}
+										connectedInput {
+											id
+											label
+											... on CheckboxInputProperty {
+												name
+											}
+										}
 									}
 								}
 							}

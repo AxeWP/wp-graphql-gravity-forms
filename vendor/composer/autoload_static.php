@@ -269,6 +269,8 @@ class ComposerStaticInit407664321485b405639c6d14baff7059
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithSize' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithSize.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithSubLabelPlacement' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithSubLabelPlacement.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithTimeFormat' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithTimeFormat.php',
+        'WPGraphQL\\GF\\Type\\WPInterface\\FieldValue\\FieldValueWithChoice' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldValue/FieldValueWithChoice.php',
+        'WPGraphQL\\GF\\Type\\WPInterface\\FieldValue\\FieldValueWithInput' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldValue/FieldValueWithInput.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldWithPersonalData' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldWithPersonalData.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FormField' => __DIR__ . '/../..' . '/src/Type/WPInterface/FormField.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\NodeWithForm' => __DIR__ . '/../..' . '/src/Type/WPInterface/NodeWithForm.php',

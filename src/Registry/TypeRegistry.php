@@ -218,6 +218,8 @@ class TypeRegistry {
 			WPInterface\FieldInputProperty::class,
 			WPInterface\FieldWithPersonalData::class,
 			WPInterface\NodeWithForm::class,
+			WPinterface\FieldValue\FieldValueWithChoice::class,
+			WPinterface\FieldValue\FieldValueWithInput::class,
 		];
 
 		// Add interfaces for GF Field Settings.
