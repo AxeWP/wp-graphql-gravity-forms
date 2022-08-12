@@ -6,7 +6,7 @@ Tested up to: 6.0.1
 Requires PHP: 7.4
 Requires Gravity Forms: 2.5.0
 Requires WPGraphQL: 1.7.0
-Stable tag: 0.11.2
+Stable tag: 0.11.3
 Maintained at: https://github.com/harness-software/wp-graphql-gravity-forms
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
