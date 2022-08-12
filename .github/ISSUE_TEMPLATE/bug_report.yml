@@ -9,7 +9,7 @@ body:
         Please remember, a bug report is not the place to ask questions. You can
         use Slack for that, or start a topic in [GitHub
         Discussions](https://github.com/harness-software/wp-graphql-gravity-forms/discussions).
-  - type: input
+  - type: textarea
     attributes:
       label: Description
       description: >-
