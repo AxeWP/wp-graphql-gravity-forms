@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.11.3 - WPGraphQL v1.9.0 Compatibility
+
+This _minor_ release fixes a bug where `gfEntries.pageInfo` fields would have incorrect data after upgrading to WPGraphQL v1.9.0.
+
+**Note:** As a result of [WPGraphQL v1.9.0](https://github.com/wp-graphql/wp-graphql/releases/tag/v1.9.0), the *order* of items returned when using backwards pagination (e.g. `last:5`) is now reversed and identical to the order of items returned when using forward pagination, as per the [GraphQL Relay spec](https://relay.dev/graphql/connections.htm#sec-Edge-order).
+
+- fix: Refactor `EntriesConnectionResolver` to support WPGraphQL v1.9.0.
+- test: refactor `gfForms` and `gfEntries` pagination tests.
+
 ## v0.11.2 - Build Scripts, Confirmations, & DataLoaders
 
 This _minor_ release fixes a bug where querying for a non-existent Form/Entry id would throw an error instead of returning `null`.
