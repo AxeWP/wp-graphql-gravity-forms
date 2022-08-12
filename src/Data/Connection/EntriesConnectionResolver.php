@@ -33,37 +33,21 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	public int $offset_index = 0;
 
 	/**
+	 * Whether the version of WPGraphQL is missing the new methods added in v1.9.0.
+	 * Used to support pre 1.9.0 versions of WPGraphQL.
+	 *
+	 * @var boolean
+	 */
+	public bool $is_legacy = false;
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function __construct( $source, array $args, AppContext $context, ResolveInfo $info ) {
+		$this->is_legacy = version_compare( WPGRAPHQL_VERSION, '1.9.0', '<' );
+
 		parent::__construct( $source, $args, $context, $info );
-		$this->offset_index = $this->get_offset_index();
-	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @throws UserError .
-	 */
-	public function should_execute() : bool {
-		$can_view = false;
-
-		if (
-			current_user_can( 'gravityforms_view_entries' ) ||
-			current_user_can( 'gform_full_access' ) ) {
-			$can_view = true;
-		}
-
-		/**
-		 * Filter to control whether the user should be allowed to view entries.
-		 *
-		 * @since 0.10.0
-		 *
-		 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
-		 * @param int|int[] $form_ids List of he specific form ID being queried.
-		 */
-		$can_view = apply_filters( 'graphql_gf_can_view_entries', $can_view, $this->get_form_ids() );
-
-		return $can_view;
+		$this->offset_index = $this->get_query_offset_index();
 	}
 
 	/**
@@ -73,33 +57,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 */
 	public function get_loader_name() : string {
 		return EntriesLoader::$name;
-	}
-
-	/**
-	 * Determine whether or not the the offset is valid, i.e the item corresponding to the offset exists.
-	 * Offset is equivalent to WordPress ID (e.g post_id, term_id). So this function is equivalent
-	 * to checking if the WordPress object exists for the given ID.
-	 *
-	 * @param int $offset The offset.
-	 *
-	 * @return bool Whether the offset is valid.
-	 */
-	public function is_valid_offset( $offset ) {
-		return GFAPI::entry_exists( $offset );
-	}
-
-	/**
-	 * Validates Model.
-	 *
-	 * If model isn't a class with a `fields` member, this function with have be overridden in
-	 * the Connection class.
-	 *
-	 * @param mixed $model model.
-	 *
-	 * @return bool
-	 */
-	protected function is_valid_model( $model ) {
-		return isset( $model->databaseId ) || empty( $model->resumeToken );
 	}
 
 	/**
@@ -129,8 +86,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @return GF_Query
 	 */
 	public function get_query() : GF_Query {
 		$form_ids        = $this->query_args['form_ids'];
@@ -140,51 +95,205 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 
 		return new GF_Query( $form_ids, $search_criteria, $sorting, $paging );
 	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @throws UserError .
+	 */
+	public function should_execute() : bool {
+		$can_view = false;
+
+		if (
+			current_user_can( 'gravityforms_view_entries' ) ||
+			current_user_can( 'gform_full_access' ) ) {
+			$can_view = true;
+		}
+
+		/**
+		 * Filter to control whether the user should be allowed to view entries.
+		 *
+		 * @since 0.10.0
+		 *
+		 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
+		 * @param int|int[] $form_ids List of he specific form ID being queried.
+		 */
+		$can_view = apply_filters( 'graphql_gf_can_view_entries', $can_view, $this->get_form_ids() );
+
+		return $can_view;
+	}
+
+	/**
+	 * Determine whether or not the the offset is valid, i.e the item corresponding to the offset exists.
+	 * Offset is equivalent to WordPress ID (e.g post_id, term_id). So this function is equivalent
+	 * to checking if the WordPress object exists for the given ID.
+	 *
+	 * @param int $offset The offset.
+	 *
+	 * @return bool Whether the offset is valid.
+	 */
+	public function is_valid_offset( $offset ) {
+		return GFAPI::entry_exists( $offset );
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_offset() {
-		/**
-		 * Defaults
-		 */
-		$offset = 0;
+	public function get_ids_from_query() : array {
+		$ids = $this->query->get_ids() ?: [];
 
-		/**
-		 * Get the $after offset.
-		 */
+		// If we're going backwards, we need to reverse the array.
+		if ( ! empty( $this->args['last'] ) ) {
+			$ids = array_reverse( $ids );
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * Gets the array index for the given offset.
+	 *
+	 * Shim for pre 1.9.0 versions of WPGraphQL.
+	 *
+	 * @param int|string|false $offset The cursor pagination offset.
+	 * @param array            $ids    The array of ids from the query.
+	 *
+	 * @return int|false $index The array index of the offset.
+	 */
+	public function get_array_index_for_offset( $offset, $ids ) {
+		if ( ! $this->is_legacy ) {
+			return parent::get_array_index_for_offset( $offset, $ids );
+		}
+
+		if ( false === $offset ) {
+			return false;
+		}
+
+		// We use array_values() to ensure we're getting a positional index, and not a key.
+		return array_search( $offset, array_values( $ids ), true );
+	}
+
+	/**
+	 * Returns an array slice of IDs, per the Relay Cursor Connection spec.
+	 *
+	 * Shim for WPGraphQL < 1.9.0
+	 *
+	 * @param array $ids The array of IDs from the query to slice, ordered as expected by the GraphQL query.
+	 *
+	 * @return array
+	 */
+	public function apply_cursors_to_ids( array $ids ) {
+		if ( ! $this->is_legacy ) {
+			return parent::apply_cursors_to_ids( $ids );
+		}
+
+		if ( empty( $ids ) ) {
+			return [];
+		}
+
+		// First we slice the array from the front.
 		if ( ! empty( $this->args['after'] ) ) {
-			$current_loc = $this->get_current_loc_from_cursor( $this->args['after'] );
-		} elseif ( ! empty( $this->args['before'] ) ) {
-			$current_loc = $this->get_current_loc_from_cursor( $this->args['before'] );
+			$offset = $this->get_offset_for_cursor( $this->args['after'] );
+			$index  = $this->get_array_index_for_offset( $offset, $ids );
+
+			if ( false !== $index ) {
+				// We want to start with the first id after the index.
+				$ids = array_slice( $ids, $index + 1, null, true );
+			}
 		}
 
-		// Add 1 since we're overfetching.
-		if ( isset( $current_loc ) ) {
-			$offset = $current_loc['offset'] + 1;
+		// Then we slice the array from the back.
+		if ( ! empty( $this->args['before'] ) ) {
+			$offset = $this->get_offset_for_cursor( $this->args['before'] );
+			$index  = $this->get_array_index_for_offset( $offset, $ids );
+
+			if ( false !== $index ) {
+				// Because array indexes start at 0, we can overfetch without adding 1 to $index.
+				$ids = array_slice( $ids, 0, $index, true );
+			}
 		}
 
-		/**
-		 * Return the higher of the two values
-		 */
-		return max( 0, $offset );
+		return $ids;
+	}
+
+	/**
+	 * Returns an array of IDs for the connection.
+	 *
+	 * Shim for WPGraphQL < 1.9.0
+	 *
+	 * @return array
+	 */
+	public function get_ids() {
+		if ( ! $this->is_legacy ) {
+			return parent::get_ids();
+		}
+		$ids = $this->get_ids_from_query();
+
+		return $this->apply_cursors_to_ids( $ids );
+	}
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_offset_for_cursor( string $cursor = null ) {
+		$offset = false;
+
+		// Bail early if no cursor to offset.
+		if ( empty( $cursor ) ) {
+			return $offset;
+		}
+
+		$current_loc = $this->parse_cursor( $cursor );
+
+		if ( isset( $current_loc['offset'] ) ) {
+			$offset = $current_loc['offset'];
+		}
+
+		return is_numeric( $offset ) ? absint( $offset ) : $offset;
+	}
+
+	/**
+	 * Validates Model.
+	 *
+	 * @param mixed $model model.
+	 *
+	 * @return bool
+	 */
+	protected function is_valid_model( $model ) {
+		return isset( $model->databaseId ) || empty( $model->resumeToken );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function get_cursor_for_node( $id ) : string {
+		// The GF_Query offset index is based on the original sort order.
+		$nodes = ! empty( $this->args['last'] ) ? array_reverse( $this->nodes, true ) : $this->nodes;
+
+		$index = $this->offset_index + array_search( $id, array_keys( $nodes ), true );
+
+		return base64_encode( 'arrayconnection:' . $index . ':' . $id );  // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 	}
 
 	/**
 	 * Gets the array index for offsetting GF_Query.
-	 *
-	 * @return integer
 	 */
-	protected function get_offset_index() : int {
+	public function get_query_offset_index() : int {
 		$offset_index = 0;
 
-		if ( ! empty( $this->args['after'] ) ) {
-			$current_loc = $this->get_current_loc_from_cursor( $this->args['after'] );
-		} elseif ( ! empty( $this->args['before'] ) ) {
-			$current_loc = $this->get_current_loc_from_cursor( $this->args['before'] );
+		if ( ! empty( $this->args['first'] ) ) {
+			$cursor_to_offset = ! empty( $this->args['after'] ) ? $this->args['after'] : null;
+		} elseif ( ! empty( $this->args['last'] ) ) {
+			$cursor_to_offset = ! empty( $this->args['before'] ) ? $this->args['before'] : null;
 		}
 
-		if ( isset( $current_loc ) ) {
-			$offset_index = $current_loc['index'] + 1;
+		if ( ! empty( $cursor_to_offset ) ) {
+			$current_loc = $this->parse_cursor( $cursor_to_offset );
+
+			if ( isset( $current_loc['index'] ) ) {
+				$offset_index = $current_loc['index'] + 1;
+			}
 		}
 
 		return $offset_index;
@@ -196,7 +305,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @param string $cursor .
 	 * @return array
 	 */
-	protected function get_current_loc_from_cursor( string $cursor ) : array {
+	protected function parse_cursor( string $cursor ) : array {
 		$decoded     = base64_decode( $cursor ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 		$current_loc = explode( ':', $decoded );
 
@@ -205,22 +314,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 			'offset' => absint( $current_loc[2] ),
 		];
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	protected function get_cursor_for_node( $id ) : string {
-		$index = $this->offset_index + array_search( $id, array_keys( $this->nodes ), true );
-		return base64_encode( 'arrayconnection:' . $index . ':' . $id );  // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function get_ids() : array {
-		return $this->query->get_ids();
-	}
-
 
 	/**
 	 * Returns form ids.
@@ -404,22 +497,8 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @throws UserError When using unsupported pagination.
 	 */
 	private function get_paging() : array {
-		/**
-		 * Throw error if querying by first + before.
-		 */
-		if ( ! empty( $this->args['first'] ) && ! empty( $this->args['before'] ) ) {
-				throw new UserError( __( '`before` pagination is currently not supported when `first` is set.', 'wp-graphql-gravity-forms' ) );
-		}
-
-		/**
-		 * Throw error if querying by last + after.
-		 */
-		if ( ! empty( $this->args['last'] ) && ! empty( $this->args['after'] ) ) {
-				throw new UserError( __( '`after` pagination is currently not supported when `last` is set.', 'wp-graphql-gravity-forms' ) );
-		}
-
 		return [
-			'offset'    => $this->get_offset_index(),
+			'offset'    => $this->get_query_offset_index(),
 			'page_size' => $this->get_query_amount() + 1, // overfetch for prev/next.
 		];
 	}
