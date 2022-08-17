@@ -128,21 +128,52 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 				GFCommon::add_categories_as_choices( $field, '' );
 			}
 		}
+		codecept_debug( $this->fields[0]['choices'] );
 		return [
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],
 				'text'    => $this->fields[0]['choices'][0]['text'],
 				'value'   => (string) $this->fields[0]['choices'][0]['text'] . ':' . $this->fields[0]['choices'][0]['value'],
+				'connectedChoice' => [
+					'text' => $this->fields[0]['choices'][0]['text'],
+					'value' => (string) $this->fields[0]['choices'][0]['value'],
+					'isSelected' => $this->fields[0]['choices'][0]['isSelected'] ?? null,
+				],
+				'connectedInput' => [
+					'id' => (float) $this->fields[0]['inputs'][0]['id'],
+					'label' => $this->fields[0]['inputs'][0]['label'],
+					'name' => $this->fields[0]['inputs'][0]['name'],
+				],
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][1]['id'],
 				'text'    => $this->fields[0]['choices'][1]['text'],
 				'value'   => null,
+				'connectedChoice' => [
+					'text' => $this->fields[0]['choices'][1]['text'],
+					'value' => (string) $this->fields[0]['choices'][1]['value'],
+					'isSelected' => $this->fields[0]['choices'][1]['isSelected'] ?? null,
+				],
+				'connectedInput' => [
+					'id' => (float) $this->fields[0]['inputs'][1]['id'],
+					'label' => $this->fields[0]['inputs'][1]['label'],
+					'name' => $this->fields[0]['inputs'][1]['name'],
+				],
 			],
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][2]['id'],
 				'text'    => $this->fields[0]['choices'][2]['text'],
 				'value'   => (string) $this->fields[0]['choices'][2]['text'] . ':' . $this->fields[0]['choices'][2]['value'],
+				'connectedChoice' => [
+					'text' => $this->fields[0]['choices'][2]['text'],
+					'value' => (string) $this->fields[0]['choices'][2]['value'],
+					'isSelected' => $this->fields[0]['choices'][2]['isSelected'] ?? null,
+				],
+				'connectedInput' => [
+					'id' => (float) $this->fields[0]['inputs'][2]['id'],
+					'label' => $this->fields[0]['inputs'][2]['label'],
+					'name' => $this->fields[0]['inputs'][2]['name'],
+				],
 			],
 		];
 	}
@@ -297,6 +328,20 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 						inputId
 						text
 						value
+						connectedChoice {
+							text
+							value
+							... on PostCategoryFieldChoice {
+								isSelected
+							}
+						}
+						connectedInput {
+							id
+							label
+							... on PostCategoryCheckboxInputProperty {
+								name
+							}
+						}
 					}
 					hasSelectAll
 					inputs {
@@ -328,6 +373,20 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 										inputId
 										text
 										value
+										connectedChoice {
+											text
+											value
+											... on PostCategoryFieldChoice {
+												isSelected
+											}
+										}
+										connectedInput {
+											id
+											label
+											... on PostCategoryCheckboxInputProperty {
+												name
+											}
+										}
 									}
 								}
 							}

@@ -9,12 +9,15 @@
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
 
+use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
+use WPGraphQL\GF\Type\WPInterface\FieldValue\FieldValueWithChoice;
+use WPGraphQL\GF\Type\WPInterface\FieldValue\FieldValueWithInput;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 /**
  * Class - CheckboxValueProperty
  */
-class CheckboxFieldValue extends AbstractObject {
+class CheckboxFieldValue extends AbstractObject implements TypeWithInterfaces {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -25,8 +28,29 @@ class CheckboxFieldValue extends AbstractObject {
 	/**
 	 * {@inheritDoc}
 	 */
+	public static function get_type_config() : array {
+		$config = parent::get_type_config();
+
+		$config['interfaces'] = self::get_interfaces();
+
+		return $config;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public static function get_description() : string {
 		return __( 'The individual properties for each element of the Checkbox value field.', 'wp-graphql-gravity-forms' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_interfaces() : array {
+		return [
+			FieldValueWithChoice::$type,
+			FieldValueWithInput::$type,
+		];
 	}
 
 	/**

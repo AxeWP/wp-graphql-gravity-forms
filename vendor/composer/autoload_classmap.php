@@ -250,6 +250,8 @@ return array(
     'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithSize' => $baseDir . '/src/Type/WPInterface/FieldSetting/FieldWithSize.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithSubLabelPlacement' => $baseDir . '/src/Type/WPInterface/FieldSetting/FieldWithSubLabelPlacement.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithTimeFormat' => $baseDir . '/src/Type/WPInterface/FieldSetting/FieldWithTimeFormat.php',
+    'WPGraphQL\\GF\\Type\\WPInterface\\FieldValue\\FieldValueWithChoice' => $baseDir . '/src/Type/WPInterface/FieldValue/FieldValueWithChoice.php',
+    'WPGraphQL\\GF\\Type\\WPInterface\\FieldValue\\FieldValueWithInput' => $baseDir . '/src/Type/WPInterface/FieldValue/FieldValueWithInput.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\FieldWithPersonalData' => $baseDir . '/src/Type/WPInterface/FieldWithPersonalData.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\FormField' => $baseDir . '/src/Type/WPInterface/FormField.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\NodeWithForm' => $baseDir . '/src/Type/WPInterface/NodeWithForm.php',

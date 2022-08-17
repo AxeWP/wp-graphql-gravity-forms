@@ -9,7 +9,7 @@
 namespace WPGraphQL\GF\Type\WPInterface;
 
 use GraphQL\Error\UserError;
-use WPGraphQL\GF\Utils\Utils;
+use WPGraphQL\GF\Registry\FieldChoiceRegistry;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -65,10 +65,13 @@ class FieldChoice extends AbstractInterface {
 	 */
 	public static function resolve_type( TypeRegistry $type_registry ) : callable {
 		return function( $value ) use ( $type_registry ) {
-			$input_type = $value->get_input_type();
+			$name = '';
 
-			$name = ( $value->type !== $input_type ? $value->type . '_' . $input_type : $value->type ) . 'FieldChoice';
-			$name = Utils::get_safe_form_field_type_name( $name );
+			if ( is_array( $value ) && isset( $value['graphql_type'] ) ) {
+				$name = $value['graphql_type'];
+			} elseif ( $value instanceof \GF_Field ) {
+				$name = FieldChoiceRegistry::get_type_name( $value );
+			}
 
 			$type = $type_registry->get_type( $name );
 

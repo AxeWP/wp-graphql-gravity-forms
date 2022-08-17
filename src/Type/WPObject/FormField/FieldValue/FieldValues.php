@@ -13,6 +13,8 @@ use GF_Field;
 use GF_Field_FileUpload;
 use GFFormsModel;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Registry\FieldChoiceRegistry;
+use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
 use WPGraphQL\GF\Utils\Utils;
 
@@ -109,15 +111,17 @@ class FieldValues {
 					$checkboxValues  = [];
 
 					foreach ( $field_input_ids as $input_id ) {
-						$input_key = array_search( $input_id, array_column( $source->inputs, 'id' ), true );
+						$input_key = (int) array_search( $input_id, array_column( $source->inputs, 'id' ), true );
 
 						$value = ! empty( $context->gfEntry->entry[ $input_id ] ) ? $context->gfEntry->entry[ $input_id ] : null;
 						$text  = $source->choices[ $input_key ]['text'] ?: $value;
 
 						$checkboxValues[] = [
-							'inputId' => $input_id,
-							'value'   => $value,
-							'text'    => $text,
+							'inputId'         => $input_id,
+							'value'           => $value,
+							'text'            => $text,
+							'connectedInput'  => self::prepare_connected_input( $source, $input_key ),
+							'connectedChoice' => self::prepare_connected_choice( $source, $input_key ),
 						];
 					}
 
@@ -434,5 +438,35 @@ class FieldValues {
 		}
 
 		return $info;
+	}
+
+	/**
+	 * Prepares the selected choice for concumption for the FieldChoice interface by adding the GraphQL object type to the return array.
+	 *
+	 * @param GF_Field $field The gravity forms field object.
+	 * @param int      $input_key The input key that represents field's selected choice.
+	 */
+	public static function prepare_connected_choice( GF_Field $field, int $input_key ) : array {
+		$type = FieldChoiceRegistry::get_type_name( $field );
+
+		$choice                 = $field->choices[ $input_key ] ?? [];
+		$choice['graphql_type'] = $type;
+
+		return $choice;
+	}
+
+	/**
+	 * Prepares the selected input for concumption for the FieldInputProperty interface by adding the GraphQL object type to the return array.
+	 *
+	 * @param GF_Field $field The gravity forms field object.
+	 * @param int      $input_key The input key that represents field's selected input.
+	 */
+	public static function prepare_connected_input( GF_Field $field, int $input_key ) : array {
+		$type = FieldInputRegistry::get_type_name( $field );
+
+		$input                 = $field->inputs[ $input_key ] ?? [];
+		$input['graphql_type'] = $type;
+
+		return $input;
 	}
 }
