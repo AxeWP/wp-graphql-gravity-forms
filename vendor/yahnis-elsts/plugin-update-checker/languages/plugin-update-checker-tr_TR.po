@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plugin-update-checker\n"
-"POT-Creation-Date: 2020-08-08 14:36+0300\n"
-"PO-Revision-Date: 2022-05-20 00:17+0200\n"
+"POT-Creation-Date: 2017-11-24 17:02+0200\n"
+"PO-Revision-Date: 2021-11-15 19:07+0300\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -12,37 +12,37 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_x:1,2c;_x\n"
-"Last-Translator: d79\n"
-"Language: it_IT\n"
+"Last-Translator: Emre Erkan <kara@karalamalar.net>\n"
+"Language: tr\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: Puc/v4p11/Plugin/Ui.php:128
+#: Puc/v4p3/Plugin/UpdateChecker.php:395
 msgid "Check for updates"
-msgstr "Verifica aggiornamenti"
+msgstr "Güncellemeleri kontrol et"
 
-#: Puc/v4p11/Plugin/Ui.php:213
+#: Puc/v4p3/Plugin/UpdateChecker.php:548
 #, php-format
 msgctxt "the plugin title"
 msgid "The %s plugin is up to date."
-msgstr "Il plugin %s è aggiornato."
+msgstr "%s eklentisi güncel."
 
-#: Puc/v4p11/Plugin/Ui.php:215
+#: Puc/v4p3/Plugin/UpdateChecker.php:550
 #, php-format
 msgctxt "the plugin title"
 msgid "A new version of the %s plugin is available."
-msgstr "Una nuova versione del plugin %s è disponibile."
+msgstr "%s eklentisinin yeni bir sürümü mevcut."
 
-#: Puc/v4p11/Plugin/Ui.php:217
+#: Puc/v4p3/Plugin/UpdateChecker.php:552
 #, php-format
 msgctxt "the plugin title"
 msgid "Could not determine if updates are available for %s."
-msgstr "Non è possibile verificare se c'è un aggiornamento disponibile per %s."
+msgstr "%s için güncelleme olup olmadığı belirlenemedi."
 
-#: Puc/v4p11/Plugin/Ui.php:223
+#: Puc/v4p3/Plugin/UpdateChecker.php:558
 #, php-format
 msgid "Unknown update checker status \"%s\""
-msgstr "Stato di controllo aggiornamenti sconosciuto \"%s\""
+msgstr "Bilinmeyen güncelleme denetleyicisi durumu \"%s\""
 
-#: Puc/v4p11/Vcs/PluginUpdateChecker.php:98
+#: Puc/v4p3/Vcs/PluginUpdateChecker.php:95
 msgid "There is no changelog available."
-msgstr "Non c'è alcun registro delle modifiche disponibile."
+msgstr "Kullanılabilir bir değişiklik yok."
