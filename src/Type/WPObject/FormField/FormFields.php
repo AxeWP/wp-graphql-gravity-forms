@@ -23,6 +23,8 @@ use WPGraphQL\GF\Utils\Utils;
 class FormFields implements Hookable, Registrable {
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @var bool
 	 */
 	public static bool $should_load_eagerly = false;
 
