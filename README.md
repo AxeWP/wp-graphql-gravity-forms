@@ -1,4 +1,4 @@
-![alt text](./.wordpress-org/icon-128x128.png "WPGraphQL for Gravity Forms Logo")
+![alt text](./assets/icon-128x128.png "WPGraphQL for Gravity Forms Logo")
 # WPGraphQL for Gravity Forms
 
 A WordPress plugin that provides a GraphQL API for interacting with Gravity Forms.
