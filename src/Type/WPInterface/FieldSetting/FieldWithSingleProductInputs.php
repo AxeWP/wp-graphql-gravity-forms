@@ -57,8 +57,6 @@ class FieldWithSingleProductInputs extends AbstractFieldSetting {
 			return;
 		}
 
-		error_log( 'adding input' );
-
 		// Register the FieldInput for the object.
 		FieldInputRegistry::register( $field, $settings );
 	}

@@ -25,6 +25,7 @@ class Entry extends \WP_UnitTest_Factory_For_Thing {
 		parent::__construct( $factory );
 		$this->default_generation_definitions = [
 			'id' => new WP_UnitTest_Generator_Sequence( '%s' ),
+			'currency' => 'USD',
 		];
 	}
 

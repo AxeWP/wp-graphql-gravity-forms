@@ -26,7 +26,7 @@ class SignatureValuesInput extends ValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function prepare_value() {
+	protected function prepare_value() : string {
 		$value = $this->args;
 
 		$this->ensure_signatures_folder_exists();

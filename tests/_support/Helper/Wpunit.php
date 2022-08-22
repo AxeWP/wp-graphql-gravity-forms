@@ -831,6 +831,29 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a Product field
+	 */
+	public function getProductFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'basePrice',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			[ 'id' => 1 ],
+			'inputName',
+			[ 'inputType' => 'singleproduct' ],
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'noDuplicates',
+			'size',
+			[ 'type' => 'product' ],
+		];
+	}
+
+	/**
 	 * Get the default args for a Quiz field
 	 */
 	public function getQuizFieldArgs() : array {

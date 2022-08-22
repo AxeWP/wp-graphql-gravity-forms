@@ -183,6 +183,7 @@ class TypeRegistry {
 			Input\FormsConnectionOrderbyInput::class,
 			Input\ListFieldInput::class,
 			Input\NameFieldInput::class,
+			Input\ProductFieldInput::class,
 			Input\SubmitFormMetaInput::class,
 			Input\UpdateDraftEntryMetaInput::class,
 			Input\UpdateEntryMetaInput::class,

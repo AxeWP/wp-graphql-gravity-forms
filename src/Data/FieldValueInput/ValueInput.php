@@ -8,14 +8,42 @@
 
 namespace WPGraphQL\GF\Data\FieldValueInput;
 
+use GFCommon;
 /**
  * Class - ValueInput
  */
 class ValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @var string
+	 */
+	protected $args;
+
+	/**
+	 * {@inheritDoc}
 	 */
 	protected function get_field_name() : string {
 		return 'value';
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function prepare_value() : string {
+		// Handle choices with price.
+		if ( property_exists( $this->field, 'enablePrice' ) && $this->field->enablePrice && false === strpos( $this->args, '|' ) ) {
+			$value_key = property_exists( $this->field, 'enableChoiceValue' ) && $this->field->enableChoiceValue ? 'value' : 'text';
+
+			$choice_key = array_search( $this->args, array_column( $this->field->choices, $value_key ), true );
+
+			$choice = $this->field->choices[ $choice_key ];
+
+			$price = rgempty( 'price', $choice ) ? 0 : GFCommon::to_number( rgar( $choice, 'price' ) );
+
+			return $this->args . '|' . $price;
+		}
+
+		return $this->args;
 	}
 }

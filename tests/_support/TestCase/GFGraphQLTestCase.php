@@ -28,7 +28,7 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	/**
 	 * Holds a helper class to easily get default properties.
 	 *
-	 * @var object .
+	 * @var \Helper\GFHelpers\PropertyHelper .
 	 */
 	protected $property_helper;
 
@@ -63,6 +63,9 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	public function tearDown(): void {
 		// Your tear down methods here.
 		wp_delete_user( $this->admin->id );
+		global $_gf_state, $_gf_uploaded_files;
+		unset( $_gf_state );
+		unset( $_gf_uploaded_files );
 
 		// Then...
 		parent::tearDown();

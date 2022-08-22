@@ -302,19 +302,29 @@ class FieldValues {
 					switch ( true ) {
 						case $source instanceof \GF_Field_SingleProduct:
 						case $source instanceof \GF_Field_HiddenProduct:
-						case $source instanceof \GF_Field_Calculation:
 							$product_name = trim( $context->gfEntry->entry[ $source->id . '.1' ] ?? '' );
 							$price        = trim( $context->gfEntry->entry[ $source->id . '.2' ] ?? '' );
 							$quantity     = trim( $context->gfEntry->entry[ $source->id . '.3' ] ?? '' );
 							break;
+						case $source instanceof \GF_Field_Calculation:
+							$product_name = trim( $context->gfEntry->entry[ $source->id . '.1' ] ?? '' );
+							$price        = GFCommon::calculate( $source, $context->gfForm->form, $context->gfEntry->entry );
+							$quantity     = trim( $context->gfEntry->entry[ $source->id . '.3' ] ?? '' );
+							break;
+
 						case $source instanceof \GF_Field_Select:
 						case $source instanceof \GF_Field_Radio:
-							$value        = explode( '|', $context->gfEntry->entry[ $source->id ] ?? '' );
-							$product_name = trim( $value[0] ?? '' );
-							$price        = trim( $value[1] ?? '' );
+							$value = explode( '|', $context->gfEntry->entry[ $source->id ] ?? '' );
+
+							$choice_key = array_search( $value[0], array_column( $source->choices, 'value' ), true );
+
+							$product_name = $source->choices[ $choice_key ]['text'] ?? null;
+							$price        = $source->choices[ $choice_key ]['price'] ?? null;
 							break;
+
 						case $source instanceof \GF_Field_Price:
-							$price = trim( $context->gfEntry->entry[ $source->id ] ?? '' );
+							$product_name = $source->label ?? '';
+							$price        = trim( $context->gfEntry->entry[ $source->id ] ?? '' );
 					}
 
 					// Get quantity from quantity field.
