@@ -13,10 +13,14 @@ on:
       - "**.php"
       - ".github/workflows/*.yml"
       - "!docs/**"
+    types: [labeled]
 
 jobs:
   continuous_integration:
     runs-on: ubuntu-latest
+    name: WordPress ${{ matrix.wordpress }} on PHP ${{ matrix.php }}
+    if: contains(github.event.pull_request.labels.*.name, 'safe to test ✔')
+
     strategy:
       matrix:
         php: ["7.4", "8.0"]
@@ -28,31 +32,28 @@ jobs:
           - php: "7.4"
             wordpress: "5.7"
       fail-fast: false
-    name: WordPress ${{ matrix.wordpress }} on PHP ${{ matrix.php }}
+
     steps:
+      - name: Cancel previous runs of this workflow (pull requests only)
+        if: ${{ github.event_name == 'pull_request_target' }}
+        uses: styfle/cancel-workflow-action@0.5.0
+        with:
+          access_token: ${{ github.token }}
+
       - name: Checkout
         uses: actions/checkout@v2
+         with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: json, mbstring
-          tools: composer, wp-cli
-
-      - name: Get Composer Cache Directory
-        id: composercache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.composercache.outputs.dir }}
-          key: php-${{ matrix.php }}-${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: php-${{ matrix.php }}-${{ runner.os }}-composer-
+          tools: composer:v2
 
       - name: Install dependencies
-        run: composer install
+        uses: ramsey/composer-install@v2
 
       - name: Build "testing" Docker Image
         env:
