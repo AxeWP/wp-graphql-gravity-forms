@@ -844,12 +844,35 @@ class Wpunit extends \Codeception\Module {
 			[ 'id' => 1 ],
 			'inputName',
 			[ 'inputType' => 'singleproduct' ],
-			'isRequired',
+			[ 'isRequired' => false ],
 			'label',
 			'labelPlacement',
 			'noDuplicates',
 			'size',
 			[ 'type' => 'product' ],
+		];
+	}
+
+
+	/**
+	 * Get the default args for a quantity field.
+	 */
+	public function getQuantityFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'defaultValue',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'noDuplicates',
+			'placeholder',
+			'size',
+			[ 'type' => 'quantity' ],
 		];
 	}
 

@@ -130,7 +130,7 @@ trait ExpectedFormFields {
 			'isSelected' => 'isSelected',
 		];
 
-		if ( ! empty( $field->enablePrice ) || in_array( $field->type, [ 'product', 'option', 'shipping' ], true ) ) {
+		if ( ! empty( $field->enablePrice ) || in_array( $field->type, [ 'product', 'option', 'quantity', 'shipping' ], true ) ) {
 			$keys['price']          = 'price';
 			$keys['formattedPrice'] = 'price';
 		}
