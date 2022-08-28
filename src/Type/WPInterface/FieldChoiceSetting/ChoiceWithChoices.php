@@ -62,7 +62,7 @@ class ChoiceWithChoices extends AbstractFieldChoiceSetting {
 	public static function add_fields_to_child_type( array $fields, string $choice_name, GF_Field $field, array $settings, array $interfaces ) : array {
 		if (
 			! in_array( self::$type, $interfaces, true ) ||
-			( empty( $field->enablePrice ) && ! in_array( $field->type, [ 'product', 'option', 'shipping' ], true ) )
+			( empty( $field->enablePrice ) && ! in_array( $field->type, [ 'product', 'quantity', 'option', 'shipping' ], true ) )
 		) {
 			return $fields;
 		}
