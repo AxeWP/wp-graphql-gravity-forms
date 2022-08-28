@@ -1,6 +1,6 @@
 <?php
 /**
- * Test ProductField.
+ * Test ProductHiddenField.
  *
  * @package Tests\WPGraphQL\GF
  */

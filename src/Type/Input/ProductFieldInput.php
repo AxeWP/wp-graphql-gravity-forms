@@ -1,7 +1,7 @@
 <?php
 /**
  * GraphQL Input Type - ProductFieldInput
- * Input fields for a single checkbox.
+ * Input fields for a product.
  *
  * @package WPGraphQL\GF\Type\Input
  * @since   0.5.0
