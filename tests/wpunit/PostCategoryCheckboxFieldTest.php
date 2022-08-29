@@ -128,7 +128,7 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 				GFCommon::add_categories_as_choices( $field, '' );
 			}
 		}
-		codecept_debug( $this->fields[0]['choices'] );
+
 		return [
 			[
 				'inputId' => (float) $this->fields[0]['inputs'][0]['id'],

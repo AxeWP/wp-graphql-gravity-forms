@@ -643,6 +643,49 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for an Option field.
+	 */
+	public function getOptionFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			[
+				'choices' => [
+					[
+						'text' => 'First Choice',
+						'value' => 'first',
+						'isSelected'=> false,
+						'price' => '$5.00',
+					],
+					[
+						'text' => 'Second Choice',
+						'value' => 'second',
+						'isSelected'=> false,
+						'price' => '$10.00',
+					],
+					[
+						'text' => 'Third Choice',
+						'value' => 'third',
+						'isSelected'=> false,
+						'price' => '$15.00',
+					],
+				],
+			],
+			'defaultValue',
+			'description',
+			'descriptionPlacement',
+			'enableChoiceValue',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'size',
+			[ 'type' => 'option' ],
+		];
+	}
+
+	/**
 	 * Get args for page field.
 	 */
 	public function getPageFieldArgs() : array {
