@@ -1,19 +1,16 @@
 <?php
 /**
- * Test QuantitySelect type.
+ * Test ShippingRadioField.
  *
  * @package Tests\WPGraphQL\GF
  */
 
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
-
 /**
- * Class -QuantitySelectFieldTest.
+ * Class -ShippingRadioFieldTest
  */
-class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
-	protected $product_field_helper;
-
+class ShippingRadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -49,113 +46,65 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		$this->product_field_helper = $this->tester->getPropertyHelper( 'ProductField',
-		[
-			'inputType' => 'singleproduct',
-			'autocompleteAttribute' => 'autocomplete',
-			'disableQuantity' => true,
-
-		] );
-		return $this->tester->getPropertyHelper( 'QuantityField',
-		[
-			'inputType' => 'select',
-			'productField' => 1,
-			'id' => 2,
-			'enablePrice' => true,
-			'allowsPrepopulate' => true,
-			'autocompleteAttribute' => 'someAttribute',
-			'defaultValue' => 'first',
-			'errorMessage' => 'some message',
-			'enableAutocomplete' => true,
-			'noDuplicates' => false,
-			'numberFormat' => 'decimal_dot',
-			'enableChoiceValue' => true,
-		] );
+		return $this->tester->getPropertyHelper( 'ShippingField',
+			[
+				'inputType' => 'radio',
+				'enablePrice' => true,
+				'allowsPrepopulate' => true,
+				'enableAutocomplete' => true,
+				'errorMessage' => 'not valid',
+				'enableEnhancedUI' => true,
+				'enableChoiceValue' => true,
+			],
+		);
 	}
 
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
 	public function generate_fields() : array {
-		return [
-			$this->factory->field->create(
-				array_merge(
-					$this->product_field_helper->values,
-					[
-						'inputs' => [
-							[
-								'id' => 1.1,
-								'label' => 'Name',
-								'name' => null,
-							],
-							[
-								'id' => 1.2,
-								'label' => 'Price',
-								'name' => null,
-							],
-							[
-								'id' => 1.3,
-								'label' => 'Quantity',
-								'name' => null,
-							],
+		return [ $this->factory->field->create(
+			array_merge(
+				$this->property_helper->values,
+				[
+					'isRequired' => true,
+					'choices' => [
+						[
+							'text' => 'First Choice',
+							'value' => 'first',
+							'isSelected'=> false,
+							'price' => '$5.00',
+						],
+						[
+							'text' => 'Second Choice',
+							'value' => 'second',
+							'isSelected'=> false,
+							'price' => '$10.00',
+						],
+						[
+							'text' => 'Third Choice',
+							'value' => 'third',
+							'isSelected'=> false,
+							'price' => '$15.00',
 						],
 					]
-				)
-			),
-			$this->factory->field->create(
-				array_merge(
-					$this->property_helper->values,
-					[
-						'choices' => [
-							[
-								'text' => 'First Choice',
-								'value' => 'first',
-								'isSelected'=> false,
-								'price' => '$5.00',
-							],
-							[
-								'text' => 'Second Choice',
-								'value' => 'second',
-								'isSelected'=> false,
-								'price' => '$10.00',
-							],
-							[
-								'text' => 'Third Choice',
-								'value' => 'third',
-								'isSelected'=> false,
-								'price' => '$15.00',
-							],
-						]
-					]
-				)
-			),
-		];
-	}
-
-	public function mutation_value_field_id() : int {
-		return $this->fields[1]->id;
+				]
+			)
+		) ];
 	}
 
 	/**
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return $this->fields[1]['choices'][0]['value'];
-	}
-
-	public function field_value_input() {
-		return $this->field_value;
+		return $this->fields[0]['choices'][0]['value'];
 	}
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return $this->fields[1]['choices'][2]['value'];
-	}
-
-	public function updated_field_value_input() {
-		return $this->updated_field_value;
+		return $this->fields[0]['choices'][2]['value'];
 	}
 
 
@@ -163,11 +112,7 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 
-			(string) $this->fields[0]['inputs'][0]['id'] => $this->fields[0]->label,
-			(string) $this->fields[0]['inputs'][1]['id'] => $this->fields[0]->basePrice,
-			$this->fields[1]->id => $this->field_value
-		];
+		return [ $this->fields[0]['id'] => $this->field_value ];
 	}
 
 	/**
@@ -177,11 +122,10 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 	 */
 	public function field_query() : string {
 		return '
-			... on QuantityField {
+			... on ShippingField {
 				adminLabel
 				canPrepopulate
 				cssClass
-				defaultValue
 				description
 				descriptionPlacement
 				inputName
@@ -193,26 +137,21 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 					shouldErase
 					shouldExport
 				}
-				placeholder
-				productField
-				type
-				value
-				... on QuantitySelectField {
-					autocompleteAttribute
+				... on ShippingRadioField {
 					choices {
 						formattedPrice
+						isOtherChoice
 						isSelected
 						price
 						text
 						value
 					}
 					errorMessage
-					hasAutocomplete
 					hasChoiceValue
-					hasEnhancedUI
+					hasOtherChoice
 					isRequired
 					shouldAllowDuplicates
-					size
+					value
 				}
 			}
 		';
@@ -232,7 +171,7 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 					entry {
 						formFields {
 							nodes {
-								... on QuantityField {
+								... on ShippingField {
 									value
 								}
 							}
@@ -263,8 +202,7 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 					entry {
 						formFields {
 							nodes {
-								__typename
-								... on QuantityField {
+								... on ShippingField {
 									value
 								}
 							}
@@ -289,7 +227,7 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 					entry: draftEntry {
 						formFields {
 							nodes {
-								... on QuantityField {
+								... on ShippingField {
 									value
 								}
 							}
@@ -306,7 +244,7 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 	 * @param array $form the current form instance.
 	 */
 	public function expected_field_response( array $form ) : array {
-		$expected   = $this->getExpectedFormFieldValues( $form['fields'][1] );
+		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
 		$expected[] = $this->expected_field_value( 'value', $this->field_value );
 
 		return [
@@ -319,7 +257,7 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 							$this->expectedNode(
 								'nodes',
 								$expected,
-								1
+								0
 							),
 						]
 					),
@@ -346,7 +284,12 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 							$this->expectedObject(
 								'formFields',
 								[
-									$this->expectedField( 'nodes.1.value', $value ),
+									$this->expectedNode(
+										'nodes',
+										[
+											$this->expected_field_value( 'value', $value ),
+										]
+									),
 								]
 							),
 						]
@@ -363,6 +306,6 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ) : void {
-		$this->assertEquals( $this->field_value, $actual_entry[ $form['fields'][1]->id ], 'Submit mutation entry value not equal' );
+		$this->assertEquals( $this->field_value, $actual_entry[ $form['fields'][0]->id ], 'Submit mutation entry value not equal' );
 	}
 }

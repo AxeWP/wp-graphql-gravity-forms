@@ -1078,6 +1078,26 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a shipping field.
+	 */
+	public function getShippingFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'description',
+			'descriptionPlacement',
+			'inputName',
+			'label',
+			'labelPlacement',
+			'noDuplicates',
+			'placeholder',
+			'size',
+			[ 'type' => 'shipping' ],
+		];
+	}
+
+
+	/**
 	 * Get the default args for a signature field.
 	 */
 	public function getSignatureFieldArgs() : array {
