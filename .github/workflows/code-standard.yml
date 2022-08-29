@@ -9,6 +9,7 @@ on:
     branches:
       - develop
       - main
+
 jobs:
   run:
     runs-on: ubuntu-latest

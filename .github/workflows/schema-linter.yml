@@ -8,7 +8,7 @@ on:
     branches:
       - develop
       - main
-    types: [labeled]
+    types: [ opened, synchronize, reopened, labeled ]
 
 jobs:
   run:
