@@ -64,7 +64,7 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 		// Your tear down methods here.
 		wp_delete_user( $this->admin->id );
 		global $_gf_state, $_gf_uploaded_files;
-		unset( $_gf_state );
+		$_gf_state = [];
 		unset( $_gf_uploaded_files );
 
 		// Then...
