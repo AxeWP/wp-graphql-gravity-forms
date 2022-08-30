@@ -58,23 +58,25 @@ class ProductHiddenFieldTest extends FormFieldTestCase implements FormFieldTestC
 				array_merge(
 					$this->property_helper->values,
 					[ 'inputType' => 'hiddenproduct' ],
-					[ 'inputs' => [
-						[
-							'id' => 1.1,
-							'label' => 'Name',
-							'name' => null,
+					[
+						'inputs' => [
+							[
+								'id'    => 1.1,
+								'label' => 'Name',
+								'name'  => null,
+							],
+							[
+								'id'    => 1.2,
+								'label' => 'Price',
+								'name'  => null,
+							],
+							[
+								'id'    => 1.3,
+								'label' => 'Quantity',
+								'name'  => null,
+							],
 						],
-						[
-							'id' => 1.2,
-							'label' => 'Price',
-							'name' => null,
-						],
-						[
-							'id' => 1.3,
-							'label' => 'Quantity',
-							'name' => null,
-						],
-					] ],
+					],
 				)
 			),
 		];
@@ -85,8 +87,8 @@ class ProductHiddenFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 */
 	public function field_value() {
 		return [
-			'name' => $this->fields[0]->label,
-			'price' => $this->fields[0]->basePrice,
+			'name'     => $this->fields[0]->label,
+			'price'    => $this->fields[0]->basePrice,
 			'quantity' => 1.0,
 		];
 	}
@@ -110,8 +112,8 @@ class ProductHiddenFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 */
 	public function updated_field_value() {
 		return [
-			'name' => $this->fields[0]->label,
-			'price' => $this->fields[0]->basePrice,
+			'name'     => $this->fields[0]->label,
+			'price'    => $this->fields[0]->basePrice,
 			'quantity' => 1.0,
 		];
 	}
@@ -328,7 +330,7 @@ class ProductHiddenFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
 		$this->assertEquals( $this->field_value['name'], $actual_entry[ (string) $form['fields'][0]['inputs'][0]['id'] ] );
-		$this->assertEquals( $this->field_value['price'], $actual_entry[(string) $form['fields'][0]['inputs'][1]['id'] ] );
+		$this->assertEquals( $this->field_value['price'], $actual_entry[ (string) $form['fields'][0]['inputs'][1]['id'] ] );
 		$this->assertEquals( $this->field_value['quantity'], $actual_entry[ (string) $form['fields'][0]['inputs'][2]['id'] ] );
 	}
 }

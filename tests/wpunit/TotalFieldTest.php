@@ -49,16 +49,20 @@ class TotalFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		$this->product_field_helper = $this->tester->getPropertyHelper( 'ProductField',
-		[
-			'inputType' => 'singleproduct',
-			'autocompleteAttribute' => 'autocomplete',
-			'disableQuantity' => false,
-		] );
-		return $this->tester->getPropertyHelper( 'TotalField',
-		[
-			'id' => 2,
-		] );
+		$this->product_field_helper = $this->tester->getPropertyHelper(
+			'ProductField',
+			[
+				'inputType'             => 'singleproduct',
+				'autocompleteAttribute' => 'autocomplete',
+				'disableQuantity'       => false,
+			]
+		);
+		return $this->tester->getPropertyHelper(
+			'TotalField',
+			[
+				'id' => 2,
+			]
+		);
 	}
 
 	/**
@@ -72,25 +76,25 @@ class TotalFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					[
 						'inputs' => [
 							[
-								'id' => 1.1,
+								'id'    => 1.1,
 								'label' => 'Name',
-								'name' => null,
+								'name'  => null,
 							],
 							[
-								'id' => 1.2,
+								'id'    => 1.2,
 								'label' => 'Price',
-								'name' => null,
+								'name'  => null,
 							],
 							[
-								'id' => 1.3,
+								'id'    => 1.3,
 								'label' => 'Quantity',
-								'name' => null,
+								'name'  => null,
 							],
 						],
 					]
 				)
 			),
-			$this->factory->field->create($this->property_helper->values ),
+			$this->factory->field->create( $this->property_helper->values ),
 		];
 	}
 
@@ -103,7 +107,7 @@ class TotalFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return (string) floatval( preg_replace('/[^\d\.]/', '', $this->fields[0]->basePrice) );
+		return (string) floatval( preg_replace( '/[^\d\.]/', '', $this->fields[0]->basePrice ) );
 	}
 
 	public function field_value_input() {
@@ -114,7 +118,7 @@ class TotalFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return (string) ( ( float ) $this->field_value * 2 );
+		return (string) ( (float) $this->field_value * 2 );
 	}
 
 	public function updated_field_value_input() {
@@ -126,11 +130,11 @@ class TotalFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 
+		return [
 			(string) $this->fields[0]['inputs'][0]['id'] => $this->fields[0]->label,
 			(string) $this->fields[0]['inputs'][1]['id'] => $this->fields[0]->basePrice,
 			(string) $this->fields[0]['inputs'][2]['id'] => 1.0,
-			$this->fields[1]->id => $this->field_value,
+			$this->fields[1]->id                         => $this->field_value,
 		];
 	}
 

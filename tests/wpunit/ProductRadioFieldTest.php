@@ -58,29 +58,31 @@ class ProductRadioFieldTest extends FormFieldTestCase implements FormFieldTestCa
 				array_merge(
 					$this->property_helper->values,
 					[ 'inputType' => 'radio' ],
-					[ 'placeholder'  => $this->property_helper->placeholder() ],
+					[ 'placeholder' => $this->property_helper->placeholder() ],
 					[ 'enableChoiceValue' => true ],
 					[ 'enablePrice' => true ],
-					[ 'choices' => [
-						[
-							'text' => 'First Choice',
-							'value' => 'first',
-							'isSelected' => false,
-							'price' => '$5.00',
+					[
+						'choices' => [
+							[
+								'text'       => 'First Choice',
+								'value'      => 'first',
+								'isSelected' => false,
+								'price'      => '$5.00',
+							],
+							[
+								'text'       => 'Second Choice',
+								'value'      => 'second',
+								'isSelected' => false,
+								'price'      => '$10.00',
+							],
+							[
+								'text'       => 'Third Choice',
+								'value'      => 'third',
+								'isSelected' => false,
+								'price'      => '$15.00',
+							],
 						],
-						[
-							'text' => 'Second Choice',
-							'value' => 'second',
-							'isSelected' => false,
-							'price' => '$10.00',
-						],
-						[
-							'text' => 'Third Choice',
-							'value' => 'third',
-							'isSelected' => false,
-							'price' => '$15.00',
-						],
-					] ],
+					],
 				)
 			),
 		];
@@ -91,8 +93,8 @@ class ProductRadioFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function field_value() {
 		return [
-			'name' => $this->fields[0]->choices[0]['text'],
-			'price' => $this->fields[0]->choices[0]['price'],
+			'name'     => $this->fields[0]->choices[0]['text'],
+			'price'    => $this->fields[0]->choices[0]['price'],
 			'quantity' => 1.0,
 		];
 	}
@@ -116,8 +118,8 @@ class ProductRadioFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function updated_field_value() {
 		return [
-			'name' => $this->fields[0]->choices[2]['text'],
-			'price' => $this->fields[0]->choices[2]['price'],
+			'name'     => $this->fields[0]->choices[2]['text'],
+			'price'    => $this->fields[0]->choices[2]['price'],
 			'quantity' => 1.0,
 		];
 	}
@@ -127,7 +129,7 @@ class ProductRadioFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ (string) $this->fields[0]['id'] => $this->fields[0]->choices[0]['value'] .'|5' ];
+		return [ (string) $this->fields[0]['id'] => $this->fields[0]->choices[0]['value'] . '|5' ];
 	}
 
 

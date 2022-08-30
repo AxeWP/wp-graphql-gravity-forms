@@ -59,23 +59,25 @@ class ProductSingleFieldTest extends FormFieldTestCase implements FormFieldTestC
 					$this->property_helper->values,
 					[ 'inputType' => 'singleproduct' ],
 					[ 'disableQuantity' => false ],
-					[ 'inputs' => [
-						[
-							'id' => 1.1,
-							'label' => 'Name',
-							'name' => null,
+					[
+						'inputs' => [
+							[
+								'id'    => 1.1,
+								'label' => 'Name',
+								'name'  => null,
+							],
+							[
+								'id'    => 1.2,
+								'label' => 'Price',
+								'name'  => null,
+							],
+							[
+								'id'    => 1.3,
+								'label' => 'Quantity',
+								'name'  => null,
+							],
 						],
-						[
-							'id' => 1.2,
-							'label' => 'Price',
-							'name' => null,
-						],
-						[
-							'id' => 1.3,
-							'label' => 'Quantity',
-							'name' => null,
-						],
-					] ],
+					],
 				)
 			),
 		];
@@ -86,9 +88,9 @@ class ProductSingleFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 */
 	public function field_value() {
 		return [
-			'name' => $this->fields[0]->label,
-			'price' => $this->fields[0]->basePrice,
-			'quantity' =>  $this->property_helper->dummy->number(1,9),
+			'name'     => $this->fields[0]->label,
+			'price'    => $this->fields[0]->basePrice,
+			'quantity' => $this->property_helper->dummy->number( 1, 9 ),
 		];
 	}
 
@@ -111,9 +113,9 @@ class ProductSingleFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 */
 	public function updated_field_value() {
 		return [
-			'name' => $this->fields[0]->label,
-			'price' => $this->fields[0]->basePrice,
-			'quantity' =>  $this->property_helper->dummy->number(11,14),
+			'name'     => $this->fields[0]->label,
+			'price'    => $this->fields[0]->basePrice,
+			'quantity' => $this->property_helper->dummy->number( 11, 14 ),
 		];
 	}
 
@@ -338,7 +340,7 @@ class ProductSingleFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
 		$this->assertEquals( $this->field_value['name'], $actual_entry[ (string) $form['fields'][0]['inputs'][0]['id'] ] );
-		$this->assertEquals( $this->field_value['price'], $actual_entry[(string) $form['fields'][0]['inputs'][1]['id'] ] );
+		$this->assertEquals( $this->field_value['price'], $actual_entry[ (string) $form['fields'][0]['inputs'][1]['id'] ] );
 		$this->assertEquals( $this->field_value['quantity'], $actual_entry[ (string) $form['fields'][0]['inputs'][2]['id'] ] );
 	}
 }

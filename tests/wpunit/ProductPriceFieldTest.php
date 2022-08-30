@@ -58,7 +58,7 @@ class ProductPriceFieldTest extends FormFieldTestCase implements FormFieldTestCa
 				array_merge(
 					$this->property_helper->values,
 					[ 'inputType' => 'price' ],
-					[ 'placeholder'  => $this->property_helper->placeholder() ],
+					[ 'placeholder' => $this->property_helper->placeholder() ],
 				)
 			),
 		];
@@ -69,8 +69,8 @@ class ProductPriceFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function field_value() {
 		return [
-			'name' => $this->fields[0]->label,
-			'price' => $this->property_helper->basePrice(),
+			'name'     => $this->fields[0]->label,
+			'price'    => $this->property_helper->basePrice(),
 			'quantity' => 1.0,
 		];
 	}
@@ -94,9 +94,9 @@ class ProductPriceFieldTest extends FormFieldTestCase implements FormFieldTestCa
 	 */
 	public function updated_field_value() {
 		return [
-			'name' => $this->fields[0]->label,
-			'price' => $this->property_helper->basePrice(),
-			'quantity' => 1.0
+			'name'     => $this->fields[0]->label,
+			'price'    => $this->property_helper->basePrice(),
+			'quantity' => 1.0,
 		];
 	}
 

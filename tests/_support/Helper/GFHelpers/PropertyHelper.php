@@ -33,7 +33,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function basePrice( $value = null ) {
-		return ! empty( $value ) ? $value : ( '$' .$this->dummy->price() );
+		return ! empty( $value ) ? $value : ( '$' . $this->dummy->price() );
 	}
 
 	public function borderColor( $value = null ) {

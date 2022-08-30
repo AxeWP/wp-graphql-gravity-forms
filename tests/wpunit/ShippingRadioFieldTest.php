@@ -46,15 +46,16 @@ class ShippingRadioFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getPropertyHelper( 'ShippingField',
+		return $this->tester->getPropertyHelper(
+			'ShippingField',
 			[
-				'inputType' => 'radio',
-				'enablePrice' => true,
-				'allowsPrepopulate' => true,
+				'inputType'          => 'radio',
+				'enablePrice'        => true,
+				'allowsPrepopulate'  => true,
 				'enableAutocomplete' => true,
-				'errorMessage' => 'not valid',
-				'enableEnhancedUI' => true,
-				'enableChoiceValue' => true,
+				'errorMessage'       => 'not valid',
+				'enableEnhancedUI'   => true,
+				'enableChoiceValue'  => true,
 			],
 		);
 	}
@@ -63,34 +64,36 @@ class ShippingRadioFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
 	public function generate_fields() : array {
-		return [ $this->factory->field->create(
-			array_merge(
-				$this->property_helper->values,
-				[
-					'isRequired' => true,
-					'choices' => [
-						[
-							'text' => 'First Choice',
-							'value' => 'first',
-							'isSelected'=> false,
-							'price' => '$5.00',
-						],
-						[
-							'text' => 'Second Choice',
-							'value' => 'second',
-							'isSelected'=> false,
-							'price' => '$10.00',
-						],
-						[
-							'text' => 'Third Choice',
-							'value' => 'third',
-							'isSelected'=> false,
-							'price' => '$15.00',
+		return [
+			$this->factory->field->create(
+				array_merge(
+					$this->property_helper->values,
+					[
+						'isRequired' => true,
+						'choices'    => [
+							[
+								'text'       => 'First Choice',
+								'value'      => 'first',
+								'isSelected' => false,
+								'price'      => '$5.00',
+							],
+							[
+								'text'       => 'Second Choice',
+								'value'      => 'second',
+								'isSelected' => false,
+								'price'      => '$10.00',
+							],
+							[
+								'text'       => 'Third Choice',
+								'value'      => 'third',
+								'isSelected' => false,
+								'price'      => '$15.00',
+							],
 						],
 					]
-				]
-			)
-		) ];
+				)
+			),
+		];
 	}
 
 	/**

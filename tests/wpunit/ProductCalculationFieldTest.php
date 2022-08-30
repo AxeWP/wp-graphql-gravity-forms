@@ -53,35 +53,37 @@ class ProductCalculationFieldTest extends FormFieldTestCase implements FormField
 	 * Generates the form fields from factory. Must be wrapped in an array.
 	 */
 	public function generate_fields() : array {
-		$label = $this->property_helper->dummy->words(2);
+		$label = $this->property_helper->dummy->words( 2 );
 		return [
 			$this->factory->field->create(
 				array_merge(
 					$this->property_helper->values,
 					[ 'inputType' => 'calculation' ],
-					['adminLabel' => 'calc'],
-					[ 'calculationFormula' => '{ ' . $label .' (Quantity):1.3} * 2' ],
+					[ 'adminLabel' => 'calc' ],
+					[ 'calculationFormula' => '{ ' . $label . ' (Quantity):1.3} * 2' ],
 					[ 'basePrice' => null ],
 					[ 'enableCalculation' => true ],
 					[ 'enableChoiceValue' => true ],
 					[ 'label' => $label ],
-					[ 'inputs' => [
-						[
-							'id' => 1.1,
-							'label' => 'Name',
-							'name' => null,
+					[
+						'inputs' => [
+							[
+								'id'    => 1.1,
+								'label' => 'Name',
+								'name'  => null,
+							],
+							[
+								'id'    => 1.2,
+								'label' => 'Price',
+								'name'  => null,
+							],
+							[
+								'id'    => 1.3,
+								'label' => 'Quantity',
+								'name'  => null,
+							],
 						],
-						[
-							'id' => 1.2,
-							'label' => 'Price',
-							'name' => null,
-						],
-						[
-							'id' => 1.3,
-							'label' => 'Quantity',
-							'name' => null,
-						],
-					] ],
+					],
 				)
 			),
 		];
@@ -92,8 +94,8 @@ class ProductCalculationFieldTest extends FormFieldTestCase implements FormField
 	 */
 	public function field_value() {
 		return [
-			'name' => $this->fields[0]->label,
-			'price' => '$2.00',
+			'name'     => $this->fields[0]->label,
+			'price'    => '$2.00',
 			'quantity' => 1.0,
 		];
 	}
@@ -103,8 +105,8 @@ class ProductCalculationFieldTest extends FormFieldTestCase implements FormField
 	 */
 	public function field_value_input() {
 		return [
-			'price' => 2.0,
-			'quantity' => 1.0
+			'price'    => 2.0,
+			'quantity' => 1.0,
 		];
 	}
 
@@ -113,7 +115,7 @@ class ProductCalculationFieldTest extends FormFieldTestCase implements FormField
 	 */
 	public function updated_field_value_input() {
 		return [
-			'price' => 4.0,
+			'price'    => 4.0,
 			'quantity' => 2.0,
 		];
 	}
@@ -123,8 +125,8 @@ class ProductCalculationFieldTest extends FormFieldTestCase implements FormField
 	 */
 	public function updated_field_value() {
 		return [
-			'name' => $this->fields[0]->label,
-			'price' => '$4.00',
+			'name'     => $this->fields[0]->label,
+			'price'    => '$4.00',
 			'quantity' => 2.0,
 		];
 	}

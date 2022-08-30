@@ -178,7 +178,7 @@ class EntryConnectionPaginationTest extends GFGraphQLTestCase {
 
 		$query = $this->getQuery();
 
-		$wp_query = GFAPI::get_entries( 0, [], ['direction' => 'ASC'] );
+		$wp_query = GFAPI::get_entries( 0, [], [ 'direction' => 'ASC' ] );
 
 		codecept_debug( $wp_query );
 
@@ -195,9 +195,9 @@ class EntryConnectionPaginationTest extends GFGraphQLTestCase {
 		$expected = array_slice( $wp_query, 0, 2, false );
 		$expected = array_reverse( $expected );
 
-		codecept_debug( array_column($expected, 'id' ) );
+		codecept_debug( array_column( $expected, 'id' ) );
 
-		$actual   = $this->graphql( compact( 'query', 'variables' ) );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertValidPagination( $expected, $actual );
 		$this->assertEquals( true, $actual['data']['gfEntries']['pageInfo']['hasPreviousPage'] );
@@ -207,7 +207,7 @@ class EntryConnectionPaginationTest extends GFGraphQLTestCase {
 		 * Test with empty offset.
 		 */
 		$variables['before'] = '';
-		$expected           = $actual;
+		$expected            = $actual;
 
 		$actual = $this->graphql( compact( 'query', 'variables' ) );
 		$this->assertEqualSets( $expected, $actual );
@@ -223,7 +223,7 @@ class EntryConnectionPaginationTest extends GFGraphQLTestCase {
 		$expected = array_slice( $wp_query, 2, 2, false );
 		$expected = array_reverse( $expected );
 
-		$actual   = $this->graphql( compact( 'query', 'variables' ) );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertValidPagination( $expected, $actual );
 		$this->assertEquals( true, $actual['data']['gfEntries']['pageInfo']['hasPreviousPage'] );
@@ -272,11 +272,11 @@ class EntryConnectionPaginationTest extends GFGraphQLTestCase {
 		$first_entry  = $expected[0];
 		$second_entry = $expected[1];
 
-		if( ! empty( $expected[0]['resumeToken'] ) ) {
+		if ( ! empty( $expected[0]['resumeToken'] ) ) {
 			$expected_key = $actual_key = 'resumeToken';
 		} else {
 			$expected_key = 'id';
-			$actual_key = 'databaseId';
+			$actual_key   = 'databaseId';
 		}
 
 		$this->assertEquals( $first_entry[ $expected_key ], $actual['data']['gfEntries']['edges'][0]['node'][ $actual_key ] );
@@ -291,7 +291,7 @@ class EntryConnectionPaginationTest extends GFGraphQLTestCase {
 	}
 
 	private function get_id_from_cursor( string $cursor ) {
-		$exploded = explode( ':', base64_decode($cursor) );
+		$exploded = explode( ':', base64_decode( $cursor ) );
 
 		return $exploded[2];
 	}

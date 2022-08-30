@@ -78,16 +78,16 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		// Test with bad ID.
 		$variables = [
-			'id' => 99999999,
-			'idType' => 'DATABASE_ID'
+			'id'     => 99999999,
+			'idType' => 'DATABASE_ID',
 		];
 
-		$actual = $this->graphql( compact( 'query', 'variables') );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertNull( $actual['data']['gfEntry'] );
 
 		// Test with Database ID.
-		$variables['id'] =$this->entry_ids[0];
+		$variables['id'] = $this->entry_ids[0];
 
 		$actual = $this->graphql( compact( 'query', 'variables' ) );
 
@@ -102,12 +102,12 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 			'idType' => 'ID',
 		];
 
-		$actual  = $this->graphql( compact( 'query', 'variables' ) );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 		$this->assertArrayHasKey( 'errors', $actual );
 
 		// Test with Global Id.
 		$variables['id'] = $global_id;
-		$actual  = $this->graphql( compact( 'query', 'variables' ) );
+		$actual          = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertQuerySuccessful( $actual, $expected );
@@ -166,17 +166,17 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		// Test with bad resume token.
 		$variables = [
-			'id' => 'not-a-real-id',
+			'id'     => 'not-a-real-id',
 			'idType' => 'RESUME_TOKEN',
 		];
 
-		$actual = $this->graphql( compact( 'query', 'variables') );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertNull( $actual['data']['gfEntry'] );
 
 		// Test with draft token
 		$variables['id'] = $draft_token;
-		$actual = $this->graphql( compact( 'query', 'variables' ) );
+		$actual          = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertEquals( $draft_token, $actual['data']['gfEntry']['resumeToken'] );
@@ -187,12 +187,12 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 			'idType' => 'ID',
 		];
 
-		$actual  = $this->graphql( compact( 'query', 'variables' ) );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 		$this->assertArrayHasKey( 'errors', $actual );
 
 		// Test with Global Id.
 		$variables['id'] = Relay::toGlobalId( DraftEntriesLoader::$name, $draft_token );
-		$actual = $this->graphql( compact( 'query', 'variables' ) );
+		$actual          = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertEquals( $draft_token, $actual['data']['gfEntry']['resumeToken'] );

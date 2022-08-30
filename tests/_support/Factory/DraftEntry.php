@@ -48,7 +48,7 @@ class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
 				'source_url'   => $args['source_url'] ?? null,
 				'user_agent'   => null,
 				'created_by'   => $args['created_by'] ?? null,
-				'currency'      => 'USD',
+				'currency'     => 'USD',
 			],
 			$args['entry'] ?? []
 		);

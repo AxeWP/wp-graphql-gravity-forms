@@ -49,21 +49,25 @@ class OptionRadioFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		$this->product_field_helper = $this->tester->getPropertyHelper( 'ProductField',
-		[
-			'inputType' => 'singleproduct',
-			'autocompleteAttribute' => 'autocomplete',
-			'disableQuantity' => true,
-		] );
-		return $this->tester->getPropertyHelper( 'OptionField',
-		[
-			'inputType' => 'radio',
-			'productField' => 1,
-			'id' => 2,
-			'enablePrice' => true,
-			'enableOtherChoice' => false,
-			'noDuplicates' => false,
-		] );
+		$this->product_field_helper = $this->tester->getPropertyHelper(
+			'ProductField',
+			[
+				'inputType'             => 'singleproduct',
+				'autocompleteAttribute' => 'autocomplete',
+				'disableQuantity'       => true,
+			]
+		);
+		return $this->tester->getPropertyHelper(
+			'OptionField',
+			[
+				'inputType'         => 'radio',
+				'productField'      => 1,
+				'id'                => 2,
+				'enablePrice'       => true,
+				'enableOtherChoice' => false,
+				'noDuplicates'      => false,
+			]
+		);
 	}
 
 	/**
@@ -77,19 +81,19 @@ class OptionRadioFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					[
 						'inputs' => [
 							[
-								'id' => 1.1,
+								'id'    => 1.1,
 								'label' => 'Name',
-								'name' => null,
+								'name'  => null,
 							],
 							[
-								'id' => 1.2,
+								'id'    => 1.2,
 								'label' => 'Price',
-								'name' => null,
+								'name'  => null,
 							],
 							[
-								'id' => 1.3,
+								'id'    => 1.3,
 								'label' => 'Quantity',
-								'name' => null,
+								'name'  => null,
 							],
 						],
 					]
@@ -98,9 +102,7 @@ class OptionRadioFieldTest extends FormFieldTestCase implements FormFieldTestCas
 			$this->factory->field->create(
 				array_merge(
 					$this->property_helper->values,
-					[
-						
-					]
+					[]
 				)
 			),
 		];
@@ -138,11 +140,11 @@ class OptionRadioFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 
+		return [
 			(string) $this->fields[0]['inputs'][0]['id'] => $this->fields[0]->label,
 			(string) $this->fields[0]['inputs'][1]['id'] => $this->fields[0]->basePrice,
 			(string) $this->fields[0]['inputs'][2]['id'] => 1.0,
-			$this->fields[1]->id => $this->field_value
+			$this->fields[1]->id                         => $this->field_value,
 		];
 	}
 

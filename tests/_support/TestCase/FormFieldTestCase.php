@@ -83,7 +83,6 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$this->entry_id = $this->createTestEntry();
 
-
 		if ( $this->test_draft ) {
 			$this->draft_token = $this->createDraftEntry();
 		}

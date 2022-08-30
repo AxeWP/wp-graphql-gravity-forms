@@ -49,19 +49,23 @@ class OptionCheckboxFieldTest extends FormFieldTestCase implements FormFieldTest
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		$this->product_field_helper = $this->tester->getPropertyHelper( 'ProductField',
-		[
-			'inputType' => 'singleproduct',
-			'autocompleteAttribute' => 'autocomplete',
-			'disableQuantity' => true,
-		] );
-		return $this->tester->getPropertyHelper( 'OptionField',
-		[
-			'inputType' => 'checkbox',
-			'productField' => 1,
-			'id' => 2,
-			'enablePrice' => true,
-		] );
+		$this->product_field_helper = $this->tester->getPropertyHelper(
+			'ProductField',
+			[
+				'inputType'             => 'singleproduct',
+				'autocompleteAttribute' => 'autocomplete',
+				'disableQuantity'       => true,
+			]
+		);
+		return $this->tester->getPropertyHelper(
+			'OptionField',
+			[
+				'inputType'    => 'checkbox',
+				'productField' => 1,
+				'id'           => 2,
+				'enablePrice'  => true,
+			]
+		);
 	}
 
 	/**
@@ -75,19 +79,19 @@ class OptionCheckboxFieldTest extends FormFieldTestCase implements FormFieldTest
 					[
 						'inputs' => [
 							[
-								'id' => 1.1,
+								'id'    => 1.1,
 								'label' => 'Name',
-								'name' => null,
+								'name'  => null,
 							],
 							[
-								'id' => 1.2,
+								'id'    => 1.2,
 								'label' => 'Price',
-								'name' => null,
+								'name'  => null,
 							],
 							[
-								'id' => 1.3,
+								'id'    => 1.3,
 								'label' => 'Quantity',
-								'name' => null,
+								'name'  => null,
 							],
 						],
 					]
@@ -99,19 +103,19 @@ class OptionCheckboxFieldTest extends FormFieldTestCase implements FormFieldTest
 					[
 						'inputs' => [
 							[
-								'id' => '2.1',
+								'id'    => '2.1',
 								'label' => 'Name',
-								'name' => null,
+								'name'  => null,
 							],
 							[
-								'id' => '2.2',
+								'id'    => '2.2',
 								'label' => 'Price',
-								'name' => null,
+								'name'  => null,
 							],
 							[
-								'id' => '2.3',
+								'id'    => '2.3',
 								'label' => 'Quantity',
-								'name' => null,
+								'name'  => null,
 							],
 						],
 					]
@@ -131,54 +135,54 @@ class OptionCheckboxFieldTest extends FormFieldTestCase implements FormFieldTest
 	public function field_value() {
 		return [
 			[
-				'inputId' => (float) $this->fields[1]['inputs'][0]['id'],
-				'text'    => $this->fields[1]['choices'][0]['text'],
-				'value'   => $this->fields[1]['choices'][0]['value'],
+				'inputId'         => (float) $this->fields[1]['inputs'][0]['id'],
+				'text'            => $this->fields[1]['choices'][0]['text'],
+				'value'           => $this->fields[1]['choices'][0]['value'],
 				'connectedChoice' => [
 					'formattedPrice' => $this->fields[1]['choices'][0]['price'] ?? null,
-					'isSelected' => $this->fields[1]['choices'][0]['isSelected'] ?? null,
-					'price' => floatval(preg_replace('/[^\d\.]/', '', $this->fields[1]['choices'][0]['price'])) ?? null,
-					'text' => $this->fields[1]['choices'][0]['text'],
-					'value' => (string) $this->fields[1]['choices'][0]['value'],
+					'isSelected'     => $this->fields[1]['choices'][0]['isSelected'] ?? null,
+					'price'          => floatval( preg_replace( '/[^\d\.]/', '', $this->fields[1]['choices'][0]['price'] ) ) ?? null,
+					'text'           => $this->fields[1]['choices'][0]['text'],
+					'value'          => (string) $this->fields[1]['choices'][0]['value'],
 				],
-				'connectedInput' => [
-					'id' => (float) $this->fields[1]['inputs'][0]['id'],
+				'connectedInput'  => [
+					'id'    => (float) $this->fields[1]['inputs'][0]['id'],
 					'label' => $this->fields[1]['inputs'][0]['label'],
-					'name' => $this->fields[1]['inputs'][0]['name'],
+					'name'  => $this->fields[1]['inputs'][0]['name'],
 				],
 			],
 			[
-				'inputId' => (float) $this->fields[1]['inputs'][1]['id'],
-				'text'    => $this->fields[1]['choices'][1]['text'],
-				'value'   => null,
+				'inputId'         => (float) $this->fields[1]['inputs'][1]['id'],
+				'text'            => $this->fields[1]['choices'][1]['text'],
+				'value'           => null,
 				'connectedChoice' => [
 					'formattedPrice' => $this->fields[1]['choices'][1]['price'] ?? null,
-					'isSelected' => $this->fields[1]['choices'][1]['isSelected'] ?? null,
-					'price' => floatval(preg_replace('/[^\d\.]/', '', $this->fields[1]['choices'][1]['price'])) ?? null,
-					'text' => $this->fields[1]['choices'][1]['text'],
-					'value' => (string) $this->fields[1]['choices'][1]['value'],
+					'isSelected'     => $this->fields[1]['choices'][1]['isSelected'] ?? null,
+					'price'          => floatval( preg_replace( '/[^\d\.]/', '', $this->fields[1]['choices'][1]['price'] ) ) ?? null,
+					'text'           => $this->fields[1]['choices'][1]['text'],
+					'value'          => (string) $this->fields[1]['choices'][1]['value'],
 				],
-				'connectedInput' => [
-					'id' => (float) $this->fields[1]['inputs'][1]['id'],
+				'connectedInput'  => [
+					'id'    => (float) $this->fields[1]['inputs'][1]['id'],
 					'label' => $this->fields[1]['inputs'][1]['label'],
-					'name' => $this->fields[1]['inputs'][1]['name'],
+					'name'  => $this->fields[1]['inputs'][1]['name'],
 				],
 			],
 			[
-				'inputId' => (float) $this->fields[1]['inputs'][2]['id'],
-				'text'    => $this->fields[1]['choices'][2]['text'],
-				'value'   => $this->fields[1]['choices'][2]['value'],
+				'inputId'         => (float) $this->fields[1]['inputs'][2]['id'],
+				'text'            => $this->fields[1]['choices'][2]['text'],
+				'value'           => $this->fields[1]['choices'][2]['value'],
 				'connectedChoice' => [
 					'formattedPrice' => $this->fields[1]['choices'][2]['price'] ?? null,
-					'isSelected' => $this->fields[1]['choices'][2]['isSelected'] ?? null,
-					'price' => floatval(preg_replace('/[^\d\.]/', '', $this->fields[1]['choices'][2]['price'])) ?? null,
-					'text' => $this->fields[1]['choices'][2]['text'],
-					'value' => (string) $this->fields[1]['choices'][2]['value'],
+					'isSelected'     => $this->fields[1]['choices'][2]['isSelected'] ?? null,
+					'price'          => floatval( preg_replace( '/[^\d\.]/', '', $this->fields[1]['choices'][2]['price'] ) ) ?? null,
+					'text'           => $this->fields[1]['choices'][2]['text'],
+					'value'          => (string) $this->fields[1]['choices'][2]['value'],
 				],
-				'connectedInput' => [
-					'id' => (float) $this->fields[1]['inputs'][2]['id'],
+				'connectedInput'  => [
+					'id'    => (float) $this->fields[1]['inputs'][2]['id'],
 					'label' => $this->fields[1]['inputs'][2]['label'],
-					'name' => $this->fields[1]['inputs'][2]['name'],
+					'name'  => $this->fields[1]['inputs'][2]['name'],
 				],
 			],
 		];
@@ -248,11 +252,11 @@ class OptionCheckboxFieldTest extends FormFieldTestCase implements FormFieldTest
 	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ 
+		return [
 			(string) $this->fields[1]['inputs'][0]['id'] => $this->fields[1]->label,
 			(string) $this->fields[1]['inputs'][1]['id'] => $this->fields[1]->basePrice,
-			(string) $this->field_value[0]['inputId'] => (string) $this->field_value[0]['value'],
-			(string) $this->field_value[2]['inputId'] => (string) $this->field_value[2]['value'],
+			(string) $this->field_value[0]['inputId']    => (string) $this->field_value[0]['value'],
+			(string) $this->field_value[2]['inputId']    => (string) $this->field_value[2]['value'],
 		];
 	}
 
