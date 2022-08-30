@@ -8,6 +8,7 @@
 
 namespace WPGraphQL\GF\Type\WPInterface;
 
+use GFCommon;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
@@ -22,6 +23,7 @@ use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Model\Form;
 use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\AbstractInterface;
+use WPGraphQL\GF\Type\WPObject\Order\OrderSummary;
 use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
@@ -106,7 +108,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 	 * {@inheritDoc}
 	 */
 	public static function get_fields() : array {
-		return [
+		$fields = [
 			'createdBy'           => [
 				'type'        => 'User',
 				'description' => __( 'The user who created the entry.', 'wp-graphql-gravity-forms' ),
@@ -168,6 +170,49 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 			 * https://docs.gravityforms.com/entry-object/#pricing-properties
 			 */
 		];
+
+		// Order Summaries are only available in GF 2.6+.
+		if ( version_compare( GFCommon::$version, '2.6.0', '>=' ) ) {
+			$fields['orderSummary'] = [
+				'type'        => OrderSummary::$type,
+				'description' => __( 'The entry order summary. Null if the entry has no pricing fields', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $source, array $args, AppContext $context ) {
+					if ( ! class_exists( 'Gravity_Forms\Gravity_Forms\Orders\Factories\GF_Order_Factory' ) ) {
+						return null;
+					}
+
+					if ( empty( $context->gfForm ) ) {
+						$context->gfForm = new Form( GFUtils::get_form( $source->formDatabaseId, false ) );
+					}
+
+					$order = \Gravity_Forms\Gravity_Forms\Orders\Factories\GF_Order_Factory::create_from_entry( $context->gfForm->form, $source->entry );
+
+					/** @var array $items */
+					$items = $order->get_items();
+					if ( empty( $items ) ) {
+						return null;
+					}
+
+					// Convert order items to array.
+					$items = array_map(
+						fn( $item) => $item->to_array(),
+						$items,
+					);
+
+					$totals   = $order->get_totals();
+					$currency = ! empty( $order->currency ) ? $order->currency : null;
+
+					return [
+						'currency' => $currency,
+						'items'    => $items,
+						'subtotal' => $totals['sub_total'] ?? null,
+						'total'    => $totals['total'] ?? null,
+					];
+				},
+			];
+		}
+
+		return $fields;
 	}
 
 	/**
