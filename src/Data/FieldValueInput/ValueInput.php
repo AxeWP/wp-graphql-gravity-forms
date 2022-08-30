@@ -42,6 +42,9 @@ class ValueInput extends AbstractFieldValueInput {
 			$price = rgempty( 'price', $choice ) ? 0 : GFCommon::to_number( rgar( $choice, 'price' ) );
 
 			return $this->args . '|' . $price;
+		} elseif ( 'total' === $this->field->type ) {
+			// Convert to number so draft updates dont return the currency.
+			return GFCommon::to_number( $this->args );
 		}
 
 		return $this->args;

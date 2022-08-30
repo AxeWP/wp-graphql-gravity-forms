@@ -1217,6 +1217,20 @@ class Wpunit extends \Codeception\Module {
 		];
 	}
 
+	/**
+	 * Get the default args for a total field.
+	 */
+	public function getTotalFieldArgs() : array {
+		return [
+			'adminLabel',
+			'description',
+			'descriptionPlacement',
+			'label',
+			'labelPlacement',
+			[ 'type' => 'total' ],
+		];
+	}
+
 
 	/**
 	 * Get default args for website field.
