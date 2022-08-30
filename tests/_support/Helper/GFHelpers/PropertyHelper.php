@@ -24,13 +24,16 @@ class PropertyHelper extends GFHelpers {
 		return $value ?: 'jpg,png';
 	}
 
-
 	public function autocompleteAttribute( $value = null ) {
 		return ! empty( $value ) ? $value : ( $this->dummy->text( 0, 8, true ) ?? null );
 	}
 
 	public function backgroundColor( $value = null ) {
 		return ! empty( $value ) ? $value : '#7ca6d8';
+	}
+
+	public function basePrice( $value = null ) {
+		return ! empty( $value ) ? $value : ( '$' . $this->dummy->price() );
 	}
 
 	public function borderColor( $value = null ) {

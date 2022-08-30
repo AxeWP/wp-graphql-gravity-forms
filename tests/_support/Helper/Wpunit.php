@@ -643,6 +643,49 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for an Option field.
+	 */
+	public function getOptionFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			[
+				'choices' => [
+					[
+						'text'       => 'First Choice',
+						'value'      => 'first',
+						'isSelected' => false,
+						'price'      => '$5.00',
+					],
+					[
+						'text'       => 'Second Choice',
+						'value'      => 'second',
+						'isSelected' => false,
+						'price'      => '$10.00',
+					],
+					[
+						'text'       => 'Third Choice',
+						'value'      => 'third',
+						'isSelected' => false,
+						'price'      => '$15.00',
+					],
+				],
+			],
+			'defaultValue',
+			'description',
+			'descriptionPlacement',
+			'enableChoiceValue',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'size',
+			[ 'type' => 'option' ],
+		];
+	}
+
+	/**
 	 * Get args for page field.
 	 */
 	public function getPageFieldArgs() : array {
@@ -831,6 +874,52 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a Product field
+	 */
+	public function getProductFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'basePrice',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			[ 'id' => 1 ],
+			'inputName',
+			[ 'inputType' => 'singleproduct' ],
+			[ 'isRequired' => false ],
+			'label',
+			'labelPlacement',
+			'noDuplicates',
+			'size',
+			[ 'type' => 'product' ],
+		];
+	}
+
+
+	/**
+	 * Get the default args for a quantity field.
+	 */
+	public function getQuantityFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'defaultValue',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'noDuplicates',
+			'placeholder',
+			'size',
+			[ 'type' => 'quantity' ],
+		];
+	}
+
+	/**
 	 * Get the default args for a Quiz field
 	 */
 	public function getQuizFieldArgs() : array {
@@ -989,6 +1078,26 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a shipping field.
+	 */
+	public function getShippingFieldArgs() : array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'description',
+			'descriptionPlacement',
+			'inputName',
+			'label',
+			'labelPlacement',
+			'noDuplicates',
+			'placeholder',
+			'size',
+			[ 'type' => 'shipping' ],
+		];
+	}
+
+
+	/**
 	 * Get the default args for a signature field.
 	 */
 	public function getSignatureFieldArgs() : array {
@@ -1105,6 +1214,20 @@ class Wpunit extends \Codeception\Module {
 			'noDuplicates',
 			'subLabelPlacement',
 			[ 'type' => 'time' ],
+		];
+	}
+
+	/**
+	 * Get the default args for a total field.
+	 */
+	public function getTotalFieldArgs() : array {
+		return [
+			'adminLabel',
+			'description',
+			'descriptionPlacement',
+			'label',
+			'labelPlacement',
+			[ 'type' => 'total' ],
 		];
 	}
 

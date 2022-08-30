@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit407664321485b405639c6d14baff7059
+class ComposerStaticInit76119eb71b081cd33ea3524d54e1ff40
 {
     public static $files = array (
         '7166494aeff09009178f278afd86c83f' => __DIR__ . '/..' . '/yahnis-elsts/plugin-update-checker/load-v4p13.php',
@@ -46,6 +46,7 @@ class ComposerStaticInit407664321485b405639c6d14baff7059
         'WPGraphQL\\GF\\Data\\FieldValueInput\\ImageValuesInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/ImageValuesInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\ListValuesInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/ListValuesInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\NameValuesInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/NameValuesInput.php',
+        'WPGraphQL\\GF\\Data\\FieldValueInput\\ProductValueInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/ProductValueInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\ValueInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/ValueInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\ValuesInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/ValuesInput.php',
         'WPGraphQL\\GF\\Data\\Loader\\DraftEntriesLoader' => __DIR__ . '/../..' . '/src/Data/Loader/DraftEntriesLoader.php',
@@ -182,6 +183,7 @@ class ComposerStaticInit407664321485b405639c6d14baff7059
         'WPGraphQL\\GF\\Type\\Input\\ListFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/ListFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\NameFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/NameFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\PostImageFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/PostImageFieldInput.php',
+        'WPGraphQL\\GF\\Type\\Input\\ProductFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/ProductFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\SubmitFormMetaInput' => __DIR__ . '/../..' . '/src/Type/Input/SubmitFormMetaInput.php',
         'WPGraphQL\\GF\\Type\\Input\\UpdateDraftEntryMetaInput' => __DIR__ . '/../..' . '/src/Type/Input/UpdateDraftEntryMetaInput.php',
         'WPGraphQL\\GF\\Type\\Input\\UpdateEntryMetaInput' => __DIR__ . '/../..' . '/src/Type/Input/UpdateEntryMetaInput.php',
@@ -201,6 +203,7 @@ class ComposerStaticInit407664321485b405639c6d14baff7059
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldInputSetting\\InputWithName' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldInputSetting/InputWithName.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldInputSetting\\InputWithPassword' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldInputSetting/InputWithPassword.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldInputSetting\\InputWithSelectAllChoices' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldInputSetting/InputWithSelectAllChoices.php',
+        'WPGraphQL\\GF\\Type\\WPInterface\\FieldInputSetting\\InputWithSingleProduct' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldInputSetting/InputWithSingleProduct.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldInputSetting\\InputWithTimeFormat' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldInputSetting/InputWithTimeFormat.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\AbstractFieldSetting' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/AbstractFieldSetting.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithAddIconUrl' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithAddIconUrl.php',
@@ -266,6 +269,7 @@ class ComposerStaticInit407664321485b405639c6d14baff7059
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithRichTextEditor' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithRichTextEditor.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithRules' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithRules.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithSelectAllChoices' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithSelectAllChoices.php',
+        'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithSingleProductInputs' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithSingleProductInputs.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithSize' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithSize.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithSubLabelPlacement' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithSubLabelPlacement.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithTimeFormat' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithTimeFormat.php',
@@ -290,6 +294,7 @@ class ComposerStaticInit407664321485b405639c6d14baff7059
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\ImageFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/ImageFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\ListFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/ListFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\NameFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/NameFieldValue.php',
+        'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\ProductFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/ProductFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FieldValue\\ValueProperty\\TimeFieldValue' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FieldValue/ValueProperty/TimeFieldValue.php',
         'WPGraphQL\\GF\\Type\\WPObject\\FormField\\FormFields' => __DIR__ . '/../..' . '/src/Type/WPObject/FormField/FormFields.php',
         'WPGraphQL\\GF\\Type\\WPObject\\Form\\Form' => __DIR__ . '/../..' . '/src/Type/WPObject/Form/Form.php',
@@ -320,9 +325,9 @@ class ComposerStaticInit407664321485b405639c6d14baff7059
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit407664321485b405639c6d14baff7059::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit407664321485b405639c6d14baff7059::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit407664321485b405639c6d14baff7059::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit76119eb71b081cd33ea3524d54e1ff40::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit76119eb71b081cd33ea3524d54e1ff40::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit76119eb71b081cd33ea3524d54e1ff40::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -33,8 +33,8 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 			'isHtml5Enabled'          => [ 'rg_gforms_enable_html5' => $this->dummy->yesno() ],
 			'isLoggingEnabled'        => [ 'gform_enable_logging' => $this->dummy->yesno() ],
 			'isNoConflictModeEnabled' => [ 'gform_enable_noconflict' => $this->dummy->yesno() ],
-			'recaptchaType' => [ 'rg_gforms_captcha_type' => 'invisible' ],
-			'publicKey' => [ 'rg_gforms_captcha_public_key' => '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' ],
+			'recaptchaType'           => [ 'rg_gforms_captcha_type' => 'invisible' ],
+			'publicKey'               => [ 'rg_gforms_captcha_public_key' => '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' ],
 		];
 
 		foreach ( $this->options as $key => $setting ) {

@@ -29,9 +29,12 @@ class FieldChoiceRegistry {
 		$input_type = $field->get_input_type();
 
 		switch ( true ) {
-			// Post Category choices are on the interface.
+			// Some choices belong on the the interface.
 			case 'post_category' === $field->type:
 				$input_name = 'PostCategoryFieldChoice';
+				break;
+			case 'option' === $field->type:
+				$input_name = 'OptionFieldChoice';
 				break;
 			default:
 				$input_name = ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'FieldChoice';

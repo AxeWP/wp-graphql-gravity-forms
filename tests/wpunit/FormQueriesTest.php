@@ -66,19 +66,19 @@ class FormQueriesTest extends GFGraphQLTestCase {
 
 		// Test with bad ID.
 		$variables = [
-			'id' => 99999999,
-			'idType' => 'DATABASE_ID'
+			'id'     => 99999999,
+			'idType' => 'DATABASE_ID',
 		];
 
-		$actual = $this->graphql( compact( 'query', 'variables') );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertNull( $actual['data']['gfForm'] );
 
 		// Test with Database ID.
 		$variables['id'] = $form_id;
-		$expected = $this->expected_field_response( $form, $confirmation_key );
+		$expected        = $this->expected_field_response( $form, $confirmation_key );
 
-		$actual = $this->graphql( compact( 'query', 'variables') );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertQuerySuccessful( $actual, $expected );
@@ -89,13 +89,12 @@ class FormQueriesTest extends GFGraphQLTestCase {
 			'idType' => 'ID',
 		];
 
-		$actual  = $this->graphql( compact( 'query', 'variables' ) );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 		$this->assertArrayHasKey( 'errors', $actual );
 
 		// Test with Global Id.
 		$variables['id'] = $global_id;
-		$actual  = $this->graphql( compact( 'query', 'variables' ) );
-
+		$actual          = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertQuerySuccessful( $actual, $expected );

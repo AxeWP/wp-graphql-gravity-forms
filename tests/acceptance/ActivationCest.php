@@ -12,17 +12,17 @@ class ActivationCest {
 
 		$I->loginAsAdmin();
 		$I->amOnPluginsPage();
-		$I->seePluginActivated($pluginSlug);
-		$I->deactivatePlugin($pluginSlug);
-		
-		$I->loginAsAdmin();
-		$I->amOnPluginsPage();
-		// Not sure why the slug changes
-		$I->seePluginDeactivated('wpgraphql-for-gravity-forms');
-		$I->activatePlugin('wpgraphql-for-gravity-forms');
+		$I->seePluginActivated( $pluginSlug );
+		$I->deactivatePlugin( $pluginSlug );
 
 		$I->loginAsAdmin();
 		$I->amOnPluginsPage();
-		$I->seePluginActivated($pluginSlug);
+		// Not sure why the slug changes
+		$I->seePluginDeactivated( 'wpgraphql-for-gravity-forms' );
+		$I->activatePlugin( 'wpgraphql-for-gravity-forms' );
+
+		$I->loginAsAdmin();
+		$I->amOnPluginsPage();
+		$I->seePluginActivated( $pluginSlug );
 	}
 }

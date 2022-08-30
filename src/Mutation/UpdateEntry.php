@@ -258,6 +258,9 @@ class UpdateEntry extends AbstractMutation {
 	 * @param array $form the existing form.
 	 */
 	public static function prepare_field_values_for_save( array $values, array $entry, array $form ) : array {
+		// We need the entry fresh to prepare the values.
+		$entry = array_merge( $entry, $values );
+
 		foreach ( $values as $id => &$value ) {
 			$input_name = 'input_' . str_replace( '.', '_', $id );
 			$field_id   = strtok( $id, '.' );

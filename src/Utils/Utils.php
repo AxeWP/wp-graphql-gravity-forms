@@ -281,20 +281,9 @@ class Utils {
 			'submit', // This is not technically a form field.
 		];
 
-		// These fields are no longer supported by GF.
-		$ignored_fields[] = 'donation';
-		// This field is still in beta.
-		$ignored_fields[] = 'repeater';
-
 		// These fields are experimental, and don't have unit testing in place.
 		if ( ! defined( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS' ) || false === WPGRAPHQL_GF_EXPERIMENTAL_FIELDS ) {
 			$ignored_fields[] = 'creditcard';
-			$ignored_fields[] = 'option';
-			$ignored_fields[] = 'price';
-			$ignored_fields[] = 'product';
-			$ignored_fields[] = 'quantity';
-			$ignored_fields[] = 'shipping';
-			$ignored_fields[] = 'total';
 		}
 
 		/**

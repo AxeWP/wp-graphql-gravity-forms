@@ -78,7 +78,7 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 
 		$query = $this->getQuery();
 
-		$wp_query = GFAPI::get_forms( null, null, 'ids', 'DESC');
+		$wp_query = GFAPI::get_forms( null, null, 'ids', 'DESC' );
 
 		codecept_debug( array_column( $wp_query, 'id' ) );
 
@@ -156,7 +156,7 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 
 		$query = $this->getQuery();
 
-		$wp_query = GFAPI::get_forms( null, null, 'ids', 'ASC');
+		$wp_query = GFAPI::get_forms( null, null, 'ids', 'ASC' );
 
 		codecept_debug( array_column( $wp_query, 'id' ) );
 
@@ -173,9 +173,9 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 		$expected = array_slice( $wp_query, 0, 2, false );
 		$expected = array_reverse( $expected );
 
-		codecept_debug( array_column($expected, 'id' ) );
+		codecept_debug( array_column( $expected, 'id' ) );
 
-		$actual   = $this->graphql( compact( 'query', 'variables' ) );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertValidPagination( $expected, $actual );
 		$this->assertEquals( true, $actual['data']['gfForms']['pageInfo']['hasPreviousPage'] );
@@ -185,7 +185,7 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 		 * Test with empty offset.
 		 */
 		$variables['before'] = '';
-		$expected           = $actual;
+		$expected            = $actual;
 
 		$actual = $this->graphql( compact( 'query', 'variables' ) );
 		$this->assertEqualSets( $expected, $actual );
@@ -201,7 +201,7 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 		$expected = array_slice( $wp_query, 2, 2, false );
 		$expected = array_reverse( $expected );
 
-		$actual   = $this->graphql( compact( 'query', 'variables' ) );
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertValidPagination( $expected, $actual );
 		$this->assertEquals( true, $actual['data']['gfForms']['pageInfo']['hasPreviousPage'] );

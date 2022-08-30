@@ -64,6 +64,11 @@ class EntryObjectMutation {
 			case 'post_image':
 				$field_value_input = FieldValueInput\ImageValuesInput::class;
 				break;
+			case 'hiddenproduct':
+			case 'singleproduct':
+			case 'calculation':
+				$field_value_input = FieldValueInput\ProductValueInput::class;
+				break;
 			case 'date':
 			case 'hidden':
 			case 'number':
@@ -71,6 +76,7 @@ class EntryObjectMutation {
 			case 'post_content':
 			case 'post_excerpt':
 			case 'post_title':
+			case 'price':
 			case 'radio':
 			case 'select':
 			case 'text':

@@ -15,7 +15,6 @@ use GFAPI;
 use GF_Field;
 use Helper\GFHelpers\ExpectedFormFields;
 use WPGraphQL\GF\Registry\FormFieldRegistry;
-use WPGraphQL\GF\Type\WPObject\FormField\FormFields;
 
 /**
  * Class - FormFieldTestCase
@@ -35,6 +34,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	protected $updated_draft_field_value_input;
 	protected $fields;
 	protected $form_id;
+	protected $field_id;
 	protected $is_draft;
 
 	/**
@@ -56,23 +56,18 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	 */
 	public function setUp(): void {
 		// Before...
+		$this->is_draft = false;
 		parent::setUp();
 
 		wp_set_current_user( $this->admin->ID );
-		$this->is_draft = false;
 
 		$this->property_helper = $this->field_helper();
 
-		$this->fields = $this->generate_fields();
-
+		$this->fields    = $this->generate_fields();
+		$this->field_id  = $this->mutation_value_field_id();
 		$this->form_args = $this->generate_form_args();
 
-		$this->form_id = $this->factory->form->create(
-			array_merge(
-				[ 'fields' => $this->fields ],
-				$this->form_args,
-			)
-		);
+		$this->form_id = $this->createTestForm();
 
 		$this->field_value                     = $this->field_value();
 		$this->field_value_input               = $this->field_value_input();
@@ -86,21 +81,10 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$this->field_query                     = $this->field_query();
 		$this->entry_query                     = $this->entry_query();
 
-		$this->entry_id = $this->factory->entry->create(
-			[ 'form_id' => $this->form_id ] + $this->value
-		);
+		$this->entry_id = $this->createTestEntry();
 
 		if ( $this->test_draft ) {
-			$this->draft_token = $this->factory->draft_entry->create(
-				[
-					'form_id'     => $this->form_id,
-					'entry'       => $this->value + [
-						'fieldValues' => $this->property_helper->get_field_values( $this->value ),
-					],
-					'created_by'  => $this->admin->ID,
-					'fieldValues' => $this->property_helper->get_field_values( $this->value ),
-				]
-			);
+			$this->draft_token = $this->createDraftEntry();
 		}
 
 		$this->clearSchema();
@@ -115,22 +99,68 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$this->factory->draft_entry->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
 		GFFormsModel::set_current_lead( null );
-		$this->draft_token                     = null;
-		$this->entry_id                        = null;
-		$this->field_value_input               = null;
-		$this->field_value                     = null;
-		$this->fields                          = null;
-		$this->form_id                         = null;
-		$this->is_draft                        = null;
-		$this->updated_field_value_input       = null;
-		$this->updated_field_value             = null;
-		$this->draft_field_value_input         = null;
-		$this->draft_field_value               = null;
-		$this->updated_draft_field_value_input = null;
-		$this->updated_draft_field_value       = null;
 
 		// Then...
 		parent::tearDown();
+	}
+
+	/**
+	 * Creates the test form.
+	 *
+	 * @uses $this->fields
+	 * @uses $this->form_args
+	 */
+	public function createTestForm() : int {
+		$form_id = $this->factory->form->create(
+			array_merge(
+				[ 'fields' => $this->fields ],
+				$this->form_args,
+			)
+		);
+
+		return $form_id;
+	}
+
+	/**
+	 * Creates the test entry.
+	 *
+	 * @uses $this->form
+	 * @uses $this->value
+	 *
+	 * @return integer
+	 */
+	public function createTestEntry() : int {
+		$entry_id = $this->factory->entry->create(
+			[ 'form_id' => $this->form_id ] + $this->value
+		);
+
+		return $entry_id;
+	}
+
+	/**
+	 * Creates the draft entry.
+	 *
+	 * @uses $this->get_draft_field_values()
+	 * @uses $this->form_id
+	 * @uses $this->value
+	 *
+	 * @return string
+	 */
+	public function createDraftEntry() : string {
+		$draft_entry_field_values = $this->get_draft_field_values();
+
+		$draft_token = $this->factory->draft_entry->create(
+			[
+				'form_id'     => $this->form_id,
+				'entry'       => $this->value + [
+					'fieldValues' => $draft_entry_field_values,
+				],
+				'created_by'  => $this->admin->ID,
+				'fieldValues' => $draft_entry_field_values,
+			]
+		);
+
+		return $draft_token;
 	}
 
 	/**
@@ -146,17 +176,38 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		);
 	}
 
+	public function mutation_value_field_id() : int {
+		return $this->fields[0]->id;
+	}
+
+	public function get_draft_field_values() {
+		return $this->property_helper->get_field_values( $this->value );
+	}
+
+	/**
+	 * The field value expected by graphql.
+	 */
 	public function field_value() {
 		return $this->field_value;
 	}
 
+	/**
+	 * The draft field value expected by graphql.
+	 */
 	public function draft_field_value() {
 		return $this->field_value;
 	}
 
+	/**
+	 * The updated field value expected by graphql.
+	 */
 	public function updated_field_value() {
 		return $this->updated_field_value;
 	}
+
+	/**
+	 * The updated draft field value expected by graphql.
+	 */
 	public function updated_draft_field_value() {
 		return $this->updated_field_value;
 	}
@@ -254,7 +305,6 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	 */
 	protected function runTestSubmitDraft() : void {
 		$this->is_draft = true;
-		$form           = $this->factory->form->get_object_by_id( $this->form_id );
 		wp_set_current_user( $this->admin->ID );
 
 		$query = $this->submit_form_mutation();
@@ -262,7 +312,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$variables = [
 			'draft'   => true,
 			'formId'  => $this->form_id,
-			'fieldId' => $form['fields'][0]->id,
+			'fieldId' => $this->field_id,
 			'value'   => $this->draft_field_value_input,
 		];
 
@@ -289,7 +339,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$variables = [
 			'draft'   => false,
 			'formId'  => $this->form_id,
-			'fieldId' => $form['fields'][0]->id,
+			'fieldId' => $this->field_id,
 			'value'   => $this->field_value_input,
 		];
 
@@ -327,7 +377,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$variables = [
 			'entryId' => $this->entry_id,
-			'fieldId' => $form['fields'][0]->id,
+			'fieldId' => $this->field_id,
 			'value'   => $field_value_input,
 		];
 
@@ -360,7 +410,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 
 		$variables = [
 			'resumeToken' => $resume_token,
-			'fieldId'     => $form['fields'][0]->id,
+			'fieldId'     => $this->field_id,
 			'value'       => $field_value_input,
 			'createdBy'   => $this->admin->ID,
 		];

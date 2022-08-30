@@ -8,6 +8,7 @@
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue;
 
+use GFAPI;
 use GFCommon;
 use GF_Field;
 use GF_Field_FileUpload;
@@ -36,28 +37,6 @@ class FieldValues {
 					}
 
 					return $source->get_value_export( $context->gfEntry->entry, $source->id ) ?: null;
-				},
-			],
-		];
-	}
-
-	/**
-	 * Get `consentValue` property.
-	 *
-	 * @return array
-	 */
-	public static function consent_value() : array {
-		return [
-			'consentValue' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Consent field value. This is `true` when consent is given, `false` when it is not.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
-						return null;
-					}
-
-					$input_key = $source->inputs[0]['id'];
-					return isset( $context->gfEntry->entry[ $input_key ] ) ? (bool) $context->gfEntry->entry[ $input_key ] : null;
 				},
 			],
 		];
@@ -126,6 +105,94 @@ class FieldValues {
 					}
 
 					return $checkboxValues;
+				},
+			],
+		];
+	}
+
+	/**
+	 * Get `consentValue` property.
+	 *
+	 * @return array
+	 */
+	public static function consent_value() : array {
+		return [
+			'consentValue' => [
+				'type'        => 'Boolean',
+				'description' => __( 'Consent field value. This is `true` when consent is given, `false` when it is not.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function ( $source, array $args, AppContext $context ) {
+					if ( ! self::is_field_and_entry( $source, $context ) ) {
+						return null;
+					}
+
+					$input_key = $source->inputs[0]['id'];
+					return isset( $context->gfEntry->entry[ $input_key ] ) ? (bool) $context->gfEntry->entry[ $input_key ] : null;
+				},
+			],
+		];
+	}
+
+	/**
+	 * Get `fileUploadValue` property.
+	 *
+	 * @return array
+	 */
+	public static function file_upload_values() : array {
+		return [
+			'fileUploadValues' => [
+				'type'        => [ 'list_of' => ValueProperty\FileUploadFieldValue::$type ],
+				'description' => __( 'File upload value', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $source, array $args, AppContext $context ) {
+					if ( ! self::is_field_and_entry( $source, $context ) ) {
+						return null;
+					}
+
+					return self::get_file_upload_extra_entry_metadata( $source, $context->gfEntry->entry, $context->gfForm->form ) ?: null;
+				},
+			],
+		];
+	}
+
+	/**
+	 * Get `imageValues` property.
+	 */
+	public static function image_values() : array {
+		return [
+			'imageValues' => [
+				'type'        => ValueProperty\ImageFieldValue::$type,
+				'description' => __( 'Image field value.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function ( $source, array $args, AppContext $context ) {
+					if ( ! self::is_field_and_entry( $source, $context ) ) {
+						return null;
+					}
+
+					$image_data = array_pad( explode( '|:|', $context->gfEntry->entry[ $source->id ] ), 5, false );
+
+					$values_to_return = [
+						'altText'     => $image_data[4] ?: null,
+						'caption'     => $image_data[2] ?: null,
+						'description' => $image_data[3] ?: null,
+						'title'       => $image_data[1] ?: null,
+						'url'         => $image_data[0] ?: null,
+					];
+
+					/**
+					 * Strip out the meta from the entry value.
+					 *
+					 * @see GF_Field_PostImage::get_extra_entry_metadata().
+					 */
+					$file_values = [];
+
+					// Draft entries don't upload files.
+					if ( ! $context->gfEntry->isDraft ) {
+						$entry                = $context->gfEntry->entry;
+						$entry[ $source->id ] = $image_data[0];
+						$file_values          = self::get_file_upload_extra_entry_metadata( $source, $entry, $context->gfForm->form );
+						// Add the file values if they exist.
+						$values_to_return = array_merge( $file_values[ $image_data[0] ] ?? [], $values_to_return );
+					}
+
+					return $values_to_return;
 				},
 			],
 		];
@@ -215,66 +282,71 @@ class FieldValues {
 	}
 
 	/**
-	 * Get `fileUploadValue` property.
-	 *
-	 * @return array
+	 * Get `productValues` property.
 	 */
-	public static function file_upload_values() : array {
+	public static function product_values() : array {
 		return [
-			'fileUploadValues' => [
-				'type'        => [ 'list_of' => ValueProperty\FileUploadFieldValue::$type ],
-				'description' => __( 'File upload value', 'wp-graphql-gravity-forms' ),
+			'productValues' => [
+				'type'        => ValueProperty\ProductFieldValue::$type,
+				'description' => __( 'Product field values.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
 
-					return self::get_file_upload_extra_entry_metadata( $source, $context->gfEntry->entry, $context->gfForm->form ) ?: null;
-				},
-			],
-		];
-	}
+					// Initialize values.
+					$product_name = null;
+					$price        = null;
+					$quantity     = null;
 
-	/**
-	 * Get `imageValues` property.
-	 */
-	public static function image_values() : array {
-		return [
-			'imageValues' => [
-				'type'        => ValueProperty\ImageFieldValue::$type,
-				'description' => __( 'Image field value.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
-						return null;
+					switch ( true ) {
+						case $source instanceof \GF_Field_SingleProduct:
+						case $source instanceof \GF_Field_HiddenProduct:
+							$product_name = trim( $context->gfEntry->entry[ $source->id . '.1' ] ?? '' );
+							$price        = trim( $context->gfEntry->entry[ $source->id . '.2' ] ?? '' );
+							$quantity     = trim( $context->gfEntry->entry[ $source->id . '.3' ] ?? '' );
+							break;
+						case $source instanceof \GF_Field_Calculation:
+							$product_name = trim( $context->gfEntry->entry[ $source->id . '.1' ] ?? '' );
+							$price        = GFCommon::calculate( $source, $context->gfForm->form, $context->gfEntry->entry );
+							$quantity     = trim( $context->gfEntry->entry[ $source->id . '.3' ] ?? '' );
+							break;
+
+						case $source instanceof \GF_Field_Select:
+						case $source instanceof \GF_Field_Radio:
+							$value = explode( '|', $context->gfEntry->entry[ $source->id ] ?? '' );
+
+							$choice_key = array_search( $value[0], array_column( $source->choices, 'value' ), true );
+
+							$product_name = $source->choices[ $choice_key ]['text'] ?? null;
+							$price        = $source->choices[ $choice_key ]['price'] ?? null;
+							break;
+
+						case $source instanceof \GF_Field_Price:
+							$product_name = $source->label ?? '';
+							$price        = trim( $context->gfEntry->entry[ $source->id ] ?? '' );
 					}
 
-					$image_data = array_pad( explode( '|:|', $context->gfEntry->entry[ $source->id ] ), 5, false );
+					// Get quantity from quantity field.
+					if ( empty( $quantity ) ) {
+						$quantity_fields = GFAPI::get_fields_by_type( $context->gfForm->form, 'quantity' );
 
-					$values_to_return = [
-						'altText'     => $image_data[4] ?: null,
-						'caption'     => $image_data[2] ?: null,
-						'description' => $image_data[3] ?: null,
-						'title'       => $image_data[1] ?: null,
-						'url'         => $image_data[0] ?: null,
+						foreach ( $quantity_fields as $field ) {
+							if ( ! isset( $field->productField ) || (int) $field->productField !== $source->id ) {
+								continue;
+							}
+
+							if ( isset( $context->gfEntry->entry[ $field->id ] ) ) {
+								$quantity = $context->gfEntry->entry[ $field->id ];
+							}
+						}
+					}
+
+					return [
+						'name'     => $product_name ?: null,
+						'price'    => GFCommon::format_number( $price, 'currency', $context->gfEntry->entry['currency'] ?? '' ) ?: null,
+						'quantity' => $quantity ?: 1,
 					];
-
-					/**
-					 * Strip out the meta from the entry value.
-					 *
-					 * @see GF_Field_PostImage::get_extra_entry_metadata().
-					 */
-					$file_values = [];
-
-					// Draft entries don't upload files.
-					if ( ! $context->gfEntry->isDraft ) {
-						$entry                = $context->gfEntry->entry;
-						$entry[ $source->id ] = $image_data[0];
-						$file_values          = self::get_file_upload_extra_entry_metadata( $source, $entry, $context->gfForm->form );
-						// Add the file values if they exist.
-						$values_to_return = array_merge( $file_values[ $image_data[0] ] ?? [], $values_to_return );
-					}
-
-					return $values_to_return;
 				},
 			],
 		];
