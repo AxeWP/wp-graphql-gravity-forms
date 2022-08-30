@@ -254,6 +254,10 @@ class TypeRegistry {
 			// Conditional Logic.
 			WPObject\ConditionalLogic\ConditionalLogic::class,
 			WPObject\ConditionalLogic\ConditionalLogicRule::class,
+			// Orders.
+			WPObject\Order\OrderItemOption::class,
+			WPObject\Order\OrderItem::class,
+			WPObject\Order\OrderSummary::class,
 			// Entries.
 			WPObject\Entry\DraftEntry::class,
 			WPObject\Entry\SubmittedEntry::class,
