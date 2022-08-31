@@ -14,15 +14,15 @@ use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;
 use WPGraphQL\GF\Type\Enum\AddressFieldTypeEnum;
 
 /**
- * Class - FieldWithAddress
+ * Class - FieldWithAddressData
  */
-class FieldWithAddress extends AbstractFieldSetting {
+class FieldWithAddressData extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithAddress';
+	public static string $type = 'GfFieldWithAddressData';
 
 	/**
 	 * The name of GF Field Setting

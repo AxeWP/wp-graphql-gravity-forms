@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 /**
- * Class - FieldWithDuplicate
+ * Class - FieldWithDuplicates
  */
-class FieldWithDuplicate extends AbstractFieldSetting {
+class FieldWithDuplicates extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithDuplicate';
+	public static string $type = 'GfFieldWithDuplicates';
 
 	/**
 	 * The name of GF Field Setting

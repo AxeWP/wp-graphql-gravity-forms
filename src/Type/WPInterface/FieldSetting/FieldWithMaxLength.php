@@ -11,15 +11,15 @@ namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 use GF_Field;
 
 /**
- * Class - FieldWithMaxlen
+ * Class - FieldWithMaxLength
  */
-class FieldWithMaxlen extends AbstractFieldSetting {
+class FieldWithMaxLength extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithMaxlen';
+	public static string $type = 'GfFieldWithMaxLength';
 
 	/**
 	 * The name of GF Field Setting

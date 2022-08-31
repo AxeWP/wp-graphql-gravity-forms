@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 /**
- * Class - FieldWithMaxrows
+ * Class - FieldWithMaxRows
  */
-class FieldWithMaxrows extends AbstractFieldSetting {
+class FieldWithMaxRows extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithMaxrows';
+	public static string $type = 'GfFieldWithMaxRows';
 
 	/**
 	 * The name of GF Field Setting

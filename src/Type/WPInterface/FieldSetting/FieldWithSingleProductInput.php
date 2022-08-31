@@ -13,15 +13,15 @@ namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 use GF_Field;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
 /**
- * Class - FieldWithSingleProductInputs
+ * Class - FieldWithSingleProductInput
  */
-class FieldWithSingleProductInputs extends AbstractFieldSetting {
+class FieldWithSingleProductInput extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithSingleProductInputs';
+	public static string $type = 'GfFieldWithSingleProductInput';
 
 	/**
 	 * The name of GF Field Setting

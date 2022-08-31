@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 /**
- * Class - FieldWithEnableEnhancedUI
+ * Class - FieldWithEnhancedUI
  */
-class FieldWithEnableEnhancedUI extends AbstractFieldSetting {
+class FieldWithEnhancedUI extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithEnableEnhancedUI';
+	public static string $type = 'GfFieldWithEnhancedUI';
 
 	/**
 	 * The name of GF Field Setting

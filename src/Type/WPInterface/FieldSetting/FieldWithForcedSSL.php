@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 /**
- * Class - FieldWithForceSSLField
+ * Class - FieldWithForcedSSL
  */
-class FieldWithForceSSLField extends AbstractFieldSetting {
+class FieldWithForcedSSL extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithForceSSLField';
+	public static string $type = 'GfFieldWithForcedSSL';
 
 	/**
 	 * The name of GF Field Setting

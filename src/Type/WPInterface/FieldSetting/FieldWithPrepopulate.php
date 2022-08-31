@@ -11,15 +11,15 @@ namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 use GF_Field;
 
 /**
- * Class - FieldWithPrepopulateField
+ * Class - FieldWithPrepopulate
  */
-class FieldWithPrepopulateField extends AbstractFieldSetting {
+class FieldWithPrepopulate extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPrepopulateField';
+	public static string $type = 'GfFieldWithPrepopulate';
 
 	/**
 	 * The name of GF Field Setting
