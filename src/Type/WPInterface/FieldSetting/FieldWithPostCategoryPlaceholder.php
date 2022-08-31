@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 /**
- * Class - FieldWithPostCategoryInitialItem
+ * Class - FieldWithPostCategoryPlaceholder
  */
-class FieldWithPostCategoryInitialItem extends AbstractFieldSetting {
+class FieldWithPostCategoryPlaceholder extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPostCategoryInitialItem';
+	public static string $type = 'GfFieldWithPostCategoryPlaceholder';
 
 	/**
 	 * The name of GF Field Setting

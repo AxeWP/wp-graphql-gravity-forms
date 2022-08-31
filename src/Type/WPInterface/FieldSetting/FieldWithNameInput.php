@@ -14,15 +14,15 @@ use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
- * Class - FieldWithName
+ * Class - FieldWithNameInput
  */
-class FieldWithName extends AbstractFieldSetting {
+class FieldWithNameInput extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithName';
+	public static string $type = 'GfFieldWithNameInput';
 
 	/**
 	 * The name of GF Field Setting
