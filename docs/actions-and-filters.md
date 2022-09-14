@@ -7,15 +7,15 @@
 * [`graphql_gf_before_register_types`](#graphql_gf_before_register_types)
 * [`graphql_gf_after_register_form_field`](#graphql_gf_after_register_form_field)
 * [`graphql_gf_after_register_form_field_object`](#graphql_gf_after_register_form_field_object)
-* [`graphql_gf_after_register_form_field_choices`](#graphql_gf_after_register_form_field_choices)
-* [`graphql_gf_after_register_form_field_inputs`](#graphql_gf_after_register_form_field_inputs)
+* [`graphql_gf_register_form_field_choices`](#graphql_gf_register_form_field_choices)
+* [`graphql_gf_register_form_field_inputs`](#graphql_gf_register_form_field_inputs)
 
 ### `graphql_gf_init`
 
 Fires after the plugin has been initialized.
 
 ```php
-apply_filters( 'graphql_gf_init', $instance );
+do_action( 'graphql_gf_init', $instance );
 ```
 
 #### Parameters
@@ -27,7 +27,7 @@ apply_filters( 'graphql_gf_init', $instance );
 Fires after plugin registers types to the GraphQL schema
 
 ```php
-apply_filters( 'graphql_gf_after_register_types' );
+do_action( 'graphql_gf_after_register_types' );
 ```
 
 ### `graphql_gf_before_register_types`
@@ -35,7 +35,7 @@ apply_filters( 'graphql_gf_after_register_types' );
 Fires before plugin registers types to the GraphQL schema
 
 ```php
-apply_filters( 'graphql_gf_before_register_types' );
+do_action( 'graphql_gf_before_register_types' );
 ```
 
 ### `graphql_gf_after_register_form_field`
@@ -46,8 +46,8 @@ Fires after the Gravity Forms field has been hooked to be registered WPGraphQL s
 The fields themselves will only be registered on the next get_graphql_register_action() call.
 
 ```php
-apply_filters( 'graphql_gf_after_register_form_field', $field, $field_settings );
-apply_filters( 'graphql_gf_after_register_form_field_' . $field->graphql_single_name, $field, $field_settings );
+do_action( 'graphql_gf_after_register_form_field', $field, $field_settings );
+do_action( 'graphql_gf_after_register_form_field_' . $field->graphql_single_name, $field, $field_settings );
 ```
 
 #### Parameters
@@ -56,13 +56,35 @@ apply_filters( 'graphql_gf_after_register_form_field_' . $field->graphql_single_
 * **`$field_settings`** _(array)_ : The Gravity Forms field settings.
 
 
-### `graphql_gf_after_register_form_field_choices`
-#### `gaphql_gf_after_register_form_field_choices_{graphql_type}`
+#### Parameters
+
+* **`$field`** _(GF_Field)_ : The Gravity Forms field object.
+* **`$field_settings`** _(array)_ : The Gravity Forms field settings.
+* **`$config`** _(array)_ : The config array as expected by WPGraphQL.
+
+### `graphql_gf_after_register_form_field_object`
+#### `gaphql_gf_after_register_form_field_object_{graphql_type}`
+
+Fires after the Gravity Forms field object has been registered to WPGraphQL schema.
+
+```php
+do_action( 'graphql_gf_after_register_form_field_object', $field, $field_settings, $config );
+do_action( 'graphql_gf_after_register_form_field_object_' . $field->graphql_single_name, $field, $field_settings, $config );
+```
+
+#### Parameters
+
+* **`$field`** _(GF_Field)_ : The Gravity Forms field object.
+* **`$field_settings`** _(array)_ : The Gravity Forms field settings.
+* **`$config`** _(array)_ : The config array as expected by WPGraphQL.
+
+### `graphql_gf_register_form_field_choices`
+#### `gaphql_gf_register_form_field_choices_{graphql_type}`
 
 Fires after the Gravity Forms field choices have been registered to WPGraphQL schema.
 ```php
-apply_filters( 'graphql_gf_after_register_form_field_choices', $field, $field_settings, $config );
-apply_filters( 'graphql_gf_after_register_form_field_choices_' . $field->graphql_single_name, $field, $field_settings, $config );
+do_action( 'graphql_gf_register_form_field_choices', $field, $field_settings, $config );
+do_action( 'graphql_gf_register_form_field_choices_' . $field->graphql_single_name, $field, $field_settings, $config );
 ```
 
 #### Parameters
@@ -77,31 +99,9 @@ apply_filters( 'graphql_gf_after_register_form_field_choices_' . $field->graphql
 
 Fires after the Gravity Forms field choices have been registered to WPGraphQL schema.
 ```php
-apply_filters( 'graphql_gf_register_form_field_inputs', $field, $field_settings, $config );
-apply_filters( 'graphql_gf_register_form_field_inputs_' . $field->graphql_single_name, $field, $field_settings, $config );
+do_action( 'graphql_gf_register_form_field_inputs', $field, $field_settings, $config );
+do_action( 'graphql_gf_register_form_field_inputs_' . $field->graphql_single_name, $field, $field_settings, $config );
 ```
-
-#### Parameters
-
-* **`$field`** _(GF_Field)_ : The Gravity Forms field object.
-* **`$field_settings`** _(array)_ : The Gravity Forms field settings.
-* **`$config`** _(array)_ : The config array as expected by WPGraphQL.
-
-### `graphql_gf_after_register_form_field_object`
-#### `gaphql_gf_after_register_form_field_object_{graphql_type}`
-
-Fires after the Gravity Forms field object has been registered to WPGraphQL schema.
-
-```php
-apply_filters( 'graphql_gf_after_register_form_field_object', $field, $field_settings, $config );
-apply_filters( 'graphql_gf_after_register_form_field_object_' . $field->graphql_single_name, $field, $field_settings, $config );
-```
-
-#### Parameters
-
-* **`$field`** _(GF_Field)_ : The Gravity Forms field object.
-* **`$field_settings`** _(array)_ : The Gravity Forms field settings.
-* **`$config`** _(array)_ : The config array as expected by WPGraphQL.
 
 ## Filters
 

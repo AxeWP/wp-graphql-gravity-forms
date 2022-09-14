@@ -162,13 +162,14 @@ Currently supported form fields:
 * `ConsentField`
 * `DateField`
 * `EmailField`
+* `FileUploadField`
 * `HiddenField`
 * `HtmlField`
-* `FileUploadField`
 * `ListField`
 * `MultiSelectField`
 * `NameField`
 * `NumberField`
+* `OptionField`
 * `PageField`
 * `PhoneField`
 * `PostCategoryField`
@@ -177,14 +178,19 @@ Currently supported form fields:
 * `PostImageField`
 * `PostTagsField`
 * `PostTitleField`
+* `PriceField`
+* `ProductField`
+* `QuantityField`
 * `QuizField`
 * `RadioField`
 * `SectionField`
 * `SelectField`
+* `ShippingField`
 * `SignatureField`
 * `TextAreaField`
 * `TextField`
 * `TimeField`
+* `TotalField`
 * `WebsiteField`
 
 ### Experimental fields
@@ -193,13 +199,8 @@ These _Gravity Forms core-only_ fields are not yet explicitly supported by the p
 
 These forms are hidden **by default**:
 
-* `CreditcardField`
-* `OptionField`
-* `PriceField`
-* `ProductField`
-* `QuantityField`
-* `ShippingField`
-* `TotalField`
+* `CreditCardField`
+
 
 To enable these plugins, you can define the `WPGRAPHQL_GF_EXPERIMENTAL_FIELDS` constant to true in wp-config.php[https://wordpress.org/support/article/editing-wp-config-php/].
 
@@ -208,7 +209,7 @@ To enable these plugins, you can define the `WPGRAPHQL_GF_EXPERIMENTAL_FIELDS` c
 define( `WPGRAPHQL_GF_EXPERIMENTAL_FIELDS`, true );
 ```
 
-You can also use [the `graphql_gf_ignored_field_types` filter](actions-and-filters.md) to add support on a field-by-field basis.
+You can also use [the `graphql_gf_ignored_field_types` filter](actions-and-filters.md#graphql_gf_ignored_field_types) to add support on a field-by-field basis.
 
 When a production-level version of this plugin is released, it is expected that all core Gravity Forms fields will be supported.
 

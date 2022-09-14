@@ -77,7 +77,7 @@ class Utils {
 		 *
 		 * @param array $fields_to_map An array of GF field types to GraphQL type names. E.g. ` 'fileupload' => 'FileUpload'`.
 		 */
-		$fields_to_map = apply_filters( 'graphql_gf_form_field_name_map', $fields_to_map );
+		$fields_to_map = apply_filters( 'graphql_gf_form_fields_name_map', $fields_to_map );
 
 		return str_replace( ' ', '', ucwords( str_replace( array_keys( $fields_to_map ), array_values( $fields_to_map ), $string ) ) );
 	}
