@@ -19,7 +19,7 @@ class FieldWithSize extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithSize';
+	public static string $type = 'GfFieldWithSizeSetting';
 
 	/**
 	 * The name of GF Field Setting

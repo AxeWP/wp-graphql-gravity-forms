@@ -17,7 +17,7 @@ class FieldWithCopyValuesOption extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithCopyValuesOption';
+	public static string $type = 'GfFieldWithCopyValuesOptionSetting';
 
 	/**
 	 * The name of GF Field Setting

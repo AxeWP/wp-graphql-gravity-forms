@@ -17,7 +17,7 @@ class FieldWithRange extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithRange';
+	public static string $type = 'GfFieldWithRangeSetting';
 
 	/**
 	 * The name of GF Field Setting

@@ -19,7 +19,7 @@ class InputWithTimeFormat extends AbstractFieldInputSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldInputWithTimeFormat';
+	public static string $type = 'GfFieldInputWithTimeFormatSetting';
 
 	/**
 	 * The name of GF Field Setting

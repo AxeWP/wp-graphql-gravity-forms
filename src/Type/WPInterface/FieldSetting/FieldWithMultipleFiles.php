@@ -17,7 +17,7 @@ class FieldWithMultipleFiles extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithMultipleFiles';
+	public static string $type = 'GfFieldWithMultipleFilesSetting';
 
 	/**
 	 * The name of GF Field Setting

@@ -19,7 +19,7 @@ class FieldWithCreditCard extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithCreditCard';
+	public static string $type = 'GfFieldWithCreditCardSetting';
 
 	/**
 	 * The name of GF Field Setting

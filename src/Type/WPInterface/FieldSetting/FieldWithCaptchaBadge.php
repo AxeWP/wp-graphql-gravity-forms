@@ -19,7 +19,7 @@ class FieldWithCaptchaBadge extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithCaptchaBadge';
+	public static string $type = 'GfFieldWithCaptchaBadgeSetting';
 
 	/**
 	 * The name of GF Field Setting

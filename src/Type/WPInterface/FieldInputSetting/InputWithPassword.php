@@ -19,7 +19,7 @@ class InputWithPassword extends AbstractFieldInputSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldInputWithPassword';
+	public static string $type = 'GfFieldInputWithPasswordSetting';
 
 	/**
 	 * The name of GF Field Setting

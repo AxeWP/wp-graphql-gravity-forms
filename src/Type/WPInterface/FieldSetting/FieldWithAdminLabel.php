@@ -17,7 +17,7 @@ class FieldWithAdminLabel extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithAdminLabel';
+	public static string $type = 'GfFieldWithAdminLabelSetting';
 
 	/**
 	 * The name of GF Field Setting

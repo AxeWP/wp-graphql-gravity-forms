@@ -17,7 +17,7 @@ class FieldWithPlaceholder extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPlaceholder';
+	public static string $type = 'GfFieldWithPlaceholderSetting';
 
 	/**
 	 * The name of GF Field Setting

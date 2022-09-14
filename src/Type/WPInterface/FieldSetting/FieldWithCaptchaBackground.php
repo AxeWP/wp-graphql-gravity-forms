@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 /**
- * Class - FieldWithCaptchaBg
+ * Class - FieldWithCaptchaBackground
  */
-class FieldWithCaptchaBg extends AbstractFieldSetting {
+class FieldWithCaptchaBackground extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithCaptchaBg';
+	public static string $type = 'GfFieldWithCaptchaBackgroundSetting';
 
 	/**
 	 * The name of GF Field Setting

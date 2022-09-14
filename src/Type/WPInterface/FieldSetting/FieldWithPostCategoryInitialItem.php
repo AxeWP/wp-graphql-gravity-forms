@@ -17,7 +17,7 @@ class FieldWithPostCategoryInitialItem extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPostCategoryInitialItem';
+	public static string $type = 'GfFieldWithPostCategoryInitialItemSetting';
 
 	/**
 	 * The name of GF Field Setting

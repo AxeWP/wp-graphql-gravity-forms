@@ -11,15 +11,15 @@ namespace WPGraphQL\GF\Type\WPInterface\FieldInputSetting;
 use WPGraphQL\GF\Type\WPInterface\FieldInputSetting\AbstractFieldInputSetting;
 
 /**
- * Class - InputWithEmailConfirm
+ * Class - InputWithEmailConfirmation
  */
-class InputWithEmailConfirm extends AbstractFieldInputSetting {
+class InputWithEmailConfirmation extends AbstractFieldInputSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldInputWithEmailConfirm';
+	public static string $type = 'GfFieldInputWithEmailConfirmationSetting';
 
 	/**
 	 * The name of GF Field Setting

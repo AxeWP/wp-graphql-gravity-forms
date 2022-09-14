@@ -14,15 +14,15 @@ use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
- * Class - FieldWithEmailConfirm
+ * Class - FieldWithEmailConfirmation
  */
-class FieldWithEmailConfirm extends AbstractFieldSetting implements TypeWithInterfaces {
+class FieldWithEmailConfirmation extends AbstractFieldSetting implements TypeWithInterfaces {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithEmailConfirm';
+	public static string $type = 'GfGfFieldWithEmailConfirmationSetting';
 
 	/**
 	 * The name of GF Field Setting

@@ -19,7 +19,7 @@ class FieldWithPhoneFormat extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPhoneFormat';
+	public static string $type = 'GfFieldWithPhoneFormatSetting';
 
 	/**
 	 * The name of GF Field Setting

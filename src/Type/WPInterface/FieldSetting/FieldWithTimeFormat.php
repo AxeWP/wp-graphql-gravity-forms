@@ -21,7 +21,7 @@ class FieldWithTimeFormat extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithTimeFormat';
+	public static string $type = 'GfFieldWithTimeFormatSetting';
 
 	/**
 	 * The name of GF Field Setting

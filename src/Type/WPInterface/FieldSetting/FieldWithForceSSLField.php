@@ -17,7 +17,7 @@ class FieldWithForceSSLField extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithForceSSLField';
+	public static string $type = 'GfFieldWithForceSSLFieldSetting';
 
 	/**
 	 * The name of GF Field Setting

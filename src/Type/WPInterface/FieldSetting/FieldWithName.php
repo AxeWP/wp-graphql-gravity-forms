@@ -22,7 +22,7 @@ class FieldWithName extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithName';
+	public static string $type = 'GfFieldWithNameSetting';
 
 	/**
 	 * The name of GF Field Setting

@@ -20,7 +20,7 @@ class ChoiceWithOtherChoice extends AbstractFieldChoiceSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldChoiceWithOtherChoice';
+	public static string $type = 'GfFieldChoiceWithOtherChoiceSetting';
 
 	/**
 	 * The name of GF Field Setting

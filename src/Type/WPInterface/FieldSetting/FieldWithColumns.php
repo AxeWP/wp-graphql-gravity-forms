@@ -19,7 +19,7 @@ class FieldWithColumns extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithColumns';
+	public static string $type = 'GfFieldWithColumnsSetting';
 
 	/**
 	 * The name of GF Field Setting

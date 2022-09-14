@@ -19,7 +19,7 @@ class FieldWithAutocomplete extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithAutocomplete';
+	public static string $type = 'GfFieldWithAutocompleteSetting';
 
 	/**
 	 * The name of GF Field Setting

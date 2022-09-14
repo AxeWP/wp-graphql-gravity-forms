@@ -17,7 +17,7 @@ class FieldWithAddIconUrl extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithAddIconUrl';
+	public static string $type = 'GfFieldWithAddIconUrlSetting';
 
 	/**
 	 * The name of GF Field Setting

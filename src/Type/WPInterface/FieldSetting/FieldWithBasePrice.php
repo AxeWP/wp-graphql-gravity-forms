@@ -17,7 +17,7 @@ class FieldWithBasePrice extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithBasePrice';
+	public static string $type = 'GfFieldWithBasePriceSetting';
 
 	/**
 	 * The name of GF Field Setting

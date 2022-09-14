@@ -17,7 +17,7 @@ class FieldWithPostCustomField extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPostCustomField';
+	public static string $type = 'GfFieldWithPostCustomFieldSetting';
 
 	/**
 	 * The name of GF Field Setting

@@ -21,7 +21,7 @@ class FieldWithPassword extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPassword';
+	public static string $type = 'GfFieldWithPasswordSetting';
 
 	/**
 	 * The password of GF Field Setting
