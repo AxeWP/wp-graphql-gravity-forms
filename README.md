@@ -26,15 +26,31 @@ Our hope for this open source project is that it will enable more teams to lever
 
 * PHP 7.4+ || 8.0
 * WordPress 5.4.1+
-* WPGraphQL 1.7.0+ (Recommended: v1.9.0+ )
-* Gravity Forms 2.5+
+* WPGraphQL 1.7.0+ (Recommended: v1.9.0+)
+* Gravity Forms 2.5+ (Recommend: v2.6+)
 * **Recommended**: [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload) - used for [File Upload and Post Image submissions](docs/submitting-forms.md).
 
 ## Quick Install
 
 1. Install & activate [WPGraphQL](https://www.wpgraphql.com/).
 2. Install & activate [Gravity Forms](https://www.gravityforms.com/) and any supported addons.
-3. Download the zip of this repository and upload it to your WordPress install, and activate the plugin.
+3. Download the [latest release](https://github.com/harness-software/wp-graphql-gravity-forms/releases) `.zip` file, upload it to your WordPress install, and activate the plugin.
+
+### With Composer
+
+```console
+composer require harness-software/wp-graphql-gravity-forms
+```
+
+
+## Updating and Versioning
+As we work [towards a 1.0 Release](https://github.com/harness-software/wp-graphql-gravity-forms/issues/179), we will need to introduce numerous breaking changes. We will do our best to group multiple breaking changes together in a single release, to make it easier on developers to keep their projects up-to-date.
+
+Until we hit v1.0, we're using *a modified version* of [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
+
+v0.x: "Major" releases. These releases introduce new features, and may contain breaking changes to either the PHP API or the GraphQL schema.
+v0.x.y: "Minor" releases. These releases introduce new features and enhancements and address bugs. They do not contain breaking changes.
+v0.x.y.z: "Patch" releases. These releases are reserved for addressing issue with the previous release only.
 
 ## Supported Features
 
@@ -48,10 +64,9 @@ Our hope for this open source project is that it will enable more teams to lever
 
 [_View all Feature Requests_](https://github.com/harness-software/wp-graphql-gravity-forms/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+enhancement+%E2%9A%A1%22%2C%22type%3A+feature+%F0%9F%A6%8B%22%2C%22type%3A+idea+%F0%9F%92%A1%22)
 
-* Add support for Experimental form fields [Github Issue](https://github.com/harness-software/wp-graphql-gravity-forms/issues/195)
-* Ability to query for lists of draft entries.
-* Ability to get the total count for a list of entries.
-* Ability to create, update, and delete an individual Gravity Form.
+* Add support for [remaining form fields](https://github.com/harness-software/wp-graphql-gravity-forms/issues/195)
+* Ability to [query for lists of draft entries](https://github.com/harness-software/wp-graphql-gravity-forms/issues/114).
+* Ability to [create, update, and delete an individual Gravity Form](https://github.com/harness-software/wp-graphql-gravity-forms/issues/115).
 
 ## Documentation
 
