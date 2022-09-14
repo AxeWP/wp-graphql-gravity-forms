@@ -59,6 +59,80 @@ The `id` input accepts either the Gravity Forms Entry ID ( `idType: DATABASE_ID`
 }
 ```
 
+### Order Summaries
+Entries that include [Pricing Fields](https://docs.gravityforms.com/category/user-guides/pricing-fields/) can return a `GfOrderSummary` object, which provides summarized order data from the entire entry.
+
+#### Example Query
+```graphql
+{
+  gfEntry(id: 2977, idType: DATABASE_ID) {
+    id # global ID
+    formDatabaseId
+    isDraft
+    orderSummary {
+      currency
+      items {
+        connectedFormField {
+          ... on ProductSingleField {
+            id
+          }
+        }
+        currency
+        description
+        isDiscount
+        isLineItem
+        isRecurring
+        isSetupFee
+        isShipping
+        isTrial
+        name
+        price
+        options {
+          connectedFormField{
+            ... on OptionCheckboxField {
+              id
+            }
+          }
+          fieldLabel
+          name
+          optionLabel
+          price
+        }
+        quantity
+        section
+        subtotal
+        
+      }
+      subtotal
+      total
+    }
+    ... on SubmittedEntry {
+      databaseId
+    }
+  }
+}
+```
+
+### Quiz Results
+
+Submitted entries that include a [Quiz Field](https://docs.gravityforms.com/quiz-field/) can return an `EntryQuizResults` object, which provides the summarized quiz data for the entire form.
+
+#### Example Query
+
+```graphql
+{
+  gfSubmittedEntry(id: 2977, idType: DATABASE_ID ){
+    databaseId
+    quizResults {
+      grade
+      isPassingScore
+      percent
+      score
+    }
+  }
+}
+```
+
 ## Get a Single Draft Entry
 
 [Draft entries](https://docs.gravityforms.com/database-storage-structure-reference/#wp-gf-draft-submissions) can be queried directly with `gfDraftEntry` or as part of `gfEntry` . The query is similar to [querying `SubmittedEntry` objects](#get-a-single-entry).
@@ -185,4 +259,4 @@ That means by default logged-in users may access their own individual submitted 
 
 By default, Gravity Forms does not limit permissions for accessing draft entries, as an entry-specific `resumeToken` is used to provide access.
 
-To change the access permissions for submitted and draft entries, you can use [the `graphql_gf_can_view_entries` and `graphql_gf_can_view_draft_entries` filters](actions-and-filters.md), respectively.
+To change the access permissions for submitted and draft entries, you can use the [`graphql_gf_can_view_entries`]((actions-and-filters.md#graphql_gf_can_view_entries) and [`graphql_gf_can_view_draft_entries`](actions-and-filters.md#graphql_gf_can_view_draft_entries) filters, respectively.
