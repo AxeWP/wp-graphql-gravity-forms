@@ -17,7 +17,7 @@ class FieldWithMaxRows extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithMaxRows';
+	public static string $type = 'GfFieldWithMaxRowsSetting';
 
 	/**
 	 * The name of GF Field Setting

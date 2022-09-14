@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 /**
- * Class - FieldWithPrice
+ * Class - FieldWithBasePrice
  */
-class FieldWithPrice extends AbstractFieldSetting {
+class FieldWithBasePrice extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPrice';
+	public static string $type = 'GfFieldWithBasePriceSetting';
 
 	/**
 	 * The name of GF Field Setting

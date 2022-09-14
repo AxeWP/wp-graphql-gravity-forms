@@ -17,7 +17,7 @@ class FieldWithRules extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithRules';
+	public static string $type = 'GfFieldWithRulesSetting';
 
 	/**
 	 * The name of GF Field Setting

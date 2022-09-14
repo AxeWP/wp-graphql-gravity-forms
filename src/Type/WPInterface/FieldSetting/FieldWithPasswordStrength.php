@@ -19,7 +19,7 @@ class FieldWithPasswordStrength extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPasswordStrength';
+	public static string $type = 'GfFieldWithPasswordStrengthSetting';
 
 	/**
 	 * The name of GF Field Setting

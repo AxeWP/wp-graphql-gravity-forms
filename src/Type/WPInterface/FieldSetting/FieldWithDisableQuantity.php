@@ -17,7 +17,7 @@ class FieldWithDisableQuantity extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithDisableQuantity';
+	public static string $type = 'GfFieldWithDisableQuantitySetting';
 
 	/**
 	 * The name of GF Field Setting

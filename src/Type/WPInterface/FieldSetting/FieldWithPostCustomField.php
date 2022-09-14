@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 /**
- * Class - FieldWithPostMeta
+ * Class - FieldWithPostCustomField
  */
-class FieldWithPostMeta extends AbstractFieldSetting {
+class FieldWithPostCustomField extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPostMeta';
+	public static string $type = 'GfFieldWithPostCustomFieldSetting';
 
 	/**
 	 * The name of GF Field Setting

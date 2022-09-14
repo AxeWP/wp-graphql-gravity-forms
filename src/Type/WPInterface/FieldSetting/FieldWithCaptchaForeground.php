@@ -17,7 +17,7 @@ class FieldWithCaptchaForeground extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithCaptchaForeground';
+	public static string $type = 'GfFieldWithCaptchaForegroundSetting';
 
 	/**
 	 * The name of GF Field Setting

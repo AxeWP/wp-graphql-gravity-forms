@@ -20,7 +20,7 @@ class FieldWithLabelPlacement extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithLabelPlacement';
+	public static string $type = 'GfFieldWithLabelPlacementSetting';
 
 	/**
 	 * The name of GF Field Setting

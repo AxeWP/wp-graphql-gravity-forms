@@ -19,7 +19,7 @@ class InputWithAddress extends AbstractFieldInputSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldInputWithAddress';
+	public static string $type = 'GfFieldInputWithAddressSetting';
 
 	/**
 	 * The name of GF Field Setting

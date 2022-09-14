@@ -20,7 +20,7 @@ class ChoiceWithColumns extends AbstractFieldChoiceSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldChoiceWithColumns';
+	public static string $type = 'GfFieldChoiceWithColumnsSetting';
 
 	/**
 	 * The name of GF Field Setting

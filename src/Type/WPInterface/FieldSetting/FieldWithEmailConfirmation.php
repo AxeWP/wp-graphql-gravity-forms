@@ -22,7 +22,7 @@ class FieldWithEmailConfirmation extends AbstractFieldSetting implements TypeWit
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfGfFieldWithEmailConfirmation';
+	public static string $type = 'GfGfFieldWithEmailConfirmationSetting';
 
 	/**
 	 * The name of GF Field Setting

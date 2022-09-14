@@ -17,7 +17,7 @@ class FieldWithCalculation extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithCalculation';
+	public static string $type = 'GfFieldWithCalculationSetting';
 
 	/**
 	 * The name of GF Field Setting

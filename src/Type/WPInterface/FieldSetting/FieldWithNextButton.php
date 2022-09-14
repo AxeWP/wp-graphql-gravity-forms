@@ -19,7 +19,7 @@ class FieldWithNextButton extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithNextButton';
+	public static string $type = 'GfFieldWithNextButtonSetting';
 
 	/**
 	 * The name of GF Field Setting

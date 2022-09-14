@@ -17,7 +17,7 @@ class FieldWithFileExtensions extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithFileExtensions';
+	public static string $type = 'GfFieldWithFileExtensionsSetting';
 
 	/**
 	 * The name of GF Field Setting

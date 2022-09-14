@@ -20,7 +20,7 @@ class FieldWithPostImage extends AbstractFieldSetting implements TypeWithInterfa
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPostImage';
+	public static string $type = 'GfFieldWithPostImageSetting';
 
 	/**
 	 * The name of GF Field Setting

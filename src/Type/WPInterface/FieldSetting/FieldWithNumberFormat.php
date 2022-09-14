@@ -19,7 +19,7 @@ class FieldWithNumberFormat extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithNumberFormat';
+	public static string $type = 'GfFieldWithNumberFormatSetting';
 
 	/**
 	 * The name of GF Field Setting

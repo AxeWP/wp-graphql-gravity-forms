@@ -17,7 +17,7 @@ class FieldWithCheckboxLabel extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithCheckboxLabel';
+	public static string $type = 'GfFieldWithCheckboxLabelSetting';
 
 	/**
 	 * The name of GF Field Setting

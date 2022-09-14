@@ -19,7 +19,7 @@ class InputWithSelectAllChoices extends AbstractFieldInputSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldInputWithSelectAllChoices';
+	public static string $type = 'GfFieldInputWithSelectAllChoicesSetting';
 
 	/**
 	 * The name of GF Field Setting

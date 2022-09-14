@@ -19,7 +19,7 @@ class FieldWithConditionalLogic extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithConditionalLogic';
+	public static string $type = 'GfFieldWithConditionalLogicSetting';
 
 	/**
 	 * The name of GF Field Setting

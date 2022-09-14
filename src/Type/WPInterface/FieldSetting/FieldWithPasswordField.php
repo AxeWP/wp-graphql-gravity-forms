@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 /**
- * Class - FieldWithPasswordInput
+ * Class - FieldWithPasswordField
  */
-class FieldWithPasswordInput extends AbstractFieldSetting {
+class FieldWithPasswordField extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPasswordInput';
+	public static string $type = 'GfFieldWithPasswordFieldSetting';
 
 	/**
 	 * The name of GF Field Setting

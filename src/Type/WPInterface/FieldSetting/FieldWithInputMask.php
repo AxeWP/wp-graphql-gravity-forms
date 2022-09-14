@@ -17,7 +17,7 @@ class FieldWithInputMask extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithInputMask';
+	public static string $type = 'GfFieldWithInputMaskSetting';
 
 	/**
 	 * The name of GF Field Setting

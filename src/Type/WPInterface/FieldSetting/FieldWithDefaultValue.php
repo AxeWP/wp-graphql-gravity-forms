@@ -17,7 +17,7 @@ class FieldWithDefaultValue extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithDefaultValue';
+	public static string $type = 'GfFieldWithDefaultValueSetting';
 
 	/**
 	 * The name of GF Field Setting

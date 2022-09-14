@@ -17,7 +17,7 @@ class FieldWithDeleteIconUrl extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithDeleteIconUrl';
+	public static string $type = 'GfFieldWithDeleteIconUrlSetting';
 
 	/**
 	 * The name of GF Field Setting

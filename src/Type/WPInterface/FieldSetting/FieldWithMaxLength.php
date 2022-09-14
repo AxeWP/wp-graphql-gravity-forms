@@ -19,7 +19,7 @@ class FieldWithMaxLength extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithMaxLength';
+	public static string $type = 'GfFieldWithMaxLengthSetting';
 
 	/**
 	 * The name of GF Field Setting

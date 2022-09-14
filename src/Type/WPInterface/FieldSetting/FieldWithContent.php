@@ -17,7 +17,7 @@ class FieldWithContent extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithContent';
+	public static string $type = 'GfFieldWithContentSetting';
 
 	/**
 	 * The name of GF Field Setting

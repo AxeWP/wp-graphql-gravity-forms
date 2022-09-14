@@ -9,15 +9,15 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 /**
- * Class - FieldWithMargins
+ * Class - FieldWithDisableMargins
  */
-class FieldWithMargins extends AbstractFieldSetting {
+class FieldWithDisableMargins extends AbstractFieldSetting {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithMargins';
+	public static string $type = 'GfFieldWithDisableMarginsSetting';
 
 	/**
 	 * The name of GF Field Setting

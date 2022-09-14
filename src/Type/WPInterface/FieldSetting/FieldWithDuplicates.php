@@ -17,7 +17,7 @@ class FieldWithDuplicates extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithDuplicates';
+	public static string $type = 'GfFieldWithDuplicatesSetting';
 
 	/**
 	 * The name of GF Field Setting

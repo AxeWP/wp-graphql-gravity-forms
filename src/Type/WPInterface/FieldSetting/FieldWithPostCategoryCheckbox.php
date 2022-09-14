@@ -17,7 +17,7 @@ class FieldWithPostCategoryCheckbox extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPostCategoryCheckbox';
+	public static string $type = 'GfFieldWithPostCategoryCheckboxSetting';
 
 	/**
 	 * The name of GF Field Setting

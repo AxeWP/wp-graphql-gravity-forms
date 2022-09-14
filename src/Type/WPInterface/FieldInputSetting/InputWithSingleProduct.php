@@ -19,7 +19,7 @@ class InputWithSingleProduct extends AbstractFieldInputSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldInputWithSingleProduct';
+	public static string $type = 'GfFieldInputWithSingleProductInputs';
 
 	/**
 	 * The name of GF Field Setting

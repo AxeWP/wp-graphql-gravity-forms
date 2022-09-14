@@ -19,7 +19,7 @@ class FieldWithCaptchaSize extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithCaptchaSize';
+	public static string $type = 'GfFieldWithCaptchaSizeSetting';
 
 	/**
 	 * The name of GF Field Setting

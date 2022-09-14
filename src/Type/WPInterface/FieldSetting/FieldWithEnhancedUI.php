@@ -17,7 +17,7 @@ class FieldWithEnhancedUI extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithEnhancedUI';
+	public static string $type = 'GfFieldWithEnhancedUISetting';
 
 	/**
 	 * The name of GF Field Setting

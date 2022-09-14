@@ -17,7 +17,7 @@ class FieldWithRichTextEditor extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithRichTextEditor';
+	public static string $type = 'GfFieldWithRichTextEditorSetting';
 
 	/**
 	 * The name of GF Field Setting
