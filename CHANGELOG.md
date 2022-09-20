@@ -2,7 +2,7 @@
 
 ## v0.11.4
 
-This _minor_ release squashes a few bugs.
+This _minor_ release fixes a bug where `form.entries` would return entries from _all_ forms, among other things.
 
 - (#291) feat: Update `plugin-update-checker` to `v4.13` and enable use of local assets on Dashboard screen.
 - (#307) fix: ensure form->entry connections only return entries on that form.
