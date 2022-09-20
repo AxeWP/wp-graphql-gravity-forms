@@ -1,12 +1,13 @@
 # Changelog
 
 ## Unreleased
-
 - feat:  `connectedChoice` and `connectedInput` to `CheckboxFieldValue` type.
 - feat: Add `orderSummary` to `GfEntry` interface.
 - feat: Add support for `Option`, `Product`, `Quantity`, `Shipping`, and `Total` Gravity Forms fields.
 - feat: Refactor `GfFormField` field settings, choices, and inputs to use GraphQL interfaces.
 - fix: ensure latest mutation input data is used to prepare the field values on update mutations.
+- fix: ensure form->entry connections only return entries on that form.
+- fix: change `formIds` input description to clarify that it (currently) only accepts database IDs.
 - dev!: Move `TypeRegistry` classes to `WPGraphQL\GF\Registry` namespace.
 - dev!: Register each GraphQL type on its own `add_action()` call.
 - dev!: Remove nullable `$type_registry` param from `Registrable::register()` interface method.
@@ -18,6 +19,7 @@
 - dev: Deprecate the `graphql_gf_form_field_setting_properties` filter in favor of `graphql_gf_form_field_setting_fields`.
 - chore: Update `plugin-update-checker` to `v4.13` and enable use of local assets on Dashboard screen.
 - test: ensure `$_gf_state` is reset between tests.
+- test: add some extra WPUnit tests for form/entry connection where args.
 
 ## v0.11.3 - WPGraphQL v1.9.0 Compatibility
 

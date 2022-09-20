@@ -100,7 +100,8 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 				'resolve'          => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
 					$context->gfForm = $source;
 
-					$args['where']['formIds'] = $source->formId ?? null;
+					$args['where']['formIds'] = $source->databaseId;
+
 					return Factory::resolve_entries_connection( $source, $args, $context, $info );
 				},
 			],
