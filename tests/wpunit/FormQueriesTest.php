@@ -16,7 +16,7 @@ use WPGraphQL\GF\Data\Loader\FormsLoader;
  */
 class FormQueriesTest extends GFGraphQLTestCase {
 	private $fields = [];
-	private $form_ids;
+	private $form_id;
 	private $text_field_helper;
 	private $text_area_field_helper;
 
@@ -35,9 +35,11 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$this->text_area_field_helper = $this->tester->getPropertyHelper( 'TextAreaField', [ 'id' => 2 ] );
 		$this->fields[]               = $this->factory->field->create( $this->text_area_field_helper->values );
 		// Form.
-		$this->form_ids = $this->factory->form->create_many(
-			6,
-			array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() )
+		$this->form_id = $this->factory->form->create(
+			array_merge(
+				[ 'fields' => $this->fields ],
+				$this->tester->getFormDefaultArgs()
+			)
 		);
 		$this->clearSchema();
 	}
@@ -47,7 +49,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		$this->factory->form->delete( $this->form_ids );
+		$this->factory->form->delete( $this->form_id );
 
 		// Then...
 		parent::tearDown();
@@ -57,9 +59,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 	 * Tests `gfForm`.
 	 */
 	public function testFormQuery() : void {
-		$form_id          = $this->form_ids[0];
-		$global_id        = Relay::toGlobalId( FormsLoader::$name, $form_id );
-		$form             = GFAPI::get_form( $form_id );
+		$global_id        = Relay::toGlobalId( FormsLoader::$name, $this->form_id );
+		$form             = GFAPI::get_form( $this->form_id );
 		$confirmation_key = key( $form['confirmations'] );
 
 		$query = $this->get_form_query();
@@ -75,7 +76,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 		$this->assertNull( $actual['data']['gfForm'] );
 
 		// Test with Database ID.
-		$variables['id'] = $form_id;
+		$variables['id'] = $this->form_id;
 		$expected        = $this->expected_field_response( $form, $confirmation_key );
 
 		$actual = $this->graphql( compact( 'query', 'variables' ) );
@@ -98,116 +99,6 @@ class FormQueriesTest extends GFGraphQLTestCase {
 
 		$this->assertArrayNotHasKey( 'errors', $actual );
 		$this->assertQuerySuccessful( $actual, $expected );
-	}
-
-	/**
-	 * Test `gfForms`.
-	 */
-	public function testFormsQuery() : void {
-		$query = '
-			query {
-				gfForms {
-					nodes {
-						databaseId
-					}
-				}
-			}
-		';
-
-		$response = $this->graphql( compact( 'query' ) );
-
-		$this->assertArrayNotHasKey( 'errors', $response );
-		$this->assertCount( 6, $response['data']['gfForms']['nodes'] );
-	}
-
-	/**
-	 * Test `gfForms` with query args.
-	 */
-	public function testForms_queryArgs() {
-		// Get form ids in DESC order.
-		$form_ids = array_reverse( $this->form_ids );
-
-		// Check `where.status` argument.
-
-		// Deactivate.
-		$this->factory->form->update_object( $form_ids[0], [ 'is_active' => 0 ] );
-		$this->factory->form->update_object( $form_ids[1], [ 'is_active' => 0 ] );
-		// Trash.
-		$this->factory->form->update_object( $form_ids[4], [ 'is_trash' => 1 ] );
-		$this->factory->form->update_object( $form_ids[5], [ 'is_trash' => 1 ] );
-		// Trash & Deactivate.
-		$this->factory->form->update_object(
-			$form_ids[2],
-			[
-				'is_active' => 0,
-				'is_trash'  => 1,
-			]
-		);
-		$this->factory->form->update_object(
-			$form_ids[3],
-			[
-				'is_active' => 0,
-				'is_trash'  => 1,
-			]
-		);
-
-		$query = '
-			query {
-				inactive: gfForms(where: {status: INACTIVE}) {
-					nodes {
-						databaseId
-						isActive
-						isTrash
-					}
-				}
-				trashed: gfForms(where: {status: TRASHED}) {
-					nodes {
-						databaseId
-						isActive
-						isTrash
-					}
-				}
-				inactive_trashed: gfForms(where: {status: INACTIVE_TRASHED}) {
-					nodes {
-						databaseId
-						isActive
-						isTrash
-					}
-				}
-			}
-		';
-
-		$response = $this->graphql( compact( 'query' ) );
-
-		$this->assertArrayNotHasKey( 'errors', $response, 'Status query has errors.' );
-		// Test inactive.
-		$this->assertCount( 2, $response['data']['inactive']['nodes'] );
-		$this->assertFalse( $response['data']['inactive']['nodes'][0]['isActive'] );
-		$this->assertFalse( $response['data']['inactive']['nodes'][0]['isTrash'] );
-		// Test trashed.
-		$this->assertCount( 2, $response['data']['trashed']['nodes'] );
-		$this->assertTrue( $response['data']['trashed']['nodes'][0]['isActive'] );
-		$this->assertTrue( $response['data']['trashed']['nodes'][0]['isTrash'] );
-		// Test inactive_trashed.
-		$this->assertCount( 2, $response['data']['inactive_trashed']['nodes'] );
-		$this->assertFalse( $response['data']['inactive_trashed']['nodes'][0]['isActive'] );
-		$this->assertTrue( $response['data']['inactive_trashed']['nodes'][0]['isTrash'] );
-
-		// Test where.sort argument.
-		$query = '
-			query {
-				gfForms( where: { orderby: { field: "id", order: DESC }, status:INACTIVE_TRASHED } ) {
-					nodes {
-						databaseId
-					}
-				}
-			}
-		';
-
-		$response = $this->graphql( compact( 'query' ) );
-
-		$this->assertArrayNotHasKey( 'errors', $response );
-		$this->assertGreaterThan( $response['data']['gfForms']['nodes'][1]['databaseId'], $response['data']['gfForms']['nodes'][0]['databaseId'] );
 	}
 
 	/**

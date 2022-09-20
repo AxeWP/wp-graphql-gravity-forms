@@ -67,6 +67,8 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 					nodes {
 						id
 						databaseId
+						dateCreated
+						title
 					}
 				}
 			}
@@ -235,6 +237,7 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 		$this->assertEqualSets( $expected['data']['gfForms']['nodes'], $actual['data']['gfForms']['nodes'] );
 	}
 
+
 	public function testFormIdsWhereArgs() {
 		$form_id_two = $this->form_ids[2];
 		$form_id_one = $this->form_ids[1];
@@ -255,60 +258,78 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 		$this->assertEquals( $form_id_two, $actual['data']['gfForms']['nodes'][1]['databaseId'] );
 	}
 
+	/**
+	 * Test `gfForms` with query args.
+	 */
 	public function testStatusWhereArgs() {
-		$form_id_one = $this->form_ids[1];
-		$query       = $this->getQuery();
+		// Get form ids in DESC order.
+		$form_ids = array_reverse( $this->form_ids );
 
-		// test inactive with no results
-		$variables = [
-			'where' => [
-				'status' => 'INACTIVE',
-			],
-		];
+		// Check `where.status` argument.
 
-		$actual = $this->graphql( compact( 'query', 'variables' ) );
+		// Deactivate.
+		$this->factory->form->update_object( $form_ids[0], [ 'is_active' => 0 ] );
+		$this->factory->form->update_object( $form_ids[1], [ 'is_active' => 0 ] );
+		// Trash.
+		$this->factory->form->update_object( $form_ids[4], [ 'is_trash' => 1 ] );
+		$this->factory->form->update_object( $form_ids[5], [ 'is_trash' => 1 ] );
+		// Trash & Deactivate.
+		$this->factory->form->update_object(
+			$form_ids[2],
+			[
+				'is_active' => 0,
+				'is_trash'  => 1,
+			]
+		);
+		$this->factory->form->update_object(
+			$form_ids[3],
+			[
+				'is_active' => 0,
+				'is_trash'  => 1,
+			]
+		);
 
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertCount( 0, $actual['data']['gfForms']['nodes'] );
+		$query = '
+			query {
+				inactive: gfForms(where: {status: INACTIVE}) {
+					nodes {
+						databaseId
+						isActive
+						isTrash
+					}
+				}
+				trashed: gfForms(where: {status: TRASHED}) {
+					nodes {
+						databaseId
+						isActive
+						isTrash
+					}
+				}
+				inactive_trashed: gfForms(where: {status: INACTIVE_TRASHED}) {
+					nodes {
+						databaseId
+						isActive
+						isTrash
+					}
+				}
+			}
+		';
 
-		// test inactive
-		\GFAPI::update_form_property( $form_id_one, 'is_active', false );
+		$response = $this->graphql( compact( 'query' ) );
 
-		$actual = $this->graphql( compact( 'query', 'variables' ) );
-
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertCount( 1, $actual['data']['gfForms']['nodes'] );
-		$this->assertEquals( $form_id_one, $actual['data']['gfForms']['nodes'][0]['databaseId'] );
-
-		// test inactive + trashed
-		\GFAPI::update_form_property( $form_id_one, 'is_trash', true );
-
-		$variables = [
-			'where' => [
-				'status' => 'INACTIVE_TRASHED',
-			],
-		];
-
-		$actual = $this->graphql( compact( 'query', 'variables' ) );
-
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertCount( 1, $actual['data']['gfForms']['nodes'] );
-		$this->assertEquals( $form_id_one, $actual['data']['gfForms']['nodes'][0]['databaseId'] );
-
-		// test trashed
-		\GFAPI::update_form_property( $form_id_one, 'is_active', true );
-
-		$variables = [
-			'where' => [
-				'status' => 'TRASHED',
-			],
-		];
-
-		$actual = $this->graphql( compact( 'query', 'variables' ) );
-
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertCount( 1, $actual['data']['gfForms']['nodes'] );
-		$this->assertEquals( $form_id_one, $actual['data']['gfForms']['nodes'][0]['databaseId'] );
+		$this->assertArrayNotHasKey( 'errors', $response, 'Status query has errors.' );
+		// Test inactive.
+		$this->assertCount( 2, $response['data']['inactive']['nodes'] );
+		$this->assertFalse( $response['data']['inactive']['nodes'][0]['isActive'] );
+		$this->assertFalse( $response['data']['inactive']['nodes'][0]['isTrash'] );
+		// Test trashed.
+		$this->assertCount( 2, $response['data']['trashed']['nodes'] );
+		$this->assertTrue( $response['data']['trashed']['nodes'][0]['isActive'] );
+		$this->assertTrue( $response['data']['trashed']['nodes'][0]['isTrash'] );
+		// Test inactive_trashed.
+		$this->assertCount( 2, $response['data']['inactive_trashed']['nodes'] );
+		$this->assertFalse( $response['data']['inactive_trashed']['nodes'][0]['isActive'] );
+		$this->assertTrue( $response['data']['inactive_trashed']['nodes'][0]['isTrash'] );
 	}
 
 	public function testOrderbyWhereArgs() {
@@ -319,32 +340,13 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 			'first' => 2,
 			'where' => [
 				'orderby' => [
-					'field' => 'ID',
-					'order' => 'ASC',
-				],
-			],
-		];
-
-		$wp_query = \GFAPI::get_forms( null, null, 'ids', 'ASC' );
-		$expected = array_slice( $wp_query, 0, 2, false );
-
-		$actual = $this->graphql( compact( 'query', 'variables' ) );
-
-		$this->assertValidPagination( $expected, $actual );
-
-		// test orderby title
-		$variables = [
-			'first' => 2,
-			'where' => [
-				'orderby' => [
-					'field' => 'title',
+					'field' => 'ids',
 					'order' => 'DESC',
 				],
 			],
 		];
 
-		$wp_query = \GFAPI::get_forms( null, null, 'title', 'DESC' );
-
+		$wp_query = \GFAPI::get_forms( null, null, 'ids', 'DESC' );
 		$expected = array_slice( $wp_query, 0, 2, false );
 
 		$actual = $this->graphql( compact( 'query', 'variables' ) );
