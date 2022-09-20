@@ -321,12 +321,16 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @return array|int
 	 */
 	private function get_form_ids() {
-		// @todo allow for both Global and DB Ids. 
-		if ( ! empty( $this->args['where']['formIds'] ) && is_array( $this->args['where']['formIds'] ) ) {
+		if ( empty( $this->args['where']['formIds'] ) ) {
+			return 0;
+		}
+
+		// @todo allow for both Global and DB Ids.
+		if ( is_array( $this->args['where']['formIds'] ) ) {
 			return array_map( 'absint', $this->args['where']['formIds'] );
 		}
 
-		return 0; // Return all forms.
+		return absint( $this->args['where']['formIds'] );
 	}
 
 	/**
