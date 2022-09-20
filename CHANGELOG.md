@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- feat!: Update minimum required WPGraphQL version to v1.9.0.
 - feat: Add `connectedChoice` and `connectedInput` to `CheckboxFieldValue` type.
 - feat: Add `orderSummary` to `GfEntry` interface.
 - feat: Add support for `Option`, `Product`, `Quantity`, `Shipping`, and `Total` Gravity Forms fields.
