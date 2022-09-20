@@ -53,7 +53,7 @@ class FormsConnection extends AbstractConnection {
 		return [
 			'formIds' => [
 				'type'        => [ 'list_of' => 'ID' ],
-				'description' => __( 'Array of form IDs to return. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Array of form database IDs to return. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
 			],
 			'status'  => [
 				'type'        => FormStatusEnum::$type,
