@@ -18,7 +18,7 @@ use WPGraphQL\GF\Data\Loader\EntriesLoader;
 class EntryQueriesTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_id;
-	private $entry_ids;
+	private $entry_id;
 	private $text_field_helper;
 
 	/**
@@ -40,8 +40,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 			)
 		);
 
-		$this->entry_ids = $this->factory->entry->create_many(
-			6,
+		$this->entry_id = $this->factory->entry->create(
 			[
 				'form_id'              => $this->form_id,
 				'created_by'           => $this->admin->ID,
@@ -57,11 +56,59 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		$this->factory->entry->delete( $this->entry_ids );
+		$this->factory->entry->delete( $this->entry_id );
 		$this->factory->form->delete( $this->form_id );
 
 		// Then...
 		parent::tearDown();
+	}
+
+	/**
+	 * Returns the full entry query for reuse.
+	 *
+	 * @return string
+	 */
+	private function get_entry_query() : string {
+		return '
+			query getEntry($id: ID!, $idType: EntryIdTypeEnum) {
+				gfEntry(id: $id, idType: $idType) {
+					createdBy {
+						databaseId
+					}
+					createdById
+					createdByDatabaseId
+					dateCreated
+					dateUpdated
+					dateCreatedGmt
+					dateUpdatedGmt
+					formDatabaseId
+					form {
+						databaseId
+					}
+					formFields {
+						nodes {
+							id
+						}
+					}
+					id
+					ip
+					isDraft
+					isSubmitted
+					sourceUrl
+					userAgent
+					... on GfDraftEntry {
+						resumeToken
+					}
+					... on GfSubmittedEntry {
+						databaseId
+						isStarred
+						isRead
+						postDatabaseId
+						status
+					}
+				}
+			}
+		';
 	}
 
 	/**
@@ -70,8 +117,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	public function testEntryQuery() : void {
 		wp_set_current_user( $this->admin->ID );
 
-		$global_id = Relay::toGlobalId( EntriesLoader::$name, $this->entry_ids[0] );
-		$entry     = $this->factory->entry->get_object_by_id( $this->entry_ids[0] );
+		$global_id = Relay::toGlobalId( EntriesLoader::$name, $this->entry_id );
+		$entry     = $this->factory->entry->get_object_by_id( $this->entry_id );
 		$form      = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$query = $this->get_entry_query();
@@ -87,7 +134,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		$this->assertNull( $actual['data']['gfEntry'] );
 
 		// Test with Database ID.
-		$variables['id'] = $this->entry_ids[0];
+		$variables['id'] = $this->entry_id;
 
 		$actual = $this->graphql( compact( 'query', 'variables' ) );
 
@@ -116,7 +163,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `gfEntry` with no setup variables.
 	 */
-	public function testEntryQuery_empty() {
+	public function testEmptyEntryQuery() {
 		wp_set_current_user( $this->admin->ID );
 
 		$entry_id  = $this->factory->entry->create(
@@ -144,7 +191,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `gfEntry` with draft entry.
 	 */
-	public function testEntryQuery_draft() : void {
+	public function testDraftEntryQuery() : void {
 		wp_set_current_user( $this->admin->ID );
 
 		$draft_token = $this->factory->draft_entry->create(
@@ -198,119 +245,6 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 		$this->assertEquals( $draft_token, $actual['data']['gfEntry']['resumeToken'] );
 
 		$this->factory->draft_entry->delete( $draft_token );
-	}
-
-	/**
-	 * Tests `gfEntries`.
-	 */
-	public function testEntriesQuery() : void {
-		wp_set_current_user( $this->admin->ID );
-
-		$query = '
-			query {
-				gfEntries {
-					nodes {
-						... on GfSubmittedEntry {
-							databaseId
-						}
-						... on GfDraftEntry {
-							resumeToken
-						}
-					}
-				}
-			}
-		';
-
-		$actual = $this->graphql( [ 'query' => $query ] );
-		$this->assertArrayNotHasKey( 'errors', $actual );
-		$this->assertCount( 6, $actual['data']['gfEntries']['nodes'] );
-	}
-
-	/**
-	 * Test entries count.
-	 */
-	public function testEntriesCount() {
-		wp_set_current_user( $this->admin->ID );
-
-		$entry_ids = array_reverse( $this->entry_ids );
-
-		$query = '
-			query testEntryCount( $status: EntryStatusEnum ) {
-				gfForms {
-					nodes {
-						entries( where: {status: $status} ) {
-							count
-						}
-					}
-				}
-			}
-		';
-
-		$response = $this->graphql( compact( 'query' ) );
-
-		$this->assertArrayNotHasKey( 'errors', $response, 'First array has errors' );
-
-		$this->assertSame( count( $entry_ids ), $response['data']['gfForms']['nodes'][0]['entries']['count'] );
-
-		$result = GFAPI::update_entry_property( $entry_ids[0], 'status', 'trash' );
-
-		$variables = [
-			'status' => 'TRASH',
-		];
-
-		$response = $this->graphql( compact( 'query', 'variables' ) );
-
-		$this->assertArrayNotHasKey( 'errors', $response, 'Second array has errors' );
-
-		$this->assertSame( 1, $response['data']['gfForms']['nodes'][0]['entries']['count'] );
-	}
-
-	/**
-	 * Returns the full entry query for reuse.
-	 *
-	 * @return string
-	 */
-	private function get_entry_query() : string {
-		return '
-			query getEntry($id: ID!, $idType: EntryIdTypeEnum) {
-				gfEntry(id: $id, idType: $idType) {
-					createdBy {
-						databaseId
-					}
-					createdById
-					createdByDatabaseId
-					dateCreated
-					dateUpdated
-					dateCreatedGmt
-					dateUpdatedGmt
-					formDatabaseId
-					form {
-						databaseId
-					}
-					formFields {
-						nodes {
-							id
-						}
-					}
-					id
-					ip
-					isDraft
-					isSubmitted
-					sourceUrl
-					userAgent
-					... on GfDraftEntry {
-						resumeToken
-					}
-					... on GfSubmittedEntry {
-						databaseId
-						isStarred
-						isRead
-						postDatabaseId
-						status
-					}
-				}
-			}
-		';
 	}
 
 	/**
