@@ -1,25 +1,31 @@
 # Changelog
 
 ## Unreleased
-- feat:  `connectedChoice` and `connectedInput` to `CheckboxFieldValue` type.
+- feat: Add `connectedChoice` and `connectedInput` to `CheckboxFieldValue` type.
 - feat: Add `orderSummary` to `GfEntry` interface.
 - feat: Add support for `Option`, `Product`, `Quantity`, `Shipping`, and `Total` Gravity Forms fields.
 - feat: Refactor `GfFormField` field settings, choices, and inputs to use GraphQL interfaces.
 - fix: ensure latest mutation input data is used to prepare the field values on update mutations.
-- fix: ensure form->entry connections only return entries on that form.
-- fix: change `formIds` input description to clarify that it (currently) only accepts database IDs.
 - dev!: Move `TypeRegistry` classes to `WPGraphQL\GF\Registry` namespace.
 - dev!: Register each GraphQL type on its own `add_action()` call.
 - dev!: Remove nullable `$type_registry` param from `Registrable::register()` interface method.
 - dev!: Remove the `$type_registry` param from the `graphql_gf_after_register_types` and `graphql_gf_before_register_types` actions.
 - dev!: Remove the `PropertyMapper`, `ChoiceMapper`, `InputMapper`, and `FieldProperties` PHP classes in favor of the `FormFieldRegistry`, `FieldInputRegistry` and `FieldChoiceRegistry` classes.
-- dev: Deprecate the `graphql_gf_form_field_value_properties` filter in favor of `graphql_gf_form_field_value_fields`.
 - dev: Add following actions: `graphql_gf_after_register_form_field`, `graphql_gf_after_register_form_field_object`,`graphql_gf_register_form_field_inputs`, `graphql_gf_register_form_field_inputs` .
 - dev: Add the following filters: `graphql_gf_form_field_setting_choice_fields`, `graphql_gf_form_field_setting_input_fields`, `graphql_gf_registered_form_field_setting_classes`, `graphql_gf_registered_form_field_setting_choice_classes`, `graphql_gf_registered_form_field_setting_input_classes`.
 - dev: Deprecate the `graphql_gf_form_field_setting_properties` filter in favor of `graphql_gf_form_field_setting_fields`.
-- chore: Update `plugin-update-checker` to `v4.13` and enable use of local assets on Dashboard screen.
-- test: ensure `$_gf_state` is reset between tests.
-- test: add some extra WPUnit tests for form/entry connection where args.
+- dev: Deprecate the `graphql_gf_form_field_value_properties` filter in favor of `graphql_gf_form_field_value_fields`.
+
+## v0.11.4
+
+This _minor_ release fixes a bug where `form.entries` would return entries from _all_ forms, among other things.
+
+- (#291) feat: Update `plugin-update-checker` to `v4.13` and enable use of local assets on Dashboard screen.
+- (#307) fix: ensure form->entry connections only return entries on that form.
+- (#307) fix: change `formIds` input description to clarify that it (currently) only accepts database IDs.
+- (#304) chore: update Composer deps.
+- (#307) test: ensure `$_gf_state` is reset between tests.
+- (#307) test: add some extra WPUnit tests for form/entry connection where args.
 
 ## v0.11.3 - WPGraphQL v1.9.0 Compatibility
 

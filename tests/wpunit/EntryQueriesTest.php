@@ -112,6 +112,54 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	}
 
 	/**
+	 * Returns the full entry query for reuse.
+	 *
+	 * @return string
+	 */
+	private function get_entry_query() : string {
+		return '
+			query getEntry($id: ID!, $idType: EntryIdTypeEnum) {
+				gfEntry(id: $id, idType: $idType) {
+					createdBy {
+						databaseId
+					}
+					createdById
+					createdByDatabaseId
+					dateCreated
+					dateUpdated
+					dateCreatedGmt
+					dateUpdatedGmt
+					formDatabaseId
+					form {
+						databaseId
+					}
+					formFields {
+						nodes {
+							id
+						}
+					}
+					id
+					ip
+					isDraft
+					isSubmitted
+					sourceUrl
+					userAgent
+					... on GfDraftEntry {
+						resumeToken
+					}
+					... on GfSubmittedEntry {
+						databaseId
+						isStarred
+						isRead
+						postDatabaseId
+						status
+					}
+				}
+			}
+		';
+	}
+
+	/**
 	 * Tests `gfEntry`.
 	 */
 	public function testEntryQuery() : void {
@@ -125,8 +173,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		// Test with bad ID.
 		$variables = [
-			'id'     => 99999999,
-			'idType' => 'DATABASE_ID',
+			'id'         => 99999999,
+			'idType' => 'DATABASE_ID',,
 		];
 
 		$actual = $this->graphql( compact( 'query', 'variables' ) );

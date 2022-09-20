@@ -67,6 +67,10 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 		$_gf_state = [];
 		unset( $_gf_uploaded_files );
 
+		global $_gf_state, $_gf_uploaded_files;
+		$_gf_state = [];
+		unset( $_gf_uploaded_files );
+
 		// Then...
 		parent::tearDown();
 	}
