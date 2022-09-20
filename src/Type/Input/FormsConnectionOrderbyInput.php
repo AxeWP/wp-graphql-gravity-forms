@@ -32,6 +32,7 @@ class FormsConnectionOrderbyInput extends AbstractInput {
 	 */
 	public static function get_fields() : array {
 		return [
+			// @todo switch to enum
 			'field' => [
 				'type'        => 'String',
 				'description' => __( 'The field name used to sort the results.', 'wp-graphql-gravity-forms' ),
