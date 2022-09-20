@@ -33,19 +33,9 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	public int $offset_index = 0;
 
 	/**
-	 * Whether the version of WPGraphQL is missing the new methods added in v1.9.0.
-	 * Used to support pre 1.9.0 versions of WPGraphQL.
-	 *
-	 * @var boolean
-	 */
-	public bool $is_legacy = false;
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function __construct( $source, array $args, AppContext $context, ResolveInfo $info ) {
-		$this->is_legacy = version_compare( WPGRAPHQL_VERSION, '1.9.0', '<' );
-
 		parent::__construct( $source, $args, $context, $info );
 		$this->offset_index = $this->get_query_offset_index();
 	}
@@ -149,89 +139,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 
 		return $ids;
 	}
-
-	/**
-	 * Gets the array index for the given offset.
-	 *
-	 * Shim for pre 1.9.0 versions of WPGraphQL.
-	 *
-	 * @param int|string|false $offset The cursor pagination offset.
-	 * @param array            $ids    The array of ids from the query.
-	 *
-	 * @return int|false $index The array index of the offset.
-	 */
-	public function get_array_index_for_offset( $offset, $ids ) {
-		if ( ! $this->is_legacy ) {
-			return parent::get_array_index_for_offset( $offset, $ids );
-		}
-
-		if ( false === $offset ) {
-			return false;
-		}
-
-		// We use array_values() to ensure we're getting a positional index, and not a key.
-		return array_search( $offset, array_values( $ids ), true );
-	}
-
-	/**
-	 * Returns an array slice of IDs, per the Relay Cursor Connection spec.
-	 *
-	 * Shim for WPGraphQL < 1.9.0
-	 *
-	 * @param array $ids The array of IDs from the query to slice, ordered as expected by the GraphQL query.
-	 *
-	 * @return array
-	 */
-	public function apply_cursors_to_ids( array $ids ) {
-		if ( ! $this->is_legacy ) {
-			return parent::apply_cursors_to_ids( $ids );
-		}
-
-		if ( empty( $ids ) ) {
-			return [];
-		}
-
-		// First we slice the array from the front.
-		if ( ! empty( $this->args['after'] ) ) {
-			$offset = $this->get_offset_for_cursor( $this->args['after'] );
-			$index  = $this->get_array_index_for_offset( $offset, $ids );
-
-			if ( false !== $index ) {
-				// We want to start with the first id after the index.
-				$ids = array_slice( $ids, $index + 1, null, true );
-			}
-		}
-
-		// Then we slice the array from the back.
-		if ( ! empty( $this->args['before'] ) ) {
-			$offset = $this->get_offset_for_cursor( $this->args['before'] );
-			$index  = $this->get_array_index_for_offset( $offset, $ids );
-
-			if ( false !== $index ) {
-				// Because array indexes start at 0, we can overfetch without adding 1 to $index.
-				$ids = array_slice( $ids, 0, $index, true );
-			}
-		}
-
-		return $ids;
-	}
-
-	/**
-	 * Returns an array of IDs for the connection.
-	 *
-	 * Shim for WPGraphQL < 1.9.0
-	 *
-	 * @return array
-	 */
-	public function get_ids() {
-		if ( ! $this->is_legacy ) {
-			return parent::get_ids();
-		}
-		$ids = $this->get_ids_from_query();
-
-		return $this->apply_cursors_to_ids( $ids );
-	}
-
 
 	/**
 	 * {@inheritDoc}
