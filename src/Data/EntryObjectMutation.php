@@ -131,7 +131,7 @@ class EntryObjectMutation {
 		}
 
 		return [
-			'type'    => $payload['confirmation_type'] ?? null,
+			'type'    => $payload['confirmation_type'],
 			'message' => $payload['confirmation_message'] ?? null,
 			'url'     => $payload['confirmation_redirect'] ?? null,
 		];

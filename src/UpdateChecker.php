@@ -9,7 +9,7 @@
 namespace WPGraphQL\GF;
 
 use Puc_v4_Factory;
-use Puc_v4p11_Vcs_PluginUpdateChecker;
+use Puc_v4p13_Vcs_PluginUpdateChecker;
 
 /**
  * Class - Update Checker
@@ -39,7 +39,7 @@ class UpdateChecker {
 		 */
 		$repo_link = apply_filters( 'graphql_gf_update_repo_url', 'https://github.com/harness-software/wp-graphql-gravity-forms/' );
 
-		/** @var Puc_v4p11_Vcs_PluginUpdateChecker */
+		/** @var Puc_v4p13_Vcs_PluginUpdateChecker */
 		$update_checker = Puc_v4_Factory::buildUpdateChecker(
 			trailingslashit( $repo_link ),
 			WPGRAPHQL_GF_PLUGIN_FILE,

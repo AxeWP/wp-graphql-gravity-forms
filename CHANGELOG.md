@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.11.4
+
+This _minor_ release squashes a few bugs.
+
+- (#291) feat: Update `plugin-update-checker` to `v4.13` and enable use of local assets on Dashboard screen.
+- (#307) fix: ensure form->entry connections only return entries on that form.
+- (#307) fix: change `formIds` input description to clarify that it (currently) only accepts database IDs.
+- (#304) chore: update Composer deps.
+- (#307) test: ensure `$_gf_state` is reset between tests.
+- (#307) test: add some extra WPUnit tests for form/entry connection where args.
+
+
 ## v0.11.3 - WPGraphQL v1.9.0 Compatibility
 
 This _minor_ release fixes a bug where `gfEntries.pageInfo` fields would have incorrect data after upgrading to WPGraphQL v1.9.0.
