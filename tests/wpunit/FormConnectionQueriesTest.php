@@ -352,6 +352,24 @@ class FormConnectionQueriesTest extends GFGraphQLTestCase {
 		$actual = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertValidPagination( $expected, $actual );
+
+		// test orderby title
+		$variables = [
+			'first' => 2,
+			'where' => [
+				'orderby' => [
+					'column' => 'TITLE',
+					'order' => 'ASC',
+				],
+			],
+		];
+
+		$wp_query = \GFAPI::get_forms( null, null, 'title', 'ASC' );
+		$expected = array_slice( $wp_query, 0, 2, false );
+
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertValidPagination( $expected, $actual );
 	}
 
 	/**

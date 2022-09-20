@@ -34,7 +34,7 @@ class FormsConnectionOrderbyInput extends AbstractInput {
 	 */
 	public static function get_fields() : array {
 		return [
-			'field'   => [
+			'field'  => [
 				'type'              => 'String',
 				'description'       => __( 'The field name used to sort the results.', 'wp-graphql-gravity-forms' ),
 				'deprecationReason' => __( 'Use the `orderBy` field instead.', 'wp-graphql-gravity-forms' ),
@@ -43,7 +43,7 @@ class FormsConnectionOrderbyInput extends AbstractInput {
 				'type'        => FormsConnectionOrderByEnum::$type,
 				'description' => __( 'The form column name used to sort the results.', 'wp-graphql-gravity-forms' ),
 			],
-			'order'   => [
+			'order'  => [
 				'type'        => 'OrderEnum',
 				'description' => __( 'The cardinality of the order of the connection.', 'wp-graphql-gravity-forms' ),
 			],

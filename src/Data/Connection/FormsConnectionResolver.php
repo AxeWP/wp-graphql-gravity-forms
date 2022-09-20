@@ -238,8 +238,13 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 		];
 
 		if ( ! empty( $this->args['where']['orderby'] ) && is_array( $this->args['where']['orderby'] ) ) {
+			// @todo remove support for deprecated `field` input.
+			if ( empty( $this->args['where']['orderby']['column'] ) && ! empty( $this->args['where']['orderby']['field'] ) ) {
+				$this->args['where']['orderby']['column'] = $this->args['where']['orderby']['field'];
+			}
+
 			$sort = [
-				'key'       => $this->args['where']['orderby']['key'] ?? '',
+				'key'       => $this->args['where']['orderby']['column'] ?? '',
 				'direction' => $this->args['where']['orderby']['order'] ?? 'ASC',
 			];
 		}
