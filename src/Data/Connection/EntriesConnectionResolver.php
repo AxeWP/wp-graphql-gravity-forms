@@ -44,7 +44,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * {@inheritDoc}
 	 */
 	public function __construct( $source, array $args, AppContext $context, ResolveInfo $info ) {
-		$this->is_legacy = version_compare( WPGRAPHQL_VERSION, '1.9.0', '<' );
+		$this->is_legacy = defined( 'WPGRAPHQL_VERSION' ) && version_compare( WPGRAPHQL_VERSION, '1.9.0', '<' );
 
 		parent::__construct( $source, $args, $context, $info );
 		$this->offset_index = $this->get_query_offset_index();
