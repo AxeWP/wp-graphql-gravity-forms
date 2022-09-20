@@ -1,6 +1,6 @@
 <?php
 /**
- * Test GraphQL Entry Queries.
+ * Test GraphQL FormConnectionQueriesTest Queries.
  *
  * @package .
  */
@@ -8,9 +8,9 @@
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 
 /**
- * Class - EntryQueriesTest
+ * Class - FormConnectionQueriesTest
  */
-class FormConnectionPaginationTest extends GFGraphQLTestCase {
+class FormConnectionQueriesTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_ids;
 	private $text_field_helper;
@@ -80,7 +80,7 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 
 		$query = $this->getQuery();
 
-		$wp_query = GFAPI::get_forms( null, null, 'ids', 'DESC' );
+		$wp_query = GFAPI::get_forms( null, null, 'id', 'DESC' );
 
 		codecept_debug( array_column( $wp_query, 'id' ) );
 
@@ -158,7 +158,7 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 
 		$query = $this->getQuery();
 
-		$wp_query = GFAPI::get_forms( null, null, 'ids', 'ASC' );
+		$wp_query = GFAPI::get_forms( null, null, 'id', 'ASC' );
 
 		codecept_debug( array_column( $wp_query, 'id' ) );
 
@@ -340,13 +340,13 @@ class FormConnectionPaginationTest extends GFGraphQLTestCase {
 			'first' => 2,
 			'where' => [
 				'orderby' => [
-					'field' => 'ids',
+					'column' => 'ID',
 					'order' => 'DESC',
 				],
 			],
 		];
 
-		$wp_query = \GFAPI::get_forms( null, null, 'ids', 'DESC' );
+		$wp_query = \GFAPI::get_forms( null, null, 'id', 'DESC' );
 		$expected = array_slice( $wp_query, 0, 2, false );
 
 		$actual = $this->graphql( compact( 'query', 'variables' ) );

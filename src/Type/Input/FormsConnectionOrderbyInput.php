@@ -9,6 +9,8 @@
 
 namespace WPGraphQL\GF\Type\Input;
 
+use WPGraphQL\GF\Type\Enum\FormsConnectionOrderByEnum;
+
 /**
  * Class - FormsConnectionOrderbyInput
  */
@@ -32,12 +34,16 @@ class FormsConnectionOrderbyInput extends AbstractInput {
 	 */
 	public static function get_fields() : array {
 		return [
-			// @todo switch to enum
-			'field' => [
-				'type'        => 'String',
-				'description' => __( 'The field name used to sort the results.', 'wp-graphql-gravity-forms' ),
+			'field'   => [
+				'type'              => 'String',
+				'description'       => __( 'The field name used to sort the results.', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Use the `orderBy` field instead.', 'wp-graphql-gravity-forms' ),
 			],
-			'order' => [
+			'column' => [
+				'type'        => FormsConnectionOrderByEnum::$type,
+				'description' => __( 'The form column name used to sort the results.', 'wp-graphql-gravity-forms' ),
+			],
+			'order'   => [
 				'type'        => 'OrderEnum',
 				'description' => __( 'The cardinality of the order of the connection.', 'wp-graphql-gravity-forms' ),
 			],

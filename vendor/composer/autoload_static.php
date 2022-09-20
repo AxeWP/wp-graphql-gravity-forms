@@ -162,6 +162,7 @@ class ComposerStaticInit1780be6bb95231f5d94c35ac3decce02
         'WPGraphQL\\GF\\Type\\Enum\\FormSubLabelPlacementEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormSubLabelPlacementEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormSubmitButtonLocationEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormSubmitButtonLocationEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\FormSubmitButtonWidthEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormSubmitButtonWidthEnum.php',
+        'WPGraphQL\\GF\\Type\\Enum\\FormsConnectionOrderByEnum' => __DIR__ . '/../..' . '/src/Type/Enum/FormsConnectionOrderByEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\NumberFieldFormatEnum' => __DIR__ . '/../..' . '/src/Type/Enum/NumberFieldFormatEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\PasswordFieldMinStrengthEnum' => __DIR__ . '/../..' . '/src/Type/Enum/PasswordFieldMinStrengthEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\PhoneFieldFormatEnum' => __DIR__ . '/../..' . '/src/Type/Enum/PhoneFieldFormatEnum.php',
