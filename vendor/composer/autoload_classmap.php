@@ -143,6 +143,7 @@ return array(
     'WPGraphQL\\GF\\Type\\Enum\\FormSubLabelPlacementEnum' => $baseDir . '/src/Type/Enum/FormSubLabelPlacementEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FormSubmitButtonLocationEnum' => $baseDir . '/src/Type/Enum/FormSubmitButtonLocationEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\FormSubmitButtonWidthEnum' => $baseDir . '/src/Type/Enum/FormSubmitButtonWidthEnum.php',
+    'WPGraphQL\\GF\\Type\\Enum\\FormsConnectionOrderByEnum' => $baseDir . '/src/Type/Enum/FormsConnectionOrderByEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\NumberFieldFormatEnum' => $baseDir . '/src/Type/Enum/NumberFieldFormatEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\PasswordFieldMinStrengthEnum' => $baseDir . '/src/Type/Enum/PasswordFieldMinStrengthEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\PhoneFieldFormatEnum' => $baseDir . '/src/Type/Enum/PhoneFieldFormatEnum.php',

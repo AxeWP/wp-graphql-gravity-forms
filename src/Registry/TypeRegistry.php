@@ -146,6 +146,7 @@ class TypeRegistry {
 			Enum\FormSubLabelPlacementEnum::class,
 			Enum\FormSubmitButtonLocationEnum::class,
 			Enum\FormSubmitButtonWidthEnum::class,
+			Enum\FormsConnectionOrderByEnum::class,
 			Enum\NumberFieldFormatEnum::class,
 			Enum\PasswordFieldMinStrengthEnum::class,
 			Enum\PhoneFieldFormatEnum::class,

@@ -5,6 +5,7 @@
 - feat: Add `orderSummary` to `GfEntry` interface.
 - feat: Add support for `Option`, `Product`, `Quantity`, `Shipping`, and `Total` Gravity Forms fields.
 - feat: Refactor `GfFormField` field settings, choices, and inputs to use GraphQL interfaces.
+- feat: Deprecate `FormsConnectionOrderbyInput.field` in favor of `FormsConnectionOrderbyInput.column`.
 - fix: ensure latest mutation input data is used to prepare the field values on update mutations.
 - dev!: Move `TypeRegistry` classes to `WPGraphQL\GF\Registry` namespace.
 - dev!: Register each GraphQL type on its own `add_action()` call.
