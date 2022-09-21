@@ -76,7 +76,6 @@ class FormConnectionQueriesTest extends GFGraphQLTestCase {
 	}
 
 	public function testForwardPagination() {
-		wp_set_current_user( $this->admin->ID );
 
 		$query = $this->getQuery();
 
@@ -154,7 +153,6 @@ class FormConnectionQueriesTest extends GFGraphQLTestCase {
 	}
 
 	public function testBackwardPagination() {
-		wp_set_current_user( $this->admin->ID );
 
 		$query = $this->getQuery();
 

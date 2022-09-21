@@ -128,51 +128,15 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_ids() : array {
-		if ( empty( $this->query ) ) {
-			return [];
-		}
+	public function get_ids_from_query() {
+		$ids = ! empty( $this->query ) ? array_keys( $this->query ) : [];
 
-		$ids = array_keys( $this->query );
-
-		// Slice here to mimic WP queries that only query the subset.
-		if ( ! empty( $this->get_offset() ) ) {
-			// Determine if the offset is in the array.
-			$key = array_search( $this->get_offset(), $ids, true );
-			// If the offset is in the array.
-			$key ++;
-			$ids = array_slice( $ids, $key, null, true );
+		// If we're going backwards, we need to reverse the array.
+		if ( ! empty( $this->args['last'] ) ) {
+			$ids = array_reverse( $ids );
 		}
 
 		return $ids;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function get_nodes() : array {
-		if ( empty( $this->ids ) ) {
-			return [];
-		}
-
-		$nodes = [];
-
-		$ids = $this->ids;
-		$ids = array_slice( $ids, 0, $this->query_amount, true );
-
-		// Reverse the array if were going backwards.
-		if ( ! empty( $this->args['last'] ) ) {
-			$ids = array_reverse( $ids, true );
-		}
-
-		foreach ( $ids as $id ) {
-			$model = $this->get_node_by_id( $id );
-			if ( true === $this->is_valid_model( $model ) ) {
-				$nodes[ $id ] = $model;
-			}
-		}
-
-		return $nodes;
 	}
 
 	/**
