@@ -8,6 +8,7 @@
 use GraphQLRelay\Relay;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 use WPGraphQL\GF\Type\Enum;
+use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum as QuizEnum;
 use Helper\GFHelpers\GFHelpers;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
 
@@ -231,8 +232,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						titleTemplate
 						status
 						shouldUseCurrentUserAsAuthor
-					}'
-					/*
+					}
 					quiz {
 						failConfirmation {
 							isAutoformatted
@@ -258,8 +258,6 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						}
 						passPercent
 					}
-					*/
-					. '
 					requiredIndicator
 					saveAndContinue {
 						buttonText
@@ -510,6 +508,46 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						]
 					),
 					// @todo Quiz fields
+					$this->expectedObject(
+						'quiz',
+						[
+							$this->expectedObject(
+								'failConfirmation', [
+									$this->expectedField( 'isAutoformatted', empty( $form['gravityformsquiz']['failConfirmationDisableAutoformat'] ) ),
+									$this->expectedField( 'message', $form['gravityformsquiz']['failConfirmationMessage'] ),
+								]
+							),
+							$this->expectedNode(
+								'grades',
+								[
+									$this->expectedField( 'text', $form['gravityformsquiz']['grades'][0]['text'] ),
+									$this->expectedField( 'value', $form['gravityformsquiz']['grades'][0]['value'] ),
+								],
+								0
+							),
+							$this->expectedField( 'gradingType', GFHelpers::get_enum_for_value( QuizEnum\QuizFieldGradingTypeEnum::$type, $form['gravityformsquiz']['grading'] ) ),
+							$this->expectedField( 'hasInstantFeedback', ! empty( $form['gravityformsquiz']['instantFeedback'] ) ),
+							$this->expectedField( 'hasLetterConfirmationMessage', ! empty( $form['gravityformsquiz']['letterDisplayConfirmation'] ) ),
+							$this->expectedField( 'hasPassFailConfirmationMessage', ! empty( $form['gravityformsquiz']['passfailDisplayConfirmation'] ) ),
+							$this->expectedField( 'isShuffleFieldsEnabled', ! empty( $form['gravityformsquiz']['shuffleFields'] ) ),
+							$this->expectedObject(
+								'letterConfirmation',
+								[
+									$this->expectedField( 'isAutoformatted', empty( $form['gravityformsquiz']['letterConfirmationDisableAutoformat'] ) ),
+									$this->expectedField( 'message', $form['gravityformsquiz']['letterConfirmationMessage'] ),
+								]
+							),
+							$this->expectedField( 'maxScore', static::IS_NULL ),
+							$this->expectedObject(
+								'passConfirmation',
+								[
+									$this->expectedField( 'isAutoformatted', empty( $form['gravityformsquiz']['passConfirmationDisableAutoformat'] ) ),
+									$this->expectedField( 'message', $form['gravityformsquiz']['passConfirmationMessage'] ),
+								]
+							),
+							$this->expectedField( 'passPercent', $form['gravityformsquiz']['passPercent'] ),
+						]
+					),
 					$this->expectedField( 'requiredIndicator', GFHelpers::get_enum_for_value( Enum\FormFieldRequiredIndicatorEnum::$type, $form['requiredIndicator'] ) ),
 					$this->expectedObject(
 						'saveAndContinue',
