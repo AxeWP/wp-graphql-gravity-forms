@@ -1,6 +1,6 @@
 <?php
 /**
- * Test GraphQL Entry Queries.
+ * Test GraphQL Form Connection Queries.
  *
  * @package .
  */
@@ -8,9 +8,9 @@
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 
 /**
- * Class - EntryQueriesTest
+ * Class - FormConnectionQueriesTest
  */
-class FormConnectionPaginationTest extends GFGraphQLTestCase {
+class FormConnectionQueriesTest extends GFGraphQLTestCase {
 	private $fields = [];
 	private $form_ids;
 	private $text_field_helper;
