@@ -1301,6 +1301,42 @@ class Wpunit extends \Codeception\Module {
 				'enableAnimation'            => false,
 				'enableHoneypot'             => false,
 				'firstPageCssClass'          => 'first-page-css-class',
+				'gravityformsquiz'           => [
+					'shuffleFields' => false,
+					'instantFeedback' => true,
+					'grading' => 'passfail',
+					'grades'  => [
+						[
+							'text' => 'A',
+							'value' => 90,
+						],
+						[
+							'text' => 'B',
+							'value' => 80,
+						],
+						[
+							'text' => 'C',
+							'value' => 70,
+						],
+						[
+							'text' => 'D',
+							'value' => 60,
+						],
+						[
+							'text' => 'F',
+							'value' => 0,
+						],
+					],
+					'passPercent' => 50,
+					'passfailDisplayConfirmation' => true,
+					'passConfirmationMessage' => 'You passed!',
+					'failConfirmationMessage' => 'You failed.',
+					'failConfirmationDisableAutoformat' => false,
+					'letterDisplayConfirmation' => true,
+					'letterConfirmationMessage' => 'Your grade is {quiz_grade}.',
+					'letterConfirmationDisableAutoformat' => false,
+					'general' => null
+				],
 				'is_active'                  => true,
 				'is_trash'                   => false,
 				'labelPlacement'             => 'top_label',

@@ -36,11 +36,11 @@ class FormQuizConfirmation extends AbstractObject {
 	public static function get_fields() : array {
 		return [
 			'isAutoformatted' => [
-				'type'        => 'String',
+				'type'        => 'Boolean',
 				'description' => __( 'Whether autoformatting is enabled for the confirmation message.', 'wp-graphql-gravity-forms' ),
 			],
 			'message'         => [
-				'type'        => 'Int',
+				'type'        => 'String',
 				'description' => __( 'The message to display.', 'wp-graphql-gravity-forms' ),
 			],
 		];
