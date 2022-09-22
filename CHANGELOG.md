@@ -9,9 +9,6 @@
 - feat: Refactor `GfFormField` field settings, choices, and inputs to use GraphQL interfaces.
 - feat: Deprecate `FormsConnectionOrderbyInput.field` in favor of `FormsConnectionOrderbyInput.column`.
 - fix: ensure latest mutation input data is used to prepare the field values on update mutations.
-- fix!: Change GraphQL field FormQuizConfirmation.isAutoformatted from type String to type Boolean.
-- fix!: Change GraphQL field FormQuizConfirmation.message from type Int to type String.
-- fix: Fix resolver for GfForm.quiz returning empty data.
 - dev!: Move `TypeRegistry` classes to `WPGraphQL\GF\Registry` namespace.
 - dev!: Register each GraphQL type on its own `add_action()` call.
 - dev!: Remove nullable `$type_registry` param from `Registrable::register()` interface method.
@@ -22,11 +19,22 @@
 - dev: Deprecate the `graphql_gf_form_field_setting_properties` filter in favor of `graphql_gf_form_field_setting_fields`.
 - dev: Deprecate the `graphql_gf_form_field_value_properties` filter in favor of `graphql_gf_form_field_value_fields`.
 - chore: Refactor `FormsConnectionResolver` to use new `AbstractConnectionResolver` methods.
-- test: Add basic WPUnit tests for GFForm.quiz fields.
+
+## v0.11.5 - Quiz Setting Bugfixes
+
+This _minor_ release fixes a bug where `gfForm.quiz` data was not resolving, as well as GraphQL types for `FormQuizConfirmation` fields.
+
+**Note**: This release is _technically_ a breaking schema change, however since those fields are entirely unusable with their current type definitions, we don't expect this have any negative impact on users when upgrading.
+
+- (#314) fix!: Change GraphQL field `FormQuizConfirmation.isAutoformatted` from type `String` to type `Boolean`.
+- (#314) fix!: Change GraphQL field `FormQuizConfirmation.message` from type `Int` to type `String`.
+- (#314) fix: Fix resolver for `GfForm.quiz` returning empty data.
+- (#314) test: Add basic WPUnit tests for `GfForm.quiz` data.
+- (#315) test: Fix `FormConnectionQueriesTest` classname corrupted after backporting from v0.11.4
 
 ## v0.11.4
 
-This _minor_ release fixes a bug where `form.entries` would return entries from _all_ forms, among other things.
+This _minor_ release fixes a bug where `gfForm.entries` would return entries from _all_ forms, among other things.
 
 - (#291) feat: Update `plugin-update-checker` to `v4.13` and enable use of local assets on Dashboard screen.
 - (#307) fix: ensure form->entry connections only return entries on that form.

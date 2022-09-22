@@ -1,6 +1,6 @@
 <?php
 /**
- * Test GraphQL FormConnectionQueriesTest Queries.
+ * Test GraphQL Form Connection Queries.
  *
  * @package .
  */
