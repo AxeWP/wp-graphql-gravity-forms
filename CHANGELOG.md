@@ -1,8 +1,20 @@
 # Changelog
 
+## v0.11.5 - Quiz Setting Bugfixes
+
+This _minor_ release fixes a bug where `gfForm.quiz` data was not resolving, as well as GraphQL types for `FormQuizConfirmation` fields.
+
+**Note**: This release is _technically_ a breaking schema change, however since those fields are entirely unusable with their current type definitions, we don't expect this have any negative impact on users when upgrading.
+
+- (#314) fix!: Change GraphQL field `FormQuizConfirmation.isAutoformatted` from type `String` to type `Boolean`.
+- (#314) fix!: Change GraphQL field `FormQuizConfirmation.message` from type `Int` to type `String`.
+- (#314) fix: Fix resolver for `GfForm.quiz` returning empty data.
+- (#314) test: Add basic WPUnit tests for `GfForm.quiz` data.
+- (#315) test: Fix `FormConnectionQueriesTest` classname corrupted after backporting from v0.11.4
+
 ## v0.11.4
 
-This _minor_ release fixes a bug where `form.entries` would return entries from _all_ forms, among other things.
+This _minor_ release fixes a bug where `gfForm.entries` would return entries from _all_ forms, among other things.
 
 - (#291) feat: Update `plugin-update-checker` to `v4.13` and enable use of local assets on Dashboard screen.
 - (#307) fix: ensure form->entry connections only return entries on that form.
