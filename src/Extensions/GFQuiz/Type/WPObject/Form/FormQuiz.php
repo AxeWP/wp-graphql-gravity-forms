@@ -139,8 +139,9 @@ class FormQuiz extends AbstractObject implements Field {
 				'type'        => static::$type,
 				'description' => __( 'Quiz-specific settings that will affect ALL Quiz fields in the form. Requires Gravity Forms Quiz addon.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function( $source, array $args, AppContext $context ) : ?array {
+					// FYI: If a user doesn't explicitly save the quiz settings on the backend, this will be null.
 					$context->gfForm = $source;
-					return ! empty( $source->form['quizSettings'] ) ? $source->form['quizSettings'] : null;
+					return ! empty( $source->quiz ) ? $source->quiz : null;
 				},
 			]
 		);
