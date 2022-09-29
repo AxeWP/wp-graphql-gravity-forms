@@ -38,7 +38,7 @@
 		"phpstan/extension-installer": "^1.1",
 		"phpstan/phpstan": "^1.2",
 		"phpunit/phpunit": "^9.0",
-		"poolshark/wp-graphql-stubs": "^0.0.2",
+		"axepress/wp-graphql-stubs": "^1.11.0",
 		"squizlabs/php_codesniffer": "^3.6",
 		"szepeviktor/phpstan-wordpress": "^1.0",
 		"wp-coding-standards/wpcs": "^2.3",
