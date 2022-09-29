@@ -36,7 +36,7 @@ class PropertyMapper {
 			'isCorrect' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates the choice item is the correct answer.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source->gquizIsCorrect ),
+				'resolve'     => fn( $source ) : bool => ! empty( $source['gquizIsCorrect'] ),
 			],
 		];
 		$choice_fields += [
@@ -45,7 +45,7 @@ class PropertyMapper {
 				'description' => __( 'The weighted score awarded for the choice.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function( $source, array $args, AppContext $context ) {
 					if ( isset( $context->gfField->gquizWeightedScoreEnabled ) && false === $context->gfField->gquizWeightedScoreEnabled ) {
-						return (float) $source['gquizIsCorrect'];
+						return isset( $source['gquizIsCorrect'] ) ? (float) $source['gquizIsCorrect'] : 0;
 					}
 
 					return is_numeric( $source['gquizWeight'] ) ? (float) $source['gquizWeight'] : null;
