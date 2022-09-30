@@ -24,7 +24,7 @@ Thanks for taking the time to submit a Pull Request.
 <!-- We encourage you to complete this checklist to the best of your abilities. If you can't do everything, that's okay too.  -->
 
 - [ ] This PR is tested to the best of my abilities.
-- [ ] This PR ollows the WordPress Coding Standards. <!-- Check code: `composer run check-cs`, Guidelines: https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/ -->
+- [ ] This PR follows the WordPress Coding Standards. <!-- Check code: `composer run check-cs`, Guidelines: https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/ -->
 - [ ] This PR has proper inline documentation. <!-- Guidelines: https://developer.wordpress.org/coding-standards/inline-documentation-standards/php/ -->
 - [ ] This PR has unit tests to verify the code works as intended.
 - [ ] The changes in this PR have been noted in CHANGELOG.md 
