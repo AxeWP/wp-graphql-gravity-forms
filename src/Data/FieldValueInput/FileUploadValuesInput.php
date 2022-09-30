@@ -98,7 +98,7 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 			$field->move_temp_file( $form_id, $file_info );
 		} elseif ( ! empty( $_FILES[ $input_name ]['name'] ) ) {
 			// Upload the file and store it to the global.
-			$_gf_uploaded_files[ $input_name ] = $this->upload_file( $form_id, $_FILES[ $input_name ] );
+			$_gf_uploaded_files[ $input_name ] = $this->upload_file( $form_id, $_FILES[ $input_name ] ); //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		}
 
 		return rgget( $input_name, $_gf_uploaded_files );
