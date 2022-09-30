@@ -19,7 +19,8 @@
 - dev: Deprecate the `graphql_gf_form_field_setting_properties` filter in favor of `graphql_gf_form_field_setting_fields`.
 - dev: Deprecate the `graphql_gf_form_field_value_properties` filter in favor of `graphql_gf_form_field_value_fields`.
 - chore: Refactor `FormsConnectionResolver` to use new `AbstractConnectionResolver` methods.
-- chore: Add automattic/vipcs Code Standard ruleset. 
+- chore: Add `automattic/vipcs` Code Standard ruleset. 
+- chore: Replace abandoned `poolshark/wp-graphql-stubs` with `axepress/wp-graphql-stubs`.
 
 ## v0.11.5 - Quiz Setting Bugfixes
 

@@ -39,7 +39,7 @@
 		"phpstan/phpstan": "^1.2",
 		"phpstan/extension-installer": "^1.1",
 		"szepeviktor/phpstan-wordpress": "^1.0",
-		"poolshark/wp-graphql-stubs": "^0.0.2",
+		"axepress/wp-graphql-stubs": "^1.11.1",
 		"wp-cli/wp-cli-bundle": "^2.6",
 		"phpcompatibility/phpcompatibility-wp": "^2.1",
 		"automattic/vipwpcs": "^2.3"
