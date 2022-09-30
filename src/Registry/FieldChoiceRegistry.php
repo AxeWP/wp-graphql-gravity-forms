@@ -64,6 +64,11 @@ class FieldChoiceRegistry {
 				'type'        => [ 'list_of' => $choice_name ],
 				// translators: GF field type.
 				'description' => sprintf( __( 'The available choices for the %s field.', 'wp-graphql-gravity-forms' ), $field->type ),
+				'resolve'     => function( GF_Field $source, array $args, AppContext $context ) {
+					$context->gfField = $source;
+
+					return ! empty( $source->choices ) ? $source->choices : null;
+				},
 			]
 		);
 	}
@@ -88,11 +93,6 @@ class FieldChoiceRegistry {
 			),
 			'interfaces'  => $interfaces,
 			'fields'      => $fields,
-			'resolve'     => function( GF_Field $source, array $args, AppContext $context ) {
-				$context->gfField = $source;
-
-				return ! empty( $source->choices ) ? $source->choices : null;
-			},
 		];
 	}
 
