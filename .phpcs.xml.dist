@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="WordPress Coding Standards based custom ruleset for your plugin">
-	<description>Generally-applicable sniffs for WordPress plugins.</description>
+<ruleset  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="WPGraphQL_GF" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+	<description>Coding Standards for WPGraphQL for Gravity Forms</description>
 
 	<!-- What to scan -->
 	<file>.</file>
@@ -12,6 +12,7 @@
 	<!-- How to scan -->
 	<!-- Usage instructions: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage -->
 	<!-- Annotated ruleset: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml -->
+
 	<arg value="sp"/>
 	<!-- Show sniff and progress -->
 	<arg name="basepath" value="./"/>
@@ -27,7 +28,27 @@
 		<include-pattern>*\.php$</include-pattern>
 	</rule>
 
+	<!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties -->
+	<config name="minimum_supported_wp_version" value="5.4.1"/>
+
+	<!-- Plugin-specific expected properties-->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<!-- Value: replace the function, class, and variable prefixes used. Separate multiple prefixes with a comma. -->
+			<property name="prefixes" type="array" value="WPGraphQL\GF, wp_graphql, gf_graphql, _gf, WPGRAPHQL_GF" />
+		</properties>
+	</rule>
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<!-- Value: replace the text domain used. -->
+			<property name="text_domain" type="array" value="wp-graphql-gravity-forms"/>
+		</properties>
+	</rule>
+
 	<!-- Rules: WordPress Coding Standards -->
+	<!-- Load WordPress VIP Go standards - for use with projects on the (newer) VIP Go platform. -->
+	<rule ref="WordPress-VIP-Go" />
+
 	<!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards -->
 	<rule ref="WordPress-Core">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
@@ -42,21 +63,8 @@
 	<rule ref="WordPress-Docs" />
 	<rule ref="WordPress-Extra" />
 
-	<!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties -->
-	<config name="minimum_supported_wp_version" value="5.4.1"/>
 
-	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
-		<properties>
-			<!-- Value: replace the function, class, and variable prefixes used. Separate multiple prefixes with a comma. -->
-			<property name="prefixes" type="array" value="WPGraphQL\GF, wp_graphql, gf_graphql, _gf, WPGRAPHQL_GF" />
-		</properties>
-	</rule>
-	<rule ref="WordPress.WP.I18n">
-		<properties>
-			<!-- Value: replace the text domain used. -->
-			<property name="text_domain" type="array" value="wp-graphql-gravity-forms"/>
-		</properties>
-	</rule>
+
 	<rule ref="WordPress.WhiteSpace.ControlStructureSpacing">
 		<properties>
 			<property name="blank_line_check" value="true"/>

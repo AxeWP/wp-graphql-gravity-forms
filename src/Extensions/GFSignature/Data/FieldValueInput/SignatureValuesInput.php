@@ -87,7 +87,7 @@ class SignatureValuesInput extends ValueInput {
 		$filename = uniqid( '', true ) . '.png';
 		$path     = $folder . $filename;
 		// @todo: switch to WP Filesystem.
-		$number_of_bytes = file_put_contents( $path, $signature_decoded ); //phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
+		$number_of_bytes = file_put_contents( $path, $signature_decoded ); //phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents, WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_file_put_contents
 
 		if ( false === $number_of_bytes ) {
 			throw new UserError( __( 'An error occurred while saving the signature image.', 'wp-graphql-gravity-forms' ) );
@@ -110,7 +110,7 @@ class SignatureValuesInput extends ValueInput {
 		$path   = $folder . $prev_filename;
 
 		if ( file_exists( $path ) ) {
-			unlink( $path );
+			unlink( $path ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_unlink
 		}
 	}
 

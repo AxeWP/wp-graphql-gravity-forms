@@ -488,7 +488,7 @@ class GFUtils {
 		// Use copy and unlink because rename breaks streams.
 	// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- duplicating default WP Core functionality.
 		$move_new_file = @copy( $file['tmp_name'], $new_file );
-		unlink( $file['tmp_name'] );
+		unlink( $file['tmp_name'] ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_unlink
 
 		if ( ! $move_new_file ) {
 			throw new UserError( __( 'Failed to copy the file to the server.', 'wp-graphql-gravity-forms' ) );
@@ -498,7 +498,7 @@ class GFUtils {
 		$stat = stat( dirname( $new_file ) );
 		if ( is_array( $stat ) ) {
 			$perms = $stat['mode'] & 0000666;
-			chmod( $new_file, $perms );
+			chmod( $new_file, $perms ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.chmod_chmod
 		}
 
 		// Compute the URL.
