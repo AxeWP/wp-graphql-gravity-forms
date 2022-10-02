@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b20783fd4ae43b85a592f7824f7d476b",
+    "content-hash": "848c03d60e2538e0a598ea445fef1c17",
     "packages": [
         {
             "name": "yahnis-elsts/plugin-update-checker",
@@ -105,6 +105,58 @@
                 "source": "https://github.com/antecedent/patchwork/tree/2.1.21"
             },
             "time": "2022-02-07T07:28:34+00:00"
+        },
+        {
+            "name": "axepress/wp-graphql-stubs",
+            "version": "v1.11.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AxeWP/wp-graphql-stubs.git",
+                "reference": "35be7ddefe55b8dba08be742085c39cc9dca2826"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AxeWP/wp-graphql-stubs/zipball/35be7ddefe55b8dba08be742085c39cc9dca2826",
+                "reference": "35be7ddefe55b8dba08be742085c39cc9dca2826",
+                "shasum": ""
+            },
+            "require": {
+                "php-stubs/wordpress-stubs": "^5.4 || ^6.0"
+            },
+            "require-dev": {
+                "php": "~7.3 || ~8.0",
+                "php-stubs/generator": "^0.8.0",
+                "phpstan/phpstan": "^1.8"
+            },
+            "suggest": {
+                "szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "WPGraphQL function and class declaration stubs for static analysis.",
+            "homepage": "https://github.com/axewp/wp-graphql-stubs",
+            "keywords": [
+                "PHPStan",
+                "graphql",
+                "static analysis",
+                "wordpress",
+                "wp-graphql",
+                "wpgraphql"
+            ],
+            "support": {
+                "issues": "https://github.com/AxeWP/wp-graphql-stubs/issues",
+                "source": "https://github.com/AxeWP/wp-graphql-stubs/tree/v1.11.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/AxeWp",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-09-29T00:58:59+00:00"
         },
         {
             "name": "behat/gherkin",
@@ -2392,7 +2444,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v8.83.23",
+            "version": "v8.83.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -2446,7 +2498,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v8.83.23",
+            "version": "v8.83.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -2494,7 +2546,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v8.83.23",
+            "version": "v8.83.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -2540,16 +2592,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v8.83.23",
+            "version": "v8.83.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "c3d643e77082786ae8a51502c757e9b1a3ee254e"
+                "reference": "1c79242468d3bbd9a0f7477df34f9647dde2a09b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/c3d643e77082786ae8a51502c757e9b1a3ee254e",
-                "reference": "c3d643e77082786ae8a51502c757e9b1a3ee254e",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/1c79242468d3bbd9a0f7477df34f9647dde2a09b",
+                "reference": "1c79242468d3bbd9a0f7477df34f9647dde2a09b",
                 "shasum": ""
             },
             "require": {
@@ -2604,7 +2656,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-06-27T13:26:30+00:00"
+            "time": "2022-09-21T21:30:03+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -3779,16 +3831,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.8.5",
+            "version": "1.8.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "f6598a5ff12ca4499a836815e08b4d77a2ddeb20"
+                "reference": "c386ab2741e64cc9e21729f891b28b2b10fe6618"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f6598a5ff12ca4499a836815e08b4d77a2ddeb20",
-                "reference": "f6598a5ff12ca4499a836815e08b4d77a2ddeb20",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c386ab2741e64cc9e21729f891b28b2b10fe6618",
+                "reference": "c386ab2741e64cc9e21729f891b28b2b10fe6618",
                 "shasum": ""
             },
             "require": {
@@ -3818,7 +3870,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.8.5"
+                "source": "https://github.com/phpstan/phpstan/tree/1.8.6"
             },
             "funding": [
                 {
@@ -3834,7 +3886,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-09-07T16:05:32+00:00"
+            "time": "2022-09-23T09:54:39+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4156,16 +4208,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.24",
+            "version": "9.5.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "d0aa6097bef9fd42458a9b3c49da32c6ce6129c5"
+                "reference": "3e6f90ca7e3d02025b1d147bd8d4a89fd4ca8a1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d0aa6097bef9fd42458a9b3c49da32c6ce6129c5",
-                "reference": "d0aa6097bef9fd42458a9b3c49da32c6ce6129c5",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3e6f90ca7e3d02025b1d147bd8d4a89fd4ca8a1d",
+                "reference": "3e6f90ca7e3d02025b1d147bd8d4a89fd4ca8a1d",
                 "shasum": ""
             },
             "require": {
@@ -4187,14 +4239,14 @@
                 "phpunit/php-timer": "^5.0.2",
                 "sebastian/cli-parser": "^1.0.1",
                 "sebastian/code-unit": "^1.0.6",
-                "sebastian/comparator": "^4.0.5",
+                "sebastian/comparator": "^4.0.8",
                 "sebastian/diff": "^4.0.3",
                 "sebastian/environment": "^5.1.3",
-                "sebastian/exporter": "^4.0.3",
+                "sebastian/exporter": "^4.0.5",
                 "sebastian/global-state": "^5.0.1",
                 "sebastian/object-enumerator": "^4.0.3",
                 "sebastian/resource-operations": "^3.0.3",
-                "sebastian/type": "^3.1",
+                "sebastian/type": "^3.2",
                 "sebastian/version": "^3.0.2"
             },
             "suggest": {
@@ -4238,7 +4290,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.24"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.25"
             },
             "funding": [
                 {
@@ -4248,44 +4300,13 @@
                 {
                     "url": "https://github.com/sebastianbergmann",
                     "type": "github"
-                }
-            ],
-            "time": "2022-08-30T07:42:16+00:00"
-        },
-        {
-            "name": "poolshark/wp-graphql-stubs",
-            "version": "v0.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Poolshark/wp-graphql-stubs.git",
-                "reference": "66ba54188d04788849abd07bfc9fff511839cdb3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Poolshark/wp-graphql-stubs/zipball/66ba54188d04788849abd07bfc9fff511839cdb3",
-                "reference": "66ba54188d04788849abd07bfc9fff511839cdb3",
-                "shasum": ""
-            },
-            "require-dev": {
-                "php": "^7.4"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
+                },
                 {
-                    "name": "Flo Ragossnig",
-                    "email": "florian@webleaders.at"
+                    "url": "https://tidelift.com/funding/github/packagist/phpunit/phpunit",
+                    "type": "tidelift"
                 }
             ],
-            "description": "WP GraphQL Stubs for VS Code and others.",
-            "support": {
-                "issues": "https://github.com/Poolshark/wp-graphql-stubs/issues",
-                "source": "https://github.com/Poolshark/wp-graphql-stubs/tree/v0.0.2"
-            },
-            "time": "2021-03-20T07:43:55+00:00"
+            "time": "2022-09-25T03:44:45+00:00"
         },
         {
             "name": "psr/container",
@@ -5965,28 +5986,28 @@
         },
         {
             "name": "softcreatr/jsonpath",
-            "version": "0.7.5",
+            "version": "0.7.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SoftCreatR/JSONPath.git",
-                "reference": "008569bf80aa3584834f7890781576bc7b65afa7"
+                "reference": "e04c02cb78bcc242c69d17dac5b29436bf3e1076"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SoftCreatR/JSONPath/zipball/008569bf80aa3584834f7890781576bc7b65afa7",
-                "reference": "008569bf80aa3584834f7890781576bc7b65afa7",
+                "url": "https://api.github.com/repos/SoftCreatR/JSONPath/zipball/e04c02cb78bcc242c69d17dac5b29436bf3e1076",
+                "reference": "e04c02cb78bcc242c69d17dac5b29436bf3e1076",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=7.1"
+                "php": ">=7.1,<8.0"
             },
             "replace": {
                 "flow/jsonpath": "*"
             },
             "require-dev": {
                 "phpunit/phpunit": ">=7.0",
-                "roave/security-advisories": "dev-master",
+                "roave/security-advisories": "dev-latest",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -6009,7 +6030,7 @@
                 {
                     "name": "Sascha Greuel",
                     "email": "hello@1-2.dev",
-                    "homepage": "http://1-2.dev",
+                    "homepage": "https://1-2.dev",
                     "role": "Developer"
                 }
             ],
@@ -6022,11 +6043,15 @@
             },
             "funding": [
                 {
+                    "url": "https://ecologi.com/softcreatr?r=61212ab3fc69b8eb8a2014f4",
+                    "type": "custom"
+                },
+                {
                     "url": "https://github.com/softcreatr",
                     "type": "github"
                 }
             ],
-            "time": "2021-06-02T22:15:26+00:00"
+            "time": "2022-09-27T09:27:12+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -7949,16 +7974,16 @@
         },
         {
             "name": "szepeviktor/phpstan-wordpress",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/szepeviktor/phpstan-wordpress.git",
-                "reference": "e487dc725845ac914681e148d0e8ac479ad887ec"
+                "reference": "e644df734e1bbe95810e0f617d17df091048a94e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/e487dc725845ac914681e148d0e8ac479ad887ec",
-                "reference": "e487dc725845ac914681e148d0e8ac479ad887ec",
+                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/e644df734e1bbe95810e0f617d17df091048a94e",
+                "reference": "e644df734e1bbe95810e0f617d17df091048a94e",
                 "shasum": ""
             },
             "require": {
@@ -8002,15 +8027,19 @@
             ],
             "support": {
                 "issues": "https://github.com/szepeviktor/phpstan-wordpress/issues",
-                "source": "https://github.com/szepeviktor/phpstan-wordpress/tree/v1.1.2"
+                "source": "https://github.com/szepeviktor/phpstan-wordpress/tree/v1.1.3"
             },
             "funding": [
                 {
                     "url": "https://www.paypal.me/szepeviktor",
                     "type": "custom"
+                },
+                {
+                    "url": "https://github.com/szepeviktor",
+                    "type": "github"
                 }
             ],
-            "time": "2022-06-21T10:51:00+00:00"
+            "time": "2022-09-22T13:14:50+00:00"
         },
         {
             "name": "theseer/tokenizer",

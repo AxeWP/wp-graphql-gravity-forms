@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.11.6 - Bugfix
+
+This _minor_ release fixes a bug where the resolver for `FormField.choices` wasn't always correctly parsing and passing the data, causing GraphQL fields on Quiz and Chained Select choices to return incorrect values.
+
+- fix: `FormField.choices` doesn't always resolve values correctly.
+- chore: replace abandoned `poolshark/wp-graphql-stubs` Composer dependency with `axewp/wp-graphql-stubs`.
+
 ## v0.11.5 - Quiz Setting Bugfixes
 
 This _minor_ release fixes a bug where `gfForm.quiz` data was not resolving, as well as GraphQL types for `FormQuizConfirmation` fields.

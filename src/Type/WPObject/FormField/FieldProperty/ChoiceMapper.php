@@ -48,11 +48,6 @@ class ChoiceMapper {
 					// translators: GF field type.
 					'description' => sprintf( __( '%s choice values.', 'wp-graphql-gravity-forms' ), ucfirst( $field->type ) ),
 					'fields'      => $choice_fields,
-					'resolve'     => function( GF_Field $source, array $args, AppContext $context ) {
-						$context->gfField = $source;
-
-						return ! empty( $source->choices ) ? $source->choices : null;
-					},
 				]
 			);
 
@@ -64,6 +59,14 @@ class ChoiceMapper {
 				'type'        => [ 'list_of' => $name ],
 				// translators: GF field type.
 				'description' => sprintf( __( 'The available choices for the %s field.', 'wp-graphql-gravity-forms' ), $field->type ),
+				'resolve'     => function( $source, array $args, AppContext $context ) {
+					if ( $source instanceof GF_Field ) {
+						$context->gfField = $source;
+						return ! empty( $source->choices ) ? $source->choices : null;
+					}
+
+					return ! empty( $source['choices'] ) ? $source['choices'] : null;
+				},
 			],
 		];
 	}
