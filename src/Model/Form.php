@@ -125,11 +125,12 @@ class Form extends Model {
 					return $pagination;
 				},
 				'personalData'                 => function() : ?array {
-					$personal_data = $this->data['personalData'] ?? null;
 
-					if ( ! is_array( $personal_data ) ) {
-						return $personal_data;
+					if ( empty( $this->data['personalData'] ) || ! is_array( $this->data['personalData'] ) ) {
+						return null;
 					}
+
+					$personal_data = $this->data['personalData'];
 
 					if ( isset( $personal_data['preventIP'] ) ) {
 						$personal_data['shouldSaveIP'] = empty( $personal_data['preventIP'] );
