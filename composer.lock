@@ -160,16 +160,16 @@
         },
         {
             "name": "axepress/wp-graphql-stubs",
-            "version": "v1.11.1",
+            "version": "v1.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/AxeWP/wp-graphql-stubs.git",
-                "reference": "35be7ddefe55b8dba08be742085c39cc9dca2826"
+                "reference": "3de749179beaaf3d375008c55acd2f5d9b0a9803"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AxeWP/wp-graphql-stubs/zipball/35be7ddefe55b8dba08be742085c39cc9dca2826",
-                "reference": "35be7ddefe55b8dba08be742085c39cc9dca2826",
+                "url": "https://api.github.com/repos/AxeWP/wp-graphql-stubs/zipball/3de749179beaaf3d375008c55acd2f5d9b0a9803",
+                "reference": "3de749179beaaf3d375008c55acd2f5d9b0a9803",
                 "shasum": ""
             },
             "require": {
@@ -200,7 +200,7 @@
             ],
             "support": {
                 "issues": "https://github.com/AxeWP/wp-graphql-stubs/issues",
-                "source": "https://github.com/AxeWP/wp-graphql-stubs/tree/v1.11.1"
+                "source": "https://github.com/AxeWP/wp-graphql-stubs/tree/v1.11.3"
             },
             "funding": [
                 {
@@ -208,7 +208,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-09-29T00:58:59+00:00"
+            "time": "2022-10-06T02:09:00+00:00"
         },
         {
             "name": "behat/gherkin",
@@ -2496,7 +2496,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v8.83.24",
+            "version": "v8.83.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -2550,7 +2550,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v8.83.24",
+            "version": "v8.83.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -2598,7 +2598,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v8.83.24",
+            "version": "v8.83.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -2644,7 +2644,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v8.83.24",
+            "version": "v8.83.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -3554,16 +3554,16 @@
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v6.0.1",
+            "version": "v6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "e04781a84e364615a7b5f70fdc345c8253ca5b8f"
+                "reference": "8f696e429e375ef40a841ecf5ac686ff7437b4dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/e04781a84e364615a7b5f70fdc345c8253ca5b8f",
-                "reference": "e04781a84e364615a7b5f70fdc345c8253ca5b8f",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/8f696e429e375ef40a841ecf5ac686ff7437b4dc",
+                "reference": "8f696e429e375ef40a841ecf5ac686ff7437b4dc",
                 "shasum": ""
             },
             "replace": {
@@ -3595,22 +3595,22 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
-                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.0.1"
+                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.0.2"
             },
-            "time": "2022-07-15T11:10:45+00:00"
+            "time": "2022-09-30T17:24:55+00:00"
         },
         {
             "name": "php-webdriver/webdriver",
-            "version": "1.12.1",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-webdriver/php-webdriver.git",
-                "reference": "b27ddf458d273c7d4602106fcaf978aa0b7fe15a"
+                "reference": "aad77b446a302985693fb339d40185be07c8f42d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-webdriver/php-webdriver/zipball/b27ddf458d273c7d4602106fcaf978aa0b7fe15a",
-                "reference": "b27ddf458d273c7d4602106fcaf978aa0b7fe15a",
+                "url": "https://api.github.com/repos/php-webdriver/php-webdriver/zipball/aad77b446a302985693fb339d40185be07c8f42d",
+                "reference": "aad77b446a302985693fb339d40185be07c8f42d",
                 "shasum": ""
             },
             "require": {
@@ -3660,9 +3660,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-webdriver/php-webdriver/issues",
-                "source": "https://github.com/php-webdriver/php-webdriver/tree/1.12.1"
+                "source": "https://github.com/php-webdriver/php-webdriver/tree/1.13.0"
             },
-            "time": "2022-05-03T12:16:34+00:00"
+            "time": "2022-10-03T11:40:29+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
@@ -3883,16 +3883,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.8.6",
+            "version": "1.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "c386ab2741e64cc9e21729f891b28b2b10fe6618"
+                "reference": "536ff0ed719b5679e9f09c17aeaee9b31969cb8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c386ab2741e64cc9e21729f891b28b2b10fe6618",
-                "reference": "c386ab2741e64cc9e21729f891b28b2b10fe6618",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/536ff0ed719b5679e9f09c17aeaee9b31969cb8e",
+                "reference": "536ff0ed719b5679e9f09c17aeaee9b31969cb8e",
                 "shasum": ""
             },
             "require": {
@@ -3922,7 +3922,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.8.6"
+                "source": "https://github.com/phpstan/phpstan/tree/1.8.7"
             },
             "funding": [
                 {
@@ -3938,7 +3938,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-09-23T09:54:39+00:00"
+            "time": "2022-10-04T14:09:33+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -6038,16 +6038,16 @@
         },
         {
             "name": "sirbrillig/phpcs-variable-analysis",
-            "version": "v2.11.8",
+            "version": "v2.11.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
-                "reference": "aaf902277f2889fddbdb37046ae02b9965e2cf0f"
+                "reference": "62730888d225d55a613854b6a76fb1f9f57d1618"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/aaf902277f2889fddbdb37046ae02b9965e2cf0f",
-                "reference": "aaf902277f2889fddbdb37046ae02b9965e2cf0f",
+                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/62730888d225d55a613854b6a76fb1f9f57d1618",
+                "reference": "62730888d225d55a613854b6a76fb1f9f57d1618",
                 "shasum": ""
             },
             "require": {
@@ -6092,7 +6092,7 @@
                 "source": "https://github.com/sirbrillig/phpcs-variable-analysis",
                 "wiki": "https://github.com/sirbrillig/phpcs-variable-analysis/wiki"
             },
-            "time": "2022-09-08T18:35:53+00:00"
+            "time": "2022-10-05T23:31:46+00:00"
         },
         {
             "name": "softcreatr/jsonpath",
