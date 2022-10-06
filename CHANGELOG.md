@@ -9,6 +9,7 @@
 - feat: Refactor `GfFormField` field settings, choices, and inputs to use GraphQL interfaces.
 - feat: Deprecate `FormsConnectionOrderbyInput.field` in favor of `FormsConnectionOrderbyInput.column`.
 - fix: Ensure latest mutation input data is used to prepare the field values on update mutations.
+- fix: Check for falsy `personalData` when resolving the form model.
 - dev!: Move `TypeRegistry` classes to `WPGraphQL\GF\Registry` namespace.
 - dev!: Register each GraphQL type on its own `add_action()` call.
 - dev!: Remove nullable `$type_registry` param from `Registrable::register()` interface method.
