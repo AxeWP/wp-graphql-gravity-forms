@@ -125,7 +125,6 @@ class Form extends Model {
 					return $pagination;
 				},
 				'personalData'                 => function() : ?array {
-
 					if ( empty( $this->data['personalData'] ) || ! is_array( $this->data['personalData'] ) ) {
 						return null;
 					}
