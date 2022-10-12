@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.11.7 - Bugfix
+This _minor_ release fixes an issue with the GraphQL dataloader storing the GF form, instead of the 'prerendered' version used by many 3rd-party plugins.
+
+- fix: Run `gform_pre_render` on Form objects before they are stored in the DataLoader.
+
 ## v0.11.6 - Bugfix
 
 This _minor_ release fixes a bug where the resolver for `FormField.choices` wasn't always correctly parsing and passing the data, causing GraphQL fields on Quiz and Chained Select choices to return incorrect values.
