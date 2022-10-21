@@ -54,7 +54,14 @@ class FormsLoader extends AbstractDataLoader {
 
 		$loaded_forms = [];
 		foreach ( $keys as $key ) {
-			$loaded_forms[ $key ] = GFAPI::get_form( $key ) ?: null;
+			$form = GFAPI::get_form( $key );
+
+			// Run the form through `gform_pre_render` to support 3rd party plugins like Populate Anything.
+			if ( ! empty( $form ) ) {
+				$form = gf_apply_filters( [ 'gform_pre_render', $form['id'] ], $form );
+			}
+
+			$loaded_forms[ $key ] = $form ?: null;
 		}
 
 		return $loaded_forms;

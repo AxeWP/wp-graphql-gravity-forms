@@ -59,6 +59,11 @@ class FormQuiz extends AbstractObject implements Field {
 				'type'        => FormQuizConfirmation::$type,
 				'description' => __( 'The message to display if the quiz grade is below the Pass Percentage. Only used if grading is set to `PASSFAIL`.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source ) {
+					// Return null if the grading type is not PASSFAIL.
+					if ( isset( $source['grading'] ) && 'passfail' !== $source['grading'] ) {
+						return null;
+					}
+
 					return [
 						'isAutoformatted' => empty( $source['failConfirmationDisableAutoformat'] ),
 						'message'         => ! empty( $source['failConfirmationMessage'] ) ? $source['failConfirmationMessage'] : null,
@@ -68,6 +73,14 @@ class FormQuiz extends AbstractObject implements Field {
 			'grades'                         => [
 				'type'        => [ 'list_of' => FormQuizGrades::$type ],
 				'description' => __( 'The letter grades to be assigned based on the percentage score achieved. Only used if `grading` is set to `LETTER`.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => function( $source ) {
+					// Return null if the grading type is not LETTER.
+					if ( isset( $source['grading'] ) && 'letter' !== $source['grading'] ) {
+						return null;
+					}
+
+					return ! empty( $source['grades'] ) ? $source['grades'] : null;
+				},
 			],
 			'gradingType'                    => [
 				'type'        => QuizFieldGradingTypeEnum::$type,
@@ -82,12 +95,26 @@ class FormQuiz extends AbstractObject implements Field {
 			'hasLetterConfirmationMessage'   => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether to display a confirmation message upon submission of the quiz form. Only used if `grading` is set to `LETTER`.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source['letterDisplayConfirmation'] ),
+				'resolve'     => function( $source ) {
+					// Return null if the grading type is not LETTER.
+					if ( isset( $source['grading'] ) && 'letter' !== $source['grading'] ) {
+						return null;
+					}
+
+					return ! empty( $source['letterConfirmationMessage'] );
+				},
 			],
 			'hasPassFailConfirmationMessage' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether to display a confirmation message upon submission of the quiz form. Only used if grading is set to `PASSFAIL`.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source['passfailDisplayConfirmation'] ),
+				'resolve'     => function( $source ) {
+					// Return null if the grading type is not PASSFAIL.
+					if ( isset( $source['grading'] ) && 'passfail' !== $source['grading'] ) {
+						return null;
+					}
+
+					return ! empty( $source['passfailDisplayConfirmation'] );
+				},
 			],
 			'isShuffleFieldsEnabled'         => [
 				'type'        => 'Boolean',
@@ -98,7 +125,12 @@ class FormQuiz extends AbstractObject implements Field {
 				'type'        => FormQuizConfirmation::$type,
 				'description' => __( 'The confirmation message to display if `grading` is set to `LETTER`.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source ) {
-					return [
+					// Return null if the grading type is not LETTER.
+					if ( isset( $source['grading'] ) && 'letter' !== $source['grading'] ) {
+						return null;
+					}
+
+					return empty( $source['letterDisplayConfirmation'] ) ? null : [
 						'isAutoformatted' => empty( $source['letterConfirmationDisableAutoformat'] ),
 						'message'         => ! empty( $source['letterConfirmationMessage'] ) ? $source['letterConfirmationMessage'] : null,
 					];
@@ -114,11 +146,24 @@ class FormQuiz extends AbstractObject implements Field {
 			'passPercent'                    => [
 				'type'        => 'Int',
 				'description' => __( "The percentage score the user must equal or exceed to be considered to have 'passed.' Only used if `grading` is set to `PASSFAIL`.", 'wp-graphql-gravity-forms' ),
+				'resolve'     => function ( $source ) {
+					// Return null if the grading type is not PASSFAIL.
+					if ( isset( $source['grading'] ) && 'passfail' !== $source['grading'] ) {
+						return null;
+					}
+
+					return ! empty( $source['passPercent'] ) ? (int) $source['passPercent'] : null;
+				},
 			],
 			'passConfirmation'               => [
 				'type'        => FormQuizConfirmation::$type,
 				'description' => __( 'The message to display if the quiz grade is above or equal to the Pass Percentage. Only used if grading is set to `PASSFAIL`.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => function ( $source ) {
+					// Return null if the grading type is not PASSFAIL.
+					if ( isset( $source['grading'] ) && 'passfail' !== $source['grading'] ) {
+						return null;
+					}
+
 					return [
 						'isAutoformatted' => empty( $source['passConfirmationDisableAutoformat'] ),
 						'message'         => ! empty( $source['passConfirmationMessage'] ) ? $source['passConfirmationMessage'] : null,
