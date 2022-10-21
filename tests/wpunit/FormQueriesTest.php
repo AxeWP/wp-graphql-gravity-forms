@@ -517,26 +517,23 @@ class FormQueriesTest extends GFGraphQLTestCase {
 									$this->expectedField( 'message', $form['gravityformsquiz']['failConfirmationMessage'] ),
 								]
 							),
-							$this->expectedNode(
-								'grades',
-								[
-									$this->expectedField( 'text', $form['gravityformsquiz']['grades'][0]['text'] ),
-									$this->expectedField( 'value', $form['gravityformsquiz']['grades'][0]['value'] ),
-								],
-								0
-							),
+							// This is null, since grading type is PASSFAIL.
+							$this->expectedField( 'grades', static::IS_NULL ),
+							// $this->expectedNode(
+							// 	'grades',
+							// 	[
+							// 		$this->expectedField( 'text', $form['gravityformsquiz']['grades'][0]['text'] ),
+							// 		$this->expectedField( 'value', $form['gravityformsquiz']['grades'][0]['value'] ),
+							// 	],
+							// 	0
+							// ),
 							$this->expectedField( 'gradingType', GFHelpers::get_enum_for_value( QuizEnum\QuizFieldGradingTypeEnum::$type, $form['gravityformsquiz']['grading'] ) ),
 							$this->expectedField( 'hasInstantFeedback', ! empty( $form['gravityformsquiz']['instantFeedback'] ) ),
-							$this->expectedField( 'hasLetterConfirmationMessage', ! empty( $form['gravityformsquiz']['letterDisplayConfirmation'] ) ),
+							// This is null because grading type is PASSFAIL.
+							$this->expectedField( 'hasLetterConfirmationMessage', static::IS_NULL ),
 							$this->expectedField( 'hasPassFailConfirmationMessage', ! empty( $form['gravityformsquiz']['passfailDisplayConfirmation'] ) ),
 							$this->expectedField( 'isShuffleFieldsEnabled', ! empty( $form['gravityformsquiz']['shuffleFields'] ) ),
-							$this->expectedObject(
-								'letterConfirmation',
-								[
-									$this->expectedField( 'isAutoformatted', empty( $form['gravityformsquiz']['letterConfirmationDisableAutoformat'] ) ),
-									$this->expectedField( 'message', $form['gravityformsquiz']['letterConfirmationMessage'] ),
-								]
-							),
+							$this->expectedField( 'letterConfirmation', static::IS_NULL ),
 							$this->expectedField( 'maxScore', static::IS_NULL ),
 							$this->expectedObject(
 								'passConfirmation',
