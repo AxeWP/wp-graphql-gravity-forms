@@ -173,7 +173,6 @@ class ComposerStaticInit1780be6bb95231f5d94c35ac3decce02
         'WPGraphQL\\GF\\Type\\Enum\\TimeFieldFormatEnum' => __DIR__ . '/../..' . '/src/Type/Enum/TimeFieldFormatEnum.php',
         'WPGraphQL\\GF\\Type\\Input\\AbstractInput' => __DIR__ . '/../..' . '/src/Type/Input/AbstractInput.php',
         'WPGraphQL\\GF\\Type\\Input\\AddressFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/AddressFieldInput.php',
-        'WPGraphQL\\GF\\Type\\Input\\ConsentFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/ConsentFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\CreditCardFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/CreditCardFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\EmailFieldInput' => __DIR__ . '/../..' . '/src/Type/Input/EmailFieldInput.php',
         'WPGraphQL\\GF\\Type\\Input\\EntriesConnectionOrderbyInput' => __DIR__ . '/../..' . '/src/Type/Input/EntriesConnectionOrderbyInput.php',
