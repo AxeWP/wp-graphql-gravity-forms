@@ -32,7 +32,7 @@ class ConsentValueInput extends AbstractFieldValueInput {
 	 * {@inheritDoc}
 	 */
 	protected function get_field_name() : string {
-		return 'value';
+		return 'consentValue';
 	}
 
 	/**
