@@ -43,6 +43,10 @@ class FormFieldValuesInput extends AbstractInput {
 				'type'        => AddressFieldInput::$type,
 				'description' => __( 'The form field values for Address fields.', 'wp-graphql-gravity-forms' ),
 			],
+			'consentValues' => [
+				'type'        => [ 'list_of' => ConsentFieldInput::$type ],
+				'description' => __( 'The form field value for Consent Field', 'wp-graphql-gravity-forms' ),
+			],
 			'checkboxValues' => [
 				'type'        => [ 'list_of' => CheckboxFieldInput::$type ],
 				'description' => __( 'The form field values for Checkbox fields.', 'wp-graphql-gravity-forms' ),

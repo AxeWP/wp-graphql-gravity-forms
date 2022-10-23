@@ -154,6 +154,7 @@ return array(
     'WPGraphQL\\GF\\Type\\Enum\\TimeFieldFormatEnum' => $baseDir . '/src/Type/Enum/TimeFieldFormatEnum.php',
     'WPGraphQL\\GF\\Type\\Input\\AbstractInput' => $baseDir . '/src/Type/Input/AbstractInput.php',
     'WPGraphQL\\GF\\Type\\Input\\AddressFieldInput' => $baseDir . '/src/Type/Input/AddressFieldInput.php',
+    'WPGraphQL\\GF\\Type\\Input\\ConsentFieldInput' => $baseDir . '/src/Type/Input/ConsentFieldInput.php',
     'WPGraphQL\\GF\\Type\\Input\\CheckboxFieldInput' => $baseDir . '/src/Type/Input/CheckboxFieldInput.php',
     'WPGraphQL\\GF\\Type\\Input\\CreditCardFieldInput' => $baseDir . '/src/Type/Input/CreditCardFieldInput.php',
     'WPGraphQL\\GF\\Type\\Input\\EmailFieldInput' => $baseDir . '/src/Type/Input/EmailFieldInput.php',
