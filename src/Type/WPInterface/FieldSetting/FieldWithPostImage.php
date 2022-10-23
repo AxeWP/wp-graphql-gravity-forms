@@ -48,22 +48,22 @@ class FieldWithPostImage extends AbstractFieldSetting implements TypeWithInterfa
 			'hasAlt'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'Controls the visibility of the alt metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->displayAlt ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->displayAlt ),
 			],
 			'hasCaption'     => [
 				'type'        => 'Boolean',
 				'description' => __( 'Controls the visibility of the caption metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->displayCaption ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->displayCaption ),
 			],
 			'hasDescription' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Controls the visibility of the description metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->displayDescription ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->displayDescription ),
 			],
 			'hasTitle'       => [
 				'type'        => 'Boolean',
 				'description' => __( 'Controls the visibility of the title metadata for Post Image fields.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->displayTitle ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->displayTitle ),
 			],
 		];
 	}

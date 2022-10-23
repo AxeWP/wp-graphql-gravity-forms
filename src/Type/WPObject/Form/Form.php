@@ -108,7 +108,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 			'formFields' => [
 				'toType'         => FormField::$type,
 				'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
-				'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+				'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
 					$context->gfForm = $source;
 
 					if ( empty( $source->formFields ) ) {
@@ -137,7 +137,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 				'type'              => FormSubmitButton::$type,
 				'description'       => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
 				'deprecationReason' => __( 'Use `submitButton` field instead', 'wp-graphql-gravity-forms' ),
-				'resolve'           => fn( $source ) => $source->submitButton,
+				'resolve'           => static fn ( $source ) => $source->submitButton,
 			],
 			'confirmations'                => [
 				'type'        => [ 'list_of' => FormConfirmation::$type ],
@@ -187,7 +187,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 				'type'              => 'Int',
 				'description'       => __( 'Form ID.', 'wp-graphql-gravity-forms' ),
 				'deprecationReason' => __( 'Deprecated in favor of the databaseId field.', 'wp-graphql-gravity-forms' ),
-				'resolve'           => fn( $source ) => $source->databaseId,
+				'resolve'           => static fn ( $source ) => $source->databaseId,
 			],
 			'hasValidationSummary'         => [
 				'type'        => 'Boolean',
@@ -209,7 +209,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 				'type'              => Button\FormLastPageButton::$type,
 				'description'       => __( 'Last page button data.', 'wp-graphql-gravity-forms' ),
 				'deprecationReason' => __( 'Use `pagination.lastPageButton` instead', 'wp-graphql-gravity-forms' ),
-				'resolve'           => fn( $source ) => ! empty( $source->pagination ) ? $source->pagination['lastPageButton'] : null,
+				'resolve'           => static fn ( $source ) => ! empty( $source->pagination ) ? $source->pagination['lastPageButton'] : null,
 			],
 			'login'                        => [
 				'type'        => FormLogin::$type,
@@ -297,7 +297,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 					],
 				],
-				'resolve'     => function( $root, array $args, AppContext $context ) {
+				'resolve'     => static function ( $root, array $args, AppContext $context ) {
 					$idType = $args['idType'] ?? 'global_id';
 
 					/**

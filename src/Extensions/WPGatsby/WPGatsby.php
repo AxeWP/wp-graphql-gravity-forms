@@ -28,8 +28,6 @@ class WPGatsby implements Hookable {
 	}
 	/**
 	 * Returns whether WPGatsby is enabled.
-	 *
-	 * @return boolean
 	 */
 	public static function is_wp_gatsby_enabled() : bool {
 		return class_exists( 'WPGatsby' ) && class_exists( 'WPGraphQL_Settings_API' );

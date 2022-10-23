@@ -1493,7 +1493,7 @@ class Wpunit extends \Codeception\Module {
 	public function merge_default_args( array $default, array $custom = [] ) : array {
 		array_walk(
 			$default,
-			function( &$value ) use ( $custom ) {
+			static function ( &$value ) use ( $custom ) {
 				if ( empty( $custom ) ) {
 					return;
 				}

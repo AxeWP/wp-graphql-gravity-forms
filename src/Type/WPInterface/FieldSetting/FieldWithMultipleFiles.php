@@ -34,7 +34,7 @@ class FieldWithMultipleFiles extends AbstractFieldSetting {
 			'canAcceptMultipleFiles' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates whether multiple files may be uploaded.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->multipleFiles ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->multipleFiles ),
 			],
 			'maxFiles'               => [
 				'type'        => 'Int',

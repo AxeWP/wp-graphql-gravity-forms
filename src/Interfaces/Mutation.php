@@ -31,8 +31,6 @@ interface Mutation {
 	 * Defines the data modification closure.
 	 *
 	 * @since 0.4.0
-	 *
-	 * @return callable
 	 */
 	public static function mutate_and_get_payload() : callable;
 

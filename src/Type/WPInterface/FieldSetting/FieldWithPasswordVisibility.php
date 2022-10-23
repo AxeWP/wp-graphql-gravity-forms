@@ -34,7 +34,7 @@ class FieldWithPasswordVisibility extends AbstractFieldSetting {
 			'hasPasswordVisibilityToggle' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the Password visibility toggle should be enabled for this field.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->passwordVisibilityEnabled ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->passwordVisibilityEnabled ),
 			],
 		];
 	}

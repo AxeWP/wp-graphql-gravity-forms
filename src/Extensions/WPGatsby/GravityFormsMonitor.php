@@ -88,7 +88,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	public function after_create_form( int $form_id ) : void {
 		$args = [
 			'action_type'         => 'CREATE',
-			'title'               => "Form #{$form_id}",
+			'title'               => sprintf( 'Form #%d', $form_id ),
 			'node_id'             => $form_id,
 			'relay_id'            => Relay::toGlobalId( FormsLoader::$name, (string) $form_id ),
 			'graphql_single_name' => Form::$type,
@@ -117,7 +117,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	public function after_update_form( int $form_id ) : void {
 		$args = [
 			'action_type'         => 'UPDATE',
-			'title'               => "Form #{$form_id}",
+			'title'               => sprintf( 'Form #%d', $form_id ),
 			'node_id'             => $form_id,
 			'relay_id'            => Relay::toGlobalId( FormsLoader::$name, (string) $form_id ),
 			'graphql_single_name' => Form::$type,
@@ -160,7 +160,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	public function after_delete_form( int $form_id ) : void {
 		$args = [
 			'action_type'         => 'DELETE',
-			'title'               => "Form #{$form_id}",
+			'title'               => sprintf( 'Form #%d', $form_id ),
 			'node_id'             => $form_id,
 			'relay_id'            => Relay::toGlobalId( FormsLoader::$name, (string) $form_id ),
 			'graphql_single_name' => Form::$type,
@@ -180,7 +180,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	public function after_create_entry( array $entry ) : void {
 		$args = [
 			'action_type'         => 'CREATE',
-			'title'               => "Entry #{$entry['id']}",
+			'title'               => sprintf( 'Entry #%s', $entry['id'] ),
 			'node_id'             => $entry['id'],
 			'relay_id'            => Relay::toGlobalId( EntriesLoader::$name, (string) $entry['id'] ),
 			'graphql_single_name' => SubmittedEntry::$type,
@@ -200,7 +200,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	public function after_update_entry( array $form, int $entry_id ) : void {
 		$args = [
 			'action_type'         => 'UPDATE',
-			'title'               => "Entry #{$entry_id}",
+			'title'               => sprintf( 'Entry #%d', $entry_id ),
 			'node_id'             => $entry_id,
 			'relay_id'            => Relay::toGlobalId( EntriesLoader::$name, (string) $entry_id ),
 			'graphql_single_name' => SubmittedEntry::$type,
@@ -231,7 +231,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	public function after_save_draft_entry( array $submission, string $resume_token ) : void {
 		$args = [
 			'action_type'         => 'Create',
-			'title'               => "Draft Entry #{$resume_token}",
+			'title'               => sprintf( 'Draft Entry #%s', $resume_token ),
 			'node_id'             => $resume_token,
 			'relay_id'            => Relay::toGlobalId( DraftEntriesLoader::$name, $resume_token ),
 			'graphql_single_name' => DraftEntry::$type,

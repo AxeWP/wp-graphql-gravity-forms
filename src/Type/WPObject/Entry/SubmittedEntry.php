@@ -76,7 +76,7 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 				'type'              => 'Int',
 				'description'       => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
 				'deprecationReason' => __( 'Deprecated in favor of the databaseId field.', 'wp-graphql-gravity-forms' ),
-				'resolve'           => fn( $source ) => $source->databaseId ?? null,
+				'resolve'           => static fn ( $source ) => $source->databaseId ?? null,
 			],
 			'isStarred'      => [
 				'type'        => 'Boolean',
@@ -89,7 +89,7 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 			'post'           => [
 				'type'        => 'Post',
 				'description' => __( 'For forms with Post fields, this is the post object that was created.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source, array $args, AppContext $context ) => ! empty( $source->postDatabaseId ) ? DataSource::resolve_post_object( $source->postDatabaseId, $context ) : null,
+				'resolve'     => static fn ( $source, array $args, AppContext $context ) => ! empty( $source->postDatabaseId ) ? DataSource::resolve_post_object( $source->postDatabaseId, $context ) : null,
 			],
 			'postDatabaseId' => [
 				'type'        => 'Int',
@@ -129,7 +129,7 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 					],
 				],
-				'resolve'     => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+				'resolve'     => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
 					$idType = $args['idType'] ?? 'global_id';
 
 					if ( 'global_id' === $idType ) {

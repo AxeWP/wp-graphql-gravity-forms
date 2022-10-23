@@ -20,6 +20,16 @@ use WPGraphQL\AppContext;
 class FormFieldsConnectionResolver {
 
 	/**
+	 * @var array<string, null>
+	 */
+	private const EMPTY_CHOICES = [
+		'text'       => null,
+		'value'      => null,
+		'isSelected' => null,
+		'price'      => null,
+	];
+
+	/**
 	 * Coerces form fields into a format GraphQL can understand.
 	 *
 	 * Instead of a Model.
@@ -29,13 +39,14 @@ class FormFieldsConnectionResolver {
 	public static function prepare_data( array $data ) : array {
 		foreach ( $data as &$field ) {
 			// Set layoutGridColumnSpan to int.
-			$field->layoutGridColumnSpan = ! empty( $field->layoutGridColumnSpan ) ? (int) $field->layoutGridColumnSpan : null;
+			$field->layoutGridColumnSpan = empty( $field->layoutGridColumnSpan ) ? null : (int) $field->layoutGridColumnSpan;
 
 			// Set empty values to null.
 			foreach ( get_object_vars( $field ) as $key => $value ) {
 				if ( '' !== $value ) {
 					continue;
 				}
+
 				$field->$key = null;
 			}
 
@@ -51,17 +62,8 @@ class FormFieldsConnectionResolver {
 			}
 
 			// Set choices for single-column list fields, so we can use the same mutation for both.
-			if ( 'list' === $field->type ) {
-				$empty_choices = [
-					'text'       => null,
-					'value'      => null,
-					'isSelected' => null,
-					'price'      => null,
-				];
-
-				if ( empty( $field['choices'] ) ) {
-					$field['choices'] = $empty_choices;
-				}
+			if ( 'list' === $field->type && empty( $field['choices'] ) ) {
+				$field['choices'] = self::EMPTY_CHOICES;
 			}
 		}
 
@@ -92,11 +94,11 @@ class FormFieldsConnectionResolver {
 		$nodes = [];
 		if ( ! empty( $connection['edges'] ) && is_array( $connection['edges'] ) ) {
 			foreach ( $connection['edges'] as $edge ) {
-				$nodes[] = ! empty( $edge['node'] ) ? $edge['node'] : null;
+				$nodes[] = empty( $edge['node'] ) ? null : $edge['node'];
 			}
 		}
 
-		$connection['nodes'] = ! empty( $nodes ) ? $nodes : null;
+		$connection['nodes'] = empty( $nodes ) ? null : $nodes;
 
 		return $connection;
 	}
@@ -144,9 +146,10 @@ class FormFieldsConnectionResolver {
 			if ( ! is_array( $args['where']['ids'] ) ) {
 				$args['where']['ids'] = [ $args['where']['ids'] ];
 			}
+
 			$ids = array_map( 'absint', $args['where']['ids'] );
 
-			$fields = array_filter( $fields, fn( $field ) => in_array( (int) $field['id'], $ids, true ) );
+			$fields = array_filter( $fields, static fn ( $field) => in_array( (int) $field['id'], $ids, true ) );
 		}
 
 		if ( isset( $args['where']['adminLabels'] ) ) {
@@ -156,7 +159,7 @@ class FormFieldsConnectionResolver {
 
 			$admin_labels = array_map( 'sanitize_text_field', $args['where']['adminLabels'] );
 
-			$fields = array_filter( $fields, fn( $field)  => in_array( $field['adminLabel'], $admin_labels, true ) );
+			$fields = array_filter( $fields, static fn ( $field) => in_array( $field['adminLabel'], $admin_labels, true ) );
 		}
 
 		if ( isset( $args['where']['fieldTypes'] ) ) {
@@ -164,13 +167,13 @@ class FormFieldsConnectionResolver {
 				$args['where']['fieldTypes'] = [ $args['where']['fieldTypes'] ];
 			}
 
-			$fields = array_filter( $fields, fn( $field ) => in_array( $field['type'], $args['where']['fieldTypes'], true ) );
+			$fields = array_filter( $fields, static fn ( $field) => in_array( $field['type'], $args['where']['fieldTypes'], true ) );
 		}
 
 		if ( isset( $args['where']['pageNumber'] ) ) {
 			$page = absint( $args['where']['pageNumber'] );
 
-			$fields = array_filter( $fields, fn( $field ) => $page === (int) $field['pageNumber'] );
+			$fields = array_filter( $fields, static fn ( $field) => $page === (int) $field['pageNumber'] );
 		}
 
 		return $fields;

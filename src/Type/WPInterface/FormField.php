@@ -57,7 +57,7 @@ class FormField extends AbstractInterface {
 			'displayOnly'                => [
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source->displayOnly ),
+				'resolve'     => static fn ( $source ) : bool => ! empty( $source->displayOnly ),
 			],
 			'id'                         => [
 				'type'        => [ 'non_null' => 'Int' ],
@@ -66,7 +66,7 @@ class FormField extends AbstractInterface {
 			'inputType'                  => [
 				'type'        => FormFieldTypeEnum::$type,
 				'description' => __( 'The base form field type used to display the input. A good example is the Post Custom Field that can be displayed as various different types of fields.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->inputType ) ? $source->inputType : null,
+				'resolve'     => static fn ( $source ) => ! empty( $source->inputType ) ? $source->inputType : null,
 			],
 			'layoutGridColumnSpan'       => [
 				'type'        => 'Int',
@@ -88,7 +88,7 @@ class FormField extends AbstractInterface {
 			'visibility'                 => [
 				'type'        => FormFieldVisibilityEnum::$type,
 				'description' => __( 'Field visibility.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : string => ! empty( $source->visibility ) ? $source->visibility : ( ! empty( $source->adminOnly ) ? 'administrative' : 'visible' ),
+				'resolve'     => static fn ( $source ) : string => ! empty( $source->visibility ) ? $source->visibility : ( ! empty( $source->adminOnly ) ? 'administrative' : 'visible' ),
 			],
 		];
 	}

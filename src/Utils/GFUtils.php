@@ -26,10 +26,9 @@ class GFUtils {
 	 * Uses GFFormsModel::get_ip()
 	 *
 	 * @param string $ip .
-	 * @return string
 	 */
 	public static function get_ip( string $ip ) : string {
-		return ! empty( $ip ) ? sanitize_text_field( $ip ) : GFFormsModel::get_ip();
+		return empty( $ip ) ? GFFormsModel::get_ip() : sanitize_text_field( $ip );
 	}
 
 	/**
@@ -40,7 +39,6 @@ class GFUtils {
 	 *
 	 * @param integer $form_id .
 	 * @param bool    $active_only Whether to only return the form if it is active.
-	 * @return array
 	 *
 	 * @throws UserError .
 	 */
@@ -70,6 +68,7 @@ class GFUtils {
 
 		return $form;
 	}
+
 	/**
 	 * Returns all the form objects.
 	 *
@@ -133,21 +132,19 @@ class GFUtils {
 	 * @param array $form     The form.
 	 * @param int   $field_id Field ID.
 	 *
-	 * @return GF_Field
-	 *
 	 * @throws UserError .
 	 */
 	public static function get_field_by_id( array $form, int $field_id ) : GF_Field {
 		$matching_fields = array_values(
 			array_filter(
 				$form['fields'],
-				function( GF_Field $field ) use ( $field_id ) : bool {
+				static function ( GF_Field $field ) use ( $field_id ) : bool {
 					return $field['id'] === $field_id;
 				}
 			)
 		);
 
-		if ( ! $matching_fields ) {
+		if ( empty( $matching_fields ) ) {
 			throw new UserError(
 				// translators: Gravity Forms form id and field id.
 				sprintf( __( 'The form (ID %1$s) does not contain a field with the field ID %2$s.', 'wp-graphql-gravity-forms' ), $form['id'], $field_id )
@@ -165,7 +162,6 @@ class GFUtils {
 	 * @see https://docs.gravityforms.com/api-functions/#get-entry
 	 *
 	 * @param integer $entry_id .
-	 * @return array
 	 *
 	 * @throws UserError .
 	 */
@@ -191,7 +187,6 @@ class GFUtils {
 	 *
 	 * @param array $entry_data .
 	 * @param int   $entry_id .
-	 * @return integer
 	 *
 	 * @throws UserError .
 	 */
@@ -216,7 +211,6 @@ class GFUtils {
 	 * Uses GFFormsModel::get_draft_submission_values().
 	 *
 	 * @param string $resume_token .
-	 * @return array
 	 *
 	 * @throws UserError .
 	 */
@@ -239,8 +233,6 @@ class GFUtils {
 	 * Returns draft entry submittion data.
 	 *
 	 * @param string $resume_token Draft entry resume token.
-	 *
-	 * @return array
 	 *
 	 * @throws UserError .
 	 */
@@ -311,7 +303,6 @@ class GFUtils {
 	 * @param string  $ip .
 	 * @param string  $source_url .
 	 * @param string  $resume_token .
-	 * @return string
 	 *
 	 * @throws UserError .
 	 */
@@ -353,7 +344,6 @@ class GFUtils {
 	 * @param array   $field_values .
 	 * @param integer $target_page .
 	 * @param integer $source_page .
-	 * @return array
 	 *
 	 * @throws UserError .
 	 */
@@ -387,7 +377,7 @@ class GFUtils {
 	 */
 	public static function get_gravity_forms_upload_dir( int $form_id ) : array {
 		// Determine YYYY/MM values.
-		$time     = (string) current_time( 'mysql' );
+		$time     = current_time( 'mysql' );
 		$y        = substr( $time, 0, 4 );
 		$m        = substr( $time, 5, 2 );
 		$date_dir = DIRECTORY_SEPARATOR . $y . DIRECTORY_SEPARATOR . $m;
@@ -421,10 +411,10 @@ class GFUtils {
 				GFCommon::recursive_add_index_file( GFFormsModel::get_upload_root() );
 			} elseif ( ! file_exists( GFFormsModel::get_upload_path( $form_id ) . '/index.html' ) ) {
 				GFCommon::recursive_add_index_file( GFFormsModel::get_upload_path( $form_id ) );
-			} elseif ( ! file_exists( GFFormsModel::get_upload_path( $form_id ) . "/$y/index.html" ) ) {
-				GFCommon::recursive_add_index_file( GFFormsModel::get_upload_path( $form_id ) . "/$y" );
+			} elseif ( ! file_exists( GFFormsModel::get_upload_path( $form_id ) . sprintf( '/%s/index.html', $y ) ) ) {
+				GFCommon::recursive_add_index_file( GFFormsModel::get_upload_path( $form_id ) . sprintf( '/%s', $y ) );
 			} else {
-				GFCommon::recursive_add_index_file( GFFormsModel::get_upload_path( $form_id ) . "/$y/$m" );
+				GFCommon::recursive_add_index_file( GFFormsModel::get_upload_path( $form_id ) . sprintf( '/%s/%s', $y, $m ) );
 			}
 		}
 
@@ -459,17 +449,15 @@ class GFUtils {
 	public static function handle_file_upload( $file, $target ) {
 		_doing_it_wrong( __FUNCTION__, esc_html__( 'GFUtils::handle_file_upload() is deprecated. Please use native WP/GF methods instead.', 'wp-graphql-gravity-forms' ), '0.11.0' );
 
-		// Default to uploads dir if alternative not provided.
 		$target = $target ?: wp_upload_dir();
 
-		// Check if filetype & ext are valid.
 		$wp_filetype     = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
 		$ext             = empty( $wp_filetype['ext'] ) ? '' : $wp_filetype['ext'];
 		$type            = empty( $wp_filetype['type'] ) ? '' : $wp_filetype['type'];
 		$proper_filename = empty( $wp_filetype['proper_filename'] ) ? '' : $wp_filetype['proper_filename'];
 
 		// Check to see if wp_check_filetype_and_ext() determined the filename was incorrect.
-		if ( $proper_filename ) {
+		if ( ! empty( $proper_filename ) ) {
 			$file['name'] = $proper_filename;
 		}
 
@@ -478,15 +466,15 @@ class GFUtils {
 			throw new UserError( __( 'This file type is not permitted for security reasons.', 'wp-graphql-gravity-forms' ) );
 		}
 
-		$type = ! $type ? $file['type'] : $type;
+		$type = empty( $type ) ? $file['type'] : $type;
 
 		$filename = wp_unique_filename( $target['path'], $file['name'] );
 
 		// Move the file to the GF uploads dir.
-		$new_file = $target['path'] . "/{$filename}";
+		$new_file = $target['path'] . sprintf( '/%s', $filename );
 
 		// Use copy and unlink because rename breaks streams.
-	// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- duplicating default WP Core functionality.
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- duplicating default WP Core functionality.
 		$move_new_file = @copy( $file['tmp_name'], $new_file );
 		unlink( $file['tmp_name'] ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_unlink
 
@@ -502,7 +490,7 @@ class GFUtils {
 		}
 
 		// Compute the URL.
-		$url = $target['url'] . "/{$filename}";
+		$url = $target['url'] . sprintf( '/%s', $filename );
 
 		return [
 			'file' => $new_file,

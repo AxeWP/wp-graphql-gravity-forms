@@ -42,7 +42,7 @@ class QuizResultsFieldCount extends AbstractObject implements TypeWithConnection
 			'formField' => [
 				'toType'   => 'QuizField',
 				'oneToOne' => true,
-				'resolve'  => static function( $source ) {
+				'resolve'  => static function ( $source ): array {
 					return [ 'node' => $source['field'] ];
 				},
 			],

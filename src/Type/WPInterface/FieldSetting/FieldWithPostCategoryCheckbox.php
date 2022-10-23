@@ -34,7 +34,7 @@ class FieldWithPostCategoryCheckbox extends AbstractFieldSetting {
 			'hasAllCategories' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Determines if all categories should be displayed on the Post Category drop down. If this property is true (display all categories), the Post Category drop down will display the categories hierarchically.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->displayAllCategories ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->displayAllCategories ),
 			],
 		];
 	}

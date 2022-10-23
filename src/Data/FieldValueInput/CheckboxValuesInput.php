@@ -43,8 +43,10 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 	protected function prepare_value() {
 		$values_to_save = array_reduce(
 			$this->field->inputs,
-			function( array $values_to_save, array $input ) : array {
-				$values_to_save[ $input['id'] ] = ''; // Initialize all inputs to an empty string.
+			static function ( array $values_to_save, array $input ) : array {
+				// Initialize all inputs to an empty string.
+				$values_to_save[ $input['id'] ] = '';
+
 				return $values_to_save;
 			},
 			[]

@@ -38,7 +38,7 @@ class Form extends Model {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function is_private() : bool {
+	protected function is_private(): bool {
 		if ( ! isset( $this->data['requireLogin'] ) || ! $this->data['requireLogin'] || is_user_logged_in() ) {
 			return false;
 		}
@@ -56,9 +56,10 @@ class Form extends Model {
 					if ( empty( $this->data['confirmations'] ) ) {
 						return null;
 					}
+
 					// Set necessary fields before returning.
 					return array_map(
-						function( $confirmation ) {
+						static function ( $confirmation ) {
 							// By default confirmations don't have the `isActive` array key.
 							$confirmation['isActive']  = isset( $confirmation['isActive'] ) ? (bool) $confirmation['isActive'] : true;
 							$confirmation['isDefault'] = ! empty( $confirmation['isDefault'] );
@@ -119,6 +120,7 @@ class Form extends Model {
 						$pagination['progressbarCompletionText'] = $pagination['progressbar_completion_text'];
 						unset( $pagination['progressbar_completion_text'] );
 					}
+
 					// Relocate logically.
 					$pagination['lastPageButton'] = ! empty( $this->data['lastPageButton'] ) ? $this->data['lastPageButton'] : null;
 
@@ -145,6 +147,7 @@ class Form extends Model {
 					if ( isset( $personal_data['retention']['retain_entries_days'] ) ) {
 						$personal_data['daysToRetain'] = 'retain' !== $personal_data['retentionPolicy'] ? $personal_data['retention']['retain_entries_days'] : null;
 					}
+
 					unset( $personal_data['retention'] );
 
 					if ( isset( $personal_data['exportingAndErasing'] ) ) {
@@ -159,6 +162,7 @@ class Form extends Model {
 								'shouldErase'  => ! empty( $settings['erase'] ),
 							];
 						}
+
 						unset( $personal_data['exportingAndErasing'] );
 					}
 

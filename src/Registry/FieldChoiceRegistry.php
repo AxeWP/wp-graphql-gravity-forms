@@ -64,7 +64,7 @@ class FieldChoiceRegistry {
 				'type'        => [ 'list_of' => $choice_name ],
 				// translators: GF field type.
 				'description' => sprintf( __( 'The available choices for the %s field.', 'wp-graphql-gravity-forms' ), $field->type ),
-				'resolve'     => function( GF_Field $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( GF_Field $source, array $args, AppContext $context ) {
 					$context->gfField = $source;
 
 					return ! empty( $source->choices ) ? $source->choices : null;
@@ -150,9 +150,8 @@ class FieldChoiceRegistry {
 		 * @param array    $interfaces The list of interfaces for the GraphQL type.
 		 */
 		$fields = apply_filters( 'graphql_gf_form_field_setting_choice_fields', $fields, $choice_name, $field, $settings, $interfaces );
-		$fields = apply_filters( 'graphql_gf_form_field_setting_choice_fields_' . $choice_name, $fields, $field, $settings, $interfaces );
 
-		return $fields;
+		return apply_filters( 'graphql_gf_form_field_setting_choice_fields_' . $choice_name, $fields, $field, $settings, $interfaces );
 	}
 
 }

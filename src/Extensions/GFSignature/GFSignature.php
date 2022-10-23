@@ -37,8 +37,6 @@ class GFSignature implements Hookable {
 
 	/**
 	 * Returns whether Gravity Forms Signature is enabled.
-	 *
-	 * @return boolean
 	 */
 	public static function is_gf_signature_enabled() : bool {
 		return class_exists( 'GFSignature' );

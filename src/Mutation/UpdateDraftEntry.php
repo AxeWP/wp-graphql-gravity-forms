@@ -76,7 +76,7 @@ class UpdateDraftEntry extends AbstractMutation {
 			'draftEntry' => [
 				'type'        => DraftEntry::$type,
 				'description' => __( 'The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( array $payload, array $args, AppContext $context ) {
+				'resolve'     => static function ( array $payload, array $args, AppContext $context ) {
 					if ( ! empty( $payload['errors'] ) || empty( $payload['resumeToken'] ) ) {
 						return null;
 					}

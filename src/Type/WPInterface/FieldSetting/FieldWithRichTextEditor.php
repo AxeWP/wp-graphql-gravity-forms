@@ -34,7 +34,7 @@ class FieldWithRichTextEditor extends AbstractFieldSetting {
 			'hasRichTextEditor' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates whether the field uses the rich text editor interface.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->useRichTextEditor ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->useRichTextEditor ),
 			],
 		];
 	}

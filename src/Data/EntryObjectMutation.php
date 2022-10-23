@@ -115,7 +115,7 @@ class EntryObjectMutation {
 	 */
 	public static function get_submission_errors( array $messages ) : array {
 		return array_map(
-			function( $id, $message ) {
+			static function ( $id, $message ) : array {
 				return [
 					'id'      => $id,
 					'message' => $message,
@@ -154,6 +154,7 @@ class EntryObjectMutation {
 		foreach ( $field_values as $key => $value ) {
 			$formatted[ 'input_' . str_replace( '.', '_', $key ) ] = $value;
 		}
+
 		return $formatted;
 	}
 
@@ -189,6 +190,7 @@ class EntryObjectMutation {
 						'error'    => null,
 					];
 				}
+
 				continue;
 			}
 
@@ -210,6 +212,7 @@ class EntryObjectMutation {
 					];
 				}
 			}
+
 			if ( ! empty( $file_payloads ) ) {
 				$files[ $input_name ] = $file_payloads;
 			}

@@ -80,7 +80,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 			'formFields' => [
 				'toType'         => FormField::$type,
 				'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
-				'resolve'        => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+				'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
 					$context->gfEntry = $source;
 
 					if ( empty( $context->gfForm ) ) {
@@ -112,7 +112,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 			'createdBy'           => [
 				'type'        => 'User',
 				'description' => __( 'The user who created the entry.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( empty( $source->createdByDatabaseId ) ) {
 						return null;
 					}
@@ -176,7 +176,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 			$fields['orderSummary'] = [
 				'type'        => OrderSummary::$type,
 				'description' => __( 'The entry order summary. Null if the entry has no pricing fields', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! class_exists( 'Gravity_Forms\Gravity_Forms\Orders\Factories\GF_Order_Factory' ) ) {
 						return null;
 					}
@@ -195,7 +195,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 
 					// Convert order items to array.
 					$items = array_map(
-						fn( $item) => $item->to_array(),
+						static fn ( $item) => $item->to_array(),
 						$items,
 					);
 
@@ -271,7 +271,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 					],
 				],
-				'resolve'     => function( $root, array $args, AppContext $context ) {
+				'resolve'     => static function ( $root, array $args, AppContext $context ) {
 					$id_type = $args['idType'] ?? 'global_id';
 
 					if ( 'global_id' === $id_type ) {

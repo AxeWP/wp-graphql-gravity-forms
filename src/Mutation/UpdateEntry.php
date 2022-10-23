@@ -73,7 +73,7 @@ class UpdateEntry extends AbstractMutation {
 			'entry'  => [
 				'type'        => SubmittedEntry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( array $payload, array $args, AppContext $context ) {
+				'resolve'     => static function ( array $payload, array $args, AppContext $context ) {
 					if ( ! empty( $payload['errors'] ) || empty( $payload['entryId'] ) ) {
 						return null;
 					}
@@ -206,15 +206,13 @@ class UpdateEntry extends AbstractMutation {
 		if ( isset( $input['fieldValues'] ) ) {
 			$all_files = EntryObjectMutation::initialize_files( $form['fields'], $input['fieldValues'], false );
 
-			if ( ! empty( $all_files ) ) {
-				foreach ( $all_files as $input_name => $files ) {
+			foreach ( $all_files as $input_name => $files ) {
 					$urls = array_map(
-						fn( $file ) => GFFormsModel::get_file_upload_path( $form['id'], $file ),
+						static fn ( $file ) => GFFormsModel::get_file_upload_path( $form['id'], $file ),
 						array_column( $files, 'uploaded_filename' )
 					);
 
 					$field_values[ (int) str_replace( 'input_', '', $input_name ) ] = wp_json_encode( array_column( $urls, 'url' ) );
-				}
 			}
 		}
 
@@ -245,9 +243,7 @@ class UpdateEntry extends AbstractMutation {
 			$field_value_input->add_value_to_submission( $formatted_values );
 		}
 
-		$formatted_values = self::prepare_field_values_for_save( $formatted_values, $entry, $form );
-
-		return $formatted_values;
+		return self::prepare_field_values_for_save( $formatted_values, $entry, $form );
 	}
 
 	/**

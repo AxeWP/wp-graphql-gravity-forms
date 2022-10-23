@@ -128,7 +128,7 @@ abstract class GFHelpers {
 		}
 
 		return array_map(
-			function( $key, $value ) {
+			static function ( $key, $value ) {
 				return [ 'input_' . $key => $value ];
 			},
 			array_keys( $values ),

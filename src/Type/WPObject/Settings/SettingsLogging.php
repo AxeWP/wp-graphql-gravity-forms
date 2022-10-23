@@ -37,12 +37,12 @@ class SettingsLogging extends AbstractObject {
 			'isLoggingEnabled' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether Gravity Forms internal logging is enabled. Logging allows you to easily debug the inner workings of Gravity Forms to solve any possible issues.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn() : bool => (bool) get_option( 'gform_enable_logging' ),
+				'resolve'     => static fn () : bool => (bool) get_option( 'gform_enable_logging' ),
 			],
 			'loggers'          => [
 				'type'        => [ 'list_of' => Logger::$type ],
 				'description' => __( 'A list of registered Gravity Forms loggers and their configurations.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function() {
+				'resolve'     => static function () {
 					$logging_instance  = GFLogging::get_instance();
 					$settings          = $logging_instance->get_plugin_settings();
 					$supported_plugins = $logging_instance->get_supported_plugins();
@@ -53,7 +53,7 @@ class SettingsLogging extends AbstractObject {
 
 					// Add plugin name to array.
 					return array_map(
-						function( $key, $setting ) use ( $supported_plugins ) {
+						static function ( $key, $setting ) use ( $supported_plugins ) {
 							$setting['name'] = $supported_plugins[ $key ];
 							return $setting;
 						},

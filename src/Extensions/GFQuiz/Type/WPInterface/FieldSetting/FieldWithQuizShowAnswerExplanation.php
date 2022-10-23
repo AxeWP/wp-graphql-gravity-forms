@@ -36,12 +36,12 @@ class FieldWithQuizShowAnswerExplanation extends AbstractFieldSetting {
 			'answerExplanation'           => [
 				'type'        => 'String',
 				'description' => __( 'The explanation for the correct answer and/or incorrect answers.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn ( $source ) : ?string => ! empty( $source->gquizAnswerExplanation ) ? $source->gquizAnswerExplanation : null,
+				'resolve'     => static fn ( $source ) : ?string => ! empty( $source->gquizAnswerExplanation ) ? $source->gquizAnswerExplanation : null,
 			],
 			'shouldShowAnswerExplanation' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether to show an answer explanation.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source->gquizShowAnswerExplanation ),
+				'resolve'     => static fn ( $source ) : bool => ! empty( $source->gquizShowAnswerExplanation ),
 			],
 		];
 	}

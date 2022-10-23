@@ -61,7 +61,7 @@ class SubmitDraftEntry extends AbstractMutation {
 			'entry'        => [
 				'type'        => SubmittedEntry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( array $payload, array $args, AppContext $context ) {
+				'resolve'     => static function ( array $payload, array $args, AppContext $context ) {
 					if ( ! empty( $payload['errors'] ) || empty( $payload['entryId'] ) ) {
 						return null;
 					}

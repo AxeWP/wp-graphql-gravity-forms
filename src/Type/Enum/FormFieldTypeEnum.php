@@ -38,7 +38,7 @@ class FormFieldTypeEnum extends AbstractEnum {
 
 		$values = [];
 
-		foreach ( $fields as $gf_type => $type ) {
+		foreach ( array_keys( $fields ) as $gf_type ) {
 			$values[ WPEnumType::get_safe_name( $gf_type ) ] = [
 				'value'       => $gf_type,
 				// translators: GF Field type.

@@ -80,7 +80,7 @@ class SubmitForm extends AbstractMutation {
 			'entry'        => [
 				'type'        => Entry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( array $payload, array $args, AppContext $context ) {
+				'resolve'     => static function ( array $payload, array $args, AppContext $context ) {
 					// Return early if bad or nonexistent entry.
 					if ( ! empty( $payload['errors'] ) || ( ! $payload['entryId'] && ! $payload['resumeToken'] ) ) {
 						return null;
@@ -278,7 +278,6 @@ class SubmitForm extends AbstractMutation {
 	 * @param boolean $is_draft .
 	 * @param array   $field_values . Required so submit_form() can generate the $_POST object.
 	 * @param array   $file_upload_values .
-	 * @return array
 	 */
 	private static function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ) : array {
 		$input_values = [

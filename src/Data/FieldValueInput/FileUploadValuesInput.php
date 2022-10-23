@@ -23,6 +23,7 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 	 * @var array
 	 */
 	protected $args;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -117,12 +118,14 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 		if ( ! $target ) {
 			return 'FAILED (Upload folder could not be created.)';
 		}
+
 		if ( copy( $file['tmp_name'], $target['path'] ) ) {
 			/** @var GF_Field_FileUpload $field */
 			$field = $this->field;
 			$field->set_permissions( $target['path'] );
 			return $target['url'];
 		}
+
 		return 'FAILED (Temporary file could not be copied.)';
 	}
 }

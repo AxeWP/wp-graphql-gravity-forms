@@ -38,7 +38,7 @@ class EntriesConnection extends AbstractConnection {
 				'toType'         => Entry::$type,
 				'fromFieldName'  => 'gfEntries',
 				'connectionArgs' => self::get_filtered_connection_args(),
-				'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+				'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
 					if ( isset( $args['entryType'] ) && EntryTypeEnum::SUBMITTED !== $args['entryType'] ) {
 						throw new UserError( __( 'Only lists of `SUBMITTED` entries may currently be queried.', 'wp-graphql-gravity-forms' ) );
 					}
@@ -55,7 +55,7 @@ class EntriesConnection extends AbstractConnection {
 				'toType'         => SubmittedEntry::$type,
 				'fromFieldName'  => 'gfSubmittedEntries',
 				'connectionArgs' => self::get_filtered_connection_args( [ 'formIds', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby', 'status' ] ),
-				'resolve'        => function( $root, array $args, AppContext $context, ResolveInfo $info ) {
+				'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
 					return Factory::resolve_entries_connection( $root, $args, $context, $info );
 				},
 			]
@@ -64,8 +64,6 @@ class EntriesConnection extends AbstractConnection {
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @return array
 	 */
 	public static function get_connection_args() : array {
 		return [

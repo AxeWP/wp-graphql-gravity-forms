@@ -31,7 +31,7 @@ class FieldValues {
 			'value' => [
 				'type'        => 'String',
 				'description' => __( 'The string-formatted entry value for the `formField`. For complex fields this might be a JSON-encoded or serialized array.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
@@ -50,7 +50,7 @@ class FieldValues {
 			'addressValues' => [
 				'type'        => ValueProperty\AddressFieldValue::$type,
 				'description' => __( 'Address field value.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
@@ -76,7 +76,7 @@ class FieldValues {
 			'checkboxValues' => [
 				'type'        => [ 'list_of' => ValueProperty\CheckboxFieldValue::$type ],
 				'description' => __( 'Checkbox field value.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
@@ -120,7 +120,7 @@ class FieldValues {
 			'consentValue' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Consent field value. This is `true` when consent is given, `false` when it is not.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
@@ -142,7 +142,7 @@ class FieldValues {
 			'fileUploadValues' => [
 				'type'        => [ 'list_of' => ValueProperty\FileUploadFieldValue::$type ],
 				'description' => __( 'File upload value', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
@@ -161,7 +161,7 @@ class FieldValues {
 			'imageValues' => [
 				'type'        => ValueProperty\ImageFieldValue::$type,
 				'description' => __( 'Image field value.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
@@ -206,7 +206,7 @@ class FieldValues {
 			'listValues' => [
 				'type'        => [ 'list_of' => ValueProperty\ListFieldValue::$type ],
 				'description' => __( 'List field value.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
@@ -217,17 +217,12 @@ class FieldValues {
 						return null;
 					}
 
-					if ( is_string( $values ) ) {
-						$values = maybe_unserialize( $values );
-					} else {
-						$values = $source->create_list_array_recursive( $values );
-					}
-
+					$values = is_string( $values ) ? maybe_unserialize( $values ) : $source->create_list_array_recursive( $values );
 					// If columns are enabled, save each row-value pair.
 					if ( $source->enableColumns ) {
 						// Save each row-value pair.
 						return array_map(
-							function( $row ) {
+							static function ( $row ) : array {
 								$row_values = [];
 
 								foreach ( $row as $single_value ) {
@@ -241,10 +236,9 @@ class FieldValues {
 							$values
 						);
 					}
-
 					// If no columns, entry values can be mapped directly to 'value'.
 					return array_map(
-						function( $single_value ) {
+						static function ( $single_value ) : array {
 							return [
 								'values' => [ $single_value ], // $single_value must be Iteratable.
 							];
@@ -264,7 +258,7 @@ class FieldValues {
 			'nameValues' => [
 				'type'        => ValueProperty\NameFieldValue::$type,
 				'description' => __( 'Name field value.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
@@ -289,7 +283,7 @@ class FieldValues {
 			'productValues' => [
 				'type'        => ValueProperty\ProductFieldValue::$type,
 				'description' => __( 'Product field values.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
@@ -360,7 +354,7 @@ class FieldValues {
 			'timeValues' => [
 				'type'        => ValueProperty\TimeFieldValue::$type,
 				'description' => __( 'Time field value.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
@@ -393,7 +387,7 @@ class FieldValues {
 			'values' => [
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'An array of field values.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
@@ -452,11 +446,7 @@ class FieldValues {
 		}
 
 		// Corerce files into an array.
-		if ( $field->multipleFiles ) {
-			$file_values = json_decode( $file_values, true );
-		} else {
-			$file_values = [ $file_values ];
-		}
+		$file_values = $field->multipleFiles ? json_decode( $file_values, true ) : [ $file_values ];
 
 		$info = [];
 
@@ -467,8 +457,8 @@ class FieldValues {
 				$time                    = current_time( 'mysql' );
 				$y                       = substr( $time, 0, 4 );
 				$m                       = substr( $time, 5, 2 );
-				$default_target_root     = GFFormsModel::get_upload_path( $form['id'] ) . "/$y/$m/";
-				$default_target_root_url = GFFormsModel::get_upload_url( $form['id'] ) . "/$y/$m/";
+				$default_target_root     = GFFormsModel::get_upload_path( $form['id'] ) . sprintf( '/%s/%s/', $y, $m );
+				$default_target_root_url = GFFormsModel::get_upload_url( $form['id'] ) . sprintf( '/%s/%s/', $y, $m );
 
 				$filename = explode( '/', $file_value );
 

@@ -105,7 +105,7 @@ class DraftEntry extends AbstractObject implements TypeWithInterfaces, Field {
 						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 					],
 				],
-				'resolve'     => function( $root, array $args, AppContext $context ) {
+				'resolve'     => static function ( $root, array $args, AppContext $context ) {
 					$idType = $args['idType'] ?? 'global_id';
 
 					if ( 'global_id' === $idType ) {

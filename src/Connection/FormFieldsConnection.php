@@ -33,8 +33,6 @@ class FormFieldsConnection extends AbstractConnection {
 
 	/**
 	 * Gets custom connection configuration arguments, such as the resolver, edgeFields, connectionArgs, etc.
-	 *
-	 * @return array
 	 */
 	public static function get_connection_args() : array {
 		return [

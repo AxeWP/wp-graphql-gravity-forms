@@ -36,7 +36,7 @@ class FieldWithCaptchaBadge extends AbstractFieldSetting {
 			'captchaBadgePosition' => [
 				'type'        => CaptchaFieldBadgePositionEnum::$type,
 				'description' => __( 'The language used when the captcha is displayed. This property is available when the captchaType is “captcha”, the default. The possible values are the language codes used by WordPress.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => isset( $source->captchaBadge ) ? $source->captchaBadge : 'bottomright',
+				'resolve'     => static fn ( $source ) => isset( $source->captchaBadge ) ? $source->captchaBadge : 'bottomright',
 			],
 		];
 	}

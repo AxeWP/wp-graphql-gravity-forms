@@ -33,16 +33,14 @@ class ValueInput extends AbstractFieldValueInput {
 	protected function prepare_value() : string {
 		// Handle choices with price.
 		if ( property_exists( $this->field, 'enablePrice' ) && $this->field->enablePrice && false === strpos( $this->args, '|' ) ) {
-			$value_key = property_exists( $this->field, 'enableChoiceValue' ) && $this->field->enableChoiceValue ? 'value' : 'text';
-
+			$value_key  = property_exists( $this->field, 'enableChoiceValue' ) && $this->field->enableChoiceValue ? 'value' : 'text';
 			$choice_key = array_search( $this->args, array_column( $this->field->choices, $value_key ), true );
-
-			$choice = $this->field->choices[ $choice_key ];
-
-			$price = rgempty( 'price', $choice ) ? 0 : GFCommon::to_number( rgar( $choice, 'price' ) );
-
+			$choice     = $this->field->choices[ $choice_key ];
+			$price      = rgempty( 'price', $choice ) ? 0 : GFCommon::to_number( rgar( $choice, 'price' ) );
 			return $this->args . '|' . $price;
-		} elseif ( 'total' === $this->field->type ) {
+		}
+
+		if ( 'total' === $this->field->type ) {
 			// Convert to number so draft updates dont return the currency.
 			return GFCommon::to_number( $this->args );
 		}
