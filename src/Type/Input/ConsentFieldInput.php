@@ -32,10 +32,6 @@ class ConsentFieldInput extends AbstractInput {
 	 */
 	public static function get_fields() : array {
 		return [
-			'inputId' => [
-				'type'        => 'Float',
-				'description' => __( 'Input ID.', 'wp-graphql-gravity-forms' ),
-			],
 			'value'   => [
 				'type'        => 'Boolean',
 				'description' => __( 'Input value.', 'wp-graphql-gravity-forms' ),
