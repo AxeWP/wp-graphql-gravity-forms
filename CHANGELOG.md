@@ -21,6 +21,13 @@
 - dev: Deprecate the `graphql_gf_form_field_value_properties` filter in favor of `graphql_gf_form_field_value_fields`.
 - chore: Refactor `FormsConnectionResolver` to use new `AbstractConnectionResolver` methods.
 - chore: Add `automattic/vipcs` Code Standard ruleset. 
+## v0.11.7 - Bugfix
+
+This _minor_ release fixes an issue with the GraphQL dataloader storing the GF form, instead of the 'prerendered' version used by many 3rd-party plugins. It also fixes `FormQuiz` GraphQL fields from resolving if they are not associated with the current `gradingType` (e.g. `passPercent` on a `LETTER` grade ).
+
+- fix: Run `gform_pre_render` on Form objects before they are stored in the DataLoader.
+- fix: FormQuiz fields should return null is not associated with current `gradingType`.
+- chore: Update Composer deps.
 
 ## v0.11.6 - Bugfix
 

@@ -15,19 +15,19 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
 | `addressValues` _( obj )_                                               | `AddressField` | `city` <br> `country` <br> `lineTwo` <br> `state` <br> `street` <br> `zip` |
 | `chainedSelectValues` _( [ obj ] )_ <sup>[1](#chainedSelectsNote)</sup> | `ChainedSelectField` | `inputId` <br> `value` |
 | `checkboxValues` _( [ obj ] )_                                          | `CheckboxField` <br> `QuizField` <sup>[3](#quizNote)</sup>                                                                                                                                                                                                                                          | `inputId` <br> `value` |
-| `consentValue` _( boolean )_                                                 | `ConsentField` | |
 | `emailValues` _( obj )_                                                 | `EmailField` | `confirmationValue` <br/> `value` |
 | `fileUploadValues` _( [ Upload ] )_<sup>[2](#uploadNote)</sup>          | `FileUploadField` | See [Submitting File Uploads](#submitting-file-uploads)                                                              |
 | `listValues` _( [ obj ] )_                                              | `ListField` | `rowValues` _( [ String ] )_                                     |
 | `nameValues` _( obj )_                                                  | `NameField` | `first` <br> `last` <br> `midele` <br> `prefix` <br> `suffix` |
 | `postImageValues` _( obj )_ <sup>[2](#uploadNote)</sup>                 | `PostImageField` | `altText` <br> `caption` <br> `description` <br> `image` _(Upload)<sup>[2](#uploadNote)</sup>_ <br> `title` |
-| `value` _( string )_                                                    | `CaptchaField` <sup>[3](#captchaNote)</sup><br> `ConsentField` <br> `DateField` <br> `HiddenField` <br> `NumberField` <br> `PhoneField` <br> `PostContentField` <br> `PostExcerptField` <br> `PostTitleField` <br> `QuizField` <sup>[4](#quizNote)</sup><br> `RadioField` <br> `SelectField` <br> `SignatureField` <br> `TextAreaField` <br> `TextField` <br> `TimeField` <br> `WebsiteField` <br> _Also used by default for custom fields._| n/a                                                              |
+| `value` _( string )_                                                    | `CaptchaField` <sup>[3](#captchaNote)</sup><br> `ConsentField`<sup>[4](#consentNote)</sup> <br> `DateField` <br> `HiddenField` <br> `NumberField` <br> `PhoneField` <br> `PostContentField` <br> `PostExcerptField` <br> `PostTitleField` <br> `QuizField` <sup>[5](#quizNote)</sup><br> `RadioField` <br> `SelectField` <br> `SignatureField` <br> `TextAreaField` <br> `TextField` <br> `TimeField` <br> `WebsiteField` <br> _Also used by default for custom fields._| n/a                                                              |
 | `values` _( [ string ] )_                                               | `MultiSelectField` <br> `PostCategoryField` <br> `PostCustomField` <br> `PostTagsField` | n/a                                                              |
 
 <a name="chainedSelectNote">1</a>: In order to use `chainedSelectValues` you must install and activate [Gravity Forms Chained Selects](https://www.gravityforms.com/add-ons/chained-selects/).<br>
 <a name="uploadNote">2</a>: In order to use `fileUploadValues` or `postImageValues` , you must install and activate [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload). See [Submitting File Uploads](#submitting-file-uploads) below.<br>
-<a name="captchaNote">2</a>: The `value` for a `Captcha` field is its validation token. See [Captcha Validation](#captcha-validation) below.<br>
-<a name="quizNote">3</a>: [Gravity Forms Quiz Fields](https://docs.gravityforms.com/quiz-field/) can be either a Checkbox, Radio, or Select field. The field value input type is assigned accordingly.
+<a name="captchaNote">3</a>: The `value` for a `Captcha` field is its validation token. See [Captcha Validation](#captcha-validation) below.<br>
+<a name="consentNote">4</a>: The `value` for a `Consent` field treats any truthy string value as `true`, and an empty string (or no submission value) as `false`.<br>
+<a name="quizNote">5</a>: [Gravity Forms Quiz Fields](https://docs.gravityforms.com/quiz-field/) can be either a Checkbox, Radio, or Select field. The field value input type is assigned accordingly.
 
 ### Example Mutation
 
