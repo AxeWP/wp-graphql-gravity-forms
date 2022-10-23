@@ -38,7 +38,7 @@ class FieldWithInputMask extends AbstractFieldSetting {
 			'hasInputMask'   => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the field has an input mask.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->inputMask ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->inputMask ),
 			],
 		];
 	}

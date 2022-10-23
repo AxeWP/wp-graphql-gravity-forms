@@ -19,6 +19,7 @@ use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Model;
+
 /**
  * Class - Factory
  */
@@ -76,8 +77,9 @@ class Factory {
 	 */
 	public static function set_max_query_amount( int $max_query_amount, $source, array $args, AppContext $context, ResolveInfo $info ) : int {
 		if ( 'formFields' === $info->fieldName ) {
-			return (int) max( $max_query_amount, 600 );
+			return max( $max_query_amount, 600 );
 		}
+
 		return $max_query_amount;
 	}
 

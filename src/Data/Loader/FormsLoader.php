@@ -47,7 +47,7 @@ class FormsLoader extends AbstractDataLoader {
 	 * @return array|false
 	 * @throws \Exception .
 	 */
-	public function loadKeys( array $keys ) {
+	protected function loadKeys( array $keys ) {
 		if ( empty( $keys ) ) {
 			return $keys;
 		}

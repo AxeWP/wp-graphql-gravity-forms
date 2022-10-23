@@ -34,7 +34,7 @@ class FieldWithDuplicates extends AbstractFieldSetting {
 			'shouldAllowDuplicates' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Determines if the field allows duplicate submissions.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => empty( $source->noDuplicates ),
+				'resolve'     => static fn ( $source ) => empty( $source->noDuplicates ),
 			],
 		];
 	}

@@ -78,7 +78,7 @@ class FieldInputRegistry {
 			),
 			'interfaces'  => $interfaces,
 			'fields'      => $fields,
-			'resolve'     => function( GF_Field $source, array $args, AppContext $context ) {
+			'resolve'     => static function ( GF_Field $source, array $args, AppContext $context ) {
 				$context->gfField = $source;
 
 				return ! empty( $source->inputs ) ? $source->inputs : null;
@@ -140,9 +140,8 @@ class FieldInputRegistry {
 		 * @param array    $interfaces The list of interfaces for the GraphQL type.
 		 */
 		$fields = apply_filters( 'graphql_gf_form_field_setting_input_fields', $fields, $input_name, $field, $settings, $interfaces );
-		$fields = apply_filters( 'graphql_gf_form_field_setting_input_fields_' . $input_name, $fields, $field, $settings, $interfaces );
 
-		return $fields;
+		return apply_filters( 'graphql_gf_form_field_setting_input_fields_' . $input_name, $fields, $field, $settings, $interfaces );
 	}
 
 }

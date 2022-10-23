@@ -48,8 +48,6 @@ class WPJamstackDeployments implements Hookable {
 
 	/**
 	 * Returns whether WPJamstackDeployments is enabled.
-	 *
-	 * @return boolean
 	 */
 	public static function is_wp_jamstack_deployments_enabled() : bool {
 		return class_exists( 'Crgeary\JAMstackDeployments\App' );

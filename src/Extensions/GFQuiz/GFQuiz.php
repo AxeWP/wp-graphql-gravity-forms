@@ -45,8 +45,6 @@ class GFQuiz implements Hookable {
 
 	/**
 	 * Returns whether Gravity Forms Quiz is enabled.
-	 *
-	 * @return boolean
 	 */
 	public static function is_gf_quiz_enabled() : bool {
 		return class_exists( 'GFQuiz' );
@@ -137,7 +135,7 @@ class GFQuiz implements Hookable {
 	 */
 	public static function form_model( $fields, string $model_name, $data ) : array {
 		if ( 'FormObject' === $model_name ) {
-			$fields['quiz'] = fn() : ?array => ! empty( $data['gravityformsquiz'] ) ? $data['gravityformsquiz'] : null;
+			$fields['quiz'] = static fn (): ?array => empty( $data['gravityformsquiz'] ) ? null : $data['gravityformsquiz'];
 		}
 
 		return $fields;

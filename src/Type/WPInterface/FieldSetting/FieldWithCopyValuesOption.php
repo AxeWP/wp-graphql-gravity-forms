@@ -34,12 +34,12 @@ class FieldWithCopyValuesOption extends AbstractFieldSetting {
 			'shouldCopyValuesOption'  => [
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates whether the copy values option can be used. This option allows users to skip filling out the field and use the same values as another. For example, if the mailing and billing address are the same.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->enableCopyValuesOption ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->enableCopyValuesOption ),
 			],
 			'copyValuesOptionFieldId' => [
 				'type'        => 'Int',
 				'description' => __( 'The field id of the field being used as the copy source.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->copyValuesOptionField ) ? $source->copyValuesOptionField : null,
+				'resolve'     => static fn ( $source ) => ! empty( $source->copyValuesOptionField ) ? $source->copyValuesOptionField : null,
 			],
 			'copyValuesOptionLabel'   => [
 				'type'        => 'String',

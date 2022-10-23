@@ -45,7 +45,7 @@ class FieldWithAutocomplete extends AbstractFieldSetting {
 			'hasAutocomplete' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether autocomplete should be enabled for this field.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->enableAutocomplete ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->enableAutocomplete ),
 			],
 		];
 	}

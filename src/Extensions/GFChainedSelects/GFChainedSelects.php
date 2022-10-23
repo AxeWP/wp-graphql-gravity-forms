@@ -54,8 +54,6 @@ class GFChainedSelects implements Hookable {
 
 	/**
 	 * Returns whether Gravity Forms Signature is enabled.
-	 *
-	 * @return boolean
 	 */
 	public static function is_gf_chained_selects_enabled() : bool {
 		return class_exists( 'GFChainedSelects' );

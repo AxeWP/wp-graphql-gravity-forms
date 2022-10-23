@@ -46,7 +46,7 @@ class FieldWithSelectAllChoices extends AbstractFieldSetting {
 			'hasSelectAll' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the \"select all\" choice should be displayed.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source->enableSelectAll ),
+				'resolve'     => static fn ( $source ) : bool => ! empty( $source->enableSelectAll ),
 			],
 		];
 	}

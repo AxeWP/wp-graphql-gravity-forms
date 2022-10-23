@@ -33,6 +33,16 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	public int $offset_index = 0;
 
 	/**
+	 * @var string[]
+	 */
+	private const OPERATORS_TO_LIMIT = [
+		FieldFiltersOperatorInputEnum::CONTAINS,
+		FieldFiltersOperatorInputEnum::IS,
+		FieldFiltersOperatorInputEnum::IS_NOT,
+		FieldFiltersOperatorInputEnum::LIKE,
+	];
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function __construct( $source, array $args, AppContext $context, ResolveInfo $info ) {
@@ -210,7 +220,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * Gets index (array offset) and offset (entry id) from decoded cursor.
 	 *
 	 * @param string $cursor .
-	 * @return array
 	 */
 	protected function parse_cursor( string $cursor ) : array {
 		$decoded     = base64_decode( $cursor ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
@@ -294,7 +303,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	private function format_field_filters( array $field_filters ) : array {
 		return array_reduce(
 			$field_filters,
-			function( $field_filters, $field_filter ) {
+			function ( $field_filters, $field_filter ) {
 				$key      = empty( $field_filter['key'] ) ? 0 : sanitize_text_field( $field_filter['key'] );
 				$operator = $field_filter['operator'] ?? FieldFiltersOperatorInputEnum::IN; // Default to "in".
 				$value    = $this->get_field_filter_value( $field_filter, $operator );
@@ -348,14 +357,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @return boolean
 	 */
 	private function should_field_filter_be_limited_to_single_value( string $operator ) : bool {
-		$operators_to_limit = [
-			FieldFiltersOperatorInputEnum::CONTAINS,
-			FieldFiltersOperatorInputEnum::IS,
-			FieldFiltersOperatorInputEnum::IS_NOT,
-			FieldFiltersOperatorInputEnum::LIKE,
-		];
-
-		return in_array( $operator, $operators_to_limit, true );
+		return in_array( $operator, self::OPERATORS_TO_LIMIT, true );
 	}
 
 	/**
@@ -368,7 +370,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		return array_values(
 			array_filter(
 				[ 'stringValues', 'intValues', 'floatValues', 'boolValues' ],
-				function( $value_field ) use ( $field_filter ) {
+				static function ( $value_field ) use ( $field_filter ) : bool {
 					return ! empty( $field_filter[ $value_field ] );
 				}
 			)
@@ -405,7 +407,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Get paging arguments for entry ID query.
 	 *
-	 * @return array
 	 * @throws UserError When using unsupported pagination.
 	 */
 	private function get_paging() : array {

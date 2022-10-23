@@ -23,13 +23,12 @@ class ValueProperty extends FieldValues {
 			'values' => [
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'ChainedSelect field value.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function ( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) : ?array {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
-
 					return array_map(
-						function( $input ) use ( $context ) {
+						static function ( $input ) use ( $context ) {
 							return $context->gfEntry->entry[ $input['id'] ] ?: null;
 						},
 						$source->inputs

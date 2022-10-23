@@ -144,12 +144,12 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @return array
 	 */
-	private function get_form_ids() : array {
-		if ( ! empty( $this->args['where']['formIds'] ) && is_array( $this->args['where']['formIds'] ) ) {
-			return array_map( 'absint', $this->args['where']['formIds'] );
+	private function get_form_ids(): array {
+		if ( empty( $this->args['where']['formIds'] ) || ! is_array( $this->args['where']['formIds'] ) ) {
+			return [];
 		}
 
-		return [];
+		return array_map( 'absint', $this->args['where']['formIds'] );
 	}
 
 
@@ -190,8 +190,6 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * Get sort argument for forms ID query.
-	 *
-	 * @return array
 	 *
 	 * @throws UserError .
 	 */

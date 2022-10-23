@@ -40,7 +40,7 @@ class OrderItem extends AbstractObject {
 			'section'            => [
 				'type'        => 'String',
 				'description' => __( 'The section this order item belongs to.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => $source['belongs_to'] ?? null,
+				'resolve'     => static fn ( $source ) => $source['belongs_to'] ?? null,
 			],
 			'currency'           => [
 				'type'        => CurrencyEnum::$type,
@@ -53,32 +53,32 @@ class OrderItem extends AbstractObject {
 			'isDiscount'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a discount item', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source)  => ! empty( $source['is_discount'] ),
+				'resolve'     => static fn ( $source)  => ! empty( $source['is_discount'] ),
 			],
 			'isLineItem'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a line item', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source )  => ! empty( $source['is_line_item'] ),
+				'resolve'     => static fn ( $source )  => ! empty( $source['is_line_item'] ),
 			],
 			'isRecurring'        => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a recurring item', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source )  => ! empty( $source['is_recurring'] ),
+				'resolve'     => static fn ( $source )  => ! empty( $source['is_recurring'] ),
 			],
 			'isSetupFee'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a setup fee', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source )  => ! empty( $source['is_setup'] ),
+				'resolve'     => static fn ( $source )  => ! empty( $source['is_setup'] ),
 			],
 			'isShipping'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a shipping fee', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source )  => ! empty( $source['is_shipping'] ),
+				'resolve'     => static fn ( $source )  => ! empty( $source['is_shipping'] ),
 			],
 			'isTrial'            => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a trial item', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source )  => ! empty( $source['is_trial'] ),
+				'resolve'     => static fn ( $source )  => ! empty( $source['is_trial'] ),
 			],
 			'name'               => [
 				'type'        => 'String',
@@ -87,7 +87,7 @@ class OrderItem extends AbstractObject {
 			'options'            => [
 				'type'        => [ 'list_of' => OrderItemOption::$type ],
 				'description' => __( 'The item options', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source['options'] ) ? $source['options'] : null,
+				'resolve'     => static fn ( $source ) => ! empty( $source['options'] ) ? $source['options'] : null,
 			],
 			'price'              => [
 				'type'        => 'Float',
@@ -96,17 +96,17 @@ class OrderItem extends AbstractObject {
 			'quantity'           => [
 				'type'        => 'Float',
 				'description' => __( 'The item quantity', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => isset( $source['quantity'] ) ? (float) $source['quantity'] : null,
+				'resolve'     => static fn ( $source ) => isset( $source['quantity'] ) ? (float) $source['quantity'] : null,
 			],
 			'subtotal'           => [
 				'type'        => 'Float',
 				'description' => __( 'The item subtotal', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => isset( $source['sub_total'] ) ? (float) $source['sub_total'] : null,
+				'resolve'     => static fn ( $source ) => isset( $source['sub_total'] ) ? (float) $source['sub_total'] : null,
 			],
 			'connectedFormField' => [
 				'type'        => FormField::$type,
 				'description' => __( 'The form field that the order item is connected to', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					return GFUtils::get_field_by_id( $context->gfForm->form, $source['id'] );
 				},
 			],

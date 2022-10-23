@@ -28,12 +28,13 @@ class CaptchaValueInput extends AbstractFieldValueInput {
 
 		// SimpleCaptcha and Math use input_captcha_prefix.
 		if ( 'simple_captcha' === $captcha_type || 'math' === $captcha_type ) {
-			$_POST[ "input_captcha_prefix_{$this->field->id}" ] = $this->value;
+			$_POST[ sprintf( 'input_captcha_prefix_%s', esc_attr( $this->field->id ) ) ] = $this->value;
 		}
 
 		// Recaptcha uses g-recaptcha-response.
 		$_POST['g-recaptcha-response'] = $this->value;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */

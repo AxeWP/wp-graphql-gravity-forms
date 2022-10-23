@@ -36,7 +36,7 @@ class FieldWithCreditCard extends AbstractFieldSetting {
 			'supportedCreditCards' => [
 				'type'        => [ 'list_of' => FormCreditCardTypeEnum::$type ],
 				'description' => __( 'The credit card type.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->creditCards ) ? $source->creditCards : null,
+				'resolve'     => static fn ( $source ) => ! empty( $source->creditCards ) ? $source->creditCards : null,
 			],
 		];
 	}

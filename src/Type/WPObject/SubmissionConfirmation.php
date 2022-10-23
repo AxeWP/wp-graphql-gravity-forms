@@ -48,7 +48,7 @@ class SubmissionConfirmation extends AbstractObject implements TypeWithConnectio
 			'page' => [
 				'toType'   => 'Page',
 				'oneToOne' => true,
-				'resolve'  => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+				'resolve'  => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
 					$page_id = url_to_postid( $source['url'] ); //phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.url_to_postid_url_to_postid
 
 					$resolver = new PostObjectConnectionResolver( $source, $args, $context, $info, 'page' );
@@ -88,7 +88,7 @@ class SubmissionConfirmation extends AbstractObject implements TypeWithConnectio
 			'pageId'      => [
 				'type'        => 'Int',
 				'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to `PAGE`.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source ) {
+				'resolve'     => static function ( $source ) {
 					$post_id = url_to_postid( $source['url'] ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.url_to_postid_url_to_postid
 
 					return ! empty( $post_id ) ? $post_id : null;
@@ -97,7 +97,7 @@ class SubmissionConfirmation extends AbstractObject implements TypeWithConnectio
 			'queryString' => [
 				'type'        => 'String',
 				'description' => __( 'Contains the query string to be appended to the redirection url. Only applicable when type is set to `REDIRECT` or `PAGE` .', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source ) {
+				'resolve'     => static function ( $source ) {
 					$parts = wp_parse_url( $source['url'] );
 
 					return false !== $parts && ! empty( $parts['query'] ) ? $parts['query'] : null;

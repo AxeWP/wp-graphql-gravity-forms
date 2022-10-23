@@ -35,6 +35,8 @@ class EmailValuesInput extends AbstractFieldValueInput {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @return mixed[]
 	 */
 	protected function prepare_value() {
 		$value = $this->args;

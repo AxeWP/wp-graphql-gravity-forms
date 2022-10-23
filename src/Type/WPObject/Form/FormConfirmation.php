@@ -49,7 +49,7 @@ class FormConfirmation extends AbstractObject implements TypeWithConnections {
 			'page' => [
 				'toType'   => 'Page',
 				'oneToOne' => true,
-				'resolve'  => static function( $source, array $args, AppContext $context, ResolveInfo $info ) {
+				'resolve'  => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
 					$page_id = $source['pageId'];
 
 					$resolver = new PostObjectConnectionResolver( $source, $args, $context, $info, 'page' );
@@ -89,7 +89,7 @@ class FormConfirmation extends AbstractObject implements TypeWithConnections {
 			'isAutoformatted'  => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the confirmation message should be formatted so that paragraphs are automatically added for new lines.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => empty( $source['disableAutoformat'] ),
+				'resolve'     => static fn ( $source ) => empty( $source['disableAutoformat'] ),
 			],
 			'isDefault'        => [
 				'type'        => 'Boolean',

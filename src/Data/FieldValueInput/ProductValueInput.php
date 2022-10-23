@@ -66,6 +66,7 @@ class ProductValueInput extends AbstractFieldValueInput {
 					)
 				);
 			}
+
 			return true;
 		}
 
@@ -92,8 +93,8 @@ class ProductValueInput extends AbstractFieldValueInput {
 
 		return [
 			(string) $field->inputs[0]['id'] => $field->label,
-			(string) $field->inputs[1]['id'] => ! empty( $this->args['price'] ) ? GFCommon::format_number( $this->args['price'], 'currency' ) : $field->basePrice,
-			(string) $field->inputs[2]['id'] => floatval( $this->args['quantity'] ),
+			(string) $field->inputs[1]['id'] => empty( $this->args['price'] ) ? $field->basePrice : GFCommon::format_number( $this->args['price'], 'currency' ),
+			(string) $field->inputs[2]['id'] => (float) $this->args['quantity'],
 		];
 	}
 

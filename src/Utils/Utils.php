@@ -27,7 +27,6 @@ class Utils {
 	 * @param array  $property The field property to deprecate.
 	 * @param string $reason The reason for the deprecation. Should be wrapped in __().
 	 *
-	 * @return array
 	 * @since 0.2.0
 	 */
 	public static function deprecate_property( array $property, string $reason ) : array {
@@ -120,7 +119,7 @@ class Utils {
 
 		// If the value isnt JSON, then convert it to an array.
 		if ( 0 !== json_last_error() ) {
-			$value_array = [ $value ];
+			return [ $value ];
 		}
 
 		return $value_array;
@@ -128,8 +127,6 @@ class Utils {
 
 	/**
 	 * Returns whether WPGraphQL Upload is enabled.
-	 *
-	 * @return boolean
 	 */
 	public static function is_graphql_upload_enabled() : bool {
 		return class_exists( 'WPGraphQL\Upload\Type\Upload' );
@@ -157,8 +154,6 @@ class Utils {
 	 * Gets an array of GF entry types paired with their GraphQL type names.
 	 *
 	 * E.g. `[ 'draft_entry' => 'GfDraftEntry' ]`
-	 *
-	 * @return array
 	 */
 	public static function get_registered_entry_types() : array {
 		$types = [
@@ -300,8 +295,6 @@ class Utils {
 
 	/**
 	 * Returns an array of Gravity Forms field settings to ignore.
-	 *
-	 * @return array
 	 */
 	public static function get_ignored_gf_settings() : array {
 		return [

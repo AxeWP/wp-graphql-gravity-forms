@@ -47,7 +47,7 @@ class NodeWithForm extends AbstractInterface {
 			'form'           => [
 				'type'        => Form::$type,
 				'description' => __( 'The form object of the node.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => function( $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( empty( $source->formDatabaseId ) ) {
 						return null;
 					}

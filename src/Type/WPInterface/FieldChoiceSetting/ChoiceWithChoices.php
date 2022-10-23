@@ -70,12 +70,12 @@ class ChoiceWithChoices extends AbstractFieldChoiceSetting {
 		$fields['price']          = [
 			'type'        => 'Float',
 			'description' => __( 'The price associated with the choice.', 'wp-graphql-gravity-forms' ),
-			'resolve'     => fn( $source ) => ! empty( $source['price'] ) ? floatval( preg_replace( '/[^\d\.]/', '', $source['price'] ) ) : null,
+			'resolve'     => static fn ( $source ) => ! empty( $source['price'] ) ? floatval( preg_replace( '/[^\d\.]/', '', $source['price'] ) ) : null,
 		];
 		$fields['formattedPrice'] = [
 			'type'        => 'String',
 			'description' => __( 'The price associated with the choice.', 'wp-graphql-gravity-forms' ),
-			'resolve'     => fn( $source ) => ! empty( $source['price'] ) ? $source['price'] : null,
+			'resolve'     => static fn ( $source ) => ! empty( $source['price'] ) ? $source['price'] : null,
 		];
 
 		return $fields;

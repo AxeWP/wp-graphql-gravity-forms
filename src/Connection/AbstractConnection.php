@@ -31,8 +31,6 @@ abstract class AbstractConnection implements Hookable, Registrable {
 
 	/**
 	 * Gets custom connection configuration arguments, such as the resolver, edgeFields, connectionArgs, etc.
-	 *
-	 * @return array
 	 */
 	public static function get_connection_args() : array {
 		return [];

@@ -54,42 +54,42 @@ class Settings extends AbstractObject implements Field {
 			'currency'                => [
 				'type'        => CurrencyEnum::$type,
 				'description' => __( 'The default currency for your forms. Used for product, credit card, and other fields.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn() : string => GFCommon::get_currency(),
+				'resolve'     => static fn () : string => GFCommon::get_currency(),
 			],
 			'hasDefaultCss'           => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether to output Gravity Forms\' default CSS.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn() : bool => ! (bool) get_option( 'rg_gforms_disable_css' ),
+				'resolve'     => static fn () : bool => ! (bool) get_option( 'rg_gforms_disable_css' ),
 			],
 			'hasBackgroundUpdates'    => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether Gravity Forms to download and install bug fixes and security updates automatically in the background. Requires a valid license key.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn() : bool => (bool) get_option( 'gform_enable_background_updates' ),
+				'resolve'     => static fn () : bool => (bool) get_option( 'gform_enable_background_updates' ),
 			],
 			'hasToolbar'              => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether to display the forms menu in the WordPress top toolbar. The forms menu will display the ten forms recently opened in the form editor.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn() : bool => (bool) get_option( 'gform_enable_toolbar_menu' ),
+				'resolve'     => static fn () : bool => (bool) get_option( 'gform_enable_toolbar_menu' ),
 			],
 			'isHtml5Enabled'          => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the server-generated form markup uses HTML5.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn() : bool => (bool) get_option( 'rg_gforms_enable_html5', false ),
+				'resolve'     => static fn () : bool => (bool) get_option( 'rg_gforms_enable_html5', false ),
 			],
 			'isNoConflictModeEnabled' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Enable to prevent extraneous scripts and styles from being printed on a Gravity Forms admin pages, reducing conflicts with other plugins and themes.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn() : bool => (bool) get_option( 'gform_enable_noconflict' ),
+				'resolve'     => static fn () : bool => (bool) get_option( 'gform_enable_noconflict' ),
 			],
 			'logging'                 => [
 				'type'        => SettingsLogging::$type,
 				'description' => __( 'Logging settings.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn() => [],
+				'resolve'     => static fn () => [],
 			],
 			'recaptcha'               => [
 				'type'        => SettingsRecaptcha::$type,
 				'description' => __( 'Recaptcha settings.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn() => [],
+				'resolve'     => static fn () => [],
 			],
 		];
 	}
@@ -104,7 +104,7 @@ class Settings extends AbstractObject implements Field {
 			[
 				'description' => __( 'Gravity Forms settings.', 'wp-graphql-gravity-forms' ),
 				'type'        => self::$type,
-				'resolve'     => fn() => [],
+				'resolve'     => static fn () => [],
 			]
 		);
 	}

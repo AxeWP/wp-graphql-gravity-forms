@@ -34,7 +34,7 @@ class FieldWithFileExtensions extends AbstractFieldSetting {
 			'allowedExtensions' => [
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'A comma-delimited list of the file extensions which may be uploaded.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->allowedExtensions ) ? explode( ',', $source->allowedExtensions ) : null,
+				'resolve'     => static fn ( $source ) => ! empty( $source->allowedExtensions ) ? explode( ',', $source->allowedExtensions ) : null,
 			],
 		];
 	}

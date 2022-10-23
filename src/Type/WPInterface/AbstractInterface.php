@@ -36,7 +36,7 @@ abstract class AbstractInterface extends AbstractType implements TypeWithDescrip
 	/**
 	 * Register Object type to GraphQL schema.
 	 *
-	 * @param  TypeRegistry $type_registry .
+	 * @param TypeRegistry $type_registry .
 	 */
 	public static function register( TypeRegistry $type_registry = null ) : void {
 		$config = static::get_type_config( $type_registry );

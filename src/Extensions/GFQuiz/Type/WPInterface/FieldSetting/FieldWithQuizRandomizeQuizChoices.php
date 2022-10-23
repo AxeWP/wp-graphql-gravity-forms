@@ -36,7 +36,7 @@ class FieldWithQuizRandomizeQuizChoices extends AbstractFieldSetting {
 			'shouldRandomizeQuizChoices' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether to randomize the order in which the answers are displayed to the user.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) : bool => ! empty( $source->gquizEnableRandomizeQuizChoices ),
+				'resolve'     => static fn ( $source ) : bool => ! empty( $source->gquizEnableRandomizeQuizChoices ),
 			],
 		];
 	}

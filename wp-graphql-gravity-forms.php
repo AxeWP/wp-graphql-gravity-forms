@@ -107,7 +107,7 @@ if ( ! function_exists( 'gf_graphql_init' ) ) {
 		foreach ( $not_ready as $dep => $version ) {
 			add_action(
 				'admin_notices',
-				function() use ( $dep, $version ) {
+				static function () use ( $dep, $version ) {
 					?>
 					<div class="error notice">
 						<p>

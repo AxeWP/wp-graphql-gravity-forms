@@ -74,7 +74,7 @@ class FormFieldRegistry {
 	protected static function register_object_type( GF_Field $field, array $field_settings, array $config ) : void {
 		add_action(
 			get_graphql_register_action(),
-			function( TypeRegistry $type_registry ) use ( $field, $config, $field_settings ) {
+			static function ( TypeRegistry $type_registry ) use ( $field, $config, $field_settings ) {
 				if ( $type_registry->has_type( $field->graphql_single_name ) ) {
 					return;
 				}
@@ -136,7 +136,7 @@ class FormFieldRegistry {
 		// Register the interface.
 		add_action(
 			get_graphql_register_action(),
-			function( TypeRegistry $type_registry ) use ( $field, $interface_settings, $possible_types ) {
+			static function ( TypeRegistry $type_registry ) use ( $field, $interface_settings, $possible_types ) {
 				// Bail early if type exists.
 				if ( $type_registry->has_type( $field->graphql_single_name ) ) {
 					return;
@@ -354,9 +354,8 @@ class FormFieldRegistry {
 		 * @param array    $interfaces The list of interfaces for the GraphQL type.
 		 */
 		$fields = apply_filters( 'graphql_gf_form_field_setting_fields', $fields, $field, $settings, $interfaces );
-		$fields = apply_filters( 'graphql_gf_form_field_setting_fields_' . $field->graphql_single_name, $fields, $field, $settings, $interfaces );
 
-		return $fields;
+		return apply_filters( 'graphql_gf_form_field_setting_fields_' . $field->graphql_single_name, $fields, $field, $settings, $interfaces );
 	}
 
 	/**
@@ -435,9 +434,8 @@ class FormFieldRegistry {
 		 * @param GF_Field $field The Gravity Forms Field object.
 		 */
 		$fields = apply_filters( 'graphql_gf_form_field_value_fields', $fields, $field );
-		$fields = apply_filters( 'graphql_gf_form_field_value_fields_' . $field->graphql_single_name, $fields, $field );
 
-		return $fields;
+		return apply_filters( 'graphql_gf_form_field_value_fields_' . $field->graphql_single_name, $fields, $field );
 	}
 
 	/**

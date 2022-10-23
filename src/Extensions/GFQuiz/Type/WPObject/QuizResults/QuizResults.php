@@ -37,6 +37,12 @@ class QuizResults extends AbstractObject implements Field {
 	 */
 	public static string $field_name = 'quizResults';
 
+	// @todo grab search criteria from connection args.
+	/**
+	 * @var array<string, string>
+	 */
+	private const SEARCH_CRITERIA = [ 'status' => 'active' ];
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -136,10 +142,7 @@ class QuizResults extends AbstractObject implements Field {
 
 		$fields = $results_config['callbacks']['fields']( $form );
 
-		// @todo grab search criteria from connection args.
-		$search_criteria = [ 'status' => 'active' ];
-
-		return $gf_results->get_results_data( $form, $fields, $search_criteria );
+		return $gf_results->get_results_data( $form, $fields, self::SEARCH_CRITERIA );
 	}
 
 	/**
@@ -161,11 +164,11 @@ class QuizResults extends AbstractObject implements Field {
 		$average_score   = round( $sum / $entry_count, 2 );
 		$average_percent = round( $sum / ( $max_score * $entry_count ) * 100 );
 
-		$score_frequencies = ! empty( $data['score_frequencies'] ) ? self::map_score_frequencies( $data['score_frequencies'] ) : null;
+		$score_frequencies = empty( $data['score_frequencies'] ) ? null : self::map_score_frequencies( $data['score_frequencies'] );
 
-		$grade_frequencies = ! empty( $data['grade_frequencies'] ) ? self::map_grade_frequencies( $data['grade_frequencies'] ) : null;
+		$grade_frequencies = empty( $data['grade_frequencies'] ) ? null : self::map_grade_frequencies( $data['grade_frequencies'] );
 
-		$field_counts = ! empty( $data['field_data'] ) ? self::map_field_data( $data['field_data'], $form, $entry_count, ) : null;
+		$field_counts = empty( $data['field_data'] ) ? null : self::map_field_data( $data['field_data'], $form, $entry_count, );
 
 		return [
 			'averagePercentage' => $average_percent,
@@ -186,7 +189,7 @@ class QuizResults extends AbstractObject implements Field {
 	 */
 	private static function map_score_frequencies( array $score_frequencies ) : array {
 		return array_map(
-			fn( $score, $count ) => [
+			static fn ( $score, $count) => [
 				'score' => $score,
 				'count' => $count,
 			],
@@ -202,7 +205,7 @@ class QuizResults extends AbstractObject implements Field {
 	 */
 	private static function map_grade_frequencies( array $grade_frequencies ) : array {
 		return array_map(
-			fn( $grade, $count ) => [
+			static fn ( $grade, $count) => [
 				'grade' => $grade,
 				'count' => $count,
 			],
@@ -220,15 +223,13 @@ class QuizResults extends AbstractObject implements Field {
 	 */
 	private static function map_field_data( array $field_data, array $form, int $entry_count ) : array {
 		return array_map(
-			function( $id, $data ) use ( $entry_count, $form ) {
+			static function ( $id, $data ) use ( $entry_count, $form ) : array {
 				$field = GFAPI::get_field( $form, $id );
-
 				// Move the totals out of $data, since we  dont need them in the choice array.
 				$totals = $data['totals'];
 				unset( $data['totals'] );
-
 				$choice_counts = array_map(
-					function ( $count, $value ) use ( $field ) {
+					static function ( $count, $value ) use ( $field ) : array {
 						return [
 							'count' => $count,
 							'value' => $value,

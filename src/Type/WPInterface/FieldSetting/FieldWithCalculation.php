@@ -34,7 +34,7 @@ class FieldWithCalculation extends AbstractFieldSetting {
 			'isCalculation'       => [
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates whether the number field is a calculation.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => fn( $source ) => ! empty( $source->enableCalculation ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->enableCalculation ),
 			],
 			'calculationFormula'  => [
 				'type'        => 'String',
