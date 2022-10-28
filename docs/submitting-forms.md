@@ -90,7 +90,10 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
         {
           # Multi-column List field value
           id: 6
-          listValues: { rowValues: ["a", "b", "c"] }
+          listValues: [
+            { rowValues: ["a", "b", "c"] }
+            { rowValues: ["d", "e", "f"] }
+          ]
         }
         {
           # Name field value
