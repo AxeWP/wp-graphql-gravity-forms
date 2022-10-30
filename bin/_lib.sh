@@ -2,6 +2,8 @@
 
 set +u
 
+export WP_CLI_ALLOW_ROOT=1
+
 download() {
 	if [ $(which curl) ]; then
 		curl -s "$1" >"$2"
@@ -101,61 +103,60 @@ install_plugins() {
 
 	# Install GF plugins and Activate.
 	echo "Installing and Activating Gravity Forms + extensions";
-	if ! $( wp plugin is-installed gravityformscli --allow-root ); then
-		wp plugin install gravityformscli --allow-root
+	if ! $( wp plugin is-installed gravityformscli ); then
+		wp plugin install gravityformscli
 	fi
-	wp plugin activate gravityformscli --allow-root
+	wp plugin activate gravityformscli
 
 	
-	if ! $( wp plugin is-installed gravityforms --allow-root ); then
-
+	if ! $( wp plugin is-installed gravityforms ); then
 		echo "Installing Gravity Forms..."
-		wp gf install --key=$GF_KEY --allow-root --quiet
+		wp gf install --key=$GF_KEY --quiet
 	fi
-	wp plugin activate gravityforms --allow-root
+	wp plugin activate gravityforms
 
-	if ! $( wp plugin is-installed gravityformssignature --allow-root ); then
+	if ! $( wp plugin is-installed gravityformssignature ); then
 		echo "Installing Gravity Forms Signature..."
-		wp gf install gravityformssignature --key=$GF_KEY --allow-root --quiet
+		wp gf install gravityformssignature --key=$GF_KEY --quiet
 	fi
 	wp plugin activate gravityformssignature --allow-root
 
-	if ! $( wp plugin is-installed gravityformschainedselects --allow-root ); then
+	if ! $( wp plugin is-installed gravityformschainedselects ); then
 		echo "Installing Gravity Forms Chained Selects..."
-		wp gf install gravityformschainedselects --key=$GF_KEY --allow-root --quiet
+		wp gf install gravityformschainedselects --key=$GF_KEY --quiet
 	fi
-	wp plugin activate gravityformschainedselects --allow-root
+	wp plugin activate gravityformschainedselects
 
-	if ! $( wp plugin is-installed gravityformsquiz --allow-root ); then
+	if ! $( wp plugin is-installed gravityformsquiz ); then
 		echo "Installing Gravity Forms Quiz..."
-		wp gf install gravityformsquiz --key=$GF_KEY --allow-root --quiet
+		wp gf install gravityformsquiz --key=$GF_KEY --quiet
 	fi
-	wp plugin activate gravityformsquiz --allow-root
+	wp plugin activate gravityformsquiz
 
 	# Install WPGraphQL and Activate
-	if ! $( wp plugin is-installed wp-graphql --allow-root ); then
-		wp plugin install wp-graphql --allow-root
+	if ! $( wp plugin is-installed wp-graphql ); then
+		wp plugin install wp-graphql
 	fi
-	wp plugin activate wp-graphql --allow-root
+	wp plugin activate wp-graphql
 
 	# Install WPGraphQL Upload and Activate
-	if ! $( wp plugin is-installed wp-graphql-upload --allow-root ); then
-		wp plugin install https://github.com/dre1080/wp-graphql-upload/archive/refs/heads/master.zip --allow-root
+	if ! $( wp plugin is-installed wp-graphql-upload ); then
+		wp plugin install https://github.com/dre1080/wp-graphql-upload/archive/refs/heads/master.zip
 	fi
-	wp plugin activate wp-graphql-upload --allow-root
+	wp plugin activate wp-graphql-upload
 
 
 	# Install WPGatsby and Activate
-	if ! $( wp plugin is-installed wp-gatsby --allow-root ); then
-		wp plugin install wp-gatsby --allow-root
+	if ! $( wp plugin is-installed wp-gatsby ); then
+		wp plugin install wp-gatsby
 	fi
-	wp plugin activate wp-gatsby --allow-root
+	wp plugin activate wp-gatsby
 
 	# Install WPJamstack Deployments and Activate
-	if ! $( wp plugin is-installed wp-jamstack-deployments --allow-root ); then
-		wp plugin install wp-jamstack-deployments --allow-root
+	if ! $( wp plugin is-installed wp-jamstack-deployments ); then
+		wp plugin install wp-jamstack-deployments
 	fi
-	wp plugin activate wp-jamstack-deployments --allow-root
+	wp plugin activate wp-jamstack-deployments
 }
 
 setup_plugin() {
@@ -179,16 +180,16 @@ setup_plugin() {
 
 post_setup() {
 	cd $WP_CORE_DIR
-	
+
 	# activate the plugin
-	wp plugin activate wp-graphql-gravity-forms --allow-root
+	wp plugin activate wp-graphql-gravity-forms
 
 	# Flush the permalinks
-	wp rewrite flush --allow-root
+	wp rewrite flush
 
 	# Export the db for codeception to use
-	wp db export $PLUGIN_DIR/tests/_data/dump.sql --allow-root
+	wp db export $PLUGIN_DIR/tests/_data/dump.sql
 
 	echo "Installed plugins"
-	wp plugin list --allow-root
+	wp plugin list
 }
