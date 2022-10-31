@@ -97,7 +97,25 @@ class FieldProperties {
 		return [
 			'calculationRounding' => [
 				'type'        => 'Int',
-				'description' => __( 'Specifies to how many decimal places the number should be rounded. This is available when isCalculation is true, but is not available when the chosen format is “Currency”.', 'wp-graphql-gravity-forms' ),
+				'description' => __( 'Specifies to how many decimal places the number should be rounded. This is available when `isCalculation` is true, but will return null if the number format is `CURRENCY` or if the calculation is set to `Do not round`.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function( $source ) {
+					// Bail if the field doesn't have a calculationRounding property.
+					if ( empty( $source->enableCalculation ) || ! isset( $source->calculationRounding ) ) {
+						return null;
+					}
+
+					// Bail if the numberFormat is currency.
+					if ( ! empty( $source->numberFormat ) && 'currency' === $source->numberFormat ) {
+						return null;
+					}
+
+					// Bail if rounding is disabled.
+					if ( 'norounding' === $source->calculationRounding ) {
+						return null;
+					}
+
+					return isset( $source->calculationRounding ) ? (int) $source->calculationRounding : null;
+				},
 			],
 		];
 	}
