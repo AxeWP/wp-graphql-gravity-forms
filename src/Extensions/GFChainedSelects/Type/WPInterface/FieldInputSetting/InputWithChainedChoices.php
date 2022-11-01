@@ -19,7 +19,7 @@ class InputWithChainedChoices extends AbstractFieldInputSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldInputWithChainedChoices';
+	public static string $type = 'GfFieldInputWithChainedChoicesSetting';
 
 	/**
 	 * The name of GF Field Setting

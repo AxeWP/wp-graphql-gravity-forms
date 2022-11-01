@@ -19,7 +19,7 @@ class FieldWithPenColor extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPenColor';
+	public static string $type = 'GfFieldWithPenColorSetting';
 
 	/**
 	 * The name of GF Field Setting

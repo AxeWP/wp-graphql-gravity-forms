@@ -19,7 +19,7 @@ class FieldWithQuizShowAnswerExplanation extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithQuizShowAnswerExplanation';
+	public static string $type = 'GfFieldWithQuizShowAnswerExplanationSetting';
 
 	/**
 	 * The name of GF Field Setting

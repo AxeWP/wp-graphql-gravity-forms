@@ -21,7 +21,7 @@ class FieldWithQuizQuestion extends FieldWithLabel {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithQuizQuestion';
+	public static string $type = 'GfFieldWithQuizQuestionSetting';
 
 	/**
 	 * The name of GF Field Setting

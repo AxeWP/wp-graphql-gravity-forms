@@ -20,7 +20,7 @@ class FieldWithBorderStyle extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithBorderStyle';
+	public static string $type = 'GfFieldWithBorderStyleSetting';
 
 	/**
 	 * The name of GF Field Setting
