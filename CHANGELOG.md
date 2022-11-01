@@ -21,6 +21,12 @@
 - dev: Deprecate the `graphql_gf_form_field_value_properties` filter in favor of `graphql_gf_form_field_value_fields`.
 - chore: Refactor `FormsConnectionResolver` to use new `AbstractConnectionResolver` methods.
 - chore: Add `automattic/vipcs` Code Standard ruleset. 
+## v0.11.8 - Bugfix
+
+This _minor_ release fixes an issue where querying for `NumberField.calculationRounding` would sometimes throw an error when `Rounding` is set to `Do not round`.
+- fix: explicitly set `calculationRounding` to `null` when rounding is disabled.
+- chore: update Composer deps.
+
 ## v0.11.7 - Bugfix
 
 This _minor_ release fixes an issue with the GraphQL dataloader storing the GF form, instead of the 'prerendered' version used by many 3rd-party plugins. It also fixes `FormQuiz` GraphQL fields from resolving if they are not associated with the current `gradingType` (e.g. `passPercent` on a `LETTER` grade ).
