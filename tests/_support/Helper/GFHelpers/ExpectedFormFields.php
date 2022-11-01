@@ -24,8 +24,8 @@ trait ExpectedFormFields {
 		$properties[] = $this->expectedField( 'addressType', ! empty( $field->addressType ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldTypeEnum::$type, $field->addressType ) : static::IS_NULL );
 
 		$properties[] = $this->expectedField( 'defaultCountry', ! empty( $field->defaultCountry ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldCountryEnum::$type, $field->defaultCountry ) : static::IS_NULL );
-		$properties[] = $this->expectedField( 'defaultProvince', ! empty( $field->defaultProvince ) ? $field->defaultProvince : static::IS_NULL );
-		$properties[] = $this->expectedField( 'defaultState', ! empty( $field->defaultState ) ? $field->defaultState : static::IS_NULL );
+		$properties[] = $this->expectedField( 'defaultProvince', ! empty( $field->defaultProvince ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldProvinceEnum::$type, $field->defaultProvince ) : static::IS_NULL );
+		$properties[] = $this->expectedField( 'defaultState', ! empty( $field->defaultState ) ? GFHelpers::get_enum_for_value( Enum\AddressFielStateeEnum::$type, $field->defaultState ) : static::IS_NULL );
 
 		$input_keys = [
 			'autocompleteAttribute' => 'autocompleteAttribute',
