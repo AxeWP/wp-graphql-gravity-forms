@@ -11,6 +11,7 @@ namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 use GF_Field;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;
+use WPGraphQL\GF\Type\Enum\AddressFieldProvinceEnum;
 use WPGraphQL\GF\Type\Enum\AddressFieldTypeEnum;
 
 /**
@@ -54,11 +55,11 @@ class FieldWithAddress extends AbstractFieldSetting {
 				'description' => __( 'Contains the country that will be selected by default. Only applicable when "addressType" is set to "INTERATIONAL".', 'wp-graphql-gravity-forms' ),
 			],
 			'defaultProvince' => [
-				'type'        => 'String',
+				'type'        => AddressFieldProvinceEnum::$type,
 				'description' => __( 'Contains the province that will be selected by default. Only applicable when "addressType" is set to "CANADA".', 'wp-graphql-gravity-forms' ),
 			],
 			'defaultState'    => [
-				'type'        => 'String',
+				'type'        => AddressFieldProvinceEnum::$type,
 				'description' => __( 'Contains the state that will be selected by default. Only applicable when "addressType" is set to "US".', 'wp-graphql-gravity-forms' ),
 			],
 		];

@@ -122,6 +122,8 @@ class ComposerStaticInitf35655797d6bdd77951f2274b8dc4a3f
         'WPGraphQL\\GF\\Type\\AbstractType' => __DIR__ . '/../..' . '/src/Type/AbstractType.php',
         'WPGraphQL\\GF\\Type\\Enum\\AbstractEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AbstractEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\AddressFieldCountryEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AddressFieldCountryEnum.php',
+        'WPGraphQL\\GF\\Type\\Enum\\AddressFieldProvinceEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AddressFieldProvinceEnum.php',
+        'WPGraphQL\\GF\\Type\\Enum\\AddressFieldStateEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AddressFieldStateEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\AddressFieldTypeEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AddressFieldTypeEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\AmPmEnum' => __DIR__ . '/../..' . '/src/Type/Enum/AmPmEnum.php',
         'WPGraphQL\\GF\\Type\\Enum\\CaptchaFieldBadgePositionEnum' => __DIR__ . '/../..' . '/src/Type/Enum/CaptchaFieldBadgePositionEnum.php',

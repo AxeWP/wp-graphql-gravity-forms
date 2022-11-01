@@ -106,6 +106,8 @@ class TypeRegistry {
 		// Enums to register.
 		$classes_to_register = [
 			Enum\AddressFieldCountryEnum::class,
+			Enum\AddressFieldProvinceEnum::class,
+			Enum\AddressFieldStateEnum::class,
 			Enum\AddressFieldTypeEnum::class,
 			Enum\AmPmEnum::class,
 			Enum\CaptchaFieldBadgePositionEnum::class,

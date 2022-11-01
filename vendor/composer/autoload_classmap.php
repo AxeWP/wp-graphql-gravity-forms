@@ -103,6 +103,8 @@ return array(
     'WPGraphQL\\GF\\Type\\AbstractType' => $baseDir . '/src/Type/AbstractType.php',
     'WPGraphQL\\GF\\Type\\Enum\\AbstractEnum' => $baseDir . '/src/Type/Enum/AbstractEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\AddressFieldCountryEnum' => $baseDir . '/src/Type/Enum/AddressFieldCountryEnum.php',
+    'WPGraphQL\\GF\\Type\\Enum\\AddressFieldProvinceEnum' => $baseDir . '/src/Type/Enum/AddressFieldProvinceEnum.php',
+    'WPGraphQL\\GF\\Type\\Enum\\AddressFieldStateEnum' => $baseDir . '/src/Type/Enum/AddressFieldStateEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\AddressFieldTypeEnum' => $baseDir . '/src/Type/Enum/AddressFieldTypeEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\AmPmEnum' => $baseDir . '/src/Type/Enum/AmPmEnum.php',
     'WPGraphQL\\GF\\Type\\Enum\\CaptchaFieldBadgePositionEnum' => $baseDir . '/src/Type/Enum/CaptchaFieldBadgePositionEnum.php',
