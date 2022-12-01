@@ -367,7 +367,7 @@ class GFUtils {
 		);
 
 		if ( is_wp_error( $submission ) ) {
-			throw new UserError( __( 'There was an error while processing the form. Error: .', 'wp-graphql-gravity-forms' ) . $submission->get_error_message() );
+			throw new UserError( $submission->get_error_message() );
 		}
 
 		return $submission;
