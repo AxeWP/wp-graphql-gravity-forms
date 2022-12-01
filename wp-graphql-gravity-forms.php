@@ -77,17 +77,15 @@ function gf_graphql_dependencies_not_ready() : array {
 
 /**
  * Initializes WPGraphQL for GF.
- *
- * @return \WPGraphQL\GF\GF|false
  */
-function gf_graphql_init() {
+function gf_graphql_init() : void {
 	gf_graphql_constants();
 
 	$not_ready = gf_graphql_dependencies_not_ready();
 
 	if ( empty( $not_ready ) && defined( 'WPGRAPHQL_GF_PLUGIN_DIR' ) ) {
 		require_once WPGRAPHQL_GF_PLUGIN_DIR . 'src/GF.php';
-		return \WPGraphQL\GF\GF::instance();
+		\WPGraphQL\GF\GF::instance();
 	}
 
 	foreach ( $not_ready as $dep ) {
@@ -110,8 +108,6 @@ function gf_graphql_init() {
 			}
 		);
 	}
-
-	return false;
 }
 
 add_action( 'graphql_init', 'gf_graphql_init' );
