@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.11.9 - WPGraphQL v1.13.x Compatibility
+
+This _minor_ release adds compatibility for WPGraphQL v1.13.x, by removing the new `Connection`, `Edge`, and `OneToOneConnection` interfaces from the `FormField` connections. This is a temporary fix, and will be reverted in a future release.
+
+- fix: remove incompatible interfaces from `FormField` connections.
+- fix: remove redundant `There was an error while processing the form.` prologue from submission `UserError`s.
+- chore: update Composer deps.
+- chore: fix PHPStan issues surfaced by new Composer deps.
+
+
 ## v0.11.8 - Bugfix
 
 This _minor_ release fixes an issue where querying for `NumberField.calculationRounding` would sometimes throw an error when `Rounding` is set to `Do not round`.
