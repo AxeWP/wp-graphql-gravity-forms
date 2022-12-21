@@ -15,6 +15,7 @@ use WPGraphQL\GF\Utils\GFUtils;
  * Class -FileUploadMultipleFieldTest
  */
 class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+
 	/**
 	 * Set up.
 	 */
