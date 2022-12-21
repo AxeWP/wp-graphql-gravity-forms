@@ -202,18 +202,36 @@ class UpdateEntry extends AbstractMutation {
 			$entry['user_agent'] = sanitize_text_field( $input['entryMeta']['userAgent'] );
 		}
 
-		// Update multiselect files.
-		if ( isset( $input['fieldValues'] ) ) {
+		// Update files.
+		$has_multiple_files = false;
+		// It's less expensive to loop through the form fields than to lookup the field by its input id.
+		foreach ( $form['fields'] as $field ) {
+			if ( 'fileupload' === $field->type || 'post_image' === $field->type || ! empty( $field->multipleFiles ) ) {
+				$has_multiple_files = true;
+				break;
+			}
+		}
+
+		if ( $has_multiple_files ) {
 			$all_files = EntryObjectMutation::initialize_files( $form['fields'], $input['fieldValues'], false );
 
 			if ( ! empty( $all_files ) ) {
+				$_POST['gform_uploaded_files'] = wp_json_encode( $all_files );
+				\GFFormsModel::set_uploaded_files( $form['id'] );
+
 				foreach ( $all_files as $input_name => $files ) {
-					$urls = array_map(
-						fn( $file ) => GFFormsModel::get_file_upload_path( $form['id'], $file ),
+					$paths = array_map(
+						fn( $file ) => \GFFormsModel::get_file_upload_path( $form['id'], $file ),
 						array_column( $files, 'uploaded_filename' )
 					);
 
-					$field_values[ (int) str_replace( 'input_', '', $input_name ) ] = wp_json_encode( array_column( $urls, 'url' ) );
+					$field_id = (int) str_replace( 'input_', '', $input_name );
+
+					$field = GFUtils::get_field_by_id( $form, $field_id );
+
+					if ( $field->multipleFiles ) {
+						$field_values[ $field_id ] = wp_json_encode( array_column( $paths, 'url' ) );
+					}
 				}
 			}
 		}

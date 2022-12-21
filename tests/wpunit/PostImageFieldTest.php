@@ -12,6 +12,29 @@ use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 use WPGraphQL\GF\Utils\GFUtils;
 
+class FooPostImage extends \GF_Field_Post_Image {
+	public function upload_file( $form_id, $file ) {
+		\GFCommon::log_debug( __METHOD__ . '(): Uploading file: ' . $file['name'] );
+		$target = GFFormsModel::get_file_upload_path( $form_id, $file['name'] );
+		if ( ! $target ) {
+			\GFCommon::log_debug( __METHOD__ . '(): FAILED (Upload folder could not be created.)' );
+
+			return 'FAILED (Upload folder could not be created.)';
+		}
+		\GFCommon::log_debug( __METHOD__ . '(): Upload folder is ' . print_r( $target, true ) );
+
+		if ( copy( $file['tmp_name'], $target['path'] ) ) {
+			\GFCommon::log_debug( __METHOD__ . '(): File ' . $file['tmp_name'] . ' successfully moved to ' . $target['path'] . '.' );
+			$this->set_permissions( $target['path'] );
+
+			return $target['url'];
+		} else {
+			\GFCommon::log_debug( __METHOD__ . '(): FAILED (Temporary file ' . $file['tmp_name'] . ' could not be copied to ' . $target['path'] . '.)' );
+
+			return 'FAILED (Temporary file could not be copied.)';
+		}
+	}
+}
 /**
  * Class -PostImageFieldTest
  */
@@ -31,6 +54,9 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 		$stat  = stat( dirname( '/tmp/img2.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img2.png', $perms );
+
+		add_filter( 'gform_gf_field_create', [$this, 'mock_post_image_field'], 10, 2 );
+
 		parent::setUp();
 
 		global $_gf_uploaded_files;
@@ -43,6 +69,8 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 */
 	public function tearDown(): void {
 		GFFormsModel::delete_files( $this->entry_id, $this->factory->form->get_object_by_id( $this->form_id ) );
+		remove_filter( 'gform_gf_field_create', [$this, 'mock_post_image_field'], 10 );
+
 		parent::tearDown();
 	}
 	/**
@@ -426,5 +454,13 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 		$this->assertStringContainsString( $this->field_value['caption'], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry caption value not equal.' );
 		$this->assertStringContainsString( $this->field_value['description'], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry description value not equal.' );
 		$this->assertStringContainsString( $this->field_value['title'], $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry Url value not equal.' );
+	}
+
+	public function mock_post_image_field( $field, $properties ) {
+		if( $field->type !== 'post_image' || $field instanceof FooPostImage ) {
+			return $field;
+		}
+
+		return new FooPostImage( $properties );
 	}
 }

@@ -10,6 +10,7 @@ namespace WPGraphQL\GF\Data;
 
 use Exception;
 use GF_Field;
+use GraphQL\Error\UserError;
 use WPGraphQL\GF\Data\FieldValueInput;
 use WPGraphQL\GF\Data\FieldValueInput\AbstractFieldValueInput;
 use WPGraphQL\GF\Utils\GFUtils;
@@ -158,6 +159,8 @@ class EntryObjectMutation {
 	 * @param GF_Field[] $form_fields .
 	 * @param array      $input_field_values .
 	 * @param bool       $save_as_draft .
+	 *
+	 * @throws UserError .
 	 */
 	public static function initialize_files( array $form_fields, array $input_field_values, bool $save_as_draft ) : array {
 		$files = [];
@@ -172,34 +175,47 @@ class EntryObjectMutation {
 			$input_name = 'input_' . $field->id;
 
 			// Single files need to be in $_FILES.
-			if ( ! $field->multipleFiles ) {
-				// We only need to initialize this once.
-				if ( ! isset( $_FILES[ $input_name ] ) ) {
-					$_FILES[ $input_name ] = [
-						'name'     => null,
-						'type'     => null,
-						'size'     => null,
-						'tmp_name' => null,
-						'error'    => null,
-					];
-				}
+			if ( ! $field->multipleFiles && ! isset( $_FILES[ $input_name ] ) ) {
+				$_FILES[ $input_name ] = [
+					'name'     => null,
+					'type'     => null,
+					'size'     => null,
+					'tmp_name' => null,
+					'error'    => null,
+				];
 				continue;
 			}
 
 			// Even though draft entries don't upload anything, GF still needs the $_FILES array.
 			if ( $save_as_draft ) {
-				break;
+				continue;
 			}
 
 			// Build multiupload filedata so the parent can save them to $_POST[`gform_uploaded_files`].
 			$file_payloads = [];
+			$target_dir    = \GFFormsModel::get_upload_path( $field->formId ) . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR;
+
+			if ( ! is_dir( $target_dir ) ) {
+				if ( ! wp_mkdir_p( $target_dir ) ) {
+					throw new UserError( __( 'Unable to create directory for file uploads.', 'wp-graphql-gravity-forms' ) );
+				}
+			}
 			foreach ( $input_field_values as $value ) {
-				if ( $value['id'] !== $field->id ) {
+				if ( $value['id'] !== $field->id || empty( $value['fileUploadValues'] ) ) {
 					continue;
 				}
 
 				foreach ( $value['fileUploadValues'] as $file ) {
+					// Uploads the files to the GF temp directory.
+					$temp_filename = 'input_' . $field->id . '_' . \GFCommon::random_str( 16 ) . '_' . $file['name'];
+					$target_file   = $target_dir . wp_basename( $temp_filename );
+					$is_success    = copy( $file['tmp_name'], $target_file );
+					if ( file_exists( $target_file ) ) {
+						\GFFormsModel::set_permissions( $target_file );
+					}
+
 					$file_payloads[] = [
+						'temp_filename'     => $temp_filename,
 						'uploaded_filename' => $file['name'],
 					];
 				}

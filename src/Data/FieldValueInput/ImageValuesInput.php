@@ -9,11 +9,19 @@
 namespace WPGraphQL\GF\Data\FieldValueInput;
 
 use GraphQL\Error\UserError;
-
+use GF_Field;
+use GF_Field_Post_Image;
 /**
  * Class - ImageValuesInput
  */
 class ImageValuesInput extends FileUploadValuesInput {
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @var \GF_Field_Post_Image
+	 */
+	protected GF_Field $field;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -42,7 +50,15 @@ class ImageValuesInput extends FileUploadValuesInput {
 
 		// change input value for parent function.
 		$this->args = isset( $value['image'] ) ? [ $value['image'] ] : [];
-		$url        = parent::prepare_value() ?: $prev_value[0] ?? null;
+
+		/**
+		 * We're force-uploading the image here because otherwise move_uploaded_file() fails in testing, with no way to mock.
+		 *
+		 * This is a crude workaround until AspectMock is updated to support PHP 8.
+		 */
+		parent::prepare_value();
+		$url        = $this->field->get_single_file_value( $this->form['id'], 'input_' . $this->field->id );
+		$url        = $url ?: $prev_value[0] ?? null;
 		$this->args = $value;
 
 		$title       = $value['title'] ?? $prev_value[1] ?? null;
