@@ -1,8 +1,12 @@
 # Changelog
 
-## Unreleased
+## v0.11.10 - Gravity Forms v2.6.8+ Compatibility
+
+This _minor_ release adds compatibility for Gravity Forms v2.6.8+ by refactoring the internal logic used for uploading files to use native Gravity Forms methods whenever possible.
+
 - fix: Refactor File Upload logic for compatibility with Gravity Forms 2.6.8+.
 - chore: Update composer deps.
+
 ## v0.11.9 - WPGraphQL v1.13.x Compatibility
 
 This _minor_ release adds compatibility for WPGraphQL v1.13.x, by removing the new `Connection`, `Edge`, and `OneToOneConnection` interfaces from the `FormField` connections. This is a temporary fix, and will be reverted in a future release.
