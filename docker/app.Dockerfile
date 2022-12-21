@@ -62,8 +62,8 @@ RUN echo "upload_max_filesize = 50M" >> /usr/local/etc/php/conf.d/custom.ini \
     ;
 
 # Install XDebug 3
-RUN echo "Installing XDebug 3 (in disabled state)" \
-    && pecl install xdebug \
+RUN echo "Installing XDebug 3 version $XDEBUG_VERSION (in disabled state)" \
+    && if [[ $PHP_VERSION == 7* ]] ; then pecl install xdebug-3.1.5 ; else pecl install xdebug ; fi \
     && mkdir -p /usr/local/etc/php/conf.d/disabled \
     && echo "zend_extension=xdebug" > /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini \
     && echo "xdebug.mode=develop,debug,coverage" >> /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini \
