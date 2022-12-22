@@ -61,7 +61,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 		add_action( 'gform_after_submission', [ $this, 'after_create_entry' ] );
 		// Update Submission.
 		add_action( 'gform_after_update_entry', [ $this, 'after_update_entry' ], 10, 2 );
-		add_action( 'gform_post_update_entry', [ $this, 'post_update_entry' ], 10, 2 );
+		add_action( 'gform_post_update_entry', [ $this, 'post_update_entry' ], 10 );
 		// Save draft entry.
 		add_action( 'gform_incomplete_submission_post_save', [ $this, 'after_save_draft_entry' ], 10, 2 );
 	}

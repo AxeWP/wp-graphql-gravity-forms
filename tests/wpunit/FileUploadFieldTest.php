@@ -12,6 +12,29 @@ use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 use WPGraphQL\GF\Utils\GFUtils;
 
+class FooFileUpload extends \GF_Field_FileUpload {
+	public function upload_file( $form_id, $file ) {
+		\GFCommon::log_debug( __METHOD__ . '(): Uploading file: ' . $file['name'] );
+		$target = GFFormsModel::get_file_upload_path( $form_id, $file['name'] );
+		if ( ! $target ) {
+			\GFCommon::log_debug( __METHOD__ . '(): FAILED (Upload folder could not be created.)' );
+
+			return 'FAILED (Upload folder could not be created.)';
+		}
+		\GFCommon::log_debug( __METHOD__ . '(): Upload folder is ' . print_r( $target, true ) );
+
+		if ( copy( $file['tmp_name'], $target['path'] ) ) {
+			\GFCommon::log_debug( __METHOD__ . '(): File ' . $file['tmp_name'] . ' successfully moved to ' . $target['path'] . '.' );
+			$this->set_permissions( $target['path'] );
+
+			return $target['url'];
+		} else {
+			\GFCommon::log_debug( __METHOD__ . '(): FAILED (Temporary file ' . $file['tmp_name'] . ' could not be copied to ' . $target['path'] . '.)' );
+
+			return 'FAILED (Temporary file could not be copied.)';
+		}
+	}
+}
 /**
  * Class -FileUploadFieldTest
  */
@@ -30,6 +53,8 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 		$stat  = stat( dirname( '/tmp/img2.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img2.png', $perms );
+		add_filter( 'gform_gf_field_create', [$this, 'mock_file_upload_field'], 10, 2 );
+
 		parent::setUp();
 
 		global $_gf_uploaded_files;
@@ -38,6 +63,8 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 
 	public function tearDown(): void {
 		GFFormsModel::delete_files( $this->entry_id, $this->factory->form->get_object_by_id( $this->form_id ) );
+		remove_filter( 'gform_gf_field_create', [$this, 'mock_file_upload_field'] );
+
 		parent::tearDown();
 	}
 
@@ -387,5 +414,13 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	public function check_saved_values( $actual_entry, $form ): void {
 		$ends_with = preg_replace( '/(.*?)gravity_forms\/(.*?)\/(.*?)/', '$3', $this->field_value[0]['url'] );
 		$this->assertStringEndsWith( $ends_with, $actual_entry[ $form['fields'][0]['id'] ], 'Submit mutation entry value not equal.' );
+	}
+
+	public function mock_file_upload_field( $field, $properties ) {
+		if( $field->type !== 'fileupload' || $field instanceof FooFileUpload ) {
+			return $field;
+		}
+
+		return new FooFileUpload( $properties );
 	}
 }

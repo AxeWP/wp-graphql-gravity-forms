@@ -22,6 +22,23 @@
 - dev: Deprecate the `graphql_gf_form_field_value_properties` filter in favor of `graphql_gf_form_field_value_fields`.
 - chore: Refactor `FormsConnectionResolver` to use new `AbstractConnectionResolver` methods.
 - chore: Add `automattic/vipcs` Code Standard ruleset. 
+
+## v0.11.10 - Gravity Forms v2.6.8+ Compatibility
+
+This _minor_ release adds compatibility for Gravity Forms v2.6.8+ by refactoring the internal logic used for uploading files to use native Gravity Forms methods whenever possible.
+
+- fix: Refactor File Upload logic for compatibility with Gravity Forms 2.6.8+.
+- chore: Update composer deps.
+
+## v0.11.9 - WPGraphQL v1.13.x Compatibility
+
+This _minor_ release adds compatibility for WPGraphQL v1.13.x, by removing the new `Connection`, `Edge`, and `OneToOneConnection` interfaces from the `FormField` connections. This is a temporary fix, and will be reverted in a future release.
+
+- fix: remove incompatible interfaces from `FormField` connections.
+- fix: remove redundant `There was an error while processing the form.` prologue from submission `UserError`s.
+- chore: update Composer deps.
+- chore: fix PHPStan issues surfaced by new Composer deps.
+
 ## v0.11.8 - Bugfix
 
 This _minor_ release fixes an issue where querying for `NumberField.calculationRounding` would sometimes throw an error when `Rounding` is set to `Do not round`.

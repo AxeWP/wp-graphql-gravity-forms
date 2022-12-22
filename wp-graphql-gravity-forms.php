@@ -7,11 +7,11 @@
  * Author: Harness Software
  * Author URI: https://www.harnessup.com
  * Update URI: https://github.com/harness-software/wp-graphql-gravity-forms/releases
- * Version: 0.11.8
+ * Version: 0.11.10
  * Text Domain: wp-graphql-gravity-forms
  * Domain Path: /languages
  * Requires at least: 5.4.1
- * Tested up to: 6.0.2
+ * Tested up to: 6.1.1
  * Requires PHP: 7.4
  * WPGraphQL requires at least: 1.9.0
  * GravityForms requires at least: 2.5.0
@@ -35,7 +35,7 @@ if ( ! function_exists( 'gf_graphql_constants' ) ) {
 	function gf_graphql_constants() : void {
 		// Plugin version.
 		if ( ! defined( 'WPGRAPHQL_GF_VERSION' ) ) {
-			define( 'WPGRAPHQL_GF_VERSION', '0.11.8' );
+			define( 'WPGRAPHQL_GF_VERSION', '0.11.10' );
 		}
 
 		// Plugin Folder Path.
@@ -91,17 +91,15 @@ if ( ! function_exists( 'graphql_gf_dependencies_not_ready' ) ) {
 if ( ! function_exists( 'gf_graphql_init' ) ) {
 	/**
 	 * Initializes WPGraphQL for GF.
-	 *
-	 * @return \WPGraphQL\GF\GF|false
 	 */
-	function gf_graphql_init() {
+	function gf_graphql_init() : void {
 		gf_graphql_constants();
 
 		$not_ready = gf_graphql_dependencies_not_ready();
 
 		if ( empty( $not_ready ) && defined( 'WPGRAPHQL_GF_PLUGIN_DIR' ) ) {
 			require_once WPGRAPHQL_GF_PLUGIN_DIR . 'src/GF.php';
-			return \WPGraphQL\GF\GF::instance();
+			\WPGraphQL\GF\GF::instance();
 		}
 
 		foreach ( $not_ready as $dep => $version ) {
@@ -125,8 +123,6 @@ if ( ! function_exists( 'gf_graphql_init' ) ) {
 				}
 			);
 		}
-
-		return false;
 	}
 }
 

@@ -32,7 +32,7 @@ class ChoiceWithChainedChoices extends AbstractFieldChoiceSetting {
 	 * {@inheritDoc}
 	 */
 	public static function register_hooks(): void {
-		add_filter( 'graphql_gf_form_field_setting_choice_fields', [ __CLASS__, 'add_fields_to_child_type' ], 10, 5 );
+		add_filter( 'graphql_gf_form_field_setting_choice_fields', [ __CLASS__, 'add_fields_to_child_type' ], 10, 4 );
 
 		parent::register_hooks();
 	}

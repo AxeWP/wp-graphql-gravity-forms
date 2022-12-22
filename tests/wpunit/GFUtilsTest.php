@@ -273,7 +273,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 		];
 
 		$this->expectException( UserError::class );
-		$this->expectExceptionMessage( 'There was an error while processing the form.' );
+		$this->expectExceptionMessage( 'There was an error while processing the form:' );
 		$actual = GFUtils::submit_form( $this->form_id, $input_values, $input_values );
 	}
 
