@@ -23,22 +23,22 @@ jobs:
 
     strategy:
       matrix:
-        php: ["7.4", "8.0"]
-        wordpress: ["6.0", "5.9", "5.8"]
+        php: ['8.0', '7.4']
+        wordpress: ['6.1', '6.0', '5.9', '5.8', '5.7' ]
         include:
-          - php: "8.0"
-            wordpress: "6.0"
+          - php: '8.1'
+            wordpress: '6.1'
             coverage: 1
-          - php: "7.4"
-            wordpress: "5.7"
+          - php: '8.1'
+            wordpress: '6.0'
+          - php: '8.1'
+            wordpress: '5.9'
       fail-fast: false
 
     steps:
       - name: Cancel previous runs of this workflow (pull requests only)
         if: ${{ github.event_name == 'pull_request_target' }}
-        uses: styfle/cancel-workflow-action@0.5.0
-        with:
-          access_token: ${{ github.token }}
+        uses: styfle/cancel-workflow-action@0.11.0
 
       - name: Checkout
         uses: actions/checkout@v3
