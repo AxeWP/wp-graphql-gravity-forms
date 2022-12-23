@@ -219,20 +219,15 @@ class TypeRegistry {
 			WPInterface\Entry::class,
 			WPInterface\FormField::class,
 			WPInterface\FieldChoice::class,
+			... array_values( self::form_field_setting_choices() ),
 			WPInterface\FieldInputProperty::class,
+			...array_values( self::form_field_setting_inputs() ),
 			WPInterface\FieldWithPersonalData::class,
+			...array_values( self::form_field_settings() ),
 			WPInterface\NodeWithForm::class,
 			WPinterface\FieldValue\FieldValueWithChoice::class,
 			WPinterface\FieldValue\FieldValueWithInput::class,
 		];
-
-		// Add interfaces for GF Field Settings.
-		$classes_to_register = array_merge(
-			$classes_to_register,
-			array_values( self::form_field_setting_inputs() ),
-			array_values( self::form_field_setting_choices() ),
-			array_values( self::form_field_settings() ),
-		);
 
 		/**
 		 * Filters the list of interfaces classes to register.

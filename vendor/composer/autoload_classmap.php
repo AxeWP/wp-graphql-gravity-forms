@@ -226,6 +226,7 @@ return array(
     'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithFileSize' => $baseDir . '/src/Type/WPInterface/FieldSetting/FieldWithFileSize.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithForceSSLField' => $baseDir . '/src/Type/WPInterface/FieldSetting/FieldWithForceSSLField.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithInputMask' => $baseDir . '/src/Type/WPInterface/FieldSetting/FieldWithInputMask.php',
+    'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithInputs' => $baseDir . '/src/Type/WPInterface/FieldSetting/FieldWithInputs.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithLabel' => $baseDir . '/src/Type/WPInterface/FieldSetting/FieldWithLabel.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithLabelPlacement' => $baseDir . '/src/Type/WPInterface/FieldSetting/FieldWithLabelPlacement.php',
     'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithMaxLength' => $baseDir . '/src/Type/WPInterface/FieldSetting/FieldWithMaxLength.php',

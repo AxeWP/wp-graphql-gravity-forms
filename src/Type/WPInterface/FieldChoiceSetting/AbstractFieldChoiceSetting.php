@@ -8,12 +8,15 @@
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldChoiceSetting;
 
+use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\WPInterface\AbstractInterface;
+use WPGraphQL\GF\Type\WPInterface\FieldChoice;
+use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - AbstractFieldChoiceSetting
  */
-abstract class AbstractFieldChoiceSetting extends AbstractInterface {
+abstract class AbstractFieldChoiceSetting extends AbstractInterface implements TypeWithInterfaces {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -35,7 +38,18 @@ abstract class AbstractFieldChoiceSetting extends AbstractInterface {
 	 *
 	 * @var boolean
 	 */
-	public static bool $should_load_eagerly = false;
+	public static bool $should_load_eagerly = true;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_type_config( ?TypeRegistry $type_registry = null ): array {
+		$config = parent::get_type_config( $type_registry );
+
+		$config['interfaces'] = static::get_interfaces();
+
+		return $config;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -46,5 +60,14 @@ abstract class AbstractFieldChoiceSetting extends AbstractInterface {
 			__( 'A Choice for a form field with the `%s` setting.', 'wp-graphql-gravity-forms' ),
 			static::$field_setting
 		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_interfaces(): array {
+		return [
+			FieldChoice::$type,
+		];
 	}
 }
