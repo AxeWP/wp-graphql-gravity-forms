@@ -22,7 +22,10 @@
 - dev: Deprecate the `graphql_gf_form_field_setting_properties` filter in favor of `graphql_gf_form_field_setting_fields`.
 - dev: Deprecate the `graphql_gf_form_field_value_properties` filter in favor of `graphql_gf_form_field_value_fields`.
 - chore: Refactor `FormsConnectionResolver` to use new `AbstractConnectionResolver` methods.
-- chore: Add `automattic/vipcs` Code Standard ruleset. 
+- chore: Add `automattic/vipcs` Code Standard ruleset.
+- ci: Update GitHub Action versions used in workflows to latest.
+- ci: Update Node version to 16+.
+- ci: Test against PHP 8.1.
 
 ## v0.11.10 - Gravity Forms v2.6.8+ Compatibility
 
