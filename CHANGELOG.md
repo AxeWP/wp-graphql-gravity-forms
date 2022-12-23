@@ -8,6 +8,7 @@
 - feat: Add support for `Option`, `Product`, `Quantity`, `Shipping`, and `Total` Gravity Forms fields.
 - feat: Refactor `GfFormField` field settings, choices, and inputs to use GraphQL interfaces.
 - feat: Deprecate `FormsConnectionOrderbyInput.field` in favor of `FormsConnectionOrderbyInput.column`.
+- feat: Add support for PHP 8.1.
 - fix: Ensure latest mutation input data is used to prepare the field values on update mutations.
 - fix: Check for falsy `personalData` when resolving the form model.
 - dev!: Audit and fix generated type names.
