@@ -31,13 +31,6 @@ class FieldWithInputs extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register_hooks(): void {
-		parent::register_hooks();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public static function get_fields() : array {
 		// Interfaces cant be empty, so lets use the ID field.
 		$fields = FormField::get_fields();

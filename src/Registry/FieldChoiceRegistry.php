@@ -63,7 +63,7 @@ class FieldChoiceRegistry {
 			[
 				'type'        => [ 'list_of' => $choice_name ],
 				'description' => __( 'The choices for the field.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function( $source, array $args, AppContext $context, $info ) use ( $field ) {
+				'resolve'     => static function( $source, array $args, AppContext $context, $info ) {
 						/** @var GF_Field $source */
 						$context->gfField = $source;
 
@@ -95,13 +95,13 @@ class FieldChoiceRegistry {
 		$fields = self::get_fields( $choice_name, $field, $settings, $interfaces );
 
 		return [
-			'description'     => sprintf(
+			'description' => sprintf(
 				// translators: GF field choice type.
 				__( '%s choice values.', 'wp-graphql-gravity-forms' ),
 				ucfirst( $choice_name )
 			),
-			'interfaces'      => $interfaces,
-			'fields'          => $fields,
+			'interfaces'  => $interfaces,
+			'fields'      => $fields,
 		];
 	}
 
