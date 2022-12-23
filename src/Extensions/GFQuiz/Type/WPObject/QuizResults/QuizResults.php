@@ -168,7 +168,7 @@ class QuizResults extends AbstractObject implements Field {
 
 		$grade_frequencies = empty( $data['grade_frequencies'] ) ? null : self::map_grade_frequencies( $data['grade_frequencies'] );
 
-		$field_counts = empty( $data['field_data'] ) ? null : self::map_field_data( $data['field_data'], $form, $entry_count, );
+		$field_counts = empty( $data['field_data'] ) ? null : self::map_field_data( $data['field_data'], $form, $entry_count );
 
 		return [
 			'averagePercentage' => $average_percent,
