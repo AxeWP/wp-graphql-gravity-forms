@@ -19,7 +19,7 @@ class FieldWithPenSize extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithPenSize';
+	public static string $type = 'GfFieldWithPenSizeSetting';
 
 	/**
 	 * The name of GF Field Setting

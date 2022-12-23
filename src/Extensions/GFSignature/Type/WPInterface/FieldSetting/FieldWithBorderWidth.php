@@ -20,7 +20,7 @@ class FieldWithBorderWidth extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithBorderWidth';
+	public static string $type = 'GfFieldWithBorderWidthSetting';
 
 	/**
 	 * The name of GF Field Setting

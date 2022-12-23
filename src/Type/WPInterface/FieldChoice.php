@@ -17,11 +17,18 @@ use WPGraphQL\Registry\TypeRegistry;
  */
 class FieldChoice extends AbstractInterface {
 	/**
-	 * Type registered in WPGraphQL.
+	 * {@inheritDoc}
 	 *
 	 * @var string
 	 */
 	public static string $type = 'GfFieldChoice';
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @var bool
+	 */
+	public static bool $should_load_eagerly = true;
 
 	/**
 	 * {@inheritDoc}

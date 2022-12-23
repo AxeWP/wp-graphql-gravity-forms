@@ -20,7 +20,7 @@ class FieldWithChainedSelectsAlignment extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithChainedSelectsAlignment';
+	public static string $type = 'GfFieldWithChainedSelectsAlignmentSetting';
 
 	/**
 	 * The name of GF Field Setting

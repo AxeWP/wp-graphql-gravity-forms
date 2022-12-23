@@ -245,6 +245,7 @@ class ComposerStaticInitf35655797d6bdd77951f2274b8dc4a3f
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithFileSize' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithFileSize.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithForceSSLField' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithForceSSLField.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithInputMask' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithInputMask.php',
+        'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithInputs' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithInputs.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithLabel' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithLabel.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithLabelPlacement' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithLabelPlacement.php',
         'WPGraphQL\\GF\\Type\\WPInterface\\FieldSetting\\FieldWithMaxLength' => __DIR__ . '/../..' . '/src/Type/WPInterface/FieldSetting/FieldWithMaxLength.php',

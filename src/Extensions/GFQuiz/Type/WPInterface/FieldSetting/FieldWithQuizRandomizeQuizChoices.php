@@ -19,7 +19,7 @@ class FieldWithQuizRandomizeQuizChoices extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithQuizRandomizeQuizChoices';
+	public static string $type = 'GfFieldWithQuizRandomizeQuizChoicesSetting';
 
 	/**
 	 * The name of GF Field Setting

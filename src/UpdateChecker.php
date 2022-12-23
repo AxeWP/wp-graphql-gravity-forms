@@ -89,7 +89,7 @@ class UpdateChecker implements Hookable {
 		}
 
 		// translators: %s: version number.
-		$message = sprintf( __( '<strong>Warning!</strong> Version %s may contain breaking changes. Please review the <a href="https://github.com/harness-software/wp-graphql-gravity-forms/releases" target="_blank">release notes</a> before upgrading.', 'wp-graphql-gravity-forms', ), $new_version );
+		$message = sprintf( __( '<strong>Warning!</strong> Version %s may contain breaking changes. Please review the <a href="https://github.com/harness-software/wp-graphql-gravity-forms/releases" target="_blank">release notes</a> before upgrading.', 'wp-graphql-gravity-forms' ), $new_version );
 
 		echo '</p></div><div class="notice inline notice-error notice-alt"><p>' . wp_kses_post( $message );
 	}

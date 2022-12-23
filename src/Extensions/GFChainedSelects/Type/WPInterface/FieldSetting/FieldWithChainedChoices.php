@@ -22,7 +22,7 @@ class FieldWithChainedChoices extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithChainedChoices';
+	public static string $type = 'GfFieldWithChainedChoicesSetting';
 
 	/**
 	 * The name of GF Field Setting

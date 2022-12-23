@@ -19,7 +19,7 @@ class FieldWithBorderColor extends AbstractFieldSetting {
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldWithBorderColor';
+	public static string $type = 'GfFieldWithBorderColorSetting';
 
 	/**
 	 * The name of GF Field Setting
