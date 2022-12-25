@@ -25,7 +25,6 @@
 - chore: Add `automattic/vipcs` Code Standard ruleset.
 - ci: Update GitHub Action versions used in workflows to latest.
 - ci: Update Node version to 16+.
-- ci: Test against PHP 8.1.
 
 ## v0.11.10 - Gravity Forms v2.6.8+ Compatibility
 
