@@ -21,6 +21,7 @@
 - dev: Add the following filters: `graphql_gf_form_field_setting_choice_fields`, `graphql_gf_form_field_setting_input_fields`, `graphql_gf_registered_form_field_setting_classes`, `graphql_gf_registered_form_field_setting_choice_classes`, `graphql_gf_registered_form_field_setting_input_classes`.
 - dev: Deprecate the `graphql_gf_form_field_setting_properties` filter in favor of `graphql_gf_form_field_setting_fields`.
 - dev: Deprecate the `graphql_gf_form_field_value_properties` filter in favor of `graphql_gf_form_field_value_fields`.
+- docs: replace `formId` with `id` in `submitGfForm` examples. Props: @mosesintech
 - chore: Refactor `FormsConnectionResolver` to use new `AbstractConnectionResolver` methods.
 - chore: Add `automattic/vipcs` Code Standard ruleset.
 - ci: Update GitHub Action versions used in workflows to latest.
