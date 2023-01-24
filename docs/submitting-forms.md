@@ -35,7 +35,7 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
 {
   submitGfForm(
     input: {
-      formId: 50
+      id: 50
       entryMeta {
         createdById: 1 # The user ID.
         ip: ""         # IP address
@@ -163,7 +163,7 @@ To validate a reCAPTCHA field, you need to [fetch the captcha response token](ht
 mutation submit( $token: String ) {
   submitGfForm(
     input: {
-      formId: 50
+      id: 50
       fieldValues: [
         # other form fields would go here.
         {
@@ -199,7 +199,7 @@ To enable WPGraphQL support for submitting files (via the `fileUploadValues` or 
 mutation submit( $exampleUploads: [ Upload ], $exampleImageUpload: Upload ){ 
   submitGfForm(
     input: {
-      formId: 50
+      id: 50
       fieldValues: [
         # other form fields would go here.
         {
