@@ -10,6 +10,7 @@
 - feat: Deprecate `FormsConnectionOrderbyInput.field` in favor of `FormsConnectionOrderbyInput.column`.
 - fix: Ensure latest mutation input data is used to prepare the field values on update mutations.
 - fix: Check for falsy `personalData` when resolving the form model.
+- fix: Properly store provided IP when submitting an entry.
 - dev!: Audit and fix generated type names.
 - dev!: change `AddressField.defaultState` and `AddressField.defaultProvince` to respective `AddressField{Province|State}Enum`.
 - dev!: Move `TypeRegistry` classes to `WPGraphQL\GF\Registry` namespace.
