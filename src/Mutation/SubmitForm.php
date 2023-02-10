@@ -191,7 +191,7 @@ class SubmitForm extends AbstractMutation {
 		}
 		// Update IP created.
 		if ( isset( $input['entryMeta']['ip'] ) ) {
-			$data['ip'] = GFUtils::get_ip( $input['entryMeta']['sourceUrl'] );
+			$data['ip'] = GFUtils::get_ip( $input['entryMeta']['ip'] );
 		}
 
 		// Update source url.

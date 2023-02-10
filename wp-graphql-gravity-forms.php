@@ -7,7 +7,7 @@
  * Author: Harness Software
  * Author URI: https://www.harnessup.com
  * Update URI: https://github.com/harness-software/wp-graphql-gravity-forms/releases
- * Version: 0.11.10
+ * Version: 0.11.11
  * Text Domain: wp-graphql-gravity-forms
  * Domain Path: /languages
  * Requires at least: 5.4.1
