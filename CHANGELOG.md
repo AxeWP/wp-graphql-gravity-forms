@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- fix: Properly store provided IP when submitting an entry. Thanks @marcusforsberg !
+
 ## v0.11.10 - Gravity Forms v2.6.8+ Compatibility
 
 This _minor_ release adds compatibility for Gravity Forms v2.6.8+ by refactoring the internal logic used for uploading files to use native Gravity Forms methods whenever possible.
