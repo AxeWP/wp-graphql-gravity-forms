@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.11.11 - Bugfix
+
 - fix: Properly store provided IP when submitting an entry. Thanks @marcusforsberg !
 - chore: Update composer deps.
 
