@@ -65,7 +65,7 @@ class Utils {
 			'fileupload'        => 'FileUpload',
 			'multiselect'       => 'MultiSelect',
 			'post_custom_field' => 'PostCustom',
-			'singleproduct'     => 'SingleProduct',
+			'singleproduct'     => 'ProductSingle',
 			'textarea'          => 'TextArea',
 			// Regular mapping.
 			'-'                 => ' ',
