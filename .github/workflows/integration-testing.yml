@@ -19,7 +19,7 @@ jobs:
   continuous_integration:
     runs-on: ubuntu-latest
     name: WordPress ${{ matrix.wordpress }} on PHP ${{ matrix.php }}
-    if: contains(github.event.pull_request.labels.*.name, 'safe to test ✔') || github.repository == github.event.pull_request.head.repo.full_name
+    if: contains(github.event.pull_request.labels.*.name, 'safe to test ✔') || github.repository == github.repository == github.event.repository.full_name
 
     strategy:
       matrix:
