@@ -97,7 +97,7 @@ With this method, you can also register specific GraphQL fields directly onto th
 
 To do so, create a PHP Class that extends `WPGraphQL\GF\Type\WPInterface\FieldSetting\AbstractFieldSetting`, and then hook the interface into WordPress using the [`graphql_gf_registered_form_field_setting_classes` filter](../actions-and-filters.md#graphql_gf_registered_form_field_setting_classes).
 
-A similar method can be used for extending `GfFieldChoice` and `GfFieldInputProperty` types.
+A similar method can be used for extending `GfFieldChoice` and `GfFieldInput` types.
 
 ### Form Fields with dynamic types
 

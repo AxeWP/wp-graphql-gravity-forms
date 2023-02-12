@@ -36,7 +36,7 @@ class FieldWithInputs extends AbstractInterface {
 	public static function get_fields() : array {
 		return [
 			'inputs' => [
-				'type'        => [ 'list_of' => FieldInputProperty::$type ],
+				'type'        => [ 'list_of' => FieldInput::$type ],
 				'description' => __( 'The inputs for the field.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function( $source, array $args, AppContext $context, $info ) {
 						/** @var \GF_Field $source */

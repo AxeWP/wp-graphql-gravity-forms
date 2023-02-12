@@ -13,15 +13,15 @@ use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
- * Class - FieldInputProperty
+ * Class - FieldInput
  */
-class FieldInputProperty extends AbstractInterface {
+class FieldInput extends AbstractInterface {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'GfFieldInputProperty';
+	public static string $type = 'GfFieldInput';
 
 	/**
 	 * {@inheritDoc}
