@@ -149,7 +149,7 @@ class FormFieldsConnectionResolver {
 
 			$ids = array_map( 'absint', $args['where']['ids'] );
 
-			$fields = array_filter( $fields, static fn ( $field) => in_array( (int) $field['id'], $ids, true ) );
+			$fields = array_filter( $fields, static fn ( $field ) => in_array( (int) $field['id'], $ids, true ) );
 		}
 
 		if ( isset( $args['where']['adminLabels'] ) ) {
@@ -159,7 +159,7 @@ class FormFieldsConnectionResolver {
 
 			$admin_labels = array_map( 'sanitize_text_field', $args['where']['adminLabels'] );
 
-			$fields = array_filter( $fields, static fn ( $field) => in_array( $field['adminLabel'], $admin_labels, true ) );
+			$fields = array_filter( $fields, static fn ( $field ) => in_array( $field['adminLabel'], $admin_labels, true ) );
 		}
 
 		if ( isset( $args['where']['fieldTypes'] ) ) {
@@ -167,13 +167,13 @@ class FormFieldsConnectionResolver {
 				$args['where']['fieldTypes'] = [ $args['where']['fieldTypes'] ];
 			}
 
-			$fields = array_filter( $fields, static fn ( $field) => in_array( $field['type'], $args['where']['fieldTypes'], true ) );
+			$fields = array_filter( $fields, static fn ( $field ) => in_array( $field['type'], $args['where']['fieldTypes'], true ) );
 		}
 
 		if ( isset( $args['where']['pageNumber'] ) ) {
 			$page = absint( $args['where']['pageNumber'] );
 
-			$fields = array_filter( $fields, static fn ( $field) => $page === (int) $field['pageNumber'] );
+			$fields = array_filter( $fields, static fn ( $field ) => $page === (int) $field['pageNumber'] );
 		}
 
 		return $fields;

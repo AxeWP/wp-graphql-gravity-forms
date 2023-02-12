@@ -77,7 +77,7 @@ class Factory {
 	 */
 	public static function set_max_query_amount( int $max_query_amount, $source, array $args, AppContext $context, ResolveInfo $info ) : int {
 		if ( 'formFields' === $info->fieldName ) {
-			return max( $max_query_amount, 600 );
+			return (int) max( $max_query_amount, 600 );
 		}
 
 		return $max_query_amount;
