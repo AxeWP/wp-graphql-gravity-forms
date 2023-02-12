@@ -19,7 +19,7 @@ jobs:
   continuous_integration:
     runs-on: ubuntu-latest
     name: WordPress ${{ matrix.wordpress }} on PHP ${{ matrix.php }}
-    if: contains(github.event.pull_request.labels.*.name, 'safe to test ✔')
+    if: contains(github.event.pull_request.labels.*.name, 'safe to test ✔') || github.repository == github.event.repository.full_name || github.event_name == 'push'
 
     strategy:
       matrix:
@@ -110,3 +110,12 @@ jobs:
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: vendor/bin/php-coveralls -v
+
+      - name: Push CodeCoverage to CodeClimate
+        if: ${{ matrix.coverage == 1 }}
+        uses: paambaati/codeclimate-action@v3.2.0
+        env:
+          CC_TEST_REPORTER_ID: c8f992fb9d2400821643b093de584af5a3c8d0a8f1f6f4e000592ccf0270ee29
+        with:
+          coverageLocations: |
+            ${{github.workspace}}/tests/_output/*.xml:clover
