@@ -222,7 +222,7 @@ class TypeRegistry {
 			WPInterface\FieldWithChoices::class,
 			... array_values( self::form_field_setting_choices() ),
 			WPInterface\FieldWithInputs::class,
-			WPInterface\FieldInputProperty::class,
+			WPInterface\FieldInput::class,
 			...array_values( self::form_field_setting_inputs() ),
 			WPInterface\FieldWithPersonalData::class,
 			...array_values( self::form_field_settings() ),

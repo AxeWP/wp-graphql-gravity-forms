@@ -9,7 +9,7 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldValue;
 
 use WPGraphQL\GF\Type\WPInterface\AbstractInterface;
-use WPGraphQL\GF\Type\WPInterface\FieldInputProperty;
+use WPGraphQL\GF\Type\WPInterface\FieldInput;
 
 /**
  * Class - FieldValueWithInput
@@ -35,7 +35,7 @@ class FieldValueWithInput extends AbstractInterface {
 	public static function get_fields() : array {
 		return [
 			'connectedInput' => [
-				'type'        => FieldInputProperty::$type,
+				'type'        => FieldInput::$type,
 				'description' => __( 'The selected Gravity Forms field input object.', 'wp-graphql-gravity-forms' ),
 			],
 		];

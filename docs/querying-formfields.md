@@ -124,7 +124,7 @@ As of v0.10.0, all `formFields` have access to the `value` GraphQL field, which 
 | Field Value Type               | Used by                                                                                                                                                                                                                                                                  | Available subfields                                              |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
 | `addressValues` _( obj )_      | `AddressField` | `city` <br> `country` <br> `lineTwo` <br> `state` <br> `street` <br> `zip` |
-| `checkboxValues` _( [ obj ] )_ | `CheckboxField` | `connectedChoice` _( GfFieldChoice )_ <br> `connectedInput` _(GfFieldInputProperty)_ <br>`inputId` <br> `text` <br> `value` |
+| `checkboxValues` _( [ obj ] )_ | `CheckboxField` | `connectedChoice` _( GfFieldChoice )_ <br> `connectedInput` _(GfFieldInput)_ <br>`inputId` <br> `text` <br> `value` |
 | `fileUploadValues` _( [ obj ] )_ | `FileUploadField` | `basePath` <br> `baseUrl` <br> `filename` <br> `url` |
 | `imageValues` _( obj )_        | `ImageField` | `altText` <br> `basePath` <br> `baseUrl` <br> `caption` <br> `description` <br> `filename` <br>  `title` <br> `url` <br>  |
 | `listValues` _( [ obj ] )_     | `ListField` | `values` _( [ string ] )_                                        |

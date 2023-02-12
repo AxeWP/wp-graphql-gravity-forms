@@ -12,7 +12,7 @@
 namespace WPGraphQL\GF\Registry;
 
 use GF_Field;
-use WPGraphQL\GF\Type\WPInterface\FieldInputProperty;
+use WPGraphQL\GF\Type\WPInterface\FieldInput;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
 use WPGraphQL\GF\Registry\TypeRegistry as GFTypeRegistry;
@@ -113,7 +113,7 @@ class FieldInputRegistry {
 	public static function get_interfaces( array $settings ) : array {
 		// Every Input is a FieldInput.
 		$interfaces = [
-			FieldInputProperty::$type,
+			FieldInput::$type,
 		];
 
 		$classes = GfTypeRegistry::form_field_setting_inputs();
@@ -147,7 +147,7 @@ class FieldInputRegistry {
 	 * @param array    $interfaces The list of interfaces to add to the field.
 	 */
 	public static function get_fields( string $input_name, GF_Field $field, array $settings, array $interfaces ) : array {
-		$fields = FieldInputProperty::get_fields();
+		$fields = FieldInput::get_fields();
 
 		/**
 		 * Filter to modify the Form Field Input GraphQL fields.

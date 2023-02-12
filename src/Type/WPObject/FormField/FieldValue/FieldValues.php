@@ -518,7 +518,7 @@ class FieldValues {
 	}
 
 	/**
-	 * Prepares the selected input for concumption for the FieldInputProperty interface by adding the GraphQL object type to the return array.
+	 * Prepares the selected input for concumption for the FieldInput interface by adding the GraphQL object type to the return array.
 	 *
 	 * @param GF_Field $field The gravity forms field object.
 	 * @param int      $input_key The input key that represents field's selected input.
