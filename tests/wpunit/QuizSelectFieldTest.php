@@ -8,9 +8,9 @@
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 /**
- * Class -QuizFieldSelectTest
+ * Class -QuizSelectFieldTest
  */
-class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+class QuizSelectFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -130,13 +130,15 @@ class QuizFieldSelectTest extends FormFieldTestCase implements FormFieldTestCase
 				adminLabel
 				answerExplanation
 				canPrepopulate
-				choices{
-					isCorrect
-					isOtherChoice
-					isSelected
-					text
-					value
-					weight
+				choices {
+					... on QuizSelectFieldChoice {
+						isCorrect
+						isOtherChoice
+						isSelected
+						text
+						value
+						weight
+					}
 				}
 				conditionalLogic{
 					actionType

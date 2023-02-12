@@ -176,9 +176,11 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 				size
 				... on PostTagsRadioField {
 					choices {
-						isSelected
-						text
-						value
+						... on PostTagsRadioFieldChoice {
+							isSelected
+							text
+							value
+						}
 					}
 					hasChoiceValue
 					hasOtherChoice

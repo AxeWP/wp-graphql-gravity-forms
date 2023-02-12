@@ -12,9 +12,11 @@
 namespace WPGraphQL\GF\Registry;
 
 use GF_Field;
-use WPGraphQL\AppContext;
 use WPGraphQL\GF\Type\WPInterface\FieldInputProperty;
 use WPGraphQL\GF\Utils\Utils;
+use WPGraphQL\Registry\TypeRegistry;
+use WPGraphQL\GF\Registry\TypeRegistry as GFTypeRegistry;
+
 
 /**
  * Class - FieldInputRegistry
@@ -30,6 +32,12 @@ class FieldInputRegistry {
 
 		$input_name = ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'InputProperty';
 
+		// Search-replace complex field types who's names are overcomplicated.
+		$names_to_map = [
+			'product_singleproduct' => 'ProductSingle',
+		];
+		$input_name   = str_replace( array_keys( $names_to_map ), array_values( $names_to_map ), $input_name );
+
 		return Utils::get_safe_form_field_type_name( $input_name );
 	}
 
@@ -38,23 +46,38 @@ class FieldInputRegistry {
 	 *
 	 * @param GF_Field $field The Gravity Forms field object.
 	 * @param array    $settings The Gravity Forms field settings used to define the GraphQL object.
+	 * @param bool     $as_interface Whether to register the choice as an interface. Default false.
 	 */
-	public static function register( GF_Field $field, $settings ) : void {
-		$input_name = self::get_type_name( $field );
+	public static function register( GF_Field $field, array $settings, bool $as_interface = false ) : void {
+		add_action(
+			get_graphql_register_action(),
+			function ( TypeRegistry $type_registry ) use ( $field, $settings, $as_interface ) {
+				$input_name = self::get_type_name( $field );
 
-		$config = self::get_config_from_settings( $input_name, $field, $settings );
+				if ( $type_registry->has_type( $input_name ) ) {
+					return;
+				}
 
-		register_graphql_object_type( $input_name, $config );
+				$config = self::get_config_from_settings( $input_name, $field, $settings );
 
-		// Register the inputs field.
-		register_graphql_field(
-			$field->graphql_single_name,
-			'inputs',
-			[
-				'type'        => [ 'list_of' => $input_name ],
-				// translators: GF field type.
-				'description' => sprintf( __( 'The available inputs for the %s field.', 'wp-graphql-gravity-forms' ), $field->type ),
-			]
+				if ( $as_interface ) {
+					$config['resolveType'] = function( $value ) use ( $input_name ) {
+						return $input_name;
+					};
+
+					$config['eagerlyLoadType'] = true;
+					register_graphql_interface_type( $input_name, $config );
+				} else {
+					$parent_input_name = Utils::get_safe_form_field_type_name( $field->type . 'InputProperty' );
+
+					if ( $parent_input_name !== $input_name ) {
+						$config['interfaces'] = array_merge( $config['interfaces'], [ $parent_input_name ] );
+					}
+
+
+					register_graphql_object_type( $input_name, $config );
+				}
+			}
 		);
 	}
 
@@ -71,18 +94,14 @@ class FieldInputRegistry {
 		$fields = self::get_fields( $input_name, $field, $settings, $interfaces );
 
 		return [
-			'description' => sprintf(
+			'description'     => sprintf(
 				// translators: GF field input type.
 				__( '%s input values.', 'wp-graphql-gravity-forms' ),
 				ucfirst( $input_name )
 			),
-			'interfaces'  => $interfaces,
-			'fields'      => $fields,
-			'resolve'     => static function ( GF_Field $source, array $args, AppContext $context ) {
-				$context->gfField = $source;
-
-				return ! empty( $source->inputs ) ? $source->inputs : null;
-			},
+			'interfaces'      => $interfaces,
+			'fields'          => $fields,
+			'eagerlyLoadType' => true,
 		];
 	}
 
@@ -97,7 +116,7 @@ class FieldInputRegistry {
 			FieldInputProperty::$type,
 		];
 
-		$classes = TypeRegistry::form_field_setting_inputs();
+		$classes = GfTypeRegistry::form_field_setting_inputs();
 
 		// Loop through the individual settings.
 		foreach ( $settings as $setting ) {

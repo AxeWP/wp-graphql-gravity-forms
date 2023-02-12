@@ -146,9 +146,11 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 				adminLabel
 				canPrepopulate
 				choices {
-					isSelected
-					text
-					value
+					... on PostCategoryFieldChoice {
+						isSelected
+						text
+						value
+					}
 				}
 				conditionalLogic {
 					actionType

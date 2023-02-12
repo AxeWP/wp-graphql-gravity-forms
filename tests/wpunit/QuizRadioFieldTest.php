@@ -10,7 +10,7 @@ use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 /**
  * Class -QuizFieldRadioTest
  */
-class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+class QuizRadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -145,13 +145,15 @@ class QuizFieldRadioTest extends FormFieldTestCase implements FormFieldTestCaseI
 				adminLabel
 				answerExplanation
 				canPrepopulate
-				choices{
-					isCorrect
-					isOtherChoice
-					isSelected
-					text
-					value
-					weight
+				choices {
+					... on QuizFieldChoice {
+						isCorrect
+						isOtherChoice
+						isSelected
+						text
+						value
+						weight
+					}
 				}
 				conditionalLogic{
 					actionType

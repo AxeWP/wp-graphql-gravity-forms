@@ -18,6 +18,17 @@ use WPGraphQL\GF\Type\WPInterface\FieldWithPersonalData;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\FieldValues;
 use WPGraphQL\GF\Registry\TypeRegistry as GFTypeRegistry;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithAddress;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithChoices;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithColumns;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithDateFormat;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithEmailConfirmation;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithName;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithOtherChoice;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithPassword;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithSelectAllChoices;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithSingleProductInputs;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithTimeFormat;
 use WPGraphQL\Registry\TypeRegistry;
 use WPGraphQL\GF\Utils\Utils;
 
@@ -47,6 +58,9 @@ class FormFieldRegistry {
 			$config['eagerlyLoadType'] = true;
 
 			self::register_object_type( $field, $field_settings, $config );
+
+			// Register any choices and inputs to the type.
+			self::maybe_register_choices_and_inputs( $field, $field_settings );
 		} else {
 			// If there are possible types, then we need to register the parent interface and all the child types as objects.
 			self::register_interface_and_types( $field, $field_settings, $possible_types );
@@ -82,8 +96,6 @@ class FormFieldRegistry {
 				// Register the FormField to the schema.
 				register_graphql_object_type( $field->graphql_single_name, $config );
 
-				// Register any choices and inputs to the type.
-				self::maybe_register_choices_and_inputs( $field, $field_settings, $config );
 
 				/**
 				 * Fires after the Gravity Forms field object has been registered to WPGraphQL schema.
@@ -166,11 +178,11 @@ class FormFieldRegistry {
 				};
 
 				register_graphql_interface_type( $field->graphql_single_name, $config );
-
-				// Register any choices and inputs to the type.
-				self::maybe_register_choices_and_inputs( $field, $interface_settings, $config );
 			}
 		);
+
+		// Register any choices and inputs to the type.
+		self::maybe_register_choices_and_inputs( $field, $interface_settings, true );
 
 		// Loop through the child fields and register each one.
 		foreach ( $possible_types as $gf_type => $graphql_type ) {
@@ -193,6 +205,9 @@ class FormFieldRegistry {
 			$config['eagerlyLoadType'] = true;
 
 			self::register_object_type( $field_to_register, $field_settings, $config );
+
+			// Register any choices and inputs to the type.
+			self::maybe_register_choices_and_inputs( $field_to_register, array_merge( $field_settings, $interface_settings ) );
 		}
 	}
 
@@ -441,29 +456,69 @@ class FormFieldRegistry {
 	/**
 	 * Calls the actions to register the choices and inputs to the type.
 	 *
-	 * @param GF_Field $field The Gravity Forms field object.
+	 * @param GF_Field $field          The Gravity Forms field object.
 	 * @param array    $field_settings The Gravity Forms field settings.
-	 * @param array    $config The config array as expected by WPGraphQL.
+	 * @param bool     $as_interface   Whether to register the choices and inputs as an interface.
 	 */
-	protected static function maybe_register_choices_and_inputs( GF_Field $field, array $field_settings, array $config ) : void {
+	protected static function maybe_register_choices_and_inputs( GF_Field $field, array $field_settings, bool $as_interface = false ) : void {
 		/**
-		 * Fires after the Gravity Forms field choices have been registered to WPGraphQL schema.
+		 * Filters the Gravity Forms field settings that should have a `choices` GraphQL Field.
 		 *
+		 * @param array    $settings_with_choices The field settings that should have a `choices` GraphQL Field.
+		 * @param array    $field_settings The Gravity Forms field settings.
 		 * @param GF_Field $field The Gravity Forms field object.
-		 * @param array    $field_settings The field settings.
-		 * @param array    $config The config array as expected by WPGraphQL.
+		 * @param bool     $as_interface Whether to register the choice as an interface.
 		 */
-		do_action( 'graphql_gf_register_form_field_choices', $field, $field_settings, $config );
-		do_action( 'graphql_gf_register_form_field_choices_', $field->graphql_single_name, $field, $field_settings, $config );
+		$settings_with_choices = apply_filters(
+			'graphql_gf_form_field_settings_with_choices',
+			[
+				FieldWithChoices::$field_setting,
+				FieldWithColumns::$field_setting,
+				FieldWithName::$field_setting,
+				FieldWithSelectAllChoices::$field_setting,
+				FieldWithOtherChoice::$field_setting,
+			],
+			$field_settings,
+			$field,
+			$as_interface
+		);
+
+		$has_choices = array_intersect( $field_settings, $settings_with_choices );
+
+
+		if ( ! empty( $has_choices ) ) {
+			FieldChoiceRegistry::register( $field, $field_settings, $as_interface );
+		}
 
 		/**
-		 * Fires after the Gravity Forms field inputs have been registered to WPGraphQL schema.
+		 * Filters the Gravity Forms field settings that should have an `inputs` GraphQL Field.
 		 *
+		 * @param array    $settings_with_inputs The field settings that should have an `inputs` GraphQL Field.
+		 * @param array    $field_settings The Gravity Forms field settings.
 		 * @param GF_Field $field The Gravity Forms field object.
-		 * @param array    $field_settings The field settings.
-		 * @param array    $config The config array as expected by WPGraphQL.
+		 * @param bool     $as_interface Whether to register the inputs as an interface.
 		 */
-		do_action( 'graphql_gf_register_form_field_inputs', $field, $field_settings, $config );
-		do_action( 'graphql_gf_register_form_field_inputs_', $field->graphql_single_name, $field, $field_settings, $config );
+		$settings_with_inputs = apply_filters(
+			'graphql_gf_form_field_settings_with_inputs',
+			[
+				FieldWithAddress::$field_setting,
+				FieldWithDateFormat::$field_setting,
+				FieldWithEmailConfirmation::$field_setting,
+				FieldWithName::$field_setting,
+				FieldWithPassword::$field_setting,
+				FieldWithSingleProductInputs::$field_setting,
+				FieldWithTimeFormat::$field_setting,
+				FieldWithSelectAllChoices::$field_setting,
+			],
+			$field_settings,
+			$field,
+			$as_interface
+		);
+
+		$has_inputs = array_intersect( $field_settings, $settings_with_inputs );
+
+		if ( ! empty( $has_inputs ) ) {
+			FieldInputRegistry::register( $field, $field_settings, $as_interface );
+		}
 	}
 }

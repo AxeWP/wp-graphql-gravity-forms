@@ -10,6 +10,7 @@ namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPInterface\FieldChoiceS
 
 use GF_Field;
 use WPGraphQL\GF\Type\WPInterface\FieldChoiceSetting\AbstractFieldChoiceSetting;
+
 /**
  * Class - ChoiceWithChainedChoices
  */

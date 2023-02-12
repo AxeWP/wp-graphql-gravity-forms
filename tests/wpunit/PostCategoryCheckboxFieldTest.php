@@ -291,9 +291,11 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 				adminLabel
 				canPrepopulate
 				choices {
-					isSelected
-					text
-					value
+					... on PostCategoryFieldChoice {
+						isSelected
+						text
+						value
+					}
 				}
 				conditionalLogic {
 					actionType
@@ -345,9 +347,11 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 					}
 					hasSelectAll
 					inputs {
-						id
-						label
-						name
+						... on PostCategoryCheckboxInputProperty {
+							id
+							label
+							name
+						}
 					}
 				}
 			}

@@ -145,11 +145,13 @@ class ShippingSelectFieldTest extends FormFieldTestCase implements FormFieldTest
 				... on ShippingSelectField {
 					autocompleteAttribute
 					choices {
-						formattedPrice
-						isSelected
-						price
-						text
-						value
+						... on ShippingSelectFieldChoice {
+							formattedPrice
+							isSelected
+							price
+							text
+							value
+						}
 					}
 					defaultValue
 					errorMessage

@@ -7,8 +7,6 @@
 * [`graphql_gf_before_register_types`](#graphql_gf_before_register_types)
 * [`graphql_gf_after_register_form_field`](#graphql_gf_after_register_form_field)
 * [`graphql_gf_after_register_form_field_object`](#graphql_gf_after_register_form_field_object)
-* [`graphql_gf_register_form_field_choices`](#graphql_gf_register_form_field_choices)
-* [`graphql_gf_register_form_field_inputs`](#graphql_gf_register_form_field_inputs)
 
 ### `graphql_gf_init`
 
@@ -78,31 +76,6 @@ do_action( 'graphql_gf_after_register_form_field_object_' . $field->graphql_sing
 * **`$field_settings`** _(array)_ : The Gravity Forms field settings.
 * **`$config`** _(array)_ : The config array as expected by WPGraphQL.
 
-### `graphql_gf_register_form_field_choices`
-#### `gaphql_gf_register_form_field_choices_{graphql_type}`
-
-Fires after the Gravity Forms field choices have been registered to WPGraphQL schema.
-```php
-do_action( 'graphql_gf_register_form_field_choices', $field, $field_settings, $config );
-do_action( 'graphql_gf_register_form_field_choices_' . $field->graphql_single_name, $field, $field_settings, $config );
-```
-
-#### Parameters
-
-* **`$field`** _(GF_Field)_ : The Gravity Forms field object.
-* **`$field_settings`** _(array)_ : The Gravity Forms field settings.
-* **`$config`** _(array)_ : The config array as expected by WPGraphQL.
-
-
-### `graphql_gf_register_form_field_inputs`
-#### `graphql_gf_register_form_field_inputs_{graphql_type}`
-
-Fires after the Gravity Forms field choices have been registered to WPGraphQL schema.
-```php
-do_action( 'graphql_gf_register_form_field_inputs', $field, $field_settings, $config );
-do_action( 'graphql_gf_register_form_field_inputs_' . $field->graphql_single_name, $field, $field_settings, $config );
-```
-
 ## Filters
 
 * [`graphql_gf_can_view_draft_entries`](#graphql_gf_can_view_entries)
@@ -115,9 +88,11 @@ do_action( 'graphql_gf_register_form_field_inputs_' . $field->graphql_single_nam
 * [`graphql_gf_forms_connection_query_args`](#graphql_gf_forms_connection_query_args)
 * [`graphql_gf_form_field_child_types`](#graphql_gf_form_field_child_types)
 * [`graphql_gf_form_field_name_map`](#graphql_gf_form_fields_name_map)
-* [`graphql_gf_form_field_setting_choice_fields`](#graphql_gf_form_fields_setting_choice_fields)
-* [`graphql_gf_form_field_setting_input_fields`](#graphql_gf_form_fields_setting_input_fields)
-* [`graphql_gf_form_field_setting_fields`](#graphql_gf_form_fields_setting_fields)
+* [`graphql_gf_form_field_setting_choice_fields`](#graphql_gf_form_field_setting_choice_fields)
+* [`graphql_gf_form_field_setting_input_fields`](#graphql_gf_form_field_setting_input_fields)
+* [`graphql_gf_form_field_setting_fields`](#graphql_gf_form_field_setting_fields)
+* [`graphql_gf_form_field_settings_with_choices`](#graphql_gf_form_field_settings_with_choices)
+* [`graphql_gf_form_field_settings_with_inputs`](#graphql_gf_form_field_settings_with_inputs)
 * [`graphql_gf_form_field_value_fields`](#graphql_gf_form_fields_value_fields)
 * [`graphql_gf_form_field_values_input_fields`](#graphql_gf_form_field_value_input_fields)
 * [`graphql_gf_form_object`](#graphql_gf_form_object)
@@ -334,7 +309,6 @@ apply_filters( 'graphql_gf_form_field_setting_input_fields_' . $input_name, $fie
 * **`$settings`** _(array)_ : The `form_editor_field_settings()` keys.
 * **`$interfaces`** _(array)_ : The list of interfaces for the GraphQL type.
 
-
 ### `graphql_gf_form_field_setting_fields`
 #### `graphql_gf_form_field_setting_fields_{graphql_type}`
 
@@ -351,6 +325,36 @@ apply_filters( 'graphql_gf_form_field_setting_fields_' . $field->graphql_single_
 * **`$field`** _(GF_Field)_ : The Gravity Forms Field object.
 * **`$settings`** _(array)_ : The `form_editor_field_settings()` keys.
 * **`$interfaces`** _(array)_ : The list of interfaces for the GraphQL type.
+
+### `graphql_gf_form_field_settings_with_choices`
+
+Filters the Gravity Forms field settings that should have a `choices` GraphQL Field.
+
+```php
+apply_filters( 'graphql_gf_form_field_settings_with_choices', $settings_with_choices, $field_settings, $field, $as_interface );
+```
+
+#### Parameters
+
+* **`$settings_with_choices`** _(array)_ : The Gravity Forms Field settings that should have a `choices` GraphQL Field.
+* **`$field_settings`** _(array)_ : The Gravity Forms field settings.
+* **`$field`** _(array)_ : The Gravity Forms field object.
+* **`$as_interface`** _(array)_ : Whether the choice is a GraphQL interface.
+
+### `graphql_gf_form_field_settings_with_inputs`
+
+Filters the Gravity Forms field settings that should have an `inputs` GraphQL Field.
+
+```php
+apply_filters( 'graphql_gf_form_field_settings_with_inputs', $settings_with_inputs, $field_settings, $field, $as_interface );
+```
+
+#### Parameters
+
+* **`$settings_with_inputs`** _(array)_ : The Gravity Forms Field settings that should have an `inputs` GraphQL Field.
+* **`$field_settings`** _(array)_ : The Gravity Forms field settings.
+* **`$field`** _(array)_ : The Gravity Forms field object.
+* **`$as_interface`** _(array)_ : Whether the choice is a GraphQL interface.
 
 ### `graphql_gf_form_field_value_fields`
 #### `graphql_gf_form_field_value_fields_{graphql_type}`

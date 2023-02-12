@@ -264,16 +264,20 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 						value
 					}
 					choices {
-						isSelected
-						text
-						value
+						... on PostTagsCheckboxFieldChoice {
+							isSelected
+							text
+							value
+						}
 					}
 					hasChoiceValue
 					hasSelectAll
 					inputs {
-						id
-						label
-						name
+						... on PostTagsCheckboxInputProperty {
+							id
+							label
+							name
+						}
 					}
 				}
 			}

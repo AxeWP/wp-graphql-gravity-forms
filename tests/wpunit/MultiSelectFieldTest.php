@@ -96,9 +96,11 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 				adminLabel
 				canPrepopulate
 				choices {
+					... on MultiSelectFieldChoice {
 					isSelected
 					text
 					value
+					}
 				}
 				conditionalLogic {
 					actionType

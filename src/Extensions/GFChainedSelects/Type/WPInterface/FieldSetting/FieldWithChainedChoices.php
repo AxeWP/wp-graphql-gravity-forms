@@ -8,15 +8,17 @@
 
 namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPInterface\FieldSetting;
 
-use GF_Field;
-use WPGraphQL\GF\Registry\FieldChoiceRegistry;
-use WPGraphQL\GF\Registry\FieldInputRegistry;
+use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\WPInterface\FieldSetting\AbstractFieldSetting;
+use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithChoices as FieldWithChoicesSetting;
+use WPGraphQL\GF\Type\WPInterface\FieldWithChoices;
+use WPGraphQL\GF\Type\WPInterface\FieldWithInputs;
+use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FieldWithChainedChoices
  */
-class FieldWithChainedChoices extends AbstractFieldSetting {
+class FieldWithChainedChoices extends AbstractFieldSetting implements TypeWithInterfaces {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -34,9 +36,20 @@ class FieldWithChainedChoices extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
+	public static function get_type_config( ?TypeRegistry $type_registry = null ): array {
+		$config = parent::get_type_config( $type_registry );
+
+		$config['interfaces'] = static::get_interfaces();
+
+		return $config;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public static function register_hooks(): void {
-		add_action( 'graphql_gf_register_form_field_inputs', [ __CLASS__, 'add_inputs' ], 11, 2 );
-		add_action( 'graphql_gf_register_form_field_choices', [ __CLASS__, 'add_choices' ], 10, 2 );
+		add_filter( 'graphql_gf_form_field_settings_with_choices', [ __CLASS__, 'add_setting' ], 10 );
+		add_filter( 'graphql_gf_form_field_settings_with_inputs', [ __CLASS__, 'add_setting' ], 10 );
 
 		parent::register_hooks();
 	}
@@ -45,46 +58,30 @@ class FieldWithChainedChoices extends AbstractFieldSetting {
 	 * {@inheritDoc}
 	 */
 	public static function get_fields() : array {
+		// This setting is identical to `choices_setting` but for some reason exists independently.
+		return FieldWithChoicesSetting::get_fields();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_interfaces() : array {
 		return [
-			'hasChoiceValue' => [
-				'type'        => 'Boolean',
-				'description' => __( 'Determines if the field (checkbox, select or radio) have choice values enabled, which allows the field to have choice values different from the labels that are displayed to the user.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source) => ! empty( $source->enableChoiceValue ),
-			],
+			FieldWithChoices::$type,
+			FieldWithInputs::$type,
 		];
 	}
 
 	/**
-	 * Registers a GraphQL field to the GraphQL type that implements this interface.
+	 * Adds the `chained_choices_setting` setting to the list of settings that have the GraphQL choices field.
 	 *
-	 * @param GF_Field $field The Gravity Forms Field object.
-	 * @param array    $settings The `form_editor_field_settings()` key.
+	 * @param array $settings the GF Field settings.
 	 */
-	public static function add_choices( GF_Field $field, array $settings ) : void {
-		if (
-			! in_array( self::$field_setting, $settings, true )
-		) {
-			return;
+	public static function add_setting( array $settings ) : array {
+		if ( ! in_array( self::$field_setting, $settings, true ) ) {
+			$settings[] = self::$field_setting;
 		}
 
-		// Register the FieldChoice for the object.
-		FieldChoiceRegistry::register( $field, $settings );
-	}
-
-	/**
-	 * Registers a GraphQL field to the GraphQL type that implements this interface.
-	 *
-	 * @param GF_Field $field The Gravity Forms Field object.
-	 * @param array    $settings The `form_editor_field_settings()` key.
-	 */
-	public static function add_inputs( GF_Field $field, array $settings ) : void {
-		if (
-			! in_array( self::$field_setting, $settings, true )
-		) {
-			return;
-		}
-
-		// Register the FieldChoice for the object.
-		FieldInputRegistry::register( $field, $settings );
+		return $settings;
 	}
 }

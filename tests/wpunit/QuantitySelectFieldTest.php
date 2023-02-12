@@ -204,11 +204,13 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 				... on QuantitySelectField {
 					autocompleteAttribute
 					choices {
-						formattedPrice
-						isSelected
-						price
-						text
-						value
+						... on QuantitySelectFieldChoice {
+							formattedPrice
+							isSelected
+							price
+							text
+							value
+						}
 					}
 					errorMessage
 					hasAutocomplete

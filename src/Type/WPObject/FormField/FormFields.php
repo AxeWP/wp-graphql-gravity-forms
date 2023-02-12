@@ -33,7 +33,7 @@ class FormFields implements Hookable, Registrable {
 	 */
 	public static function register_hooks() : void {
 		// Hooks are applied later in the lifecycle, to ensure the TypeRegister is always up to date.
-		add_action( get_graphql_register_action(), [ __CLASS__, 'register' ] );
+		self::register();
 	}
 
 	/**

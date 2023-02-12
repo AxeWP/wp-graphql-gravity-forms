@@ -161,11 +161,13 @@ class OptionSelectFieldTest extends FormFieldTestCase implements FormFieldTestCa
 				adminLabel
 				canPrepopulate
 				choices{
-					formattedPrice
-					isSelected
-					price
-					text
-					value
+					... on OptionFieldChoice {
+						formattedPrice
+						isSelected
+						price
+						text
+						value
+					}
 				}
 				cssClass
 				defaultValue

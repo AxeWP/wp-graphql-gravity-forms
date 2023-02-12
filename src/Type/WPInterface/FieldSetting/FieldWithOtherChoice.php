@@ -8,10 +8,13 @@
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
+use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
+use WPGraphQL\Registry\TypeRegistry;
+
 /**
  * Class - FieldWithOtherChoice
  */
-class FieldWithOtherChoice extends AbstractFieldSetting {
+class FieldWithOtherChoice extends AbstractFieldSetting implements TypeWithInterfaces {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -29,6 +32,17 @@ class FieldWithOtherChoice extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
+	public static function get_type_config( ?TypeRegistry $type_registry = null ): array {
+		$config = parent::get_type_config( $type_registry );
+
+		$config['interfaces'] = static::get_interfaces();
+
+		return $config;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public static function get_fields() : array {
 		return [
 			'hasOtherChoice' => [
@@ -36,6 +50,16 @@ class FieldWithOtherChoice extends AbstractFieldSetting {
 				'description' => __( 'Indicates whether the \'Enable "other" choice\' option is checked in the editor.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->enableOtherChoice ),
 			],
+		];
+	}
+
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_interfaces() : array {
+		return [
+			FieldWithChoices::$type,
 		];
 	}
 }
