@@ -29,6 +29,8 @@
 - chore: Add `automattic/vipcs` Code Standard ruleset.
 - ci: Update GitHub Action versions used in workflows to latest.
 - ci: Update Node version to 16+.
+- ci: Run actions on organization repository.
+- ci: Add coverage to Code Climate.
 
 ## v0.11.11 - Bugfix
 
