@@ -6,7 +6,7 @@ use WPGraphQL\GF\Type\Enum\RecaptchaTypeEnum;
 
 class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	/**
-	 * @var \WpunitTesterActions
+	 * @var \WpunitTester
 	 */
 	protected $tester;
 	public $instance;
