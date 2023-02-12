@@ -142,12 +142,14 @@ class ShippingRadioFieldTest extends FormFieldTestCase implements FormFieldTestC
 				}
 				... on ShippingRadioField {
 					choices {
-						formattedPrice
-						isOtherChoice
-						isSelected
-						price
-						text
-						value
+						... on ShippingRadioFieldChoice {
+							formattedPrice
+							isOtherChoice
+							isSelected
+							price
+							text
+							value
+						}
 					}
 					errorMessage
 					hasChoiceValue

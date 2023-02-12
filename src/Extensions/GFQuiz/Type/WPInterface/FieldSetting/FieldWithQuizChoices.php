@@ -31,6 +31,14 @@ class FieldWithQuizChoices extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
+	public static function register_hooks(): void {
+		add_filter( 'graphql_gf_form_field_settings_with_choices', [ __CLASS__, 'add_setting' ], 10 );
+
+		parent::register_hooks();
+	}
+	/**
+	 * {@inheritDoc}
+	 */
 	public static function get_fields() : array {
 		return [
 			'hasWeightedScore' => [
@@ -39,5 +47,18 @@ class FieldWithQuizChoices extends AbstractFieldSetting {
 				'resolve'     => static fn ( $source ) : bool => ! empty( $source->gquizWeightedScoreEnabled ),
 			],
 		];
+	}
+
+	/**
+	 * Adds the `chained_choices_setting` setting to the list of settings that have the GraphQL choices field.
+	 *
+	 * @param array $settings the GF Field settings.
+	 */
+	public static function add_setting( array $settings ) : array {
+		if ( ! in_array( self::$field_setting, $settings, true ) ) {
+			$settings[] = self::$field_setting;
+		}
+
+		return $settings;
 	}
 }

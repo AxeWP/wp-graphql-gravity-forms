@@ -121,12 +121,14 @@ class TimeFieldTest  extends FormFieldTestCase implements FormFieldTestCaseInter
 				descriptionPlacement
 				errorMessage
 				inputs {
-					autocompleteAttribute
-					customLabel
-					defaultValue
-					id
-					label
-					placeholder
+					... on TimeInputProperty {
+						autocompleteAttribute
+						customLabel
+						defaultValue
+						id
+						label
+						placeholder
+					}
 				}
 				isRequired
 				label

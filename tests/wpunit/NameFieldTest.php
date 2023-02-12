@@ -128,21 +128,23 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				hasAutocomplete
 				inputName
 				inputs {
-					autocompleteAttribute
-					choices {
-						isSelected
-						text
-						value
+					... on NameInputProperty {
+						autocompleteAttribute
+						choices {
+							isSelected
+							text
+							value
+						}
+						customLabel
+						defaultValue
+						hasChoiceValue
+						id
+						isHidden
+						key
+						label
+						name
+						placeholder
 					}
-					customLabel
-					defaultValue
-					hasChoiceValue
-					id
-					isHidden
-					key
-					label
-					name
-					placeholder
 				}
 				isRequired
 				labelPlacement

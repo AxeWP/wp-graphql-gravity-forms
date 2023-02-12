@@ -135,15 +135,17 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				errorMessage
 				hasAutocomplete
 				inputs {
-					customLabel
-					defaultValue
-					id
-					isHidden
-					key
-					label
-					name
-					placeholder
-					autocompleteAttribute
+					... on AddressInputProperty {
+						customLabel
+						defaultValue
+						id
+						isHidden
+						key
+						label
+						name
+						placeholder
+						autocompleteAttribute
+					}
 				}
 				isRequired
 				label

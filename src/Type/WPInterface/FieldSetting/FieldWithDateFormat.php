@@ -9,13 +9,16 @@
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 use GF_Field;
+use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Type\Enum\DateFieldFormatEnum;
+use WPGraphQL\GF\Type\WPInterface\FieldWithInputs;
+use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FieldWithDateFormat
  */
-class FieldWithDateFormat extends AbstractFieldSetting {
+class FieldWithDateFormat extends AbstractFieldSetting implements TypeWithInterfaces {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -24,20 +27,22 @@ class FieldWithDateFormat extends AbstractFieldSetting {
 	public static string $type = 'GfFieldWithDateFormatSetting';
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_type_config( ?TypeRegistry $type_registry = null ): array {
+		$config = parent::get_type_config( $type_registry );
+
+		$config['interfaces'] = static::get_interfaces();
+
+		return $config;
+	}
+
+	/**
 	 * The name of GF Field Setting
 	 *
 	 * @var string
 	 */
 	public static string $field_setting = 'date_format_setting';
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public static function register_hooks(): void {
-		add_action( 'graphql_gf_register_form_field_inputs', [ __CLASS__, 'add_inputs' ], 11, 2 );
-
-		parent::register_hooks();
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -52,19 +57,11 @@ class FieldWithDateFormat extends AbstractFieldSetting {
 	}
 
 	/**
-	 * Registers a GraphQL field to the GraphQL type that implements this interface.
-	 *
-	 * @param GF_Field $field The Gravity Forms Field object.
-	 * @param array    $settings The `form_editor_field_settings()` key.
+	 * {@inheritDoc}
 	 */
-	public static function add_inputs( GF_Field $field, array $settings ) : void {
-		if (
-			! in_array( self::$field_setting, $settings, true )
-		) {
-			return;
-		}
-
-		// Register the FieldChoice for the object.
-		FieldInputRegistry::register( $field, $settings );
+	public static function get_interfaces() : array {
+		return [
+			FieldWithInputs::$type,
+		];
 	}
 }

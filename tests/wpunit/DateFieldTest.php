@@ -107,12 +107,14 @@ class DateFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 				errorMessage
 				inputName
 				inputs {
-					autocompleteAttribute
-					customLabel
-					defaultValue
-					id
-					label
-					placeholder
+					... on DateInputProperty {
+						autocompleteAttribute
+						customLabel
+						defaultValue
+						id
+						label
+						placeholder
+					}
 				}
 				isRequired
 				label

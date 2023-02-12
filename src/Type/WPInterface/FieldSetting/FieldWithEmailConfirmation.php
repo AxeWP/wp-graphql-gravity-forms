@@ -8,9 +8,8 @@
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
-use GF_Field;
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
-use WPGraphQL\GF\Registry\FieldInputRegistry;
+use WPGraphQL\GF\Type\WPInterface\FieldWithInputs;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -30,15 +29,6 @@ class FieldWithEmailConfirmation extends AbstractFieldSetting implements TypeWit
 	 * @var string
 	 */
 	public static string $field_setting = 'email_confirm_setting';
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public static function register_hooks(): void {
-		add_action( 'graphql_gf_register_form_field_inputs', [ __CLASS__, 'add_inputs' ], 11, 2 );
-
-		parent::register_hooks();
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -70,23 +60,7 @@ class FieldWithEmailConfirmation extends AbstractFieldSetting implements TypeWit
 	public static function get_interfaces() : array {
 		return [
 			FieldWithSubLabelPlacement::$type,
+			FieldWithInputs::$type,
 		];
-	}
-
-	/**
-	 * Registers a GraphQL field to the GraphQL type that implements this interface.
-	 *
-	 * @param GF_Field $field The Gravity Forms Field object.
-	 * @param array    $settings The `form_editor_field_settings()` key.
-	 */
-	public static function add_inputs( GF_Field $field, array $settings ) : void {
-		if (
-			! in_array( self::$field_setting, $settings, true )
-		) {
-			return;
-		}
-
-		// Register the FieldChoice for the object.
-		FieldInputRegistry::register( $field, $settings );
 	}
 }

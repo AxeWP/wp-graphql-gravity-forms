@@ -210,9 +210,11 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					}
 				}
 				choices {
-					isSelected
-					text
-					value
+					... on CheckboxFieldChoice {
+						isSelected
+						text
+						value
+					}
 				}
 				conditionalLogic {
 					actionType
@@ -232,9 +234,11 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 				hasSelectAll
 				inputName
 				inputs {
-					id
-					label
-					name
+					... on CheckboxInputProperty {
+						id
+						label
+						name
+					}
 				}
 				isRequired
 				label

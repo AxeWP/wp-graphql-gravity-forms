@@ -159,12 +159,14 @@ class ProductRadioFieldTest extends FormFieldTestCase implements FormFieldTestCa
 				visibility
 				... on ProductRadioField {
 					choices {
-						formattedPrice
-						isOtherChoice
-						isSelected
-						price
-						text
-						value
+						... on ProductRadioFieldChoice {
+							formattedPrice
+							isOtherChoice
+							isSelected
+							price
+							text
+							value
+						}
 					}
 					errorMessage
 					hasChoiceValue

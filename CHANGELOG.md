@@ -17,8 +17,11 @@
 - dev!: Remove nullable `$type_registry` param from `Registrable::register()` interface method.
 - dev!: Remove the `$type_registry` param from the `graphql_gf_after_register_types` and `graphql_gf_before_register_types` actions.
 - dev!: Remove the `PropertyMapper`, `ChoiceMapper`, `InputMapper`, and `FieldProperties` PHP classes in favor of the `FormFieldRegistry`, `FieldInputRegistry` and `FieldChoiceRegistry` classes.
-- dev: Add following actions: `graphql_gf_after_register_form_field`, `graphql_gf_after_register_form_field_object`,`graphql_gf_register_form_field_inputs`, `graphql_gf_register_form_field_inputs` .
-- dev: Add the following filters: `graphql_gf_form_field_setting_choice_fields`, `graphql_gf_form_field_setting_input_fields`, `graphql_gf_registered_form_field_setting_classes`, `graphql_gf_registered_form_field_setting_choice_classes`, `graphql_gf_registered_form_field_setting_input_classes`.
+- dev: Add following actions: `graphql_gf_after_register_form_field`, `graphql_gf_after_register_form_field_object`.
+- dev: Add the following filters: 
+`graphql_gf_form_field_settings_with_inputs`
+`graphql_gf_form_field_settings_with_choices`
+`graphql_gf_form_field_setting_choice_fields`, `graphql_gf_form_field_setting_input_fields`, `graphql_gf_registered_form_field_setting_classes`, `graphql_gf_registered_form_field_setting_choice_classes`, `graphql_gf_registered_form_field_setting_input_classes`.
 - dev: Deprecate the `graphql_gf_form_field_setting_properties` filter in favor of `graphql_gf_form_field_setting_fields`.
 - dev: Deprecate the `graphql_gf_form_field_value_properties` filter in favor of `graphql_gf_form_field_value_fields`.
 - docs: replace `formId` with `id` in `submitGfForm` examples. Props: @mosesintech
