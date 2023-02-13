@@ -35,7 +35,7 @@ if ( ! function_exists( 'gf_graphql_constants' ) ) {
 	function gf_graphql_constants() : void {
 		// Plugin version.
 		if ( ! defined( 'WPGRAPHQL_GF_VERSION' ) ) {
-			define( 'WPGRAPHQL_GF_VERSION', '0.11.10' );
+			define( 'WPGRAPHQL_GF_VERSION', '0.12.0' );
 		}
 
 		// Plugin Folder Path.
