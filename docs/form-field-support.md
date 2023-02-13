@@ -32,11 +32,11 @@ Below is a list of supported editor settings:
 * `catcha_size_setting`
 * `catcha_theme_setting`
 * `catcha_type_setting`
+* `chained_choices_setting`
 * `chained_selects_alignment_setting`
 * `chained_selects_hide_inactive_setting`
 * `checkbox_label_setting`
 * `choices_setting`
-* `chained_choices_setting`
 * `columns_setting`
 * `conditional_logic_field_setting`
 * `conditional_logic_page_setting`
@@ -54,17 +54,17 @@ Below is a list of supported editor settings:
 * `disable_quantity_setting`
 * `duplicate_setting`
 * `email_confirm_setting`
-* `error_message_setting`
 * `enable_enhanced_ui_setting`
+* `error_message_setting`
 * `file_extensions_setting`
 * `file_size_setting`
 * `force_ssl_field_setting`
 * `gquiz-setting-choices`
-* `gquiz-setting-show-answer-explanation`
 * `gquiz-setting-randomize-quiz-choices`
+* `gquiz-setting-show-answer-explanation`
 * `input_mask_setting`
-* `label_setting`
 * `label_placement_setting`
+* `label_setting`
 * `maxlen_setting`
 * `maxrows_setting`
 * `multiple_files_setting`
@@ -91,12 +91,15 @@ Below is a list of supported editor settings:
 * `range_setting`
 * `rich_text_editor_setting`
 * `rules_setting`
-* `size_setting`
 * `select_all_choices_setting`
+* `size_setting`
+* `single_product_inputs_setting`
 * `sub_label_placement_setting`
 * `time_format_setting`
 
-Form fields that implement the above settings will have their GraphQL fields automatically registered to the type. Custom field settings can be registered with [the `graphql_gf_form_field_setting_fields` filter](recipes/register-custom-form-field.md).
+Each setting is registered as a GraphQL Interface. Form fields that implement the above settings will have the GraphQL Interfaces and corresponding fields automatically registered to the type.
+
+Custom field settings can be registered with [the `graphql_gf_form_field_setting_fields` filter](recipes/register-custom-form-field.md).
 
 ## Form Field entry values
 
@@ -115,13 +118,26 @@ For Gravity Forms core, these form fields are automatically registered as GraphQ
 For an example of the PostCategory field:
 
 ```graphql
- gfEntries{
+gfEntries{
   formFields {
     nodes {
       databaseId
-      ... on PostCategoryField { # the Interface
+      inputType
+      ... on GfFieldWithPostCategoryCheckboxSetting { # the Form Field Setting Interface
         hasAllCategories
-        inputType
+      }
+      ... on GfFieldWithEnhancedUISetting {
+        hasEnhancedUI
+      }
+      ... on PostCategoryCheckboxField {
+        checkboxValues {
+          id
+          value
+        }
+      }
+      # works the same as this:
+      ... on PostCategoryField { # the complex Form Field inherited interface.
+        hasAllCategories
         ... on PostCategoryCheckboxField {
           checkboxValues {
             id
@@ -133,10 +149,15 @@ For an example of the PostCategory field:
       ... on PostCategorySelectField {
         hasEnhancedUI
         value
+        hasAllCategories
+        checkboxValues {
+          id
+          value
+        }
       }
     }
   }
- }
+}
 ```
 
 Developers wishing to support a custom Gravity Forms field that can resolve into multiple input types can make use of [the `graphql_gf_form_field_child_types` filter](recipes/register-custom-form-field.md).

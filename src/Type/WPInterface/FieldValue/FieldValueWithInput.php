@@ -3,7 +3,7 @@
  * Interface - Gravity Forms field value with a connected input.
  *
  * @package WPGraphQL\GF\Type\Interface\FieldValue
- * @since   @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldValue;

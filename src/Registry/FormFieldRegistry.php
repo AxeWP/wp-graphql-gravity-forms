@@ -6,7 +6,7 @@
  * @see https://docs.gravityforms.com/gf_field/
  *
  * @package WPGraphQL\GF\Registry
- * @since   @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Registry;
@@ -349,14 +349,14 @@ class FormFieldRegistry {
 				/**
 				 * Filter to modify the Form Field GraphQL fields based on GF_Field::form_editor_field_settings().
 				 *
-				 * @deprecated @todo
+				 * @deprecated 0.12.0 Use `graphql_gf_form_field_setting_fields` instead.
 				 *
 				 * @param array    $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
 				 * @param string    $setting_key   The `form_editor_field_settings()` key.
 				 * @param GF_Field $field      The Gravity Forms Field object.
 				 * @param array    $interfaces The list of interfaces for the GraphQL type.
 				 */
-				$fields = apply_filters_deprecated( 'graphql_gf_form_field_setting_properties', [ $fields, $setting_key, $field ], '@todo', 'graphql_gf_form_field_setting_fields' );
+				$fields = apply_filters_deprecated( 'graphql_gf_form_field_setting_properties', [ $fields, $setting_key, $field ], '0.12.0', 'graphql_gf_form_field_setting_fields' );
 			}
 		}
 
@@ -435,12 +435,12 @@ class FormFieldRegistry {
 		/**
 		 * Filter to modify the Form Field value GraphQL fields.
 		 *
-		 * @deprecated @todo
+		 * @deprecated 0.12.0 Use `graphql_gf_form_field_value_fields` instead.
 		 *
 		 * @param array $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
 		 * @param GF_Field $field The Gravity Forms Field object.
 		 */
-		$fields = apply_filters_deprecated( 'graphql_gf_form_field_value_properties', [ $fields, $field ], '@todo', 'graphql_gf_form_field_value_fields' );
+		$fields = apply_filters_deprecated( 'graphql_gf_form_field_value_properties', [ $fields, $field ], '0.12.0', 'graphql_gf_form_field_value_fields' );
 
 		/**
 		 * Filter to modify the Form Field Value GraphQL fields.

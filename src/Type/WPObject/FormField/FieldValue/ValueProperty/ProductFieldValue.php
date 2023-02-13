@@ -4,7 +4,7 @@
  * An individual value property for the Product field.
  *
  * @package WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty
- * @since   @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;

@@ -9,7 +9,7 @@
 namespace WPGraphQL\GF\Interfaces;
 
 /**
- * Interface - Type.
+ * Interface - TypeWithInterfaces.
  */
 interface TypeWithInterfaces {
 	/**

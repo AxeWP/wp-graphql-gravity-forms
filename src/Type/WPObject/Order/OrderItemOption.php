@@ -3,7 +3,7 @@
  * GraphQL Object Type - Gravity Forms Entry Order Item option.
  *
  * @package WPGraphQL\GF\Type\WPObject\Order
- * @since   @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\Order;

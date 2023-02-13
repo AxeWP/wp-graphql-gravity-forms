@@ -16,7 +16,6 @@ use WPGraphQL\Data\Connection\PostObjectConnectionResolver;
 use WPGraphQL\GF\Interfaces\TypeWithConnections;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\Enum\SubmissionConfirmationTypeEnum;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - Submission Confirmation

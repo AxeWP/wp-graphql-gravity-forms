@@ -3,7 +3,7 @@
  * Interface for classes containing WordPress action/filter hooks.
  *
  * @package WPGraphQL\GF\Interfaces
- * @since 0.10.0
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Interfaces;

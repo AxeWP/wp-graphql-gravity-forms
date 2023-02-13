@@ -5,7 +5,7 @@
  * @see https://docs.gravityforms.com/confirmation/
  *
  * @package WPGraphQL\GF\Type\WPObject\Order
- * @since   @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPObject\Order;

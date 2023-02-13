@@ -3,7 +3,7 @@
  * GraphQL Interface for a FormField with the `post_category_checkbox_setting` setting.
  *
  * @package WPGraphQL\GF\Type\Interface\FieldSetting
- * @since  @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;

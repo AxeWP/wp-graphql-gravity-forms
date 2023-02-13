@@ -15,7 +15,6 @@ use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Enum\FormStatusEnum;
 use WPGraphQL\GF\Type\Input\FormsConnectionOrderbyInput;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FormsConnection

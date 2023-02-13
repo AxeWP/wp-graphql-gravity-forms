@@ -3,7 +3,7 @@
  * Abstract Class for FormField ChoiceSetting Interfaces
  *
  * @package WPGraphQL\GF\Type\Interface\FieldChoiceSetting
- * @since  @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldChoiceSetting;

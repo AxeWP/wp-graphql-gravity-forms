@@ -3,7 +3,7 @@
  * Abstract Class for FormField Setting Interfaces
  *
  * @package WPGraphQL\GF\Type\Interface\FieldSetting
- * @since  @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;

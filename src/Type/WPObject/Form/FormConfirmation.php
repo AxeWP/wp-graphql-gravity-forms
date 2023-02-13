@@ -17,7 +17,6 @@ use WPGraphQL\GF\Interfaces\TypeWithConnections;
 use WPGraphQL\GF\Type\Enum\FormConfirmationTypeEnum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\ConditionalLogic\ConditionalLogic;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FormConfirmation

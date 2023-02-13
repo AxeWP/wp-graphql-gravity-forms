@@ -11,7 +11,6 @@
 namespace WPGraphQL\GF\Connection;
 
 use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FormFieldsConnection
