@@ -3,7 +3,7 @@
  * Abstract Class for FormField InputSetting Interfaces
  *
  * @package WPGraphQL\GF\Type\Interface\FieldInputSetting
- * @since  @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldInputSetting;

@@ -6,7 +6,7 @@
  * @see https://docs.gravityforms.com/gf_field/
  *
  * @package WPGraphQL\GF\Registry
- * @since   @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Registry;

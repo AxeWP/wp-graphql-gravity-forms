@@ -3,7 +3,7 @@
  * Interface - Form Field with `choices`.
  *
  * @package WPGraphQL\GF\Type\Interface
- * @since   @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface;

@@ -3,7 +3,7 @@
  * GraphQL Interface for a FormField with the `chained_choices_setting` setting.
  *
  * @package  WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPInterface\FieldSetting
- * @since  @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPInterface\FieldSetting;

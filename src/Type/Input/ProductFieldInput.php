@@ -4,7 +4,7 @@
  * Input fields for a product.
  *
  * @package WPGraphQL\GF\Type\Input
- * @since   0.5.0
+ * @since   0.12.0
  */
 
 namespace WPGraphQL\GF\Type\Input;

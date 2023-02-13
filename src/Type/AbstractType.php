@@ -3,7 +3,7 @@
  * Abstract GraphQL Type.
  *
  * @package WPGraphQL\GF\Type
- * @since   @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type;

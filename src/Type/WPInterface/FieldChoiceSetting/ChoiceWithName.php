@@ -3,7 +3,7 @@
  * GraphQL Interface for a FormField with the `name_setting` setting.
  *
  * @package WPGraphQL\GF\Type\Interface\FieldChoiceSetting
- * @since  @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldChoiceSetting;

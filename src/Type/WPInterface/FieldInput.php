@@ -3,7 +3,7 @@
  * Interface - Gravity Forms field input.
  *
  * @package WPGraphQL\GF\Type\Interface
- * @since   0.10.0
+ * @since   0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface;

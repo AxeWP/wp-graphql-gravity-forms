@@ -1,15 +1,15 @@
 <?php
 /**
- * Interface for a GraphQL Type.
+ * Interface for a GraphQL Type with connections.
  *
  * @package WPGraphQL\GF\Interfaces
- * @since 0.0.1
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Interfaces;
 
 /**
- * Interface - Type.
+ * Interface - TypeWithConnections.
  */
 interface TypeWithConnections {
 	/**

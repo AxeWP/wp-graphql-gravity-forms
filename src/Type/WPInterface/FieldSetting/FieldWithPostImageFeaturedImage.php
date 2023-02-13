@@ -3,7 +3,7 @@
  * GraphQL Interface for a FormField with the `post_image_featured_image` setting.
  *
  * @package WPGraphQL\GF\Type\Interface\FieldSetting
- * @since  @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;

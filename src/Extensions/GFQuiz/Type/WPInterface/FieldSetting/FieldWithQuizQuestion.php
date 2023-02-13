@@ -5,7 +5,7 @@
  * It's an alias of FieldWithLabel, to make it easier for the targeted addition of GraphQL fields.
  *
  * @package  WPGraphQL\GF\Extensions\GFQuiz\Type\WPInterface\FieldSetting
- * @since  @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPInterface\FieldSetting;

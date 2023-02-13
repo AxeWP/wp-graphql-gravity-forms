@@ -3,7 +3,7 @@
  * Enum Type - AddressFieldStateEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
- * @since @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\Enum;

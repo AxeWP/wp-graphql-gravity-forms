@@ -3,7 +3,7 @@
  * GraphQL Interface for a FormField with the `gquiz-setting-choices` setting.
  *
  * @package  WPGraphQL\GF\Extensions\GFQuiz\Type\WPInterface\FieldSetting
- * @since  @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPInterface\FieldSetting;

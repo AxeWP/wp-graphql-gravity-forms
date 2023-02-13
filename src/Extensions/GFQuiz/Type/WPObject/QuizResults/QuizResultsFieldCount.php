@@ -10,7 +10,6 @@ namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\QuizResults;
 
 use WPGraphQL\GF\Interfaces\TypeWithConnections;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - QuizResultsFieldCount

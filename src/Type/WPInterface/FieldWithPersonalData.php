@@ -3,15 +3,14 @@
  * Interface - Form Field personal data.
  *
  * @package WPGraphQL\GF\Type\Interface
- * @since   0.10.0
+ * @since   0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface;
 
 use GF_Field;
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Type\WPObject\FormField\FieldDataPolicy;
-use WPGraphQL\Registry\TypeRegistry;
+use WPGraphQL\GF\Type\WPObject\FormField\FormFieldDataPolicy;
 
 /**
  * Class - FieldWithPersonalData
@@ -37,7 +36,7 @@ class FieldWithPersonalData extends AbstractInterface {
 	public static function get_fields() : array {
 		return [
 			'personalData' => [
-				'type'        => FieldDataPolicy::$type,
+				'type'        => FormFieldDataPolicy::$type,
 				'description' => __( 'The form field-specifc policies for exporting and erasing personal data.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( GF_Field $source, array $args, AppContext $context ) {
 					if ( empty( $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] ) ) {

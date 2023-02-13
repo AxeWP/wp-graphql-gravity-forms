@@ -5,7 +5,7 @@
  * This isnt a real GF setting, as the inputs are added directly to GF_Field_SingleProduct.
  *
  * @package WPGraphQL\GF\Type\Interface\FieldSetting
- * @since  @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;

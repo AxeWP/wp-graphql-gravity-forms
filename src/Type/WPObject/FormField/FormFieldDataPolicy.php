@@ -11,9 +11,9 @@ namespace WPGraphQL\GF\Type\WPObject\FormField;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 /**
- * Class - FieldDataPolicy
+ * Class - FormFieldDataPolicy
  */
-class FieldDataPolicy extends AbstractObject {
+class FormFieldDataPolicy extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

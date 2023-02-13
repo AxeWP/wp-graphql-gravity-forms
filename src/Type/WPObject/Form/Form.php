@@ -28,7 +28,6 @@ use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Button;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - Form

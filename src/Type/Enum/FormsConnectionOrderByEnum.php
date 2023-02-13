@@ -3,7 +3,7 @@
  * Enum Type - FormsConnectionOrderByEnum
  *
  * @package WPGraphQL\GF\Type\Enum,
- * @since   0.4.0
+ * @since   0.12.0
  */
 
 namespace WPGraphQL\GF\Type\Enum;

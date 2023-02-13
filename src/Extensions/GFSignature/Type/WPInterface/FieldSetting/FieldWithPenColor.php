@@ -3,7 +3,7 @@
  * GraphQL Interface for a FormField with the `pen_color_setting` setting.
  *
  * @package  WPGraphQL\GF\Extensions\GFSignature\Type\WPInterface\FieldSetting
- * @since  @todo
+ * @since 0.12.0
  */
 
 namespace WPGraphQL\GF\Extensions\GFSignature\Type\WPInterface\FieldSetting;
