@@ -1,22 +1,58 @@
 # Changelog
 
 ## Unreleased
-- feat!: Update minimum required WPGraphQL version to v1.9.0.
-- feat: Check if plugin dependences meet the minimum version requirements.
-- feat: Add `connectedChoice` and `connectedInput` to `CheckboxFieldValue` type.
-- feat: Add `orderSummary` to `GfEntry` interface.
-- feat: Add support for `Option`, `Product`, `Quantity`, `Shipping`, and `Total` Gravity Forms fields.
-- feat: Refactor `GfFormField` field settings, choices, and inputs to use GraphQL interfaces.
-- feat: Deprecate `FormsConnectionOrderbyInput.field` in favor of `FormsConnectionOrderbyInput.column`.
+
+## v0.12.0 - Form Field Interfaces and Pricing Fields
+
+**:warning: This release contains multiple breaking changes.**
+
+This _major_ release refactors the way Gravity Forms fields are registered in GraphQL, by using GraphQL interfaces to define common field settings, choices, and inputs. This allows for more flexibility in how fields are registered and consumed, and allows for DRYer GraphQL queries.
+
+This release also adds explicit support for Pricing Fields. Specifically, we've added support for the `Option`, `Product`, `Quantity`, `Shipping`, and `Total` fields, and the `orderSummary` field on `GfEntry`.
+
+Lastly, we've exposed the `connectedChoice` and `connectedInput` fields on `CheckboxFieldValue` objects, added some additional test coverage, and squashed a few bugs along the way.
+
+**Note**: The minimum version of WPGraphQL has been bumped to v1.9.0.
+
+### What's New
+
+* **🚨 Breaking**: We've refactored the way Gravity Forms fields are registered in GraphQL, by using GraphQL interfaces derived from the Gravity Forms Field Settings. **Note**: This is a breaking change, and will require you to update your GraphQL queries for `formField.choices` and `formField.inputs` to use the new `FormFieldChoice` and `FormFieldInput` interfaces, respectively.
+* We've added explicit support for the `Option`, `Product`, `Quantity`, `Shipping`, and `Total` Gravity Forms fields.
+* We've added the new `orderSummary` field to `GfEntry` objects, which contains all the order details for the form submission.
+* We've exposed the `connectedChoice` and `connectedInput` fields to `CheckboxFieldValue` objects, to make it easier to access specific values of the selected choices and inputs without hacky workarounds.
+* We've _deprecated_ the `FormField.id` field in favor of `FormField.databaseId`, which is more consistent with WPGraphQL's naming conventions. **Note**: `FormField.id` will change its type to a global (Relay) ID in an upcoming release.
+
+### Fixes
+
 - fix: Ensure latest mutation input data is used to prepare the field values on update mutations.
 - fix: Check for falsy `personalData` when resolving the form model.
-- dev!: Audit and fix generated type names.
-- dev!: change `AddressField.defaultState` and `AddressField.defaultProvince` to respective `AddressField{Province|State}Enum`.
+
+### **🚨 Breaking** Schema Changes
+
+* Field `AddressField.defaultProvince` changed type from String to `AddressFieldProvinceEnum`.
+* Field `AddressField.defaultState` changed type from String to `AddressFieldProvinceEnum`.
+* All `{FieldType}.inputs` fields changed type from [AddressInputProperty] to `[GfFieldInput]`.
+* Field `{FieldType}.choices` changed type from [ChainedSelectFieldChoice] to `[GfFieldChoice]`.
+* Enum value `SUBMIT` was removed from enum `FormFieldTypeEnum`.
+* **🚨 Breaking**: `PostCategoryFieldChoice` kind changed from `ObjectTypeDefinition` to `InterfaceTypeDefinition`.
+* Type `PostCategoryInputProperty` was removed.
+* Type `PostCustomInputProperty` was removed.
+* Type `PostTagsInputProperty` was removed.
+* `QuizFieldChoice` kind changed from `ObjectTypeDefinition` to InterfaceTypeDefinition.
+* Type `QuizInputProperty` was removed.
+* Type `SubmitField` was removed.
+
+### Misc
+- feat: Deprecate `FormsConnectionOrderbyInput.field` in favor of `FormsConnectionOrderbyInput.column`
+
+### Behind the Scenes
+- feat!: Update minimum required WPGraphQL version to v1.9.0.
 - dev!: Move `TypeRegistry` classes to `WPGraphQL\GF\Registry` namespace.
 - dev!: Register each GraphQL type on its own `add_action()` call.
 - dev!: Remove nullable `$type_registry` param from `Registrable::register()` interface method.
 - dev!: Remove the `$type_registry` param from the `graphql_gf_after_register_types` and `graphql_gf_before_register_types` actions.
 - dev!: Remove the `PropertyMapper`, `ChoiceMapper`, `InputMapper`, and `FieldProperties` PHP classes in favor of the `FormFieldRegistry`, `FieldInputRegistry` and `FieldChoiceRegistry` classes.
+- dev!: Check if plugin dependences meet the minimum version requirements.
 - dev: Add following actions: `graphql_gf_after_register_form_field`, `graphql_gf_after_register_form_field_object`.
 - dev: Add the following filters: 
 `graphql_gf_form_field_settings_with_inputs`
@@ -24,7 +60,6 @@
 `graphql_gf_form_field_setting_choice_fields`, `graphql_gf_form_field_setting_input_fields`, `graphql_gf_registered_form_field_setting_classes`, `graphql_gf_registered_form_field_setting_choice_classes`, `graphql_gf_registered_form_field_setting_input_classes`.
 - dev: Deprecate the `graphql_gf_form_field_setting_properties` filter in favor of `graphql_gf_form_field_setting_fields`.
 - dev: Deprecate the `graphql_gf_form_field_value_properties` filter in favor of `graphql_gf_form_field_value_fields`.
-- docs: replace `formId` with `id` in `submitGfForm` examples. Props: @mosesintech
 - chore: Refactor `FormsConnectionResolver` to use new `AbstractConnectionResolver` methods.
 - chore: Add `automattic/vipcs` Code Standard ruleset.
 - ci: Update GitHub Action versions used in workflows to latest.
@@ -35,8 +70,12 @@
 - tests: Rename FormFieldTestCase test methods for specificity.
 - tests: Format and harden.
 - tests: Add tests for `submitGfForm` mutation.
+- docs: replace `formId` with `id` in `submitGfForm` examples. Props: @mosesintech
+
 
 ## v0.11.11 - Bugfix
+
+This _minor_ release fixes a bug where the `ip` field on `GfEntry` was not being properly stored when submitting a form.
 
 - fix: Properly store provided IP when submitting an entry. Thanks @marcusforsberg !
 - chore: Update composer deps.
