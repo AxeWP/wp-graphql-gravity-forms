@@ -19,9 +19,14 @@ use WPGraphQL\GF\Type\Enum;
  */
 class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	/**
+	 * @var \WpunitTester
+	 */
+	protected $tester;
+
+	/**
 	 * Holds the User ID of a user whith the "admin" role. For use through the tests for the purpose of testing user access levels.
 	 *
-	 * @var WP_User
+	 * @var \WP_User
 	 */
 	protected $admin;
 

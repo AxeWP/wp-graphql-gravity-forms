@@ -99,6 +99,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$this->factory->draft_entry->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
 		GFFormsModel::set_current_lead( null );
+		unset( $_POST );
 
 		// Then...
 		parent::tearDown();
@@ -330,7 +331,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
-	protected function runTestSubmit() : void {
+	protected function runtestSubmitForm() : void {
 		$this->is_draft = false;
 		$form           = $this->factory->form->get_object_by_id( $this->form_id );
 		wp_set_current_user( $this->admin->ID );
@@ -364,7 +365,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
-	protected function runTestUpdate() : void {
+	protected function runtestUpdateEntry() : void {
 		$this->is_draft = false;
 		wp_set_current_user( $this->admin->ID );
 

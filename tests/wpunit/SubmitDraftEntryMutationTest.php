@@ -80,7 +80,7 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 		$this->factory->entry->delete( $expected['id'] );
 	}
 
-	public function testSubmitWithURLConfirmation() : void {
+	public function testSubmitWithUrlConfirmation() : void {
 		$form = GFAPI::get_form( $this->form_id );
 
 		$confirmation_id = array_keys( $form['confirmations'] )[0];

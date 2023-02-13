@@ -8,6 +8,7 @@
 
 namespace WPGraphQL\GF\Data\FieldValueInput;
 
+use GFCommon;
 use GraphQL\Error\UserError;
 
 /**
@@ -52,7 +53,7 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 			[]
 		);
 
-		foreach ( $this->args as $single_value ) {
+		foreach ( $this->args as $key => $single_value ) {
 			// Make sure the input ID passed in exists.
 			if ( ! isset( $values_to_save[ (string) $single_value['inputId'] ] ) ) {
 				throw new UserError(
@@ -63,6 +64,11 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 						$single_value['inputId']
 					)
 				);
+			}
+
+			// If the field has prices, append the price to the value.
+			if ( ! empty( $this->field->enablePrice ) && ! empty( $single_value['value'] ) && false === strpos( $single_value['value'], '|' ) ) {
+				$single_value['value'] .= '|' . GFCommon::to_number( $this->field->choices[ $key ]['price'] ?? '0' );
 			}
 
 			// Overwrite initial empty string with the value passed in.

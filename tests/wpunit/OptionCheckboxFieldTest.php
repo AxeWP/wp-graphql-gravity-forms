@@ -29,14 +29,14 @@ class OptionCheckboxFieldTest extends FormFieldTestCase implements FormFieldTest
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
-	public function testSubmit(): void {
-		$this->runTestSubmit();
+	public function testSubmitForm(): void {
+		$this->runtestSubmitForm();
 	}
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
-	public function testUpdate(): void {
-		$this->runTestUpdate();
+	public function testUpdateEntry(): void {
+		$this->runtestUpdateEntry();
 	}
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
@@ -137,7 +137,7 @@ class OptionCheckboxFieldTest extends FormFieldTestCase implements FormFieldTest
 			[
 				'inputId'         => (float) $this->fields[1]['inputs'][0]['id'],
 				'text'            => $this->fields[1]['choices'][0]['text'],
-				'value'           => $this->fields[1]['choices'][0]['value'],
+				'value'           => $this->fields[1]['choices'][0]['value'] . '|' . GFCommon::to_number( $this->fields[1]['choices'][0]['price'] ),
 				'connectedChoice' => [
 					'formattedPrice' => $this->fields[1]['choices'][0]['price'] ?? null,
 					'isSelected'     => $this->fields[1]['choices'][0]['isSelected'] ?? null,
@@ -171,7 +171,7 @@ class OptionCheckboxFieldTest extends FormFieldTestCase implements FormFieldTest
 			[
 				'inputId'         => (float) $this->fields[1]['inputs'][2]['id'],
 				'text'            => $this->fields[1]['choices'][2]['text'],
-				'value'           => $this->fields[1]['choices'][2]['value'],
+				'value'           => $this->fields[1]['choices'][2]['value'] . '|' . GFCommon::to_number( $this->fields[1]['choices'][2]['price'] ),
 				'connectedChoice' => [
 					'formattedPrice' => $this->fields[1]['choices'][2]['price'] ?? null,
 					'isSelected'     => $this->fields[1]['choices'][2]['isSelected'] ?? null,
@@ -219,12 +219,12 @@ class OptionCheckboxFieldTest extends FormFieldTestCase implements FormFieldTest
 			[
 				'inputId' => (float) $this->fields[1]['inputs'][1]['id'],
 				'text'    => $this->fields[1]['choices'][1]['text'],
-				'value'   => (string) $this->fields[1]['choices'][1]['value'],
+				'value'   => (string) $this->fields[1]['choices'][1]['value'] . '|' . GFCommon::to_number( $this->fields[1]['choices'][1]['price'] ),
 			],
 			[
 				'inputId' => (float) $this->fields[1]['inputs'][2]['id'],
 				'text'    => $this->fields[1]['choices'][2]['text'],
-				'value'   => (string) $this->fields[1]['choices'][2]['value'],
+				'value'   => (string) $this->fields[1]['choices'][2]['value'] . '|' . GFCommon::to_number( $this->fields[1]['choices'][2]['price'] ),
 			],
 		];
 	}

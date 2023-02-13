@@ -512,7 +512,8 @@ class FormQueriesTest extends GFGraphQLTestCase {
 						'quiz',
 						[
 							$this->expectedObject(
-								'failConfirmation', [
+								'failConfirmation',
+								[
 									$this->expectedField( 'isAutoformatted', empty( $form['gravityformsquiz']['failConfirmationDisableAutoformat'] ) ),
 									$this->expectedField( 'message', $form['gravityformsquiz']['failConfirmationMessage'] ),
 								]
@@ -520,12 +521,12 @@ class FormQueriesTest extends GFGraphQLTestCase {
 							// This is null, since grading type is PASSFAIL.
 							$this->expectedField( 'grades', static::IS_NULL ),
 							// $this->expectedNode(
-							// 	'grades',
-							// 	[
-							// 		$this->expectedField( 'text', $form['gravityformsquiz']['grades'][0]['text'] ),
-							// 		$this->expectedField( 'value', $form['gravityformsquiz']['grades'][0]['value'] ),
-							// 	],
-							// 	0
+							// 'grades',
+							// [
+							// $this->expectedField( 'text', $form['gravityformsquiz']['grades'][0]['text'] ),
+							// $this->expectedField( 'value', $form['gravityformsquiz']['grades'][0]['value'] ),
+							// ],
+							// 0
 							// ),
 							$this->expectedField( 'gradingType', GFHelpers::get_enum_for_value( QuizEnum\QuizFieldGradingTypeEnum::$type, $form['gravityformsquiz']['grading'] ) ),
 							$this->expectedField( 'hasInstantFeedback', ! empty( $form['gravityformsquiz']['instantFeedback'] ) ),

@@ -31,6 +31,10 @@
 - ci: Update Node version to 16+.
 - ci: Run actions on organization repository.
 - ci: Add coverage to Code Climate.
+- ci: Set config to skip GF Setup screen.
+- tests: Rename FormFieldTestCase test methods for specificity.
+- tests: Format and harden.
+- tests: Add tests for `submitGfForm` mutation.
 
 ## v0.11.11 - Bugfix
 

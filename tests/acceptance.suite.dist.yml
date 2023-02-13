@@ -5,7 +5,7 @@
 # Use WPDb to set up your initial database fixture.
 # If you need both WPWebDriver and WPBrowser tests - create a separate suite.
 
-actor: AcceptanceTesterActions
+actor: AcceptanceTester
 modules:
     enabled:
         - Asserts

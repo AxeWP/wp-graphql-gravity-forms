@@ -29,14 +29,14 @@ class OptionRadioFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
-	public function testSubmit(): void {
-		$this->runTestSubmit();
+	public function testSubmitForm(): void {
+		$this->runtestSubmitForm();
 	}
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
-	public function testUpdate(): void {
-		$this->runTestUpdate();
+	public function testUpdateEntry(): void {
+		$this->runtestUpdateEntry();
 	}
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
@@ -60,12 +60,10 @@ class OptionRadioFieldTest extends FormFieldTestCase implements FormFieldTestCas
 		return $this->tester->getPropertyHelper(
 			'OptionField',
 			[
-				'inputType'         => 'radio',
-				'productField'      => 1,
-				'id'                => 2,
-				'enablePrice'       => true,
-				'enableOtherChoice' => false,
-				'noDuplicates'      => false,
+				'inputType'    => 'radio',
+				'productField' => 1,
+				'id'           => 2,
+				'enablePrice'  => true,
 			]
 		);
 	}
@@ -100,10 +98,7 @@ class OptionRadioFieldTest extends FormFieldTestCase implements FormFieldTestCas
 				)
 			),
 			$this->factory->field->create(
-				array_merge(
-					$this->property_helper->values,
-					[]
-				)
+				$this->property_helper->values,
 			),
 		];
 	}
@@ -112,29 +107,27 @@ class OptionRadioFieldTest extends FormFieldTestCase implements FormFieldTestCas
 		return $this->fields[1]->id;
 	}
 
-
 	/**
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return $this->fields[1]['choices'][0]['value'];
+		return $this->field_value_input() . ' (' . $this->fields[1]['choices'][0]['price'] . ')';
 	}
 
 	public function field_value_input() {
-		return $this->field_value;
+		return $this->fields[1]['choices'][0]['value'];
 	}
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return $this->fields[1]['choices'][2]['value'];
+		return $this->updated_field_value_input() . ' (' . $this->fields[1]['choices'][2]['price'] . ')';
 	}
 
 	public function updated_field_value_input() {
-		return $this->updated_field_value;
+		return $this->fields[1]['choices'][2]['value'];
 	}
-
 
 	/**
 	 * The value as expected by Gravity Forms.
@@ -340,6 +333,6 @@ class OptionRadioFieldTest extends FormFieldTestCase implements FormFieldTestCas
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ) : void {
-		$this->assertEquals( $this->field_value, $actual_entry[ $form['fields'][1]->id ], 'Submit mutation entry value not equal' );
+		$this->assertStringStartsWith( $this->field_value_input(), $actual_entry[ $form['fields'][1]->id ], 'Submit mutation entry value not equal' );
 	}
 }

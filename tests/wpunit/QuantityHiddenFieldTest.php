@@ -29,14 +29,14 @@ class QuantityHiddenFieldTest extends FormFieldTestCase implements FormFieldTest
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
-	public function testSubmit(): void {
-		$this->runTestSubmit();
+	public function testSubmitForm(): void {
+		$this->runtestSubmitForm();
 	}
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
-	public function testUpdate(): void {
-		$this->runTestUpdate();
+	public function testUpdateEntry(): void {
+		$this->runtestUpdateEntry();
 	}
 	/**
 	 * Tests updating the draft field value with updateGfEntry.

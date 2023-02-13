@@ -2,10 +2,8 @@
 
 class ActivationCest {
 
-
-
 	// tests
-	public function testActivation( AcceptanceTesterActions $I ) {
+	public function testActivation( AcceptanceTester $I ) {
 		$pluginSlug = 'wp-graphql-gravity-forms';
 
 		$I->wantTo( 'activate and deactivate the plugin correctly' );

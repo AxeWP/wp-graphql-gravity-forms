@@ -192,4 +192,10 @@ post_setup() {
 
 	echo "Installed plugins"
 	wp plugin list
+
+	wp config set WP_DEBUG true --raw --type=constant
+	wp config set WP_DEBUG_LOG true --raw --type=constant
+	wp config set GRAPHQL_DEBUG true --raw --type=constant
+
+	wp option update gf_env_hide_setup_wizard true
 }

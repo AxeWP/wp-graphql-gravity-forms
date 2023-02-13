@@ -4,7 +4,7 @@ use WPGraphQL\GF\GF;
 
 class GFTest extends \Codeception\TestCase\WPTestCase {
 	/**
-	 * @var \WpunitTesterActions
+	 * @var \WpunitTester
 	 */
 	protected $tester;
 	public $instance;

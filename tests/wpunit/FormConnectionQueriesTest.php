@@ -76,7 +76,6 @@ class FormConnectionQueriesTest extends GFGraphQLTestCase {
 	}
 
 	public function testForwardPagination() {
-
 		$query = $this->getQuery();
 
 		$wp_query = GFAPI::get_forms( null, null, 'id', 'DESC' );
@@ -153,7 +152,6 @@ class FormConnectionQueriesTest extends GFGraphQLTestCase {
 	}
 
 	public function testBackwardPagination() {
-
 		$query = $this->getQuery();
 
 		$wp_query = GFAPI::get_forms( null, null, 'id', 'ASC' );
@@ -339,7 +337,7 @@ class FormConnectionQueriesTest extends GFGraphQLTestCase {
 			'where' => [
 				'orderby' => [
 					'column' => 'ID',
-					'order' => 'DESC',
+					'order'  => 'DESC',
 				],
 			],
 		];
@@ -357,7 +355,7 @@ class FormConnectionQueriesTest extends GFGraphQLTestCase {
 			'where' => [
 				'orderby' => [
 					'column' => 'TITLE',
-					'order' => 'ASC',
+					'order'  => 'ASC',
 				],
 			],
 		];
