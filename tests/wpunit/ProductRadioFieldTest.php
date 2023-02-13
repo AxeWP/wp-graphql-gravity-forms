@@ -146,7 +146,6 @@ class ProductRadioFieldTest extends FormFieldTestCase implements FormFieldTestCa
 				description
 				descriptionPlacement
 				displayOnly
-				id
 				inputName
 				inputType
 				label

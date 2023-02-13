@@ -16,7 +16,7 @@ The `id` input accepts either the Gravity Forms form ID (`idType: DATABASE_ID`) 
     dateCreated
     formFields {
       nodes {
-        id
+        databaseId
         type
         ... on TextField {
           label
@@ -71,7 +71,7 @@ The code comments in the example query below shows how you can fetch and filter 
         formFields(first: 300) {
           nodes {
             type
-            id
+            databaseId
             cssClass
             ... on TextField {
               label

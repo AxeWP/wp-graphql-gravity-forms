@@ -24,7 +24,7 @@ The `id` input accepts either the Gravity Forms Entry ID ( `idType: DATABASE_ID`
     isDraft
     formFields(first: 300) {
       nodes {
-        id
+        databaseId
         type
         ... on TextField {
           label
@@ -47,7 +47,7 @@ The `id` input accepts either the Gravity Forms Entry ID ( `idType: DATABASE_ID`
     isStarred
     formFields(first: 300) {
       nodes {
-        id
+        databaseId
         type
         ... on TextField {
           label
@@ -74,7 +74,7 @@ Entries that include [Pricing Fields](https://docs.gravityforms.com/category/use
       items {
         connectedFormField {
           ... on ProductSingleField {
-            id
+            databaseId
           }
         }
         currency
@@ -90,7 +90,7 @@ Entries that include [Pricing Fields](https://docs.gravityforms.com/category/use
         options {
           connectedFormField{
             ... on OptionCheckboxField {
-              id
+              databaseId
             }
           }
           fieldLabel

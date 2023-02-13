@@ -148,7 +148,6 @@ class ProductSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 				description
 				descriptionPlacement
 				displayOnly
-				id
 				inputName
 				inputType
 				label

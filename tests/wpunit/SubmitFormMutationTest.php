@@ -670,7 +670,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		$this->assertEquals( 'USD', $actual['data']['submitGfForm']['entry']['orderSummary']['currency'] );
 
 		// Test first Order Item.
-		$this->assertEquals( $fields[0]->id, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][0]['connectedFormField']['id'] );
+		$this->assertEquals( $fields[0]->id, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][0]['connectedFormField']['databaseId'] );
 		$this->assertEquals( 'USD', $actual['data']['submitGfForm']['entry']['orderSummary']['items'][0]['currency'] );
 		$this->assertStringContainsString( $actual['data']['submitGfForm']['entry']['orderSummary']['items'][0]['price'], $fields[0]->basePrice );
 		$this->assertEquals( 2, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][0]['quantity'] );
@@ -678,13 +678,13 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		$this->assertEquals( $expected_subtotal_one, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][0]['subtotal'] );
 
 		// Test second Order Item.
-		$this->assertEquals( $fields[1]->id, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['connectedFormField']['id'] );
+		$this->assertEquals( $fields[1]->id, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['connectedFormField']['databaseId'] );
 		$this->assertEquals( 'USD', $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['currency'] );
 		$this->assertStringContainsString( $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['price'], $fields[1]->basePrice );
 		$this->assertEquals( 2, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['quantity'] );
 		// Test options.
 		$this->assertNotEmpty( $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['options'] );
-		$this->assertEquals( $fields[3]->id, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['options'][0]['connectedFormField']['id'] );
+		$this->assertEquals( $fields[3]->id, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['options'][0]['connectedFormField']['databaseId'] );
 		$this->assertEquals( $fields[3]->label, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['options'][0]['fieldLabel'] );
 		$this->assertEquals( $fields[3]->choices[0]['value'], $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['options'][0]['name'] );
 		$this->assertEquals( $fields[3]->label . ': ' . $fields[3]->choices[0]['value'], $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['options'][0]['optionLabel'] );
@@ -699,7 +699,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		$this->assertEquals( $expected_subtotal_two, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][1]['subtotal'] );
 
 		// Test shipping field.
-		$this->assertEquals( $fields[4]->id, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][2]['connectedFormField']['id'] );
+		$this->assertEquals( $fields[4]->id, $actual['data']['submitGfForm']['entry']['orderSummary']['items'][2]['connectedFormField']['databaseId'] );
 		$this->assertEquals( 'USD', $actual['data']['submitGfForm']['entry']['orderSummary']['items'][2]['currency'] );
 		$this->assertStringContainsString( $actual['data']['submitGfForm']['entry']['orderSummary']['items'][2]['price'], $fields[4]->basePrice );
 		$this->assertTrue( $actual['data']['submitGfForm']['entry']['orderSummary']['items'][2]['isShipping'] );
@@ -793,8 +793,8 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 						orderSummary{
 							currency
 							items{
-								connectedFormField{
-									id
+								connectedFormField {
+									databaseId
 								}
 								currency
 								description
@@ -808,7 +808,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 								name
 								options{
 									connectedFormField {
-										id
+										databaseId
 									}
 									fieldLabel
 									name
