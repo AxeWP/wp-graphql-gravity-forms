@@ -144,7 +144,6 @@ class ProductHiddenFieldTest extends FormFieldTestCase implements FormFieldTestC
 				description
 				descriptionPlacement
 				displayOnly
-				id
 				inputName
 				inputType
 				label

@@ -135,7 +135,6 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 		return '
 			... on CaptchaField {
 				displayOnly
-				id
 				inputType
 				layoutGridColumnSpan
 				layoutSpacerGridColumnSpan

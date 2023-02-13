@@ -88,6 +88,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 					formFields {
 						nodes {
 							id
+							databaseId
 						}
 					}
 					id
@@ -285,6 +286,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 								'nodes',
 								[
 									$this->expectedField( 'id', (int) $form['fields'][0]['id'] ),
+									$this->expectedField( 'databaseId', (int) $form['fields'][0]['id'] ),
 								]
 							),
 						]

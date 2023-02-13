@@ -20,7 +20,7 @@ This method is best if you have a small form with a limited number of field type
     databaseId
     formFields(first: 300) {
       nodes {
-        id
+        databaseId
         type
         cssClass
         ... on TextField {
@@ -65,7 +65,7 @@ Luckily, we can use [GraphQL Interfaces](https://graphql.org/learn/schema/#inter
     databaseId
     formFields(where: {pageNumber: 1}) {
       nodes {
-        id
+        databaseId
         inputType
         type
         ... on GfFieldWithLabelSetting {
@@ -185,10 +185,11 @@ The code comments in the example query below explain how you can get a filtered 
         # Filter form fields by the page number in multi-page forms.
         pageNumber: 2
       }
-      ) {
+    ) {
       nodes {
-        id
+        databaseId
         type
+      }
     }
   }
 }

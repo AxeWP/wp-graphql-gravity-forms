@@ -157,7 +157,6 @@ class ProductCalculationFieldTest extends FormFieldTestCase implements FormField
 				description
 				descriptionPlacement
 				displayOnly
-				id
 				inputName
 				inputType
 				label

@@ -118,7 +118,7 @@ For an example of the PostCategory field:
  gfEntries{
   formFields {
     nodes {
-      id
+      databaseId
       ... on PostCategoryField { # the Interface
         hasAllCategories
         inputType
