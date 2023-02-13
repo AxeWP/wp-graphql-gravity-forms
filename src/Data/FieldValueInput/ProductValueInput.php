@@ -54,6 +54,11 @@ class ProductValueInput extends AbstractFieldValueInput {
 			return true;
 		}
 
+		// Fields with a separate quantity are valid, and filled out automatically.
+		if ( ! empty( $this->field->disableQuantity ) ) {
+			return true;
+		}
+
 		// Fields using `value` must use it as the quantity.
 		if ( isset( $this->input_args['value'] ) ) {
 			if ( ! floatval( $this->input_args['value'] ) ) {
@@ -91,11 +96,17 @@ class ProductValueInput extends AbstractFieldValueInput {
 	protected function prepare_value() {
 		$field = $this->field;
 
-		return [
+		$prepared_value = [
 			(string) $field->inputs[0]['id'] => $field->label,
 			(string) $field->inputs[1]['id'] => empty( $this->args['price'] ) ? $field->basePrice : GFCommon::format_number( $this->args['price'], 'currency' ),
-			(string) $field->inputs[2]['id'] => (float) $this->args['quantity'],
 		];
+
+		// Only add quantity if the field supports it.
+		if ( empty( $field->disableQuantity ) ) {
+			$prepared_value[ (string) $field->inputs[2]['id'] ] = (float) $this->args['quantity'];
+		}
+
+		return $prepared_value;
 	}
 
 	/**

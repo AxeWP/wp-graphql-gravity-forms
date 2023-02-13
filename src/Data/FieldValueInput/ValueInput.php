@@ -32,8 +32,8 @@ class ValueInput extends AbstractFieldValueInput {
 	 */
 	protected function prepare_value() : string {
 		// Handle choices with price.
-		if ( property_exists( $this->field, 'enablePrice' ) && $this->field->enablePrice && false === strpos( $this->args, '|' ) ) {
-			$value_key  = property_exists( $this->field, 'enableChoiceValue' ) && $this->field->enableChoiceValue ? 'value' : 'text';
+		if ( ! empty( $this->field->enablePrice ) && false === strpos( $this->args, '|' ) ) {
+			$value_key  = ! empty( $this->field->enablePrice ) || ! empty( $this->field->enableChoiceValue ) ? 'value' : 'text';
 			$choice_key = array_search( $this->args, array_column( $this->field->choices, $value_key ), true );
 			$choice     = $this->field->choices[ $choice_key ];
 			$price      = rgempty( 'price', $choice ) ? 0 : GFCommon::to_number( rgar( $choice, 'price' ) );

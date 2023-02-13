@@ -171,6 +171,7 @@ class ProductSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 					}
 					errorMessage
 					hasAutocomplete
+					autocompleteAttribute
 					hasChoiceValue
 					hasEnhancedUI
 					isRequired

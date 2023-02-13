@@ -11,7 +11,6 @@
 namespace WPGraphQL\GF\Mutation;
 
 use GFAPI;
-use GF_Field;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
