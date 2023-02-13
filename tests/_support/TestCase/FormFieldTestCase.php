@@ -99,6 +99,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$this->factory->draft_entry->delete( $this->draft_token );
 		$this->factory->form->delete( $this->form_id );
 		GFFormsModel::set_current_lead( null );
+		unset( $_POST );
 
 		// Then...
 		parent::tearDown();

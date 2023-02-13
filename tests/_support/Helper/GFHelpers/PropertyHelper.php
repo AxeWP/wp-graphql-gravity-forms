@@ -149,7 +149,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function disableQuantity( $value = null ) : bool {
-		return null !== $value ? $value : $this->dummy->yesno();
+		return null !== $value ? $value : false;
 	}
 
 	public function disableMargins( $value = null ) : bool {
@@ -211,6 +211,10 @@ class PropertyHelper extends GFHelpers {
 
 	public function enablePasswordInput( $value = null ) : bool {
 		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
+	}
+
+	public function enablePrice( $value = null ) : bool {
+		return null !== $value ? ! empty( $value ) : true;
 	}
 
 	public function gquizEnableRandomizeQuizChoices( bool $value = null ) : bool {

@@ -125,7 +125,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 		// Test with bad ID.
 		$variables = [
-			'id'         => 99999999,
+			'id'     => 99999999,
 			'idType' => 'DATABASE_ID',
 		];
 

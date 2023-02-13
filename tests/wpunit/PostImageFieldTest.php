@@ -55,7 +55,7 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img2.png', $perms );
 
-		add_filter( 'gform_gf_field_create', [$this, 'mock_post_image_field'], 10, 2 );
+		add_filter( 'gform_gf_field_create', [ $this, 'mock_post_image_field' ], 10, 2 );
 
 		parent::setUp();
 
@@ -69,7 +69,7 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 */
 	public function tearDown(): void {
 		GFFormsModel::delete_files( $this->entry_id, $this->factory->form->get_object_by_id( $this->form_id ) );
-		remove_filter( 'gform_gf_field_create', [$this, 'mock_post_image_field'], 10 );
+		remove_filter( 'gform_gf_field_create', [ $this, 'mock_post_image_field' ], 10 );
 
 		parent::tearDown();
 	}
@@ -457,7 +457,7 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	}
 
 	public function mock_post_image_field( $field, $properties ) {
-		if( $field->type !== 'post_image' || $field instanceof FooPostImage ) {
+		if ( $field->type !== 'post_image' || $field instanceof FooPostImage ) {
 			return $field;
 		}
 

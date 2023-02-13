@@ -682,6 +682,12 @@ class Wpunit extends \Codeception\Module {
 			'labelPlacement',
 			'size',
 			[ 'type' => 'option' ],
+			'productField',
+			'enablePrice',
+			[ 'enableOtherChoice' => false ],
+			'noDuplicates',
+			'enableAutocomplete',
+			[ 'enableEnhancedUI' => null ],
 		];
 	}
 
@@ -892,7 +898,11 @@ class Wpunit extends \Codeception\Module {
 			'labelPlacement',
 			'noDuplicates',
 			'size',
+			'rangeMin',
+			'rangeMax',
 			[ 'type' => 'product' ],
+			[ 'autocompleteAttribute' => null ],
+			[ 'disableQuantity' => false ],
 		];
 	}
 
@@ -915,6 +925,7 @@ class Wpunit extends \Codeception\Module {
 			'noDuplicates',
 			'placeholder',
 			'size',
+			'productField',
 			[ 'type' => 'quantity' ],
 		];
 	}
@@ -1093,6 +1104,7 @@ class Wpunit extends \Codeception\Module {
 			'placeholder',
 			'size',
 			[ 'type' => 'shipping' ],
+			'basePrice',
 		];
 	}
 
@@ -1302,40 +1314,40 @@ class Wpunit extends \Codeception\Module {
 				'enableHoneypot'             => false,
 				'firstPageCssClass'          => 'first-page-css-class',
 				'gravityformsquiz'           => [
-					'shuffleFields' => false,
-					'instantFeedback' => true,
-					'grading' => 'passfail',
-					'grades'  => [
+					'shuffleFields'                       => false,
+					'instantFeedback'                     => true,
+					'grading'                             => 'passfail',
+					'grades'                              => [
 						[
-							'text' => 'A',
+							'text'  => 'A',
 							'value' => 90,
 						],
 						[
-							'text' => 'B',
+							'text'  => 'B',
 							'value' => 80,
 						],
 						[
-							'text' => 'C',
+							'text'  => 'C',
 							'value' => 70,
 						],
 						[
-							'text' => 'D',
+							'text'  => 'D',
 							'value' => 60,
 						],
 						[
-							'text' => 'F',
+							'text'  => 'F',
 							'value' => 0,
 						],
 					],
-					'passPercent' => 50,
-					'passfailDisplayConfirmation' => true,
-					'passConfirmationMessage' => 'You passed!',
-					'failConfirmationMessage' => 'You failed.',
-					'failConfirmationDisableAutoformat' => false,
-					'letterDisplayConfirmation' => true,
-					'letterConfirmationMessage' => 'Your grade is {quiz_grade}.',
+					'passPercent'                         => 50,
+					'passfailDisplayConfirmation'         => true,
+					'passConfirmationMessage'             => 'You passed!',
+					'failConfirmationMessage'             => 'You failed.',
+					'failConfirmationDisableAutoformat'   => false,
+					'letterDisplayConfirmation'           => true,
+					'letterConfirmationMessage'           => 'Your grade is {quiz_grade}.',
 					'letterConfirmationDisableAutoformat' => false,
-					'general' => null
+					'general'                             => null,
 				],
 				'is_active'                  => true,
 				'is_trash'                   => false,

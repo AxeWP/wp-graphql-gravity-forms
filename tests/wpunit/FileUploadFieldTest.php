@@ -53,7 +53,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 		$stat  = stat( dirname( '/tmp/img2.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img2.png', $perms );
-		add_filter( 'gform_gf_field_create', [$this, 'mock_file_upload_field'], 10, 2 );
+		add_filter( 'gform_gf_field_create', [ $this, 'mock_file_upload_field' ], 10, 2 );
 
 		parent::setUp();
 
@@ -63,7 +63,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 
 	public function tearDown(): void {
 		GFFormsModel::delete_files( $this->entry_id, $this->factory->form->get_object_by_id( $this->form_id ) );
-		remove_filter( 'gform_gf_field_create', [$this, 'mock_file_upload_field'] );
+		remove_filter( 'gform_gf_field_create', [ $this, 'mock_file_upload_field' ] );
 
 		parent::tearDown();
 	}
@@ -417,7 +417,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	}
 
 	public function mock_file_upload_field( $field, $properties ) {
-		if( $field->type !== 'fileupload' || $field instanceof FooFileUpload ) {
+		if ( $field->type !== 'fileupload' || $field instanceof FooFileUpload ) {
 			return $field;
 		}
 
