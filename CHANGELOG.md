@@ -6,7 +6,7 @@
 
 **:warning: This release contains multiple breaking changes.**
 
-This _major_ release refactors the way Gravity Forms fields are registered in GraphQL, by using GraphQL interfaces to define common field settings, choices, and inputs. This allows for more flexibility in how fields are registered and consumed, and allows for DRYer GraphQL queries.
+This _major_ release refactors the way Gravity Forms fields are registered in GraphQL, by using GraphQL interfaces derived from the Forms Field Settings to register the fields, choices, and inputs tp the type. This allows for more flexibility in how fields are registered and consumed, and for DRYer GraphQL queries and frontend components.
 
 This release also adds explicit support for Pricing Fields. Specifically, we've added support for the `Option`, `Product`, `Quantity`, `Shipping`, and `Total` fields, and the `orderSummary` field on `GfEntry`.
 
@@ -22,17 +22,12 @@ Lastly, we've exposed the `connectedChoice` and `connectedInput` fields on `Chec
 * We've exposed the `connectedChoice` and `connectedInput` fields to `CheckboxFieldValue` objects, to make it easier to access specific values of the selected choices and inputs without hacky workarounds.
 * We've _deprecated_ the `FormField.id` field in favor of `FormField.databaseId`, which is more consistent with WPGraphQL's naming conventions. **Note**: `FormField.id` will change its type to a global (Relay) ID in an upcoming release.
 
-### Fixes
-
-- fix: Ensure latest mutation input data is used to prepare the field values on update mutations.
-- fix: Check for falsy `personalData` when resolving the form model.
-
 ### **🚨 Breaking** Schema Changes
 
 * Field `AddressField.defaultProvince` changed type from String to `AddressFieldProvinceEnum`.
 * Field `AddressField.defaultState` changed type from String to `AddressFieldProvinceEnum`.
-* All `{FieldType}.inputs` fields changed type from [AddressInputProperty] to `[GfFieldInput]`.
-* Field `{FieldType}.choices` changed type from [ChainedSelectFieldChoice] to `[GfFieldChoice]`.
+* All `{FieldType}.inputs` fields changed type from `[AddressInputProperty]` to `[GfFieldInput]`.
+* Field `{FieldType}.choices` changed type from `[ChainedSelectFieldChoice]` to `[GfFieldChoice]`.
 * Enum value `SUBMIT` was removed from enum `FormFieldTypeEnum`.
 * **🚨 Breaking**: `PostCategoryFieldChoice` kind changed from `ObjectTypeDefinition` to `InterfaceTypeDefinition`.
 * Type `PostCategoryInputProperty` was removed.
@@ -42,10 +37,17 @@ Lastly, we've exposed the `connectedChoice` and `connectedInput` fields on `Chec
 * Type `QuizInputProperty` was removed.
 * Type `SubmitField` was removed.
 
+### Fixes
+
+- fix: Ensure latest mutation input data is used to prepare the field values on update mutations.
+- fix: Check for falsy `personalData` when resolving the form model.
+
 ### Misc
+
 - feat: Deprecate `FormsConnectionOrderbyInput.field` in favor of `FormsConnectionOrderbyInput.column`
 
 ### Behind the Scenes
+
 - feat!: Update minimum required WPGraphQL version to v1.9.0.
 - dev!: Move `TypeRegistry` classes to `WPGraphQL\GF\Registry` namespace.
 - dev!: Register each GraphQL type on its own `add_action()` call.
