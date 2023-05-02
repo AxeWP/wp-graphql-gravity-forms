@@ -2,9 +2,10 @@
 
 ## Unreleased
 
-- fix: use local store for `FieldInputRegistry` and `FieldChoiceRegistry` to prevent the registration of duplicate/nonexistent types.
-- chore: update Composer dev deps.
+- fix: Use local store for `FieldInputRegistry` and `FieldChoiceRegistry` to prevent the registration of duplicate/nonexistent types.
+- chore: Update Composer dev deps.
 - test: Ensure no `extensions['debug']` messages are returned when querying FormFields.
+- ci: Ignore `graphql-schema-linter` error for `FormFieldConnection.pageInfo` missing a description. This will be reverted once FormFieldConnection is refactored to be a Relay-compatible.
 
 ## v0.12.0 - Form Field Interfaces and Pricing Fields
 
