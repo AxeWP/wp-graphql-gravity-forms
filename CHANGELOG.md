@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- chore: update Composer dev deps.
+
 ## v0.12.0 - Form Field Interfaces and Pricing Fields
 
 **:warning: This release contains multiple breaking changes.**
