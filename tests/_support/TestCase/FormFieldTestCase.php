@@ -14,6 +14,8 @@ use GFFormsModel;
 use GFAPI;
 use GF_Field;
 use Helper\GFHelpers\ExpectedFormFields;
+use WPGraphQL\GF\Registry\FieldChoiceRegistry;
+use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Registry\FormFieldRegistry;
 
 /**
@@ -88,6 +90,17 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		}
 
 		$this->clearSchema();
+
+		// Cleanup registry.
+		$field_choice_reflection = new \ReflectionClass( FieldChoiceRegistry::class );
+		$field_choice_property   = $field_choice_reflection->getProperty( 'registered_types' );
+		$field_choice_property->setAccessible( true );
+		$field_choice_property->setValue( [] );
+
+		$field_input_reflection = new \ReflectionClass( FieldInputRegistry::class );
+		$field_input_property   = $field_input_reflection->getProperty( 'registered_types' );
+		$field_input_property->setAccessible( true );
+		$field_input_property->setValue( [] );
 	}
 
 	/**
@@ -281,6 +294,9 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 		$this->assertArrayNotHasKey( 'errors', $response, 'field has errors' );
 
+		// Assert that their are no debug messages.
+		$this->assertEmpty( $response['extensions']['debug'], print_r($response['extensions']['debug'], true ) );
+
 		$expected = $this->expected_field_response( $form );
 
 		$this->assertQuerySuccessful( $response, $expected );
@@ -348,6 +364,7 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		$response = $this->graphql( compact( 'query', 'variables' ) );
 
 		$expected = $this->expected_mutation_response( 'submitGfForm', $this->field_value );
+	
 		$this->assertQuerySuccessful( $response, $expected );
 		$this->assertEquals( $response['data']['submitGfForm']['errors'], null );
 
