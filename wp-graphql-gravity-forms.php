@@ -7,7 +7,7 @@
  * Author: Harness Software
  * Author URI: https://www.harnessup.com
  * Update URI: https://github.com/harness-software/wp-graphql-gravity-forms/releases
- * Version: 0.12.0
+ * Version: 0.12.1
  * Text Domain: wp-graphql-gravity-forms
  * Domain Path: /languages
  * Requires at least: 5.4.1
@@ -35,7 +35,7 @@ if ( ! function_exists( 'gf_graphql_constants' ) ) {
 	function gf_graphql_constants() : void {
 		// Plugin version.
 		if ( ! defined( 'WPGRAPHQL_GF_VERSION' ) ) {
-			define( 'WPGRAPHQL_GF_VERSION', '0.12.0' );
+			define( 'WPGRAPHQL_GF_VERSION', '0.12.1' );
 		}
 
 		// Plugin Folder Path.

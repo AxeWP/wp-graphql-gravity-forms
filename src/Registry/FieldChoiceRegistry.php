@@ -27,7 +27,7 @@ class FieldChoiceRegistry {
 	 *
 	 * Used to prevent duplicate type registration.
 	 *
-	 * @since @todo
+	 * @since 0.12.1
 	 *
 	 * @var array
 	 */
