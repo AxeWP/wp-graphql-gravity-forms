@@ -66,7 +66,7 @@ jobs:
 
       - name: Lint the Static Schema
         run: |
-          graphql-schema-linter --except=relay-connection-types-spec,relay-page-info-spec --ignore '{"defined-types-are-used":["MenuItemsWhereArgs","PostObjectUnion","TermObjectUnion","TimezoneEnum"], "fields-have-descriptions":["WPGatsbyCompatibility","WPGatsbyPageNode","WPGatsbyPreviewStatus"], "enum-values-have-descriptions":["WPGatsbyRemotePreviewStatusEnum","WPGatsbyWPPreviewedNodeStatus"]}' /tmp/schema.graphql
+          graphql-schema-linter --except=relay-connection-types-spec,relay-page-info-spec --ignore '{"fields-have-descriptions":["WPGatsbyCompatibility","WPGatsbyPageNode","WPGatsbyPreviewStatus", "FormFieldConnection.pageInfo"], "enum-values-have-descriptions":["WPGatsbyRemotePreviewStatusEnum","WPGatsbyWPPreviewedNodeStatus"]}' /tmp/schema.graphql
 
       - name: Display ignored linting errors
         run: |
