@@ -2,7 +2,7 @@
 Contributors: kellenmace, mtdbyanechko, justlevine, tinytoolbox
 Tags: GraphQL, Gatsby, Headless, GF, Gravity, Forms, WPGraphQL, 
 Requires at least: 5.4.1
-Tested up to: 6.1.1
+Tested up to: 6.2
 Requires PHP: 7.4
 Requires Gravity Forms: 2.5.0
 Requires WPGraphQL: 1.9.0
