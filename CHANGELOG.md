@@ -2,7 +2,9 @@
 
 ## Unreleased
 
+- fix: use local store for `FieldInputRegistry` and `FieldChoiceRegistry` to prevent the registration of duplicate/nonexistent types.
 - chore: update Composer dev deps.
+- test: Ensure no `extensions['debug']` messages are returned when querying FormFields.
 
 ## v0.12.0 - Form Field Interfaces and Pricing Fields
 

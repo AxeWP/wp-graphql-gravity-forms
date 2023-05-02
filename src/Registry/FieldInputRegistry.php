@@ -23,6 +23,17 @@ use WPGraphQL\GF\Registry\TypeRegistry as GFTypeRegistry;
  */
 class FieldInputRegistry {
 	/**
+	 * The GraphQL type names registered in this registry.
+	 *
+	 * Used to prevent duplicate type registration.
+	 *
+	 * @since @todo
+	 *
+	 * @var array
+	 */
+	public static $registered_types = [];
+
+	/**
 	 * Gets the GraphQL type name for the generated GF Field input.
 	 *
 	 * @param GF_Field $field The Gravity Forms field object.
@@ -54,7 +65,8 @@ class FieldInputRegistry {
 			function ( TypeRegistry $type_registry ) use ( $field, $settings, $as_interface ) {
 				$input_name = self::get_type_name( $field );
 
-				if ( $type_registry->has_type( $input_name ) ) {
+				// Skip if already registered.
+				if ( in_array( $input_name, self::$registered_types, true ) ) {
 					return;
 				}
 
@@ -70,13 +82,16 @@ class FieldInputRegistry {
 				} else {
 					$parent_input_name = Utils::get_safe_form_field_type_name( $field->type . 'InputProperty' );
 
-					if ( $parent_input_name !== $input_name ) {
+					// Check if we need to register a parent interface.
+					if ( $parent_input_name !== $input_name && in_array( $parent_input_name, self::$registered_types, true ) ) {
 						$config['interfaces'] = array_merge( $config['interfaces'], [ $parent_input_name ] );
 					}
 
-
 					register_graphql_object_type( $input_name, $config );
 				}
+
+				// Store in static array to prevent duplicate registration.
+				self::$registered_types[] = $input_name;
 			}
 		);
 	}
