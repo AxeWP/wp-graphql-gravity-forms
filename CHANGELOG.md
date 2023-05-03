@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v0.12.1 - Bug fix
+
+This _minor_ release fixes an issue where certain complex Field Input and Field Choice types would try to implement a non-existent parent inteface, causing GraphQL debug messages to be returned in the response.
+
 - fix: Use local store for `FieldInputRegistry` and `FieldChoiceRegistry` to prevent the registration of duplicate/nonexistent types.
 - chore: Update Composer dev deps.
 - test: Ensure no `extensions['debug']` messages are returned when querying FormFields.
