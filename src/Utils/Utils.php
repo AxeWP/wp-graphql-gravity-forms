@@ -330,23 +330,7 @@ class Utils {
 	 * @throws UserError .
 	 */
 	public static function get_entry_id_from_id( $id ) : int {
-		// If we already have the database ID, send it back as an integer.
-		if ( is_numeric( $id ) ) {
-			return absint( $id );
-		}
-
-		$id_parts = Relay::fromGlobalId( $id );
-
-		if ( empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-			throw new UserError( __( 'The ID passed is not a valid Global ID.', 'wp-graphql-gravity-forms' ) );
-		}
-
-		if ( EntriesLoader::$name !== $id_parts['type'] ) {
-			throw new UserError( __( 'The ID passed is not a for a valid Gravity Forms entry.', 'wp-graphql-gravity-forms' ) );
-		}
-
-
-		return absint( $id_parts['id'] );
+		return self::get_database_id_from_id( $id, EntriesLoader::$name );
 	}
 
 	/**
@@ -358,6 +342,20 @@ class Utils {
 	 * @throws UserError .
 	 */
 	public static function get_form_id_from_id( $id ) : int {
+		return self::get_database_id_from_id( $id, FormsLoader::$name );
+	}
+
+	/**
+	 * Gets the databaseId from an indeterminate GraphQL ID, ensuring it's the correct type.
+	 *
+	 * @since @todo
+	 * 
+	 * @param int|string $id The provided ID.
+	 * @param string     $type The expected dataloader type.
+	 *
+	 * @throws UserError If the ID is not a valid Global ID.
+	 */
+	protected static function get_database_id_from_id( $id, $type ) : int {
 		// If we already have the database ID, send it back as an integer.
 		if ( is_numeric( $id ) ) {
 			return absint( $id );
@@ -369,10 +367,9 @@ class Utils {
 			throw new UserError( __( 'The ID passed is not a valid Global ID.', 'wp-graphql-gravity-forms' ) );
 		}
 
-		if ( FormsLoader::$name !== $id_parts['type'] ) {
-			throw new UserError( __( 'The ID passed is not a for a valid Gravity Forms form.', 'wp-graphql-gravity-forms' ) );
+		if ( $type !== $id_parts['type'] ) {
+			throw new UserError( __( 'The ID passed is not a valid Global ID for this type.', 'wp-graphql-gravity-forms' ) );
 		}
-
 
 		return absint( $id_parts['id'] );
 	}
