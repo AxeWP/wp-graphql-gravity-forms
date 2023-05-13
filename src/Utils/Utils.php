@@ -321,9 +321,10 @@ class Utils {
 		];
 	}
 
-	
 	/**
 	 * Gets the entry databaseId from an indeterminate GraphQL ID.
+	 *
+	 * @since @todo
 	 *
 	 * @param int|string $id .
 	 * @throws UserError .
@@ -350,6 +351,8 @@ class Utils {
 
 	/**
 	 * Gets the entry databaseId from an indeterminate GraphQL ID.
+	 *
+	 * @since @todo
 	 *
 	 * @param int|string $id .
 	 * @throws UserError .
