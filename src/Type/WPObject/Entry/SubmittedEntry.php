@@ -10,9 +10,6 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Entry;
 
-use GraphQL\Error\UserError;
-use GraphQL\Type\Definition\ResolveInfo;
-use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
 use WPGraphQL\Data\DataSource;
 use WPGraphQL\GF\Data\Factory;
@@ -22,6 +19,7 @@ use WPGraphQL\GF\Type\Enum\SubmittedEntryIdTypeEnum;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - Submitted
@@ -129,20 +127,8 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 					],
 				],
-				'resolve'     => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
-					$idType = $args['idType'] ?? 'global_id';
-
-					if ( 'global_id' === $idType ) {
-						$id_parts = Relay::fromGlobalId( $args['id'] );
-
-						if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-							throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
-						}
-
-						$id = sanitize_text_field( $id_parts['id'] );
-					} else {
-						$id = sanitize_text_field( $args['id'] );
-					}
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
+					$id = Utils::get_entry_id_from_id( $args['id'] );
 
 					return Factory::resolve_entry( (int) $id, $context );
 				},

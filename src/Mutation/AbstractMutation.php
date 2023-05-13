@@ -11,8 +11,6 @@ namespace WPGraphQL\GF\Mutation;
 use GraphQL\Error\UserError;
 use GraphQLRelay\Relay;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
-use WPGraphQL\GF\Data\Loader\EntriesLoader;
-use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Interfaces\Mutation;
 use WPGraphQL\GF\Type\AbstractType;
 
@@ -81,47 +79,4 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 		return sanitize_text_field( $resume_token );
 	}
 
-	/**
-	 * Gets the entry databaseId from an indeterminate GraphQL ID.
-	 *
-	 * @param int|string $id .
-	 * @throws UserError .
-	 */
-	protected static function get_entry_id_from_id( $id ) : int {
-		$id_parts = Relay::fromGlobalId( $id );
-
-		if ( ! empty( $id_parts['id'] ) && ! empty( $id_parts['type'] ) ) {
-			if ( EntriesLoader::$name !== $id_parts['type'] ) {
-				throw new UserError( __( 'The ID passed is not a for a valid Gravity Forms entry.', 'wp-graphql-gravity-forms' ) );
-			}
-
-			$entry_id = $id_parts['id'];
-		} else {
-			$entry_id = $id;
-		}
-
-		return absint( $entry_id );
-	}
-
-	/**
-	 * Gets the entry databaseId from an indeterminate GraphQL ID.
-	 *
-	 * @param int|string $id .
-	 * @throws UserError .
-	 */
-	protected static function get_form_id_from_id( $id ) : int {
-		$id_parts = Relay::fromGlobalId( $id );
-
-		if ( ! empty( $id_parts['id'] ) && ! empty( $id_parts['type'] ) ) {
-			if ( FormsLoader::$name !== $id_parts['type'] ) {
-				throw new UserError( __( 'The ID passed is not a for a valid Gravity Forms form.', 'wp-graphql-gravity-forms' ) );
-			}
-
-			$form_id = $id_parts['id'];
-		} else {
-			$form_id = $id;
-		}
-
-		return absint( $form_id );
-	}
 }

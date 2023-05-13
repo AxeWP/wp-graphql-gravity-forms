@@ -18,6 +18,7 @@ use WPGraphQL\AppContext;
 use WPGraphQL\GF\Model\SubmittedEntry as ModelSubmittedEntry;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
 use WPGraphQL\GF\Utils\GFUtils;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - DeleteEntry
@@ -76,7 +77,7 @@ class DeleteEntry extends AbstractMutation {
 				throw new UserError( __( 'Sorry, you are not allowed to delete entries.', 'wp-graphql-gravity-forms' ) );
 			}
 
-			$entry_id = self::get_entry_id_from_id( $input['id'] );
+			$entry_id = Utils::get_entry_id_from_id( $input['id'] );
 
 			if ( empty( $input['forceDelete'] ) ) {
 				$result          = GFAPI::update_entry_property( $entry_id, 'status', 'trash' );

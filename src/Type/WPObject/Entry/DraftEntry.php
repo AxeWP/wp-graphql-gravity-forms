@@ -19,7 +19,6 @@ use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\Enum\DraftEntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - Draft

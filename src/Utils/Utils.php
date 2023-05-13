@@ -11,10 +11,14 @@
 namespace WPGraphQL\GF\Utils;
 
 use GF_Fields;
+use GraphQL\Error\UserError;
+use GraphQLRelay\Relay;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
+use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Type\WPObject\Entry\DraftEntry;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
+use WPGraphQL\Type\ObjectType\User;
 
 /**
  * Class - Utils
@@ -315,5 +319,58 @@ class Utils {
 			'sub_labels_setting',
 			'visibility_setting',
 		];
+	}
+
+	
+	/**
+	 * Gets the entry databaseId from an indeterminate GraphQL ID.
+	 *
+	 * @param int|string $id .
+	 * @throws UserError .
+	 */
+	public static function get_entry_id_from_id( $id ) : int {
+		// If we already have the database ID, send it back as an integer.
+		if ( is_numeric( $id ) ) {
+			return absint( $id );
+		}
+
+		$id_parts = Relay::fromGlobalId( $id );
+
+		if ( empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
+			throw new UserError( __( 'The ID passed is not a valid Global ID.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		if ( EntriesLoader::$name !== $id_parts['type'] ) {
+			throw new UserError( __( 'The ID passed is not a for a valid Gravity Forms entry.', 'wp-graphql-gravity-forms' ) );
+		}
+
+
+		return absint( $id_parts['id'] );
+	}
+
+	/**
+	 * Gets the entry databaseId from an indeterminate GraphQL ID.
+	 *
+	 * @param int|string $id .
+	 * @throws UserError .
+	 */
+	public static function get_form_id_from_id( $id ) : int {
+		// If we already have the database ID, send it back as an integer.
+		if ( is_numeric( $id ) ) {
+			return absint( $id );
+		}
+
+		$id_parts = Relay::fromGlobalId( $id );
+
+		if ( empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
+			throw new UserError( __( 'The ID passed is not a valid Global ID.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		if ( FormsLoader::$name !== $id_parts['type'] ) {
+			throw new UserError( __( 'The ID passed is not a for a valid Gravity Forms form.', 'wp-graphql-gravity-forms' ) );
+		}
+
+
+		return absint( $id_parts['id'] );
 	}
 }
