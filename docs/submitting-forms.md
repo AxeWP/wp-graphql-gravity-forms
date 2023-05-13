@@ -10,24 +10,26 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
 
 ## Supported Field Value input types
 
-| Field Value Input Type                                                  | Used for                                                                                                                                                                                                                                                 | Sub-fields                                                       |
-| ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| `addressValues` _( obj )_                                               | `AddressField` | `city` <br> `country` <br> `lineTwo` <br> `state` <br> `street` <br> `zip` |
-| `chainedSelectValues` _( [ obj ] )_ <sup>[1](#chainedSelectsNote)</sup> | `ChainedSelectField` | `inputId` <br> `value` |
-| `checkboxValues` _( [ obj ] )_                                          | `CheckboxField` <br> `QuizField` <sup>[3](#quizNote)</sup>                                                                                                                                                                                                                                          | `inputId` <br> `value` |
-| `emailValues` _( obj )_                                                 | `EmailField` | `confirmationValue` <br/> `value` |
-| `fileUploadValues` _( [ Upload ] )_<sup>[2](#uploadNote)</sup>          | `FileUploadField` | See [Submitting File Uploads](#submitting-file-uploads)                                                              |
-| `listValues` _( [ obj ] )_                                              | `ListField` | `rowValues` _( [ String ] )_                                     |
-| `nameValues` _( obj )_                                                  | `NameField` | `first` <br> `last` <br> `midele` <br> `prefix` <br> `suffix` |
-| `postImageValues` _( obj )_ <sup>[2](#uploadNote)</sup>                 | `PostImageField` | `altText` <br> `caption` <br> `description` <br> `image` _(Upload)<sup>[2](#uploadNote)</sup>_ <br> `title` |
-| `value` _( string )_                                                    | `CaptchaField` <sup>[3](#captchaNote)</sup><br> `ConsentField`<sup>[4](#consentNote)</sup> <br> `DateField` <br> `HiddenField` <br> `NumberField` <br> `PhoneField` <br> `PostContentField` <br> `PostExcerptField` <br> `PostTitleField` <br> `QuizField` <sup>[5](#quizNote)</sup><br> `RadioField` <br> `SelectField` <br> `SignatureField` <br> `TextAreaField` <br> `TextField` <br> `TimeField` <br> `WebsiteField` <br> _Also used by default for custom fields._| n/a                                                              |
-| `values` _( [ string ] )_                                               | `MultiSelectField` <br> `PostCategoryField` <br> `PostCustomField` <br> `PostTagsField` | n/a                                                              |
+| Field Value Input Type                                                  | Used for                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Sub-fields                                                                                                  |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `addressValues` _( obj )_                                               | `AddressField`                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `city` <br> `country` <br> `lineTwo` <br> `state` <br> `street` <br> `zip`                                  |
+| `chainedSelectValues` _( [ obj ] )_ <sup>[1](#chainedSelectsNote)</sup> | `ChainedSelectField`                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `inputId` <br> `value`                                                                                      |
+| `checkboxValues` _( [ obj ] )_                                          | `CheckboxField` <br> `QuizField` <sup>[3](#quizNote)</sup>                                                                                                                                                                                                                                                                                                                                                                                                               | `inputId` <br> `value`                                                                                      |
+| `emailValues` _( obj )_                                                 | `EmailField`                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `confirmationValue` <br/> `value`                                                                           |
+| `fileUploadValues` _( [ Upload ] )_<sup>[2](#uploadNote)</sup>          | `FileUploadField`                                                                                                                                                                                                                                                                                                                                                                                                                                                        | See [Submitting File Uploads](#submitting-file-uploads)                                                     |
+| `listValues` _( [ obj ] )_                                              | `ListField`                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `rowValues` _( [ String ] )_                                                                                |
+| `nameValues` _( obj )_                                                  | `NameField`                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `first` <br> `last` <br> `midele` <br> `prefix` <br> `suffix`                                               |
+| `postImageValues` _( obj )_ <sup>[2](#uploadNote)</sup>                 | `PostImageField`                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `altText` <br> `caption` <br> `description` <br> `image` _(Upload)<sup>[2](#uploadNote)</sup>_ <br> `title` |
+| `productValues` _( obj )_ <sup>[6](#productNote)</sup>                  | `ProductField`                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `price` <br> `quantity`                                                                                     |
+| `value` _( string )_                                                    | `CaptchaField` <sup>[3](#captchaNote)</sup><br> `ConsentField`<sup>[4](#consentNote)</sup> <br> `DateField` <br> `HiddenField` <br> `NumberField` <br> `PhoneField` <br> `PostContentField` <br> `PostExcerptField` <br> `PostTitleField` <br> `QuizField` <sup>[5](#quizNote)</sup><br> `RadioField` <br> `SelectField` <br> `SignatureField` <br> `TextAreaField` <br> `TextField` <br> `TimeField` <br> `WebsiteField` <br> _Also used by default for custom fields._ | n/a                                                                                                         |
+| `values` _( [ string ] )_                                               | `MultiSelectField` <br> `PostCategoryField` <br> `PostCustomField` <br> `PostTagsField`                                                                                                                                                                                                                                                                                                                                                                                  | n/a                                                                                                         |
 
 <a name="chainedSelectNote">1</a>: In order to use `chainedSelectValues` you must install and activate [Gravity Forms Chained Selects](https://www.gravityforms.com/add-ons/chained-selects/).<br>
 <a name="uploadNote">2</a>: In order to use `fileUploadValues` or `postImageValues` , you must install and activate [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload). See [Submitting File Uploads](#submitting-file-uploads) below.<br>
 <a name="captchaNote">3</a>: The `value` for a `Captcha` field is its validation token. See [Captcha Validation](#captcha-validation) below.<br>
 <a name="consentNote">4</a>: The `value` for a `Consent` field treats any truthy string value as `true`, and an empty string (or no submission value) as `false`.<br>
-<a name="quizNote">5</a>: [Gravity Forms Quiz Fields](https://docs.gravityforms.com/quiz-field/) can be either a Checkbox, Radio, or Select field. The field value input type is assigned accordingly.
+<a name="quizNote">5</a>: [Gravity Forms Quiz Fields](https://docs.gravityforms.com/quiz-field/) can be either a Checkbox, Radio, or Select field. The field value input type is assigned accordingly.<br>
+<a name="productNote">6</a>: There are multiple types of [Gravity Forms Product Fields](https://docs.gravityforms.com/product/), each with their own input requirements. See [Submitting Product Fields](#submitting-product-fields) below.
 
 ### Example Mutation
 
@@ -218,7 +220,80 @@ mutation submit( $exampleUploads: [ Upload ], $exampleImageUpload: Upload ){
             title: "Some title"
           }
         }
-      }
+      ]
+    }
+  ) {
+    errors {
+      id
+      message
+    }
+    confirmation {
+      message
+    }
+    entry {
+      databaseId
+    }
+  }
+}
+```
+
+## Submitting Product Fields
+
+While most Product Fields can be submitted with a simple `value` input, some require the use of one or more fields on the `productValues` input. Even if a Product Field accepts a `value` input, you can choose to use the `productValues` input instead to provide more granular control over the Product Field's values.
+
+The `productValues` input takes a `price` and a `quantity` field. When the Form Field is configured to have a separate price or quantity field, those respective values become optional and will be overwritten by the latter fields.
+
+### Example Mutation
+```graphql
+mutation submit {
+  submitGfForm(
+    input: {
+      id: 50
+      fieldValues: [
+        # other form fields would go here.
+        {
+          # Product Calculation field
+          id: 1
+          productValues: { # Both are required.
+            price: 10.00
+            quantity: 2
+          }
+        },
+        {
+          # Hidden Product Field
+          id: 2
+          productValues: { # Only the quantity is necessary.
+            quantity: 2
+          }
+          # can also be set like this
+          value: "2"
+        },
+        {
+          # Price Field
+          id: 2
+          productValues: { # Only the price is necessary.
+            price: 50.00
+          }
+          # can also be set like this
+          value: "50.00"
+        },
+        {
+          # Radio / Select Product Field
+          id: 2
+          # Same as a normal Radio/Select field
+          value: "second-choice"
+        },
+        {
+          # Single Product field
+          id: 1
+          productValues: { # Only the quantity is required.
+            price: 10.00
+            quantity: 2
+          }
+          # can also be set like this
+          value: "50.00"
+        },
+      ]
     }
   ) {
     errors {

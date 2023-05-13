@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- docs: Add missing documentation regarding using `productValues` input when submitting forms.
 
 ## v0.12.1 - Bug fix
 
