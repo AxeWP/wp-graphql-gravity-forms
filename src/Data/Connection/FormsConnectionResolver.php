@@ -150,7 +150,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 			return [];
 		}
 
-		if ( is_string( $this->args['where']['formIds'] ) ) {
+		if ( is_string( $this->args['where']['formIds'] ) || is_integer( $this->args['where']['formIds'] ) ) {
 			$this->args['where']['formIds'] = [ $this->args['where']['formIds'] ];
 		}
 
