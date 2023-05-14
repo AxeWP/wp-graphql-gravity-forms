@@ -22,6 +22,7 @@ use WPGraphQL\GF\Type\Input\UpdateEntryMetaInput;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Utils\GFUtils;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - UpdateEntry
@@ -97,7 +98,7 @@ class UpdateEntry extends AbstractMutation {
 			static::check_required_inputs( $input );
 
 			// Get the entry.
-			$entry_id = self::get_entry_id_from_id( $input['id'] );
+			$entry_id = Utils::get_entry_id_from_id( $input['id'] );
 			$entry    = GFUtils::get_entry( $entry_id );
 
 			// Check if user has permissions.

@@ -11,9 +11,7 @@
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
 use GF_Query;
-use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
-use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Connection\EntriesConnection;
 use WPGraphQL\GF\Connection\FormFieldsConnection;
@@ -28,6 +26,7 @@ use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Button;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - Form
@@ -296,22 +295,8 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 					],
 				],
-				'resolve'     => static function ( $root, array $args, AppContext $context ) {
-					$idType = $args['idType'] ?? 'global_id';
-
-					/**
-					 * If global id is used, get the (int) id.
-					 */
-					if ( 'global_id' === $idType ) {
-						$id_parts = Relay::fromGlobalId( $args['id'] );
-
-						if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-							throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
-						}
-						$id = (int) sanitize_text_field( $id_parts['id'] );
-					} else {
-						$id = (int) sanitize_text_field( $args['id'] );
-					}
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
+					$id = Utils::get_form_id_from_id( $args['id'] );
 
 					return Factory::resolve_form( $id, $context );
 				},

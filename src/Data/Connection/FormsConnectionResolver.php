@@ -18,6 +18,7 @@ use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Type\Enum\FormStatusEnum;
 use WPGraphQL\GF\Utils\GFUtils;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - FormsConnectionResolver
@@ -145,11 +146,15 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 * @return array
 	 */
 	private function get_form_ids(): array {
-		if ( empty( $this->args['where']['formIds'] ) || ! is_array( $this->args['where']['formIds'] ) ) {
+		if ( empty( $this->args['where']['formIds'] ) ) {
 			return [];
 		}
 
-		return array_map( 'absint', $this->args['where']['formIds'] );
+		if ( is_string( $this->args['where']['formIds'] ) || is_integer( $this->args['where']['formIds'] ) ) {
+			$this->args['where']['formIds'] = [ $this->args['where']['formIds'] ];
+		}
+
+		return array_map( fn( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
 	}
 
 

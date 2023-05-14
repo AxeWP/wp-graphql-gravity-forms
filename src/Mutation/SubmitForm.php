@@ -23,6 +23,7 @@ use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\FieldError;
 use WPGraphQL\GF\Type\WPObject\SubmissionConfirmation;
 use WPGraphQL\GF\Utils\GFUtils;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - SubmitForm
@@ -132,7 +133,7 @@ class SubmitForm extends AbstractMutation {
 	public static function mutate_and_get_payload() : callable {
 		return function( $input, AppContext $context, ResolveInfo $info ) : array {
 			// Get the form database_id.
-			$form_id = self::get_form_id_from_id( $input['id'] );
+			$form_id = Utils::get_form_id_from_id( $input['id'] );
 
 			$form = GFUtils::get_form( $form_id );
 

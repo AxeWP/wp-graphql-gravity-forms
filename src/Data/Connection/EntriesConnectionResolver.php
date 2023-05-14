@@ -20,6 +20,7 @@ use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Enum\FieldFiltersModeEnum;
 use WPGraphQL\GF\Type\Enum\FieldFiltersOperatorInputEnum;
+use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - EntriesConnectionResolver
@@ -241,12 +242,11 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 			return 0;
 		}
 
-		// @todo allow for both Global and DB Ids.
-		if ( is_array( $this->args['where']['formIds'] ) ) {
-			return array_map( 'absint', $this->args['where']['formIds'] );
+		if ( is_string( $this->args['where']['formIds'] ) || is_integer( $this->args['where']['formIds'] ) ) {
+			$this->args['where']['formIds'] = [ $this->args['where']['formIds'] ];
 		}
 
-		return absint( $this->args['where']['formIds'] );
+		return array_map( fn( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
 	}
 
 	/**

@@ -11,10 +11,14 @@
 namespace WPGraphQL\GF\Utils;
 
 use GF_Fields;
+use GraphQL\Error\UserError;
+use GraphQLRelay\Relay;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
+use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Type\WPObject\Entry\DraftEntry;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
+use WPGraphQL\Type\ObjectType\User;
 
 /**
  * Class - Utils
@@ -315,5 +319,58 @@ class Utils {
 			'sub_labels_setting',
 			'visibility_setting',
 		];
+	}
+
+	/**
+	 * Gets the entry databaseId from an indeterminate GraphQL ID.
+	 *
+	 * @since @todo
+	 *
+	 * @param int|string $id .
+	 * @throws UserError .
+	 */
+	public static function get_entry_id_from_id( $id ) : int {
+		return self::get_database_id_from_id( $id, EntriesLoader::$name );
+	}
+
+	/**
+	 * Gets the entry databaseId from an indeterminate GraphQL ID.
+	 *
+	 * @since @todo
+	 *
+	 * @param int|string $id .
+	 * @throws UserError .
+	 */
+	public static function get_form_id_from_id( $id ) : int {
+		return self::get_database_id_from_id( $id, FormsLoader::$name );
+	}
+
+	/**
+	 * Gets the databaseId from an indeterminate GraphQL ID, ensuring it's the correct type.
+	 *
+	 * @since @todo
+	 * 
+	 * @param int|string $id The provided ID.
+	 * @param string     $type The expected dataloader type.
+	 *
+	 * @throws UserError If the ID is not a valid Global ID.
+	 */
+	protected static function get_database_id_from_id( $id, $type ) : int {
+		// If we already have the database ID, send it back as an integer.
+		if ( is_numeric( $id ) ) {
+			return absint( $id );
+		}
+
+		$id_parts = Relay::fromGlobalId( $id );
+
+		if ( empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
+			throw new UserError( __( 'The ID passed is not a valid Global ID.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		if ( $type !== $id_parts['type'] ) {
+			throw new UserError( __( 'The ID passed is not a valid Global ID for this type.', 'wp-graphql-gravity-forms' ) );
+		}
+
+		return absint( $id_parts['id'] );
 	}
 }
