@@ -16,11 +16,11 @@ print_usage_instructions() {
 	echo "  composer build-app"
 	echo "  composer run-app"
 	echo ""
-	echo "  WP_VERSION=6.2 PHP_VERSION=8.0 composer build-app"
-	echo "  WP_VERSION=6.2 PHP_VERSION=8.0 composer run-app"
+	echo "  WP_VERSION=6.2 PHP_VERSION=8.1 composer build-app"
+	echo "  WP_VERSION=6.2 PHP_VERSION=8.1 composer run-app"
 	echo ""
-	echo "  WP_VERSION=6.2 PHP_VERSION=8.0 bin/run-docker.sh build -a"
-	echo "  WP_VERSION=6.2 PHP_VERSION=8.0 bin/run-docker.sh run -a"
+	echo "  WP_VERSION=6.2 PHP_VERSION=8.1 bin/run-docker.sh build -a"
+	echo "  WP_VERSION=6.2 PHP_VERSION=8.1 bin/run-docker.sh run -a"
 	exit 1
 }
 
@@ -30,7 +30,7 @@ fi
 
 TAG=${TAG-latest}
 WP_VERSION=${WP_VERSION-6.2}
-PHP_VERSION=${PHP_VERSION-8.0}
+PHP_VERSION=${PHP_VERSION-8.1}
 
 BUILD_NO_CACHE=${BUILD_NO_CACHE-}
 
