@@ -110,6 +110,8 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 
 		$query = [];
 
+		$loader = $this->getLoader();
+
 		foreach ( $forms as $form ) {
 			/**
 			 * "wp_graphql_gf_form_object" filter
@@ -120,7 +122,12 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 			 *
 			 * @param array $form Form meta array.
 			 */
-			$query[ $form['id'] ] = apply_filters( 'graphql_gf_form_object', $form );
+			$modified_form = apply_filters( 'graphql_gf_form_object', $form );
+
+			// Cache the form in the dataloader.
+			$loader->prime( $modified_form['id'], $modified_form );
+
+			$query[ $modified_form['id'] ] = $modified_form;
 		}
 
 		return $query;
