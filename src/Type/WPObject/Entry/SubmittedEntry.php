@@ -11,7 +11,6 @@
 namespace WPGraphQL\GF\Type\WPObject\Entry;
 
 use WPGraphQL\AppContext;
-use WPGraphQL\Data\DataSource;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
@@ -87,7 +86,7 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 			'post'           => [
 				'type'        => 'Post',
 				'description' => __( 'For forms with Post fields, this is the post object that was created.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source, array $args, AppContext $context ) => ! empty( $source->postDatabaseId ) ? DataSource::resolve_post_object( $source->postDatabaseId, $context ) : null,
+				'resolve'     => static fn ( $source, array $args, AppContext $context ) => ! empty( $source->postDatabaseId ) ? $context->get_loader( 'post' )->load( $source->postDatabaseId ) : null,
 			],
 			'postDatabaseId' => [
 				'type'        => 'Int',
