@@ -70,7 +70,7 @@ class FieldChoiceRegistry {
 				$config = self::get_config_from_settings( $choice_name, $field, $settings );
 
 				if ( $as_interface ) {
-					$config['resolveType'] = function( $value ) use ( $choice_name ) {
+					$config['resolveType'] = function ( $value ) use ( $choice_name ) {
 						return $choice_name;
 					};
 

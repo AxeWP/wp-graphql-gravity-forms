@@ -98,7 +98,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload() : callable {
-		return function( $input, AppContext $context, ResolveInfo $info ) : array {
+		return function ( $input, AppContext $context, ResolveInfo $info ) : array {
 			// Check for required fields.
 			static::check_required_inputs( $input );
 

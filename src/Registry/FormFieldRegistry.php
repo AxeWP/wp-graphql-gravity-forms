@@ -158,7 +158,7 @@ class FormFieldRegistry {
 
 				$config['description'] = self::get_description( $field->type );
 
-				$config['resolveType'] = function( $value ) use ( $type_registry, $possible_types ) {
+				$config['resolveType'] = function ( $value ) use ( $type_registry, $possible_types ) {
 					$input_type = $value->get_input_type();
 					if ( isset( $possible_types[ $input_type ] ) ) {
 						$type = $type_registry->get_type( $possible_types[ $value->$input_type ] );

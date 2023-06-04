@@ -97,7 +97,7 @@ class SubmitForm extends AbstractMutation {
 						 * The callback checks if the model is for the current id, and then it's applied
 						 * to the model as a filter.
 						 */
-						$is_private_callback = function( bool $can_view, int $form_id, $entry_id ) use ( $payload ) {
+						$is_private_callback = function ( bool $can_view, int $form_id, $entry_id ) use ( $payload ) {
 							if ( $payload['entryId'] === $entry_id ) {
 								return true;
 							}
@@ -131,7 +131,7 @@ class SubmitForm extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload() : callable {
-		return function( $input, AppContext $context, ResolveInfo $info ) : array {
+		return function ( $input, AppContext $context, ResolveInfo $info ) : array {
 			// Get the form database_id.
 			$form_id = Utils::get_form_id_from_id( $input['id'] );
 

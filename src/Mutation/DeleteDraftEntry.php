@@ -73,7 +73,7 @@ class DeleteDraftEntry extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload() : callable {
-		return function( $input, AppContext $context, ResolveInfo $info ) : array {
+		return function ( $input, AppContext $context, ResolveInfo $info ) : array {
 			if ( ! GFCommon::current_user_can_any( 'gravityforms_delete_entries' ) ) {
 				throw new UserError( __( 'Sorry, you are not allowed to delete entries.', 'wp-graphql-gravity-forms' ) );
 			}

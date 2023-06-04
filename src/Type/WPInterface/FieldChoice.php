@@ -71,7 +71,7 @@ class FieldChoice extends AbstractInterface {
 	 * @param TypeRegistry $type_registry The WPGraphQL type registry.
 	 */
 	public static function resolve_type( TypeRegistry $type_registry ) : callable {
-		return function( $value ) use ( $type_registry ) {
+		return function ( $value ) use ( $type_registry ) {
 			$name = '';
 
 			if ( is_array( $value ) && isset( $value['graphql_type'] ) ) {

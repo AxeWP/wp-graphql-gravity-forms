@@ -228,7 +228,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 	 * @param TypeRegistry $type_registry The WPGraphQL type registry.
 	 */
 	public static function resolve_type( TypeRegistry $type_registry ) : callable {
-		return function( $value ) use ( $type_registry ) {
+		return function ( $value ) use ( $type_registry ) {
 			$possible_types = Utils::get_registered_entry_types();
 
 			$id_parts = Relay::fromGlobalId( $value->id );

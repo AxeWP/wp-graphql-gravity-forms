@@ -73,7 +73,7 @@ class FieldInputRegistry {
 				$config = self::get_config_from_settings( $input_name, $field, $settings );
 
 				if ( $as_interface ) {
-					$config['resolveType'] = function( $value ) use ( $input_name ) {
+					$config['resolveType'] = function ( $value ) use ( $input_name ) {
 						return $input_name;
 					};
 

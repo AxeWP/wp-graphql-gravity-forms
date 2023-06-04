@@ -52,7 +52,7 @@ class Form extends Model {
 	protected function init() : void {
 		if ( empty( $this->fields ) ) {
 			$this->fields = [
-				'confirmations'                => function() : ?array {
+				'confirmations'                => function () : ?array {
 					if ( empty( $this->data['confirmations'] ) ) {
 						return null;
 					}
@@ -78,7 +78,7 @@ class Form extends Model {
 				'dateCreated'                  => fn() : ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,
 				'description'                  => fn() : ?string => $this->data['description'] ?? null,
 				'descriptionPlacement'         => fn() : ?string => $this->data['descriptionPlacement'] ?? null,
-				'entryLimits'                  => function() : array {
+				'entryLimits'                  => function () : array {
 					return [
 						'hasLimit'            => ! empty( $this->data['limitEntries'] ),
 						'limitationPeriod'    => ! empty( $this->data['limitEntriesPeriod'] ) ? $this->data['limitEntriesPeriod'] : null,
@@ -95,7 +95,7 @@ class Form extends Model {
 				'isActive'                     => fn() : bool => $this->data['is_active'] ?? true,
 				'isTrash'                      => fn() : bool => $this->data['is_trash'] ?? false,
 				'labelPlacement'               => fn() : ?string => $this->data['labelPlacement'] ?? null,
-				'login'                        => function() : array {
+				'login'                        => function () : array {
 					return [
 						'isLoginRequired'      => ! empty( $this->data['requireLogin'] ),
 						'loginRequiredMessage' => ! empty( $this->data['requireLoginMessage'] ) ? $this->data['requireLoginMessage'] : null,
@@ -104,7 +104,7 @@ class Form extends Model {
 				'markupVersion'                => fn() : ?string => $this->data['markupVersion'] ?? null,
 				'notifications'                => fn() : ?array => ! empty( $this->data['notifications'] ) ? $this->data['notifications'] : null,
 				'nextFieldId'                  => fn() : ?int => isset( $this->data['nextFieldId'] ) ? (int) $this->data['nextFieldId'] : null,
-				'pagination'                   => function() : ?array {
+				'pagination'                   => function () : ?array {
 					if ( ! isset( $this->data['pagination'] ) ) {
 						return null;
 					}
@@ -126,7 +126,7 @@ class Form extends Model {
 
 					return $pagination;
 				},
-				'personalData'                 => function() : ?array {
+				'personalData'                 => function () : ?array {
 					$personal_data = ! empty( $this->data['personalData'] ) ? $this->data['personalData'] : null;
 
 					if ( ! is_array( $personal_data ) ) {
@@ -168,7 +168,7 @@ class Form extends Model {
 
 					return $personal_data;
 				},
-				'postCreation'                 => function() : array {
+				'postCreation'                 => function () : array {
 					return [
 						'authorDatabaseId'             => isset( $this->data['postAuthor'] ) ? (int) $this->data['postAuthor'] : null,
 						'authorId'                     => isset( $this->data['postAuthor'] ) ? Relay::toGlobalId( 'user', $this->data['postAuthor'] ) : null,
@@ -184,7 +184,7 @@ class Form extends Model {
 				},
 				'requiredIndicator'            => fn() : ?string => $this->data['requiredIndicator'] ?? null,
 				'saveAndContinue'              => fn() : ?array => ! empty( $this->data['save'] ) ? $this->data['save'] : null,
-				'scheduling'                   => function() : array {
+				'scheduling'                   => function () : array {
 					return [
 						'closedMessage'  => ! empty( $this->data['scheduleMessage'] ) ? $this->data['scheduleMessage'] : null,
 						'hasSchedule'    => ! empty( $this->data['scheduleForm'] ),
@@ -206,7 +206,7 @@ class Form extends Model {
 					];
 				},
 				'subLabelPlacement'            => fn() : ?string => ! empty( $this->data['subLabelPlacement'] ) ? $this->data['subLabelPlacement'] : null,
-				'submitButton'                 => function() : ?array {
+				'submitButton'                 => function () : ?array {
 					$button = isset( $this->data['button'] ) ? $this->data['button'] : null;
 					// Coax types.
 					$button['layoutGridColumnSpan'] = ! empty( $button['layoutGridColumnSpan'] ) ? (int) $button['layoutGridColumnSpan'] : null;

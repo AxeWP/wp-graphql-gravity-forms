@@ -80,7 +80,7 @@ class SubmitDraftEntry extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload() : callable {
-		return function( $input, AppContext $context, ResolveInfo $info ) : array {
+		return function ( $input, AppContext $context, ResolveInfo $info ) : array {
 			// Get the resume token.
 			$id_type      = isset( $input['idType'] ) ? $input['idType'] : 'global_id';
 			$resume_token = self::get_resume_token_from_id( $input['id'], $id_type );

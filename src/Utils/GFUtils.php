@@ -281,7 +281,7 @@ class GFUtils {
 		 */
 		return esc_url(
 			apply_filters(
-				'gform_save_and_continue_resume_url',
+				'gform_save_and_continue_resume_url', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				add_query_arg( [ 'gf_token' => $resume_token ], $source_url ),
 				$form,
 				$resume_token,
