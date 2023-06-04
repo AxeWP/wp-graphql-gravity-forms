@@ -20,8 +20,8 @@ class ConditionalLogicActionTypeEnum extends AbstractEnum {
 	public static string $type = 'ConditionalLogicActionTypeEnum';
 
 	// Individual elements.
-	const SHOW = 'show';
-	const HIDE = 'hide';
+	public const SHOW = 'show';
+	public const HIDE = 'hide';
 
 	/**
 	 * {@inheritDoc}

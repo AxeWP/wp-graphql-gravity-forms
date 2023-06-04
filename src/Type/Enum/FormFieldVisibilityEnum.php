@@ -20,9 +20,9 @@ class FormFieldVisibilityEnum extends AbstractEnum {
 	public static string $type = 'FormFieldVisibilityEnum';
 
 	// Individual elements.
-	const VISIBLE        = 'visible';
-	const HIDDEN         = 'hidden';
-	const ADMINISTRATIVE = 'administrative';
+	public const VISIBLE        = 'visible';
+	public const HIDDEN         = 'hidden';
+	public const ADMINISTRATIVE = 'administrative';
 
 	/**
 	 * {@inheritDoc}

@@ -9,7 +9,6 @@
 namespace WPGraphQL\GF\Data;
 
 use Exception;
-use GF_Field;
 use GraphQL\Error\UserError;
 use WPGraphQL\GF\Data\FieldValueInput;
 use WPGraphQL\GF\Data\FieldValueInput\AbstractFieldValueInput;
@@ -27,7 +26,7 @@ class EntryObjectMutation {
 	 * @param bool  $is_draft If the mutation is for a draft entry.
 	 * @param array $entry The GF entry object. Used when updating.
 	 *
-	 * @throws Exception .
+	 * @throws \Exception .
 	 */
 	public static function get_field_value_input( array $args, array $form, bool $is_draft, array $entry = null ) : FieldValueInput\AbstractFieldValueInput {
 		$field = GFUtils::get_field_by_id( $form, $args['id'] );
@@ -95,7 +94,7 @@ class EntryObjectMutation {
 		 *
 		 * @param string $field_value_input_class  The FieldValueInput class to use. The referenced class must extend AbstractFieldValueInput.
 		 * @param array    $args The GraphQL input args for the form field.
-		 * @param GF_Field $field The current Gravity Forms field object.
+		 * @param \GF_Field $field The current Gravity Forms field object.
 		 * @param array $form The current Gravity Forms form object.
 		 * @param array|null $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
 		 * @param bool $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
@@ -163,11 +162,11 @@ class EntryObjectMutation {
 	 * Initializes the globals needed for file uploads to work.
 	 * This prevents any notices about missing array keys.
 	 *
-	 * @param GF_Field[] $form_fields .
-	 * @param array      $input_field_values .
-	 * @param bool       $save_as_draft .
+	 * @param \GF_Field[] $form_fields .
+	 * @param array       $input_field_values .
+	 * @param bool        $save_as_draft .
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	public static function initialize_files( array $form_fields, array $input_field_values, bool $save_as_draft ) : array {
 		$files = [];
@@ -218,7 +217,7 @@ class EntryObjectMutation {
 					$temp_filename = 'input_' . $field->id . '_' . \GFCommon::random_str( 16 ) . '_' . $file['name'];
 					$target_file   = $target_dir . wp_basename( $temp_filename );
 					$is_success    = copy( $file['tmp_name'], $target_file );
-					if ( file_exists( $target_file ) ) {
+					if ( $is_success && file_exists( $target_file ) ) {
 						\GFFormsModel::set_permissions( $target_file );
 					}
 

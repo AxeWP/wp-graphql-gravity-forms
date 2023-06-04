@@ -20,9 +20,9 @@ class NumberFieldFormatEnum extends AbstractEnum {
 	public static string $type = 'NumberFieldFormatEnum';
 
 	// Individual elements.
-	const CURRENCY      = 'currency';
-	const DECIMAL_DOT   = 'decimal_dot';
-	const DECIMAL_COMMA = 'decimal_comma';
+	public const CURRENCY      = 'currency';
+	public const DECIMAL_DOT   = 'decimal_dot';
+	public const DECIMAL_COMMA = 'decimal_comma';
 
 	/**
 	 * {@inheritDoc}

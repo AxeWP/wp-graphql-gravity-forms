@@ -20,9 +20,9 @@ class FormFieldRequiredIndicatorEnum extends AbstractEnum {
 	public static string $type = 'FormFieldRequiredIndicatorEnum';
 
 	// Individual elements.
-	const ASTERISK = 'asterisk';
-	const CUSTOM   = 'custom';
-	const TEXT     = 'text';
+	public const ASTERISK = 'asterisk';
+	public const CUSTOM   = 'custom';
+	public const TEXT     = 'text';
 
 	/**
 	 * {@inheritDoc}

@@ -78,7 +78,7 @@ class SubmittedEntry extends Model {
 				'dateUpdated'         => fn() : ?string => ! empty( $this->data['date_updated'] ) ? get_date_from_gmt( $this->data['date_updated'] ) : null,
 				'dateUpdatedGmt'      => fn() : ?string => ! empty( $this->data['date_updated'] ) ? $this->data['date_updated'] : null,
 				'entry'               => fn() : array => $this->data,
-				'entryValues'         => fn() : ?array => array_filter( $this->data, fn( $key ) => is_numeric( $key ), ARRAY_FILTER_USE_KEY ) ?: null,
+				'entryValues'         => fn() : ?array => array_filter( $this->data, static fn( $key ) => is_numeric( $key ), ARRAY_FILTER_USE_KEY ) ?: null,
 				'formDatabaseId'      => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
 				'formId'              => fn() => ! empty( $this->data['form_id'] ) ? Relay::toGlobalId( FormsLoader::$name, $this->data['form_id'] ) : null,
 				'id'                  => fn() : string => Relay::toGlobalId( EntriesLoader::$name, (string) $this->data['id'] ),

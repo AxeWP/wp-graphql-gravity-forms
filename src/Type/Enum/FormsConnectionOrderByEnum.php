@@ -20,11 +20,11 @@ class FormsConnectionOrderByEnum extends AbstractEnum {
 	public static string $type = 'FormsConnectionOrderByEnum';
 
 	// Individual elements.
-	const DATE_CREATED = 'date_created';
-	const ID           = 'id';
-	const IS_ACTIVE    = 'is_active';
-	const IS_TRASH     = 'is_trash';
-	const TITLE        = 'title';
+	public const DATE_CREATED = 'date_created';
+	public const ID           = 'id';
+	public const IS_ACTIVE    = 'is_active';
+	public const IS_TRASH     = 'is_trash';
+	public const TITLE        = 'title';
 
 	/**
 	 * {@inheritDoc}

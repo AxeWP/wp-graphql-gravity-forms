@@ -89,7 +89,7 @@ class DraftEntry extends Model {
 				'dateUpdated'         => fn() : ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? get_date_from_gmt( $this->submission['partial_entry']['date_updated'] ) : null,
 				'dateUpdatedGmt'      => fn() : ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? $this->submission['partial_entry']['date_updated'] : null,
 				'entry'               => fn() : array => $this->submission['partial_entry'],
-				'entryValues'         => fn() : ?array => array_filter( $this->submission['partial_entry'], fn( $key ) => is_numeric( $key ), ARRAY_FILTER_USE_KEY ) ?: null,
+				'entryValues'         => fn() : ?array => array_filter( $this->submission['partial_entry'], static fn( $key ) => is_numeric( $key ), ARRAY_FILTER_USE_KEY ) ?: null,
 				'formId'              => fn() => ! empty( $this->data['form_id'] ) ? Relay::toGlobalId( FormsLoader::$name, $this->data['form_id'] ) : null,
 				'formDatabaseId'      => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
 				'id'                  => fn() : string => Relay::toGlobalId( DraftEntriesLoader::$name, $this->resume_token ),

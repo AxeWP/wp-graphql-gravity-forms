@@ -8,9 +8,7 @@
 
 namespace WPGraphQL\GF\Data\FieldValueInput;
 
-use GraphQL\Error\UserError;
 use GF_Field;
-use GF_Field_Post_Image;
 /**
  * Class - ImageValuesInput
  */
@@ -39,7 +37,7 @@ class ImageValuesInput extends FileUploadValuesInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws UserError
+	 * @throws \GraphQL\Error\UserError
 	 */
 	protected function prepare_value() {
 		$value      = $this->args;

@@ -20,8 +20,8 @@ class AmPmEnum extends AbstractEnum {
 	public static string $type = 'AmPmEnum';
 
 	// Individual elements.
-	const AM = 'am';
-	const PM = 'pm';
+	public const AM = 'am';
+	public const PM = 'pm';
 
 	/**
 	 * {@inheritDoc}

@@ -38,9 +38,9 @@ class WPJamstackDeployments implements Hookable {
 		}
 
 		// Register settings.
-		add_action( 'admin_init', [ __CLASS__, 'register_settings' ], 11 );
+		add_action( 'admin_init', [ self::class, 'register_settings' ], 11 );
 		// Filters sanitization callback.
-		add_filter( 'sanitize_option_' . self::get_options_key(), [ __CLASS__, 'sanitize' ], 10 );
+		add_filter( 'sanitize_option_' . self::get_options_key(), [ self::class, 'sanitize' ], 10 );
 
 		// Trigger deployments.
 		self::trigger_deployments();
@@ -130,12 +130,12 @@ class WPJamstackDeployments implements Hookable {
 			switch ( $gf_hook ) {
 				case 'create_form':
 					add_action( 'gform_post_form_duplicated', 'jamstack_deployments_fire_webhook' );
-					add_action( 'gform_after_save_form', [ __CLASS__, 'after_save_form' ], 10, 2 );
+					add_action( 'gform_after_save_form', [ self::class, 'after_save_form' ], 10, 2 );
 					break;
 				case 'update_form':
 					// Only add action if it doenst already exist.
-					if ( ! has_action( 'gform_after_save_form', [ __CLASS__, 'after_save_form' ] ) ) {
-						add_action( 'gform_after_save_form', [ __CLASS__, 'after_save_form' ], 10, 2 );
+					if ( ! has_action( 'gform_after_save_form', [ self::class, 'after_save_form' ] ) ) {
+						add_action( 'gform_after_save_form', [ self::class, 'after_save_form' ], 10, 2 );
 					}
 					add_action( 'gform_post_update_form_meta', 'jamstack_deployments_fire_webhook' );
 					add_action( 'gform_post_form_activated', 'jamstack_deployments_fire_webhook' );

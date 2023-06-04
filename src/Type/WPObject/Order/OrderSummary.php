@@ -10,7 +10,6 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Order;
 
-use WPGraphQL\AppContext;
 use WPGraphQL\GF\Type\Enum\CurrencyEnum;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 

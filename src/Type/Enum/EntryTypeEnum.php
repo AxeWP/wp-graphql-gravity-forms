@@ -20,9 +20,9 @@ class EntryTypeEnum extends AbstractEnum {
 	public static string $type = 'EntryTypeEnum';
 
 	// Individual elements.
-	const DRAFT     = 'draft';
-	const PARTIAL   = 'partial';
-	const SUBMITTED = 'submitted';
+	public const DRAFT     = 'draft';
+	public const PARTIAL   = 'partial';
+	public const SUBMITTED = 'submitted';
 
 	/**
 	 * {@inheritDoc}

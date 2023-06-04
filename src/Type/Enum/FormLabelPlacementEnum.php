@@ -20,9 +20,9 @@ class FormLabelPlacementEnum extends AbstractEnum {
 	public static string $type = 'FormLabelPlacementEnum';
 
 	// Individual elements.
-	const TOP   = 'top_label';
-	const LEFT  = 'left_label';
-	const RIGHT = 'right_label';
+	public const TOP   = 'top_label';
+	public const LEFT  = 'left_label';
+	public const RIGHT = 'right_label';
 
 	/**
 	 * {@inheritDoc}

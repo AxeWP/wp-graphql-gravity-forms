@@ -20,13 +20,13 @@ class DateFieldFormatEnum extends AbstractEnum {
 	public static string $type = 'DateFieldFormatEnum';
 
 	// Individual elements.
-	const MDY       = 'mdy';
-	const DMY       = 'dmy';
-	const DMY_DASH  = 'dmy_dash';
-	const DMY_DOT   = 'dmy_dot';
-	const YMD_SLASH = 'ymd_slash';
-	const YMD_DASH  = 'ymd_dash';
-	const YMD_DOT   = 'ymd_dot';
+	public const MDY       = 'mdy';
+	public const DMY       = 'dmy';
+	public const DMY_DASH  = 'dmy_dash';
+	public const DMY_DOT   = 'dmy_dot';
+	public const YMD_SLASH = 'ymd_slash';
+	public const YMD_DASH  = 'ymd_dash';
+	public const YMD_DOT   = 'ymd_dot';
 
 	/**
 	 * {@inheritDoc}

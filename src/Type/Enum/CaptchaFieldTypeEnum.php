@@ -20,9 +20,9 @@ class CaptchaFieldTypeEnum extends AbstractEnum {
 	public static string $type = 'CaptchaFieldTypeEnum';
 
 	// Individual elements.
-	const RECAPTCHA = 'recaptcha';
-	const SIMPLE    = 'simple_captcha';
-	const MATH      = 'math';
+	public const RECAPTCHA = 'recaptcha';
+	public const SIMPLE    = 'simple_captcha';
+	public const MATH      = 'math';
 
 	/**
 	 * {@inheritDoc}

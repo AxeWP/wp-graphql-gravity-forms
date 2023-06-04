@@ -93,7 +93,7 @@ class UpdateEntry extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload() : callable {
-		return function ( $input, AppContext $context, ResolveInfo $info ) : array {
+		return static function ( $input, AppContext $context, ResolveInfo $info ) : array {
 			// Check for required fields.
 			static::check_required_inputs( $input );
 
@@ -133,7 +133,7 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected static function check_required_inputs( $input = null ) : void {
 		if ( ! empty( $input['entryMeta'] ) && empty( $input['fieldValues'] ) ) {
@@ -147,7 +147,7 @@ class UpdateEntry extends AbstractMutation {
 	 * @param array $input .
 	 * @param array $entry .
 	 * @param array $form .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	private static function prepare_entry_data( array $input, array $entry, array $form ) : array {
 		$should_validate = isset( $input['shouldValidate'] ) ? (bool) $input['shouldValidate'] : true;
@@ -301,9 +301,9 @@ class UpdateEntry extends AbstractMutation {
 	public static function update_post( int $entry_id, array $form ) : void {
 		$entry = GFUtils::get_entry( $entry_id );
 
-		add_filter( 'gform_post_data', [ __CLASS__, 'set_post_id_for_update' ], 10, 3 );
+		add_filter( 'gform_post_data', [ self::class, 'set_post_id_for_update' ], 10, 3 );
 		GFFormsModel::create_post( $form, $entry );
-		remove_filter( 'gform_post_data', [ __CLASS__, 'set_post_id_for_update' ] );
+		remove_filter( 'gform_post_data', [ self::class, 'set_post_id_for_update' ] );
 	}
 
 	/**

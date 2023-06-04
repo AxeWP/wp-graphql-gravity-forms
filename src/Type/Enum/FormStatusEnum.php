@@ -20,10 +20,10 @@ class FormStatusEnum extends AbstractEnum {
 	public static string $type = 'FormStatusEnum';
 
 	// Individual elements.
-	const ACTIVE           = 'ACTIVE';
-	const INACTIVE         = 'INACTIVE';
-	const TRASHED          = 'TRASHED';
-	const INACTIVE_TRASHED = 'INACTIVE_TRASHED';
+	public const ACTIVE           = 'ACTIVE';
+	public const INACTIVE         = 'INACTIVE';
+	public const TRASHED          = 'TRASHED';
+	public const INACTIVE_TRASHED = 'INACTIVE_TRASHED';
 
 	/**
 	 * {@inheritDoc}

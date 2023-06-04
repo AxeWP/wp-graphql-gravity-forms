@@ -27,12 +27,12 @@ class GFSignature implements Hookable {
 		}
 
 		// Register Enums.
-		add_filter( 'graphql_gf_registered_enum_classes', [ __CLASS__, 'enums' ] );
+		add_filter( 'graphql_gf_registered_enum_classes', [ self::class, 'enums' ] );
 		// Register Form Field Settings interfaces.
-		add_filter( 'graphql_gf_registered_form_field_setting_classes', [ __CLASS__, 'form_field_settings' ] );
+		add_filter( 'graphql_gf_registered_form_field_setting_classes', [ self::class, 'form_field_settings' ] );
 
 		// Register FieldValueInput.
-		add_filter( 'graphql_gf_field_value_input_class', [ __CLASS__, 'field_value_input' ], 10, 3 );
+		add_filter( 'graphql_gf_field_value_input_class', [ self::class, 'field_value_input' ], 10, 3 );
 	}
 
 	/**
@@ -73,9 +73,9 @@ class GFSignature implements Hookable {
 	/**
 	 * Registers the SignatureValuesInput class.
 	 *
-	 * @param string   $input_class .
-	 * @param array    $args .
-	 * @param GF_Field $field .
+	 * @param string    $input_class .
+	 * @param array     $args .
+	 * @param \GF_Field $field .
 	 */
 	public static function field_value_input( string $input_class, array $args, GF_Field $field ) : string {
 		if ( 'signature' === $field->get_input_type() ) {

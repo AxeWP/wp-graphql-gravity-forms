@@ -20,8 +20,8 @@ class TimeFieldFormatEnum extends AbstractEnum {
 	public static string $type = 'TimeFieldFormatEnum';
 
 	// Individual elements.
-	const H12 = '12';
-	const H24 = '24';
+	public const H12 = '12';
+	public const H24 = '24';
 
 	/**
 	 * {@inheritDoc}

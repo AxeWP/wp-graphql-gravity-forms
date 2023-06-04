@@ -20,10 +20,10 @@ class FormLimitEntriesPeriodEnum extends AbstractEnum {
 	public static string $type = 'FormLimitEntriesPeriodEnum';
 
 	// Individual elements.
-	const DAY   = 'day';
-	const WEEK  = 'week';
-	const MONTH = 'month';
-	const YEAR  = 'year';
+	public const DAY   = 'day';
+	public const WEEK  = 'week';
+	public const MONTH = 'month';
+	public const YEAR  = 'year';
 
 	/**
 	 * {@inheritDoc}

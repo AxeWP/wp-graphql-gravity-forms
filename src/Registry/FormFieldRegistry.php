@@ -40,7 +40,7 @@ class FormFieldRegistry {
 	/**
 	 * Register the Form Field type to the WPGraphQL schema.
 	 *
-	 * @param GF_Field $field The Gravity Forms field object.
+	 * @param \GF_Field $field The Gravity Forms field object.
 	 */
 	public static function register( GF_Field $field ) : void {
 		$field->graphql_single_name = Utils::get_safe_form_field_type_name( $field->type ) . 'Field';
@@ -71,7 +71,7 @@ class FormFieldRegistry {
 		 *
 		 * The fields themselves will only be registered on the next get_graphql_register_action() call.
 		 *
-		 * @param GF_Field $field The Gravity Forms field object.
+		 * @param \GF_Field $field The Gravity Forms field object.
 		 * @param array    $field_settings The field settings.
 		 */
 		do_action( 'graphql_gf_after_register_form_field', $field, $field_settings );
@@ -81,9 +81,9 @@ class FormFieldRegistry {
 	/**
 	 * Registers the GF Form Field as a GraphQL object, wrapped in actions to keep things DRY.
 	 *
-	 * @param GF_Field $field The Gravity Forms field object.
-	 * @param array    $field_settings The Gravity Forms field settings.
-	 * @param array    $config The config array as expected by WPGraphQL.
+	 * @param \GF_Field $field The Gravity Forms field object.
+	 * @param array     $field_settings The Gravity Forms field settings.
+	 * @param array     $config The config array as expected by WPGraphQL.
 	 */
 	protected static function register_object_type( GF_Field $field, array $field_settings, array $config ) : void {
 		add_action(
@@ -100,7 +100,7 @@ class FormFieldRegistry {
 				/**
 				 * Fires after the Gravity Forms field object has been registered to WPGraphQL schema.
 				 *
-				 * @param GF_Field $field The Gravity Forms field object.
+				 * @param \GF_Field $field The Gravity Forms field object.
 				 * @param array    $field_settings The field settings.
 				 * @param array    $config The config array as expected by WPGraphQL.
 				 */
@@ -116,9 +116,9 @@ class FormFieldRegistry {
 	 *
 	 * @uses FormFields::register_gf_field_object() to register the child types.
 	 *
-	 * @param GF_Field $field          The Gravity Forms field object.
-	 * @param array    $settings       The field settings.
-	 * @param array    $possible_types The possible child types of the field. Null if no child types.
+	 * @param \GF_Field $field The Gravity Forms field object.
+	 * @param array     $settings       The field settings.
+	 * @param array     $possible_types The possible child types of the field. Null if no child types.
 	 */
 	protected static function register_interface_and_types( GF_Field $field, array $settings, array $possible_types ) : void {
 		// Store these for later use.
@@ -158,7 +158,7 @@ class FormFieldRegistry {
 
 				$config['description'] = self::get_description( $field->type );
 
-				$config['resolveType'] = function ( $value ) use ( $type_registry, $possible_types ) {
+				$config['resolveType'] = static function ( $value ) use ( $type_registry, $possible_types ) {
 					$input_type = $value->get_input_type();
 					if ( isset( $possible_types[ $input_type ] ) ) {
 						$type = $type_registry->get_type( $possible_types[ $value->$input_type ] );
@@ -214,7 +214,7 @@ class FormFieldRegistry {
 	/**
 	 * Gets the registered field settings, including those of input types.
 	 *
-	 * @param GF_Field $field .
+	 * @param \GF_Field $field .
 	 */
 	public static function get_field_settings( GF_Field $field ) : array {
 		$settings = $field->get_form_editor_field_settings();
@@ -241,8 +241,8 @@ class FormFieldRegistry {
 	/**
 	 * Returns the config array used to register the form field.
 	 *
-	 * @param GF_Field $field .
-	 * @param array    $settings .
+	 * @param \GF_Field $field .
+	 * @param array     $settings .
 	 */
 	public static function get_config_from_settings( GF_Field $field, array $settings ) : array {
 		// Every GF_field is a FormField.
@@ -290,8 +290,8 @@ class FormFieldRegistry {
 	/**
 	 * Gets the PHP class for the interface.
 	 *
-	 * @param GF_Field $field The Gravity Forms field object.
-	 * @param string   $setting The Gravity Forms field setting key.
+	 * @param \GF_Field $field The Gravity Forms field object.
+	 * @param string    $setting The Gravity Forms field setting key.
 	 */
 	public static function get_setting_interface_class( GF_Field $field, string $setting ) : ?string {
 		$class = null;
@@ -337,9 +337,9 @@ class FormFieldRegistry {
 	/**
 	 * Gets the GraphQL fields config for the form field.
 	 *
-	 * @param GF_Field $field The Gravity Forms field object.
-	 * @param array    $settings The Gravity Forms field settings.
-	 * @param array    $interfaces The list of interfaces to add to the field.
+	 * @param \GF_Field $field The Gravity Forms field object.
+	 * @param array     $settings The Gravity Forms field settings.
+	 * @param array     $interfaces The list of interfaces to add to the field.
 	 */
 	public static function get_fields( GF_Field $field, array $settings, $interfaces ) : array {
 		$fields = [];
@@ -353,7 +353,7 @@ class FormFieldRegistry {
 				 *
 				 * @param array    $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
 				 * @param string    $setting_key   The `form_editor_field_settings()` key.
-				 * @param GF_Field $field      The Gravity Forms Field object.
+				 * @param \GF_Field $field The Gravity Forms Field object.
 				 * @param array    $interfaces The list of interfaces for the GraphQL type.
 				 */
 				$fields = apply_filters_deprecated( 'graphql_gf_form_field_setting_properties', [ $fields, $setting_key, $field ], '0.12.0', 'graphql_gf_form_field_setting_fields' );
@@ -364,7 +364,7 @@ class FormFieldRegistry {
 		 * Filter to modify the Form Field GraphQL fields.
 		 *
 		 * @param array    $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
-		 * @param GF_Field $field The Gravity Forms Field object.
+		 * @param \GF_Field $field The Gravity Forms Field object.
 		 * @param array    $settings The `form_editor_field_settings()` key.
 		 * @param array    $interfaces The list of interfaces for the GraphQL type.
 		 */
@@ -376,7 +376,7 @@ class FormFieldRegistry {
 	/**
 	 * Gets the Field Value field config.
 	 *
-	 * @param GF_Field $field The Gravity Forms field object.
+	 * @param \GF_Field $field The Gravity Forms field object.
 	 */
 	public static function get_field_value_fields( GF_Field $field ) : array {
 		$fields = [];
@@ -438,7 +438,7 @@ class FormFieldRegistry {
 		 * @deprecated 0.12.0 Use `graphql_gf_form_field_value_fields` instead.
 		 *
 		 * @param array $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
-		 * @param GF_Field $field The Gravity Forms Field object.
+		 * @param \GF_Field $field The Gravity Forms Field object.
 		 */
 		$fields = apply_filters_deprecated( 'graphql_gf_form_field_value_properties', [ $fields, $field ], '0.12.0', 'graphql_gf_form_field_value_fields' );
 
@@ -446,7 +446,7 @@ class FormFieldRegistry {
 		 * Filter to modify the Form Field Value GraphQL fields.
 		 *
 		 * @param array    $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
-		 * @param GF_Field $field The Gravity Forms Field object.
+		 * @param \GF_Field $field The Gravity Forms Field object.
 		 */
 		$fields = apply_filters( 'graphql_gf_form_field_value_fields', $fields, $field );
 
@@ -456,9 +456,9 @@ class FormFieldRegistry {
 	/**
 	 * Calls the actions to register the choices and inputs to the type.
 	 *
-	 * @param GF_Field $field          The Gravity Forms field object.
-	 * @param array    $field_settings The Gravity Forms field settings.
-	 * @param bool     $as_interface   Whether to register the choices and inputs as an interface.
+	 * @param \GF_Field $field The Gravity Forms field object.
+	 * @param array     $field_settings The Gravity Forms field settings.
+	 * @param bool      $as_interface   Whether to register the choices and inputs as an interface.
 	 */
 	protected static function maybe_register_choices_and_inputs( GF_Field $field, array $field_settings, bool $as_interface = false ) : void {
 		/**
@@ -466,7 +466,7 @@ class FormFieldRegistry {
 		 *
 		 * @param array    $settings_with_choices The field settings that should have a `choices` GraphQL Field.
 		 * @param array    $field_settings The Gravity Forms field settings.
-		 * @param GF_Field $field The Gravity Forms field object.
+		 * @param \GF_Field $field The Gravity Forms field object.
 		 * @param bool     $as_interface Whether to register the choice as an interface.
 		 */
 		$settings_with_choices = apply_filters(
@@ -495,7 +495,7 @@ class FormFieldRegistry {
 		 *
 		 * @param array    $settings_with_inputs The field settings that should have an `inputs` GraphQL Field.
 		 * @param array    $field_settings The Gravity Forms field settings.
-		 * @param GF_Field $field The Gravity Forms field object.
+		 * @param \GF_Field $field The Gravity Forms field object.
 		 * @param bool     $as_interface Whether to register the inputs as an interface.
 		 */
 		$settings_with_inputs = apply_filters(

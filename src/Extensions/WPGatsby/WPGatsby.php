@@ -23,7 +23,7 @@ class WPGatsby implements Hookable {
 		}
 
 		// Register action monitors.
-		add_filter( 'gatsby_action_monitors', [ __CLASS__, 'register_monitors' ], 10, 2 );
+		add_filter( 'gatsby_action_monitors', [ self::class, 'register_monitors' ], 10, 2 );
 		add_action( 'admin_init', [ Settings::class, 'register_settings' ], 11 );
 	}
 	/**

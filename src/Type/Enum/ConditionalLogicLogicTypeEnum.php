@@ -20,8 +20,8 @@ class ConditionalLogicLogicTypeEnum extends AbstractEnum {
 	public static string $type = 'ConditionalLogicLogicTypeEnum';
 
 	// Individual elements.
-	const ALL = 'all';
-	const ANY = 'any';
+	public const ALL = 'all';
+	public const ANY = 'any';
 
 	/**
 	 * {@inheritDoc}

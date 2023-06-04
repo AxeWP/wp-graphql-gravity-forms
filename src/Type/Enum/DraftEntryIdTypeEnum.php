@@ -20,8 +20,8 @@ class DraftEntryIdTypeEnum extends AbstractEnum {
 	public static string $type = 'DraftEntryIdTypeEnum';
 
 	// Individual elements.
-	const ID           = 'global_id';
-	const RESUME_TOKEN = 'resume_token';
+	public const ID           = 'global_id';
+	public const RESUME_TOKEN = 'resume_token';
 
 	/**
 	 * {@inheritDoc}

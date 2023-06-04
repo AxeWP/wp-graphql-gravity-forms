@@ -97,7 +97,7 @@ class SubmitForm extends AbstractMutation {
 						 * The callback checks if the model is for the current id, and then it's applied
 						 * to the model as a filter.
 						 */
-						$is_private_callback = function ( bool $can_view, int $form_id, $entry_id ) use ( $payload ) {
+						$is_private_callback = static function ( bool $can_view, int $form_id, $entry_id ) use ( $payload ) {
 							if ( $payload['entryId'] === $entry_id ) {
 								return true;
 							}
@@ -131,7 +131,7 @@ class SubmitForm extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload() : callable {
-		return function ( $input, AppContext $context, ResolveInfo $info ) : array {
+		return static function ( $input, AppContext $context, ResolveInfo $info ) : array {
 			// Get the form database_id.
 			$form_id = Utils::get_form_id_from_id( $input['id'] );
 
@@ -229,7 +229,7 @@ class SubmitForm extends AbstractMutation {
 	 * @param array $form .
 	 * @param array $submission The Gravity Forms submission result array.
 	 * @param array $entry_meta .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	private static function update_entry_properties( array $form, array $submission, array $entry_meta ) : void {
 		if ( ! empty( $submission['resume_token'] ) ) {

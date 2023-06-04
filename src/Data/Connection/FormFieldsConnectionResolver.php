@@ -73,12 +73,12 @@ class FormFieldsConnectionResolver {
 	/**
 	 * The connection resolve method.
 	 *
-	 * @param mixed       $source  The object the connection is coming from.
-	 * @param array       $args    Array of args to be passed down to the resolve method.
-	 * @param AppContext  $context The AppContext object to be passed down.
-	 * @param ResolveInfo $info    The ResolveInfo object.
+	 * @param mixed                                $source  The object the connection is coming from.
+	 * @param array                                $args    Array of args to be passed down to the resolve method.
+	 * @param \WPGraphQL\AppContext                $context The AppContext object to be passed down.
+	 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo object.
 	 *
-	 * @return mixed|array|Deferred
+	 * @return mixed|array|\WPGraphQL\GF\Data\Connection\Deferred
 	 */
 	public static function resolve( $source, array $args, AppContext $context, ResolveInfo $info ) {
 		if ( ! is_array( $source ) || empty( $source ) ) {

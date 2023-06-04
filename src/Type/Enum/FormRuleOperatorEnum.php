@@ -20,13 +20,13 @@ class FormRuleOperatorEnum extends AbstractEnum {
 	public static string $type = 'FormRuleOperatorEnum';
 
 	// Individual elements.
-	const IS           = 'is';
-	const IS_NOT       = 'isnot';
-	const CONTAINS     = 'contains';
-	const GREATER_THAN = '>';
-	const LESS_THAN    = '<';
-	const STARTS_WITH  = 'starts_with';
-	const ENDS_WITH    = 'ends_with';
+	public const IS           = 'is';
+	public const IS_NOT       = 'isnot';
+	public const CONTAINS     = 'contains';
+	public const GREATER_THAN = '>';
+	public const LESS_THAN    = '<';
+	public const STARTS_WITH  = 'starts_with';
+	public const ENDS_WITH    = 'ends_with';
 
 	/**
 	 * {@inheritDoc}

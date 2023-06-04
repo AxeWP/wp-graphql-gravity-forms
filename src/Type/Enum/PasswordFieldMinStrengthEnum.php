@@ -20,10 +20,10 @@ class PasswordFieldMinStrengthEnum extends AbstractEnum {
 	public static string $type = 'PasswordFieldMinStrengthEnum';
 
 	// Individual elements.
-	const SHORT  = 'short';
-	const BAD    = 'bad';
-	const GOOD   = 'good';
-	const STRONG = 'strong';
+	public const SHORT  = 'short';
+	public const BAD    = 'bad';
+	public const GOOD   = 'good';
+	public const STRONG = 'strong';
 
 	/**
 	 * {@inheritDoc}

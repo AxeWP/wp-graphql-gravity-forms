@@ -20,9 +20,9 @@ class DateFieldTypeEnum extends AbstractEnum {
 	public static string $type = 'DateFieldTypeEnum';
 
 	// Individual elements.
-	const FIELD    = 'datefield';
-	const DROPDOWN = 'datedropdown';
-	const PICKER   = 'datepicker';
+	public const FIELD    = 'datefield';
+	public const DROPDOWN = 'datedropdown';
+	public const PICKER   = 'datepicker';
 
 	/**
 	 * {@inheritDoc}

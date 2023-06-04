@@ -20,8 +20,8 @@ class FormButtonTypeEnum extends AbstractEnum {
 	public static string $type = 'FormButtonTypeEnum';
 
 	// Individual elements.
-	const TEXT  = 'text';
-	const IMAGE = 'image';
+	public const TEXT  = 'text';
+	public const IMAGE = 'image';
 
 	/**
 	 * {@inheritDoc}

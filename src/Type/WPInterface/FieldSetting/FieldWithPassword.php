@@ -8,9 +8,7 @@
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
-use GF_Field;
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
-use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Type\WPInterface\FieldWithInputs;
 use WPGraphQL\Registry\TypeRegistry;
 

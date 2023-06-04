@@ -22,9 +22,9 @@ class QuizFieldTypeEnum extends AbstractEnum {
 	public static string $type = 'QuizFieldTypeEnum';
 
 	// Individual elements.
-	const CHECKBOX = 'checkbox';
-	const RADIO    = 'radio';
-	const SELECT   = 'select';
+	public const CHECKBOX = 'checkbox';
+	public const RADIO    = 'radio';
+	public const SELECT   = 'select';
 
 	/**
 	 * {@inheritDoc}

@@ -20,12 +20,12 @@ class FieldFiltersOperatorInputEnum extends AbstractEnum {
 	public static string $type = 'FieldFiltersOperatorEnum';
 
 	// Individual elements.
-	const CONTAINS = 'contains';
-	const IN       = 'in';
-	const IS       = 'is';
-	const IS_NOT   = 'is not';
-	const LIKE     = 'like';
-	const NOT_IN   = 'not in';
+	public const CONTAINS = 'contains';
+	public const IN       = 'in';
+	public const IS       = 'is';
+	public const IS_NOT   = 'is not';
+	public const LIKE     = 'like';
+	public const NOT_IN   = 'not in';
 
 	/**
 	 * {@inheritDoc}

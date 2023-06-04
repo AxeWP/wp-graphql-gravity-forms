@@ -20,8 +20,8 @@ class FormSubmitButtonLocationEnum extends AbstractEnum {
 	public static string $type = 'FormSubmitButtonLocationEnum';
 
 	// Individual elements.
-	const BOTTOM = 'bottom';
-	const INLINE = 'inline';
+	public const BOTTOM = 'bottom';
+	public const INLINE = 'inline';
 
 	/**
 	 * {@inheritDoc}

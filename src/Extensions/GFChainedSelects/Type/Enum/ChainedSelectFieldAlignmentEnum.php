@@ -22,8 +22,8 @@ class ChainedSelectFieldAlignmentEnum extends AbstractEnum {
 	public static string $type = 'ChainedSelectFieldAlignmentEnum';
 
 	// Individual elements.
-	const HORIZONTAL = 'horizontal';
-	const VERTICAL   = 'vertical';
+	public const HORIZONTAL = 'horizontal';
+	public const VERTICAL   = 'vertical';
 
 	/**
 	 * {@inheritDoc}

@@ -20,8 +20,8 @@ class CaptchaFieldThemeEnum extends AbstractEnum {
 	public static string $type = 'CaptchaFieldThemeEnum';
 
 	// Individual elements.
-	const DARK  = 'dark';
-	const LIGHT = 'light';
+	public const DARK  = 'dark';
+	public const LIGHT = 'light';
 
 	/**
 	 * {@inheritDoc}

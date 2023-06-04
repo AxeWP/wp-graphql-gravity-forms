@@ -20,12 +20,12 @@ class FormPageProgressStyleEnum extends AbstractEnum {
 	public static string $type = 'FormPageProgressStyleEnum';
 
 	// Individual elements.
-	const BLUE   = 'blue';
-	const GREY   = 'grey';
-	const GREEN  = 'green';
-	const ORANGE = 'orange';
-	const RED    = 'red';
-	const CUSTOM = 'custom';
+	public const BLUE   = 'blue';
+	public const GREY   = 'grey';
+	public const GREEN  = 'green';
+	public const ORANGE = 'orange';
+	public const RED    = 'red';
+	public const CUSTOM = 'custom';
 
 	/**
 	 * {@inheritDoc}

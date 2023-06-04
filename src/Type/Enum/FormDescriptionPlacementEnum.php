@@ -20,8 +20,8 @@ class FormDescriptionPlacementEnum extends AbstractEnum {
 	public static string $type = 'FormDescriptionPlacementEnum';
 
 	// Individual elements.
-	const ABOVE = 'above';
-	const BELOW = 'below';
+	public const ABOVE = 'above';
+	public const BELOW = 'below';
 
 	/**
 	 * {@inheritDoc}

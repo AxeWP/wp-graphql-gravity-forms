@@ -77,8 +77,8 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		 * @param array       $query_args The args that will be passed to the WP_Query
 		 * @param mixed       $source     The source that's passed down the GraphQL queries
 		 * @param array       $args       The inputArgs on the field
-		 * @param AppContext  $context    The AppContext passed down the GraphQL tree
-		 * @param ResolveInfo $info       The ResolveInfo passed down the GraphQL tree
+		 * @param \WPGraphQL\AppContext $context The AppContext passed down the GraphQL tree
+		 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo passed down the GraphQL tree
 		 */
 		$query_args = apply_filters( 'graphql_gf_entries_connection_query_args', $query_args, $this->source, $this->args, $this->context, $this->info );
 
@@ -100,7 +100,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	public function should_execute() : bool {
 		$can_view = false;
@@ -246,7 +246,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 			$this->args['where']['formIds'] = [ $this->args['where']['formIds'] ];
 		}
 
-		return array_map( fn( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
+		return array_map( static fn( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
 	}
 
 	/**
@@ -325,7 +325,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @return mixed Filter value.
 	 *
-	 * @throws UserError Field filters must have one value field.
+	 * @throws \GraphQL\Error\UserError Field filters must have one value field.
 	 */
 	private function get_field_filter_value( array $field_filter, string $operator ) {
 		$value_fields = $this->get_field_filter_value_fields( $field_filter );
@@ -407,7 +407,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Get paging arguments for entry ID query.
 	 *
-	 * @throws UserError When using unsupported pagination.
+	 * @throws \GraphQL\Error\UserError When using unsupported pagination.
 	 */
 	private function get_paging() : array {
 		return [

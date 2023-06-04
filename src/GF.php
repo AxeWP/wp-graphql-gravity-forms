@@ -19,7 +19,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		/**
 		 * Class instances.
 		 *
-		 * @var ?GF $instance
+		 * @var ?\WPGraphQL\GF\GF $instance
 		 */
 		private static $instance;
 
@@ -27,7 +27,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		 * Constructor
 		 */
 		public static function instance() : self {
-			if ( ! isset( self::$instance ) || ! ( is_a( self::$instance, __CLASS__ ) ) ) {
+			if ( ! isset( self::$instance ) || ! ( is_a( self::$instance, self::class ) ) ) {
 				if ( ! function_exists( 'is_plugin_active' ) ) {
 					require_once ABSPATH . 'wp-admin/includes/plugin.php';
 				}
@@ -39,7 +39,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 			/**
 			 * Fire off init action.
 			 *
-			 * @param GF $instance the instance of the plugin class.
+			 * @param \WPGraphQL\GF\GF $instance the instance of the plugin class.
 			 */
 			do_action( 'graphql_gf_init', self::$instance );
 

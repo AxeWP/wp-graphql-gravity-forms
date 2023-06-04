@@ -20,9 +20,9 @@ class EntryStatusEnum extends AbstractEnum {
 	public static string $type = 'EntryStatusEnum';
 
 	// Individual elements.
-	const ACTIVE = 'active';
-	const SPAM   = 'spam';
-	const TRASH  = 'trash';
+	public const ACTIVE = 'active';
+	public const SPAM   = 'spam';
+	public const TRASH  = 'trash';
 
 	/**
 	 * {@inheritDoc}

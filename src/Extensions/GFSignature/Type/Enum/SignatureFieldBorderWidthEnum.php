@@ -22,10 +22,10 @@ class SignatureFieldBorderWidthEnum extends AbstractEnum {
 	public static string $type = 'SignatureFieldBorderWidthEnum';
 
 	// Individual elements.
-	const NONE   = '0';
-	const SMALL  = '1';
-	const MEDIUM = '2';
-	const LARGE  = '3';
+	public const NONE   = '0';
+	public const SMALL  = '1';
+	public const MEDIUM = '2';
+	public const LARGE  = '3';
 
 	/**
 	 * {@inheritDoc}

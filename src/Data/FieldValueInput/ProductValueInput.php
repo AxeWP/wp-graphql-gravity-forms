@@ -39,7 +39,7 @@ class ProductValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected function is_valid_input_type() : bool {
 		$is_valid = false;

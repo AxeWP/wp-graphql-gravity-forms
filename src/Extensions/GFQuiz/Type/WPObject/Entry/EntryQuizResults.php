@@ -11,7 +11,6 @@ namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\Entry;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - EntryQuizResults

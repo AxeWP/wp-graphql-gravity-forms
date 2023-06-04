@@ -9,8 +9,6 @@
 
 namespace WPGraphQL\GF\Type\Input;
 
-use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
-
 /**
  * Class - SubmitFormMetaInput
  */

@@ -9,7 +9,6 @@
 namespace WPGraphQL\GF;
 
 use Puc_v4_Factory;
-use Puc_v4p13_Vcs_PluginUpdateChecker;
 use WPGraphQL\GF\Interfaces\Hookable;
 
 /**
@@ -20,9 +19,9 @@ class UpdateChecker implements Hookable {
 	 * Registers hooks to WordPress.
 	 */
 	public static function register_hooks() : void {
-		add_filter( 'auto_update_plugin', [ __CLASS__, 'disable_autoupdates' ], 10, 2 );
-		add_action( 'admin_init', [ __CLASS__, 'check_updates' ] );
-		add_action( 'in_plugin_update_message-wp-graphql-gravity-forms/wp-graphql-gravity-forms.php', [ __CLASS__, 'in_plugin_update_message' ], 10, 2 );
+		add_filter( 'auto_update_plugin', [ self::class, 'disable_autoupdates' ], 10, 2 );
+		add_action( 'admin_init', [ self::class, 'check_updates' ] );
+		add_action( 'in_plugin_update_message-wp-graphql-gravity-forms/wp-graphql-gravity-forms.php', [ self::class, 'in_plugin_update_message' ], 10, 2 );
 	}
 
 	/**
@@ -40,7 +39,7 @@ class UpdateChecker implements Hookable {
 		 */
 		$repo_link = apply_filters( 'graphql_gf_update_repo_url', 'https://github.com/harness-software/wp-graphql-gravity-forms/' );
 
-		/** @var Puc_v4p13_Vcs_PluginUpdateChecker */
+		/** @var \Puc_v4p13_Vcs_PluginUpdateChecker */
 		$update_checker = Puc_v4_Factory::buildUpdateChecker(
 			trailingslashit( $repo_link ),
 			WPGRAPHQL_GF_PLUGIN_FILE,

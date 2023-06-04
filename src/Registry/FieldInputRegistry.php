@@ -36,7 +36,7 @@ class FieldInputRegistry {
 	/**
 	 * Gets the GraphQL type name for the generated GF Field input.
 	 *
-	 * @param GF_Field $field The Gravity Forms field object.
+	 * @param \GF_Field $field The Gravity Forms field object.
 	 */
 	public static function get_type_name( GF_Field $field ) : string {
 		$input_type = $field->get_input_type();
@@ -55,14 +55,14 @@ class FieldInputRegistry {
 	/**
 	 * Registers the Input property for the GF Form Field as a GraphQL object.
 	 *
-	 * @param GF_Field $field The Gravity Forms field object.
-	 * @param array    $settings The Gravity Forms field settings used to define the GraphQL object.
-	 * @param bool     $as_interface Whether to register the choice as an interface. Default false.
+	 * @param \GF_Field $field The Gravity Forms field object.
+	 * @param array     $settings The Gravity Forms field settings used to define the GraphQL object.
+	 * @param bool      $as_interface Whether to register the choice as an interface. Default false.
 	 */
 	public static function register( GF_Field $field, array $settings, bool $as_interface = false ) : void {
 		add_action(
 			get_graphql_register_action(),
-			function ( TypeRegistry $type_registry ) use ( $field, $settings, $as_interface ) {
+			static function ( TypeRegistry $type_registry ) use ( $field, $settings, $as_interface ) {
 				$input_name = self::get_type_name( $field );
 
 				// Skip if already registered.
@@ -73,7 +73,7 @@ class FieldInputRegistry {
 				$config = self::get_config_from_settings( $input_name, $field, $settings );
 
 				if ( $as_interface ) {
-					$config['resolveType'] = function ( $value ) use ( $input_name ) {
+					$config['resolveType'] = static function ( $value ) use ( $input_name ) {
 						return $input_name;
 					};
 
@@ -99,9 +99,9 @@ class FieldInputRegistry {
 	/**
 	 * Returns the config array used to register the form field.
 	 *
-	 * @param string   $input_name The name of the input.
-	 * @param GF_Field $field The Gravity Forms field object.
-	 * @param array    $settings The Gravity Forms field settings.
+	 * @param string    $input_name The name of the input.
+	 * @param \GF_Field $field The Gravity Forms field object.
+	 * @param array     $settings The Gravity Forms field settings.
 	 */
 	public static function get_config_from_settings( string $input_name, GF_Field $field, array $settings ) : array {
 		$interfaces = self::get_interfaces( $settings );
@@ -156,10 +156,10 @@ class FieldInputRegistry {
 	/**
 	 * Gets the fields to register to the FieldInput object.
 	 *
-	 * @param string   $input_name .
-	 * @param GF_Field $field The Gravity Forms field object.
-	 * @param array    $settings The Gravity Forms field settings.
-	 * @param array    $interfaces The list of interfaces to add to the field.
+	 * @param string    $input_name .
+	 * @param \GF_Field $field The Gravity Forms field object.
+	 * @param array     $settings The Gravity Forms field settings.
+	 * @param array     $interfaces The list of interfaces to add to the field.
 	 */
 	public static function get_fields( string $input_name, GF_Field $field, array $settings, array $interfaces ) : array {
 		$fields = FieldInput::get_fields();
@@ -169,7 +169,7 @@ class FieldInputRegistry {
 		 *
 		 * @param array    $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
 		 * @param string   $input_name The name of the input type.
-		 * @param GF_Field $field The Gravity Forms Field object.
+		 * @param \GF_Field $field The Gravity Forms Field object.
 		 * @param array    $settings The `form_editor_field_settings()` key.
 		 * @param array    $interfaces The list of interfaces for the GraphQL type.
 		 */

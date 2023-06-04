@@ -10,7 +10,6 @@
 
 namespace WPGraphQL\GF\Data\Loader;
 
-use Exception;
 use GFFormsModel;
 use GraphQL\Deferred;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
@@ -65,7 +64,7 @@ class DraftEntriesLoader extends AbstractDataLoader {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws Exception .
+	 * @throws \Exception .
 	 */
 	public function load_deferred( $database_id ) {
 		if ( empty( $database_id ) ) {

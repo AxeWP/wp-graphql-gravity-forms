@@ -17,7 +17,6 @@ use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - QuizResults

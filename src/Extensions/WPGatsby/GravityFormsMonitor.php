@@ -31,7 +31,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	/**
 	 * The class constructor.
 	 *
-	 * @param ActionMonitor $action_monitor .
+	 * @param \WPGatsby\ActionMonitor\ActionMonitor $action_monitor .
 	 */
 	public function __construct( ActionMonitor $action_monitor ) {
 		self::$enabled_actions = Settings::get_enabled_actions();

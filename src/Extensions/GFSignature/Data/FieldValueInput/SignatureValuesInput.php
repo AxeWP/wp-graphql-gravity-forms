@@ -49,7 +49,7 @@ class SignatureValuesInput extends ValueInput {
 	/**
 	 * Ensures the folder for storing signatures exists.
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected function ensure_signatures_folder_exists() : void {
 		$folder = \GFSignature::get_signatures_folder();
@@ -70,7 +70,7 @@ class SignatureValuesInput extends ValueInput {
 	 *
 	 * @return string $filename The filename of the saved signature image file.
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected function save_signature( string $signature ) : string {
 		if ( '' === $signature ) {
@@ -128,7 +128,7 @@ class SignatureValuesInput extends ValueInput {
 	 *
 	 * @param string $signature Base-64 encoded png signature image data.
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected function get_decoded_image_data( string $signature ) : string {
 		$error_message = __( 'An invalid signature image was provided. Image must be a base-64 encoded png.', 'wp-graphql-gravity-forms' );

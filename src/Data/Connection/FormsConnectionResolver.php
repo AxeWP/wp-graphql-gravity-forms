@@ -12,8 +12,6 @@ namespace WPGraphQL\GF\Data\Connection;
 
 use GFAPI;
 use GraphQL\Error\UserError;
-use GraphQL\Type\Definition\ResolveInfo;
-use WPGraphQL\AppContext;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Type\Enum\FormStatusEnum;
@@ -62,7 +60,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws UserError When using `formIds` and `status` together.
+	 * @throws \GraphQL\Error\UserError When using `formIds` and `status` together.
 	 */
 	public function get_query_args() : array {
 		/**
@@ -84,8 +82,8 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 		 * @param array       $query_args The args that will be passed to the WP_Query
 		 * @param mixed       $source     The source that's passed down the GraphQL queries
 		 * @param array       $args       The inputArgs on the field
-		 * @param AppContext  $context    The AppContext passed down the GraphQL tree
-		 * @param ResolveInfo $info       The ResolveInfo passed down the GraphQL tree
+		 * @param \WPGraphQL\AppContext $context The AppContext passed down the GraphQL tree
+		 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo passed down the GraphQL tree
 		 */
 		$query_args = apply_filters( 'graphql_gf_forms_connection_query_args', $query_args, $this->source, $this->args, $this->context, $this->info );
 
@@ -161,7 +159,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 			$this->args['where']['formIds'] = [ $this->args['where']['formIds'] ];
 		}
 
-		return array_map( fn( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
+		return array_map( static fn( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
 	}
 
 
@@ -203,7 +201,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Get sort argument for forms ID query.
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	private function get_sort() : array {
 		$sort = [

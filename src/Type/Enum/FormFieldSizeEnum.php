@@ -20,9 +20,9 @@ class FormFieldSizeEnum extends AbstractEnum {
 	public static string $type = 'FormFieldSizeEnum';
 
 	// Individual elements.
-	const SMALL  = 'small';
-	const MEDIUM = 'medium';
-	const LARGE  = 'large';
+	public const SMALL  = 'small';
+	public const MEDIUM = 'medium';
+	public const LARGE  = 'large';
 
 	/**
 	 * {@inheritDoc}

@@ -29,27 +29,27 @@ class GFChainedSelects implements Hookable {
 		}
 
 		// Register Enums.
-		add_filter( 'graphql_gf_registered_enum_classes', [ __CLASS__, 'enums' ] );
+		add_filter( 'graphql_gf_registered_enum_classes', [ self::class, 'enums' ] );
 
 		// Register Inputs.
-		add_filter( 'graphql_gf_registered_input_classes', [ __CLASS__, 'inputs' ] );
+		add_filter( 'graphql_gf_registered_input_classes', [ self::class, 'inputs' ] );
 
 		// Register Form Field Settings interfaces.
-		add_filter( 'graphql_gf_registered_form_field_setting_classes', [ __CLASS__, 'form_field_settings' ] );
-		add_filter( 'graphql_gf_registered_form_field_setting_choice_classes', [ __CLASS__, 'form_field_setting_choices' ] );
-		add_filter( 'graphql_gf_registered_form_field_setting_input_classes', [ __CLASS__, 'form_field_setting_inputs' ] );
+		add_filter( 'graphql_gf_registered_form_field_setting_classes', [ self::class, 'form_field_settings' ] );
+		add_filter( 'graphql_gf_registered_form_field_setting_choice_classes', [ self::class, 'form_field_setting_choices' ] );
+		add_filter( 'graphql_gf_registered_form_field_setting_input_classes', [ self::class, 'form_field_setting_inputs' ] );
 
 		// Register FieldValueInput.
-		add_filter( 'graphql_gf_field_value_input_class', [ __CLASS__, 'field_value_input' ], 10, 3 );
+		add_filter( 'graphql_gf_field_value_input_class', [ self::class, 'field_value_input' ], 10, 3 );
 
 		// Register field value property.
-		add_filter( 'graphql_gf_form_field_value_fields', [ __CLASS__, 'field_value_fields' ], 10, 2 );
+		add_filter( 'graphql_gf_form_field_value_fields', [ self::class, 'field_value_fields' ], 10, 2 );
 
 		// Register fieldValues input.
-		add_filter( 'graphql_gf_form_field_values_input_fields', [ __CLASS__, 'field_values_input_fields' ] );
+		add_filter( 'graphql_gf_form_field_values_input_fields', [ self::class, 'field_values_input_fields' ] );
 
 		// Map GF field name.
-		add_filter( 'graphql_gf_form_fields_name_map', [ __CLASS__, 'form_field_name' ] );
+		add_filter( 'graphql_gf_form_fields_name_map', [ self::class, 'form_field_name' ] );
 	}
 
 	/**
@@ -117,9 +117,9 @@ class GFChainedSelects implements Hookable {
 	/**
 	 * Registers the SignatureValuesInput class.
 	 *
-	 * @param string   $input_class .
-	 * @param array    $args .
-	 * @param GF_Field $field .
+	 * @param string    $input_class .
+	 * @param array     $args .
+	 * @param \GF_Field $field .
 	 */
 	public static function field_value_input( string $input_class, array $args, GF_Field $field ) : string {
 		if ( 'chainedselect' === $field->get_input_type() ) {
@@ -133,8 +133,8 @@ class GFChainedSelects implements Hookable {
 	/**
 	 * Registers ChainedSelect field value.
 	 *
-	 * @param array    $fields .
-	 * @param GF_Field $field .
+	 * @param array     $fields .
+	 * @param \GF_Field $field .
 	 */
 	public static function field_value_fields( array $fields, GF_Field $field ) : array {
 		if ( 'chainedselect' === $field->get_input_type() ) {

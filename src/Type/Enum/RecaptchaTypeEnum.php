@@ -20,8 +20,8 @@ class RecaptchaTypeEnum extends AbstractEnum {
 	public static string $type = 'RecaptchaTypeEnum';
 
 	// Individual elements.
-	const CHECKBOX  = 'checkbox';
-	const INVISIBLE = 'invisible';
+	public const CHECKBOX  = 'checkbox';
+	public const INVISIBLE = 'invisible';
 
 	/**
 	 * {@inheritDoc}

@@ -20,9 +20,9 @@ class CaptchaFieldBadgePositionEnum extends AbstractEnum {
 	public static string $type = 'CaptchaFieldBadgePositionEnum';
 
 	// Individual elements.
-	const BOTTOM_RIGHT = 'bottomright';
-	const BOTTOM_LEFT  = 'bottomleft';
-	const INLINE       = 'inline';
+	public const BOTTOM_RIGHT = 'bottomright';
+	public const BOTTOM_LEFT  = 'bottomleft';
+	public const INLINE       = 'inline';
 
 	/**
 	 * {@inheritDoc}

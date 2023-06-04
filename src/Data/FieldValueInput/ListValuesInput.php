@@ -38,7 +38,7 @@ class ListValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected function prepare_value() {
 		$value = $this->args;

@@ -98,7 +98,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload() : callable {
-		return function ( $input, AppContext $context, ResolveInfo $info ) : array {
+		return static function ( $input, AppContext $context, ResolveInfo $info ) : array {
 			// Check for required fields.
 			static::check_required_inputs( $input );
 
@@ -218,7 +218,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected static function check_required_inputs( $input = null ) : void {
 		if ( empty( $input['entryMeta'] ) && empty( $input['fieldValues'] ) ) {

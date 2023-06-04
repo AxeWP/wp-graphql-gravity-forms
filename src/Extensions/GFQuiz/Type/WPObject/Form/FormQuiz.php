@@ -15,7 +15,6 @@ use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum\QuizFieldGradingTypeEnum;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FormConfirmation

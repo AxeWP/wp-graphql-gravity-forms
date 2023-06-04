@@ -20,8 +20,8 @@ class PhoneFieldFormatEnum extends AbstractEnum {
 	public static string $type = 'PhoneFieldFormatEnum';
 
 	// Individual elements.
-	const STANDARD      = 'standard';
-	const INTERNATIONAL = 'international';
+	public const STANDARD      = 'standard';
+	public const INTERNATIONAL = 'international';
 
 	/**
 	 * {@inheritDoc}

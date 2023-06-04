@@ -20,9 +20,9 @@ class AddressFieldTypeEnum extends AbstractEnum {
 	public static string $type = 'AddressFieldTypeEnum';
 
 	// Individual elements.
-	const INTERNATIONAL = 'international';
-	const US            = 'us';
-	const CANADIAN      = 'canadian';
+	public const INTERNATIONAL = 'international';
+	public const US            = 'us';
+	public const CANADIAN      = 'canadian';
 
 	/**
 	 * {@inheritDoc}

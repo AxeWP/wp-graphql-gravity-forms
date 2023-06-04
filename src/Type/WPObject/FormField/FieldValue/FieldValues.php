@@ -419,8 +419,8 @@ class FieldValues {
 	/**
 	 * Checks that the necessary values to retrieve the values are set in the resolver.
 	 *
-	 * @param mixed      $source .
-	 * @param AppContext $context .
+	 * @param mixed                 $source .
+	 * @param \WPGraphQL\AppContext $context .
 	 */
 	protected static function is_field_and_entry( $source, AppContext $context ) : bool {
 		return $source instanceof GF_Field
@@ -433,9 +433,9 @@ class FieldValues {
 	 *
 	 * Shim GF_Field_FileUpload::get_extra_entry_metadata().
 	 *
-	 * @param GF_Field_FileUpload $field .
-	 * @param array               $entry .
-	 * @param array               $form .
+	 * @param \GF_Field_FileUpload $field .
+	 * @param array                $entry .
+	 * @param array                $form .
 	 */
 	protected static function get_file_upload_extra_entry_metadata( GF_Field_FileUpload $field, array $entry, array $form ) : array {
 		$file_values = $entry[ $field->id ] ?? null;
@@ -505,8 +505,8 @@ class FieldValues {
 	/**
 	 * Prepares the selected choice for concumption for the FieldChoice interface by adding the GraphQL object type to the return array.
 	 *
-	 * @param GF_Field $field The gravity forms field object.
-	 * @param int      $input_key The input key that represents field's selected choice.
+	 * @param \GF_Field $field The gravity forms field object.
+	 * @param int       $input_key The input key that represents field's selected choice.
 	 */
 	public static function prepare_connected_choice( GF_Field $field, int $input_key ) : array {
 		$type = FieldChoiceRegistry::get_type_name( $field );
@@ -520,8 +520,8 @@ class FieldValues {
 	/**
 	 * Prepares the selected input for concumption for the FieldInput interface by adding the GraphQL object type to the return array.
 	 *
-	 * @param GF_Field $field The gravity forms field object.
-	 * @param int      $input_key The input key that represents field's selected input.
+	 * @param \GF_Field $field The gravity forms field object.
+	 * @param int       $input_key The input key that represents field's selected input.
 	 */
 	public static function prepare_connected_input( GF_Field $field, int $input_key ) : array {
 		$type = FieldInputRegistry::get_type_name( $field );

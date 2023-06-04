@@ -102,10 +102,10 @@ class FormField extends AbstractInterface {
 	/**
 	 * Resolves the interface to the GraphQL type.
 	 *
-	 * @param TypeRegistry $type_registry The WPGraphQL type registry.
+	 * @param \WPGraphQL\Registry\TypeRegistry $type_registry The WPGraphQL type registry.
 	 */
 	public static function resolve_type( TypeRegistry $type_registry ) : callable {
-		return function ( $value ) use ( $type_registry ) {
+		return static function ( $value ) use ( $type_registry ) {
 			$possible_types    = Utils::get_registered_form_field_types();
 			$possible_subtypes = Utils::get_possible_form_field_child_types( $value->type );
 

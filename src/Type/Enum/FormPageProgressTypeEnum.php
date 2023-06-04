@@ -20,9 +20,9 @@ class FormPageProgressTypeEnum extends AbstractEnum {
 	public static string $type = 'FormPageProgressTypeEnum';
 
 	// Individual elements.
-	const PERCENTAGE = 'percentage';
-	const STEPS      = 'steps';
-	const NONE       = 'none';
+	public const PERCENTAGE = 'percentage';
+	public const STEPS      = 'steps';
+	public const NONE       = 'none';
 
 	/**
 	 * {@inheritDoc}

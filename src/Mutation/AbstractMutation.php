@@ -48,7 +48,7 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 	 * Checks that necessary WPGraphQL are set.
 	 *
 	 * @param array $input .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected static function check_required_inputs( ?array $input ) : void {
 		if ( empty( $input ) || ! is_array( $input ) ) {
@@ -61,7 +61,7 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 	 *
 	 * @param int|string $id .
 	 * @param string     $id_type .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected static function get_resume_token_from_id( $id, string $id_type ) : string {
 		if ( 'resume_token' === $id_type ) {

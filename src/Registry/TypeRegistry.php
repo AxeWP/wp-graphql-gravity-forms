@@ -517,7 +517,7 @@ class TypeRegistry {
 	 *
 	 * @param array $classes_to_register .
 	 *
-	 * @throws Exception .
+	 * @throws \Exception .
 	 */
 	private static function register_types( array $classes_to_register ) : void {
 		// Bail if there are no classes to register.

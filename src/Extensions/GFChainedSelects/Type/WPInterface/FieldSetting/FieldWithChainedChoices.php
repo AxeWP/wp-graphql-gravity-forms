@@ -48,8 +48,8 @@ class FieldWithChainedChoices extends AbstractFieldSetting implements TypeWithIn
 	 * {@inheritDoc}
 	 */
 	public static function register_hooks(): void {
-		add_filter( 'graphql_gf_form_field_settings_with_choices', [ __CLASS__, 'add_setting' ], 10 );
-		add_filter( 'graphql_gf_form_field_settings_with_inputs', [ __CLASS__, 'add_setting' ], 10 );
+		add_filter( 'graphql_gf_form_field_settings_with_choices', [ self::class, 'add_setting' ], 10 );
+		add_filter( 'graphql_gf_form_field_settings_with_inputs', [ self::class, 'add_setting' ], 10 );
 
 		parent::register_hooks();
 	}

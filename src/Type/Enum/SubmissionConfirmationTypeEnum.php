@@ -20,8 +20,8 @@ class SubmissionConfirmationTypeEnum extends AbstractEnum {
 	public static string $type = 'SubmissionConfirmationTypeEnum';
 
 	// Individual elements.
-	const MESSAGE  = 'message';
-	const REDIRECT = 'redirect';
+	public const MESSAGE  = 'message';
+	public const REDIRECT = 'redirect';
 
 	/**
 	 * {@inheritDoc}

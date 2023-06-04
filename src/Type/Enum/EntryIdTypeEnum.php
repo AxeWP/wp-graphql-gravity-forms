@@ -20,9 +20,9 @@ class EntryIdTypeEnum extends AbstractEnum {
 	public static string $type = 'EntryIdTypeEnum';
 
 	// Individual elements.
-	const ID           = 'global_id';
-	const DATABASE_ID  = 'database_id';
-	const RESUME_TOKEN = 'resume_token';
+	public const ID           = 'global_id';
+	public const DATABASE_ID  = 'database_id';
+	public const RESUME_TOKEN = 'resume_token';
 
 	/**
 	 * {@inheritDoc}

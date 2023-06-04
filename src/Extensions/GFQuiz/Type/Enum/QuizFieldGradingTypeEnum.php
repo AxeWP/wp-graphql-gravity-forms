@@ -22,9 +22,9 @@ class QuizFieldGradingTypeEnum extends AbstractEnum {
 	public static string $type = 'QuizFieldGradingTypeEnum';
 
 	// Individual elements.
-	const NONE     = 'none';
-	const PASSFAIL = 'passfail';
-	const LETTER   = 'letter';
+	public const NONE     = 'none';
+	public const PASSFAIL = 'passfail';
+	public const LETTER   = 'letter';
 
 	/**
 	 * {@inheritDoc}

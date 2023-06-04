@@ -20,8 +20,8 @@ class FormSubmitButtonWidthEnum extends AbstractEnum {
 	public static string $type = 'FormSubmitButtonWidthEnum';
 
 	// Individual elements.
-	const AUTO = 'auto';
-	const FULL = 'full';
+	public const AUTO = 'auto';
+	public const FULL = 'full';
 
 	/**
 	 * {@inheritDoc}

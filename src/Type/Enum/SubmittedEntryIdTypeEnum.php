@@ -20,8 +20,8 @@ class SubmittedEntryIdTypeEnum extends AbstractEnum {
 	public static string $type = 'SubmittedEntryIdTypeEnum';
 
 	// Individual elements.
-	const ID          = 'global_id';
-	const DATABASE_ID = 'database_id';
+	public const ID          = 'global_id';
+	public const DATABASE_ID = 'database_id';
 
 	/**
 	 * {@inheritDoc}

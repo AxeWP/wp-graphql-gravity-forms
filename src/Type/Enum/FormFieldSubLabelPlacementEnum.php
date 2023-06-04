@@ -20,9 +20,9 @@ class FormFieldSubLabelPlacementEnum extends AbstractEnum {
 	public static string $type = 'FormFieldSubLabelPlacementEnum';
 
 	// Individual elements.
-	const ABOVE   = 'above';
-	const BELOW   = 'below';
-	const INHERIT = 'inherit';
+	public const ABOVE   = 'above';
+	public const BELOW   = 'below';
+	public const INHERIT = 'inherit';
 
 	/**
 	 * {@inheritDoc}

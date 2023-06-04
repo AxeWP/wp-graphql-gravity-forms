@@ -17,7 +17,7 @@ class Settings {
 	/**
 	 * An instance of the Settings API.
 	 *
-	 * @var ?WPGraphQL_Settings_API
+	 * @var ?\WPGraphQL_Settings_API
 	 */
 	private static $settings_api;
 

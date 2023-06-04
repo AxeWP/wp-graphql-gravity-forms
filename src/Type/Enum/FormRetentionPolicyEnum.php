@@ -20,9 +20,9 @@ class FormRetentionPolicyEnum extends AbstractEnum {
 	public static string $type = 'FormRetentionPolicyEnum';
 
 	// Individual elements.
-	const DELETE = 'delete';
-	const RETAIN = 'retain';
-	const TRASH  = 'trash';
+	public const DELETE = 'delete';
+	public const RETAIN = 'retain';
+	public const TRASH  = 'trash';
 
 	/**
 	 * {@inheritDoc}

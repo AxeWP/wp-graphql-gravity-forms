@@ -20,9 +20,9 @@ class FormFieldCalendarIconTypeEnum extends AbstractEnum {
 	public static string $type = 'FormFieldCalendarIconTypeEnum';
 
 	// Individual elements.
-	const CALENDAR = 'calendar';
-	const CUSTOM   = 'custom';
-	const NONE     = 'none';
+	public const CALENDAR = 'calendar';
+	public const CUSTOM   = 'custom';
+	public const NONE     = 'none';
 
 	/**
 	 * {@inheritDoc}

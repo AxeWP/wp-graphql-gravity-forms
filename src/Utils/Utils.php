@@ -18,7 +18,6 @@ use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Type\WPObject\Entry\DraftEntry;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
-use WPGraphQL\Type\ObjectType\User;
 
 /**
  * Class - Utils
@@ -327,7 +326,7 @@ class Utils {
 	 * @since @todo
 	 *
 	 * @param int|string $id .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	public static function get_entry_id_from_id( $id ) : int {
 		return self::get_database_id_from_id( $id, EntriesLoader::$name );
@@ -339,7 +338,7 @@ class Utils {
 	 * @since @todo
 	 *
 	 * @param int|string $id .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	public static function get_form_id_from_id( $id ) : int {
 		return self::get_database_id_from_id( $id, FormsLoader::$name );
@@ -353,7 +352,7 @@ class Utils {
 	 * @param int|string $id The provided ID.
 	 * @param string     $type The expected dataloader type.
 	 *
-	 * @throws UserError If the ID is not a valid Global ID.
+	 * @throws \GraphQL\Error\UserError If the ID is not a valid Global ID.
 	 */
 	protected static function get_database_id_from_id( $id, $type ) : int {
 		// If we already have the database ID, send it back as an integer.

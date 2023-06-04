@@ -8,7 +8,6 @@
 
 namespace WPGraphQL\GF\Type\WPInterface;
 
-use GF_Field;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
 

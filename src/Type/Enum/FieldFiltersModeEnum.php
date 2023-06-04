@@ -20,8 +20,8 @@ class FieldFiltersModeEnum extends AbstractEnum {
 	public static string $type = 'FieldFiltersModeEnum';
 
 	// Individual elements.
-	const ALL = 'all';
-	const ANY = 'any';
+	public const ALL = 'all';
+	public const ANY = 'any';
 
 	/**
 	 * {@inheritDoc}

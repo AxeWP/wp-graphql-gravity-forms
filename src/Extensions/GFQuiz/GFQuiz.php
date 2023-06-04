@@ -27,20 +27,20 @@ class GFQuiz implements Hookable {
 		}
 
 		// Register Enums.
-		add_filter( 'graphql_gf_registered_enum_classes', [ __CLASS__, 'enums' ] );
+		add_filter( 'graphql_gf_registered_enum_classes', [ self::class, 'enums' ] );
 
 		// Register Form Field Settings interfaces.
-		add_filter( 'graphql_gf_registered_form_field_setting_classes', [ __CLASS__, 'form_field_settings' ] );
-		add_filter( 'graphql_gf_registered_form_field_setting_choice_classes', [ __CLASS__, 'form_field_setting_choices' ] );
+		add_filter( 'graphql_gf_registered_form_field_setting_classes', [ self::class, 'form_field_settings' ] );
+		add_filter( 'graphql_gf_registered_form_field_setting_choice_classes', [ self::class, 'form_field_setting_choices' ] );
 
 		// Register Objects.
-		add_filter( 'graphql_gf_registered_object_classes', [ __CLASS__, 'objects' ] );
+		add_filter( 'graphql_gf_registered_object_classes', [ self::class, 'objects' ] );
 
 		// Register Child Field types.
-		add_filter( 'graphql_gf_form_field_child_types', [ __CLASS__, 'field_child_types' ], 10, 2 );
+		add_filter( 'graphql_gf_form_field_child_types', [ self::class, 'field_child_types' ], 10, 2 );
 
 		// Add quiz to Form Model.
-		add_filter( 'graphql_model_prepare_fields', [ __CLASS__, 'form_model' ], 10, 3 );
+		add_filter( 'graphql_model_prepare_fields', [ self::class, 'form_model' ], 10, 3 );
 	}
 
 	/**

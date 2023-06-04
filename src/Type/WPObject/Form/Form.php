@@ -10,7 +10,6 @@
 
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
-use GF_Query;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Connection\EntriesConnection;
@@ -84,12 +83,12 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 							 *
 							 * @todo get the connection resolver directly, once supported by WPGraphQL AppContext::get_current_connection();
 							 *
-							 * @var GF_Query
+							 * @var \GF_Query
 							 */
 							$connection = $root['edges'][0]['connection'] instanceof EntriesConnectionResolver ? $root['edges'][0]['connection']->get_query() : null;
 
 							// Needed to resolve the counts.
-							$ids = $connection->get_ids();
+							$connection->get_ids();
 
 							return $connection->total_found;
 						},
