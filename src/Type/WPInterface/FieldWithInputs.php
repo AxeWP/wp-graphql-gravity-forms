@@ -38,12 +38,12 @@ class FieldWithInputs extends AbstractInterface {
 				'type'        => [ 'list_of' => FieldInput::$type ],
 				'description' => __( 'The inputs for the field.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context, $info ) {
-						/** @var \GF_Field $source */
-						$context->gfField = $source;
+					/** @var \GF_Field $source */
+					$context->gfField = $source;
 
-						return ! empty( $source->inputs )
-																			? // Include GraphQL Type in resolver.
-						array_map(
+					return ! empty( $source->inputs )
+						// Include GraphQL Type in resolver.
+						? array_map(
 							static function ( $choice ) use ( $source ) {
 								$choice['graphql_type'] = FieldInputRegistry::get_type_name( $source );
 
@@ -51,7 +51,7 @@ class FieldWithInputs extends AbstractInterface {
 							},
 							$source->inputs
 						)
-																			: null;
+						: null;
 				},
 			],
 		];

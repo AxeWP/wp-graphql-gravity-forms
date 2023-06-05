@@ -35,14 +35,13 @@
 		"lucatume/wp-browser": "^3.0",
 		"wp-graphql/wp-graphql-testcase": "~2.3",
 		"phpunit/phpunit": "^9.0",
-		"php-coveralls/php-coveralls": "^2.5",
 		"phpstan/phpstan": "^1.2",
 		"phpstan/extension-installer": "^1.1",
 		"szepeviktor/phpstan-wordpress": "^1.0",
 		"axepress/wp-graphql-stubs": "^1.11.1",
-		"wp-cli/wp-cli-bundle": "^2.6",
-		"phpcompatibility/phpcompatibility-wp": "^2.1",
-		"automattic/vipwpcs": "^2.3"
+		"axepress/wp-graphql-cs": "dev-develop",
+		"wp-cli/wp-cli-bundle": "^2.8.1",
+		"php-coveralls/php-coveralls": "^2.5"
 	},
 	"config": {
 		"optimize-autoloader": true,
