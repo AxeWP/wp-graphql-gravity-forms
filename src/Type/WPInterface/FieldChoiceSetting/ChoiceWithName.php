@@ -43,7 +43,7 @@ class ChoiceWithName extends AbstractFieldChoiceSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'isSelected' => [
 				'type'        => 'Boolean',
@@ -58,7 +58,7 @@ class ChoiceWithName extends AbstractFieldChoiceSetting {
 	 * @param \GF_Field $field The Gravity Forms Field object.
 	 * @param array     $settings The `form_editor_field_settings()` key.
 	 */
-	public static function add_choice_to_inputs( GF_Field $field, array $settings ) : void {
+	public static function add_choice_to_inputs( GF_Field $field, array $settings ): void {
 		if (
 			! in_array( self::$field_setting, $settings, true )
 		) {

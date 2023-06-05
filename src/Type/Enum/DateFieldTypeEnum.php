@@ -27,14 +27,14 @@ class DateFieldTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of date field to display.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'FIELD'    => [
 				'description' => __( 'A simple date field.', 'wp-graphql-gravity-forms' ),

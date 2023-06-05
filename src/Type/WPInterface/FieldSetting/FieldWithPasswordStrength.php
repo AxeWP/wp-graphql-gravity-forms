@@ -31,7 +31,7 @@ class FieldWithPasswordStrength extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'hasPasswordStrengthIndicator' => [
 				'type'        => 'Boolean',

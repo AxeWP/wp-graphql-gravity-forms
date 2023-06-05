@@ -27,14 +27,14 @@ class OrderSummary extends AbstractObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The entry order information.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'currency' => [
 				'type'        => CurrencyEnum::$type,

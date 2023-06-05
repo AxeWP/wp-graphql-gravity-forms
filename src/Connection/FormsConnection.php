@@ -30,7 +30,7 @@ class FormsConnection extends AbstractConnection {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		// RootQuery to Form.
 		register_graphql_connection(
 			[
@@ -48,7 +48,7 @@ class FormsConnection extends AbstractConnection {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_connection_args() : array {
+	public static function get_connection_args(): array {
 		return [
 			'formIds' => [
 				'type'        => [ 'list_of' => 'ID' ],

@@ -43,7 +43,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_input_fields() : array {
+	public static function get_input_fields(): array {
 		return [
 			'id'             => [
 				'type'        => [ 'non_null' => 'ID' ],
@@ -71,7 +71,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_output_fields() : array {
+	public static function get_output_fields(): array {
 		return [
 			'draftEntry' => [
 				'type'        => DraftEntry::$type,
@@ -97,8 +97,8 @@ class UpdateDraftEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function mutate_and_get_payload() : callable {
-		return static function ( $input, AppContext $context, ResolveInfo $info ) : array {
+	public static function mutate_and_get_payload(): callable {
+		return static function ( $input, AppContext $context, ResolveInfo $info ): array {
 			// Check for required fields.
 			static::check_required_inputs( $input );
 
@@ -136,7 +136,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * @param array $submission .
 	 * @param array $form .
 	 */
-	private static function prepare_draft_entry_data( array $input, array $submission, array $form ) : array {
+	private static function prepare_draft_entry_data( array $input, array $submission, array $form ): array {
 		$should_validate = isset( $input['shouldValidate'] ) ? (bool) $input['shouldValidate'] : true;
 
 		// Update field values.
@@ -196,7 +196,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * @param array $submission .
 	 * @param bool  $should_validate .
 	 */
-	private static function prepare_field_values( array $field_values, array $form, array $entry, array &$submission, bool $should_validate ) : array {
+	private static function prepare_field_values( array $field_values, array $form, array $entry, array &$submission, bool $should_validate ): array {
 		$formatted_values = [];
 
 		foreach ( $field_values as $values ) {
@@ -220,7 +220,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
-	protected static function check_required_inputs( $input = null ) : void {
+	protected static function check_required_inputs( $input = null ): void {
 		if ( empty( $input['entryMeta'] ) && empty( $input['fieldValues'] ) ) {
 			throw new UserError( __( 'Mutation not processed. No data provided to update.', 'wp-graphql-gravity-forms' ) );
 		}

@@ -31,7 +31,7 @@ class FieldWithCreditCard extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'supportedCreditCards' => [
 				'type'        => [ 'list_of' => FormCreditCardTypeEnum::$type ],

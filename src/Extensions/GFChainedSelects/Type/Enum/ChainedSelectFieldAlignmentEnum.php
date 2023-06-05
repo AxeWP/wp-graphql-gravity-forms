@@ -28,14 +28,14 @@ class ChainedSelectFieldAlignmentEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Alignment of the dropdown fields.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'HORIZONTAL' => [
 				'description' => __( 'Horizontal alignment (in a row).', 'wp-graphql-gravity-forms' ),

@@ -29,14 +29,14 @@ class FormsConnectionOrderByEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of button to be displayed. Default is TEXT.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'DATE_CREATED' => [
 				'description' => __( 'The date the form was created.', 'wp-graphql-gravity-forms' ),

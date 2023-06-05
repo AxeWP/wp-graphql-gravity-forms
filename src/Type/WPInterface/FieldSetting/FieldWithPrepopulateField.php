@@ -40,7 +40,7 @@ class FieldWithPrepopulateField extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'canPrepopulate' => [
 				'type'        => 'Boolean',
@@ -58,7 +58,7 @@ class FieldWithPrepopulateField extends AbstractFieldSetting {
 	 * @param array     $settings The `form_editor_field_settings()` key.
 	 * @param array     $interfaces The list of interfaces for the GraphQL type.
 	 */
-	public static function add_fields_to_child_type( array $fields, GF_Field $field, array $settings, array $interfaces ) : array {
+	public static function add_fields_to_child_type( array $fields, GF_Field $field, array $settings, array $interfaces ): array {
 		// Bail early.
 		if (
 			! in_array( self::$type, $interfaces, true ) ||

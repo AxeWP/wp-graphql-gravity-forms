@@ -31,14 +31,14 @@ class DateFieldFormatEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'How the DateField date is displayed.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'MDY'       => [
 				'description' => __( 'mm/dd/yyyy format.', 'wp-graphql-gravity-forms' ),

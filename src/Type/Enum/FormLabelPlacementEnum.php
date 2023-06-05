@@ -27,14 +27,14 @@ class FormLabelPlacementEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Determines where the field labels should be placed in relation to the field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'TOP'   => [
 				'description' => __( 'Field labels are displayed on top of the fields.', 'wp-graphql-gravity-forms' ),

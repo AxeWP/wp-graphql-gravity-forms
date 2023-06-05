@@ -32,7 +32,7 @@ class Factory {
 	 *
 	 * @return array Data loaders, with new ones added.
 	 */
-	public static function register_loaders( array $loaders, AppContext $context ) : array {
+	public static function register_loaders( array $loaders, AppContext $context ): array {
 		$loaders[ DraftEntriesLoader::$name ] = new DraftEntriesLoader( $context );
 		$loaders[ EntriesLoader::$name ]      = new EntriesLoader( $context );
 		$loaders[ FormsLoader::$name ]        = new FormsLoader( $context );
@@ -75,7 +75,7 @@ class Factory {
 	 *
 	 * @return int Max query amount, possibly bumped.
 	 */
-	public static function set_max_query_amount( int $max_query_amount, $source, array $args, AppContext $context, ResolveInfo $info ) : int {
+	public static function set_max_query_amount( int $max_query_amount, $source, array $args, AppContext $context, ResolveInfo $info ): int {
 		if ( 'formFields' === $info->fieldName ) {
 			return (int) max( $max_query_amount, 600 );
 		}
@@ -89,7 +89,7 @@ class Factory {
 	 * @param int                   $id .
 	 * @param \WPGraphQL\AppContext $context .
 	 */
-	public static function resolve_form( $id, AppContext $context ) : ?Deferred {
+	public static function resolve_form( $id, AppContext $context ): ?Deferred {
 		return $context->get_loader( FormsLoader::$name )->load_deferred( $id );
 	}
 
@@ -115,7 +115,7 @@ class Factory {
 	 * @param string                $id .
 	 * @param \WPGraphQL\AppContext $context .
 	 */
-	public static function resolve_draft_entry( $id, AppContext $context ) : ?Deferred {
+	public static function resolve_draft_entry( $id, AppContext $context ): ?Deferred {
 		return $context->get_loader( DraftEntriesLoader::$name )->load_deferred( $id );
 	}
 
@@ -125,7 +125,7 @@ class Factory {
 	 * @param int                   $id .
 	 * @param \WPGraphQL\AppContext $context .
 	 */
-	public static function resolve_entry( $id, AppContext $context ) : ?Deferred {
+	public static function resolve_entry( $id, AppContext $context ): ?Deferred {
 		return $context->get_loader( EntriesLoader::$name )->load_deferred( $id );
 	}
 

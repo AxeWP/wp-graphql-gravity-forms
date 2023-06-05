@@ -26,14 +26,14 @@ class CaptchaFieldThemeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The theme to be used for the reCAPTCHA field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'LIGHT' => [
 				'description' => __( 'Light reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),

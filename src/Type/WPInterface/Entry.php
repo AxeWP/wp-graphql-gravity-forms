@@ -51,15 +51,16 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 	 *
 	 * @param \WPGraphQL\Registry\TypeRegistry $type_registry Instance of the WPGraphQL TypeRegistry.
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
+	public static function register( TypeRegistry $type_registry = null ): void {
 		parent::register( $type_registry );
+
 		self::register_field();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config( TypeRegistry $type_registry = null ) : array {
+	public static function get_type_config( TypeRegistry $type_registry = null ): array {
 		$config = parent::get_type_config();
 
 		$config['connections'] = self::get_connections();
@@ -75,7 +76,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_connections() : array {
+	public static function get_connections(): array {
 		return [
 			'formFields' => [
 				'toType'         => FormField::$type,
@@ -100,14 +101,14 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Gravity Forms entry interface.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		$fields = [
 			'createdBy'           => [
 				'type'        => 'User',
@@ -218,7 +219,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [ 'Node', NodeWithForm::$type ];
 	}
 
@@ -227,7 +228,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 	 *
 	 * @param \WPGraphQL\Registry\TypeRegistry $type_registry The WPGraphQL type registry.
 	 */
-	public static function resolve_type( TypeRegistry $type_registry ) : callable {
+	public static function resolve_type( TypeRegistry $type_registry ): callable {
 		return static function ( $value ) use ( $type_registry ) {
 			$possible_types = Utils::get_registered_entry_types();
 
@@ -254,7 +255,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register_field() : void {
+	public static function register_field(): void {
 		register_graphql_field(
 			'RootQuery',
 			self::$field_name,

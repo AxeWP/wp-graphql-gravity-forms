@@ -12,11 +12,10 @@ namespace WPGraphQL\GF\Data\FieldValueInput;
  * Class - ValuesInput
  */
 class ValuesInput extends AbstractFieldValueInput {
-
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_field_name() : string {
+	protected function get_field_name(): string {
 		return 'values';
 	}
 }

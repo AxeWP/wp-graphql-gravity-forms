@@ -29,5 +29,4 @@ class FieldWithQuizQuestion extends FieldWithLabel {
 	 * @var string
 	 */
 	public static string $field_setting = 'gquiz-setting-question';
-
 }

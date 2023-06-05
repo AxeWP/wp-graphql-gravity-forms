@@ -38,14 +38,14 @@ class FieldInput extends AbstractInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Gravity Forms field input.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'label' => [
 				'type'        => 'String',
@@ -63,7 +63,7 @@ class FieldInput extends AbstractInterface {
 	 *
 	 * @param \WPGraphQL\Registry\TypeRegistry $type_registry The WPGraphQL type registry.
 	 */
-	public static function resolve_type( TypeRegistry $type_registry ) : callable {
+	public static function resolve_type( TypeRegistry $type_registry ): callable {
 		return static function ( $value ) use ( $type_registry ) {
 			$name = '';
 

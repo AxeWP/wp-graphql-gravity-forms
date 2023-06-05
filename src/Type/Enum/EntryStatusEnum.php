@@ -27,14 +27,14 @@ class EntryStatusEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Status of entries to get. Default is ACTIVE.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'ACTIVE' => [
 				'description' => __( 'Active entries (default).', 'wp-graphql-gravity-forms' ),

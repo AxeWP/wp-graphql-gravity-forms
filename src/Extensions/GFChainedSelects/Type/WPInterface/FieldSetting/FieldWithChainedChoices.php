@@ -57,7 +57,7 @@ class FieldWithChainedChoices extends AbstractFieldSetting implements TypeWithIn
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		// This setting is identical to `choices_setting` but for some reason exists independently.
 		return FieldWithChoicesSetting::get_fields();
 	}
@@ -65,7 +65,7 @@ class FieldWithChainedChoices extends AbstractFieldSetting implements TypeWithIn
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithChoices::$type,
 			FieldWithInputs::$type,
@@ -77,7 +77,7 @@ class FieldWithChainedChoices extends AbstractFieldSetting implements TypeWithIn
 	 *
 	 * @param array $settings the GF Field settings.
 	 */
-	public static function add_setting( array $settings ) : array {
+	public static function add_setting( array $settings ): array {
 		if ( ! in_array( self::$field_setting, $settings, true ) ) {
 			$settings[] = self::$field_setting;
 		}

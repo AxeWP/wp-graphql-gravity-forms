@@ -17,21 +17,19 @@ interface Mutation {
 	 *
 	 * @since 0.4.0
 	 */
-	public static function get_input_fields() : array;
+	public static function get_input_fields(): array;
 
 	/**
 	 * Defines the output field configuration.
 	 *
 	 * @since 0.4.0
 	 */
-	public static function get_output_fields() : array;
-
+	public static function get_output_fields(): array;
 
 	/**
 	 * Defines the data modification closure.
 	 *
 	 * @since 0.4.0
 	 */
-	public static function mutate_and_get_payload() : callable;
-
+	public static function mutate_and_get_payload(): callable;
 }

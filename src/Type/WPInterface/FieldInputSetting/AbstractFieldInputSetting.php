@@ -40,7 +40,7 @@ abstract class AbstractFieldInputSetting extends AbstractInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return sprintf(
 			// translators: The Gravity Forms field Setting.
 			__( 'An Input for a form field with the `%s` setting.', 'wp-graphql-gravity-forms' ),

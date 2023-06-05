@@ -27,14 +27,14 @@ class EntryTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The type of Gravity Forms entry.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'DRAFT'     => [
 				'description' => __( 'A Gravity Forms draft entry.', 'wp-graphql-gravity-forms' ),

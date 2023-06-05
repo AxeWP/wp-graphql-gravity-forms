@@ -26,14 +26,14 @@ class FormSubmitButtonLocationEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Where the submit button should be located.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'BOTTOM' => [
 				'description' => __( 'The submit button will be placed in a new row after all fields of the form.', 'wp-graphql-gravity-forms' ),

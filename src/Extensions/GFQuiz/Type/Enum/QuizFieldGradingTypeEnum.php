@@ -29,14 +29,14 @@ class QuizFieldGradingTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of grading system used by Gravity Forms Quiz. Default is `NONE`.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'NONE'     => [
 				'description' => __( 'No grading.', 'wp-graphql-gravity-forms' ),

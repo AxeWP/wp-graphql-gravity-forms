@@ -25,7 +25,7 @@ class FileUploadFieldValue extends AbstractObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The individual file properties from an uploaded file.', 'wp-graphql-gravity-forms' );
 	}
 

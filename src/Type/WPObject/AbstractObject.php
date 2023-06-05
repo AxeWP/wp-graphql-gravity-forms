@@ -35,7 +35,7 @@ abstract class AbstractObject extends AbstractType implements TypeWithDescriptio
 	/**
 	 * Register Object type to GraphQL schema.
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		$config = static::get_type_config();
 
 		register_graphql_object_type( static::$type, $config );

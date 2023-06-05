@@ -48,14 +48,14 @@ class FieldWithSingleProductInputs extends AbstractFieldSetting implements TypeW
 	 *
 	 * The only added field is `inputs`, which is handled by the Input registry.
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return FieldWithInputs::get_fields();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithInputs::$type,
 		];

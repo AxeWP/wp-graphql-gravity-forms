@@ -19,21 +19,21 @@ class FormFieldsConnection extends AbstractConnection {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register_hooks() : void {
+	public static function register_hooks(): void {
 		// @todo register to rootQuery.
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		// @todo register to rootQuery.
 	}
 
 	/**
 	 * Gets custom connection configuration arguments, such as the resolver, edgeFields, connectionArgs, etc.
 	 */
-	public static function get_connection_args() : array {
+	public static function get_connection_args(): array {
 		return [
 			'ids'         => [
 				'type'        => [ 'list_of' => 'ID' ],

@@ -26,14 +26,14 @@ class FormSubmitButtonWidthEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Submit button width.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'AUTO' => [
 				'description' => __( 'The width is set to match that of the button text.', 'wp-graphql-gravity-forms' ),

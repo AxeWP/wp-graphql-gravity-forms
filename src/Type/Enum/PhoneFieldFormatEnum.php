@@ -26,14 +26,14 @@ class PhoneFieldFormatEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Tthe allowed format for phone numbers.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'STANDARD'      => [
 				'description' => __( 'Standard phone number format.', 'wp-graphql-gravity-forms' ),

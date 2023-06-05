@@ -25,14 +25,14 @@ class ChainedSelectFieldInput extends AbstractInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Input fields for a single ChainedSelect.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'inputId' => [
 				'type'        => 'Float',

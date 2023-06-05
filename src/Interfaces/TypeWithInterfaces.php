@@ -15,5 +15,5 @@ interface TypeWithInterfaces {
 	/**
 	 * Gets the the connection config for the GraphQL Type.
 	 */
-	public static function get_interfaces() : array;
+	public static function get_interfaces(): array;
 }

@@ -26,7 +26,7 @@ class AddressFieldValue extends AbstractObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The individual properties for each element of the address value field.', 'wp-graphql-gravity-forms' );
 	}
 

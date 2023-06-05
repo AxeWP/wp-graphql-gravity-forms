@@ -32,7 +32,7 @@ class FormField extends AbstractInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config( TypeRegistry $type_registry = null ) : array {
+	public static function get_type_config( TypeRegistry $type_registry = null ): array {
 		$config = parent::get_type_config( $type_registry );
 
 		if ( null !== $type_registry ) {
@@ -45,19 +45,19 @@ class FormField extends AbstractInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Gravity Forms field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'displayOnly'                => [
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source ) : bool => ! empty( $source->displayOnly ),
+				'resolve'     => static fn ( $source ): bool => ! empty( $source->displayOnly ),
 			],
 			'id'                         => [
 				'type'              => [ 'non_null' => 'Int' ],
@@ -67,7 +67,7 @@ class FormField extends AbstractInterface {
 			'databaseId'                 => [
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'Field database ID.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source ) : int => absint( $source->id ),
+				'resolve'     => static fn ( $source ): int => absint( $source->id ),
 			],
 			'inputType'                  => [
 				'type'        => FormFieldTypeEnum::$type,
@@ -94,7 +94,7 @@ class FormField extends AbstractInterface {
 			'visibility'                 => [
 				'type'        => FormFieldVisibilityEnum::$type,
 				'description' => __( 'Field visibility.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source ) : string => ! empty( $source->visibility ) ? $source->visibility : ( ! empty( $source->adminOnly ) ? 'administrative' : 'visible' ),
+				'resolve'     => static fn ( $source ): string => ! empty( $source->visibility ) ? $source->visibility : ( ! empty( $source->adminOnly ) ? 'administrative' : 'visible' ),
 			],
 		];
 	}
@@ -104,7 +104,7 @@ class FormField extends AbstractInterface {
 	 *
 	 * @param \WPGraphQL\Registry\TypeRegistry $type_registry The WPGraphQL type registry.
 	 */
-	public static function resolve_type( TypeRegistry $type_registry ) : callable {
+	public static function resolve_type( TypeRegistry $type_registry ): callable {
 		return static function ( $value ) use ( $type_registry ) {
 			$possible_types    = Utils::get_registered_form_field_types();
 			$possible_subtypes = Utils::get_possible_form_field_child_types( $value->type );

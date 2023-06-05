@@ -25,14 +25,14 @@ class EntriesFieldFiltersInput extends AbstractInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Field Filters input fields for Entries queries.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'key'          => [
 				'type'        => 'String',

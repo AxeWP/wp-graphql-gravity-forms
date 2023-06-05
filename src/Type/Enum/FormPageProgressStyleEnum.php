@@ -30,14 +30,14 @@ class FormPageProgressStyleEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Style of progress bar.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'BLUE'   => [
 				'description' => __( 'Blue progress bar style.', 'wp-graphql-gravity-forms' ),

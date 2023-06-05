@@ -11,8 +11,8 @@ namespace WPGraphQL\GF\Extensions\GFSignature;
 use GF_Field;
 use WPGraphQL\GF\Extensions\GFSignature\Data\FieldValueInput\SignatureValuesInput;
 use WPGraphQL\GF\Extensions\GFSignature\Type\Enum;
-use WPGraphQL\GF\Interfaces\Hookable;
 use WPGraphQL\GF\Extensions\GFSignature\Type\WPInterface;
+use WPGraphQL\GF\Interfaces\Hookable;
 
 /**
  * Class - GFSignature
@@ -21,7 +21,7 @@ class GFSignature implements Hookable {
 	/**
 	 * Hook extension into plugin.
 	 */
-	public static function register_hooks() : void {
+	public static function register_hooks(): void {
 		if ( ! self::is_gf_signature_enabled() ) {
 			return;
 		}
@@ -38,7 +38,7 @@ class GFSignature implements Hookable {
 	/**
 	 * Returns whether Gravity Forms Signature is enabled.
 	 */
-	public static function is_gf_signature_enabled() : bool {
+	public static function is_gf_signature_enabled(): bool {
 		return class_exists( 'GFSignature' );
 	}
 
@@ -47,7 +47,7 @@ class GFSignature implements Hookable {
 	 *
 	 * @param array $registered_classes .
 	 */
-	public static function enums( array $registered_classes ) : array {
+	public static function enums( array $registered_classes ): array {
 		$registered_classes[] = Enum\SignatureFieldBorderStyleEnum::class;
 		$registered_classes[] = Enum\SignatureFieldBorderWidthEnum::class;
 		return $registered_classes;
@@ -58,7 +58,7 @@ class GFSignature implements Hookable {
 	 *
 	 * @param array $classes .
 	 */
-	public static function form_field_settings( array $classes ) : array {
+	public static function form_field_settings( array $classes ): array {
 		$classes['background_color_setting'] = WPInterface\FieldSetting\FieldWithBackgroundColor::class;
 		$classes['border_color_setting']     = WPInterface\FieldSetting\FieldWithBorderColor::class;
 		$classes['border_style_setting']     = WPInterface\FieldSetting\FieldWithBorderStyle::class;
@@ -77,12 +77,11 @@ class GFSignature implements Hookable {
 	 * @param array     $args .
 	 * @param \GF_Field $field .
 	 */
-	public static function field_value_input( string $input_class, array $args, GF_Field $field ) : string {
+	public static function field_value_input( string $input_class, array $args, GF_Field $field ): string {
 		if ( 'signature' === $field->get_input_type() ) {
 			$input_class = SignatureValuesInput::class;
 		}
 
 		return $input_class;
 	}
-
 }

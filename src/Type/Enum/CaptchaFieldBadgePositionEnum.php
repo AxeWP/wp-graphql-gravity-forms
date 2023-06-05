@@ -27,14 +27,14 @@ class CaptchaFieldBadgePositionEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The position to place the (invisible) reCaptcha badge.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'BOTTOM_LEFT'  => [
 				'description' => __( 'Bottom-left position.', 'wp-graphql-gravity-forms' ),

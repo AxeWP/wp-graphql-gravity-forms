@@ -34,14 +34,14 @@ class SignatureFieldBorderStyleEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Border style to be used around the signature area.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'DOTTED' => [
 				'description' => __( 'A "dotted" border style.', 'wp-graphql-gravity-forms' ),

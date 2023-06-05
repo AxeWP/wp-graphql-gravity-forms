@@ -29,7 +29,7 @@ class FieldWithLabel extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'label' => [
 				'type'        => 'String',

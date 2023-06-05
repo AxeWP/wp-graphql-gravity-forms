@@ -28,7 +28,7 @@ class EntryObjectMutation {
 	 *
 	 * @throws \Exception .
 	 */
-	public static function get_field_value_input( array $args, array $form, bool $is_draft, array $entry = null ) : FieldValueInput\AbstractFieldValueInput {
+	public static function get_field_value_input( array $args, array $form, bool $is_draft, array $entry = null ): FieldValueInput\AbstractFieldValueInput {
 		$field = GFUtils::get_field_by_id( $form, $args['id'] );
 
 		$input_type = $field->get_input_type();
@@ -113,9 +113,9 @@ class EntryObjectMutation {
 	 *
 	 * @param array $messages The Gravity Forms submission validation messages.
 	 */
-	public static function get_submission_errors( array $messages ) : array {
+	public static function get_submission_errors( array $messages ): array {
 		return array_map(
-			static function ( $id, $message ) : array {
+			static function ( $id, $message ): array {
 				return [
 					'id'      => $id,
 					'message' => $message,
@@ -131,7 +131,7 @@ class EntryObjectMutation {
 	 *
 	 * @param array $payload the submission response.
 	 */
-	public static function get_submission_confirmation( array $payload ) : ?array {
+	public static function get_submission_confirmation( array $payload ): ?array {
 		if ( empty( $payload['confirmation_type'] ) ) {
 			return null;
 		}
@@ -148,7 +148,7 @@ class EntryObjectMutation {
 	 *
 	 * @param array $field_values .
 	 * */
-	public static function rename_field_names_for_submission( array $field_values ) : array {
+	public static function rename_field_names_for_submission( array $field_values ): array {
 		$formatted = [];
 
 		foreach ( $field_values as $key => $value ) {
@@ -168,7 +168,7 @@ class EntryObjectMutation {
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function initialize_files( array $form_fields, array $input_field_values, bool $save_as_draft ) : array {
+	public static function initialize_files( array $form_fields, array $input_field_values, bool $save_as_draft ): array {
 		$files = [];
 
 		// Loop through all the fields to see if there are any upload types.

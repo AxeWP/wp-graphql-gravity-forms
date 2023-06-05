@@ -15,5 +15,5 @@ interface TypeWithFields {
 	/**
 	 * Gets the properties for the type.
 	 */
-	public static function get_fields() : array;
+	public static function get_fields(): array;
 }

@@ -26,14 +26,14 @@ class FormIdTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The Type of Identifier used to fetch a single resource.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'ID'          => [
 				'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),

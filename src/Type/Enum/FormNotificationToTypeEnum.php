@@ -28,14 +28,14 @@ class FormNotificationToTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'What to use for the notification "to".', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'EMAIL'   => [
 				'description' => __( 'Email address.', 'wp-graphql-gravity-forms' ),

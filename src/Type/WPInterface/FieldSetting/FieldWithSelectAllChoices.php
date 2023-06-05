@@ -45,12 +45,12 @@ class FieldWithSelectAllChoices extends AbstractFieldSetting implements TypeWith
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'hasSelectAll' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the \"select all\" choice should be displayed.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source ) : bool => ! empty( $source->enableSelectAll ),
+				'resolve'     => static fn ( $source ): bool => ! empty( $source->enableSelectAll ),
 			],
 		];
 	}
@@ -58,7 +58,7 @@ class FieldWithSelectAllChoices extends AbstractFieldSetting implements TypeWith
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithChoices::$type,
 			FieldWithInputs::$type,

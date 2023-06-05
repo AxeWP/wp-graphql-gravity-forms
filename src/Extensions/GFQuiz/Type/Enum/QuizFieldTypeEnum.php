@@ -29,14 +29,14 @@ class QuizFieldTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The Gravity Forms field type used to display the current Quiz Field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'CHECKBOX' => [
 				'description' => __( 'Gravity Forms `CheckboxField`.', 'wp-graphql-gravity-forms' ),

@@ -29,12 +29,12 @@ class FieldWithRange extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'rangeMax' => [
 				'type'        => 'Float',
 				'description' => __( 'Maximum allowed value for a number field. Values higher than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $source ) : ?float {
+				'resolve'     => static function ( $source ): ?float {
 					if ( ! isset( $source->rangeMax ) ) {
 						return null;
 					}
@@ -47,7 +47,7 @@ class FieldWithRange extends AbstractFieldSetting {
 			'rangeMin' => [
 				'type'        => 'Float',
 				'description' => __( 'Minimum allowed value for a number field. Values lower than the number specified by this property will cause the field to fail validation.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $source ) : ?float {
+				'resolve'     => static function ( $source ): ?float {
 					if ( ! isset( $source->rangeMin ) ) {
 						return null;
 					}

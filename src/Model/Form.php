@@ -32,6 +32,7 @@ class Form extends Model {
 	 */
 	public function __construct( $form ) {
 		$this->data = $form;
+
 		parent::__construct();
 	}
 
@@ -49,10 +50,10 @@ class Form extends Model {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function init() : void {
+	protected function init(): void {
 		if ( empty( $this->fields ) ) {
 			$this->fields = [
-				'confirmations'                => function () : ?array {
+				'confirmations'                => function (): ?array {
 					if ( empty( $this->data['confirmations'] ) ) {
 						return null;
 					}
@@ -71,14 +72,14 @@ class Form extends Model {
 						$this->data['confirmations']
 					);
 				},
-				'cssClass'                     => fn() : ?string => ! empty( $this->data['cssClass'] ) ? $this->data['cssClass'] : null,
-				'customRequiredIndicator'      => fn() : ?string => ! empty( $this->data['customRequiredIndicator'] ) ? $this->data['customRequiredIndicator'] : null,
-				'databaseId'                   => fn() : int => (int) $this->data['id'],
-				'dateCreatedGmt'               => fn() : ?string => $this->data['date_created'] ?? null,
-				'dateCreated'                  => fn() : ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,
-				'description'                  => fn() : ?string => $this->data['description'] ?? null,
-				'descriptionPlacement'         => fn() : ?string => $this->data['descriptionPlacement'] ?? null,
-				'entryLimits'                  => function () : array {
+				'cssClass'                     => fn (): ?string => ! empty( $this->data['cssClass'] ) ? $this->data['cssClass'] : null,
+				'customRequiredIndicator'      => fn (): ?string => ! empty( $this->data['customRequiredIndicator'] ) ? $this->data['customRequiredIndicator'] : null,
+				'databaseId'                   => fn (): int => (int) $this->data['id'],
+				'dateCreatedGmt'               => fn (): ?string => $this->data['date_created'] ?? null,
+				'dateCreated'                  => fn (): ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,
+				'description'                  => fn (): ?string => $this->data['description'] ?? null,
+				'descriptionPlacement'         => fn (): ?string => $this->data['descriptionPlacement'] ?? null,
+				'entryLimits'                  => function (): array {
 					return [
 						'hasLimit'            => ! empty( $this->data['limitEntries'] ),
 						'limitationPeriod'    => ! empty( $this->data['limitEntriesPeriod'] ) ? $this->data['limitEntriesPeriod'] : null,
@@ -86,25 +87,25 @@ class Form extends Model {
 						'maxEntries'          => isset( $this->data['limitEntriesCount'] ) ? (int) $this->data['limitEntriesCount'] : null,
 					];
 				},
-				'hasConditionalLogicAnimation' => fn() : bool => $this->data['enableAnimation'] ?? false,
-				'hasHoneypot'                  => fn() : bool => $this->data['enableHoneypot'] ?? false,
-				'firstPageCssClass'            => fn() : ?string => $this->data['firstPageCssClass'] ?? null,
-				'form'                         => fn() : array => $this->data,
-				'formFields'                   => fn() : ?array => ! empty( $this->data['fields'] ) ? $this->data['fields'] : null,
-				'id'                           => fn() : string => Relay::toGlobalId( FormsLoader::$name, $this->data['id'] ),
-				'isActive'                     => fn() : bool => $this->data['is_active'] ?? true,
-				'isTrash'                      => fn() : bool => $this->data['is_trash'] ?? false,
-				'labelPlacement'               => fn() : ?string => $this->data['labelPlacement'] ?? null,
-				'login'                        => function () : array {
+				'hasConditionalLogicAnimation' => fn (): bool => $this->data['enableAnimation'] ?? false,
+				'hasHoneypot'                  => fn (): bool => $this->data['enableHoneypot'] ?? false,
+				'firstPageCssClass'            => fn (): ?string => $this->data['firstPageCssClass'] ?? null,
+				'form'                         => fn (): array => $this->data,
+				'formFields'                   => fn (): ?array => ! empty( $this->data['fields'] ) ? $this->data['fields'] : null,
+				'id'                           => fn (): string => Relay::toGlobalId( FormsLoader::$name, $this->data['id'] ),
+				'isActive'                     => fn (): bool => $this->data['is_active'] ?? true,
+				'isTrash'                      => fn (): bool => $this->data['is_trash'] ?? false,
+				'labelPlacement'               => fn (): ?string => $this->data['labelPlacement'] ?? null,
+				'login'                        => function (): array {
 					return [
 						'isLoginRequired'      => ! empty( $this->data['requireLogin'] ),
 						'loginRequiredMessage' => ! empty( $this->data['requireLoginMessage'] ) ? $this->data['requireLoginMessage'] : null,
 					];
 				},
-				'markupVersion'                => fn() : ?string => $this->data['markupVersion'] ?? null,
-				'notifications'                => fn() : ?array => ! empty( $this->data['notifications'] ) ? $this->data['notifications'] : null,
-				'nextFieldId'                  => fn() : ?int => isset( $this->data['nextFieldId'] ) ? (int) $this->data['nextFieldId'] : null,
-				'pagination'                   => function () : ?array {
+				'markupVersion'                => fn (): ?string => $this->data['markupVersion'] ?? null,
+				'notifications'                => fn (): ?array => ! empty( $this->data['notifications'] ) ? $this->data['notifications'] : null,
+				'nextFieldId'                  => fn (): ?int => isset( $this->data['nextFieldId'] ) ? (int) $this->data['nextFieldId'] : null,
+				'pagination'                   => function (): ?array {
 					if ( ! isset( $this->data['pagination'] ) ) {
 						return null;
 					}
@@ -126,7 +127,7 @@ class Form extends Model {
 
 					return $pagination;
 				},
-				'personalData'                 => function () : ?array {
+				'personalData'                 => function (): ?array {
 					$personal_data = ! empty( $this->data['personalData'] ) ? $this->data['personalData'] : null;
 
 					if ( ! is_array( $personal_data ) ) {
@@ -168,7 +169,7 @@ class Form extends Model {
 
 					return $personal_data;
 				},
-				'postCreation'                 => function () : array {
+				'postCreation'                 => function (): array {
 					return [
 						'authorDatabaseId'             => isset( $this->data['postAuthor'] ) ? (int) $this->data['postAuthor'] : null,
 						'authorId'                     => isset( $this->data['postAuthor'] ) ? Relay::toGlobalId( 'user', $this->data['postAuthor'] ) : null,
@@ -182,9 +183,9 @@ class Form extends Model {
 						'shouldUseCurrentUserAsAuthor' => ! empty( $this->data['useCurrentUserAsAuthor'] ),
 					];
 				},
-				'requiredIndicator'            => fn() : ?string => $this->data['requiredIndicator'] ?? null,
-				'saveAndContinue'              => fn() : ?array => ! empty( $this->data['save'] ) ? $this->data['save'] : null,
-				'scheduling'                   => function () : array {
+				'requiredIndicator'            => fn (): ?string => $this->data['requiredIndicator'] ?? null,
+				'saveAndContinue'              => fn (): ?array => ! empty( $this->data['save'] ) ? $this->data['save'] : null,
+				'scheduling'                   => function (): array {
 					return [
 						'closedMessage'  => ! empty( $this->data['scheduleMessage'] ) ? $this->data['scheduleMessage'] : null,
 						'hasSchedule'    => ! empty( $this->data['scheduleForm'] ),
@@ -205,8 +206,8 @@ class Form extends Model {
 						],
 					];
 				},
-				'subLabelPlacement'            => fn() : ?string => ! empty( $this->data['subLabelPlacement'] ) ? $this->data['subLabelPlacement'] : null,
-				'submitButton'                 => function () : ?array {
+				'subLabelPlacement'            => fn (): ?string => ! empty( $this->data['subLabelPlacement'] ) ? $this->data['subLabelPlacement'] : null,
+				'submitButton'                 => function (): ?array {
 					$button = isset( $this->data['button'] ) ? $this->data['button'] : null;
 					// Coax types.
 					$button['layoutGridColumnSpan'] = ! empty( $button['layoutGridColumnSpan'] ) ? (int) $button['layoutGridColumnSpan'] : null;
@@ -214,9 +215,9 @@ class Form extends Model {
 					$button['text']                 = ! empty( $button['text'] ) ? $button['text'] : null;
 					return $button;
 				},
-				'title'                        => fn() : ?string => ! empty( $this->data['title'] ) ? $this->data['title'] : null,
-				'hasValidationSummary'         => fn() : bool => ! empty( $this->data['validationSummary'] ),
-				'version'                      => fn() : ?string => ! empty( $this->data['version'] ) ? $this->data['version'] : null,
+				'title'                        => fn (): ?string => ! empty( $this->data['title'] ) ? $this->data['title'] : null,
+				'hasValidationSummary'         => fn (): bool => ! empty( $this->data['validationSummary'] ),
+				'version'                      => fn (): ?string => ! empty( $this->data['version'] ) ? $this->data['version'] : null,
 			];
 
 			/**

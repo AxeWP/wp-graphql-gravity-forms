@@ -26,14 +26,14 @@ class TimeFieldFormatEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'How the time is displayed.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'H12' => [
 				'description' => __( '12-hour time format.', 'wp-graphql-gravity-forms' ),

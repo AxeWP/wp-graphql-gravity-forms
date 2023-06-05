@@ -25,14 +25,14 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function should_execute() : bool {
+	public function should_execute(): bool {
 		return true;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_loader_name() : string {
+	public function get_loader_name(): string {
 		return FormsLoader::$name;
 	}
 
@@ -62,7 +62,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @throws \GraphQL\Error\UserError When using `formIds` and `status` together.
 	 */
-	public function get_query_args() : array {
+	public function get_query_args(): array {
 		/**
 		 * Throw error if trying to filter `where.formIds` by `where.status`.
 		 */
@@ -95,7 +95,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @return array
 	 */
-	public function get_query() : array {
+	public function get_query(): array {
 		$form_ids    = $this->query_args['form_ids'];
 		$active      = $this->query_args['status']['active'];
 		$sort_column = $this->query_args['sort']['key'];
@@ -159,16 +159,15 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 			$this->args['where']['formIds'] = [ $this->args['where']['formIds'] ];
 		}
 
-		return array_map( static fn( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
+		return array_map( static fn ( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
 	}
-
 
 	/**
 	 * Gets form status from query.
 	 *
 	 * @return array
 	 */
-	private function get_form_status() : array {
+	private function get_form_status(): array {
 		$status = $this->args['where']['status'] ?? FormStatusEnum::ACTIVE;
 		if ( FormStatusEnum::INACTIVE === $status ) {
 			return [
@@ -203,7 +202,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
-	private function get_sort() : array {
+	private function get_sort(): array {
 		$sort = [
 			'key'       => '',
 			'direction' => 'DESC',

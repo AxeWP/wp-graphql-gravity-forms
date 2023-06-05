@@ -26,14 +26,14 @@ class ConditionalLogicLogicTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Determines how to the rules should be evaluated.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'ALL' => [
 				'description' => __( 'Evaulate all logic rules.', 'wp-graphql-gravity-forms' ),

@@ -29,7 +29,7 @@ class DraftEntriesLoader extends AbstractDataLoader {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_model( $entry, $key ) : DraftEntry {
+	protected function get_model( $entry, $key ): DraftEntry {
 		return new DraftEntry( $entry, $key );
 	}
 

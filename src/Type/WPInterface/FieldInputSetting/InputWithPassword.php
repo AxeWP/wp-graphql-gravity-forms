@@ -31,7 +31,7 @@ class InputWithPassword extends AbstractFieldInputSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'customLabel' => [
 				'type'        => 'String',

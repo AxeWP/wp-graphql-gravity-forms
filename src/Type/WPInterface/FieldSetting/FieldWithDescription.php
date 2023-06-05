@@ -29,7 +29,7 @@ class FieldWithDescription extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'description' => [
 				'type'        => 'String',

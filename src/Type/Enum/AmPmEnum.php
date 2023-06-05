@@ -26,14 +26,14 @@ class AmPmEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The AM or PM cycle in a 12-hour clock.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'AM' => [
 				'description' => __( 'AM. The first 12-hour cycle of the day.', 'wp-graphql-gravity-forms' ),

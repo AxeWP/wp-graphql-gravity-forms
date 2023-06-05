@@ -28,7 +28,6 @@ class WPJamstackDeployments implements Hookable {
 	 */
 	public static array $options;
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -49,21 +48,21 @@ class WPJamstackDeployments implements Hookable {
 	/**
 	 * Returns whether WPJamstackDeployments is enabled.
 	 */
-	public static function is_wp_jamstack_deployments_enabled() : bool {
+	public static function is_wp_jamstack_deployments_enabled(): bool {
 		return class_exists( 'Crgeary\JAMstackDeployments\App' );
 	}
 
 	/**
 	 * Returns the Options Key used by WPJamstackDeployments.
 	 */
-	public static function get_options_key() : string {
+	public static function get_options_key(): string {
 		return defined( 'CRGEARY_JAMSTACK_DEPLOYMENTS_OPTIONS_KEY' ) ? CRGEARY_JAMSTACK_DEPLOYMENTS_OPTIONS_KEY : 'wp_jamstack_deployments';
 	}
 
 	/**
 	 * Returns the array of options.
 	 */
-	public static function get_options() : array {
+	public static function get_options(): array {
 		if ( empty( self::$options ) ) {
 			self::$options = \jamstack_deployments_get_options();
 		}
@@ -74,7 +73,7 @@ class WPJamstackDeployments implements Hookable {
 	/**
 	 * Registers settings to enable/disable deployments.
 	 */
-	public static function register_settings() : void {
+	public static function register_settings(): void {
 		$key = self::get_options_key();
 
 		$option = self::get_options();
@@ -109,7 +108,7 @@ class WPJamstackDeployments implements Hookable {
 	 *
 	 * @param array $input .
 	 */
-	public static function sanitize( array $input ) : array {
+	public static function sanitize( array $input ): array {
 		if ( ! isset( $input[ self::$option_name ] ) || ! is_array( $input[ self::$option_name ] ) ) {
 			$input[ self::$option_name ] = [];
 		}
@@ -120,7 +119,7 @@ class WPJamstackDeployments implements Hookable {
 	/**
 	 * Adds actions to trigger deployments based on the settings.
 	 */
-	public static function trigger_deployments() : void {
+	public static function trigger_deployments(): void {
 		$options = self::get_options();
 		if ( empty( $options[ self::$option_name ] ) ) {
 			return;
@@ -166,7 +165,7 @@ class WPJamstackDeployments implements Hookable {
 	 * @param array   $form .
 	 * @param boolean $is_new .
 	 */
-	public static function after_save_form( array $form, bool $is_new ) : void {
+	public static function after_save_form( array $form, bool $is_new ): void {
 		$options = self::get_options();
 
 		if ( in_array( 'create_form', $options[ self::$option_name ], true ) && $is_new ) {

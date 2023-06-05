@@ -26,7 +26,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		/**
 		 * Constructor
 		 */
-		public static function instance() : self {
+		public static function instance(): self {
 			if ( ! isset( self::$instance ) || ! ( is_a( self::$instance, self::class ) ) ) {
 				if ( ! function_exists( 'is_plugin_active' ) ) {
 					require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -51,7 +51,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		 *
 		 * @since 0.10.0
 		 */
-		private function includes() : void {
+		private function includes(): void {
 			if ( defined( 'WPGRAPHQL_GF_AUTOLOAD' ) && false !== WPGRAPHQL_GF_AUTOLOAD && defined( 'WPGRAPHQL_GF_PLUGIN_DIR' ) ) {
 				require_once WPGRAPHQL_GF_PLUGIN_DIR . 'vendor/autoload.php';
 			}
@@ -60,7 +60,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		/**
 		 * Sets up the schema.
 		 */
-		private function setup() : void {
+		private function setup(): void {
 			Extensions::register_hooks();
 			CoreSchemaFilters::register_hooks();
 			UpdateChecker::register_hooks();
@@ -87,7 +87,7 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		 *
 		 * @since  0.10.0
 		 */
-		public function __wakeup() : void {
+		public function __wakeup(): void {
 			// De-serializing instances of the class is forbidden.
 			_doing_it_wrong( __FUNCTION__, esc_html__( 'De-serializing instances of the GF class is not allowed.', 'wp-graphql-gravity-forms' ), '0.10.0' );
 		}

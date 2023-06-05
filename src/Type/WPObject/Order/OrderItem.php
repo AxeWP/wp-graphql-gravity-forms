@@ -28,14 +28,14 @@ class OrderItem extends AbstractObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The entry order item.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'section'            => [
 				'type'        => 'String',
@@ -53,32 +53,32 @@ class OrderItem extends AbstractObject {
 			'isDiscount'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a discount item', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source)  => ! empty( $source['is_discount'] ),
+				'resolve'     => static fn ( $source) => ! empty( $source['is_discount'] ),
 			],
 			'isLineItem'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a line item', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source )  => ! empty( $source['is_line_item'] ),
+				'resolve'     => static fn ( $source ) => ! empty( $source['is_line_item'] ),
 			],
 			'isRecurring'        => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a recurring item', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source )  => ! empty( $source['is_recurring'] ),
+				'resolve'     => static fn ( $source ) => ! empty( $source['is_recurring'] ),
 			],
 			'isSetupFee'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a setup fee', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source )  => ! empty( $source['is_setup'] ),
+				'resolve'     => static fn ( $source ) => ! empty( $source['is_setup'] ),
 			],
 			'isShipping'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a shipping fee', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source )  => ! empty( $source['is_shipping'] ),
+				'resolve'     => static fn ( $source ) => ! empty( $source['is_shipping'] ),
 			],
 			'isTrial'            => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a trial item', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source )  => ! empty( $source['is_trial'] ),
+				'resolve'     => static fn ( $source ) => ! empty( $source['is_trial'] ),
 			],
 			'name'               => [
 				'type'        => 'String',

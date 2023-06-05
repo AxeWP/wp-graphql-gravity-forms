@@ -29,7 +29,7 @@ class FieldWithFileExtensions extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'allowedExtensions' => [
 				'type'        => [ 'list_of' => 'String' ],

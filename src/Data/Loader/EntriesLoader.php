@@ -28,7 +28,7 @@ class EntriesLoader extends AbstractDataLoader {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_model( $entry, $key ) : SubmittedEntry {
+	protected function get_model( $entry, $key ): SubmittedEntry {
 		return new SubmittedEntry( $entry );
 	}
 

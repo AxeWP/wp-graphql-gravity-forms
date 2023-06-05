@@ -27,14 +27,14 @@ class CaptchaFieldTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of CAPTCHA field to be used.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'RECAPTCHA' => [
 				'description' => __( 'reCAPTCHA type.', 'wp-graphql-gravity-forms' ),

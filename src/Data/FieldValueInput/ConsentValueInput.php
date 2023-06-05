@@ -31,7 +31,7 @@ class ConsentValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_field_name() : string {
+	protected function get_field_name(): string {
 		return 'value';
 	}
 
@@ -51,7 +51,7 @@ class ConsentValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function add_value_to_submission( array &$field_values ) : void {
+	public function add_value_to_submission( array &$field_values ): void {
 		$field_values += $this->value;
 	}
 }

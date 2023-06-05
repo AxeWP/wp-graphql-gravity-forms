@@ -38,7 +38,7 @@ abstract class AbstractInterface extends AbstractType implements TypeWithDescrip
 	 *
 	 * @param \WPGraphQL\Registry\TypeRegistry $type_registry .
 	 */
-	public static function register( TypeRegistry $type_registry = null ) : void {
+	public static function register( TypeRegistry $type_registry = null ): void {
 		$config = static::get_type_config( $type_registry );
 
 		register_graphql_interface_type( static::$type, $config );

@@ -31,7 +31,7 @@ class InputWithChainedChoices extends AbstractFieldInputSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'name' => [
 				'type'        => 'String',

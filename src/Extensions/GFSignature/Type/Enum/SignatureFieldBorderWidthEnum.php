@@ -30,14 +30,14 @@ class SignatureFieldBorderWidthEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Width of the border around the signature area.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'NONE'   => [
 				'description' => __( 'No border width.', 'wp-graphql-gravity-forms' ),

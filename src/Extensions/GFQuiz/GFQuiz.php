@@ -9,8 +9,8 @@
 namespace WPGraphQL\GF\Extensions\GFQuiz;
 
 use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum;
-use WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject;
 use WPGraphQL\GF\Extensions\GFQuiz\Type\WPInterface;
+use WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject;
 use WPGraphQL\GF\Interfaces\Hookable;
 use WPGraphQL\GF\Utils\Utils;
 
@@ -21,7 +21,7 @@ class GFQuiz implements Hookable {
 	/**
 	 * Hook extension into plugin.
 	 */
-	public static function register_hooks() : void {
+	public static function register_hooks(): void {
 		if ( ! self::is_gf_quiz_enabled() ) {
 			return;
 		}
@@ -46,7 +46,7 @@ class GFQuiz implements Hookable {
 	/**
 	 * Returns whether Gravity Forms Quiz is enabled.
 	 */
-	public static function is_gf_quiz_enabled() : bool {
+	public static function is_gf_quiz_enabled(): bool {
 		return class_exists( 'GFQuiz' );
 	}
 
@@ -55,7 +55,7 @@ class GFQuiz implements Hookable {
 	 *
 	 * @param array $classes .
 	 */
-	public static function enums( array $classes ) : array {
+	public static function enums( array $classes ): array {
 		$classes[] = Enum\QuizFieldGradingTypeEnum::class;
 		$classes[] = Enum\QuizFieldTypeEnum::class;
 
@@ -67,7 +67,7 @@ class GFQuiz implements Hookable {
 	 *
 	 * @param array $classes .
 	 */
-	public static function form_field_settings( array $classes ) : array {
+	public static function form_field_settings( array $classes ): array {
 		$classes['gquiz-setting-choices']                 = WPInterface\FieldSetting\FieldWithQuizChoices::class;
 		$classes['gquiz-setting-question']                = WPInterface\FieldSetting\FieldWithQuizQuestion::class;
 		$classes['gquiz-setting-randomize-quiz-choices']  = WPInterface\FieldSetting\FieldWithQuizRandomizeQuizChoices::class;
@@ -81,7 +81,7 @@ class GFQuiz implements Hookable {
 	 *
 	 * @param array $classes .
 	 */
-	public static function form_field_setting_choices( array $classes ) : array {
+	public static function form_field_setting_choices( array $classes ): array {
 		$classes['gquiz-setting-choices'] = WPInterface\FieldChoiceSetting\ChoiceWithQuizChoices::class;
 
 		return $classes;
@@ -92,7 +92,7 @@ class GFQuiz implements Hookable {
 	 *
 	 * @param array $classes .
 	 */
-	public static function objects( array $classes ) : array {
+	public static function objects( array $classes ): array {
 		$classes[] = WPObject\Entry\EntryQuizResults::class;
 		$classes[] = WPObject\Form\FormQuizGrades::class;
 		$classes[] = WPObject\Form\FormQuizConfirmation::class;
@@ -112,7 +112,7 @@ class GFQuiz implements Hookable {
 	 * @param array  $child_types An array of GF_Field::$type => GraphQL type names.
 	 * @param string $field_type The 'parent' GF_Field type.
 	 */
-	public static function field_child_types( array $child_types, string $field_type ) : array {
+	public static function field_child_types( array $child_types, string $field_type ): array {
 		if ( 'quiz' === $field_type ) {
 			$prefix = Utils::get_safe_form_field_type_name( $field_type );
 
@@ -133,7 +133,7 @@ class GFQuiz implements Hookable {
 	 * @param string $model_name .
 	 * @param array  $data .
 	 */
-	public static function form_model( $fields, string $model_name, $data ) : array {
+	public static function form_model( $fields, string $model_name, $data ): array {
 		if ( 'FormObject' === $model_name ) {
 			$fields['quiz'] = static fn (): ?array => empty( $data['gravityformsquiz'] ) ? null : $data['gravityformsquiz'];
 		}

@@ -25,14 +25,14 @@ class FieldWithChoices extends AbstractInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'A Gravity Forms field with possible field choices.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'choices' => [
 				'type'        => [ 'list_of' => FieldChoice::$type ],
@@ -41,8 +41,8 @@ class FieldWithChoices extends AbstractInterface {
 						/** @var \GF_Field $source */
 						$context->gfField = $source;
 
-						return ! empty( $source->choices ) ? 
-						// Include GraphQL Type in resolver.
+						return ! empty( $source->choices )
+																			? // Include GraphQL Type in resolver.
 						array_map(
 							static function ( $choice ) use ( $source ) {
 								$choice['graphql_type'] = FieldChoiceRegistry::get_type_name( $source );
@@ -50,7 +50,8 @@ class FieldWithChoices extends AbstractInterface {
 								return $choice;
 							},
 							$source->choices
-						) : null;
+						)
+																			: null;
 				},
 			],
 		];

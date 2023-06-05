@@ -32,7 +32,7 @@ class FormConfirmation extends AbstractObject implements TypeWithConnections {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config() : array {
+	public static function get_type_config(): array {
 		$config = parent::get_type_config();
 
 		$config['connections'] = self::get_connections();
@@ -64,14 +64,14 @@ class FormConfirmation extends AbstractObject implements TypeWithConnections {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Properties for all the email notifications which exist for a form.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'conditionalLogic' => [
 				'type'        => ConditionalLogic::$type,

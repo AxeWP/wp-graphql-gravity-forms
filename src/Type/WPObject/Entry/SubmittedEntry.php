@@ -14,8 +14,8 @@ use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
-use WPGraphQL\GF\Type\Enum\SubmittedEntryIdTypeEnum;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
+use WPGraphQL\GF\Type\Enum\SubmittedEntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Utils\Utils;
@@ -41,8 +41,9 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		parent::register();
+
 		self::register_field();
 	}
 
@@ -60,14 +61,14 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'A Gravity Forms submitted entry.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'entryId'        => [
 				'type'              => 'Int',
@@ -102,14 +103,14 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [ 'DatabaseIdentifier', Entry::$type ];
 	}
 
 	/**
 	 * Register entry query.
 	 */
-	public static function register_field() : void {
+	public static function register_field(): void {
 		register_graphql_field(
 			'RootQuery',
 			self::$field_name,

@@ -12,10 +12,10 @@
 namespace WPGraphQL\GF\Registry;
 
 use GF_Field;
+use WPGraphQL\GF\Registry\TypeRegistry as GFTypeRegistry;
 use WPGraphQL\GF\Type\WPInterface\FieldInput;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
-use WPGraphQL\GF\Registry\TypeRegistry as GFTypeRegistry;
 
 
 /**
@@ -38,7 +38,7 @@ class FieldInputRegistry {
 	 *
 	 * @param \GF_Field $field The Gravity Forms field object.
 	 */
-	public static function get_type_name( GF_Field $field ) : string {
+	public static function get_type_name( GF_Field $field ): string {
 		$input_type = $field->get_input_type();
 
 		$input_name = ( $field->type !== $input_type ? $field->type . '_' . $input_type : $field->type ) . 'InputProperty';
@@ -59,7 +59,7 @@ class FieldInputRegistry {
 	 * @param array     $settings The Gravity Forms field settings used to define the GraphQL object.
 	 * @param bool      $as_interface Whether to register the choice as an interface. Default false.
 	 */
-	public static function register( GF_Field $field, array $settings, bool $as_interface = false ) : void {
+	public static function register( GF_Field $field, array $settings, bool $as_interface = false ): void {
 		add_action(
 			get_graphql_register_action(),
 			static function ( TypeRegistry $type_registry ) use ( $field, $settings, $as_interface ) {
@@ -103,7 +103,7 @@ class FieldInputRegistry {
 	 * @param \GF_Field $field The Gravity Forms field object.
 	 * @param array     $settings The Gravity Forms field settings.
 	 */
-	public static function get_config_from_settings( string $input_name, GF_Field $field, array $settings ) : array {
+	public static function get_config_from_settings( string $input_name, GF_Field $field, array $settings ): array {
 		$interfaces = self::get_interfaces( $settings );
 
 		$fields = self::get_fields( $input_name, $field, $settings, $interfaces );
@@ -125,7 +125,7 @@ class FieldInputRegistry {
 	 *
 	 * @param array $settings .
 	 */
-	public static function get_interfaces( array $settings ) : array {
+	public static function get_interfaces( array $settings ): array {
 		// Every Input is a FieldInput.
 		$interfaces = [
 			FieldInput::$type,
@@ -161,7 +161,7 @@ class FieldInputRegistry {
 	 * @param array     $settings The Gravity Forms field settings.
 	 * @param array     $interfaces The list of interfaces to add to the field.
 	 */
-	public static function get_fields( string $input_name, GF_Field $field, array $settings, array $interfaces ) : array {
+	public static function get_fields( string $input_name, GF_Field $field, array $settings, array $interfaces ): array {
 		$fields = FieldInput::get_fields();
 
 		/**
@@ -177,5 +177,4 @@ class FieldInputRegistry {
 
 		return apply_filters( 'graphql_gf_form_field_setting_input_fields_' . $input_name, $fields, $field, $settings, $interfaces );
 	}
-
 }

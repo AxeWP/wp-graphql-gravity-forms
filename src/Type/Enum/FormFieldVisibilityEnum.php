@@ -27,14 +27,14 @@ class FormFieldVisibilityEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Field visibility.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'VISIBLE'        => [
 				'description' => __( 'The field is "visible".', 'wp-graphql-gravity-forms' ),

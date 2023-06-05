@@ -22,7 +22,6 @@ use WPGraphQL\GF\Utils\Utils;
  * Class - TypeRegistry
  */
 class TypeRegistry {
-
 	/**
 	 * The local registry of registered types.
 	 *
@@ -40,7 +39,7 @@ class TypeRegistry {
 	/**
 	 * Gets an array of all the registered GraphQL types along with their class name.
 	 */
-	public static function get_registered_types() : array {
+	public static function get_registered_types(): array {
 		if ( empty( self::$registry ) ) {
 			self::initialize_registry();
 		}
@@ -51,7 +50,7 @@ class TypeRegistry {
 	/**
 	 * Gets an array of all the registered GraphQL types along with their class name.
 	 */
-	public static function get_registered_classes() : array {
+	public static function get_registered_classes(): array {
 		if ( empty( self::$registered_classes ) ) {
 			self::initialize_registry();
 		}
@@ -62,7 +61,7 @@ class TypeRegistry {
 	/**
 	 * Registers types, connections, unions, and mutations to GraphQL schema.
 	 */
-	public static function init() : void {
+	public static function init(): void {
 		/**
 		 * Fires before all types have been registered.
 		 */
@@ -79,7 +78,7 @@ class TypeRegistry {
 	/**
 	 * Initializes the GF type registry. If $type_registry is nulled, these fields wont be (re)-registered to WPGraphQL.
 	 */
-	private static function initialize_registry() : void {
+	private static function initialize_registry(): void {
 		$classes_to_register = array_merge(
 			self::enums(),
 			self::inputs(),
@@ -95,14 +94,12 @@ class TypeRegistry {
 		self::register_types( self::$registered_classes );
 	}
 
-
-
 	/**
 	 * List of Enum classes to register.
 	 *
 	 * @return class-string[]
 	 */
-	private static function enums() : array {
+	private static function enums(): array {
 		// Enums to register.
 		$classes_to_register = [
 			Enum\AddressFieldCountryEnum::class,
@@ -174,7 +171,7 @@ class TypeRegistry {
 	 *
 	 * @return class-string[]
 	 */
-	private static function inputs() : array {
+	private static function inputs(): array {
 		$classes_to_register = [
 			Input\AddressFieldInput::class,
 			Input\CheckboxFieldInput::class,
@@ -214,7 +211,7 @@ class TypeRegistry {
 	 *
 	 * @return class-string[]
 	 */
-	public static function interfaces() : array {
+	public static function interfaces(): array {
 		$classes_to_register = [
 			WPInterface\Entry::class,
 			WPInterface\FormField::class,
@@ -246,7 +243,7 @@ class TypeRegistry {
 	 *
 	 * @return class-string[]
 	 */
-	public static function objects() : array {
+	public static function objects(): array {
 		$classes_to_register = [
 			// Buttons.
 			WPObject\Button\FormButton::class,
@@ -315,7 +312,7 @@ class TypeRegistry {
 	 *
 	 * @return array<string, class-string>
 	 */
-	public static function form_field_settings() : array {
+	public static function form_field_settings(): array {
 		// Key-value pairs of settings and their corresponding class name.
 		$classes_to_register = [
 			'add_icon_url_setting'               => WPInterface\FieldSetting\FieldWithAddIconUrl::class,
@@ -402,7 +399,7 @@ class TypeRegistry {
 	 *
 	 * @return array<string, class-string>
 	 */
-	public static function form_field_setting_inputs() : array {
+	public static function form_field_setting_inputs(): array {
 		// Key-value pairs of settings and their corresponding class name.
 		$classes_to_register = [
 			'address_setting'            => WPInterface\FieldInputSetting\InputWithAddress::class,
@@ -430,7 +427,7 @@ class TypeRegistry {
 	 *
 	 * @return array<string, class-string>
 	 */
-	public static function form_field_setting_choices() : array {
+	public static function form_field_setting_choices(): array {
 		// Key-value pairs of settings and their corresponding class name.
 		$classes_to_register = [
 			'choices_setting'      => WPInterface\FieldChoiceSetting\ChoiceWithChoices::class,
@@ -452,7 +449,7 @@ class TypeRegistry {
 	/**
 	 * List of Field classes to register.
 	 */
-	public static function fields() : array {
+	public static function fields(): array {
 		$classes_to_register = [];
 
 		/**
@@ -468,7 +465,7 @@ class TypeRegistry {
 	/**
 	 * List of Connection classes to register.
 	 */
-	public static function connections() : array {
+	public static function connections(): array {
 		$classes_to_register = [
 			Connection\EntriesConnection::class,
 			Connection\FormsConnection::class,
@@ -488,7 +485,7 @@ class TypeRegistry {
 	/**
 	 * Registers mutation.
 	 */
-	public static function mutations() : array {
+	public static function mutations(): array {
 		$classes_to_register = [
 			Mutation\DeleteDraftEntry::class,
 			Mutation\DeleteEntry::class,
@@ -519,7 +516,7 @@ class TypeRegistry {
 	 *
 	 * @throws \Exception .
 	 */
-	private static function register_types( array $classes_to_register ) : void {
+	private static function register_types( array $classes_to_register ): void {
 		// Bail if there are no classes to register.
 		if ( empty( $classes_to_register ) ) {
 			return;

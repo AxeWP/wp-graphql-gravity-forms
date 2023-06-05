@@ -24,14 +24,14 @@ class Logger extends AbstractObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Gravity Forms Logging Settings.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'isEnabled' => [
 				'type'        => 'Boolean',

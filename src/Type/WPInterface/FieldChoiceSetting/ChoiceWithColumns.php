@@ -32,7 +32,7 @@ class ChoiceWithColumns extends AbstractFieldChoiceSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		// All types need to have fields, so we explicitly list the interface fields.
 		return FieldChoice::get_fields();
 	}

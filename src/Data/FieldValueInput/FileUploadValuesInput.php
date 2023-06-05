@@ -25,7 +25,7 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_field_name() : string {
+	protected function get_field_name(): string {
 		return 'fileUploadValues';
 	}
 
@@ -63,7 +63,7 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 	 *
 	 * @param array $field_values.
 	 */
-	public function add_value_to_submission( array &$field_values ) : void {
+	public function add_value_to_submission( array &$field_values ): void {
 		if ( empty( $this->entry ) || $this->is_draft || ! empty( $this->field->multipleFields ) ) {
 			return;
 		}
@@ -74,5 +74,4 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 
 		$field_values[ $this->field->id ] = $this->field->get_value_save_entry( $value, $this->form, $input_name, $this->entry['id'] ?? null, $this->entry );
 	}
-
 }

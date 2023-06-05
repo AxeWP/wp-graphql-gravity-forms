@@ -31,14 +31,14 @@ class FormRuleOperatorEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Operator to be used when evaluating logic rules.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'IS'           => [
 				'description' => __( 'Evaluates values that match the comparison value.', 'wp-graphql-gravity-forms' ),

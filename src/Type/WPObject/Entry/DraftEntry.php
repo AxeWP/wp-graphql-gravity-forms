@@ -38,19 +38,19 @@ class DraftEntry extends AbstractObject implements TypeWithInterfaces, Field {
 	 */
 	public static string $field_name = 'gfDraftEntry';
 
-
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		parent::register();
+
 		self::register_field();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config() : array {
+	public static function get_type_config(): array {
 		$config = parent::get_type_config();
 
 		$config['interfaces'] = self::get_interfaces();
@@ -61,14 +61,14 @@ class DraftEntry extends AbstractObject implements TypeWithInterfaces, Field {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'A Gravity Forms draft entry.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'resumeToken' => [
 				'type'        => 'String',
@@ -80,14 +80,14 @@ class DraftEntry extends AbstractObject implements TypeWithInterfaces, Field {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [ Entry::$type ];
 	}
 
 	/**
 	 * Register entry query.
 	 */
-	public static function register_field() : void {
+	public static function register_field(): void {
 		register_graphql_field(
 			'RootQuery',
 			self::$field_name,

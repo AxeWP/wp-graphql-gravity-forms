@@ -31,7 +31,7 @@ class FieldWithNextButton extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'nextButton' => [
 				'type'        => FormButton::$type,

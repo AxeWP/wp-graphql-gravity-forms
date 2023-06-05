@@ -26,14 +26,14 @@ class ConditionalLogicActionTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The type of action the conditional logic will perform.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'SHOW' => [
 				'description' => __( 'Image button.', 'wp-graphql-gravity-forms' ),

@@ -10,8 +10,8 @@
 
 namespace WPGraphQL\GF\Data\Connection;
 
-use GF_Query;
 use GFAPI;
+use GF_Query;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
@@ -48,22 +48,21 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 */
 	public function __construct( $source, array $args, AppContext $context, ResolveInfo $info ) {
 		parent::__construct( $source, $args, $context, $info );
+
 		$this->offset_index = $this->get_query_offset_index();
 	}
 
 	/**
 	 * Return the name of the loader to be used with the connection resolver
-	 *
-	 * @return string
 	 */
-	public function get_loader_name() : string {
+	public function get_loader_name(): string {
 		return EntriesLoader::$name;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_query_args() : array {
+	public function get_query_args(): array {
 		$query_args = [
 			'form_ids'        => $this->get_form_ids(),
 			'search_criteria' => $this->get_search_criteria(),
@@ -88,7 +87,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_query() : GF_Query {
+	public function get_query(): GF_Query {
 		$form_ids        = $this->query_args['form_ids'];
 		$search_criteria = $this->query_args['search_criteria'];
 		$sorting         = $this->query_args['sorting'];
@@ -102,7 +101,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
-	public function should_execute() : bool {
+	public function should_execute(): bool {
 		$can_view = false;
 
 		if (
@@ -140,7 +139,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_ids_from_query() : array {
+	public function get_ids_from_query(): array {
 		$ids = $this->query->get_ids() ?: [];
 
 		// If we're going backwards, we need to reverse the array.
@@ -185,7 +184,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_cursor_for_node( $id ) : string {
+	protected function get_cursor_for_node( $id ): string {
 		// The GF_Query offset index is based on the original sort order.
 		$nodes = ! empty( $this->args['last'] ) ? array_reverse( $this->nodes, true ) : $this->nodes;
 
@@ -197,7 +196,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Gets the array index for offsetting GF_Query.
 	 */
-	public function get_query_offset_index() : int {
+	public function get_query_offset_index(): int {
 		$offset_index = 0;
 
 		if ( ! empty( $this->args['first'] ) ) {
@@ -222,7 +221,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @param string $cursor .
 	 */
-	protected function parse_cursor( string $cursor ) : array {
+	protected function parse_cursor( string $cursor ): array {
 		$decoded     = base64_decode( $cursor ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 		$current_loc = explode( ':', $decoded );
 
@@ -246,7 +245,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 			$this->args['where']['formIds'] = [ $this->args['where']['formIds'] ];
 		}
 
-		return array_map( static fn( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
+		return array_map( static fn ( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
 	}
 
 	/**
@@ -254,7 +253,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @return array
 	 */
-	private function get_search_criteria() : array {
+	private function get_search_criteria(): array {
 		$search_criteria = $this->apply_status_to_search_criteria( [] );
 
 		if ( ! empty( $this->args['where']['dateFilters']['startDate'] ) ) {
@@ -281,7 +280,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @param array $search_criteria The search criteria for the entry Ids.
 	 * @return array
 	 */
-	private function apply_status_to_search_criteria( array $search_criteria ) : array {
+	private function apply_status_to_search_criteria( array $search_criteria ): array {
 		$status = $this->args['where']['status'] ?? EntryStatusEnum::ACTIVE; // Default to active entries.
 
 		// For all entries, don't add a 'status' value to search criteria.
@@ -300,7 +299,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @param array $field_filters .
 	 * @return array
 	 */
-	private function format_field_filters( array $field_filters ) : array {
+	private function format_field_filters( array $field_filters ): array {
 		return array_reduce(
 			$field_filters,
 			function ( $field_filters, $field_filter ) {
@@ -354,9 +353,8 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * Returns whether field filter should be limited to a single value.
 	 *
 	 * @param string $operator Operator.
-	 * @return boolean
 	 */
-	private function should_field_filter_be_limited_to_single_value( string $operator ) : bool {
+	private function should_field_filter_be_limited_to_single_value( string $operator ): bool {
 		return in_array( $operator, self::OPERATORS_TO_LIMIT, true );
 	}
 
@@ -366,11 +364,11 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @param array $field_filter .
 	 * @return array
 	 */
-	private function get_field_filter_value_fields( array $field_filter ) : array {
+	private function get_field_filter_value_fields( array $field_filter ): array {
 		return array_values(
 			array_filter(
 				[ 'stringValues', 'intValues', 'floatValues', 'boolValues' ],
-				static function ( $value_field ) use ( $field_filter ) : bool {
+				static function ( $value_field ) use ( $field_filter ): bool {
 					return ! empty( $field_filter[ $value_field ] );
 				}
 			)
@@ -382,7 +380,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @return array
 	 */
-	private function get_sort() : array {
+	private function get_sort(): array {
 		// Set default sort direction.
 		$sort = [
 			'direction' => 'DESC',
@@ -409,7 +407,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @throws \GraphQL\Error\UserError When using unsupported pagination.
 	 */
-	private function get_paging() : array {
+	private function get_paging(): array {
 		return [
 			'offset'    => $this->get_query_offset_index(),
 			'page_size' => $this->get_query_amount() + 1, // overfetch for prev/next.

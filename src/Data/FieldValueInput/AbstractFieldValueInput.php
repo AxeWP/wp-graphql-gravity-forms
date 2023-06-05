@@ -167,12 +167,12 @@ abstract class AbstractFieldValueInput {
 	 *
 	 * E.g. `nameValues`.
 	 */
-	abstract protected function get_field_name() : string;
+	abstract protected function get_field_name(): string;
 
 	/**
 	 * Checks whether the input values submitted to the mutation are using the correct field value input for the Gravity Forms field type.
 	 */
-	protected function is_valid_input_type() : bool {
+	protected function is_valid_input_type(): bool {
 		$is_valid = false;
 
 		$key = $this->field_name;
@@ -210,7 +210,7 @@ abstract class AbstractFieldValueInput {
 	 *
 	 * @param array $errors .
 	 */
-	public function validate_value( array &$errors ) : void {
+	public function validate_value( array &$errors ): void {
 		$this->field->validate( $this->value, $this->form );
 
 		if ( ! empty( $this->field->failed_validation ) ) {
@@ -226,7 +226,7 @@ abstract class AbstractFieldValueInput {
 	 *
 	 * @param array $field_values the existing field values array.
 	 */
-	public function add_value_to_submission( array &$field_values ) : void {
+	public function add_value_to_submission( array &$field_values ): void {
 		$field_values[ $this->field->id ] = $this->value;
 	}
 }

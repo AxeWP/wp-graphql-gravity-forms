@@ -25,14 +25,14 @@ class CurrencyEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Currencies supported by Gravity Forms.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		$currencies = RGCurrency::get_currencies();
 
 		$values = [];

@@ -18,7 +18,7 @@ class UpdateChecker implements Hookable {
 	/**
 	 * Registers hooks to WordPress.
 	 */
-	public static function register_hooks() : void {
+	public static function register_hooks(): void {
 		add_filter( 'auto_update_plugin', [ self::class, 'disable_autoupdates' ], 10, 2 );
 		add_action( 'admin_init', [ self::class, 'check_updates' ] );
 		add_action( 'in_plugin_update_message-wp-graphql-gravity-forms/wp-graphql-gravity-forms.php', [ self::class, 'in_plugin_update_message' ], 10, 2 );
@@ -27,7 +27,7 @@ class UpdateChecker implements Hookable {
 	/**
 	 * Checks github for latest release.
 	 */
-	public static function check_updates() : void {
+	public static function check_updates(): void {
 		/**
 		 * Filters the repo url used in the update checker.
 		 *
@@ -73,7 +73,7 @@ class UpdateChecker implements Hookable {
 	 * @param array  $plugin_data .
 	 * @param object $response .
 	 */
-	public static function in_plugin_update_message( array $plugin_data, $response ) : void {
+	public static function in_plugin_update_message( array $plugin_data, $response ): void {
 		if ( empty( $response->new_version ) ) {
 			return;
 		}

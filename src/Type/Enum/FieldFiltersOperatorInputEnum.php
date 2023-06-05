@@ -30,14 +30,14 @@ class FieldFiltersOperatorInputEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The operator to use for filtering.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'CONTAINS' => [
 				'description' => __( 'Find field values that contain the passed value. Only one value may be passed when using this operator. SQL Equivalent: `LIKE %value%`.', 'wp-graphql-gravity-forms' ),

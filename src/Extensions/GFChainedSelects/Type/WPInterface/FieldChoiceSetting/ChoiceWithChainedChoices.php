@@ -41,7 +41,7 @@ class ChoiceWithChainedChoices extends AbstractFieldChoiceSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'isSelected' => [
 				'type'        => 'Boolean',
@@ -58,7 +58,7 @@ class ChoiceWithChainedChoices extends AbstractFieldChoiceSetting {
 	 * @param \GF_Field $field The Gravity Forms Field object.
 	 * @param array     $settings The `form_editor_field_settings()` key.
 	 */
-	public static function add_fields_to_child_type( array $fields, string $choice_name, GF_Field $field, array $settings ) : array {
+	public static function add_fields_to_child_type( array $fields, string $choice_name, GF_Field $field, array $settings ): array {
 		if (
 			! in_array( self::$field_setting, $settings, true )
 		) {
@@ -75,5 +75,4 @@ class ChoiceWithChainedChoices extends AbstractFieldChoiceSetting {
 		];
 		return $fields;
 	}
-
 }

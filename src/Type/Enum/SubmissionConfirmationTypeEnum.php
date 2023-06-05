@@ -26,14 +26,14 @@ class SubmissionConfirmationTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of confirmation returned by the submission.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'MESSAGE'  => [
 				'description' => __( 'A confirmation "message".', 'wp-graphql-gravity-forms' ),

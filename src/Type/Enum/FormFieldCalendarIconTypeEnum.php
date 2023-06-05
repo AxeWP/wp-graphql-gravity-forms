@@ -27,14 +27,14 @@ class FormFieldCalendarIconTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'How the date field displays its calendar icon.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'CALENDAR' => [
 				'description' => __( 'Default calendar icon.', 'wp-graphql-gravity-forms' ),

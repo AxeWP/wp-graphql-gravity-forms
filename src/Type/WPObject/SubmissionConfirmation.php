@@ -14,8 +14,8 @@ use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\Data\Connection\PostObjectConnectionResolver;
 use WPGraphQL\GF\Interfaces\TypeWithConnections;
-use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\Enum\SubmissionConfirmationTypeEnum;
+use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 /**
  * Class - Submission Confirmation
@@ -42,7 +42,7 @@ class SubmissionConfirmation extends AbstractObject implements TypeWithConnectio
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_connections() : array {
+	public static function get_connections(): array {
 		return [
 			'page' => [
 				'toType'   => 'Page',
@@ -63,14 +63,14 @@ class SubmissionConfirmation extends AbstractObject implements TypeWithConnectio
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The Confirmation object returned on submission. Null if the submission was not successful.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'message'     => [
 				'type'        => 'String',

@@ -28,7 +28,7 @@ class CheckboxFieldValue extends AbstractObject implements TypeWithInterfaces {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config() : array {
+	public static function get_type_config(): array {
 		$config = parent::get_type_config();
 
 		$config['interfaces'] = self::get_interfaces();
@@ -39,14 +39,14 @@ class CheckboxFieldValue extends AbstractObject implements TypeWithInterfaces {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The individual properties for each element of the Checkbox value field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldValueWithChoice::$type,
 			FieldValueWithInput::$type,

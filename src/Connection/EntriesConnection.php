@@ -30,7 +30,7 @@ class EntriesConnection extends AbstractConnection {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		// RootQuery to Entry.
 		register_graphql_connection(
 			[
@@ -65,7 +65,7 @@ class EntriesConnection extends AbstractConnection {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_connection_args() : array {
+	public static function get_connection_args(): array {
 		return [
 			'dateFilters'      => [
 				'type'        => EntriesDateFiltersInput::$type,

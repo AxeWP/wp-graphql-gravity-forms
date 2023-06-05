@@ -23,14 +23,14 @@ class ValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_field_name() : string {
+	protected function get_field_name(): string {
 		return 'value';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function prepare_value() : string {
+	protected function prepare_value(): string {
 		// Handle choices with price.
 		if ( ! empty( $this->field->enablePrice ) && false === strpos( $this->args, '|' ) ) {
 			$value_key  = ! empty( $this->field->enablePrice ) || ! empty( $this->field->enableChoiceValue ) ? 'value' : 'text';

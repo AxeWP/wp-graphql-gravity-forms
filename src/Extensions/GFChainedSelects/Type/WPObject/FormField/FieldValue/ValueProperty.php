@@ -18,12 +18,12 @@ class ValueProperty extends FieldValues {
 	/**
 	 * Get `values` property for Chained Select field.
 	 */
-	public static function chained_select_values() : array {
+	public static function chained_select_values(): array {
 		return [
 			'values' => [
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'ChainedSelect field value.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $source, array $args, AppContext $context ) : ?array {
+				'resolve'     => static function ( $source, array $args, AppContext $context ): ?array {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}

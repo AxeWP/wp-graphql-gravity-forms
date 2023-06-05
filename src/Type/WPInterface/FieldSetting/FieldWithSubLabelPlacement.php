@@ -31,7 +31,7 @@ class FieldWithSubLabelPlacement extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'subLabelPlacement' => [
 				'type'        => FormFieldSubLabelPlacementEnum::$type,

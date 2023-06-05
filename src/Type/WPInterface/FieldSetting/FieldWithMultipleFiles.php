@@ -29,7 +29,7 @@ class FieldWithMultipleFiles extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'canAcceptMultipleFiles' => [
 				'type'        => 'Boolean',

@@ -26,14 +26,14 @@ class FormButtonTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of button to be displayed. Default is TEXT.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'IMAGE' => [
 				'description' => __( 'Image button.', 'wp-graphql-gravity-forms' ),

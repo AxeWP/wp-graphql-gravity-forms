@@ -44,7 +44,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 *
 	 * @todo Trigger on delete entry, once filter is added.
 	 */
-	public function init() : void {
+	public function init(): void {
 		// Create form.
 		add_action( 'gform_post_form_duplicated', [ $this, 'after_duplicate_form' ], 10, 2 );
 		// Create or update form.
@@ -72,7 +72,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 * @param string $action_name the name of the action defined in the settings.
 	 * @param array  $args the action config.
 	 */
-	public function log( string $action_name, array $args ) : void {
+	public function log( string $action_name, array $args ): void {
 		if ( ! in_array( $action_name, self::$enabled_actions, true ) ) {
 			return;
 		}
@@ -85,7 +85,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 *
 	 * @param integer $form_id .
 	 */
-	public function after_create_form( int $form_id ) : void {
+	public function after_create_form( int $form_id ): void {
 		$args = [
 			'action_type'         => 'CREATE',
 			'title'               => sprintf( 'Form #%d', $form_id ),
@@ -105,7 +105,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 * @param int $old_id .
 	 * @param int $new_id .
 	 */
-	public function after_duplicate_form( int $old_id, int $new_id ) : void {
+	public function after_duplicate_form( int $old_id, int $new_id ): void {
 		$this->after_create_form( $new_id );
 	}
 
@@ -114,7 +114,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 *
 	 * @param integer $form_id .
 	 */
-	public function after_update_form( int $form_id ) : void {
+	public function after_update_form( int $form_id ): void {
 		$args = [
 			'action_type'         => 'UPDATE',
 			'title'               => sprintf( 'Form #%d', $form_id ),
@@ -134,7 +134,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 * @param mixed $form_meta .
 	 * @param int   $form_id The form ID.
 	 */
-	public function post_update_form_meta( $form_meta, int $form_id ) : void {
+	public function post_update_form_meta( $form_meta, int $form_id ): void {
 		$this->after_update_form( $form_id );
 	}
 
@@ -144,7 +144,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 * @param array $form .
 	 * @param bool  $is_new whether the form was created or updated.
 	 */
-	public function after_save_form( array $form, bool $is_new ) : void {
+	public function after_save_form( array $form, bool $is_new ): void {
 		if ( $is_new ) {
 			$this->after_create_form( $form['id'] );
 		} else {
@@ -157,7 +157,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 *
 	 * @param integer $form_id .
 	 */
-	public function after_delete_form( int $form_id ) : void {
+	public function after_delete_form( int $form_id ): void {
 		$args = [
 			'action_type'         => 'DELETE',
 			'title'               => sprintf( 'Form #%d', $form_id ),
@@ -171,13 +171,12 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 		$this->log( 'delete_form', $args );
 	}
 
-
 	/**
 	 * Triggers a Gatsby `log_action()` after an entry is created.
 	 *
 	 * @param array $entry .
 	 */
-	public function after_create_entry( array $entry ) : void {
+	public function after_create_entry( array $entry ): void {
 		$args = [
 			'action_type'         => 'CREATE',
 			'title'               => sprintf( 'Entry #%s', $entry['id'] ),
@@ -197,7 +196,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 * @param array $form .
 	 * @param int   $entry_id .
 	 */
-	public function after_update_entry( array $form, int $entry_id ) : void {
+	public function after_update_entry( array $form, int $entry_id ): void {
 		$args = [
 			'action_type'         => 'UPDATE',
 			'title'               => sprintf( 'Entry #%d', $entry_id ),
@@ -216,7 +215,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 *
 	 * @param array $entry .
 	 */
-	public function post_update_entry( array $entry ) : void {
+	public function post_update_entry( array $entry ): void {
 		$this->after_update_entry( [], $entry['id'] );
 	}
 
@@ -228,7 +227,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 * @param array  $submission .
 	 * @param string $resume_token .
 	 */
-	public function after_save_draft_entry( array $submission, string $resume_token ) : void {
+	public function after_save_draft_entry( array $submission, string $resume_token ): void {
 		$args = [
 			'action_type'         => 'Create',
 			'title'               => sprintf( 'Draft Entry #%s', $resume_token ),

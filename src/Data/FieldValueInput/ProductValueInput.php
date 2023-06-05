@@ -32,7 +32,7 @@ class ProductValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_field_name() : string {
+	protected function get_field_name(): string {
 		return 'productValues';
 	}
 
@@ -41,7 +41,7 @@ class ProductValueInput extends AbstractFieldValueInput {
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
-	protected function is_valid_input_type() : bool {
+	protected function is_valid_input_type(): bool {
 		$is_valid = false;
 
 		// Calculation fields need a quantity and price.
@@ -112,7 +112,7 @@ class ProductValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function add_value_to_submission( array &$field_values ) : void {
+	public function add_value_to_submission( array &$field_values ): void {
 		$field_values += $this->value;
 	}
 }

@@ -24,14 +24,14 @@ class FormDataPolicies extends AbstractObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The policies governing which entry data to include when erasing and exporting personal data.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'canExportAndErase'             => [
 				'type'        => 'Boolean',

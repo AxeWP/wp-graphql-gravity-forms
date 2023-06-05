@@ -27,14 +27,14 @@ class FormFieldSizeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The size of the field when displayed on the page.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'SMALL'  => [
 				'description' => __( 'Small field size.', 'wp-graphql-gravity-forms' ),

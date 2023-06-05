@@ -44,15 +44,14 @@ class FieldWithPassword extends AbstractFieldSetting implements TypeWithInterfac
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return FieldWithInputs::get_fields();
 	}
 
-	
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithInputs::$type,
 		];

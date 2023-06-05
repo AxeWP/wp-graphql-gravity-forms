@@ -47,7 +47,7 @@ class FieldWithAddress extends AbstractFieldSetting implements TypeWithInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'addressType'     => [
 				'type'        => AddressFieldTypeEnum::$type,
@@ -71,7 +71,7 @@ class FieldWithAddress extends AbstractFieldSetting implements TypeWithInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithInputs::$type,
 		];

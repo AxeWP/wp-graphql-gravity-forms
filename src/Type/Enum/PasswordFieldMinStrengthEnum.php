@@ -28,14 +28,14 @@ class PasswordFieldMinStrengthEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Indicates how strong the password should be.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'SHORT'  => [
 				'description' => __( 'The password strength must be "short" or better.', 'wp-graphql-gravity-forms' ),

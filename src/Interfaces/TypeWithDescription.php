@@ -15,5 +15,5 @@ interface TypeWithDescription {
 	/**
 	 * Gets the Field type description.
 	 */
-	public static function get_description() : string;
+	public static function get_description(): string;
 }

@@ -45,7 +45,7 @@ class FieldWithTimeFormat extends AbstractFieldSetting implements TypeWithInterf
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'timeFormat' => [
 				'type'        => TimeFieldFormatEnum::$type,
@@ -57,7 +57,7 @@ class FieldWithTimeFormat extends AbstractFieldSetting implements TypeWithInterf
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithInputs::$type,
 		];

@@ -8,9 +8,9 @@
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
-use WPGraphQL\Registry\TypeRegistry;
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\WPInterface\FieldWithInputs;
+use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - FieldWithName
@@ -44,14 +44,14 @@ class FieldWithName extends AbstractFieldSetting implements TypeWithInterfaces {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return FieldWithInputs::get_fields();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithInputs::$type,
 		];

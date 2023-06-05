@@ -14,8 +14,8 @@ use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Connection\EntriesConnection;
 use WPGraphQL\GF\Connection\FormFieldsConnection;
-use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
 use WPGraphQL\GF\Data\Connection\EntriesConnectionResolver;
+use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Interfaces\TypeWithConnections;
@@ -48,15 +48,16 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		parent::register();
+
 		self::register_field();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config() : array {
+	public static function get_type_config(): array {
 		$config = parent::get_type_config();
 
 		$config['connections'] = static::get_connections();
@@ -68,7 +69,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_connections() : array {
+	public static function get_connections(): array {
 		return [
 			'entries'    => [
 				'toType'           => Entry::$type,
@@ -121,14 +122,14 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Gravity Forms form.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'button'                       => [
 				'type'              => FormSubmitButton::$type,
@@ -270,14 +271,14 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [ 'Node', 'DatabaseIdentifier' ];
 	}
 
 	/**
 	 * Register form query.
 	 */
-	public static function register_field() : void {
+	public static function register_field(): void {
 		register_graphql_field(
 			'RootQuery',
 			self::$field_name,

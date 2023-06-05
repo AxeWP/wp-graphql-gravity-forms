@@ -23,7 +23,7 @@ class GFChainedSelects implements Hookable {
 	/**
 	 * Hook extension into plugin.
 	 */
-	public static function register_hooks() : void {
+	public static function register_hooks(): void {
 		if ( ! self::is_gf_chained_selects_enabled() ) {
 			return;
 		}
@@ -55,7 +55,7 @@ class GFChainedSelects implements Hookable {
 	/**
 	 * Returns whether Gravity Forms Signature is enabled.
 	 */
-	public static function is_gf_chained_selects_enabled() : bool {
+	public static function is_gf_chained_selects_enabled(): bool {
 		return class_exists( 'GFChainedSelects' );
 	}
 
@@ -64,7 +64,7 @@ class GFChainedSelects implements Hookable {
 	 *
 	 * @param array $registered_classes .
 	 */
-	public static function enums( array $registered_classes ) : array {
+	public static function enums( array $registered_classes ): array {
 		$registered_classes[] = Enum\ChainedSelectFieldAlignmentEnum::class;
 		return $registered_classes;
 	}
@@ -74,7 +74,7 @@ class GFChainedSelects implements Hookable {
 	 *
 	 * @param array $registered_classes .
 	 */
-	public static function inputs( array $registered_classes ) : array {
+	public static function inputs( array $registered_classes ): array {
 		$registered_classes[] = Input\ChainedSelectFieldInput::class;
 		return $registered_classes;
 	}
@@ -84,7 +84,7 @@ class GFChainedSelects implements Hookable {
 	 *
 	 * @param array $classes .
 	 */
-	public static function form_field_settings( array $classes ) : array {
+	public static function form_field_settings( array $classes ): array {
 		$classes['chained_choices_setting']               = WPInterface\FieldSetting\FieldWithChainedChoices::class;
 		$classes['chained_selects_alignment_setting']     = WPInterface\FieldSetting\FieldWithChainedSelectsAlignment::class;
 		$classes['chained_selects_hide_inactive_setting'] = WPInterface\FieldSetting\FieldWithChainedSelectsHideInactive::class;
@@ -97,7 +97,7 @@ class GFChainedSelects implements Hookable {
 	 *
 	 * @param array $classes .
 	 */
-	public static function form_field_setting_choices( array $classes ) : array {
+	public static function form_field_setting_choices( array $classes ): array {
 		$classes['chained_choices_setting'] = WPInterface\FieldChoiceSetting\ChoiceWithChainedChoices::class;
 
 		return $classes;
@@ -108,7 +108,7 @@ class GFChainedSelects implements Hookable {
 	 *
 	 * @param array $classes .
 	 */
-	public static function form_field_setting_inputs( array $classes ) : array {
+	public static function form_field_setting_inputs( array $classes ): array {
 		$classes['chained_choices_setting'] = WPInterface\FieldInputSetting\InputWithChainedChoices::class;
 
 		return $classes;
@@ -121,7 +121,7 @@ class GFChainedSelects implements Hookable {
 	 * @param array     $args .
 	 * @param \GF_Field $field .
 	 */
-	public static function field_value_input( string $input_class, array $args, GF_Field $field ) : string {
+	public static function field_value_input( string $input_class, array $args, GF_Field $field ): string {
 		if ( 'chainedselect' === $field->get_input_type() ) {
 			$input_class = ChainedSelectValuesInput::class;
 		}
@@ -129,14 +129,13 @@ class GFChainedSelects implements Hookable {
 		return $input_class;
 	}
 
-
 	/**
 	 * Registers ChainedSelect field value.
 	 *
 	 * @param array     $fields .
 	 * @param \GF_Field $field .
 	 */
-	public static function field_value_fields( array $fields, GF_Field $field ) : array {
+	public static function field_value_fields( array $fields, GF_Field $field ): array {
 		if ( 'chainedselect' === $field->get_input_type() ) {
 			$fields = array_merge( $fields, ValueProperty::chained_select_values() );
 		}
@@ -149,7 +148,7 @@ class GFChainedSelects implements Hookable {
 	 *
 	 * @param array $fields .
 	 */
-	public static function field_values_input_fields( array $fields ) : array {
+	public static function field_values_input_fields( array $fields ): array {
 		if ( ! isset( $fields['chainedSelectValues'] ) ) {
 			$fields['chainedSelectValues'] = [
 				'type'        => [ 'list_of' => Input\ChainedSelectFieldInput::$type ],
@@ -165,7 +164,7 @@ class GFChainedSelects implements Hookable {
 	 *
 	 * @param array $fields_to_map .
 	 */
-	public static function form_field_name( array $fields_to_map ) : array {
+	public static function form_field_name( array $fields_to_map ): array {
 		$fields_to_map['chainedselect'] = 'ChainedSelect';
 
 		return $fields_to_map;

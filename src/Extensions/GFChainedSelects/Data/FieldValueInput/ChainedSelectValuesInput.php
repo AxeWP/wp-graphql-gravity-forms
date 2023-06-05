@@ -17,7 +17,7 @@ class ChainedSelectValuesInput extends CheckboxValuesInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_field_name() : string {
+	protected function get_field_name(): string {
 		return 'chainedSelectValues';
 	}
 }
