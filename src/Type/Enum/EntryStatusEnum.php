@@ -20,21 +20,21 @@ class EntryStatusEnum extends AbstractEnum {
 	public static string $type = 'EntryStatusEnum';
 
 	// Individual elements.
-	const ACTIVE = 'active';
-	const SPAM   = 'spam';
-	const TRASH  = 'trash';
+	public const ACTIVE = 'active';
+	public const SPAM   = 'spam';
+	public const TRASH  = 'trash';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Status of entries to get. Default is ACTIVE.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'ACTIVE' => [
 				'description' => __( 'Active entries (default).', 'wp-graphql-gravity-forms' ),

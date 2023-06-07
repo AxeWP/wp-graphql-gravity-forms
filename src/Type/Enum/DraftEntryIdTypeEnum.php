@@ -20,20 +20,20 @@ class DraftEntryIdTypeEnum extends AbstractEnum {
 	public static string $type = 'DraftEntryIdTypeEnum';
 
 	// Individual elements.
-	const ID           = 'global_id';
-	const RESUME_TOKEN = 'resume_token';
+	public const ID           = 'global_id';
+	public const RESUME_TOKEN = 'resume_token';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The Type of Identifier used to fetch a single resource.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'ID'           => [
 				'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),

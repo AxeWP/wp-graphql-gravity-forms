@@ -20,22 +20,22 @@ class FormLimitEntriesPeriodEnum extends AbstractEnum {
 	public static string $type = 'FormLimitEntriesPeriodEnum';
 
 	// Individual elements.
-	const DAY   = 'day';
-	const WEEK  = 'week';
-	const MONTH = 'month';
-	const YEAR  = 'year';
+	public const DAY   = 'day';
+	public const WEEK  = 'week';
+	public const MONTH = 'month';
+	public const YEAR  = 'year';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'When limitEntries is set to 1, this property specifies the time period during which submissions are allowed.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'DAY'   => [
 				'description' => __( 'Limit entries by "day".', 'wp-graphql-gravity-forms' ),

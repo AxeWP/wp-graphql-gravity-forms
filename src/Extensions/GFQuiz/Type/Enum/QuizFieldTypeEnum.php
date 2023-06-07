@@ -22,21 +22,21 @@ class QuizFieldTypeEnum extends AbstractEnum {
 	public static string $type = 'QuizFieldTypeEnum';
 
 	// Individual elements.
-	const CHECKBOX = 'checkbox';
-	const RADIO    = 'radio';
-	const SELECT   = 'select';
+	public const CHECKBOX = 'checkbox';
+	public const RADIO    = 'radio';
+	public const SELECT   = 'select';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The Gravity Forms field type used to display the current Quiz Field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'CHECKBOX' => [
 				'description' => __( 'Gravity Forms `CheckboxField`.', 'wp-graphql-gravity-forms' ),

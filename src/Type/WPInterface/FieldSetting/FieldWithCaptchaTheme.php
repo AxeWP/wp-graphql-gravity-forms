@@ -31,7 +31,7 @@ class FieldWithCaptchaTheme extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'captchaTheme' => [
 				'type'        => CaptchaFieldThemeEnum::$type,

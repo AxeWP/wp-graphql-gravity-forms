@@ -29,7 +29,7 @@ class FieldWithCopyValuesOption extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'shouldCopyValuesOption'  => [
 				'type'        => 'Boolean',

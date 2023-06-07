@@ -35,7 +35,7 @@ class ChoiceWithName extends AbstractFieldChoiceSetting {
 	 * {@inheritDoc}
 	 */
 	public static function register_hooks(): void {
-		add_action( 'graphql_gf_after_register_form_field', [ __CLASS__, 'add_choice_to_inputs' ], 11, 2 );
+		add_action( 'graphql_gf_after_register_form_field', [ self::class, 'add_choice_to_inputs' ], 11, 2 );
 
 		parent::register_hooks();
 	}
@@ -43,7 +43,7 @@ class ChoiceWithName extends AbstractFieldChoiceSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'isSelected' => [
 				'type'        => 'Boolean',
@@ -55,10 +55,10 @@ class ChoiceWithName extends AbstractFieldChoiceSetting {
 	/**
 	 * Registers a GraphQL field to the GraphQL type that implements this interface.
 	 *
-	 * @param GF_Field $field The Gravity Forms Field object.
-	 * @param array    $settings The `form_editor_field_settings()` key.
+	 * @param \GF_Field $field The Gravity Forms Field object.
+	 * @param array     $settings The `form_editor_field_settings()` key.
 	 */
-	public static function add_choice_to_inputs( GF_Field $field, array $settings ) : void {
+	public static function add_choice_to_inputs( GF_Field $field, array $settings ): void {
 		if (
 			! in_array( self::$field_setting, $settings, true )
 		) {

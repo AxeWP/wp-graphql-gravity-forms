@@ -11,7 +11,6 @@ namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\Entry;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - EntryQuizResults
@@ -34,48 +33,49 @@ class EntryQuizResults extends AbstractObject implements Field {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		parent::register();
+
 		self::register_field();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The quiz results for the entry. Requires Gravity Forms Quiz to be enabled.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'score'          => [
 				'type'        => 'Int',
 				'description' => __( 'The raw quiz score.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $root ) : ?int {
+				'resolve'     => static function ( $root ): ?int {
 					return $root['gquiz_score'] ?? null;
 				},
 			],
 			'percent'        => [
 				'type'        => 'Int',
 				'description' => __( 'The quiz score as a percent.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $root ) : ?int {
+				'resolve'     => static function ( $root ): ?int {
 					return $root['gquiz_percent'] ?? null;
 				},
 			],
 			'grade'          => [
 				'type'        => 'String',
 				'description' => __( 'The quiz score as a letter grade.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $root ) : ?string {
+				'resolve'     => static function ( $root ): ?string {
 					return $root['gquiz_grade'] ?? null;
 				},
 			],
 			'isPassingScore' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the quiz score meets the assigned passing threshold.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $root ) : ?bool {
+				'resolve'     => static function ( $root ): ?bool {
 					return $root['gquiz_is_pass'] ?? null;
 				},
 			],
@@ -85,7 +85,7 @@ class EntryQuizResults extends AbstractObject implements Field {
 	/**
 	 * Register quizResults.
 	 */
-	public static function register_field() : void {
+	public static function register_field(): void {
 		register_graphql_field(
 			SubmittedEntry::$type,
 			self::$field_name,

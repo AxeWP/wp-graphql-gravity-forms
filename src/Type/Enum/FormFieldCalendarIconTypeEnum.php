@@ -20,21 +20,21 @@ class FormFieldCalendarIconTypeEnum extends AbstractEnum {
 	public static string $type = 'FormFieldCalendarIconTypeEnum';
 
 	// Individual elements.
-	const CALENDAR = 'calendar';
-	const CUSTOM   = 'custom';
-	const NONE     = 'none';
+	public const CALENDAR = 'calendar';
+	public const CUSTOM   = 'custom';
+	public const NONE     = 'none';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'How the date field displays its calendar icon.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'CALENDAR' => [
 				'description' => __( 'Default calendar icon.', 'wp-graphql-gravity-forms' ),

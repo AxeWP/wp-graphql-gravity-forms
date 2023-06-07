@@ -8,9 +8,7 @@
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
-use GF_Field;
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
-use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Type\WPInterface\FieldWithInputs;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -46,15 +44,14 @@ class FieldWithPassword extends AbstractFieldSetting implements TypeWithInterfac
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return FieldWithInputs::get_fields();
 	}
 
-	
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithInputs::$type,
 		];

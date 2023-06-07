@@ -20,21 +20,21 @@ class CaptchaFieldBadgePositionEnum extends AbstractEnum {
 	public static string $type = 'CaptchaFieldBadgePositionEnum';
 
 	// Individual elements.
-	const BOTTOM_RIGHT = 'bottomright';
-	const BOTTOM_LEFT  = 'bottomleft';
-	const INLINE       = 'inline';
+	public const BOTTOM_RIGHT = 'bottomright';
+	public const BOTTOM_LEFT  = 'bottomleft';
+	public const INLINE       = 'inline';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The position to place the (invisible) reCaptcha badge.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'BOTTOM_LEFT'  => [
 				'description' => __( 'Bottom-left position.', 'wp-graphql-gravity-forms' ),

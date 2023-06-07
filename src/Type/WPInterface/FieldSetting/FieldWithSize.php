@@ -31,7 +31,7 @@ class FieldWithSize extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'size' => [
 				'type'        => FormFieldSizeEnum::$type,

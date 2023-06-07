@@ -8,8 +8,6 @@
 
 namespace WPGraphQL\GF\Data\FieldValueInput;
 
-use GFFormsModel;
-use GF_Field_FileUpload;
 use GraphQL\Error\UserError;
 use WPGraphQL\GF\Utils\Utils;
 
@@ -27,14 +25,14 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_field_name() : string {
+	protected function get_field_name(): string {
 		return 'fileUploadValues';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws UserError
+	 * @throws \GraphQL\Error\UserError
 	 */
 	protected function prepare_value() {
 		// Draft entries don't upload files.
@@ -65,7 +63,7 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 	 *
 	 * @param array $field_values.
 	 */
-	public function add_value_to_submission( array &$field_values ) : void {
+	public function add_value_to_submission( array &$field_values ): void {
 		if ( empty( $this->entry ) || $this->is_draft || ! empty( $this->field->multipleFields ) ) {
 			return;
 		}
@@ -76,5 +74,4 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 
 		$field_values[ $this->field->id ] = $this->field->get_value_save_entry( $value, $this->form, $input_name, $this->entry['id'] ?? null, $this->entry );
 	}
-
 }

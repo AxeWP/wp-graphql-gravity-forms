@@ -28,7 +28,7 @@ class FormsLoader extends AbstractDataLoader {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_model( $entry, $key ) : Form {
+	protected function get_model( $entry, $key ): Form {
 		return new Form( $entry );
 	}
 

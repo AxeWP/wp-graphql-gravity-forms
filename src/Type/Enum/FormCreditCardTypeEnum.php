@@ -25,14 +25,14 @@ class FormCreditCardTypeEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of Credit Card supported by Gravity Forms.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		$cards = GFCommon::get_card_types();
 
 		$values = [];

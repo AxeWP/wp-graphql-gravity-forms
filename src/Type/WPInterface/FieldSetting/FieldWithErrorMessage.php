@@ -29,7 +29,7 @@ class FieldWithErrorMessage extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'errorMessage' => [
 				'type'        => 'String',

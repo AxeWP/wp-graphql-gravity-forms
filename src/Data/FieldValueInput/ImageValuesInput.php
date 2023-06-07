@@ -8,9 +8,7 @@
 
 namespace WPGraphQL\GF\Data\FieldValueInput;
 
-use GraphQL\Error\UserError;
 use GF_Field;
-use GF_Field_Post_Image;
 /**
  * Class - ImageValuesInput
  */
@@ -25,7 +23,7 @@ class ImageValuesInput extends FileUploadValuesInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_field_name() : string {
+	protected function get_field_name(): string {
 		return 'imageValues';
 	}
 
@@ -39,7 +37,7 @@ class ImageValuesInput extends FileUploadValuesInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws UserError
+	 * @throws \GraphQL\Error\UserError
 	 */
 	protected function prepare_value() {
 		$value      = $this->args;
@@ -57,6 +55,7 @@ class ImageValuesInput extends FileUploadValuesInput {
 		 * This is a crude workaround until AspectMock is updated to support PHP 8.
 		 */
 		parent::prepare_value();
+
 		$url        = $this->field->get_single_file_value( $this->form['id'], 'input_' . $this->field->id );
 		$url        = $url ?: $prev_value[0] ?? null;
 		$this->args = $value;
@@ -86,7 +85,7 @@ class ImageValuesInput extends FileUploadValuesInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function add_value_to_submission( array &$field_values ) : void {
+	public function add_value_to_submission( array &$field_values ): void {
 		if ( ! $this->is_draft && empty( $this->entry ) ) {
 			$field_values += $this->value;
 		} else {

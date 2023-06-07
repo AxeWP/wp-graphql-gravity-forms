@@ -29,7 +29,7 @@ class FieldWithRules extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'isRequired' => [
 				'type'        => 'Boolean',

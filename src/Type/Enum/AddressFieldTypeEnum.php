@@ -20,21 +20,21 @@ class AddressFieldTypeEnum extends AbstractEnum {
 	public static string $type = 'AddressFieldTypeEnum';
 
 	// Individual elements.
-	const INTERNATIONAL = 'international';
-	const US            = 'us';
-	const CANADIAN      = 'canadian';
+	public const INTERNATIONAL = 'international';
+	public const US            = 'us';
+	public const CANADIAN      = 'canadian';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Determines the type of address to be displayed.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'INTERNATIONAL' => [
 				'description' => __( 'International address type.', 'wp-graphql-gravity-forms' ),

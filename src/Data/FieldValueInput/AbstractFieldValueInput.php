@@ -33,7 +33,7 @@ abstract class AbstractFieldValueInput {
 	/**
 	 * The Gravity Forms field object.
 	 *
-	 * @var GF_Field
+	 * @var \GF_Field
 	 */
 	protected GF_Field $field;
 
@@ -78,10 +78,10 @@ abstract class AbstractFieldValueInput {
 	 * @param array      $input_args The GraphQL input args for the form field.
 	 * @param array      $form The current Gravity Forms form object.
 	 * @param bool       $is_draft Whether the mutation is handling a Draft Entry.
-	 * @param GF_Field   $field The current Gravity Forms field object.
+	 * @param \GF_Field  $field The current Gravity Forms field object.
 	 * @param array|null $entry The current Gravity Forms entry object.
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	public function __construct( array $input_args, array $form, bool $is_draft, GF_Field $field = null, array $entry = null ) {
 		$this->input_args = $input_args;
@@ -94,7 +94,7 @@ abstract class AbstractFieldValueInput {
 		 * Filters the accepted GraphQL input value key for the form field.
 		 *
 		 * @param string $name The GraphQL input value name to use. E.g. `nameValues`.
-		 * @param GF_Field $field The current Gravity Forms field object.
+		 * @param \GF_Field $field The current Gravity Forms field object.
 		 * @param array $form The current Gravity Forms form object.
 		 * @param array|null $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
 		 * @param bool $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
@@ -123,7 +123,7 @@ abstract class AbstractFieldValueInput {
 		 * Filters the GraphQL input args for the field value input.
 		 *
 		 * @param array|string $args field value input args.
-		 * @param GF_Field $field The current Gravity Forms field object.
+		 * @param \GF_Field $field The current Gravity Forms field object.
 		 * @param array $form The current Gravity Forms form object.
 		 * @param array|null $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
 		 * @param bool $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
@@ -144,7 +144,7 @@ abstract class AbstractFieldValueInput {
 		 *
 		 * @param array|string $prepared_field_value The field value formatted in a way Gravity Forms can understand.
 		 * @param array|string $args field value input args.
-		 * @param GF_Field $field The current Gravity Forms field object.
+		 * @param \GF_Field $field The current Gravity Forms field object.
 		 * @param array $form The current Gravity Forms form object.
 		 * @param array|null $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
 		 * @param bool $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
@@ -167,12 +167,12 @@ abstract class AbstractFieldValueInput {
 	 *
 	 * E.g. `nameValues`.
 	 */
-	abstract protected function get_field_name() : string;
+	abstract protected function get_field_name(): string;
 
 	/**
 	 * Checks whether the input values submitted to the mutation are using the correct field value input for the Gravity Forms field type.
 	 */
-	protected function is_valid_input_type() : bool {
+	protected function is_valid_input_type(): bool {
 		$is_valid = false;
 
 		$key = $this->field_name;
@@ -210,7 +210,7 @@ abstract class AbstractFieldValueInput {
 	 *
 	 * @param array $errors .
 	 */
-	public function validate_value( array &$errors ) : void {
+	public function validate_value( array &$errors ): void {
 		$this->field->validate( $this->value, $this->form );
 
 		if ( ! empty( $this->field->failed_validation ) ) {
@@ -226,7 +226,7 @@ abstract class AbstractFieldValueInput {
 	 *
 	 * @param array $field_values the existing field values array.
 	 */
-	public function add_value_to_submission( array &$field_values ) : void {
+	public function add_value_to_submission( array &$field_values ): void {
 		$field_values[ $this->field->id ] = $this->value;
 	}
 }

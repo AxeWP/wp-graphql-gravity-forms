@@ -32,7 +32,7 @@ class FieldWithPrepopulateField extends AbstractFieldSetting {
 	 * {@inheritDoc}
 	 */
 	public static function register_hooks(): void {
-		add_filter( 'graphql_gf_form_field_setting_fields', [ __CLASS__, 'add_fields_to_child_type' ], 10, 4 );
+		add_filter( 'graphql_gf_form_field_setting_fields', [ self::class, 'add_fields_to_child_type' ], 10, 4 );
 
 		parent::register_hooks();
 	}
@@ -40,7 +40,7 @@ class FieldWithPrepopulateField extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'canPrepopulate' => [
 				'type'        => 'Boolean',
@@ -53,12 +53,12 @@ class FieldWithPrepopulateField extends AbstractFieldSetting {
 	/**
 	 * Registers a GraphQL field to the GraphQL type that implements this interface.
 	 *
-	 * @param array    $fields An array of GraphQL field configs.
-	 * @param GF_Field $field The Gravity Forms Field object.
-	 * @param array    $settings The `form_editor_field_settings()` key.
-	 * @param array    $interfaces The list of interfaces for the GraphQL type.
+	 * @param array     $fields An array of GraphQL field configs.
+	 * @param \GF_Field $field The Gravity Forms Field object.
+	 * @param array     $settings The `form_editor_field_settings()` key.
+	 * @param array     $interfaces The list of interfaces for the GraphQL type.
 	 */
-	public static function add_fields_to_child_type( array $fields, GF_Field $field, array $settings, array $interfaces ) : array {
+	public static function add_fields_to_child_type( array $fields, GF_Field $field, array $settings, array $interfaces ): array {
 		// Bail early.
 		if (
 			! in_array( self::$type, $interfaces, true ) ||

@@ -20,21 +20,21 @@ class FormFieldVisibilityEnum extends AbstractEnum {
 	public static string $type = 'FormFieldVisibilityEnum';
 
 	// Individual elements.
-	const VISIBLE        = 'visible';
-	const HIDDEN         = 'hidden';
-	const ADMINISTRATIVE = 'administrative';
+	public const VISIBLE        = 'visible';
+	public const HIDDEN         = 'hidden';
+	public const ADMINISTRATIVE = 'administrative';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Field visibility.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'VISIBLE'        => [
 				'description' => __( 'The field is "visible".', 'wp-graphql-gravity-forms' ),

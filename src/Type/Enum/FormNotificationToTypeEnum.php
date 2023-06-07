@@ -20,22 +20,22 @@ class FormNotificationToTypeEnum extends AbstractEnum {
 	public static string $type = 'FormNotificationToTypeEnum';
 
 	// Individual elements.
-	const EMAIL   = 'email';
-	const FIELD   = 'field';
-	const ROUTING = 'routing';
-	const HIDDEN  = 'hidden';
+	public const EMAIL   = 'email';
+	public const FIELD   = 'field';
+	public const ROUTING = 'routing';
+	public const HIDDEN  = 'hidden';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'What to use for the notification "to".', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'EMAIL'   => [
 				'description' => __( 'Email address.', 'wp-graphql-gravity-forms' ),

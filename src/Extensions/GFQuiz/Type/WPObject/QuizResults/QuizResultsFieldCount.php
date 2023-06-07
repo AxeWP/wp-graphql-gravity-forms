@@ -36,7 +36,7 @@ class QuizResultsFieldCount extends AbstractObject implements TypeWithConnection
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_connections() : array {
+	public static function get_connections(): array {
 		return [
 			'formField' => [
 				'toType'   => 'QuizField',
@@ -51,14 +51,14 @@ class QuizResultsFieldCount extends AbstractObject implements TypeWithConnection
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The quiz results summary for an individual quiz field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'choiceCounts'   => [
 				'type'        => [ 'list_of' => QuizResultsChoiceCount::$type ],

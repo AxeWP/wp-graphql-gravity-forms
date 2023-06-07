@@ -32,19 +32,20 @@ class FieldWithQuizChoices extends AbstractFieldSetting {
 	 * {@inheritDoc}
 	 */
 	public static function register_hooks(): void {
-		add_filter( 'graphql_gf_form_field_settings_with_choices', [ __CLASS__, 'add_setting' ], 10 );
+		add_filter( 'graphql_gf_form_field_settings_with_choices', [ self::class, 'add_setting' ], 10 );
 
 		parent::register_hooks();
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'hasWeightedScore' => [
 				'type'        => 'Boolean',
 				'description' => __( 'If this setting is disabled then the response will be awarded a score of 1 if correct and 0 if incorrect.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source ) : bool => ! empty( $source->gquizWeightedScoreEnabled ),
+				'resolve'     => static fn ( $source ): bool => ! empty( $source->gquizWeightedScoreEnabled ),
 			],
 		];
 	}
@@ -54,7 +55,7 @@ class FieldWithQuizChoices extends AbstractFieldSetting {
 	 *
 	 * @param array $settings the GF Field settings.
 	 */
-	public static function add_setting( array $settings ) : array {
+	public static function add_setting( array $settings ): array {
 		if ( ! in_array( self::$field_setting, $settings, true ) ) {
 			$settings[] = self::$field_setting;
 		}

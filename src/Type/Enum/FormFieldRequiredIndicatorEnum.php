@@ -20,21 +20,21 @@ class FormFieldRequiredIndicatorEnum extends AbstractEnum {
 	public static string $type = 'FormFieldRequiredIndicatorEnum';
 
 	// Individual elements.
-	const ASTERISK = 'asterisk';
-	const CUSTOM   = 'custom';
-	const TEXT     = 'text';
+	public const ASTERISK = 'asterisk';
+	public const CUSTOM   = 'custom';
+	public const TEXT     = 'text';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of indicator to use when field is required.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'ASTERISK' => [
 				'description' => __( 'Asterisk (*) indicator.', 'wp-graphql-gravity-forms' ),

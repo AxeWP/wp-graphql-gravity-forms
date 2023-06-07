@@ -29,7 +29,7 @@ class FieldWithPasswordVisibility extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'hasPasswordVisibilityToggle' => [
 				'type'        => 'Boolean',

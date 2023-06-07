@@ -20,21 +20,21 @@ class FormLabelPlacementEnum extends AbstractEnum {
 	public static string $type = 'FormLabelPlacementEnum';
 
 	// Individual elements.
-	const TOP   = 'top_label';
-	const LEFT  = 'left_label';
-	const RIGHT = 'right_label';
+	public const TOP   = 'top_label';
+	public const LEFT  = 'left_label';
+	public const RIGHT = 'right_label';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Determines where the field labels should be placed in relation to the field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'TOP'   => [
 				'description' => __( 'Field labels are displayed on top of the fields.', 'wp-graphql-gravity-forms' ),

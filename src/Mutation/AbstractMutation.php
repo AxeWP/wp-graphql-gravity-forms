@@ -28,7 +28,7 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		$config = static::get_type_config();
 		register_graphql_mutation( static::$name, $config );
 	}
@@ -36,7 +36,7 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config() : array {
+	public static function get_type_config(): array {
 		return [
 			'inputFields'         => static::get_input_fields(),
 			'outputFields'        => static::get_output_fields(),
@@ -48,9 +48,9 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 	 * Checks that necessary WPGraphQL are set.
 	 *
 	 * @param array $input .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	protected static function check_required_inputs( ?array $input ) : void {
+	protected static function check_required_inputs( ?array $input ): void {
 		if ( empty( $input ) || ! is_array( $input ) ) {
 			throw new UserError( __( 'Mutation not processed. The input data was missing or invalid.', 'wp-graphql-gravity-forms' ) );
 		}
@@ -61,9 +61,9 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 	 *
 	 * @param int|string $id .
 	 * @param string     $id_type .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	protected static function get_resume_token_from_id( $id, string $id_type ) : string {
+	protected static function get_resume_token_from_id( $id, string $id_type ): string {
 		if ( 'resume_token' === $id_type ) {
 			$resume_token = $id;
 		} else {
@@ -78,5 +78,4 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 
 		return sanitize_text_field( $resume_token );
 	}
-
 }

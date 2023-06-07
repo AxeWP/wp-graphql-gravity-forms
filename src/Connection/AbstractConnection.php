@@ -25,14 +25,14 @@ abstract class AbstractConnection implements Hookable, Registrable {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register_hooks() : void {
+	public static function register_hooks(): void {
 		add_action( 'graphql_register_types', [ static::class, 'register' ] );
 	}
 
 	/**
 	 * Gets custom connection configuration arguments, such as the resolver, edgeFields, connectionArgs, etc.
 	 */
-	public static function get_connection_args() : array {
+	public static function get_connection_args(): array {
 		return [];
 	}
 
@@ -41,7 +41,7 @@ abstract class AbstractConnection implements Hookable, Registrable {
 	 *
 	 * @param array $filter_by .
 	 */
-	public static function get_filtered_connection_args( array $filter_by = null ) : array {
+	public static function get_filtered_connection_args( array $filter_by = null ): array {
 		$connection_args = static::get_connection_args();
 
 		if ( empty( $filter_by ) ) {

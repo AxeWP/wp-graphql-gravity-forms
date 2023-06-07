@@ -20,21 +20,21 @@ class CaptchaFieldTypeEnum extends AbstractEnum {
 	public static string $type = 'CaptchaFieldTypeEnum';
 
 	// Individual elements.
-	const RECAPTCHA = 'recaptcha';
-	const SIMPLE    = 'simple_captcha';
-	const MATH      = 'math';
+	public const RECAPTCHA = 'recaptcha';
+	public const SIMPLE    = 'simple_captcha';
+	public const MATH      = 'math';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of CAPTCHA field to be used.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'RECAPTCHA' => [
 				'description' => __( 'reCAPTCHA type.', 'wp-graphql-gravity-forms' ),

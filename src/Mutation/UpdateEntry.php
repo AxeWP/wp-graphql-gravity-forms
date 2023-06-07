@@ -45,7 +45,7 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_input_fields() : array {
+	public static function get_input_fields(): array {
 		return [
 			'id'             => [
 				'type'        => [ 'non_null' => 'ID' ],
@@ -69,7 +69,7 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_output_fields() : array {
+	public static function get_output_fields(): array {
 		return [
 			'entry'  => [
 				'type'        => SubmittedEntry::$type,
@@ -92,8 +92,8 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function mutate_and_get_payload() : callable {
-		return function( $input, AppContext $context, ResolveInfo $info ) : array {
+	public static function mutate_and_get_payload(): callable {
+		return static function ( $input, AppContext $context, ResolveInfo $info ): array {
 			// Check for required fields.
 			static::check_required_inputs( $input );
 
@@ -133,9 +133,9 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	protected static function check_required_inputs( $input = null ) : void {
+	protected static function check_required_inputs( $input = null ): void {
 		if ( ! empty( $input['entryMeta'] ) && empty( $input['fieldValues'] ) ) {
 			throw new UserError( __( 'Mutation not processed. No data provided to update.', 'wp-graphql-gravity-forms' ) );
 		}
@@ -147,9 +147,9 @@ class UpdateEntry extends AbstractMutation {
 	 * @param array $input .
 	 * @param array $entry .
 	 * @param array $form .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	private static function prepare_entry_data( array $input, array $entry, array $form ) : array {
+	private static function prepare_entry_data( array $input, array $entry, array $form ): array {
 		$should_validate = isset( $input['shouldValidate'] ) ? (bool) $input['shouldValidate'] : true;
 
 		// Update Field values.
@@ -251,7 +251,7 @@ class UpdateEntry extends AbstractMutation {
 	 * @param array $form .
 	 * @param bool  $should_validate .
 	 */
-	private static function prepare_field_values( array $field_values, array $entry, array $form, bool $should_validate ) : array {
+	private static function prepare_field_values( array $field_values, array $entry, array $form, bool $should_validate ): array {
 		$formatted_values = [];
 
 		foreach ( $field_values as $values ) {
@@ -274,7 +274,7 @@ class UpdateEntry extends AbstractMutation {
 	 * @param array $entry the existing entry.
 	 * @param array $form the existing form.
 	 */
-	public static function prepare_field_values_for_save( array $values, array $entry, array $form ) : array {
+	public static function prepare_field_values_for_save( array $values, array $entry, array $form ): array {
 		// We need the entry fresh to prepare the values.
 		$entry = array_merge( $entry, $values );
 
@@ -298,12 +298,12 @@ class UpdateEntry extends AbstractMutation {
 	 * @param integer $entry_id .
 	 * @param array   $form .
 	 */
-	public static function update_post( int $entry_id, array $form ) : void {
+	public static function update_post( int $entry_id, array $form ): void {
 		$entry = GFUtils::get_entry( $entry_id );
 
-		add_filter( 'gform_post_data', [ __CLASS__, 'set_post_id_for_update' ], 10, 3 );
+		add_filter( 'gform_post_data', [ self::class, 'set_post_id_for_update' ], 10, 3 );
 		GFFormsModel::create_post( $form, $entry );
-		remove_filter( 'gform_post_data', [ __CLASS__, 'set_post_id_for_update' ] );
+		remove_filter( 'gform_post_data', [ self::class, 'set_post_id_for_update' ] );
 	}
 
 	/**

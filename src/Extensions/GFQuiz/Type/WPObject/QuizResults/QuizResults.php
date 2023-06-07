@@ -17,7 +17,6 @@ use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
-use WPGraphQL\Registry\TypeRegistry;
 
 /**
  * Class - QuizResults
@@ -46,22 +45,23 @@ class QuizResults extends AbstractObject implements Field {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		parent::register();
+
 		self::register_field();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The quiz results for all entries.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'averagePercentage' => [
 				'type'        => 'Float',
@@ -101,7 +101,7 @@ class QuizResults extends AbstractObject implements Field {
 	/**
 	 * Register quizResults.
 	 */
-	public static function register_field() : void {
+	public static function register_field(): void {
 		$from_type = sprintf( '%1$sTo%2$sConnection', Form::$type, Entry::$type );
 
 		register_graphql_field(
@@ -129,9 +129,9 @@ class QuizResults extends AbstractObject implements Field {
 	 * @param array $form .
 	 * @param array $results_config the GFQuiz config array.
 	 */
-	protected static function get_quiz_results_data( array $form, array $results_config ) : array {
+	protected static function get_quiz_results_data( array $form, array $results_config ): array {
 		if ( ! class_exists( 'GFResults' ) ) {
-			require_once GFCommon::get_base_path() . '/includes/addon/class-gf-results.php';
+			require_once GFCommon::get_base_path() . '/includes/addon/class-gf-results.php'; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingCustomConstant
 		}
 
 		if ( isset( $results_config['callbacks']['filters'] ) ) {
@@ -151,7 +151,7 @@ class QuizResults extends AbstractObject implements Field {
 	 * @param array $data The Quiz Results data.
 	 * @param array $form .
 	 */
-	protected static function prepare_results_data( array $data, array $form ) : array {
+	protected static function prepare_results_data( array $data, array $form ): array {
 		if ( empty( $data['entry_count'] ) ) {
 			return [];
 		}
@@ -187,7 +187,7 @@ class QuizResults extends AbstractObject implements Field {
 	 *
 	 * @param array $score_frequencies the score frequences array. E.g. `[ $score => $count ]`.
 	 */
-	private static function map_score_frequencies( array $score_frequencies ) : array {
+	private static function map_score_frequencies( array $score_frequencies ): array {
 		return array_map(
 			static fn ( $score, $count) => [
 				'score' => $score,
@@ -203,7 +203,7 @@ class QuizResults extends AbstractObject implements Field {
 	 *
 	 * @param array $grade_frequencies the score frequences array. E.g. `[ $grade => $count ]`.
 	 */
-	private static function map_grade_frequencies( array $grade_frequencies ) : array {
+	private static function map_grade_frequencies( array $grade_frequencies ): array {
 		return array_map(
 			static fn ( $grade, $count) => [
 				'grade' => $grade,
@@ -221,15 +221,15 @@ class QuizResults extends AbstractObject implements Field {
 	 * @param array   $form .
 	 * @param integer $entry_count . The number of submitted entries.
 	 */
-	private static function map_field_data( array $field_data, array $form, int $entry_count ) : array {
+	private static function map_field_data( array $field_data, array $form, int $entry_count ): array {
 		return array_map(
-			static function ( $id, $data ) use ( $entry_count, $form ) : array {
+			static function ( $id, $data ) use ( $entry_count, $form ): array {
 				$field = GFAPI::get_field( $form, $id );
 				// Move the totals out of $data, since we  dont need them in the choice array.
 				$totals = $data['totals'];
 				unset( $data['totals'] );
 				$choice_counts = array_map(
-					static function ( $count, $value ) use ( $field ) : array {
+					static function ( $count, $value ) use ( $field ): array {
 						return [
 							'count' => $count,
 							'value' => $value,

@@ -20,21 +20,21 @@ class FormPageProgressTypeEnum extends AbstractEnum {
 	public static string $type = 'FormPageProgressTypeEnum';
 
 	// Individual elements.
-	const PERCENTAGE = 'percentage';
-	const STEPS      = 'steps';
-	const NONE       = 'none';
+	public const PERCENTAGE = 'percentage';
+	public const STEPS      = 'steps';
+	public const NONE       = 'none';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of page progress indicator to be displayed.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'PERCENTAGE' => [
 				'description' => __( 'Show page progress indicator as a percentage.', 'wp-graphql-gravity-forms' ),

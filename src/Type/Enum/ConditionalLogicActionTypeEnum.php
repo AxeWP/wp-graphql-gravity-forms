@@ -20,20 +20,20 @@ class ConditionalLogicActionTypeEnum extends AbstractEnum {
 	public static string $type = 'ConditionalLogicActionTypeEnum';
 
 	// Individual elements.
-	const SHOW = 'show';
-	const HIDE = 'hide';
+	public const SHOW = 'show';
+	public const HIDE = 'hide';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The type of action the conditional logic will perform.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'SHOW' => [
 				'description' => __( 'Image button.', 'wp-graphql-gravity-forms' ),

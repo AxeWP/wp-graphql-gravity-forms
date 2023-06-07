@@ -24,7 +24,6 @@ use WPGraphQL\GF\Utils\GFUtils;
  * Class - DeleteDraftEntry
  */
 class DeleteDraftEntry extends AbstractMutation {
-
 	/**
 	 * Mutation Name
 	 *
@@ -35,7 +34,7 @@ class DeleteDraftEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_input_fields() : array {
+	public static function get_input_fields(): array {
 		return [
 			'id'     => [
 				'type'        => [ 'non_null' => 'ID' ],
@@ -51,7 +50,7 @@ class DeleteDraftEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_output_fields() : array {
+	public static function get_output_fields(): array {
 		return [
 			'deletedId'  => [
 				'type'        => 'ID',
@@ -72,8 +71,8 @@ class DeleteDraftEntry extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function mutate_and_get_payload() : callable {
-		return function( $input, AppContext $context, ResolveInfo $info ) : array {
+	public static function mutate_and_get_payload(): callable {
+		return static function ( $input, AppContext $context, ResolveInfo $info ): array {
 			if ( ! GFCommon::current_user_can_any( 'gravityforms_delete_entries' ) ) {
 				throw new UserError( __( 'Sorry, you are not allowed to delete entries.', 'wp-graphql-gravity-forms' ) );
 			}

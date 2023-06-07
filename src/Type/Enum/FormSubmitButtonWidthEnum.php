@@ -20,20 +20,20 @@ class FormSubmitButtonWidthEnum extends AbstractEnum {
 	public static string $type = 'FormSubmitButtonWidthEnum';
 
 	// Individual elements.
-	const AUTO = 'auto';
-	const FULL = 'full';
+	public const AUTO = 'auto';
+	public const FULL = 'full';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Submit button width.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'AUTO' => [
 				'description' => __( 'The width is set to match that of the button text.', 'wp-graphql-gravity-forms' ),

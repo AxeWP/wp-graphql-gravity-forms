@@ -25,7 +25,7 @@ class NameFieldValue extends AbstractObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The individual properties for each element of the Name value field.', 'wp-graphql-gravity-forms' );
 	}
 

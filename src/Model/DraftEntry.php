@@ -57,7 +57,7 @@ class DraftEntry extends Model {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function is_private() : bool {
+	protected function is_private(): bool {
 		$can_view = true;
 
 		/**
@@ -78,30 +78,30 @@ class DraftEntry extends Model {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function init() : void {
+	protected function init(): void {
 		if ( empty( $this->fields ) ) {
 			$this->fields = [
 				// Interface fields.
-				'createdByDatabaseId' => fn() : ?int => ! empty( $this->submission['partial_entry']['created_by'] ) ? (int) $this->submission['partial_entry']['created_by'] : null,
-				'createdById'         => fn() : ?string => ! empty( $this->data['created_by'] ) ? Relay::toGlobalId( 'user', $this->data['created_by'] ) : null,
-				'dateCreated'         => fn() : ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,
-				'dateCreatedGmt'      => fn() : ?string => ! empty( $this->data['date_created'] ) ? $this->data['date_created'] : null,
-				'dateUpdated'         => fn() : ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? get_date_from_gmt( $this->submission['partial_entry']['date_updated'] ) : null,
-				'dateUpdatedGmt'      => fn() : ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? $this->submission['partial_entry']['date_updated'] : null,
-				'entry'               => fn() : array => $this->submission['partial_entry'],
-				'entryValues'         => fn() : ?array => array_filter( $this->submission['partial_entry'], fn( $key ) => is_numeric( $key ), ARRAY_FILTER_USE_KEY ) ?: null,
-				'formId'              => fn() => ! empty( $this->data['form_id'] ) ? Relay::toGlobalId( FormsLoader::$name, $this->data['form_id'] ) : null,
-				'formDatabaseId'      => fn() : ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
-				'id'                  => fn() : string => Relay::toGlobalId( DraftEntriesLoader::$name, $this->resume_token ),
-				'ip'                  => fn() : ?string => ! empty( $this->submission['partial_entry']['ip'] ) ? $this->submission['partial_entry']['ip'] : null,
-				'isDraft'             => fn() : bool => ! empty( $this->resume_token ),
-				'isSubmitted'         => fn() : bool => ! empty( $this->submission['partial_entry']['id'] ),
-				'sourceUrl'           => fn() : ?string => ! empty( $this->submission['partial_entry']['source_url'] ) ? $this->submission['partial_entry']['source_url'] : null,
-				'userAgent'           => fn() : ?string => ! empty( $this->submission['partial_entry']['user_agent'] ) ? $this->submission['partial_entry']['user_agent'] : null,
+				'createdByDatabaseId' => fn (): ?int => ! empty( $this->submission['partial_entry']['created_by'] ) ? (int) $this->submission['partial_entry']['created_by'] : null,
+				'createdById'         => fn (): ?string => ! empty( $this->data['created_by'] ) ? Relay::toGlobalId( 'user', $this->data['created_by'] ) : null,
+				'dateCreated'         => fn (): ?string => ! empty( $this->data['date_created'] ) ? get_date_from_gmt( $this->data['date_created'] ) : null,
+				'dateCreatedGmt'      => fn (): ?string => ! empty( $this->data['date_created'] ) ? $this->data['date_created'] : null,
+				'dateUpdated'         => fn (): ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? get_date_from_gmt( $this->submission['partial_entry']['date_updated'] ) : null,
+				'dateUpdatedGmt'      => fn (): ?string => ! empty( $this->submission['partial_entry']['date_updated'] ) ? $this->submission['partial_entry']['date_updated'] : null,
+				'entry'               => fn (): array => $this->submission['partial_entry'],
+				'entryValues'         => fn (): ?array => array_filter( $this->submission['partial_entry'], static fn ( $key ) => is_numeric( $key ), ARRAY_FILTER_USE_KEY ) ?: null,
+				'formId'              => fn () => ! empty( $this->data['form_id'] ) ? Relay::toGlobalId( FormsLoader::$name, $this->data['form_id'] ) : null,
+				'formDatabaseId'      => fn (): ?int => ! empty( $this->data['form_id'] ) ? (int) $this->data['form_id'] : null,
+				'id'                  => fn (): string => Relay::toGlobalId( DraftEntriesLoader::$name, $this->resume_token ),
+				'ip'                  => fn (): ?string => ! empty( $this->submission['partial_entry']['ip'] ) ? $this->submission['partial_entry']['ip'] : null,
+				'isDraft'             => fn (): bool => ! empty( $this->resume_token ),
+				'isSubmitted'         => fn (): bool => ! empty( $this->submission['partial_entry']['id'] ),
+				'sourceUrl'           => fn (): ?string => ! empty( $this->submission['partial_entry']['source_url'] ) ? $this->submission['partial_entry']['source_url'] : null,
+				'userAgent'           => fn (): ?string => ! empty( $this->submission['partial_entry']['user_agent'] ) ? $this->submission['partial_entry']['user_agent'] : null,
 
 				// Fields specific to the model.
-				'currency'            => fn() : ?int => ! empty( $this->submission['partial_entry']['currency'] ) ? (int) $this->submission['partial_entry']['currency'] : null,
-				'resumeToken'         => fn() : string => $this->resume_token,
+				'currency'            => fn (): ?int => ! empty( $this->submission['partial_entry']['currency'] ) ? (int) $this->submission['partial_entry']['currency'] : null,
+				'resumeToken'         => fn (): string => $this->resume_token,
 			];
 		}
 	}

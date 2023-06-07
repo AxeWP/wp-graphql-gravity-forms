@@ -20,21 +20,21 @@ class FormFieldSizeEnum extends AbstractEnum {
 	public static string $type = 'FormFieldSizeEnum';
 
 	// Individual elements.
-	const SMALL  = 'small';
-	const MEDIUM = 'medium';
-	const LARGE  = 'large';
+	public const SMALL  = 'small';
+	public const MEDIUM = 'medium';
+	public const LARGE  = 'large';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The size of the field when displayed on the page.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'SMALL'  => [
 				'description' => __( 'Small field size.', 'wp-graphql-gravity-forms' ),

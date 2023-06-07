@@ -29,7 +29,7 @@ class EmailValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_field_name() : string {
+	protected function get_field_name(): string {
 		return 'emailValues';
 	}
 
@@ -54,7 +54,7 @@ class EmailValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function add_value_to_submission( array &$field_values ) : void {
+	public function add_value_to_submission( array &$field_values ): void {
 		// Normal email fields are stored under their field id.
 		$field_values[ $this->field->id ] = $this->value[0];
 

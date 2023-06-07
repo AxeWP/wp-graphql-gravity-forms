@@ -44,7 +44,7 @@ class FieldWithEmailConfirmation extends AbstractFieldSetting implements TypeWit
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'hasEmailConfirmation' => [
 				'type'        => 'Boolean',
@@ -57,7 +57,7 @@ class FieldWithEmailConfirmation extends AbstractFieldSetting implements TypeWit
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithSubLabelPlacement::$type,
 			FieldWithInputs::$type,

@@ -25,24 +25,24 @@ class SettingsRecaptcha extends AbstractObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Gravity Forms reCAPTCHA Settings.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'publicKey' => [
 				'type'        => 'String',
 				'description' => __( 'The public reCAPTCHA site key.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn () : ?string => get_option( 'rg_gforms_captcha_public_key', null ),
+				'resolve'     => static fn (): ?string => get_option( 'rg_gforms_captcha_public_key', null ),
 			],
 			'type'      => [
 				'type'        => RecaptchaTypeEnum::$type,
 				'description' => __( 'The type of of reCAPTCHA v2 to be used', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn () : string => get_option( 'rg_gforms_captcha_type', 'checkbox' ),
+				'resolve'     => static fn (): string => get_option( 'rg_gforms_captcha_type', 'checkbox' ),
 			],
 		];
 	}

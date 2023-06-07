@@ -32,7 +32,7 @@ class FieldWithBorderWidth extends AbstractFieldSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'borderWidth' => [
 				'type'        => SignatureFieldBorderWidthEnum::$type,

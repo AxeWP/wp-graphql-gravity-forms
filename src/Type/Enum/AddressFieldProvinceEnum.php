@@ -8,7 +8,6 @@
 
 namespace WPGraphQL\GF\Type\Enum;
 
-use GF_Field_Address;
 use GF_Fields;
 use WPGraphQL\Type\WPEnumType;
 
@@ -26,18 +25,18 @@ class AddressFieldProvinceEnum extends AbstractEnum {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Canadian Provinces supported by Gravity Forms Address Field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		/**
 		 * A gravity forms address field.
 		 *
-		 * @var GF_Field_Address $field
+		 * @var \GF_Field_Address $field
 		 */
 		$field     = GF_Fields::get( 'address' );
 		$provinces = $field->get_canadian_provinces();

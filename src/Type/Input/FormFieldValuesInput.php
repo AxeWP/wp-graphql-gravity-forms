@@ -26,14 +26,14 @@ class FormFieldValuesInput extends AbstractInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Field values input. Includes a field id, and a valid value Input.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		$fields = [
 			'id'             => [
 				'type'        => [ 'non_null' => 'Int' ],

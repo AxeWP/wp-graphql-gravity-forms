@@ -8,8 +8,8 @@
 
 namespace WPGraphQL\GF\Extensions\GFSignature\Data\FieldValueInput;
 
-use GraphQL\Error\UserError;
 use GFCommon;
+use GraphQL\Error\UserError;
 use WPGraphQL\GF\Data\FieldValueInput\ValueInput;
 
 /**
@@ -26,7 +26,7 @@ class SignatureValuesInput extends ValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function prepare_value() : string {
+	protected function prepare_value(): string {
 		$value = $this->args;
 
 		$this->ensure_signatures_folder_exists();
@@ -49,9 +49,9 @@ class SignatureValuesInput extends ValueInput {
 	/**
 	 * Ensures the folder for storing signatures exists.
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	protected function ensure_signatures_folder_exists() : void {
+	protected function ensure_signatures_folder_exists(): void {
 		$folder = \GFSignature::get_signatures_folder();
 		$exists = wp_mkdir_p( $folder );
 
@@ -70,9 +70,9 @@ class SignatureValuesInput extends ValueInput {
 	 *
 	 * @return string $filename The filename of the saved signature image file.
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	protected function save_signature( string $signature ) : string {
+	protected function save_signature( string $signature ): string {
 		if ( '' === $signature ) {
 			return '';
 		}
@@ -101,7 +101,7 @@ class SignatureValuesInput extends ValueInput {
 	 *
 	 * @param string $prev_filename The file name of the image to delete.
 	 */
-	protected function delete_previous_signature_image( string $prev_filename = null ) : void {
+	protected function delete_previous_signature_image( string $prev_filename = null ): void {
 		if ( ! $prev_filename ) {
 			return;
 		}
@@ -119,7 +119,7 @@ class SignatureValuesInput extends ValueInput {
 	 *
 	 * @param string $signature_decoded Decoded png signature image data.
 	 */
-	protected function does_image_exceed_max_upload_size( string $signature_decoded ) : bool {
+	protected function does_image_exceed_max_upload_size( string $signature_decoded ): bool {
 		return strlen( $signature_decoded ) > wp_max_upload_size();
 	}
 
@@ -128,9 +128,9 @@ class SignatureValuesInput extends ValueInput {
 	 *
 	 * @param string $signature Base-64 encoded png signature image data.
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	protected function get_decoded_image_data( string $signature ) : string {
+	protected function get_decoded_image_data( string $signature ): string {
 		$error_message = __( 'An invalid signature image was provided. Image must be a base-64 encoded png.', 'wp-graphql-gravity-forms' );
 
 		$string_parts = explode( ';', $signature );

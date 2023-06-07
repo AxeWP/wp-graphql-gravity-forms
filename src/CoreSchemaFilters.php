@@ -18,7 +18,7 @@ class CoreSchemaFilters implements Hookable {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register_hooks() : void {
+	public static function register_hooks(): void {
 		// Register Data Loaders.
 		add_filter( 'graphql_data_loaders', [ Factory::class, 'register_loaders' ], 10, 2 );
 
@@ -40,7 +40,7 @@ class CoreSchemaFilters implements Hookable {
 	 *
 	 * @return array
 	 */
-	public static function strip_connection_interface_from_gf_fields( array $interfaces, array $config ) : array {
+	public static function strip_connection_interface_from_gf_fields( array $interfaces, array $config ): array {
 		// Bail early if Connection, 'Edge, or 'OneToOneConnection' arent in the interfaces.
 		if ( ! in_array( 'Connection', $interfaces, true ) && ! in_array( 'Edge', $interfaces, true ) && ! in_array( 'OneToOneConnection', $interfaces, true ) ) {
 			return $interfaces;
@@ -50,7 +50,7 @@ class CoreSchemaFilters implements Hookable {
 		if ( false !== strpos( $config['name'], 'FormFieldConnection' ) || false !== strpos( $config['name'], 'QuizFieldConnection' ) ) {
 			$interfaces = array_filter(
 				$interfaces,
-				function( $interface ) {
+				static function ( $interface ) {
 					return ! in_array( $interface, [ 'Connection', 'Edge', 'OneToOneConnection' ], true );
 				}
 			);

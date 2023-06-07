@@ -32,19 +32,19 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_field_name() : string {
+	protected function get_field_name(): string {
 		return 'checkboxValues';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected function prepare_value() {
 		$values_to_save = array_reduce(
 			$this->field->inputs,
-			static function ( array $values_to_save, array $input ) : array {
+			static function ( array $values_to_save, array $input ): array {
 				// Initialize all inputs to an empty string.
 				$values_to_save[ $input['id'] ] = '';
 
@@ -81,7 +81,7 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function add_value_to_submission( array &$field_values ) : void {
+	public function add_value_to_submission( array &$field_values ): void {
 		$field_values += $this->value;
 	}
 }

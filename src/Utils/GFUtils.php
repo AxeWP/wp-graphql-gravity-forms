@@ -10,11 +10,11 @@
 
 namespace WPGraphQL\GF\Utils;
 
-use GF_Field;
 use GFAPI;
 use GFCommon;
 use GFFormDisplay;
 use GFFormsModel;
+use GF_Field;
 use GraphQL\Error\UserError;
 
 /**
@@ -27,7 +27,7 @@ class GFUtils {
 	 *
 	 * @param string $ip .
 	 */
-	public static function get_ip( string $ip ) : string {
+	public static function get_ip( string $ip ): string {
 		return empty( $ip ) ? GFFormsModel::get_ip() : sanitize_text_field( $ip );
 	}
 
@@ -40,9 +40,9 @@ class GFUtils {
 	 * @param integer $form_id .
 	 * @param bool    $active_only Whether to only return the form if it is active.
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function get_form( int $form_id, bool $active_only = true ) : array {
+	public static function get_form( int $form_id, bool $active_only = true ): array {
 		$form = GFAPI::get_form( $form_id );
 
 		if ( ! $form ) {
@@ -84,7 +84,7 @@ class GFUtils {
 	 *
 	 * @return array The array of Form Objects.
 	 */
-	public static function get_forms( array $ids = [], bool $active = true, bool $trash = false, string $sort_column = 'id', string $sort_dir = 'DESC' ) : array {
+	public static function get_forms( array $ids = [], bool $active = true, bool $trash = false, string $sort_column = 'id', string $sort_dir = 'DESC' ): array {
 		$form_ids = ! empty( $ids ) ? $ids : GFFormsModel::get_form_ids( $active, $trash, $sort_column, $sort_dir );
 
 		if ( empty( $form_ids ) ) {
@@ -105,8 +105,8 @@ class GFUtils {
 	 *
 	 * @param array $form .
 	 */
-	public static function get_last_form_page( array $form ) : int {
-		require_once GFCommon::get_base_path() . '/form_display.php';
+	public static function get_last_form_page( array $form ): int {
+		require_once GFCommon::get_base_path() . '/form_display.php'; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingCustomConstant
 
 		return GFFormDisplay::get_max_page_number( $form );
 	}
@@ -118,7 +118,7 @@ class GFUtils {
 	 *
 	 * @return string Unique ID.
 	 */
-	public static function get_form_unique_id( int $form_id ) : string {
+	public static function get_form_unique_id( int $form_id ): string {
 		if ( ! isset( GFFormsModel::$unique_ids[ $form_id ] ) ) {
 			GFFormsModel::$unique_ids[ $form_id ] = uniqid();
 		}
@@ -132,13 +132,13 @@ class GFUtils {
 	 * @param array $form     The form.
 	 * @param int   $field_id Field ID.
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function get_field_by_id( array $form, int $field_id ) : GF_Field {
+	public static function get_field_by_id( array $form, int $field_id ): GF_Field {
 		$matching_fields = array_values(
 			array_filter(
 				$form['fields'],
-				static function ( GF_Field $field ) use ( $field_id ) : bool {
+				static function ( GF_Field $field ) use ( $field_id ): bool {
 					return $field['id'] === $field_id;
 				}
 			)
@@ -154,7 +154,6 @@ class GFUtils {
 		return $matching_fields[0];
 	}
 
-
 	/**
 	 * Gets the Gravity Form entry object for the given form ID.
 	 * Uses GFAPI::get_entry().
@@ -163,9 +162,9 @@ class GFUtils {
 	 *
 	 * @param integer $entry_id .
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function get_entry( int $entry_id ) : array {
+	public static function get_entry( int $entry_id ): array {
 		$entry = GFAPI::get_entry( $entry_id );
 
 		if ( is_wp_error( $entry ) ) {
@@ -178,7 +177,6 @@ class GFUtils {
 		return $entry;
 	}
 
-
 	/**
 	 * Updates the existing Gravity Form entry.
 	 * Uses GFAPI::update_entry().
@@ -188,9 +186,9 @@ class GFUtils {
 	 * @param array $entry_data .
 	 * @param int   $entry_id .
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function update_entry( array $entry_data, int $entry_id = null ) : int {
+	public static function update_entry( array $entry_data, int $entry_id = null ): int {
 		$entry_id = $entry_id ?? $entry_data['id'];
 
 		$is_entry_updated = GFAPI::update_entry( $entry_data, $entry_id );
@@ -205,16 +203,15 @@ class GFUtils {
 		return $entry_id;
 	}
 
-
 	/**
 	 * Returns draft entry array from a given resume token.
 	 * Uses GFFormsModel::get_draft_submission_values().
 	 *
 	 * @param string $resume_token .
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function get_draft_entry( string $resume_token ) : array {
+	public static function get_draft_entry( string $resume_token ): array {
 		$draft_entry = GFFormsModel::get_draft_submission_values( $resume_token );
 
 		if ( ! is_array( $draft_entry ) || empty( $draft_entry ) ) {
@@ -227,16 +224,14 @@ class GFUtils {
 		return $draft_entry;
 	}
 
-
-
 	/**
 	 * Returns draft entry submittion data.
 	 *
 	 * @param string $resume_token Draft entry resume token.
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function get_draft_submission( string $resume_token ) : array {
+	public static function get_draft_submission( string $resume_token ): array {
 		$draft_entry = self::get_draft_entry( $resume_token );
 
 		$submission = json_decode( $draft_entry['submission'], true );
@@ -254,8 +249,6 @@ class GFUtils {
 		return $submission;
 	}
 
-
-
 	/**
 	 * Get the draft resume URL.
 	 *
@@ -265,7 +258,7 @@ class GFUtils {
 	 *
 	 * @return string Resume URL, or empty string if no source URL was provided.
 	 */
-	public static function get_resume_url( string $resume_token, string $source_url = '', $form = [] ) : string {
+	public static function get_resume_url( string $resume_token, string $source_url = '', $form = [] ): string {
 		if ( empty( $source_url ) ) {
 			$source_url = GFFormsModel::get_current_page_url();
 		}
@@ -281,7 +274,7 @@ class GFUtils {
 		 */
 		return esc_url(
 			apply_filters(
-				'gform_save_and_continue_resume_url',
+				'gform_save_and_continue_resume_url', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				add_query_arg( [ 'gf_token' => $resume_token ], $source_url ),
 				$form,
 				$resume_token,
@@ -304,9 +297,9 @@ class GFUtils {
 	 * @param string  $source_url .
 	 * @param string  $resume_token .
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function save_draft_submission( array $form, array $entry, array $field_values = null, int $page_number = 1, array $files = [], string $form_unique_id = null, string $ip = '', string $source_url = '', string $resume_token = '' ) : string {
+	public static function save_draft_submission( array $form, array $entry, array $field_values = null, int $page_number = 1, array $files = [], string $form_unique_id = null, string $ip = '', string $source_url = '', string $resume_token = '' ): string {
 		if ( empty( $form ) || empty( $entry ) ) {
 			throw new UserError( __( 'An error occured while trying to save the draft entry. Form or Entry not set.', 'wp-graphql-gravity-forms' ) );
 		}
@@ -332,7 +325,6 @@ class GFUtils {
 		return $new_resume_token ? (string) $new_resume_token : $resume_token;
 	}
 
-
 	/**
 	 * Submits a Gravity Forms form.
 	 * Uses GFAPI::submit_form().
@@ -345,9 +337,9 @@ class GFUtils {
 	 * @param integer $target_page .
 	 * @param integer $source_page .
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function submit_form( int $form_id, array $input_values, array $field_values = [], int $target_page = 0, int $source_page = 0 ) : array {
+	public static function submit_form( int $form_id, array $input_values, array $field_values = [], int $target_page = 0, int $source_page = 0 ): array {
 		$submission = GFAPI::submit_form(
 			$form_id,
 			$input_values,
@@ -373,9 +365,9 @@ class GFUtils {
 	 * @param int $form_id GF form ID.
 	 *
 	 * @return array     GF uploads dir config.
-	 * @throws UserError If directory doesn't exist or cant be created.
+	 * @throws \GraphQL\Error\UserError If directory doesn't exist or cant be created.
 	 */
-	public static function get_gravity_forms_upload_dir( int $form_id ) : array {
+	public static function get_gravity_forms_upload_dir( int $form_id ): array {
 		// Determine YYYY/MM values.
 		$time     = current_time( 'mysql' );
 		$y        = substr( $time, 0, 4 );
@@ -444,7 +436,7 @@ class GFUtils {
 	 *
 	 * @deprecated 0.11.0
 	 *
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
 	public static function handle_file_upload( $file, $target ) {
 		_doing_it_wrong( __FUNCTION__, esc_html__( 'GFUtils::handle_file_upload() is deprecated. Please use native WP/GF methods instead.', 'wp-graphql-gravity-forms' ), '0.11.0' );
@@ -474,7 +466,7 @@ class GFUtils {
 		$new_file = $target['path'] . sprintf( '/%s', $filename );
 
 		// Use copy and unlink because rename breaks streams.
-		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- duplicating default WP Core functionality.
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged,Generic.PHP.NoSilencedErrors.Forbidden -- duplicating default WP Core functionality.
 		$move_new_file = @copy( $file['tmp_name'], $new_file );
 		unlink( $file['tmp_name'] ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_unlink
 

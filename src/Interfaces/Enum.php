@@ -15,5 +15,5 @@ interface Enum {
 	/**
 	 * Gets the Enum type values.
 	 */
-	public static function get_values() : array;
+	public static function get_values(): array;
 }

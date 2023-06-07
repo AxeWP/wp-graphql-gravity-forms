@@ -22,20 +22,20 @@ class ChainedSelectFieldAlignmentEnum extends AbstractEnum {
 	public static string $type = 'ChainedSelectFieldAlignmentEnum';
 
 	// Individual elements.
-	const HORIZONTAL = 'horizontal';
-	const VERTICAL   = 'vertical';
+	public const HORIZONTAL = 'horizontal';
+	public const VERTICAL   = 'vertical';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Alignment of the dropdown fields.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'HORIZONTAL' => [
 				'description' => __( 'Horizontal alignment (in a row).', 'wp-graphql-gravity-forms' ),

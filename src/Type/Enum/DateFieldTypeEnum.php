@@ -20,21 +20,21 @@ class DateFieldTypeEnum extends AbstractEnum {
 	public static string $type = 'DateFieldTypeEnum';
 
 	// Individual elements.
-	const FIELD    = 'datefield';
-	const DROPDOWN = 'datedropdown';
-	const PICKER   = 'datepicker';
+	public const FIELD    = 'datefield';
+	public const DROPDOWN = 'datedropdown';
+	public const PICKER   = 'datepicker';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of date field to display.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'FIELD'    => [
 				'description' => __( 'A simple date field.', 'wp-graphql-gravity-forms' ),

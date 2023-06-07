@@ -20,20 +20,20 @@ class CaptchaFieldThemeEnum extends AbstractEnum {
 	public static string $type = 'CaptchaFieldThemeEnum';
 
 	// Individual elements.
-	const DARK  = 'dark';
-	const LIGHT = 'light';
+	public const DARK  = 'dark';
+	public const LIGHT = 'light';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The theme to be used for the reCAPTCHA field.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'LIGHT' => [
 				'description' => __( 'Light reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),

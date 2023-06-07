@@ -20,24 +20,24 @@ class FieldFiltersOperatorInputEnum extends AbstractEnum {
 	public static string $type = 'FieldFiltersOperatorEnum';
 
 	// Individual elements.
-	const CONTAINS = 'contains';
-	const IN       = 'in';
-	const IS       = 'is';
-	const IS_NOT   = 'is not';
-	const LIKE     = 'like';
-	const NOT_IN   = 'not in';
+	public const CONTAINS = 'contains';
+	public const IN       = 'in';
+	public const IS       = 'is';
+	public const IS_NOT   = 'is not';
+	public const LIKE     = 'like';
+	public const NOT_IN   = 'not in';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The operator to use for filtering.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'CONTAINS' => [
 				'description' => __( 'Find field values that contain the passed value. Only one value may be passed when using this operator. SQL Equivalent: `LIKE %value%`.', 'wp-graphql-gravity-forms' ),

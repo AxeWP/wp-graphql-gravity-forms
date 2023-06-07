@@ -17,7 +17,7 @@ class Settings {
 	/**
 	 * An instance of the Settings API.
 	 *
-	 * @var ?WPGraphQL_Settings_API
+	 * @var ?\WPGraphQL_Settings_API
 	 */
 	private static $settings_api;
 
@@ -52,7 +52,7 @@ class Settings {
 	/**
 	 * Gets an instance of the WPGraphQL settings api.
 	 */
-	public static function get_settings_api() : WPGraphQL_Settings_API {
+	public static function get_settings_api(): WPGraphQL_Settings_API {
 		if ( ! isset( self::$settings_api ) ) {
 			self::$settings_api = new WPGraphQL_Settings_API();
 		}
@@ -63,7 +63,7 @@ class Settings {
 	/**
 	 * Registers settings to enable/disable action monitoring to Settings>GatsbyJS.
 	 */
-	public static function register_settings() : void {
+	public static function register_settings(): void {
 		$settings_api = self::get_settings_api();
 
 		$settings_api->add_field(
@@ -90,7 +90,7 @@ class Settings {
 	/**
 	 * Gets an array of Gravity Forms actions that should be monitored.
 	 */
-	public static function get_enabled_actions() : array {
+	public static function get_enabled_actions(): array {
 		/** @var array $options */
 		$options = get_option( self::$section_name, [] );
 
@@ -117,7 +117,7 @@ class Settings {
 	 *
 	 * @param string $action_name the name of the action triggering.
 	 */
-	public static function is_action_enabled( string $action_name ) : bool {
+	public static function is_action_enabled( string $action_name ): bool {
 		$enabled_actions = self::get_enabled_actions();
 
 		return ! empty( $enabled_actions ) && in_array( $action_name, $enabled_actions, true );

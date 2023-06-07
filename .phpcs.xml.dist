@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
-<ruleset  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="WPGraphQL_GF" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
-	<description>Coding Standards for WPGraphQL for Gravity Forms</description>
+<ruleset name="WordPress Coding Standards for WPGraphQL for Gravity Forms" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+	<description>Sniffs for the WPGraphQL plugin ecosystem.</description>
 
-	<!-- What to scan -->
-	<file>.</file>
+	<!-- What to scan: include any root-level PHP files, and the /src folder -->
+	<file>./src/</file>
+	<file>./wp-graphql-gravity-forms.php</file>
 	<exclude-pattern>/vendor/</exclude-pattern>
 	<exclude-pattern>/node_modules/</exclude-pattern>
 	<exclude-pattern>/phpstan/</exclude-pattern>
@@ -13,29 +14,49 @@
 	<!-- Usage instructions: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage -->
 	<!-- Annotated ruleset: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml -->
 
-	<arg value="sp"/>
 	<!-- Show sniff and progress -->
-	<arg name="basepath" value="./"/>
+	<arg value="sp"/>
 	<!-- Strip the file paths down to the relevant bit -->
+	<arg name="basepath" value="./"/>
+	<!-- Enable colors in report -->
 	<arg name="colors"/>
+	<!-- Only lint php files by default -->
 	<arg name="extensions" value="php"/>
+	<!-- Whenever possible, cache the scan results and re-use those for unchanged files on the next scan. -->
+	<arg name="cache" value="tests/_output/cache.json" />
 	<!-- Enables parallel processing when available for faster results. -->
-	<arg name="parallel" value="8"/>
+	<arg name="parallel" value="20"/>
+	<!-- Set severity to 1 to see everything that isn't effectively turned off. -->
+	<arg name="severity" value="1"/>
 
-	<!-- Tests for PHP version compatibility -->
+	<!-- Ruleset Config: set these to match your project constraints-->
+
+	<!--
+		Tests for PHP version compatibility.
+		https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards#Recomended-additional-rulesets
+	-->
 	<config name="testVersion" value="7.4-"/>
-	<rule ref="PHPCompatibilityWP">
-		<include-pattern>*\.php$</include-pattern>
-	</rule>
 
-	<!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties -->
+	<!--
+		Tests for WordPress version compatibility.
+		https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
+	-->
 	<config name="minimum_supported_wp_version" value="5.4.1"/>
 
-	<!-- Plugin-specific expected properties-->
+	<!-- Rules: WPGraphQL Coding Standards -->
+	<!-- https://github.com/AxeWP/WPGraphQL-Coding-Standards/WPGraphQL/ruleset.xml -->
+	<rule ref="WPGraphQL">
+		<exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification" />
+		<exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification" />
+		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification" />
+	</rule>
+
+	<!-- Individual rule configuration -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<!-- Value: replace the function, class, and variable prefixes used. Separate multiple prefixes with a comma. -->
-			<property name="prefixes" type="array" value="WPGraphQL\GF, wp_graphql, gf_graphql, _gf, WPGRAPHQL_GF" />
+			<!-- @todo drop gf_graphql -->
+			<property name="prefixes" type="array" value="WPGraphQL\GF, wp_graphql, gf_graphql, graphql_gf, _gf, WPGRAPHQL_GF" />
 		</properties>
 	</rule>
 	<rule ref="WordPress.WP.I18n">
@@ -45,39 +66,4 @@
 		</properties>
 	</rule>
 
-	<!-- Rules: WordPress Coding Standards -->
-	<!-- Load WordPress VIP Go standards - for use with projects on the (newer) VIP Go platform. -->
-	<rule ref="WordPress-VIP-Go" />
-
-	<!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards -->
-	<rule ref="WordPress-Core">
-		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
-		<exclude name="WordPress.PHP.DisallowShortTernary.Found"/>
-		<exclude name="WordPress.CodeAnalysis.AssignmentInCondition.Found"/>
-		<exclude name="WordPress.Files.FileName" />
-		<exclude name="WordPress.NamingConventions.ValidVariableName" />
-		<!-- Maybe Add later: -->
-		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound" />
-		<exclude name="Generic.Commenting.DocComment.MissingShort" />
-	</rule>
-	<rule ref="WordPress-Docs" />
-	<rule ref="WordPress-Extra" />
-
-
-
-	<rule ref="WordPress.WhiteSpace.ControlStructureSpacing">
-		<properties>
-			<property name="blank_line_check" value="true"/>
-		</properties>
-	</rule>
-
-	<!-- Enforce short array syntax -->
-	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
-
-	<!--Disable DocBlock requirements if inherited -->
-	<rule ref="Squiz.Commenting.FunctionComment">
-		<properties>
-				<property name="skipIfInheritdoc" value="true" />
-		</properties>
-	</rule>
 </ruleset>

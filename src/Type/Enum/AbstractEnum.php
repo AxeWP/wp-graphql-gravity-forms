@@ -26,7 +26,7 @@ abstract class AbstractEnum extends AbstractType implements Enum, TypeWithDescri
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		$config = static::get_type_config();
 
 		register_graphql_enum_type( static::$type, $config );
@@ -35,7 +35,7 @@ abstract class AbstractEnum extends AbstractType implements Enum, TypeWithDescri
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config() : array {
+	public static function get_type_config(): array {
 		return [
 			'description' => static::get_description(),
 			'values'      => static::get_values(),

@@ -45,7 +45,7 @@ class FieldWithChoices extends AbstractFieldSetting  implements TypeWithInterfac
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'hasChoiceValue' => [
 				'type'        => 'Boolean',
@@ -58,11 +58,10 @@ class FieldWithChoices extends AbstractFieldSetting  implements TypeWithInterfac
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithChoicesInterface::$type,
 			FieldWithInputs::$type,
 		];
 	}
-
 }

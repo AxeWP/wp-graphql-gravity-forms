@@ -38,7 +38,7 @@ class CaptchaValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function get_field_name() : string {
+	protected function get_field_name(): string {
 		return 'value';
 	}
 
@@ -47,5 +47,7 @@ class CaptchaValueInput extends AbstractFieldValueInput {
 	 *
 	 * Recaptchas are validated using the $_POST object, not in the submission values.
 	 */
-	public function add_value_to_submission( array &$field_values ) : void {}
+	public function add_value_to_submission( array &$field_values ): void {
+		// noop.
+	}
 }

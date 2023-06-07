@@ -20,20 +20,20 @@ class SubmittedEntryIdTypeEnum extends AbstractEnum {
 	public static string $type = 'SubmittedEntryIdTypeEnum';
 
 	// Individual elements.
-	const ID          = 'global_id';
-	const DATABASE_ID = 'database_id';
+	public const ID          = 'global_id';
+	public const DATABASE_ID = 'database_id';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The Type of Identifier used to fetch a single resource.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'ID'          => [
 				'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),

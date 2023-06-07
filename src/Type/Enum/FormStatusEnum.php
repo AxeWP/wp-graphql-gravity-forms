@@ -20,22 +20,22 @@ class FormStatusEnum extends AbstractEnum {
 	public static string $type = 'FormStatusEnum';
 
 	// Individual elements.
-	const ACTIVE           = 'ACTIVE';
-	const INACTIVE         = 'INACTIVE';
-	const TRASHED          = 'TRASHED';
-	const INACTIVE_TRASHED = 'INACTIVE_TRASHED';
+	public const ACTIVE           = 'ACTIVE';
+	public const INACTIVE         = 'INACTIVE';
+	public const TRASHED          = 'TRASHED';
+	public const INACTIVE_TRASHED = 'INACTIVE_TRASHED';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Status of forms to get. Default is ACTIVE.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			self::ACTIVE           => [
 				'description' => __( 'Active forms (default).', 'wp-graphql-gravity-forms' ),

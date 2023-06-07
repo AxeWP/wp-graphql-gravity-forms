@@ -20,23 +20,23 @@ class FormFieldLabelPlacementEnum extends AbstractEnum {
 	public static string $type = 'FormFieldLabelPlacementEnum';
 
 	// Individual elements.
-	const TOP     = 'top_label';
-	const LEFT    = 'left_label';
-	const RIGHT   = 'right_label';
-	const INHERIT = 'inherit';
-	const HIDDEN  = 'hidden_label';
+	public const TOP     = 'top_label';
+	public const LEFT    = 'left_label';
+	public const RIGHT   = 'right_label';
+	public const INHERIT = 'inherit';
+	public const HIDDEN  = 'hidden_label';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The field label position. Empty when using the form defaults or a value of "hidden_label".', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'HIDDEN'  => [
 				'description' => __( 'Field label is hidden.', 'wp-graphql-gravity-forms' ),

@@ -32,12 +32,12 @@ class ChoiceWithQuizChoices extends AbstractFieldChoiceSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'isCorrect'     => [
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates the choice item is the correct answer.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source ) : bool => ! empty( $source['gquizIsCorrect'] ),
+				'resolve'     => static fn ( $source ): bool => ! empty( $source['gquizIsCorrect'] ),
 			],
 			'weight'        => [
 				'type'        => 'Float',

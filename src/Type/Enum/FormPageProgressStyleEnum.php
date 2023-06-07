@@ -20,24 +20,24 @@ class FormPageProgressStyleEnum extends AbstractEnum {
 	public static string $type = 'FormPageProgressStyleEnum';
 
 	// Individual elements.
-	const BLUE   = 'blue';
-	const GREY   = 'grey';
-	const GREEN  = 'green';
-	const ORANGE = 'orange';
-	const RED    = 'red';
-	const CUSTOM = 'custom';
+	public const BLUE   = 'blue';
+	public const GREY   = 'grey';
+	public const GREEN  = 'green';
+	public const ORANGE = 'orange';
+	public const RED    = 'red';
+	public const CUSTOM = 'custom';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Style of progress bar.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'BLUE'   => [
 				'description' => __( 'Blue progress bar style.', 'wp-graphql-gravity-forms' ),

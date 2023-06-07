@@ -33,7 +33,7 @@ class ChoiceWithOtherChoice extends AbstractFieldChoiceSetting {
 	 * {@inheritDoc}
 	 */
 	public static function register_hooks(): void {
-		add_filter( 'graphql_gf_form_field_setting_choice_fields', [ __CLASS__, 'add_fields_to_child_type' ], 10, 5 );
+		add_filter( 'graphql_gf_form_field_setting_choice_fields', [ self::class, 'add_fields_to_child_type' ], 10, 5 );
 
 		parent::register_hooks();
 	}
@@ -41,7 +41,7 @@ class ChoiceWithOtherChoice extends AbstractFieldChoiceSetting {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'isOtherChoice' => [
 				'type'        => 'Boolean',
@@ -53,13 +53,13 @@ class ChoiceWithOtherChoice extends AbstractFieldChoiceSetting {
 	/**
 	 * Registers a GraphQL field to the GraphQL type that implements this interface.
 	 *
-	 * @param array    $fields An array of GraphQL field configs.
-	 * @param string   $choice_name The name of the choice type.
-	 * @param GF_Field $field The Gravity Forms Field object.
-	 * @param array    $settings The `form_editor_field_settings()` key.
-	 * @param array    $interfaces The list of interfaces for the GraphQL type.
+	 * @param array     $fields An array of GraphQL field configs.
+	 * @param string    $choice_name The name of the choice type.
+	 * @param \GF_Field $field The Gravity Forms Field object.
+	 * @param array     $settings The `form_editor_field_settings()` key.
+	 * @param array     $interfaces The list of interfaces for the GraphQL type.
 	 */
-	public static function add_fields_to_child_type( array $fields, string $choice_name, GF_Field $field, array $settings, array $interfaces ) : array {
+	public static function add_fields_to_child_type( array $fields, string $choice_name, GF_Field $field, array $settings, array $interfaces ): array {
 		if (
 			! in_array( self::$type, $interfaces, true ) ||
 			'quiz' === $field->type

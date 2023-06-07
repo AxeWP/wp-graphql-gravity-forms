@@ -31,7 +31,7 @@ class FormFields implements Hookable, Registrable {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register_hooks() : void {
+	public static function register_hooks(): void {
 		// Hooks are applied later in the lifecycle, to ensure the TypeRegister is always up to date.
 		self::register();
 	}
@@ -39,7 +39,7 @@ class FormFields implements Hookable, Registrable {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function register() : void {
+	public static function register(): void {
 		$fields = GF_Fields::get_all();
 
 		foreach ( $fields as $field ) {
@@ -62,5 +62,4 @@ class FormFields implements Hookable, Registrable {
 			}
 		}
 	}
-
 }

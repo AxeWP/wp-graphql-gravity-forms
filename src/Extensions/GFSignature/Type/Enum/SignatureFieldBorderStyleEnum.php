@@ -22,26 +22,26 @@ class SignatureFieldBorderStyleEnum extends AbstractEnum {
 	public static string $type = 'SignatureFieldBorderStyleEnum';
 
 	// Individual elements.
-	const DASHED = 'dashed';
-	const DOTTED = 'dotted';
-	const DOUBLE = 'double';
-	const GROOVE = 'groove';
-	const INSET  = 'inset';
-	const OUTSET = 'outset';
-	const RIDGE  = 'ridge';
-	const SOLID  = 'solid';
+	public const DASHED = 'dashed';
+	public const DOTTED = 'dotted';
+	public const DOUBLE = 'double';
+	public const GROOVE = 'groove';
+	public const INSET  = 'inset';
+	public const OUTSET = 'outset';
+	public const RIDGE  = 'ridge';
+	public const SOLID  = 'solid';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Border style to be used around the signature area.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'DOTTED' => [
 				'description' => __( 'A "dotted" border style.', 'wp-graphql-gravity-forms' ),

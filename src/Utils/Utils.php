@@ -18,13 +18,11 @@ use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Type\WPObject\Entry\DraftEntry;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
-use WPGraphQL\Type\ObjectType\User;
 
 /**
  * Class - Utils
  */
 class Utils {
-
 	/**
 	 * Adds deprecation reason to GraphQL field property.
 	 *
@@ -33,7 +31,7 @@ class Utils {
 	 *
 	 * @since 0.2.0
 	 */
-	public static function deprecate_property( array $property, string $reason ) : array {
+	public static function deprecate_property( array $property, string $reason ): array {
 		$property_key = array_key_first( $property );
 
 		// Add deprecation reason to property.
@@ -51,7 +49,7 @@ class Utils {
 	 *
 	 * @param string $string the original string.
 	 */
-	public static function to_snake_case( $string ) : string {
+	public static function to_snake_case( $string ): string {
 		return strtolower( (string) preg_replace( [ '/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/' ], '$1_$2', $string ) );
 	}
 
@@ -62,7 +60,7 @@ class Utils {
 	 *
 	 * @param string $string the original string.
 	 */
-	public static function get_safe_form_field_type_name( $string ) : string {
+	public static function get_safe_form_field_type_name( $string ): string {
 		// Shim to map fields with existing PascalCase.
 		$fields_to_map = [
 			'chainedselect'     => 'ChainedSelect',
@@ -94,7 +92,7 @@ class Utils {
 	 *
 	 * @return string The string, possibly truncated.
 	 */
-	public static function truncate( string $str, int $length ) : string {
+	public static function truncate( string $str, int $length ): string {
 		if ( strlen( $str ) > $length ) {
 			$str = substr( $str, 0, $length );
 		}
@@ -133,7 +131,7 @@ class Utils {
 	/**
 	 * Returns whether WPGraphQL Upload is enabled.
 	 */
-	public static function is_graphql_upload_enabled() : bool {
+	public static function is_graphql_upload_enabled(): bool {
 		return class_exists( 'WPGraphQL\Upload\Type\Upload' );
 	}
 
@@ -142,7 +140,7 @@ class Utils {
 	 *
 	 * E.g. `[ 'text' => 'TextField' ]`.
 	 */
-	public static function get_registered_form_field_types() : array {
+	public static function get_registered_form_field_types(): array {
 		$types = [];
 
 		$fields = GF_Fields::get_all();
@@ -160,7 +158,7 @@ class Utils {
 	 *
 	 * E.g. `[ 'draft_entry' => 'GfDraftEntry' ]`
 	 */
-	public static function get_registered_entry_types() : array {
+	public static function get_registered_entry_types(): array {
 		$types = [
 			EntriesLoader::$name      => SubmittedEntry::$type,
 			DraftEntriesLoader::$name => DraftEntry::$type,
@@ -179,7 +177,7 @@ class Utils {
 	 *
 	 * @param string $type The current GF field type.
 	 */
-	public static function get_possible_form_field_child_types( string $type ) : array {
+	public static function get_possible_form_field_child_types( string $type ): array {
 		$prefix = self::get_safe_form_field_type_name( $type );
 
 		switch ( $type ) {
@@ -274,7 +272,7 @@ class Utils {
 	/**
 	 * Gets a filterable list of Gravity Forms field types that should be disabled for this instance.
 	 */
-	public static function get_ignored_gf_field_types() : array {
+	public static function get_ignored_gf_field_types(): array {
 		$ignored_fields = [
 			'donation', // These fields are no longer supported by GF.
 			'repeater', // This still in beta.
@@ -301,7 +299,7 @@ class Utils {
 	/**
 	 * Returns an array of Gravity Forms field settings to ignore.
 	 */
-	public static function get_ignored_gf_settings() : array {
+	public static function get_ignored_gf_settings(): array {
 		return [
 			'default_input_values_setting',
 			'input_placeholders_setting',
@@ -327,9 +325,9 @@ class Utils {
 	 * @since @todo
 	 *
 	 * @param int|string $id .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function get_entry_id_from_id( $id ) : int {
+	public static function get_entry_id_from_id( $id ): int {
 		return self::get_database_id_from_id( $id, EntriesLoader::$name );
 	}
 
@@ -339,9 +337,9 @@ class Utils {
 	 * @since @todo
 	 *
 	 * @param int|string $id .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function get_form_id_from_id( $id ) : int {
+	public static function get_form_id_from_id( $id ): int {
 		return self::get_database_id_from_id( $id, FormsLoader::$name );
 	}
 
@@ -353,9 +351,9 @@ class Utils {
 	 * @param int|string $id The provided ID.
 	 * @param string     $type The expected dataloader type.
 	 *
-	 * @throws UserError If the ID is not a valid Global ID.
+	 * @throws \GraphQL\Error\UserError If the ID is not a valid Global ID.
 	 */
-	protected static function get_database_id_from_id( $id, $type ) : int {
+	protected static function get_database_id_from_id( $id, $type ): int {
 		// If we already have the database ID, send it back as an integer.
 		if ( is_numeric( $id ) ) {
 			return absint( $id );

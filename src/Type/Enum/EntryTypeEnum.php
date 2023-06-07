@@ -20,21 +20,21 @@ class EntryTypeEnum extends AbstractEnum {
 	public static string $type = 'EntryTypeEnum';
 
 	// Individual elements.
-	const DRAFT     = 'draft';
-	const PARTIAL   = 'partial';
-	const SUBMITTED = 'submitted';
+	public const DRAFT     = 'draft';
+	public const PARTIAL   = 'partial';
+	public const SUBMITTED = 'submitted';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'The type of Gravity Forms entry.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'DRAFT'     => [
 				'description' => __( 'A Gravity Forms draft entry.', 'wp-graphql-gravity-forms' ),

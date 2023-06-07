@@ -18,7 +18,6 @@ use WPGraphQL\AppContext;
  * Class - FormFieldsConnectionResolver
  */
 class FormFieldsConnectionResolver {
-
 	/**
 	 * @var array<string, null>
 	 */
@@ -36,7 +35,7 @@ class FormFieldsConnectionResolver {
 	 *
 	 * @param array $data array of form fields.
 	 */
-	public static function prepare_data( array $data ) : array {
+	public static function prepare_data( array $data ): array {
 		foreach ( $data as &$field ) {
 			// Set layoutGridColumnSpan to int.
 			$field->layoutGridColumnSpan = empty( $field->layoutGridColumnSpan ) ? null : (int) $field->layoutGridColumnSpan;
@@ -73,12 +72,12 @@ class FormFieldsConnectionResolver {
 	/**
 	 * The connection resolve method.
 	 *
-	 * @param mixed       $source  The object the connection is coming from.
-	 * @param array       $args    Array of args to be passed down to the resolve method.
-	 * @param AppContext  $context The AppContext object to be passed down.
-	 * @param ResolveInfo $info    The ResolveInfo object.
+	 * @param mixed                                $source  The object the connection is coming from.
+	 * @param array                                $args    Array of args to be passed down to the resolve method.
+	 * @param \WPGraphQL\AppContext                $context The AppContext object to be passed down.
+	 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo object.
 	 *
-	 * @return mixed|array|Deferred
+	 * @return mixed|array|\WPGraphQL\GF\Data\Connection\Deferred
 	 */
 	public static function resolve( $source, array $args, AppContext $context, ResolveInfo $info ) {
 		if ( ! is_array( $source ) || empty( $source ) ) {
@@ -108,7 +107,7 @@ class FormFieldsConnectionResolver {
 	 *
 	 * @return array
 	 */
-	private static function get_address_input_keys() : array {
+	private static function get_address_input_keys(): array {
 		return [
 			'street',
 			'lineTwo',
@@ -124,7 +123,7 @@ class FormFieldsConnectionResolver {
 	 *
 	 * @return array
 	 */
-	private static function get_name_input_keys() : array {
+	private static function get_name_input_keys(): array {
 		return [
 			'prefix',
 			'first',
@@ -141,7 +140,7 @@ class FormFieldsConnectionResolver {
 		 * @param array $args .
 		 * @return array
 		 */
-	private static function filter_form_fields_by_connection_args( $fields, $args ) : array {
+	private static function filter_form_fields_by_connection_args( $fields, $args ): array {
 		if ( isset( $args['where']['ids'] ) ) {
 			if ( ! is_array( $args['where']['ids'] ) ) {
 				$args['where']['ids'] = [ $args['where']['ids'] ];

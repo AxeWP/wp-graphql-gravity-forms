@@ -9,8 +9,6 @@
 
 namespace WPGraphQL\GF\Type\Input;
 
-use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
-
 /**
  * Class - SubmitFormMetaInput
  */
@@ -25,14 +23,14 @@ class SubmitFormMetaInput extends AbstractInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Entry meta input fields for submitting Gravity Forms forms.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'createdById'    => [
 				'type'        => 'Int',

@@ -39,7 +39,7 @@ class SubmitForm extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_input_fields() : array {
+	public static function get_input_fields(): array {
 		return [
 			'id'          => [
 				'type'        => [ 'non_null' => 'ID' ],
@@ -71,7 +71,7 @@ class SubmitForm extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_output_fields() : array {
+	public static function get_output_fields(): array {
 		return [
 			'confirmation' => [
 				'type'        => SubmissionConfirmation::$type,
@@ -97,7 +97,7 @@ class SubmitForm extends AbstractMutation {
 						 * The callback checks if the model is for the current id, and then it's applied
 						 * to the model as a filter.
 						 */
-						$is_private_callback = function( bool $can_view, int $form_id, $entry_id ) use ( $payload ) {
+						$is_private_callback = static function ( bool $can_view, int $form_id, $entry_id ) use ( $payload ) {
 							if ( $payload['entryId'] === $entry_id ) {
 								return true;
 							}
@@ -130,8 +130,8 @@ class SubmitForm extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function mutate_and_get_payload() : callable {
-		return function( $input, AppContext $context, ResolveInfo $info ) : array {
+	public static function mutate_and_get_payload(): callable {
+		return static function ( $input, AppContext $context, ResolveInfo $info ): array {
 			// Get the form database_id.
 			$form_id = Utils::get_form_id_from_id( $input['id'] );
 
@@ -177,7 +177,7 @@ class SubmitForm extends AbstractMutation {
 	 *
 	 * @param array $input .
 	 */
-	private static function prepare_entry_data( array $input ) : array {
+	private static function prepare_entry_data( array $input ): array {
 		$data = [];
 
 		// Update Created by id.
@@ -210,7 +210,7 @@ class SubmitForm extends AbstractMutation {
 	/**
 	 * {@inheritDoc}
 	 */
-	private static function prepare_field_values( array $field_values, array $form, bool $save_as_draft ) : array {
+	private static function prepare_field_values( array $field_values, array $form, bool $save_as_draft ): array {
 		$formatted_values = [];
 
 		// Prepares field values to a format GF can understand.
@@ -229,9 +229,9 @@ class SubmitForm extends AbstractMutation {
 	 * @param array $form .
 	 * @param array $submission The Gravity Forms submission result array.
 	 * @param array $entry_meta .
-	 * @throws UserError .
+	 * @throws \GraphQL\Error\UserError .
 	 */
-	private static function update_entry_properties( array $form, array $submission, array $entry_meta ) : void {
+	private static function update_entry_properties( array $form, array $submission, array $entry_meta ): void {
 		if ( ! empty( $submission['resume_token'] ) ) {
 			$decoded_submission = GFUtils::get_draft_submission( $submission['resume_token'] );
 
@@ -278,7 +278,7 @@ class SubmitForm extends AbstractMutation {
 	 * @param array   $field_values . Required so submit_form() can generate the $_POST object.
 	 * @param array   $file_upload_values .
 	 */
-	private static function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ) : array {
+	private static function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ): array {
 		$input_values = [
 			'gform_save' => $is_draft,
 		];

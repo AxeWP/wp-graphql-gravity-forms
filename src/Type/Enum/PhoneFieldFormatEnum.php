@@ -20,20 +20,20 @@ class PhoneFieldFormatEnum extends AbstractEnum {
 	public static string $type = 'PhoneFieldFormatEnum';
 
 	// Individual elements.
-	const STANDARD      = 'standard';
-	const INTERNATIONAL = 'international';
+	public const STANDARD      = 'standard';
+	public const INTERNATIONAL = 'international';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Tthe allowed format for phone numbers.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'STANDARD'      => [
 				'description' => __( 'Standard phone number format.', 'wp-graphql-gravity-forms' ),

@@ -44,7 +44,7 @@ class FieldWithColumns extends AbstractFieldSetting implements TypeWithInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'hasColumns' => [
 				'type'        => 'Boolean',
@@ -57,7 +57,7 @@ class FieldWithColumns extends AbstractFieldSetting implements TypeWithInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithChoices::$type,
 		];

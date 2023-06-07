@@ -8,8 +8,8 @@
 
 namespace WPGraphQL\GF\Type\Enum;
 
-use WPGraphQL\Type\WPEnumType;
 use WPGraphQL\GF\Utils\Utils;
+use WPGraphQL\Type\WPEnumType;
 
 /**
  * Class - FormFieldTypeEnum
@@ -22,18 +22,17 @@ class FormFieldTypeEnum extends AbstractEnum {
 	 */
 	public static string $type = 'FormFieldTypeEnum';
 
-
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Gravity Forms Field Type.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		$fields = Utils::get_registered_form_field_types();
 
 		$values = [];

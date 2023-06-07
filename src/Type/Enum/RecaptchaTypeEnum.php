@@ -20,20 +20,20 @@ class RecaptchaTypeEnum extends AbstractEnum {
 	public static string $type = 'RecaptchaTypeEnum';
 
 	// Individual elements.
-	const CHECKBOX  = 'checkbox';
-	const INVISIBLE = 'invisible';
+	public const CHECKBOX  = 'checkbox';
+	public const INVISIBLE = 'invisible';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Determines which version of reCAPTCHA v2 will be used. ', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'CHECKBOX'  => [
 				'description' => __( 'A checkbox reCAPTCHA type.', 'wp-graphql-gravity-forms' ),

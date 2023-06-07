@@ -20,21 +20,21 @@ class FormConfirmationTypeEnum extends AbstractEnum {
 	public static string $type = 'FormConfirmationTypeEnum';
 
 	// Individual elements.
-	const MESSAGE  = 'message';
-	const PAGE     = 'page';
-	const REDIRECT = 'redirect';
+	public const MESSAGE  = 'message';
+	public const PAGE     = 'page';
+	public const REDIRECT = 'redirect';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'Type of form confirmation to be used.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'MESSAGE'  => [
 				'description' => __( 'Use a confirmation "message".', 'wp-graphql-gravity-forms' ),

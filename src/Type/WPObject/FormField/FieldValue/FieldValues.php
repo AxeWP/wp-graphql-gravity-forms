@@ -10,9 +10,9 @@ namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue;
 
 use GFAPI;
 use GFCommon;
+use GFFormsModel;
 use GF_Field;
 use GF_Field_FileUpload;
-use GFFormsModel;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Registry\FieldChoiceRegistry;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
@@ -26,7 +26,7 @@ class FieldValues {
 	/**
 	 * Get `value` property.
 	 */
-	public static function value() : array {
+	public static function value(): array {
 		return [
 			'value' => [
 				'type'        => 'String',
@@ -45,7 +45,7 @@ class FieldValues {
 	/**
 	 * Get `addressValues` property.
 	 */
-	public static function address_values() : array {
+	public static function address_values(): array {
 		return [
 			'addressValues' => [
 				'type'        => ValueProperty\AddressFieldValue::$type,
@@ -71,7 +71,7 @@ class FieldValues {
 	/**
 	 * Get `checkboxValues` property.
 	 */
-	public static function checkbox_values() : array {
+	public static function checkbox_values(): array {
 		return [
 			'checkboxValues' => [
 				'type'        => [ 'list_of' => ValueProperty\CheckboxFieldValue::$type ],
@@ -115,7 +115,7 @@ class FieldValues {
 	 *
 	 * @return array
 	 */
-	public static function consent_value() : array {
+	public static function consent_value(): array {
 		return [
 			'consentValue' => [
 				'type'        => 'Boolean',
@@ -137,7 +137,7 @@ class FieldValues {
 	 *
 	 * @return array
 	 */
-	public static function file_upload_values() : array {
+	public static function file_upload_values(): array {
 		return [
 			'fileUploadValues' => [
 				'type'        => [ 'list_of' => ValueProperty\FileUploadFieldValue::$type ],
@@ -156,7 +156,7 @@ class FieldValues {
 	/**
 	 * Get `imageValues` property.
 	 */
-	public static function image_values() : array {
+	public static function image_values(): array {
 		return [
 			'imageValues' => [
 				'type'        => ValueProperty\ImageFieldValue::$type,
@@ -201,7 +201,7 @@ class FieldValues {
 	/**
 	 * Get `listValues` property.
 	 */
-	public static function list_values() : array {
+	public static function list_values(): array {
 		return [
 			'listValues' => [
 				'type'        => [ 'list_of' => ValueProperty\ListFieldValue::$type ],
@@ -222,7 +222,7 @@ class FieldValues {
 					if ( $source->enableColumns ) {
 						// Save each row-value pair.
 						return array_map(
-							static function ( $row ) : array {
+							static function ( $row ): array {
 								$row_values = [];
 
 								foreach ( $row as $single_value ) {
@@ -238,7 +238,7 @@ class FieldValues {
 					}
 					// If no columns, entry values can be mapped directly to 'value'.
 					return array_map(
-						static function ( $single_value ) : array {
+						static function ( $single_value ): array {
 							return [
 								'values' => [ $single_value ], // $single_value must be Iteratable.
 							];
@@ -253,7 +253,7 @@ class FieldValues {
 	/**
 	 * Get `nameValues` property.
 	 */
-	public static function name_values() : array {
+	public static function name_values(): array {
 		return [
 			'nameValues' => [
 				'type'        => ValueProperty\NameFieldValue::$type,
@@ -278,7 +278,7 @@ class FieldValues {
 	/**
 	 * Get `productValues` property.
 	 */
-	public static function product_values() : array {
+	public static function product_values(): array {
 		return [
 			'productValues' => [
 				'type'        => ValueProperty\ProductFieldValue::$type,
@@ -349,7 +349,7 @@ class FieldValues {
 	/**
 	 * Get `timeValues` property.
 	 */
-	public static function time_values() : array {
+	public static function time_values(): array {
 		return [
 			'timeValues' => [
 				'type'        => ValueProperty\TimeFieldValue::$type,
@@ -382,7 +382,7 @@ class FieldValues {
 	/**
 	 * Get `values` property.
 	 */
-	public static function values() : array {
+	public static function values(): array {
 		return [
 			'values' => [
 				'type'        => [ 'list_of' => 'String' ],
@@ -419,10 +419,10 @@ class FieldValues {
 	/**
 	 * Checks that the necessary values to retrieve the values are set in the resolver.
 	 *
-	 * @param mixed      $source .
-	 * @param AppContext $context .
+	 * @param mixed                 $source .
+	 * @param \WPGraphQL\AppContext $context .
 	 */
-	protected static function is_field_and_entry( $source, AppContext $context ) : bool {
+	protected static function is_field_and_entry( $source, AppContext $context ): bool {
 		return $source instanceof GF_Field
 			&& isset( $context->gfEntry )
 			&& isset( $context->gfEntry->entry );
@@ -433,11 +433,11 @@ class FieldValues {
 	 *
 	 * Shim GF_Field_FileUpload::get_extra_entry_metadata().
 	 *
-	 * @param GF_Field_FileUpload $field .
-	 * @param array               $entry .
-	 * @param array               $form .
+	 * @param \GF_Field_FileUpload $field .
+	 * @param array                $entry .
+	 * @param array                $form .
 	 */
-	protected static function get_file_upload_extra_entry_metadata( GF_Field_FileUpload $field, array $entry, array $form ) : array {
+	protected static function get_file_upload_extra_entry_metadata( GF_Field_FileUpload $field, array $entry, array $form ): array {
 		$file_values = $entry[ $field->id ] ?? null;
 
 		// Bail if no files.
@@ -505,10 +505,10 @@ class FieldValues {
 	/**
 	 * Prepares the selected choice for concumption for the FieldChoice interface by adding the GraphQL object type to the return array.
 	 *
-	 * @param GF_Field $field The gravity forms field object.
-	 * @param int      $input_key The input key that represents field's selected choice.
+	 * @param \GF_Field $field The gravity forms field object.
+	 * @param int       $input_key The input key that represents field's selected choice.
 	 */
-	public static function prepare_connected_choice( GF_Field $field, int $input_key ) : array {
+	public static function prepare_connected_choice( GF_Field $field, int $input_key ): array {
 		$type = FieldChoiceRegistry::get_type_name( $field );
 
 		$choice                 = $field->choices[ $input_key ] ?? [];
@@ -520,10 +520,10 @@ class FieldValues {
 	/**
 	 * Prepares the selected input for concumption for the FieldInput interface by adding the GraphQL object type to the return array.
 	 *
-	 * @param GF_Field $field The gravity forms field object.
-	 * @param int      $input_key The input key that represents field's selected input.
+	 * @param \GF_Field $field The gravity forms field object.
+	 * @param int       $input_key The input key that represents field's selected input.
 	 */
-	public static function prepare_connected_input( GF_Field $field, int $input_key ) : array {
+	public static function prepare_connected_input( GF_Field $field, int $input_key ): array {
 		$type = FieldInputRegistry::get_type_name( $field );
 
 		$input                 = $field->inputs[ $input_key ] ?? [];

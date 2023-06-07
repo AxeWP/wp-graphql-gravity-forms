@@ -22,7 +22,7 @@ class Extensions implements Hookable {
 	/**
 	 * Register Gravity Forms Extensions.
 	 */
-	public static function register_hooks() : void {
+	public static function register_hooks(): void {
 		GFChainedSelects::register_hooks();
 		GFQuiz::register_hooks();
 		GFSignature::register_hooks();

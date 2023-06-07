@@ -8,9 +8,7 @@
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
-use GF_Field;
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
-use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Type\Enum\DateFieldFormatEnum;
 use WPGraphQL\GF\Type\WPInterface\FieldWithInputs;
 use WPGraphQL\Registry\TypeRegistry;
@@ -47,7 +45,7 @@ class FieldWithDateFormat extends AbstractFieldSetting implements TypeWithInterf
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_fields() : array {
+	public static function get_fields(): array {
 		return [
 			'dateFormat' => [
 				'type'        => DateFieldFormatEnum::$type,
@@ -59,7 +57,7 @@ class FieldWithDateFormat extends AbstractFieldSetting implements TypeWithInterf
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_interfaces() : array {
+	public static function get_interfaces(): array {
 		return [
 			FieldWithInputs::$type,
 		];

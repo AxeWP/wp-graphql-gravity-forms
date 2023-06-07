@@ -20,20 +20,20 @@ class TimeFieldFormatEnum extends AbstractEnum {
 	public static string $type = 'TimeFieldFormatEnum';
 
 	// Individual elements.
-	const H12 = '12';
-	const H24 = '24';
+	public const H12 = '12';
+	public const H24 = '24';
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_description() : string {
+	public static function get_description(): string {
 		return __( 'How the time is displayed.', 'wp-graphql-gravity-forms' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_values() : array {
+	public static function get_values(): array {
 		return [
 			'H12' => [
 				'description' => __( '12-hour time format.', 'wp-graphql-gravity-forms' ),
