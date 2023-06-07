@@ -17,6 +17,7 @@ use WPGraphQL\GF\Connection\FormFieldsConnection;
 use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
+use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Interfaces\TypeWithConnections;
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
@@ -84,8 +85,15 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 				'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
 					$context->gfEntry = $source;
 
+					// If the form isn't stored in the context, we need to fetch it.
 					if ( empty( $context->gfForm ) ) {
-						$context->gfForm = new Form( GFUtils::get_form( $source->formDatabaseId, false ) );
+						$form = GFUtils::get_form( $source->formDatabaseId, false );
+
+						// Cache the form for later use.
+						$context->get_loader( FormsLoader::$name )->prime( $form['id'], $form );
+
+						// Store it in the context for easy access.
+						$context->gfForm = new Form( $form );
 					}
 
 					if ( empty( $context->gfForm->formFields ) ) {
