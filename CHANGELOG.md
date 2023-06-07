@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## v0.12.1
+## v0.12.2
 
 This _minor_ release expands the ability to use database and global IDs interchangeably in more connections. We also now prime the `GFFormsLoader` dataloader, reducing the number of database queries and improving performance.
 
