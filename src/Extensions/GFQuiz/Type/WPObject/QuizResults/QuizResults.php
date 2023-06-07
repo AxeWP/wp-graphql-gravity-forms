@@ -131,7 +131,7 @@ class QuizResults extends AbstractObject implements Field {
 	 */
 	protected static function get_quiz_results_data( array $form, array $results_config ): array {
 		if ( ! class_exists( 'GFResults' ) ) {
-			require_once GFCommon::get_base_path() . '/includes/addon/class-gf-results.php';
+			require_once GFCommon::get_base_path() . '/includes/addon/class-gf-results.php'; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingCustomConstant
 		}
 
 		if ( isset( $results_config['callbacks']['filters'] ) ) {

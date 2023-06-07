@@ -106,7 +106,7 @@ class GFUtils {
 	 * @param array $form .
 	 */
 	public static function get_last_form_page( array $form ): int {
-		require_once GFCommon::get_base_path() . '/form_display.php';
+		require_once GFCommon::get_base_path() . '/form_display.php'; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingCustomConstant
 
 		return GFFormDisplay::get_max_page_number( $form );
 	}
@@ -466,7 +466,7 @@ class GFUtils {
 		$new_file = $target['path'] . sprintf( '/%s', $filename );
 
 		// Use copy and unlink because rename breaks streams.
-		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- duplicating default WP Core functionality.
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged,Generic.PHP.NoSilencedErrors.Forbidden -- duplicating default WP Core functionality.
 		$move_new_file = @copy( $file['tmp_name'], $new_file );
 		unlink( $file['tmp_name'] ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_unlink
 

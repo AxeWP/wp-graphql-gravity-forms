@@ -27,7 +27,7 @@
 	<!-- Enables parallel processing when available for faster results. -->
 	<arg name="parallel" value="20"/>
 	<!-- Set severity to 1 to see everything that isn't effectively turned off. -->
-	<arg name="severity" value="1" />
+	<arg name="severity" value="1"/>
 
 	<!-- Ruleset Config: set these to match your project constraints-->
 
@@ -48,6 +48,7 @@
 	<rule ref="WPGraphQL">
 		<exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification" />
 		<exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification" />
+		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification" />
 	</rule>
 
 	<!-- Individual rule configuration -->
