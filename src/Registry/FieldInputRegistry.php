@@ -27,7 +27,7 @@ class FieldInputRegistry {
 	 *
 	 * Used to prevent duplicate type registration.
 	 *
-	 * @since 0.12.1
+	 * @since 0.12.2
 	 *
 	 * @var array
 	 */

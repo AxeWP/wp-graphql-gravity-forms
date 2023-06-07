@@ -322,10 +322,10 @@ class Utils {
 	/**
 	 * Gets the entry databaseId from an indeterminate GraphQL ID.
 	 *
-	 * @since @todo
-	 *
 	 * @param int|string $id .
 	 * @throws \GraphQL\Error\UserError .
+	 *
+	 * @since 0.12.2
 	 */
 	public static function get_entry_id_from_id( $id ): int {
 		return self::get_database_id_from_id( $id, EntriesLoader::$name );
@@ -334,10 +334,10 @@ class Utils {
 	/**
 	 * Gets the entry databaseId from an indeterminate GraphQL ID.
 	 *
-	 * @since @todo
-	 *
 	 * @param int|string $id .
 	 * @throws \GraphQL\Error\UserError .
+	 *
+	 * @since 0.12.2
 	 */
 	public static function get_form_id_from_id( $id ): int {
 		return self::get_database_id_from_id( $id, FormsLoader::$name );
@@ -346,8 +346,8 @@ class Utils {
 	/**
 	 * Gets the databaseId from an indeterminate GraphQL ID, ensuring it's the correct type.
 	 *
-	 * @since @todo
-	 * 
+	 * @since 0.12.2
+	 *
 	 * @param int|string $id The provided ID.
 	 * @param string     $type The expected dataloader type.
 	 *
