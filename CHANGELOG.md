@@ -1,10 +1,17 @@
 # Changelog
 
 ## Unreleased
+
+## v0.12.1
+
+This _minor_ release expands the ability to use database and global IDs interchangeably in more connections. We also now prime the `GFFormsLoader` dataloader, reducing the number of database queries and improving performance.
+
+We've also implemented the new WPGraphQL Coding Standards ruleset for `PHP_CodeSniffer`. While many of the (over 1000+) addressed sniffs are cosmetic, numerous smells regarding performance, type safety, sanitization, and 3rd-party interoperability have been fixed as well.
+
 - dev: Refactor database ID resolution when the GraphQL `ID` type is indeterminate. Note: The following input args now work with both database and global IDs: `GfEntriesConnectionWhereArgs.formIds`, `GfFormsConnectionwhereArgs.formIds`.
 - dev: Remove usage of deprecated `WPGraphQL\Data\DataSource::resolve_post_object()` method.
 - dev: Prime the GfForm dataloader when querying form connections, to prevent unnecessary database queries.
-- chore: Implement `axepress/wp-graphql-cs` PHP_Codesniffer ruleset.
+- chore: Implement `axepress/wp-graphql-cs` PHP_Codesniffer ruleset, and fix all resulting issues.
 - docs: Add missing documentation regarding using `productValues` input when submitting forms.
 
 ## v0.12.1 - Bug fix
