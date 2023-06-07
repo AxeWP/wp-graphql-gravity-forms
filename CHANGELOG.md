@@ -4,6 +4,7 @@
 - dev: Refactor database ID resolution when the GraphQL `ID` type is indeterminate. Note: The following input args now work with both database and global IDs: `GfEntriesConnectionWhereArgs.formIds`, `GfFormsConnectionwhereArgs.formIds`.
 - dev: Remove usage of deprecated `WPGraphQL\Data\DataSource::resolve_post_object()` method.
 - dev: Prime the GfForm dataloader when querying form connections, to prevent unnecessary database queries.
+- chore: Implement `axepress/wp-graphql-cs` PHP_Codesniffer ruleset.
 - docs: Add missing documentation regarding using `productValues` input when submitting forms.
 
 ## v0.12.1 - Bug fix
