@@ -1,0 +1,13 @@
+{
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/crgeary/wp-jamstack-deployments.git"
+    }
+  ],
+  "require-dev": {
+    "crgeary/wp-jamstack-deployments": "dev-master",
+    "gatsbyjs/wp-gatsby": "^2.3",
+    "wp-graphql/wp-graphql": "^1.14"
+  }
+}

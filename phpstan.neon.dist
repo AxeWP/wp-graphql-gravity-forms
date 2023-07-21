@@ -1,26 +1,24 @@
 parameters:
-		level: 8
-		inferPrivatePropertyTypeFromConstructor: true
-		checkMissingIterableValueType: false
-		featureToggles:
-			disableRuntimeReflectionProvider: true
-		stubFiles:
-			# Simulate added properties
-			- phpstan/class-app-context.stub
-			- phpstan/class-gf-quiz.stub
-		bootstrapFiles:
-			- phpstan/constants.php
-			- wp-graphql-gravity-forms.php
-		paths:
-			- wp-graphql-gravity-forms.php
-			- src/
-		scanDirectories:
-			- ../wp-graphql/
-			- ../gravityforms/
-			- ../gravityformssignature/
-			- ../gravityformschainedselects/
-			- ../gravityformsquiz/
-			- ../wp-gatsby/
-			- ../wp-jamstack-deployments/
-		ignoreErrors:
-			- '#^Function gf_apply_filters(_ref_array)? invoked with ([1-9]|1[0-2]) parameters, 2 required\.$#'
+	paths:
+		- wp-graphql-gravity-forms.php
+		- src/
+	bootstrapFiles:
+		- phpstan/vendor/autoload.php
+		- phpstan/constants.php
+		- vendor/php-stubs/gravity-forms-stubs/gravity-forms-stubs.php
+	scanDirectories:
+		#- ../gravityformssignature/
+		#- ../gravityformschainedselects/
+		#- ../gravityformsquiz/
+		- phpstan/vendor/crgeary/wp-jamstack-deployments/src/
+		- phpstan/vendor/gatsbyjs/wp-gatsby/lib/
+	stubFiles:
+		- phpstan/class-app-context.stub
+		- phpstan/class-gf-quiz.stub
+	level: 8
+	inferPrivatePropertyTypeFromConstructor: true
+	checkMissingIterableValueType: false
+	featureToggles:
+		disableRuntimeReflectionProvider: true
+	ignoreErrors:
+		- '#^Function gf_apply_filters(_ref_array)? invoked with ([1-9]|1[0-2]) parameters, 2 required\.$#'

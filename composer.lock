@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1dbd8da85ae4ba5eadefd96015f946e1",
+    "content-hash": "93d1796be9935b146a13c947f3bca23e",
     "packages": [
         {
             "name": "yahnis-elsts/plugin-update-checker",
@@ -217,58 +217,6 @@
                 "source": "https://github.com/AxeWP/WPGraphQL-Coding-Standards"
             },
             "time": "2023-06-05T09:07:08+00:00"
-        },
-        {
-            "name": "axepress/wp-graphql-stubs",
-            "version": "v1.14.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/AxeWP/wp-graphql-stubs.git",
-                "reference": "84399dce808db09a876fd79013db56af5d8da4da"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/AxeWP/wp-graphql-stubs/zipball/84399dce808db09a876fd79013db56af5d8da4da",
-                "reference": "84399dce808db09a876fd79013db56af5d8da4da",
-                "shasum": ""
-            },
-            "require": {
-                "php-stubs/wordpress-stubs": "^5.4 || ^6.0"
-            },
-            "require-dev": {
-                "php": "~7.3 || ~8.0",
-                "php-stubs/generator": "^0.8.0",
-                "phpstan/phpstan": "^1.8"
-            },
-            "suggest": {
-                "szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "WPGraphQL function and class declaration stubs for static analysis.",
-            "homepage": "https://github.com/axewp/wp-graphql-stubs",
-            "keywords": [
-                "PHPStan",
-                "graphql",
-                "static analysis",
-                "wordpress",
-                "wp-graphql",
-                "wpgraphql"
-            ],
-            "support": {
-                "issues": "https://github.com/AxeWP/wp-graphql-stubs/issues",
-                "source": "https://github.com/AxeWP/wp-graphql-stubs/tree/v1.14.3"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/AxeWp",
-                    "type": "github"
-                }
-            ],
-            "time": "2023-04-28T12:31:19+00:00"
         },
         {
             "name": "behat/gherkin",
@@ -3519,6 +3467,50 @@
                 "source": "https://github.com/php-coveralls/php-coveralls/tree/v2.5.3"
             },
             "time": "2022-09-12T20:47:09+00:00"
+        },
+        {
+            "name": "php-stubs/gravity-forms-stubs",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-stubs/gravity-forms-stubs.git",
+                "reference": "6229910064b9881d218cdc407eba5947147377ee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-stubs/gravity-forms-stubs/zipball/6229910064b9881d218cdc407eba5947147377ee",
+                "reference": "6229910064b9881d218cdc407eba5947147377ee",
+                "shasum": ""
+            },
+            "require": {
+                "php-stubs/wordpress-stubs": "^5.3 || ^6.0"
+            },
+            "require-dev": {
+                "php": "~7.1 || ~8.0",
+                "php-stubs/generator": "^0.8.0"
+            },
+            "suggest": {
+                "szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan"
+            },
+            "default-branch": true,
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Gravity Forms function and class declaration stubs for static analysis.",
+            "homepage": "https://github.com/php-stubs/gravity-forms-stubs",
+            "keywords": [
+                "PHPStan",
+                "gravity-forms",
+                "static analysis",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/php-stubs/gravity-forms-stubs/issues",
+                "source": "https://github.com/php-stubs/gravity-forms-stubs/tree/master"
+            },
+            "time": "2023-07-21T20:30:52+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -10565,7 +10557,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "axepress/wp-graphql-cs": 10
+        "axepress/wp-graphql-cs": 10,
+        "php-stubs/gravity-forms-stubs": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
