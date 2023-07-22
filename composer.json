@@ -18,7 +18,7 @@
 		}
 	],
 	"require": {
-		"php": ">=7.4 || ^8.0",
+		"php": "^7.4 || ^8.0",
 		"yahnis-elsts/plugin-update-checker": "~4.13.0"
 	},
 	"require-dev": {
@@ -47,7 +47,7 @@
 		"optimize-autoloader": true,
 		"process-timeout": 0,
 		"platform": {
-			"php": "7.4"
+			"php": "7.4.0"
 		},
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true,
