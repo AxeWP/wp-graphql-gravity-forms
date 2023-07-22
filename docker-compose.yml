@@ -21,7 +21,7 @@ services:
       local:
 
   app_db:
-    image: mariadb:10.2
+    image: mariadb:10
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE:      wordpress
