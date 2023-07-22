@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- ci: Fix GitHub Action workflows by locking MariaDB version to v10.
 
 ## v0.12.2
 
