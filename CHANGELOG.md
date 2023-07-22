@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- chore: Fix Composer PHP version constraints and rebuild lockfile. Thanks @szepeviktor!
 - ci: Fix GitHub Action workflows by locking MariaDB version to v10.
 
 ## v0.12.2
