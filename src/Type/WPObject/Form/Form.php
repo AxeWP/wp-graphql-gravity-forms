@@ -79,6 +79,11 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 						'type'        => 'Int',
 						'description' => __( 'The number of (filtered) entries submitted to the form.', 'wp-graphql-gravity-forms' ),
 						'resolve'     => static function ( $root ) {
+							// Bail early if no entries.
+							if ( empty( $root['edges'][0]['connection'] ) ) {
+								return 0;
+							}
+
 							/**
 							 * The current entry query.
 							 *
