@@ -156,13 +156,14 @@ class QuizResults extends AbstractObject implements Field {
 			return [];
 		}
 
-		$entry_count = $data['entry_count'];
-		$sum         = $data['sum'];
-		$max_score   = max( array_keys( $data['score_frequencies'] ?? [] ) );
+		$entry_count = (int) $data['entry_count'];
+		$sum         = ! empty( $data['sum'] ) ? (int) $data['sum'] : 0;
+		$max_score   = isset( $data['score_frequencies'] ) && is_array( $data['score_frequencies'] ) ? max( array_keys( $data['score_frequencies'] ) ) : null;
 		$pass_rate   = $data['pass_rate'] ?? null;
 
-		$average_score   = round( $sum / $entry_count, 2 );
-		$average_percent = round( $sum / ( $max_score * $entry_count ) * 100 );
+		$average_score = round( $sum / $entry_count, 2 );
+
+		$average_percent = ! empty( $max_score ) && is_int( $max_score ) ? round( ( $sum / ( $max_score * $entry_count ) ) * 100 ) : null;
 
 		$score_frequencies = empty( $data['score_frequencies'] ) ? null : self::map_score_frequencies( $data['score_frequencies'] );
 
