@@ -102,7 +102,7 @@ class EntryObjectMutation {
 		$field_value_input = apply_filters( 'graphql_gf_field_value_input_class', $field_value_input, $args, $field, $form, $entry, $is_draft );
 
 		if ( ! is_a( $field_value_input, AbstractFieldValueInput::class, true ) ) {
-			throw new Exception( __( 'Invalid FieldValueInput class. Classes must extend AbstractFieldValueInput.', 'wp-graphql-gravity-forms' ) );
+			throw new Exception( esc_html__( 'Invalid FieldValueInput class. Classes must extend AbstractFieldValueInput.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		return new $field_value_input( $args, $form, $is_draft, $field, $entry );
@@ -181,7 +181,7 @@ class EntryObjectMutation {
 			$input_name = 'input_' . $field->id;
 
 			// Single files need to be in $_FILES.
-			if ( ! $field->multipleFiles && ! isset( $_FILES[ $input_name ] ) ) {
+			if ( ! $field->multipleFiles && ! isset( $_FILES[ $input_name ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				$_FILES[ $input_name ] = [
 					'name'     => null,
 					'type'     => null,
@@ -204,7 +204,7 @@ class EntryObjectMutation {
 
 			if ( ! is_dir( $target_dir ) ) {
 				if ( ! wp_mkdir_p( $target_dir ) ) {
-					throw new UserError( __( 'Unable to create directory for file uploads.', 'wp-graphql-gravity-forms' ) );
+					throw new UserError( esc_html__( 'Unable to create directory for file uploads.', 'wp-graphql-gravity-forms' ) );
 				}
 			}
 			foreach ( $input_field_values as $value ) {

@@ -79,8 +79,8 @@ class FieldInput extends AbstractInterface {
 				throw new UserError(
 					sprintf(
 					/* translators: %s: The Choice Field name */
-						__( 'The "%s" type does not exist in the schema.', 'wp-graphql-gravity-forms' ),
-						$name
+						esc_html__( 'The "%s" type does not exist in the schema.', 'wp-graphql-gravity-forms' ),
+						esc_html( $name )
 					)
 				);
 			}

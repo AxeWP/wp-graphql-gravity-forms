@@ -52,6 +52,12 @@
 	</rule>
 
 	<!-- Individual rule configuration -->
+	<rule ref="WordPress.WP.Capabilities">
+		<properties>
+			<!-- Value: replace the capabilities used. Separate multiple capabilities with a comma. -->
+			<property name="custom_capabilities" type="array" value="gravityforms_view_entries, gform_full_access" />
+		</properties>
+	</rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<!-- Value: replace the function, class, and variable prefixes used. Separate multiple prefixes with a comma. -->

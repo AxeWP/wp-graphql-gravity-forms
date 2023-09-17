@@ -190,7 +190,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 
 		$index = $this->offset_index + array_search( $id, array_keys( $nodes ), true );
 
-		return base64_encode( 'arrayconnection:' . $index . ':' . $id );  // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+		return base64_encode( 'arrayconnection:' . $index . ':' . $id );
 	}
 
 	/**
@@ -222,7 +222,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @param string $cursor .
 	 */
 	protected function parse_cursor( string $cursor ): array {
-		$decoded     = base64_decode( $cursor ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
+		$decoded     = base64_decode( $cursor );
 		$current_loc = explode( ':', $decoded );
 
 		return [
@@ -330,7 +330,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		$value_fields = $this->get_field_filter_value_fields( $field_filter );
 
 		if ( 1 !== count( $value_fields ) ) {
-			throw new UserError( __( 'Every field filter must have one value field.', 'wp-graphql-gravity-forms' ) );
+			throw new UserError( esc_html__( 'Every field filter must have one value field.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		$field_filter_values = array_map( 'sanitize_text_field', $field_filter[ $value_fields[0] ] );
@@ -339,7 +339,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 			if ( 1 !== count( $field_filter_values ) ) {
 				throw new UserError(
 					// translators: FieldFiltersOperatorInputEnum.
-					sprintf( __( '%s requires passing only a single value. Array passed.', 'wp-graphql-gravity-forms' ), $operator )
+					sprintf( esc_html__( '%s requires passing only a single value. Array passed.', 'wp-graphql-gravity-forms' ), esc_html( $operator ) )
 				);
 			}
 

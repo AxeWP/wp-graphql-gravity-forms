@@ -47,10 +47,10 @@ class Utils {
 	 *
 	 * @since 0.4.0
 	 *
-	 * @param string $string the original string.
+	 * @param string $s the original string.
 	 */
-	public static function to_snake_case( $string ): string {
-		return strtolower( (string) preg_replace( [ '/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/' ], '$1_$2', $string ) );
+	public static function to_snake_case( $s ): string {
+		return strtolower( (string) preg_replace( [ '/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/' ], '$1_$2', $s ) );
 	}
 
 	/**
@@ -58,9 +58,9 @@ class Utils {
 	 *
 	 * @since 0.10.0
 	 *
-	 * @param string $string the original string.
+	 * @param string $s the original string.
 	 */
-	public static function get_safe_form_field_type_name( $string ): string {
+	public static function get_safe_form_field_type_name( $s ): string {
 		// Shim to map fields with existing PascalCase.
 		$fields_to_map = [
 			'chainedselect'     => 'ChainedSelect',
@@ -81,7 +81,7 @@ class Utils {
 		 */
 		$fields_to_map = apply_filters( 'graphql_gf_form_fields_name_map', $fields_to_map );
 
-		return str_replace( ' ', '', ucwords( str_replace( array_keys( $fields_to_map ), array_values( $fields_to_map ), $string ) ) );
+		return str_replace( ' ', '', ucwords( str_replace( array_keys( $fields_to_map ), array_values( $fields_to_map ), $s ) ) );
 	}
 
 	/**
@@ -362,11 +362,11 @@ class Utils {
 		$id_parts = Relay::fromGlobalId( $id );
 
 		if ( empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-			throw new UserError( __( 'The ID passed is not a valid Global ID.', 'wp-graphql-gravity-forms' ) );
+			throw new UserError( esc_html__( 'The ID passed is not a valid Global ID.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		if ( $type !== $id_parts['type'] ) {
-			throw new UserError( __( 'The ID passed is not a valid Global ID for this type.', 'wp-graphql-gravity-forms' ) );
+			throw new UserError( esc_html__( 'The ID passed is not a valid Global ID for this type.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		return absint( $id_parts['id'] );

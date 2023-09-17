@@ -217,7 +217,7 @@ class TypeRegistry {
 			WPInterface\FormField::class,
 			WPInterface\FieldChoice::class,
 			WPInterface\FieldWithChoices::class,
-			... array_values( self::form_field_setting_choices() ),
+			...array_values( self::form_field_setting_choices() ),
 			WPInterface\FieldWithInputs::class,
 			WPInterface\FieldInput::class,
 			...array_values( self::form_field_setting_inputs() ),
@@ -525,7 +525,7 @@ class TypeRegistry {
 		foreach ( $classes_to_register as $class ) {
 			if ( ! is_a( $class, Hookable::class, true ) ) {
 				// translators: PHP class.
-				throw new Exception( sprintf( __( 'To be registered to the GF GraphQL schema, %s needs to implement WPGraphQL\Interfaces\Registrable.', 'wp-graphql-gravity-forms' ), $class ) );
+				throw new Exception( sprintf( esc_html__( 'To be registered to the GF GraphQL schema, %s needs to implement WPGraphQL\Interfaces\Registrable.', 'wp-graphql-gravity-forms' ), esc_html( $class ) ) );
 			}
 
 			$class::register_hooks();

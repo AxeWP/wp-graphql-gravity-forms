@@ -40,7 +40,7 @@ class EntriesConnection extends AbstractConnection {
 				'connectionArgs' => self::get_filtered_connection_args(),
 				'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
 					if ( isset( $args['entryType'] ) && EntryTypeEnum::SUBMITTED !== $args['entryType'] ) {
-						throw new UserError( __( 'Only lists of `SUBMITTED` entries may currently be queried.', 'wp-graphql-gravity-forms' ) );
+						throw new UserError( esc_html__( 'Only lists of `SUBMITTED` entries may currently be queried.', 'wp-graphql-gravity-forms' ) );
 					}
 
 					return Factory::resolve_entries_connection( $root, $args, $context, $info );

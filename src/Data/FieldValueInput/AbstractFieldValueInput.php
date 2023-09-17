@@ -112,9 +112,9 @@ abstract class AbstractFieldValueInput {
 			throw new UserError(
 				sprintf(
 					// translators: field ID, input key.
-					__( 'Mutation not processed. Field %1$s requires the use of `%2$s`.', 'wp-graphql-gravity-forms' ),
-					$this->field->id,
-					$this->field_name,
+					esc_html__( 'Mutation not processed. Field %1$s requires the use of `%2$s`.', 'wp-graphql-gravity-forms' ),
+					esc_html( $this->field->id ),
+					esc_html( $this->field_name ),
 				)
 			);
 		}

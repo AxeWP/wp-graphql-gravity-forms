@@ -204,7 +204,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 
 					// Convert order items to array.
 					$items = array_map(
-						static fn ( $item) => $item->to_array(),
+						static fn ( $item ) => $item->to_array(),
 						$items,
 					);
 
@@ -243,7 +243,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 			$id_parts = Relay::fromGlobalId( $value->id );
 
 			if ( empty( $id_parts['type'] ) ) {
-				throw new UserError( __( 'The entry type cannot be resolved.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( esc_html__( 'The entry type cannot be resolved.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			if ( isset( $possible_types[ $id_parts['type'] ] ) ) {
@@ -253,8 +253,8 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 			throw new UserError(
 				sprintf(
 					/* translators: %s: GF entry type */
-					__( 'The Gravity Forms "%s" type is not supported by the schema.', 'wp-graphql-gravity-forms' ),
-					$id_parts['type']
+					esc_html__( 'The Gravity Forms "%s" type is not supported by the schema.', 'wp-graphql-gravity-forms' ),
+					esc_html( $id_parts['type'] )
 				)
 			);
 		};
@@ -287,7 +287,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 						$id_parts = Relay::fromGlobalId( $args['id'] );
 
 						if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-							throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
+							throw new UserError( esc_html__( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
 						}
 
 						$loader = $id_parts['type'];

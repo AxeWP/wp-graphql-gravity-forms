@@ -67,7 +67,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 		 * Throw error if trying to filter `where.formIds` by `where.status`.
 		 */
 		if ( isset( $this->args['where']['formIds'] ) && isset( $this->args['where']['status'] ) ) {
-				throw new UserError( __( 'Sorry, filtering by `formIds` and `status` simultaneously is not currently supported.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( esc_html__( 'Sorry, filtering by `formIds` and `status` simultaneously is not currently supported.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		$query_args = [

@@ -59,9 +59,9 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 				throw new UserError(
 					sprintf(
 						// translators: field ID, input ID.
-						__( 'Field %1$s has no input with an id of %2$s.', 'wp-graphql-gravity-forms' ),
-						$this->field->id,
-						$single_value['inputId']
+						esc_html__( 'Field %1$s has no input with an id of %2$s.', 'wp-graphql-gravity-forms' ),
+						esc_html( $this->field->id ),
+						esc_html( $single_value['inputId'] ),
 					)
 				);
 			}

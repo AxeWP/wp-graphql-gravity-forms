@@ -34,7 +34,7 @@ class FieldWithPostCustomField extends AbstractFieldSetting {
 			'postMetaFieldName' => [
 				'type'        => 'String',
 				'description' => __( 'The post meta key to which the value should be assigned.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source) => ! empty( $source->postCustomFieldName ) ? $source->postCustomFieldName : null,
+				'resolve'     => static fn ( $source ) => ! empty( $source->postCustomFieldName ) ? $source->postCustomFieldName : null,
 			],
 		];
 	}

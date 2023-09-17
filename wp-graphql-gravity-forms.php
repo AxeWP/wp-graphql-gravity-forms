@@ -32,7 +32,7 @@ if ( ! function_exists( 'gf_graphql_constants' ) ) {
 	/**
 	 * Define plugin constants.
 	 */
-	function gf_graphql_constants() : void {
+	function gf_graphql_constants(): void {
 		// Plugin version.
 		if ( ! defined( 'WPGRAPHQL_GF_VERSION' ) ) {
 			define( 'WPGRAPHQL_GF_VERSION', '0.12.2' );
@@ -70,7 +70,7 @@ if ( ! function_exists( 'graphql_gf_dependencies_not_ready' ) ) {
 	/**
 	 * Checks if all the the required plugins are installed and activated.
 	 */
-	function gf_graphql_dependencies_not_ready() : array {
+	function gf_graphql_dependencies_not_ready(): array {
 		$wpgraphql_version = '1.9.0';
 		$gf_version        = '2.5.0';
 
@@ -92,7 +92,7 @@ if ( ! function_exists( 'gf_graphql_init' ) ) {
 	/**
 	 * Initializes WPGraphQL for GF.
 	 */
-	function gf_graphql_init() : void {
+	function gf_graphql_init(): void {
 		gf_graphql_constants();
 
 		$not_ready = gf_graphql_dependencies_not_ready();

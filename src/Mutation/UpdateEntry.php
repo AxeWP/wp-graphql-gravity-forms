@@ -107,7 +107,7 @@ class UpdateEntry extends AbstractMutation {
 				! empty( $entry['created_by'] )
 				&& get_current_user_id() !== absint( $entry['created_by'] )
 			) {
-				throw new UserError( __( 'Sorry, you are not allowed to edit entries.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( esc_html__( 'Sorry, you are not allowed to edit entries.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			// Prepare the entry data.
@@ -137,7 +137,7 @@ class UpdateEntry extends AbstractMutation {
 	 */
 	protected static function check_required_inputs( $input = null ): void {
 		if ( ! empty( $input['entryMeta'] ) && empty( $input['fieldValues'] ) ) {
-			throw new UserError( __( 'Mutation not processed. No data provided to update.', 'wp-graphql-gravity-forms' ) );
+			throw new UserError( esc_html__( 'Mutation not processed. No data provided to update.', 'wp-graphql-gravity-forms' ) );
 		}
 	}
 
@@ -162,7 +162,7 @@ class UpdateEntry extends AbstractMutation {
 		// Update Created by id.
 		if ( isset( $input['entryMeta']['createdById'] ) ) {
 			if ( ! GFCommon::current_user_can_any( 'gravityforms_edit_entries' ) ) {
-				throw new UserError( __( 'Sorry, you do not have permission to change the Entry user.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( esc_html__( 'Sorry, you do not have permission to change the Entry user.', 'wp-graphql-gravity-forms' ) );
 			}
 			$entry['created_by'] = absint( $input['entryMeta']['createdById'] );
 		}
