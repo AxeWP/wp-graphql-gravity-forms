@@ -1,9 +1,11 @@
 # Changelog
 
 ## Unreleased
-- chore: Fix Composer PHP version constraints and rebuild lockfile. Thanks @szepeviktor!
 - fix: Check if entries exist before resolving the connection `count`.
 - fix: Improve type checks when calculating the `QuizResults` data.
+- chore: Fix Composer PHP version constraints and rebuild lockfile. Thanks @szepeviktor!
+- chore: Update Composer dev-deps.
+- tests: Set `WPLoader.loadOnly` to true for acceptance suite. Thanks @lucatume!
 - ci: Fix GitHub Action workflows by locking MariaDB version to v10.
 
 ## v0.12.2
