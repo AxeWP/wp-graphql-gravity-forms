@@ -263,8 +263,8 @@ class SubmitForm extends AbstractMutation {
 				throw new UserError(
 					sprintf(
 						// translators: Gravity Forms entry property.
-						__( 'Unable to update the entry `%s` property.', 'wp-graphql-gravity-forms' ),
-						$key
+						esc_html__( 'Unable to update the entry `%s` property.', 'wp-graphql-gravity-forms' ),
+						esc_html( $key )
 					)
 				);
 			}

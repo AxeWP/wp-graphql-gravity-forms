@@ -111,7 +111,7 @@ class DraftEntry extends AbstractObject implements TypeWithInterfaces, Field {
 						$id_parts = Relay::fromGlobalId( $args['id'] );
 
 						if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-							throw new UserError( __( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
+							throw new UserError( esc_html__( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
 						}
 
 						$id = sanitize_text_field( $id_parts['id'] );

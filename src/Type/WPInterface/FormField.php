@@ -120,8 +120,8 @@ class FormField extends AbstractInterface {
 			throw new UserError(
 				sprintf(
 				/* translators: %s: GF field type */
-					__( 'The "%s" Gravity Forms field type is not (yet) supported by the schema.', 'wp-graphql-gravity-forms' ),
-					$value->type
+					esc_html__( 'The "%s" Gravity Forms field type is not (yet) supported by the schema.', 'wp-graphql-gravity-forms' ),
+					esc_html( $value->type )
 				)
 			);
 		};

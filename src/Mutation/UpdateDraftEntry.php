@@ -222,7 +222,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	 */
 	protected static function check_required_inputs( $input = null ): void {
 		if ( empty( $input['entryMeta'] ) && empty( $input['fieldValues'] ) ) {
-			throw new UserError( __( 'Mutation not processed. No data provided to update.', 'wp-graphql-gravity-forms' ) );
+			throw new UserError( esc_html__( 'Mutation not processed. No data provided to update.', 'wp-graphql-gravity-forms' ) );
 		}
 	}
 }

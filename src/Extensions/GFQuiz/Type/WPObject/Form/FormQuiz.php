@@ -83,12 +83,12 @@ class FormQuiz extends AbstractObject implements Field {
 			'gradingType'                    => [
 				'type'        => QuizFieldGradingTypeEnum::$type,
 				'description' => __( 'The quiz grading type. Defaults to `NONE`.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source) => empty( $source['grading'] ) ? null : $source['grading'],
+				'resolve'     => static fn ( $source ) => empty( $source['grading'] ) ? null : $source['grading'],
 			],
 			'hasInstantFeedback'             => [
 				'type'        => 'Boolean',
 				'description' => __( 'Display correct or incorrect indicator and explanation (if any) immediately after answer selection. This setting only applies to radio button quiz fields and it is intended for training applications and trivial quizzes. It should not be considered a secure option for critical testing requirements.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source) => ! empty( $source['instantFeedback'] ),
+				'resolve'     => static fn ( $source ) => ! empty( $source['instantFeedback'] ),
 			],
 			'hasLetterConfirmationMessage'   => [
 				'type'        => 'Boolean',
@@ -117,7 +117,7 @@ class FormQuiz extends AbstractObject implements Field {
 			'isShuffleFieldsEnabled'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'Randomize the order of the quiz fields on this form each time the form is loaded.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source) => ! empty( $source['shuffleFields'] ),
+				'resolve'     => static fn ( $source ) => ! empty( $source['shuffleFields'] ),
 			],
 			'letterConfirmation'             => [
 				'type'        => FormQuizConfirmation::$type,

@@ -13,8 +13,6 @@ namespace WPGraphQL\GF\Mutation;
 use GFCommon;
 use GFFormsModel;
 use GraphQL\Error\UserError;
-use GraphQL\Type\Definition\ResolveInfo;
-use WPGraphQL\AppContext;
 use WPGraphQL\GF\Model\DraftEntry as ModelDraftEntry;
 use WPGraphQL\GF\Type\Enum\DraftEntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPObject\Entry\DraftEntry;
@@ -72,9 +70,9 @@ class DeleteDraftEntry extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload(): callable {
-		return static function ( $input, AppContext $context, ResolveInfo $info ): array {
+		return static function ( $input ): array {
 			if ( ! GFCommon::current_user_can_any( 'gravityforms_delete_entries' ) ) {
-				throw new UserError( __( 'Sorry, you are not allowed to delete entries.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( esc_html__( 'Sorry, you are not allowed to delete entries.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			$id_type      = isset( $input['idType'] ) ? $input['idType'] : 'global_id';
@@ -85,7 +83,7 @@ class DeleteDraftEntry extends AbstractMutation {
 			$result = GFFormsModel::delete_draft_submission( $resume_token );
 
 			if ( ! $result ) {
-				throw new UserError( __( 'An error occurred while trying to delete the draft entry.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( esc_html__( 'An error occurred while trying to delete the draft entry.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			return [

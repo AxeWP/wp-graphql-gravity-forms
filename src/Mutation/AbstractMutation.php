@@ -52,7 +52,7 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 	 */
 	protected static function check_required_inputs( ?array $input ): void {
 		if ( empty( $input ) || ! is_array( $input ) ) {
-			throw new UserError( __( 'Mutation not processed. The input data was missing or invalid.', 'wp-graphql-gravity-forms' ) );
+			throw new UserError( esc_html__( 'Mutation not processed. The input data was missing or invalid.', 'wp-graphql-gravity-forms' ) );
 		}
 	}
 
@@ -70,7 +70,7 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 			$id_parts = Relay::fromGlobalId( $id );
 
 			if ( empty( $id_parts['id'] ) || DraftEntriesLoader::$name !== $id_parts['type'] ) {
-				throw new UserError( __( 'The ID passed is not a for a valid Gravity Forms draft entry.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( esc_html__( 'The ID passed is not a for a valid Gravity Forms draft entry.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			$resume_token = $id_parts['id'];

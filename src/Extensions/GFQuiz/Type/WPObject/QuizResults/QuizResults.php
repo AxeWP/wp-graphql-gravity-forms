@@ -190,7 +190,7 @@ class QuizResults extends AbstractObject implements Field {
 	 */
 	private static function map_score_frequencies( array $score_frequencies ): array {
 		return array_map(
-			static fn ( $score, $count) => [
+			static fn ( $score, $count ) => [
 				'score' => $score,
 				'count' => $count,
 			],
@@ -206,7 +206,7 @@ class QuizResults extends AbstractObject implements Field {
 	 */
 	private static function map_grade_frequencies( array $grade_frequencies ): array {
 		return array_map(
-			static fn ( $grade, $count) => [
+			static fn ( $grade, $count ) => [
 				'grade' => $grade,
 				'count' => $count,
 			],

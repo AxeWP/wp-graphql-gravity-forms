@@ -49,7 +49,7 @@ class FormPagination extends AbstractObject {
 			'hasProgressbarOnConfirmation' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether the confirmation bar should be displayed with the confirmation text.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source) => ! empty( $source['displayProgressbarOnConfirmation'] ),
+				'resolve'     => static fn ( $source ) => ! empty( $source['displayProgressbarOnConfirmation'] ),
 			],
 			'lastPageButton'               => [
 				'type'        => FormLastPageButton::$type,
@@ -58,7 +58,7 @@ class FormPagination extends AbstractObject {
 			'pageNames'                    => [
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'Names of the form\'s pages.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source) => ! empty( $source['pages'] ) ? $source['pages'] : null,
+				'resolve'     => static fn ( $source ) => ! empty( $source['pages'] ) ? $source['pages'] : null,
 			],
 			'progressbarCompletionText'    => [
 				'type'        => 'String',

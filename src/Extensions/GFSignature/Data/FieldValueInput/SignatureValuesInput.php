@@ -56,7 +56,7 @@ class SignatureValuesInput extends ValueInput {
 		$exists = wp_mkdir_p( $folder );
 
 		if ( ! $exists ) {
-			throw new UserError( __( 'The Gravity Forms Signatures directory could not be created.', 'wp-graphql-gravity-forms' ) );
+			throw new UserError( esc_html__( 'The Gravity Forms Signatures directory could not be created.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		// Add index.html to prevent directory browsing.
@@ -80,7 +80,7 @@ class SignatureValuesInput extends ValueInput {
 		$signature_decoded = $this->get_decoded_image_data( $signature );
 
 		if ( $this->does_image_exceed_max_upload_size( $signature_decoded ) ) {
-			throw new UserError( __( 'The signature image exceeds the maximum upload file size allowed.', 'wp-graphql-gravity-forms' ) );
+			throw new UserError( esc_html__( 'The signature image exceeds the maximum upload file size allowed.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		$folder   = \GFSignature::get_signatures_folder();
@@ -90,7 +90,7 @@ class SignatureValuesInput extends ValueInput {
 		$number_of_bytes = file_put_contents( $path, $signature_decoded ); //phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents, WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_file_put_contents
 
 		if ( false === $number_of_bytes ) {
-			throw new UserError( __( 'An error occurred while saving the signature image.', 'wp-graphql-gravity-forms' ) );
+			throw new UserError( esc_html__( 'An error occurred while saving the signature image.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		return $filename;
@@ -136,19 +136,19 @@ class SignatureValuesInput extends ValueInput {
 		$string_parts = explode( ';', $signature );
 
 		if ( 2 !== count( $string_parts ) || 'data:image/png' !== $string_parts[0] ) {
-			throw new UserError( $error_message );
+			throw new UserError( esc_html( $error_message ) );
 		}
 
 		$data_parts = explode( ',', $string_parts[1] );
 
 		if ( 2 !== count( $data_parts ) || 'base64' !== $data_parts[0] || ! $data_parts[1] ) {
-			throw new UserError( $error_message );
+			throw new UserError( esc_html( $error_message ) );
 		}
 
-		$image_data_decoded = base64_decode( $data_parts[1] ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
+		$image_data_decoded = base64_decode( $data_parts[1] );
 
 		if ( ! $image_data_decoded ) {
-			throw new UserError( $error_message );
+			throw new UserError( esc_html( $error_message ) );
 		}
 
 		return $image_data_decoded;

@@ -16,7 +16,7 @@ use WPGraphQL\Registry\TypeRegistry;
 /**
  * Class - FieldWithChoices
  */
-class FieldWithChoices extends AbstractFieldSetting  implements TypeWithInterfaces {
+class FieldWithChoices extends AbstractFieldSetting implements TypeWithInterfaces {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

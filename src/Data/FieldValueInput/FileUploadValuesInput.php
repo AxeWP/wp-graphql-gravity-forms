@@ -41,7 +41,7 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 		}
 
 		if ( ! Utils::is_graphql_upload_enabled() ) {
-			throw new UserError( __( 'To upload files you must enable the WPGraphQL Upload plugin!.', 'wp-graphql-gravity-forms' ) );
+			throw new UserError( esc_html__( 'To upload files you must enable the WPGraphQL Upload plugin!.', 'wp-graphql-gravity-forms' ) );
 		}
 
 		// Let people know this is a workaround until there's native WPGraphQL support.

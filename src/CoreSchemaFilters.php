@@ -50,8 +50,8 @@ class CoreSchemaFilters implements Hookable {
 		if ( false !== strpos( $config['name'], 'FormFieldConnection' ) || false !== strpos( $config['name'], 'QuizFieldConnection' ) ) {
 			$interfaces = array_filter(
 				$interfaces,
-				static function ( $interface ) {
-					return ! in_array( $interface, [ 'Connection', 'Edge', 'OneToOneConnection' ], true );
+				static function ( $interface_name ) {
+					return ! in_array( $interface_name, [ 'Connection', 'Edge', 'OneToOneConnection' ], true );
 				}
 			);
 		}

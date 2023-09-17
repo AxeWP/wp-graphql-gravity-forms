@@ -137,7 +137,7 @@ class FormFieldRegistry {
 		// We flip the arrays and compare the keys for performance.
 		$interface_settings = array_keys(
 			array_intersect_key(
-				... array_map( 'array_flip', array_values( $possible_settings ) )
+				...array_map( 'array_flip', array_values( $possible_settings ) )
 			)
 		);
 
@@ -168,9 +168,9 @@ class FormFieldRegistry {
 					throw new UserError(
 						sprintf(
 						/* translators: %s: GF field type */
-							__( 'The "%1$1s" Gravity Forms field does not yet support the %2$2s input type.', 'wp-graphql-gravity-forms' ),
-							$value->type,
-							$value->inputType
+							esc_html__( 'The "%1$1s" Gravity Forms field does not yet support the %2$2s input type.', 'wp-graphql-gravity-forms' ),
+							esc_html( $value->type ),
+							esc_html( $value->inputType ),
 						)
 					);
 				};

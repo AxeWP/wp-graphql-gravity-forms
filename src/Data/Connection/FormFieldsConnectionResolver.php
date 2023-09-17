@@ -79,7 +79,7 @@ class FormFieldsConnectionResolver {
 	 *
 	 * @return mixed|array|\WPGraphQL\GF\Data\Connection\Deferred
 	 */
-	public static function resolve( $source, array $args, AppContext $context, ResolveInfo $info ) {
+	public static function resolve( $source, array $args, AppContext $context, ResolveInfo $info ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( ! is_array( $source ) || empty( $source ) ) {
 			return null;
 		}

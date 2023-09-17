@@ -36,7 +36,7 @@ class FieldWithChainedSelectsHideInactive extends AbstractFieldSetting {
 			'shouldHideInactiveChoices' => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether inactive dropdowns should be hidden.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source) => ! empty( $source->chainedSelectsHideInactive ),
+				'resolve'     => static fn ( $source ) => ! empty( $source->chainedSelectsHideInactive ),
 			],
 		];
 	}

@@ -65,8 +65,8 @@ class ProductValueInput extends AbstractFieldValueInput {
 				throw new UserError(
 					sprintf(
 						// translators: field ID, input key.
-						__( 'Mutation not processed. Field %1$s requires the use of `%2$s` as a valid quantity.', 'wp-graphql-gravity-forms' ),
-						$this->field->id,
+						esc_html__( 'Mutation not processed. Field %1$s requires the use of `%2$s` as a valid quantity.', 'wp-graphql-gravity-forms' ),
+						esc_html( $this->field->id ),
 						'value',
 					)
 				);

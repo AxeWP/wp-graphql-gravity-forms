@@ -15,7 +15,6 @@ use GF_Field;
 use WPGraphQL\GF\Registry\TypeRegistry as GFTypeRegistry;
 use WPGraphQL\GF\Type\WPInterface\FieldChoice;
 use WPGraphQL\GF\Utils\Utils;
-use WPGraphQL\Registry\TypeRegistry;
 
 
 /**
@@ -59,7 +58,7 @@ class FieldChoiceRegistry {
 	public static function register( GF_Field $field, array $settings, bool $as_interface = false ): void {
 		add_action(
 			get_graphql_register_action(),
-			static function ( TypeRegistry $type_registry ) use ( $field, $settings, $as_interface ) {
+			static function () use ( $field, $settings, $as_interface ) {
 				$choice_name = self::get_type_name( $field );
 				
 				// Skip if already registered.
@@ -70,7 +69,7 @@ class FieldChoiceRegistry {
 				$config = self::get_config_from_settings( $choice_name, $field, $settings );
 
 				if ( $as_interface ) {
-					$config['resolveType'] = static function ( $value ) use ( $choice_name ) {
+					$config['resolveType'] = static function () use ( $choice_name ) {
 						return $choice_name;
 					};
 

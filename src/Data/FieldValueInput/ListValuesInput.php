@@ -58,8 +58,8 @@ class ListValuesInput extends AbstractFieldValueInput {
 				throw new UserError(
 					sprintf(
 						// translators: field id.
-						__( 'Mutation failed. Unable to encode the list field values for field %s.', 'wp-graphql-gravity-forms' ),
-						$this->field->id,
+						esc_html__( 'Mutation failed. Unable to encode the list field values for field %s.', 'wp-graphql-gravity-forms' ),
+						esc_html( $this->field->id ),
 					)
 				);
 			}

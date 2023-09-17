@@ -53,7 +53,7 @@ class OrderItem extends AbstractObject {
 			'isDiscount'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'Whether this is a discount item', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source) => ! empty( $source['is_discount'] ),
+				'resolve'     => static fn ( $source ) => ! empty( $source['is_discount'] ),
 			],
 			'isLineItem'         => [
 				'type'        => 'Boolean',

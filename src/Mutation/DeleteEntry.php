@@ -13,8 +13,6 @@ namespace WPGraphQL\GF\Mutation;
 use GFAPI;
 use GFCommon;
 use GraphQL\Error\UserError;
-use GraphQL\Type\Definition\ResolveInfo;
-use WPGraphQL\AppContext;
 use WPGraphQL\GF\Model\SubmittedEntry as ModelSubmittedEntry;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
 use WPGraphQL\GF\Utils\GFUtils;
@@ -72,9 +70,9 @@ class DeleteEntry extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload(): callable {
-		return static function ( $input, AppContext $context, ResolveInfo $info ): array {
+		return static function ( $input ): array {
 			if ( ! GFCommon::current_user_can_any( 'gravityforms_delete_entries' ) ) {
-				throw new UserError( __( 'Sorry, you are not allowed to delete entries.', 'wp-graphql-gravity-forms' ) );
+				throw new UserError( esc_html__( 'Sorry, you are not allowed to delete entries.', 'wp-graphql-gravity-forms' ) );
 			}
 
 			$entry_id = Utils::get_entry_id_from_id( $input['id'] );
@@ -88,7 +86,7 @@ class DeleteEntry extends AbstractMutation {
 			}
 
 			if ( is_wp_error( $result ) ) {
-				throw new UserError( __( 'An error occurred while deleting the entry. Error: .', 'wp-graphql-gravity-forms' ) . $result->get_error_message() );
+				throw new UserError( esc_html__( 'An error occurred while deleting the entry. Error: .', 'wp-graphql-gravity-forms' ) . esc_html( $result->get_error_message() ) );
 			}
 
 			return [
