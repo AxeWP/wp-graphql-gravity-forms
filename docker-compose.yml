@@ -4,7 +4,7 @@ services:
   app:
     depends_on:
       - app_db
-    image: wp-graphql-gravity-forms:latest-wp${WP_VERSION-6.2}-php${PHP_VERSION-8.0}
+    image: wp-graphql-gravity-forms:latest-wp${WP_VERSION-6.3}-php${PHP_VERSION-8.1}
     volumes:
       - .:/var/www/html/wp-content/plugins/wp-graphql-gravity-forms
       - ./.log/app:/var/log/apache2
