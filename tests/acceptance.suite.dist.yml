@@ -16,3 +16,5 @@ modules:
     config:
         WPDb:
             cleanup: false
+        WPLoader:
+            loadOnly: true
