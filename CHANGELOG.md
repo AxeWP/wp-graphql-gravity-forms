@@ -3,6 +3,7 @@
 ## Unreleased
 - fix: Check if entries exist before resolving the connection `count`.
 - fix: Improve type checks when calculating the `QuizResults` data.
+- fix: Pass the entry array to the `QuizResults` resolver.
 - chore: Fix Composer PHP version constraints and rebuild lockfile. Thanks @szepeviktor!
 - chore: Update WPGraphQL Coding Standards to 2.0.0-beta.1 and fix resulting issues.
 - chore: Update Composer dev-deps.

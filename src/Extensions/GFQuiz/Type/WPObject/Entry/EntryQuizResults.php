@@ -93,7 +93,7 @@ class EntryQuizResults extends AbstractObject implements Field {
 				'type'        => static::$type,
 				'description' => __( 'The quiz results for the entry. Requires Gravity Forms Quiz to be enabled.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source ) {
-					return $source;
+					return ! empty( $source->entry ) ? $source->entry : null;
 				},
 			]
 		);
