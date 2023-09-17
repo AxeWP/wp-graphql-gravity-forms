@@ -19,7 +19,7 @@ ENV WP_VERSION=${WP_VERSION}
 ENV PHP_VERSION=${PHP_VERSION}
 
 LABEL author=harness
-LABEL author_uri=https://github.com/harness-software
+LABEL author_uri=https://github.com/axewp
 
 SHELL [ "/bin/bash", "-c" ]
 

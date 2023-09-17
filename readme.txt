@@ -7,12 +7,12 @@ Requires PHP: 7.4
 Requires Gravity Forms: 2.5.0
 Requires WPGraphQL: 1.9.0
 Stable tag: 0.12.2
-Maintained at: https://github.com/harness-software/wp-graphql-gravity-forms
+Maintained at: https://github.com/axewp/wp-graphql-gravity-forms
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
-Adds Gravity Forms functionality to the WPGraphQL schema. For more information, see [README.md](https://github.com/harness-software/wp-graphql-gravity-forms/blob/main/README.md)
+Adds Gravity Forms functionality to the WPGraphQL schema. For more information, see [README.md](https://github.com/axewp/wp-graphql-gravity-forms/blob/main/README.md)
 
 == Upgrade Notice == 
 == Frequently Asked Questions ==
@@ -21,4 +21,4 @@ Adds Gravity Forms functionality to the WPGraphQL schema. For more information, 
 
 == Changelog ==
 **WARNING**: This release _may_ have breaking changes. Please review the release notes before updating.
-[Release Notes](https://github.com/harness-software/wp-graphql-gravity-forms/releases)
+[Release Notes](https://github.com/axewp/wp-graphql-gravity-forms/releases)

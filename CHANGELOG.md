@@ -6,6 +6,7 @@
 - chore: Fix Composer PHP version constraints and rebuild lockfile. Thanks @szepeviktor!
 - chore: Update WPGraphQL Coding Standards to 2.0.0-beta.1 and fix resulting issues.
 - chore: Update Composer dev-deps.
+- chore: Update links to repo and README.
 - tests: Set `WPLoader.loadOnly` to true for acceptance suite. Thanks @lucatume!
 - ci: Fix GitHub Action workflows by locking MariaDB version to v10.
 - ci: Test against WordPress 6.3 and PHP 8.1
@@ -548,7 +549,7 @@ This minor release addresses an issue where `PostImageInput` would be registered
 * tests: add WPUnit tests for `ListField`,      `MultiSelectField`,  `NameField`,     `TimeField`,  `PostContentField`,      `PostTitleField`,      `PostExcerptField`,      `GFUtils::get_forms()`,      `Utils::maybe_decode_json()`, and `WPGraphQLGravityForms::instances()`
 * tests: remove tests for `{fieldType}FieldValue` edges since they're deprecated anyway.
 
-**Note** As part of the road to v1.0, [the next release will](https://github.com/harness-software/wp-graphql-gravity-forms/issues?q=is%3Aopen+is%3Aissue+milestone%3Av0.10) contain numerous breaking changes to the codebase AND schema, including the removal of deprecated code (such as FieldValue edges). Please prepare accordingly.
+**Note** As part of the road to v1.0, [the next release will](https://github.com/axewp/wp-graphql-gravity-forms/issues?q=is%3Aopen+is%3Aissue+milestone%3Av0.10) contain numerous breaking changes to the codebase AND schema, including the removal of deprecated code (such as FieldValue edges). Please prepare accordingly.
 
 ## v0.9.1 - Gravity Forms Quiz Support
 
@@ -901,7 +902,7 @@ Beyond that, we've squashed some bugs, deprecated some confusing and unnecessary
 
 ### New features
 
-* Added `submitGravityFormsForm` mutation to bypass the existing draft entry flow. See [README. MD](https://github.com/harness-software/wp-graphql-gravity-forms/README.md#documentation-submit-form-mutation) for usage.
+* Added `submitGravityFormsForm` mutation to bypass the existing draft entry flow. See [README. MD](https://github.com/axewp/wp-graphql-gravity-forms/README.md#documentation-submit-form-mutation) for usage.
 * Added `updateGravityFormsEntry` and `updateGravityFormsDraftEntry` mutations that follow the same pattern.
 * Added `idType` to `GravityFormsForm` and `GravityFormsEntry`, so you can now query them using the database ID, instead of generating a global id first.
 * Added `id` property to `FieldErrors`, so you know which failed validation.
@@ -1096,4 +1097,4 @@ These properties will be removed in v1.0.
 
 This release takes the last year and a half of work on this plugin, and makes it ready for public consumption and contribution, by adopting SemVer, WordPress Coding Standards, etc.
 
-Please see [README.md](https://github.com/harness-software/wp-graphql-gravity-forms/blob/main/README.md) for a list of all functionality.
+Please see [README.md](https://github.com/axewp/wp-graphql-gravity-forms/blob/main/README.md) for a list of all functionality.

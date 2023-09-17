@@ -81,7 +81,7 @@ jobs:
           echo "Previous tagged schema ${{ steps.get-latest-tag.outputs.tag }}"
 
       - name: Get Previous Released Schema
-        run: curl 'https://github.com/harness-software/wp-graphql-gravity-forms/releases/download/${{ steps.get-latest-tag.outputs.tag }}/schema.graphql' -L  --output /tmp/${{ steps.get-latest-tag.outputs.tag }}.graphql
+        run: curl 'https://github.com/axewp/wp-graphql-gravity-forms/releases/download/${{ steps.get-latest-tag.outputs.tag }}/schema.graphql' -L  --output /tmp/${{ steps.get-latest-tag.outputs.tag }}.graphql
 
       # https://github.com/marketplace/actions/graphql-inspector
       - name: Install Schema Inspector

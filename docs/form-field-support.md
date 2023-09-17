@@ -6,7 +6,7 @@ By default, WPGraphQL for Gravity Forms adds basic query support for _all_ Form 
 
 These types inherit the `FormField` interface.
 
-*Note:* As of v0.10.0, [Experimental fields are hidden by default and must be enabled](#experimental-fields). To track implementation status of experimental fields, please review [this github issue](https://github.com/harness-software/wp-graphql-gravity-forms/issues/195)
+*Note:* As of v0.10.0, [Experimental fields are hidden by default and must be enabled](#experimental-fields). To track implementation status of experimental fields, please review [this github issue](https://github.com/axewp/wp-graphql-gravity-forms/issues/195)
 
 ## Form Field properties (GraphQL fields) <a name="form-field-properties" />
 

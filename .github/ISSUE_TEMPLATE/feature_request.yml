@@ -8,7 +8,7 @@ body:
 
 
         Please make sure to search the repo for [existing feature
-        requests](https://github.com/harness-software/wp-graphql-gravity-forms/issues?q=label%3A%22type%3A+enhancement+%E2%9A%A1%22+label%3A%22type%3A+feature+%F0%9F%A6%8B%22+label%3A%22type%3A+idea+%F0%9F%92%A1%22+)
+        requests](https://github.com/axewp/wp-graphql-gravity-forms/issues?q=label%3A%22type%3A+enhancement+%E2%9A%A1%22+label%3A%22type%3A+feature+%F0%9F%A6%8B%22+label%3A%22type%3A+idea+%F0%9F%92%A1%22+)
         before creating a new one.
   - type: textarea
     attributes:
