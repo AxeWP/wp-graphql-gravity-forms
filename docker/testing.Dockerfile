@@ -7,7 +7,7 @@ ARG PHP_VERSION
 
 FROM wp-graphql-gravity-forms:latest-wp${WP_VERSION}-php${PHP_VERSION}
 
-LABEL author=harness
+LABEL author=axepress
 LABEL author_uri=https://github.com/axewp
 
 SHELL [ "/bin/bash", "-c" ]

@@ -1,6 +1,11 @@
 # Changelog
 
 ## Unreleased
+
+## v0.12.3
+
+This _minor_ release fixes a few bugs when resolving `GfEntry` data, and addresses some code smells from the updated WPGraphQL Coding Standards. We're also now testing the plugin against WordPress 6.3 and PHP 8.1.
+
 - fix: Check if entries exist before resolving the connection `count`.
 - fix: Improve type checks when calculating the `QuizResults` data.
 - fix: Pass the entry array to the `QuizResults` resolver.
