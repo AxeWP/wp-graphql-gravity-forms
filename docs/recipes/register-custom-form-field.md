@@ -2,7 +2,7 @@
 
 ## How to: register query support for a custom Gravity Forms Field
 
-__To see this patterns in action, take a look in [`src/Extensions`](https://github.com/harness-software/wp-graphql-gravity-forms/tree/main/src/Extensions).
+__To see this patterns in action, take a look in [`src/Extensions`](https://github.com/axewp/wp-graphql-gravity-forms/tree/main/src/Extensions).
 
 While this plugin offers [basic support for custom Gravity Forms fields out of the box](../form-field-support.md), in many cases you will want to extend the GraphQL schema to provide your custom field data.
 

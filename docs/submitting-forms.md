@@ -6,7 +6,7 @@ This mutation can be used either to submit an Entry or to submit a draft entry, 
 
 The `fieldValues` input takes an array of objects containing the `id` of the field, and a value input that corresponds to the Gravity Forms Field type.
 
-**Note**: Due to [GraphQL's current lack of support for Input Union types](https://github.com/harness-software/wp-graphql-gravity-forms/issues/4#issuecomment-563305561), you must use the specific value type specific to that field. A full list of field value types and their corresponding field fragments are below.
+**Note**: Due to [GraphQL's current lack of support for Input Union types](https://github.com/axewp/wp-graphql-gravity-forms/issues/4#issuecomment-563305561), you must use the specific value type specific to that field. A full list of field value types and their corresponding field fragments are below.
 
 ## Supported Field Value input types
 

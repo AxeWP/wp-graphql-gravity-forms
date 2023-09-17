@@ -10,7 +10,7 @@ While the needs of each form field are different, the following guide lays out s
 
 Depending on how complex your Form Field is, you might want to create a custom GraphQL Input type for the form field value.
 
-If your field is using a [preexisting `FormFieldValues` type](https://github.com/harness-software/wp-graphql-gravity-forms/blob/develop/src/Type/Input/FormFieldValuesInput.php#L34) ( e.g. `value` , `values` , `checkboxValues` ), you can skip this step. _However_, we recommend creating a custom input type for every custom GF form to [protect yourself against future breaking changes to the schema](https://www.apollographql.com/blog/graphql/basics/designing-graphql-mutations/).
+If your field is using a [preexisting `FormFieldValues` type](https://github.com/axewp/wp-graphql-gravity-forms/blob/develop/src/Type/Input/FormFieldValuesInput.php#L34) ( e.g. `value` , `values` , `checkboxValues` ), you can skip this step. _However_, we recommend creating a custom input type for every custom GF form to [protect yourself against future breaking changes to the schema](https://www.apollographql.com/blog/graphql/basics/designing-graphql-mutations/).
 
 For example:
 
@@ -45,13 +45,13 @@ add_filter(
 
 ### Preparing the GraphQL data for Gravity Forms.
 
-WPGraphQL for Gravity Forms passes the GraphQL input args through [the `AbstractFieldValueInput` class](https://github.com/harness-software/wp-graphql-gravity-forms/blob/develop/src/Data/FieldValueInput/AbstractFieldValueInput.php) to make it easy to process the data for Gravity Forms.
+WPGraphQL for Gravity Forms passes the GraphQL input args through [the `AbstractFieldValueInput` class](https://github.com/axewp/wp-graphql-gravity-forms/blob/develop/src/Data/FieldValueInput/AbstractFieldValueInput.php) to make it easy to process the data for Gravity Forms.
 
 For custom fields, we recommend extending the above class, and then registering it with [the `graphql_gf_field_value_input_class` filter](../actions-and-filters.md#graphql_gf_field_value_input). If you wish to change the behavior of one of the default `FieldValueInput` s, you can make use of several WordPress filters.
 
 #### Example 1: Extending `AbstractFieldValueInput`
 
-The following example shows how to create a custom FieldValueInput object to handle submissions for your custom Form Field. For a full understanding, you should review the comments in [the source code](https://github.com/harness-software/wp-graphql-gravity-forms/blob/develop/src/Data/FieldValueInput/AbstractFieldValueInput.php).
+The following example shows how to create a custom FieldValueInput object to handle submissions for your custom Form Field. For a full understanding, you should review the comments in [the source code](https://github.com/axewp/wp-graphql-gravity-forms/blob/develop/src/Data/FieldValueInput/AbstractFieldValueInput.php).
 
 ```php
 class MyCustomFieldValueInput extends \WPGraphQL\GF\Data\FieldValueInput\AbstractFieldValueInput {

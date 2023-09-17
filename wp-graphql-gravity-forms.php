@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: WPGraphQL for Gravity Forms
- * Plugin URI: https://github.com/harness-software/wp-graphql-gravity-forms
- * GitHub Plugin URI: https://github.com/harness-software/wp-graphql-gravity-forms
+ * Plugin URI: https://github.com/axewp/wp-graphql-gravity-forms
+ * GitHub Plugin URI: https://github.com/axewp/wp-graphql-gravity-forms
  * Description: Adds Gravity Forms functionality to the WPGraphQL schema.
  * Author: Harness Software
  * Author URI: https://www.harnessup.com
- * Update URI: https://github.com/harness-software/wp-graphql-gravity-forms/releases
+ * Update URI: https://github.com/axewp/wp-graphql-gravity-forms/releases
  * Version: 0.12.2
  * Text Domain: wp-graphql-gravity-forms
  * Domain Path: /languages

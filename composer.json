@@ -4,17 +4,19 @@
 	"type": "wordpress-plugin",
 	"license": "GPL-3.0-or-later",
 	"support": {
-		"issues": "https://github.com/harness-software/wp-graphql-gravity-forms/issues",
-		"source": "https://github.com/harness-software/wp-graphql-gravity-forms"
+		"issues": "https://github.com/axewp/wp-graphql-gravity-forms/issues",
+		"source": "https://github.com/axewp/wp-graphql-gravity-forms"
 	},
 	"authors": [
 		{
-			"name": "Harness Software",
-			"email": "info@harnessup.com"
+			"name": "AxePress Development",
+			"email": "support@axepress.dev",
+			"homepage": "https://axepress.dev"
 		},
 		{
-			"name": "Dovid Levine",
-			"role": "Lead Developer"
+			"name": "David Levine",
+			"role": "Lead Developer",
+			"email": "david@axepress.dev"
 		}
 	],
 	"require": {
