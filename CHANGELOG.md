@@ -7,6 +7,7 @@
 - chore: Update Composer dev-deps.
 - tests: Set `WPLoader.loadOnly` to true for acceptance suite. Thanks @lucatume!
 - ci: Fix GitHub Action workflows by locking MariaDB version to v10.
+- ci: Test against WordPress 6.3 and PHP 8.1
 
 ## v0.12.2
 
