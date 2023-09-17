@@ -18,7 +18,7 @@ ARG PHP_VERSION
 ENV WP_VERSION=${WP_VERSION}
 ENV PHP_VERSION=${PHP_VERSION}
 
-LABEL author=harness
+LABEL author=axepress
 LABEL author_uri=https://github.com/axewp
 
 SHELL [ "/bin/bash", "-c" ]

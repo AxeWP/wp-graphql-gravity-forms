@@ -4,10 +4,10 @@
  * Plugin URI: https://github.com/axewp/wp-graphql-gravity-forms
  * GitHub Plugin URI: https://github.com/axewp/wp-graphql-gravity-forms
  * Description: Adds Gravity Forms functionality to the WPGraphQL schema.
- * Author: Harness Software
- * Author URI: https://www.harnessup.com
+ * Author: AxePress Development
+ * Author URI: https://axepress.dev
  * Update URI: https://github.com/axewp/wp-graphql-gravity-forms/releases
- * Version: 0.12.2
+ * Version: 0.12.3
  * Text Domain: wp-graphql-gravity-forms
  * Domain Path: /languages
  * Requires at least: 5.4.1
@@ -19,7 +19,7 @@
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  *
  * @package WPGraphQL\GF
- * @author harnessup
+ * @author axepress
  * @license GPL-3
  */
 
@@ -35,7 +35,7 @@ if ( ! function_exists( 'gf_graphql_constants' ) ) {
 	function gf_graphql_constants(): void {
 		// Plugin version.
 		if ( ! defined( 'WPGRAPHQL_GF_VERSION' ) ) {
-			define( 'WPGRAPHQL_GF_VERSION', '0.12.2' );
+			define( 'WPGRAPHQL_GF_VERSION', '0.12.3' );
 		}
 
 		// Plugin Folder Path.
