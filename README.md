@@ -100,21 +100,8 @@ Priority support and custom development are available to [our Sponsors](https://
 
 ## Sponsors
 <div class="sponsor-grid">
-  <a href="https://mysafetyhq.com/"><img src="https://avatars.githubusercontent.com/u/50597878?s=150&v=4" alt="SafetyHQ (previously Harness Software)">SafetyHQ</a>
+  <a href="https://mysafetyhq.com/" target="_blank" rel="sponsored" title="SafetyHQ (previously Harness Software)"><img src="https://avatars.githubusercontent.com/u/50597878?s=150&v=4" alt="SafetyHQ (previously Harness Software)"></a>
 </div>
 
-<a href="https://github.com/sponsors/AxeWP" alt="GitHub Sponsors"><img src="https://img.shields.io/static/v1?label=Sponsor%20Us%20%40%20AxeWP&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86&style=for-the-badge" /></a>
 
-<style>
-  .sponsor-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .sponsor-grid img {
-    max-width: 100%;
-    height: auto;
-  }
-</style>
+<a href="https://github.com/sponsors/AxeWP" alt="GitHub Sponsors"><img src="https://img.shields.io/static/v1?label=Sponsor%20Us%20%40%20AxeWP&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86&style=for-the-badge" /></a>
