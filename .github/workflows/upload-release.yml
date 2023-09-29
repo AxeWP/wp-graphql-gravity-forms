@@ -22,8 +22,9 @@ jobs:
           composer install --no-dev --optimize-autoloader
       - name: Create Artifact
         run: |
-          mkdir plugin-build
-          composer archive -vvv --format=zip --file="plugin-build/wp-graphql-gravity-forms"
+          mkdir -p plugin-build/wp-graphql-gravity-forms
+          rsync -rc --exclude-from=.distignore --exclude=plugin-build . plugin-build/wp-graphql-gravity-forms/ --delete --delete-excluded -v
+          cd plugin-build ; zip -r wp-graphql-gravity-forms.zip wp-graphql-gravity-forms
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
