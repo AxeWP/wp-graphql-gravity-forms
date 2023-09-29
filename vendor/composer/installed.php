@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'harness-software/wp-graphql-gravity-forms',
-        'pretty_version' => 'dev-develop',
-        'version' => 'dev-develop',
-        'reference' => '2b5a054a418805892516a3ea6b322afdb890dd79',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '07d6471beff1304aa7e8db183ec63df20ab89800',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,18 +11,18 @@
     ),
     'versions' => array(
         'harness-software/wp-graphql-gravity-forms' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
-            'reference' => '2b5a054a418805892516a3ea6b322afdb890dd79',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '07d6471beff1304aa7e8db183ec63df20ab89800',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'yahnis-elsts/plugin-update-checker' => array(
-            'pretty_version' => 'v4.13',
-            'version' => '4.13.0.0',
-            'reference' => '6eb27a6911e0e0880d09e5b11f577d3f688f7da7',
+            'pretty_version' => 'v5.2',
+            'version' => '5.2.0.0',
+            'reference' => '5a270988c5f76bfdfbbb42cccc7c9627f7dd64d0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../yahnis-elsts/plugin-update-checker',
             'aliases' => array(),
