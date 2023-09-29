@@ -3,7 +3,7 @@
 ## Unreleased
 
 - fix: Fix installation errors when upgrading plugin via the WordPress backend.
-- chore: Update `yahnis-elsts/plugin-update-cheker` to v5.2.
+- chore: Update `yahnis-elsts/plugin-update-checker` to v5.2.
 - ci: Include top-level plugin folder in release zip.
 
 ## v0.12.3
