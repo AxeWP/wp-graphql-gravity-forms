@@ -8,8 +8,8 @@
 
 namespace WPGraphQL\GF;
 
-use Puc_v4_Factory;
 use WPGraphQL\GF\Interfaces\Hookable;
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 /**
  * Class - Update Checker
@@ -37,17 +37,16 @@ class UpdateChecker implements Hookable {
 		 *
 		 * @param string           $repo_link The url to the repo.
 		 */
-		$repo_link = apply_filters( 'graphql_gf_update_repo_url', 'https://github.com/axewp/wp-graphql-gravity-forms/' );
+		$repo_link = apply_filters( 'graphql_gf_update_repo_url', 'https://github.com/AxeWP/wp-graphql-gravity-forms/' );
 
-		/** @var \Puc_v4p13_Vcs_PluginUpdateChecker */
-		$update_checker = Puc_v4_Factory::buildUpdateChecker(
+		$update_checker = PucFactory::buildUpdateChecker(
 			trailingslashit( $repo_link ),
 			WPGRAPHQL_GF_PLUGIN_FILE,
 			'wp-graphql-gravity-forms',
 		);
-
+		
 		// @phpstan-ignore-next-line
-		$update_checker->getVcsApi()->enableReleaseAssets();
+		$update_checker->getVcsApi()->enableReleaseAssets( '/wp-graphql-gravity-forms\.zip/' );
 	}
 
 	/**

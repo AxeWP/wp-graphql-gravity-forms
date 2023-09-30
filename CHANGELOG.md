@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- fix: Fix installation errors when upgrading plugin via the WordPress backend.
+- chore: Update `yahnis-elsts/plugin-update-checker` to v5.2.
+- ci: Include top-level plugin folder in release zip.
+
 ## v0.12.3
 
 This _minor_ release fixes a few bugs when resolving `GfEntry` data, and addresses some code smells from the updated WPGraphQL Coding Standards. We're also now testing the plugin against WordPress 6.3 and PHP 8.1.
