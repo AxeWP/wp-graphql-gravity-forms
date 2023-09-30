@@ -6,7 +6,7 @@ Tested up to: 6.3.1
 Requires PHP: 7.4
 Requires Gravity Forms: 2.5.0
 Requires WPGraphQL: 1.9.0
-Stable tag: 0.12.3
+Stable tag: 0.12.4
 Maintained at: https://github.com/axewp/wp-graphql-gravity-forms
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html

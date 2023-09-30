@@ -2,7 +2,13 @@
 
 ## Unreleased
 
-- fix: Fix installation errors when upgrading plugin via the WordPress backend.
+## v0.12.4
+
+This _minor_ release fixes a bug where updating the plugin via the WordPress backend would fail due to changes to GitHub's API.
+
+**Note**: Users relying on WordPress's built-in plugin update mechanism will need to update manually to this version by downloading the release zip.
+
+- fix: Fix installation errors when upgrading plugin via the WordPress backend. H/t @shaderpixel.
 - chore: Update `yahnis-elsts/plugin-update-checker` to v5.2.
 - ci: Include top-level plugin folder in release zip.
 
