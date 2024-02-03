@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- fix: Ensure `EmailField` inputs are hydrated when Email Confirmation is disabled. H/t @
+Gytjarek.
+
 ## v0.12.4
 
 This _minor_ release fixes a bug where updating the plugin via the WordPress backend would fail due to changes to GitHub's API.
