@@ -86,7 +86,7 @@ class FormFieldsConnectionResolver {
 
 		$fields = self::filter_form_fields_by_connection_args( $source, $args );
 
-		$fields = self::prepare_data( $source );
+		$fields = self::prepare_data( $fields );
 
 		$connection = Relay::connectionFromArray( $fields, $args );
 
@@ -172,7 +172,7 @@ class FormFieldsConnectionResolver {
 		if ( isset( $args['where']['pageNumber'] ) ) {
 			$page = absint( $args['where']['pageNumber'] );
 
-			$fields = array_filter( $fields, static fn ( $field ) => $page === (int) $field['pageNumber'] );
+			$fields = array_filter( $fields, static fn ( $field ) => $page === (int) $field->pageNumber );
 		}
 
 		return $fields;
