@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- chore: Test compatibility with WordPress 6.4.x
+
 ## v0.12.4
 
 This _minor_ release fixes a bug where updating the plugin via the WordPress backend would fail due to changes to GitHub's API.
