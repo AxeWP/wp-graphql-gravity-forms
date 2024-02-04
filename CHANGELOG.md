@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## v0.12.5
+
+This _minor_ release fixes a bug where `EmailField.inputs` were returning `null` when Email Confirmation is disabled and an issue where `formFields` were not being correctly filtered by their `where` args. We've also updated the Composer dependencies, did some code linting, and tested compatibility against WordPress 6.4.x.
 
 - fix: Ensure `EmailField` inputs are hydrated when Email Confirmation is disabled. H/t @gytjarek.
 - fix: Correctly use filtered form fields when preparing the connection data. H/t @samuelhadsall.
