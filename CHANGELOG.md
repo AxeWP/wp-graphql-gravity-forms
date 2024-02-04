@@ -3,6 +3,7 @@
 ## Unreleased
 
 - fix: Ensure `EmailField` inputs are hydrated when Email Confirmation is disabled. H/t @Gytjarek.
+- chore: Update `yahnis-elsts/plugin-update-checker` to v5.3.
 - chore: Test compatibility with WordPress 6.4.x
 
 ## v0.12.4
