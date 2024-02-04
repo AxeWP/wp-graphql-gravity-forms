@@ -33,7 +33,7 @@ abstract class AbstractFieldInputSetting extends AbstractInterface {
 	 *
 	 * Eager load should only be necessary for types that are not referenced directly (e.g. in Unions, Interfaces ).
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public static bool $should_load_eagerly = false;
 

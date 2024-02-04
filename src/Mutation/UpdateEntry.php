@@ -13,7 +13,6 @@ namespace WPGraphQL\GF\Mutation;
 use GFCommon;
 use GFFormsModel;
 use GraphQL\Error\UserError;
-use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\EntryObjectMutation;
 use WPGraphQL\GF\Data\Factory;
@@ -93,7 +92,7 @@ class UpdateEntry extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload(): callable {
-		return static function ( $input, AppContext $context, ResolveInfo $info ): array {
+		return static function ( $input ): array {
 			// Check for required fields.
 			static::check_required_inputs( $input );
 
@@ -295,8 +294,8 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * Grabs the updated entry, and then updates the post.
 	 *
-	 * @param integer $entry_id .
-	 * @param array   $form .
+	 * @param int   $entry_id .
+	 * @param array $form .
 	 */
 	public static function update_post( int $entry_id, array $form ): void {
 		$entry = GFUtils::get_entry( $entry_id );

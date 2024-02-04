@@ -11,7 +11,6 @@
 namespace WPGraphQL\GF\Mutation;
 
 use GraphQL\Error\UserError;
-use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\EntryObjectMutation;
 use WPGraphQL\GF\Data\Factory;
@@ -98,7 +97,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload(): callable {
-		return static function ( $input, AppContext $context, ResolveInfo $info ): array {
+		return static function ( $input ): array {
 			// Check for required fields.
 			static::check_required_inputs( $input );
 

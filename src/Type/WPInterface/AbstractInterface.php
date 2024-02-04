@@ -29,7 +29,7 @@ abstract class AbstractInterface extends AbstractType implements TypeWithDescrip
 	 *
 	 * Eager load should only be necessary for types that are not referenced directly (e.g. in Unions, Interfaces ).
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public static bool $should_load_eagerly = false;
 
@@ -38,7 +38,7 @@ abstract class AbstractInterface extends AbstractType implements TypeWithDescrip
 	 *
 	 * @param \WPGraphQL\Registry\TypeRegistry $type_registry .
 	 */
-	public static function register( TypeRegistry $type_registry = null ): void {
+	public static function register( ?TypeRegistry $type_registry = null ): void {
 		$config = static::get_type_config( $type_registry );
 
 		register_graphql_interface_type( static::$type, $config );
@@ -47,7 +47,7 @@ abstract class AbstractInterface extends AbstractType implements TypeWithDescrip
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config( TypeRegistry $type_registry = null ): array {
+	public static function get_type_config( ?TypeRegistry $type_registry = null ): array {
 		return [
 			'description'     => static::get_description(),
 			'fields'          => static::get_fields(),

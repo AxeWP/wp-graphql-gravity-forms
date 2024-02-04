@@ -12,7 +12,6 @@ namespace WPGraphQL\GF\Mutation;
 
 use GFAPI;
 use GraphQL\Error\UserError;
-use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\EntryObjectMutation;
 use WPGraphQL\GF\Data\Factory;
@@ -131,7 +130,7 @@ class SubmitForm extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload(): callable {
-		return static function ( $input, AppContext $context, ResolveInfo $info ): array {
+		return static function ( $input ): array {
 			// Get the form database_id.
 			$form_id = Utils::get_form_id_from_id( $input['id'] );
 
@@ -274,9 +273,9 @@ class SubmitForm extends AbstractMutation {
 	/**
 	 * Creates the $input_values array required by GFAPI::submit_form().
 	 *
-	 * @param boolean $is_draft .
-	 * @param array   $field_values . Required so submit_form() can generate the $_POST object.
-	 * @param array   $file_upload_values .
+	 * @param bool  $is_draft .
+	 * @param array $field_values . Required so submit_form() can generate the $_POST object.
+	 * @param array $file_upload_values .
 	 */
 	private static function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ): array {
 		$input_values = [

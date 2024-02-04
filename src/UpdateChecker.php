@@ -52,10 +52,10 @@ class UpdateChecker implements Hookable {
 	/**
 	 * Disable autoupdates if breaking release.
 	 *
-	 * @param boolean|null $update .
-	 * @param object       $item .
+	 * @param bool|null $update .
+	 * @param object    $item .
 	 *
-	 * @return boolean|null
+	 * @return bool|null
 	 */
 	public static function disable_autoupdates( $update, $item ) {
 		// Bail early while respecting user filters.

@@ -218,9 +218,9 @@ class QuizResults extends AbstractObject implements Field {
 	/**
 	 * Maps the field data array to a format WPGraphQL can understand.
 	 *
-	 * @param array   $field_data . The field data array.
-	 * @param array   $form .
-	 * @param integer $entry_count . The number of submitted entries.
+	 * @param array $field_data . The field data array.
+	 * @param array $form .
+	 * @param int   $entry_count . The number of submitted entries.
 	 */
 	private static function map_field_data( array $field_data, array $form, int $entry_count ): array {
 		return array_map(

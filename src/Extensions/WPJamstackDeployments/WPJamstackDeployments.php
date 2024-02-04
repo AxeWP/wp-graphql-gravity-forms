@@ -162,8 +162,8 @@ class WPJamstackDeployments implements Hookable {
 	/**
 	 * Triggers the correct deployment when a form is saved.
 	 *
-	 * @param array   $form .
-	 * @param boolean $is_new .
+	 * @param array $form .
+	 * @param bool  $is_new .
 	 */
 	public static function after_save_form( array $form, bool $is_new ): void {
 		$options = self::get_options();

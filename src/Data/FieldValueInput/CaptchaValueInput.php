@@ -17,7 +17,7 @@ class CaptchaValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function __construct( array $input_args, array $form, bool $is_draft, GF_Field $field = null, array $entry = null ) {
+	public function __construct( array $input_args, array $form, bool $is_draft, ?GF_Field $field = null, ?array $entry = null ) {
 		parent::__construct( $input_args, $form, $is_draft, $field, $entry );
 
 		// Set the $_POST object, since we use that instead of field vales.

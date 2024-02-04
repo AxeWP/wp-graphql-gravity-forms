@@ -37,8 +37,8 @@ class GFUtils {
 	 *
 	 * @see https://docs.gravityforms.com/api-functions/#get-form
 	 *
-	 * @param integer $form_id .
-	 * @param bool    $active_only Whether to only return the form if it is active.
+	 * @param int  $form_id .
+	 * @param bool $active_only Whether to only return the form if it is active.
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
@@ -160,7 +160,7 @@ class GFUtils {
 	 *
 	 * @see https://docs.gravityforms.com/api-functions/#get-entry
 	 *
-	 * @param integer $entry_id .
+	 * @param int $entry_id .
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
@@ -188,7 +188,7 @@ class GFUtils {
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function update_entry( array $entry_data, int $entry_id = null ): int {
+	public static function update_entry( array $entry_data, ?int $entry_id = null ): int {
 		$entry_id = $entry_id ?? $entry_data['id'];
 
 		$is_entry_updated = GFAPI::update_entry( $entry_data, $entry_id );
@@ -287,19 +287,19 @@ class GFUtils {
 	 * Saves Gravity Forms draft entry.
 	 * Uses GFFormsModel::save_draft_submission().
 	 *
-	 * @param array   $form .
-	 * @param array   $entry .
-	 * @param array   $field_values .
-	 * @param integer $page_number .
-	 * @param array   $files .
-	 * @param string  $form_unique_id .
-	 * @param string  $ip .
-	 * @param string  $source_url .
-	 * @param string  $resume_token .
+	 * @param array  $form .
+	 * @param array  $entry .
+	 * @param array  $field_values .
+	 * @param int    $page_number .
+	 * @param array  $files .
+	 * @param string $form_unique_id .
+	 * @param string $ip .
+	 * @param string $source_url .
+	 * @param string $resume_token .
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function save_draft_submission( array $form, array $entry, array $field_values = null, int $page_number = 1, array $files = [], string $form_unique_id = null, string $ip = '', string $source_url = '', string $resume_token = '' ): string {
+	public static function save_draft_submission( array $form, array $entry, ?array $field_values = null, int $page_number = 1, array $files = [], ?string $form_unique_id = null, string $ip = '', string $source_url = '', string $resume_token = '' ): string {
 		if ( empty( $form ) || empty( $entry ) ) {
 			throw new UserError( esc_html__( 'An error occured while trying to save the draft entry. Form or Entry not set.', 'wp-graphql-gravity-forms' ) );
 		}
@@ -331,11 +331,11 @@ class GFUtils {
 	 *
 	 * @see https://docs.gravityforms.com/api-functions/#submit-form
 	 *
-	 * @param integer $form_id .
-	 * @param array   $input_values .
-	 * @param array   $field_values .
-	 * @param integer $target_page .
-	 * @param integer $source_page .
+	 * @param int   $form_id .
+	 * @param array $input_values .
+	 * @param array $field_values .
+	 * @param int   $target_page .
+	 * @param int   $source_page .
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */

@@ -61,7 +61,7 @@ abstract class AbstractFieldValueInput {
 	/**
 	 * Whether this input is for a draft mutation.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected bool $is_draft;
 
@@ -83,7 +83,7 @@ abstract class AbstractFieldValueInput {
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
-	public function __construct( array $input_args, array $form, bool $is_draft, GF_Field $field = null, array $entry = null ) {
+	public function __construct( array $input_args, array $form, bool $is_draft, ?GF_Field $field = null, ?array $entry = null ) {
 		$this->input_args = $input_args;
 		$this->form       = $form;
 		$this->is_draft   = $is_draft;
