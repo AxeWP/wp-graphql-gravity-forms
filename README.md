@@ -89,6 +89,7 @@ Priority support and custom development are available to [our Sponsors](https://
 * [Submitting forms](docs/submitting-forms.md)
 * [Updating entries & draft entries](docs/updating-entries.md)
 * [Deleting entries & draft entries](docs/deleting-entries.md)
+* [Internationalization & Localization](docs/i18n.md)
 * [Actions & Filters](docs/actions-and-filters.md)
 
 ### Recipes
