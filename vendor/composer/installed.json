@@ -2,29 +2,29 @@
     "packages": [
         {
             "name": "yahnis-elsts/plugin-update-checker",
-            "version": "v5.2",
-            "version_normalized": "5.2.0.0",
+            "version": "v5.3",
+            "version_normalized": "5.3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/YahnisElsts/plugin-update-checker.git",
-                "reference": "5a270988c5f76bfdfbbb42cccc7c9627f7dd64d0"
+                "reference": "0b6bd7cd3286688ab680201aa6a7d8572c51ae1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/YahnisElsts/plugin-update-checker/zipball/5a270988c5f76bfdfbbb42cccc7c9627f7dd64d0",
-                "reference": "5a270988c5f76bfdfbbb42cccc7c9627f7dd64d0",
+                "url": "https://api.github.com/repos/YahnisElsts/plugin-update-checker/zipball/0b6bd7cd3286688ab680201aa6a7d8572c51ae1f",
+                "reference": "0b6bd7cd3286688ab680201aa6a7d8572c51ae1f",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": ">=5.6.20"
             },
-            "time": "2023-08-17T12:44:32+00:00",
+            "time": "2023-11-09T08:34:00+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
                 "files": [
-                    "load-v5p2.php"
+                    "load-v5p3.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -49,7 +49,7 @@
             ],
             "support": {
                 "issues": "https://github.com/YahnisElsts/plugin-update-checker/issues",
-                "source": "https://github.com/YahnisElsts/plugin-update-checker/tree/v5.2"
+                "source": "https://github.com/YahnisElsts/plugin-update-checker/tree/v5.3"
             },
             "install-path": "../yahnis-elsts/plugin-update-checker"
         }
