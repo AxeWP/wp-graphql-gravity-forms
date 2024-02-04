@@ -28,7 +28,7 @@ class EntryObjectMutation {
 	 *
 	 * @throws \Exception .
 	 */
-	public static function get_field_value_input( array $args, array $form, bool $is_draft, array $entry = null ): FieldValueInput\AbstractFieldValueInput {
+	public static function get_field_value_input( array $args, array $form, bool $is_draft, ?array $entry = null ): FieldValueInput\AbstractFieldValueInput {
 		$field = GFUtils::get_field_by_id( $form, $args['id'] );
 
 		$input_type = $field->get_input_type();

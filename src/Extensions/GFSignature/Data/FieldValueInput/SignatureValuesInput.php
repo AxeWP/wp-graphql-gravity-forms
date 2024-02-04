@@ -101,7 +101,7 @@ class SignatureValuesInput extends ValueInput {
 	 *
 	 * @param string $prev_filename The file name of the image to delete.
 	 */
-	protected function delete_previous_signature_image( string $prev_filename = null ): void {
+	protected function delete_previous_signature_image( ?string $prev_filename = null ): void {
 		if ( ! $prev_filename ) {
 			return;
 		}

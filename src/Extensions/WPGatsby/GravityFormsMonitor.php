@@ -83,7 +83,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	/**
 	 * Triggers a Gatsby `log_action()` after a form is created.
 	 *
-	 * @param integer $form_id .
+	 * @param int $form_id .
 	 */
 	public function after_create_form( int $form_id ): void {
 		$args = [
@@ -112,7 +112,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	/**
 	 * Triggers a Gatsby `log_action()` after a form is updated.
 	 *
-	 * @param integer $form_id .
+	 * @param int $form_id .
 	 */
 	public function after_update_form( int $form_id ): void {
 		$args = [
@@ -155,7 +155,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	/**
 	 * Triggers a Gatsby `log_action()` after a form is deleted.
 	 *
-	 * @param integer $form_id .
+	 * @param int $form_id .
 	 */
 	public function after_delete_form( int $form_id ): void {
 		$args = [

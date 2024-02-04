@@ -52,7 +52,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 	 *
 	 * @param \WPGraphQL\Registry\TypeRegistry $type_registry Instance of the WPGraphQL TypeRegistry.
 	 */
-	public static function register( TypeRegistry $type_registry = null ): void {
+	public static function register( ?TypeRegistry $type_registry = null ): void {
 		parent::register( $type_registry );
 
 		self::register_field();
@@ -61,7 +61,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config( TypeRegistry $type_registry = null ): array {
+	public static function get_type_config( ?TypeRegistry $type_registry = null ): array {
 		$config = parent::get_type_config();
 
 		$config['connections'] = self::get_connections();

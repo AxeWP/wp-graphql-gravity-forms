@@ -12,7 +12,6 @@ namespace WPGraphQL\GF\Mutation;
 
 use GFFormsModel;
 
-use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\EntryObjectMutation;
 use WPGraphQL\GF\Data\Factory;
@@ -80,7 +79,7 @@ class SubmitDraftEntry extends AbstractMutation {
 	 * {@inheritDoc}
 	 */
 	public static function mutate_and_get_payload(): callable {
-		return static function ( $input, AppContext $context, ResolveInfo $info ): array {
+		return static function ( $input ): array {
 			// Get the resume token.
 			$id_type      = isset( $input['idType'] ) ? $input['idType'] : 'global_id';
 			$resume_token = self::get_resume_token_from_id( $input['id'], $id_type );

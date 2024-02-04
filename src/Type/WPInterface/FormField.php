@@ -32,7 +32,7 @@ class FormField extends AbstractInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function get_type_config( TypeRegistry $type_registry = null ): array {
+	public static function get_type_config( ?TypeRegistry $type_registry = null ): array {
 		$config = parent::get_type_config( $type_registry );
 
 		if ( null !== $type_registry ) {

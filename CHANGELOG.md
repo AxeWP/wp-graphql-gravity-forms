@@ -14,6 +14,8 @@ This _minor_ release fixes a bug where updating the plugin via the WordPress bac
 
 - fix: Fix installation errors when upgrading plugin via the WordPress backend. H/t @shaderpixel.
 - chore: Update `yahnis-elsts/plugin-update-checker` to v5.2.
+- chore: Update `axepress/wp-graphql-cs` to v2.0.0-beta.2 and fix resulting issues.
+- chore: Update Composer dev deps.
 - ci: Include top-level plugin folder in release zip.
 
 ## v0.12.3

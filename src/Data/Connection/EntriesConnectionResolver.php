@@ -29,7 +29,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Offset index.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	public int $offset_index = 0;
 
@@ -153,7 +153,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_offset_for_cursor( string $cursor = null ) {
+	public function get_offset_for_cursor( ?string $cursor = null ) {
 		$offset = false;
 
 		// Bail early if no cursor to offset.
