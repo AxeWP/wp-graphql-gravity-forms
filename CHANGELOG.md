@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- fix: Ensure `EmailField` inputs are hydrated when Email Confirmation is disabled. H/t @Gytjarek.
 - chore: Test compatibility with WordPress 6.4.x
 
 ## v0.12.4
