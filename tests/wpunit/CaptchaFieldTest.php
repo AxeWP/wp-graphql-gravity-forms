@@ -116,7 +116,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 		return "
 			query getFieldValue(\$id: ID!, \$idType: EntryIdTypeEnum) {
 				gfEntry(id: \$id, idType: \$idType ) {
-					formFields(where:{fieldTypes:CAPTCHA}) {
+					formFields {
 						nodes {
 							{$this->field_query}
 						}

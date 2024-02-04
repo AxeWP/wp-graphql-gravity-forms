@@ -3,10 +3,11 @@
 ## Unreleased
 
 - fix: Ensure `EmailField` inputs are hydrated when Email Confirmation is disabled. H/t @gytjarek.
+- fix: Correctly use filtered form fields when preparing the connection data. H/t @samuelhadsall.
 - chore: Update `yahnis-elsts/plugin-update-checker` to v5.3.
 - chore: Update `axepress/wp-graphql-cs` to v2.0.0-beta.2 and fix resulting issues.
 - chore: Update Composer dev deps.
-- chore: Test compatibility with WordPress 6.4.x
+- ci: Test compatibility with WordPress 6.4.x
 - docs: Add docs on troubleshooting i18n issues. H/t @dev-ditrict-web.
 
 ## v0.12.4
