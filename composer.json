@@ -34,7 +34,7 @@
 		"codeception/module-webdriver": "^1.0",
 		"codeception/phpunit-wrapper": "^9.0",
 		"codeception/util-universalframework": "^1.0",
-		"lucatume/wp-browser": "^3.0",
+		"lucatume/wp-browser": "<3.5",
 		"wp-graphql/wp-graphql-testcase": "~2.3",
 		"phpunit/phpunit": "^9.0",
 		"phpstan/phpstan": "^1.2",

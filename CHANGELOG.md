@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - chore: update Composer deps and lint.
+- chore: lock WPBrowser to <3.5.0 to prevent conflicts with Codeception.
 
 ## v0.12.5
 
