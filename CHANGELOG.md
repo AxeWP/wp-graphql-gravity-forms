@@ -4,6 +4,8 @@
 
 - chore: update Composer deps and lint.
 - chore: lock WPBrowser to <3.5.0 to prevent conflicts with Codeception.
+- ci: Update GitHub Actions to latest versions.
+- ci: Test plugin compatibility with WordPress 6.5.0.
 
 ## v0.12.5
 
