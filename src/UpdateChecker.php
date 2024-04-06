@@ -44,7 +44,7 @@ class UpdateChecker implements Hookable {
 			WPGRAPHQL_GF_PLUGIN_FILE,
 			'wp-graphql-gravity-forms',
 		);
-		
+
 		// @phpstan-ignore-next-line
 		$update_checker->getVcsApi()->enableReleaseAssets( '/wp-graphql-gravity-forms\.zip/' );
 	}

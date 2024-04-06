@@ -104,8 +104,6 @@ class FormFieldsConnectionResolver {
 
 	/**
 	 * Returns input keys for Address field.
-	 *
-	 * @return array
 	 */
 	private static function get_address_input_keys(): array {
 		return [
@@ -120,8 +118,6 @@ class FormFieldsConnectionResolver {
 
 	/**
 	 * Returns input keys for Name field.
-	 *
-	 * @return array
 	 */
 	private static function get_name_input_keys(): array {
 		return [
@@ -138,7 +134,6 @@ class FormFieldsConnectionResolver {
 		 *
 		 * @param array $fields .
 		 * @param array $args .
-		 * @return array
 		 */
 	private static function filter_form_fields_by_connection_args( $fields, $args ): array {
 		if ( isset( $args['where']['ids'] ) ) {
