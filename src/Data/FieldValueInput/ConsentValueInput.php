@@ -37,6 +37,8 @@ class ConsentValueInput extends AbstractFieldValueInput {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @return array
 	 */
 	protected function prepare_value() {
 		$field = $this->field;

@@ -39,6 +39,8 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
+	 * @return array
+	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected function prepare_value() {

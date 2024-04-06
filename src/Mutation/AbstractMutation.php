@@ -51,7 +51,7 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected static function check_required_inputs( ?array $input ): void {
-		if ( empty( $input ) || ! is_array( $input ) ) {
+		if ( empty( $input ) ) {
 			throw new UserError( esc_html__( 'Mutation not processed. The input data was missing or invalid.', 'wp-graphql-gravity-forms' ) );
 		}
 	}

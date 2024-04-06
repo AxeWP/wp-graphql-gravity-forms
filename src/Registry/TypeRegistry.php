@@ -310,7 +310,7 @@ class TypeRegistry {
 	/**
 	 * Returns an array of Gravity Forms field settings mapped to their corresponding PHP class.
 	 *
-	 * @return array<string, class-string>
+	 * @return array<string,class-string>
 	 */
 	public static function form_field_settings(): array {
 		// Key-value pairs of settings and their corresponding class name.
@@ -397,7 +397,7 @@ class TypeRegistry {
 	/**
 	 * Returns an array of Gravity Forms field settings mapped to their InputProperty's corresponding interface PHP class.
 	 *
-	 * @return array<string, class-string>
+	 * @return array<string,class-string>
 	 */
 	public static function form_field_setting_inputs(): array {
 		// Key-value pairs of settings and their corresponding class name.
@@ -425,7 +425,7 @@ class TypeRegistry {
 	/**
 	 * Returns an array of Gravity Forms field settings mapped to their FieldChoice's corresponding interface PHP class.
 	 *
-	 * @return array<string, class-string>
+	 * @return array<string,class-string>
 	 */
 	public static function form_field_setting_choices(): array {
 		// Key-value pairs of settings and their corresponding class name.

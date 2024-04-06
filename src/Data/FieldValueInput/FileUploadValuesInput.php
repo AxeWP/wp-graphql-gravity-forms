@@ -32,6 +32,8 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
+	 * @return string|mixed
+	 *
 	 * @throws \GraphQL\Error\UserError
 	 */
 	protected function prepare_value() {

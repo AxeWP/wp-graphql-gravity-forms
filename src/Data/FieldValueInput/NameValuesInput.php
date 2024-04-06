@@ -35,6 +35,8 @@ class NameValuesInput extends AbstractFieldValueInput {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @return array
 	 */
 	protected function prepare_value() {
 		$value = $this->args;

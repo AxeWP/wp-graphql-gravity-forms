@@ -3,8 +3,9 @@
 ## [Unreleased]
 
 - feat: Add plugin dependency header.
-- chore: update Composer deps and lint.
-- chore: lock WPBrowser to <3.5.0 to prevent conflicts with Codeception.
+- chore: Update Composer deps and lint.
+- chore: Lock WPBrowser to <3.5.0 to prevent conflicts with Codeception.
+- chore: Implement strict PHPStan rules and fix resulting issues.
 - ci: Update GitHub Actions to latest versions.
 - ci: Test plugin compatibility with WordPress 6.5.0.
 - ci: Test plugin compatibility with PHP 8.2.

@@ -38,7 +38,7 @@ class QuizResults extends AbstractObject implements Field {
 
 	// @todo grab search criteria from connection args.
 	/**
-	 * @var array<string, string>
+	 * @var array<string,string>
 	 */
 	private const SEARCH_CRITERIA = [ 'status' => 'active' ];
 
