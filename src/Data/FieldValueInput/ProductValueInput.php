@@ -92,6 +92,8 @@ class ProductValueInput extends AbstractFieldValueInput {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @return array<string,mixed>
 	 */
 	protected function prepare_value() {
 		$field = $this->field;

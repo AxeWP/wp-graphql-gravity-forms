@@ -40,12 +40,14 @@ class GFUtils {
 	 * @param int  $form_id .
 	 * @param bool $active_only Whether to only return the form if it is active.
 	 *
+	 * @return array<string,mixed> The form object.
+	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
 	public static function get_form( int $form_id, bool $active_only = true ): array {
 		$form = GFAPI::get_form( $form_id );
 
-		if ( ! $form ) {
+		if ( ! is_array( $form ) ) {
 			throw new UserError(
 				// translators: Gravity Forms form id.
 				sprintf( esc_html__( 'Unable to retrieve the form for the given ID %s.', 'wp-graphql-gravity-forms' ), absint( $form_id ) ),
@@ -66,6 +68,9 @@ class GFUtils {
 			);
 		}
 
+		/**
+		 * @var array<string,mixed> $form
+		 */
 		return $form;
 	}
 
@@ -76,13 +81,13 @@ class GFUtils {
 	 *
 	 * @see https://docs.gravityforms.com/api-functions/#get-forms
 	 *
-	 * @param array  $ids         Array of form ids to limit results. Empty if all.
+	 * @param int[]  $ids         Array of form ids to limit results. Empty if all.
 	 * @param bool   $active      True if active forms are returned. False to get inactive forms. Defaults to true.
 	 * @param bool   $trash       True if trashed forms are returned. False to exclude trash. Defaults to false.
 	 * @param string $sort_column The column to sort the results on.
 	 * @param string $sort_dir    The sort direction, ASC or DESC.
 	 *
-	 * @return array The array of Form Objects.
+	 * @return array<string,mixed>[] The array of Form Objects.
 	 */
 	public static function get_forms( array $ids = [], bool $active = true, bool $trash = false, string $sort_column = 'id', string $sort_dir = 'DESC' ): array {
 		$form_ids = ! empty( $ids ) ? $ids : GFFormsModel::get_form_ids( $active, $trash, $sort_column, $sort_dir );
@@ -94,7 +99,7 @@ class GFUtils {
 		$forms = [];
 
 		foreach ( $form_ids as $form_id ) {
-			$forms[] = self::get_form( $form_id, false );
+			$forms[] = self::get_form( (int) $form_id, false );
 		}
 
 		return $forms;
@@ -103,7 +108,7 @@ class GFUtils {
 	/**
 	 * Gets the last page of the form. Useful for form submissions.
 	 *
-	 * @param array $form .
+	 * @param array<string,mixed> $form The form object.
 	 */
 	public static function get_last_form_page( array $form ): int {
 		require_once GFCommon::get_base_path() . '/form_display.php'; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingCustomConstant
@@ -129,8 +134,8 @@ class GFUtils {
 	/**
 	 * Returns Gravity Forms Field object for given field id.
 	 *
-	 * @param array $form     The form.
-	 * @param int   $field_id Field ID.
+	 * @param array<string,mixed> $form     The form.
+	 * @param int                 $field_id Field ID.
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
@@ -162,12 +167,14 @@ class GFUtils {
 	 *
 	 * @param int $entry_id .
 	 *
+	 * @return array<int|string,mixed> The entry object.
+	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
 	public static function get_entry( int $entry_id ): array {
 		$entry = GFAPI::get_entry( $entry_id );
 
-		if ( is_wp_error( $entry ) ) {
+		if ( $entry instanceof \WP_Error ) {
 			throw new UserError(
 				// translators: Gravity Forms form id.
 				sprintf( esc_html__( 'The entry for the given ID %s was not found. Error: .', 'wp-graphql-gravity-forms' ), absint( $entry_id ) ) . esc_html( $entry->get_error_message() )
@@ -183,8 +190,8 @@ class GFUtils {
 	 *
 	 * @see https://docs.gravityforms.com/api-functions/#update-entry
 	 *
-	 * @param array $entry_data .
-	 * @param int   $entry_id .
+	 * @param array<int|string,mixed> $entry_data .
+	 * @param int                     $entry_id .
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
@@ -193,7 +200,7 @@ class GFUtils {
 
 		$is_entry_updated = GFAPI::update_entry( $entry_data, $entry_id );
 
-		if ( is_wp_error( ( $is_entry_updated ) ) ) {
+		if ( $is_entry_updated instanceof \WP_Error ) {
 			throw new UserError(
 				// translators: Gravity Forms entry id.
 				sprintf( esc_html__( 'An error occured while trying to update the entry (ID: %s). Error: .', 'wp-graphql-gravity-forms' ), esc_html( $entry_data['id'] ) ) . esc_html( $is_entry_updated->get_error_message() )
@@ -209,6 +216,7 @@ class GFUtils {
 	 *
 	 * @param string $resume_token .
 	 *
+	 * @return array<int|string,mixed> Draft entry.
 	 * @throws \GraphQL\Error\UserError .
 	 */
 	public static function get_draft_entry( string $resume_token ): array {
@@ -228,6 +236,8 @@ class GFUtils {
 	 * Returns draft entry submittion data.
 	 *
 	 * @param string $resume_token Draft entry resume token.
+	 *
+	 * @return array<int|string,mixed> Draft entry submission data.
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
@@ -252,9 +262,9 @@ class GFUtils {
 	/**
 	 * Get the draft resume URL.
 	 *
-	 * @param string     $resume_token Resume token.
-	 * @param string     $source_url   Source URL.
-	 * @param array|null $form         Form object.
+	 * @param string $resume_token Resume token.
+	 * @param string $source_url   Source URL.
+	 * @param array  $form         Form object.
 	 *
 	 * @return string Resume URL, or empty string if no source URL was provided.
 	 */
@@ -287,15 +297,15 @@ class GFUtils {
 	 * Saves Gravity Forms draft entry.
 	 * Uses GFFormsModel::save_draft_submission().
 	 *
-	 * @param array  $form .
-	 * @param array  $entry .
-	 * @param array  $field_values .
-	 * @param int    $page_number .
-	 * @param array  $files .
-	 * @param string $form_unique_id .
-	 * @param string $ip .
-	 * @param string $source_url .
-	 * @param string $resume_token .
+	 * @param array<string,mixed>     $form .
+	 * @param array<int|string,mixed> $entry .
+	 * @param array                   $field_values .
+	 * @param int                     $page_number .
+	 * @param array                   $files .
+	 * @param string                  $form_unique_id .
+	 * @param string                  $ip .
+	 * @param string                  $source_url .
+	 * @param string                  $resume_token .
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
@@ -337,6 +347,8 @@ class GFUtils {
 	 * @param int   $target_page .
 	 * @param int   $source_page .
 	 *
+	 * @return array<int|string,mixed> The submission object.
+	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
 	public static function submit_form( int $form_id, array $input_values, array $field_values = [], int $target_page = 0, int $source_page = 0 ): array {
@@ -348,7 +360,7 @@ class GFUtils {
 			$source_page,
 		);
 
-		if ( is_wp_error( $submission ) ) {
+		if ( $submission instanceof \WP_Error ) {
 			throw new UserError( esc_html( $submission->get_error_message() ) );
 		}
 
@@ -364,7 +376,7 @@ class GFUtils {
 	 *
 	 * @param int $form_id GF form ID.
 	 *
-	 * @return array     GF uploads dir config.
+	 * @return array<string,mixed> GF uploads dir config.
 	 * @throws \GraphQL\Error\UserError If directory doesn't exist or cant be created.
 	 */
 	public static function get_gravity_forms_upload_dir( int $form_id ): array {
@@ -429,10 +441,10 @@ class GFUtils {
 	 *
 	 * @author WebDevStudios
 	 * @source https://github.com/WebDevStudios/wds-headless-wordpress/blob/5a8e84a2dbb7a0bb537422223ab409ecd2568b00/themes/wds_headless/inc/wp-graphql.php#L452
-	 * @param array $file   File data to upload.
-	 * @param array $target Target upload directory; WP uploads dir will be used if none provided.
+	 * @param array<string,mixed> $file   File data to upload.
+	 * @param array<string,mixed> $target Target upload directory; WP uploads dir will be used if none provided.
 	 *
-	 * @return array        Uploaded file data.
+	 * @return array{file:string,url:string,type:mixed}
 	 *
 	 * @deprecated 0.11.0
 	 *

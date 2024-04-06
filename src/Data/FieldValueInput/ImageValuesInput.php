@@ -37,6 +37,8 @@ class ImageValuesInput extends FileUploadValuesInput {
 	/**
 	 * {@inheritDoc}
 	 *
+	 * @return array<string,mixed>
+	 *
 	 * @throws \GraphQL\Error\UserError
 	 */
 	protected function prepare_value() {

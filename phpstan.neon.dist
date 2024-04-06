@@ -1,9 +1,24 @@
 parameters:
 		level: 8
+		checkAlwaysTrueCheckTypeFunctionCall: true
+		checkAlwaysTrueInstanceof: true
+		checkAlwaysTrueStrictComparison: true
+		checkExplicitMixedMissingReturn: true
+		checkFunctionNameCase: true
+		checkInternalClassCaseSensitivity: true
+		checkMissingIterableValueType: false # @todo make true
+		checkTooWideReturnTypesInProtectedAndPublicMethods: true
 		inferPrivatePropertyTypeFromConstructor: true
-		checkMissingIterableValueType: false
+		polluteScopeWithAlwaysIterableForeach: false
+		polluteScopeWithLoopInitialAssignments: false
+		reportAlwaysTrueInLastCondition: true
+		reportStaticMethodSignatures: true
+		reportWrongPhpDocTypeInVarTag: true
+		treatPhpDocTypesAsCertain: false
 		featureToggles:
 			disableRuntimeReflectionProvider: true
+		dynamicConstantNames:
+			- WPGRAPHQL_GF_AUTOLOAD
 		stubFiles:
 			# Simulate added properties
 			- phpstan/class-app-context.stub

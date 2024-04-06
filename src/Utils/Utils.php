@@ -26,9 +26,10 @@ class Utils {
 	/**
 	 * Adds deprecation reason to GraphQL field property.
 	 *
-	 * @param array  $property The field property to deprecate.
-	 * @param string $reason The reason for the deprecation. Should be wrapped in __().
+	 * @param array<string,mixed> $property The field property to deprecate.
+	 * @param string              $reason   The reason for the deprecation. Should be wrapped in __().
 	 *
+	 * @return array<string,mixed>
 	 * @since 0.2.0
 	 */
 	public static function deprecate_property( array $property, string $reason ): array {
@@ -139,6 +140,8 @@ class Utils {
 	 * Gets an array of all GF type names paired with their GraphQL type names.
 	 *
 	 * E.g. `[ 'text' => 'TextField' ]`.
+	 *
+	 * @return array<string,string>
 	 */
 	public static function get_registered_form_field_types(): array {
 		$types = [];
@@ -150,6 +153,9 @@ class Utils {
 			}
 		}
 
+		/**
+		 * @var array<string,string> $types An array of GF_Field::$type => GraphQL Type names.
+		 */
 		return $types;
 	}
 
@@ -157,6 +163,8 @@ class Utils {
 	 * Gets an array of GF entry types paired with their GraphQL type names.
 	 *
 	 * E.g. `[ 'draft_entry' => 'GfDraftEntry' ]`
+	 *
+	 * @return array<string,string>
 	 */
 	public static function get_registered_entry_types(): array {
 		$types = [
@@ -167,7 +175,7 @@ class Utils {
 		/**
 		 * Filter for modifying the Gravity Forms Entry types supported by WPGraphQL.
 		 *
-		 * @param array $entry_types An array of Data Loader names => GraphQL Types.
+		 * @param array<string,string> $entry_types An array of Data Loader names => GraphQL Types.
 		 */
 		return apply_filters( 'graphql_gf_registered_entry_types', $types );
 	}
@@ -176,6 +184,8 @@ class Utils {
 	 * Returns an array of possible form field input types for GraphQL object generation.
 	 *
 	 * @param string $type The current GF field type.
+	 *
+	 * @return array<string,string>
 	 */
 	public static function get_possible_form_field_child_types( string $type ): array {
 		$prefix = self::get_safe_form_field_type_name( $type );
@@ -263,14 +273,16 @@ class Utils {
 		/**
 		 * Filter for altering the child types of a specific GF_Field.
 		 *
-		 * @param array $child_types An array of GF_Field::$type => GraphQL type names.
-		 * @param string $field_type The 'parent' GF_Field type.
+		 * @param array<string,string> $child_types An array of GF_Field::$type => GraphQL type names.
+		 * @param string               $field_type  The 'parent' GF_Field type.
 		 */
 		return apply_filters( 'graphql_gf_form_field_child_types', $child_types, $type );
 	}
 
 	/**
 	 * Gets a filterable list of Gravity Forms field types that should be disabled for this instance.
+	 *
+	 * @return string[]
 	 */
 	public static function get_ignored_gf_field_types(): array {
 		$ignored_fields = [
@@ -289,7 +301,7 @@ class Utils {
 		 *
 		 * Useful for adding/removing support for a specific Gravity Forms field.
 		 *
-		 * @param array $ignored_fields An array of GF_Field $type names to be ignored by WPGraphQL.
+		 * @param string[] $ignored_fields An array of GF_Field $type names to be ignored by WPGraphQL.
 		 */
 		$ignored_fields = apply_filters( 'graphql_gf_ignored_field_types', $ignored_fields );
 
@@ -298,6 +310,8 @@ class Utils {
 
 	/**
 	 * Returns an array of Gravity Forms field settings to ignore.
+	 *
+	 * @return string[]
 	 */
 	public static function get_ignored_gf_settings(): array {
 		return [

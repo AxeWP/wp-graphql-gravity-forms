@@ -33,19 +33,7 @@ class FormsLoader extends AbstractDataLoader {
 	}
 
 	/**
-	 * Given array of keys, loads and returns a map consisting of keys from `keys` array and loaded
-	 * posts as the values
-	 *
-	 * Note that order of returned values must match exactly the order of keys.
-	 * If some entry is not available for given key - it must include null for the missing key.
-	 *
-	 * For example:
-	 * loadKeys(['a', 'b', 'c']) -> ['a' => 'value1, 'b' => null, 'c' => 'value3']
-	 *
-	 * @param array $keys .
-	 *
-	 * @return array|false
-	 * @throws \Exception .
+	 * {@inheritDoc}
 	 */
 	protected function loadKeys( array $keys ) {
 		if ( empty( $keys ) ) {
@@ -54,7 +42,11 @@ class FormsLoader extends AbstractDataLoader {
 
 		$loaded_forms = [];
 		foreach ( $keys as $key ) {
-			$form = GFAPI::get_form( $key );
+			if ( empty( $key ) ) {
+				continue;
+			}
+
+			$form = GFAPI::get_form( (int) $key );
 
 			// Run the form through `gform_pre_render` to support 3rd party plugins like Populate Anything.
 			if ( ! empty( $form ) ) {

@@ -19,7 +19,7 @@ use WPGraphQL\AppContext;
  */
 class FormFieldsConnectionResolver {
 	/**
-	 * @var array<string, null>
+	 * @var array<string,null>
 	 */
 	private const EMPTY_CHOICES = [
 		'text'       => null,

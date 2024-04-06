@@ -214,6 +214,8 @@ class FormFieldRegistry {
 	 * Gets the registered field settings, including those of input types.
 	 *
 	 * @param \GF_Field $field .
+	 *
+	 * @return string[]
 	 */
 	public static function get_field_settings( GF_Field $field ): array {
 		$settings = $field->get_form_editor_field_settings();
@@ -242,6 +244,8 @@ class FormFieldRegistry {
 	 *
 	 * @param \GF_Field $field .
 	 * @param array     $settings .
+	 *
+	 * @return array{interfaces:string[],fields:array}
 	 */
 	public static function get_config_from_settings( GF_Field $field, array $settings ): array {
 		// Every GF_field is a FormField.
@@ -339,6 +343,8 @@ class FormFieldRegistry {
 	 * @param \GF_Field $field The Gravity Forms field object.
 	 * @param array     $settings The Gravity Forms field settings.
 	 * @param array     $interfaces The list of interfaces to add to the field.
+	 *
+	 * @return array<string,array<string,mixed>> The GraphQL fields config.
 	 */
 	public static function get_fields( GF_Field $field, array $settings, $interfaces ): array {
 		$fields = [];
@@ -362,10 +368,10 @@ class FormFieldRegistry {
 		/**
 		 * Filter to modify the Form Field GraphQL fields.
 		 *
-		 * @param array    $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
-		 * @param \GF_Field $field The Gravity Forms Field object.
-		 * @param array    $settings The `form_editor_field_settings()` key.
-		 * @param array    $interfaces The list of interfaces for the GraphQL type.
+		 * @param array<string,array<string,mixed>> $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
+		 * @param \GF_Field                         $field The Gravity Forms Field object.
+		 * @param array                             $settings The `form_editor_field_settings()` key.
+		 * @param array                             $interfaces The list of interfaces for the GraphQL type.
 		 */
 		$fields = apply_filters( 'graphql_gf_form_field_setting_fields', $fields, $field, $settings, $interfaces );
 

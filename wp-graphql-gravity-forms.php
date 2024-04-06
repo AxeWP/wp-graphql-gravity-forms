@@ -70,6 +70,8 @@ if ( ! function_exists( 'graphql_gf_dependencies_not_ready' ) ) {
 
 	/**
 	 * Checks if all the the required plugins are installed and activated.
+	 *
+	 * @return array<string,string> List of dependencies not ready.
 	 */
 	function gf_graphql_dependencies_not_ready(): array {
 		$wpgraphql_version = '1.9.0';

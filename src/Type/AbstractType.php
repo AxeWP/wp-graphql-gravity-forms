@@ -40,6 +40,8 @@ abstract class AbstractType implements Hookable, Registrable {
 
 	/**
 	 * Gets the WPGraphQL config array used to register the type.
+	 *
+	 * @return array<string,mixed>
 	 */
 	abstract public static function get_type_config(): array;
 }

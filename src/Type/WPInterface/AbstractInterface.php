@@ -46,6 +46,8 @@ abstract class AbstractInterface extends AbstractType implements TypeWithDescrip
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @return array<string,mixed>
 	 */
 	public static function get_type_config( ?TypeRegistry $type_registry = null ): array {
 		return [
