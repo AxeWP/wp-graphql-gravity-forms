@@ -31,6 +31,8 @@ abstract class AbstractConnection implements Hookable, Registrable {
 
 	/**
 	 * Gets custom connection configuration arguments, such as the resolver, edgeFields, connectionArgs, etc.
+	 *
+	 * @return array<string,array<string,mixed>>
 	 */
 	public static function get_connection_args(): array {
 		return [];
@@ -39,7 +41,9 @@ abstract class AbstractConnection implements Hookable, Registrable {
 	/**
 	 * Returns a filtered array of connection args.
 	 *
-	 * @param array $filter_by .
+	 * @param string[] $filter_by .
+	 *
+	 * @return array<string,array<string,mixed>>
 	 */
 	public static function get_filtered_connection_args( ?array $filter_by = null ): array {
 		$connection_args = static::get_connection_args();

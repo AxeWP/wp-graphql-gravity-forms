@@ -402,7 +402,6 @@ class FieldValues {
 
 					// Sometimes GF likes to nest their jsons twice.
 					if ( is_string( $values ) ) {
-
 						$values = Utils::maybe_decode_json( $values );
 					}
 
