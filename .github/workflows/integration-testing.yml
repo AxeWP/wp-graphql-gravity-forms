@@ -19,7 +19,7 @@ on:
 concurrency:
   # Group workflow runs by workflow name, along with the head branch ref of the pull request
   # or otherwise the branch or tag ref.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request_target' && github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
