@@ -95,8 +95,8 @@ class Form extends Model {
 				'form'                         => fn (): array => $this->data,
 				'formFields'                   => fn (): ?array => ! empty( $this->data['fields'] ) ? $this->data['fields'] : null,
 				'id'                           => fn (): string => Relay::toGlobalId( FormsLoader::$name, $this->data['id'] ),
-				'isActive'                     => fn (): bool => $this->data['is_active'] ?? true,
-				'isTrash'                      => fn (): bool => $this->data['is_trash'] ?? false,
+				'isActive'                     => fn (): bool => ! empty( $this->data['is_active'] ),
+				'isTrash'                      => fn (): bool => ! empty( $this->data['is_trash'] ),
 				'labelPlacement'               => fn (): ?string => $this->data['labelPlacement'] ?? null,
 				'login'                        => function (): array {
 					return [
