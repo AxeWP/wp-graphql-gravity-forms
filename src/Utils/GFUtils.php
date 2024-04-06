@@ -198,14 +198,14 @@ class GFUtils {
 	 * @throws \GraphQL\Error\UserError .
 	 */
 	public static function update_entry( array $entry_data, ?int $entry_id = null ): int {
-		$entry_id = $entry_id ?? $entry_data['id'];
+		$entry_id = $entry_id ?? (int) $entry_data['id'];
 
 		$is_entry_updated = GFAPI::update_entry( $entry_data, $entry_id );
 
 		if ( $is_entry_updated instanceof \WP_Error ) {
 			throw new UserError(
 				// translators: Gravity Forms entry id.
-				sprintf( esc_html__( 'An error occured while trying to update the entry (ID: %s). Error: .', 'wp-graphql-gravity-forms' ), esc_html( $entry_data['id'] ) ) . esc_html( $is_entry_updated->get_error_message() )
+				sprintf( esc_html__( 'An error occured while trying to update the entry (ID: %s). Error: .', 'wp-graphql-gravity-forms' ), esc_html( (string) $entry_data['id'] ) ) . esc_html( $is_entry_updated->get_error_message() )
 			);
 		}
 
