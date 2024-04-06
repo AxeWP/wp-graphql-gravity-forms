@@ -46,7 +46,7 @@ class FormsLoader extends AbstractDataLoader {
 				continue;
 			}
 
-			GFAPI::get_form( (int) $key );
+			$form = GFAPI::get_form( (int) $key );
 
 			// Run the form through `gform_pre_render` to support 3rd party plugins like Populate Anything.
 			if ( ! empty( $form ) ) {
