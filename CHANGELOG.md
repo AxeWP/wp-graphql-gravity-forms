@@ -6,6 +6,7 @@
 - chore: lock WPBrowser to <3.5.0 to prevent conflicts with Codeception.
 - ci: Update GitHub Actions to latest versions.
 - ci: Test plugin compatibility with WordPress 6.5.0.
+- ci: Test plugin compatibility with PHP 8.2.
 
 ## v0.12.5
 
