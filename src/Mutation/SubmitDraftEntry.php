@@ -88,7 +88,7 @@ class SubmitDraftEntry extends AbstractMutation {
 
 			// Prepare the entry data.
 			$submission = GFUtils::get_draft_submission( $resume_token );
-			$form       = GFUtils::get_form( $submission['partial_entry']['form_id'] );
+			$form       = GFUtils::get_form( (int) $submission['partial_entry']['form_id'] );
 
 			$submission['page_number'] = GFUtils::get_last_form_page( $form );
 

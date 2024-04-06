@@ -112,7 +112,7 @@ class UpdateEntry extends AbstractMutation {
 			}
 
 			// Prepare the entry data.
-			$form = GFUtils::get_form( $entry['form_id'] );
+			$form = GFUtils::get_form( (int) $entry['form_id'] );
 
 			$entry_data = self::prepare_entry_data( $input, $entry, $form );
 
