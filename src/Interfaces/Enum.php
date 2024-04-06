@@ -11,6 +11,7 @@ namespace WPGraphQL\GF\Interfaces;
 /**
  * Interface - Enum.
  */
+// phpcs:ignore PHPCompatibility.Keywords.ForbiddenNames.enumFound -- @todo Remove b/c
 interface Enum {
 	/**
 	 * Gets the Enum type values.
