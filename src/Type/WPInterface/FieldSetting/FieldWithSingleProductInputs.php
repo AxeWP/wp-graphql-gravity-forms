@@ -8,6 +8,8 @@
  * @since 0.12.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;

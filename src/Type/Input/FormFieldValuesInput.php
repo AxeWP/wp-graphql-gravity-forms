@@ -8,6 +8,8 @@
  * @since   0.4.o
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\Input;
 
 use WPGraphQL\GF\Utils\Utils;

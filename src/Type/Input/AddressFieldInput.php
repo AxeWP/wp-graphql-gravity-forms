@@ -7,6 +7,8 @@
  * @since   0.0.1
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\Input;
 
 use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;

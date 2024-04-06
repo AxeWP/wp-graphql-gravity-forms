@@ -8,6 +8,8 @@
  * @since   0.11.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
 use WPGraphQL\GF\Type\Enum\FormButtonTypeEnum;

@@ -9,6 +9,8 @@
  * @since 0.12.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Registry;
 
 use GF_Field;

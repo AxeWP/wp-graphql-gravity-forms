@@ -6,6 +6,8 @@
  * @since   0.10.4
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\QuizResults;
 
 use WPGraphQL\GF\Interfaces\TypeWithConnections;

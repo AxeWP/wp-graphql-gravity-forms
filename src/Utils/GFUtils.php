@@ -8,6 +8,8 @@
  * @since 0.4.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Utils;
 
 use GFAPI;

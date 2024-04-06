@@ -24,6 +24,8 @@
  * @license GPL-3
  */
 
+declare( strict_types = 1 );
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

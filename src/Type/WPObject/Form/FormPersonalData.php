@@ -6,6 +6,8 @@
  * @since   0.10.1
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
 use WPGraphQL\GF\Type\Enum\FormRetentionPolicyEnum;

@@ -6,6 +6,8 @@
  * @since 0.10.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Data\FieldValueInput;
 
 use GraphQL\Error\UserError;
@@ -35,6 +37,8 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 	 * @return string|mixed
 	 *
 	 * @throws \GraphQL\Error\UserError
+	 *
+	 * @return string|mixed
 	 */
 	protected function prepare_value() {
 		// Draft entries don't upload files.

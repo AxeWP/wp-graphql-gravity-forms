@@ -6,6 +6,8 @@
  * @since   0.4.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\Enum;
 
 use WPGraphQL\GF\Type\Enum\AbstractEnum;

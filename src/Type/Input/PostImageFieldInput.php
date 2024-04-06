@@ -7,6 +7,8 @@
  * @since   0.7.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\Input;
 
 /**

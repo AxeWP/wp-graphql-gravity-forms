@@ -6,6 +6,8 @@
  * @since   0.11.1
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\WPObject\Settings;
 
 use WPGraphQL\GF\Type\Enum\RecaptchaTypeEnum;

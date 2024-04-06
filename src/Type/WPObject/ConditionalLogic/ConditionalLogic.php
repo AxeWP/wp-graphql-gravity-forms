@@ -8,6 +8,8 @@
  * @since   0.0.1
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\WPObject\ConditionalLogic;
 
 use WPGraphQL\GF\Type\Enum\ConditionalLogicActionTypeEnum;

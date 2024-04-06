@@ -7,6 +7,8 @@
  * @since 0.10.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\Input;
 
 use WPGraphQL\GF\Type\Input\AbstractInput;

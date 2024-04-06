@@ -6,6 +6,8 @@
  * @since   0.10.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Extensions;
 
 use WPGraphQL\GF\Extensions\GFChainedSelects\GFChainedSelects;

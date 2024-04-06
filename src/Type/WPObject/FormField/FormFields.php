@@ -9,6 +9,8 @@
  * @since   0.10.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\WPObject\FormField;
 
 use GF_Fields;

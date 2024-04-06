@@ -8,6 +8,8 @@
  * @since 0.10.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Mutation;
 
 use GFFormsModel;
