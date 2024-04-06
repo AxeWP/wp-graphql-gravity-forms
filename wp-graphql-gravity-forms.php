@@ -13,6 +13,7 @@
  * Requires at least: 5.4.1
  * Tested up to: 6.5
  * Requires PHP: 7.4
+ * Requires Plugins: wp-graphql
  * WPGraphQL requires at least: 1.9.0
  * GravityForms requires at least: 2.5.0
  * License: GPL-3
