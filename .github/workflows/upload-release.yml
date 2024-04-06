@@ -10,13 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 7.4
           extensions: mbstring, intl
           tools: composer
+
       - name: Install dependencies
         run: |
           composer install --no-dev --optimize-autoloader
@@ -25,13 +27,15 @@ jobs:
           mkdir -p plugin-build/wp-graphql-gravity-forms
           rsync -rc --exclude-from=.distignore --exclude=plugin-build . plugin-build/wp-graphql-gravity-forms/ --delete --delete-excluded -v
           cd plugin-build ; zip -r wp-graphql-gravity-forms.zip wp-graphql-gravity-forms
+
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: wp-graphql-gravity-forms
           path: plugin-build/wp-graphql-gravity-forms.zip
+
       - name: Upload release asset
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: plugin-build/wp-graphql-gravity-forms.zip
         env:

@@ -15,6 +15,13 @@ on:
       - "!docs/**"
     types: [ opened, synchronize, reopened, labeled ]
 
+# Cancel previous workflow run groups that have not completed.
+concurrency:
+  # Group workflow runs by workflow name, along with the head branch ref of the pull request
+  # or otherwise the branch or tag ref.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   continuous_integration:
     runs-on: ubuntu-latest
@@ -24,31 +31,33 @@ jobs:
     strategy:
       matrix:
         php: [ '8.0', '7.4' ]
-        wordpress: [ '6.4','6.3', '6.2', '6.1', '6.0', '5.9', '5.8', '5.7' ]
+        wordpress: [ '6.5', '6.4','6.3', '6.2', '6.1', '6.0', '5.9', '5.8', '5.7' ]
         include:
           - php: '8.1'
-            wordpress: '6.4'
+            wordpress: '6.5'
             coverage: 1
+          - php: '8.1'
+            wordpress: '6.4'
           - php: '8.1'
             wordpress: '6.3'
           - php: '8.1'
             wordpress: '6.2'
         exclude:
           - php: '7.4'
+            wordpress: '6.5'
+          - php: '7.4'
             wordpress: '6.4'
           - php: '7.4'
             wordpress: '6.3'
           - php: '7.4'
             wordpress: '6.2'
+          - php: "8.0"
+            wordpress: "6.5"
       fail-fast: false
 
     steps:
-      - name: Cancel previous runs of this workflow (pull requests only)
-        if: ${{ github.event_name == 'pull_request_target' }}
-        uses: styfle/cancel-workflow-action@0.11.0
-
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
@@ -60,7 +69,7 @@ jobs:
           tools: composer:v2
 
       - name: Install dependencies
-        uses: ramsey/composer-install@v2
+        uses: ramsey/composer-install@v3
 
       - name: Build "testing" Docker Image
         env:
@@ -124,7 +133,7 @@ jobs:
 
       - name: Push CodeCoverage to CodeClimate
         if: ${{ matrix.coverage == 1 }}
-        uses: paambaati/codeclimate-action@v3.2.0
+        uses: paambaati/codeclimate-action@v5
         env:
           CC_TEST_REPORTER_ID: c8f992fb9d2400821643b093de584af5a3c8d0a8f1f6f4e000592ccf0270ee29
         with:
