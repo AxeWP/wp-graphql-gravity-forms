@@ -154,7 +154,7 @@ class EntryObjectMutation {
 		$formatted = [];
 
 		foreach ( $field_values as $key => $value ) {
-			$formatted[ 'input_' . str_replace( '.', '_', $key ) ] = $value;
+			$formatted[ 'input_' . str_replace( '.', '_', (string) $key ) ] = $value;
 		}
 
 		return $formatted;

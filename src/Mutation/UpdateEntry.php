@@ -227,7 +227,7 @@ class UpdateEntry extends AbstractMutation {
 						array_column( $files, 'uploaded_filename' )
 					);
 
-					$field_id = (int) str_replace( 'input_', '', $input_name );
+					$field_id = (int) str_replace( 'input_', '', (string) $input_name );
 
 					$field = GFUtils::get_field_by_id( $form, $field_id );
 
@@ -280,8 +280,8 @@ class UpdateEntry extends AbstractMutation {
 		$entry = array_merge( $entry, $values );
 
 		foreach ( $values as $id => &$value ) {
-			$input_name = 'input_' . str_replace( '.', '_', $id );
-			$field_id   = strtok( $id, '.' );
+			$input_name = 'input_' . str_replace( '.', '_', (string) $id );
+			$field_id   = strtok( (string) $id, '.' );
 			$field      = GFUtils::get_field_by_id( $form, (int) $field_id );
 
 			// Post images can sometimes already be prepared.
