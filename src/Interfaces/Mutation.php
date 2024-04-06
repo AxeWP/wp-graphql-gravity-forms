@@ -15,12 +15,16 @@ interface Mutation {
 	/**
 	 * Defines the input field configuration.
 	 *
+	 * @return array<string,array<string,mixed>>
+	 *
 	 * @since 0.4.0
 	 */
 	public static function get_input_fields(): array;
 
 	/**
 	 * Defines the output field configuration.
+	 *
+	 * @return array<string,array<string,mixed>>
 	 *
 	 * @since 0.4.0
 	 */

@@ -14,6 +14,8 @@ namespace WPGraphQL\GF\Interfaces;
 interface TypeWithConnections {
 	/**
 	 * Gets the the connection config for the GraphQL Type.
+	 *
+	 * @return array<string,array<string,mixed>>
 	 */
 	public static function get_connections(): array;
 }

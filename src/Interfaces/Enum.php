@@ -15,6 +15,8 @@ namespace WPGraphQL\GF\Interfaces;
 interface Enum {
 	/**
 	 * Gets the Enum type values.
+	 *
+	 * @return array<string,array<string,mixed>>
 	 */
 	public static function get_values(): array;
 }
