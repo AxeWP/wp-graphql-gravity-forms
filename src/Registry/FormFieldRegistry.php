@@ -134,12 +134,14 @@ class FormFieldRegistry {
 		}
 
 		// We flip the arrays and compare the keys for performance.
-		$interface_settings = array_keys(
-			array_intersect_key(
-				...array_map( 'array_flip', array_values( $possible_settings ) )
-			)
-		);
-
+		$flipped_arrays = array_map( 'array_flip', array_values( $possible_settings ) );
+		if ( count( $flipped_arrays ) < 2 ) {
+			// Handle the case when there is less than two arrays.
+			$interface_settings = $flipped_arrays[0] ?? [];
+		} else {
+				// Get the intersection of the arrays.
+				$interface_settings = array_keys( call_user_func_array( 'array_intersect_key', $flipped_arrays ) );
+		}
 		$interface_settings = array_merge( $settings, $interface_settings );
 
 		// Register the interface.
