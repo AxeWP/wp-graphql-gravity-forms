@@ -104,7 +104,7 @@ class Form extends Model {
 						'loginRequiredMessage' => ! empty( $this->data['requireLoginMessage'] ) ? $this->data['requireLoginMessage'] : null,
 					];
 				},
-				'markupVersion'                => fn (): ?string => $this->data['markupVersion'] ?? null,
+				'markupVersion'                => fn (): ?string => (string) $this->data['markupVersion'] ?? null,
 				'notifications'                => fn (): ?array => ! empty( $this->data['notifications'] ) ? $this->data['notifications'] : null,
 				'nextFieldId'                  => fn (): ?int => isset( $this->data['nextFieldId'] ) ? (int) $this->data['nextFieldId'] : null,
 				'pagination'                   => function (): ?array {
