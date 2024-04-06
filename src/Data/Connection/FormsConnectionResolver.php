@@ -147,8 +147,6 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * Returns form ids.
-	 *
-	 * @return array
 	 */
 	private function get_form_ids(): array {
 		if ( empty( $this->args['where']['formIds'] ) ) {
@@ -164,8 +162,6 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * Gets form status from query.
-	 *
-	 * @return array
 	 */
 	private function get_form_status(): array {
 		$status = $this->args['where']['status'] ?? FormStatusEnum::ACTIVE;

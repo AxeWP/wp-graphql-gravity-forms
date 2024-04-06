@@ -250,8 +250,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * Gets search criteria for entry Ids.
-	 *
-	 * @return array
 	 */
 	private function get_search_criteria(): array {
 		$search_criteria = $this->apply_status_to_search_criteria( [] );
@@ -278,7 +276,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * Adds 'status' value to search criteria.
 	 *
 	 * @param array $search_criteria The search criteria for the entry Ids.
-	 * @return array
 	 */
 	private function apply_status_to_search_criteria( array $search_criteria ): array {
 		$status = $this->args['where']['status'] ?? EntryStatusEnum::ACTIVE; // Default to active entries.
@@ -297,7 +294,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * Correctly formats the field filters for search criteria.
 	 *
 	 * @param array $field_filters .
-	 * @return array
 	 */
 	private function format_field_filters( array $field_filters ): array {
 		return array_reduce(
@@ -362,7 +358,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * Get value fields for the field filter.
 	 *
 	 * @param array $field_filter .
-	 * @return array
 	 */
 	private function get_field_filter_value_fields( array $field_filter ): array {
 		return array_values(
@@ -377,8 +372,6 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * Get sort argument for entry ID query.
-	 *
-	 * @return array
 	 */
 	private function get_sort(): array {
 		// Set default sort direction.

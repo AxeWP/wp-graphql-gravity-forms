@@ -60,7 +60,7 @@ class FieldChoiceRegistry {
 			get_graphql_register_action(),
 			static function () use ( $field, $settings, $as_interface ) {
 				$choice_name = self::get_type_name( $field );
-				
+
 				// Skip if already registered.
 				if ( in_array( $choice_name, self::$registered_types, true ) ) {
 					return;

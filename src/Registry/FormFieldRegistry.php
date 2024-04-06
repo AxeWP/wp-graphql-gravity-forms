@@ -95,7 +95,6 @@ class FormFieldRegistry {
 				// Register the FormField to the schema.
 				register_graphql_object_type( $field->graphql_single_name, $config );
 
-
 				/**
 				 * Fires after the Gravity Forms field object has been registered to WPGraphQL schema.
 				 *
@@ -482,7 +481,6 @@ class FormFieldRegistry {
 		);
 
 		$has_choices = array_intersect( $field_settings, $settings_with_choices );
-
 
 		if ( ! empty( $has_choices ) ) {
 			FieldChoiceRegistry::register( $field, $field_settings, $as_interface );

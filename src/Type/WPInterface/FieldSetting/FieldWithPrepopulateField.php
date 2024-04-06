@@ -62,8 +62,10 @@ class FieldWithPrepopulateField extends AbstractFieldSetting {
 		// Bail early.
 		if (
 			! in_array( self::$type, $interfaces, true ) ||
-			'checkbox' !== $field->type &&
-			( ! empty( $field->inputs ) || in_array( $field->inputType, [ 'email', 'time', 'password' ], true ) )
+			(
+				'checkbox' !== $field->type &&
+				( ! empty( $field->inputs ) || in_array( $field->inputType, [ 'email', 'time', 'password' ], true ) )
+			)
 		) {
 			return $fields;
 		}

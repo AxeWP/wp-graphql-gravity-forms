@@ -112,8 +112,6 @@ class FieldValues {
 
 	/**
 	 * Get `consentValue` property.
-	 *
-	 * @return array
 	 */
 	public static function consent_value(): array {
 		return [
@@ -134,8 +132,6 @@ class FieldValues {
 
 	/**
 	 * Get `fileUploadValue` property.
-	 *
-	 * @return array
 	 */
 	public static function file_upload_values(): array {
 		return [
