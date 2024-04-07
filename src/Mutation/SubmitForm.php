@@ -283,7 +283,9 @@ class SubmitForm extends AbstractMutation {
 	 *
 	 * @param bool                $is_draft .
 	 * @param array<string,mixed> $field_values Required so submit_form() can generate the $_POST object.
-	 * @param array               $file_upload_values .
+	 * @param array<string,mixed> $file_upload_values .
+	 *
+	 * @return array<string,mixed>
 	 */
 	private static function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ): array {
 		$input_values = [

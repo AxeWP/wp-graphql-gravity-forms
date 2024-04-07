@@ -125,9 +125,9 @@ class GFChainedSelects implements Hookable {
 	/**
 	 * Registers the SignatureValuesInput class.
 	 *
-	 * @param string    $input_class .
-	 * @param array     $args .
-	 * @param \GF_Field $field .
+	 * @param class-string        $input_class .
+	 * @param array<string,mixed> $args .
+	 * @param \GF_Field           $field .
 	 */
 	public static function field_value_input( string $input_class, array $args, GF_Field $field ): string {
 		if ( 'chainedselect' === $field->get_input_type() ) {

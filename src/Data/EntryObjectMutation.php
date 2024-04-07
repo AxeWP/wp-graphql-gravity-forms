@@ -111,7 +111,9 @@ class EntryObjectMutation {
 	/**
 	 * Generates array of field errors from the submission.
 	 *
-	 * @param array $messages The Gravity Forms submission validation messages.
+	 * @param array<int|string,string> $messages The Gravity Forms submission validation messages.
+	 *
+	 * @return array{message:string,id:int|string}[]
 	 */
 	public static function get_submission_errors( array $messages ): array {
 		return array_map(
@@ -148,7 +150,7 @@ class EntryObjectMutation {
 	/**
 	 * Renames $field_value keys to input_{id}_{sub_id}, so Gravity Forms can read them.
 	 *
-	 * @param array $field_values .
+	 * @param array<int|string,mixed> $field_values .
 	 *
 	 * @return array<string,mixed> $formatted .
 	 * */
@@ -156,7 +158,7 @@ class EntryObjectMutation {
 		$formatted = [];
 
 		foreach ( $field_values as $key => $value ) {
-			$formatted[ 'input_' . str_replace( '.', '_', $key ) ] = $value;
+			$formatted[ 'input_' . str_replace( '.', '_', (string) $key ) ] = $value;
 		}
 
 		return $formatted;
@@ -169,6 +171,8 @@ class EntryObjectMutation {
 	 * @param \GF_Field[]           $form_fields .
 	 * @param array<string,mixed>[] $input_field_values .
 	 * @param bool                  $save_as_draft .
+	 *
+	 * @return array<string,array<string,mixed>[]>
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
