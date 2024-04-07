@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## v0.12.6
+
+This _minor_ release adds explicit support for PHP 8.2 and WordPress 6.5 - including the new Plugin Dependency header. Additionally, we've updated the Composer dependencies, and improved code quality and type safety.
+
 - feat: Add plugin dependency header.
 - chore: Update Composer deps and lint.
 - chore: Lock WPBrowser to <3.5.0 to prevent conflicts with Codeception.
