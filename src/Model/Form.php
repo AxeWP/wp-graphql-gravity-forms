@@ -19,14 +19,14 @@ class Form extends Model {
 	/**
 	 * Stores the incoming form to be modeled.
 	 *
-	 * @var array $data;
+	 * @var array<string,mixed> $data;
 	 */
 	protected $data;
 
 	/**
 	 * Form constructor.
 	 *
-	 * @param array $form The incoming form to be modeled.
+	 * @param array<string,mixed> $form The incoming form to be modeled.
 	 *
 	 * @throws \Exception .
 	 */

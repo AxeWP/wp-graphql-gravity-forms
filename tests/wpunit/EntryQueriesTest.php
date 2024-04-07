@@ -6,11 +6,11 @@
  */
 
 use GraphQLRelay\Relay;
-use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
-use WPGraphQL\GF\Type\Enum;
 use Helper\GFHelpers\GFHelpers;
+use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
+use WPGraphQL\GF\Type\Enum;
 
 /**
  * Class - EntryQueriesTest
@@ -65,10 +65,8 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 
 	/**
 	 * Returns the full entry query for reuse.
-	 *
-	 * @return string
 	 */
-	private function get_entry_query() : string {
+	private function get_entry_query(): string {
 		return '
 			query getEntry($id: ID!, $idType: EntryIdTypeEnum) {
 				gfEntry(id: $id, idType: $idType) {
@@ -115,7 +113,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `gfEntry`.
 	 */
-	public function testEntryQuery() : void {
+	public function testEntryQuery(): void {
 		wp_set_current_user( $this->admin->ID );
 
 		$global_id = Relay::toGlobalId( EntriesLoader::$name, $this->entry_id );
@@ -192,7 +190,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `gfEntry` with draft entry.
 	 */
-	public function testDraftEntryQuery() : void {
+	public function testDraftEntryQuery(): void {
 		wp_set_current_user( $this->admin->ID );
 
 		$draft_token = $this->factory->draft_entry->create(
@@ -249,34 +247,31 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function expected_field_response( array $entry, array $form ) : array {
+	public function expected_field_response( array $entry, array $form ): array {
 		return [
 			$this->expectedObject(
 				'gfEntry',
 				[
-					$this->expectedField( 'createdByDatabaseId', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : static::IS_NULL ),
-					$this->expectedField( 'createdById', ! empty( $entry['created_by'] ) ? $this->toRelayId( 'user', $entry['created_by'] ) : static::IS_NULL ),
+					$this->expectedField( 'createdByDatabaseId', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : self::IS_NULL ),
+					$this->expectedField( 'createdById', ! empty( $entry['created_by'] ) ? $this->toRelayId( 'user', $entry['created_by'] ) : self::IS_NULL ),
 					$this->expectedObject(
 						'createdBy',
 						[
-							$this->expectedField( 'databaseId', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : static::IS_NULL ),
+							$this->expectedField( 'databaseId', ! empty( $entry['created_by'] ) ? (int) $entry['created_by'] : self::IS_NULL ),
 						]
 					),
-					$this->expectedField( 'databaseId', ! empty( $entry['id'] ) ? (int) $entry['id'] : static::IS_NULL ),
-					$this->expectedField( 'dateCreated', ! empty( $entry['date_created'] ) ? get_date_from_gmt( $entry['date_created'] ) : static::IS_NULL ),
-					$this->expectedField( 'dateCreatedGmt', ! empty( $entry['date_created'] ) ? $entry['date_created'] : static::IS_NULL ),
-					$this->expectedField( 'dateUpdated', ! empty( $entry['date_updated'] ) ? get_date_from_gmt( $entry['date_updated'] ) : static::IS_NULL ),
-					$this->expectedField( 'dateUpdatedGmt', ! empty( $entry['date_updated'] ) ? $entry['date_updated'] : static::IS_NULL ),
-					$this->expectedField( 'formDatabaseId', ! empty( $form['id'] ) ? (int) $form['id'] : static::IS_NULL ),
+					$this->expectedField( 'databaseId', ! empty( $entry['id'] ) ? (int) $entry['id'] : self::IS_NULL ),
+					$this->expectedField( 'dateCreated', ! empty( $entry['date_created'] ) ? get_date_from_gmt( $entry['date_created'] ) : self::IS_NULL ),
+					$this->expectedField( 'dateCreatedGmt', ! empty( $entry['date_created'] ) ? $entry['date_created'] : self::IS_NULL ),
+					$this->expectedField( 'dateUpdated', ! empty( $entry['date_updated'] ) ? get_date_from_gmt( $entry['date_updated'] ) : self::IS_NULL ),
+					$this->expectedField( 'dateUpdatedGmt', ! empty( $entry['date_updated'] ) ? $entry['date_updated'] : self::IS_NULL ),
+					$this->expectedField( 'formDatabaseId', ! empty( $form['id'] ) ? (int) $form['id'] : self::IS_NULL ),
 					$this->expectedObject(
 						'form',
 						[
-							$this->expectedField( 'databaseId', isset( $form['id'] ) ? (int) $form['id'] : static::IS_NULL ),
+							$this->expectedField( 'databaseId', isset( $form['id'] ) ? (int) $form['id'] : self::IS_NULL ),
 						]
 					),
 					$this->expectedObject(
@@ -292,15 +287,15 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 						]
 					),
 					$this->expectedField( 'id', $this->toRelayId( EntriesLoader::$name, $entry['id'] ) ),
-					$this->expectedField( 'ip', ! empty( $entry['ip'] ) ? $entry['ip'] : static::IS_NULL ),
+					$this->expectedField( 'ip', ! empty( $entry['ip'] ) ? $entry['ip'] : self::IS_NULL ),
 					$this->expectedField( 'isDraft', ! empty( $entry['resume_token'] ) ),
 					$this->expectedField( 'isSubmitted', ! empty( $entry['id'] ) ),
 					$this->expectedField( 'isRead', ! empty( $entry['is_read'] ) ),
 					$this->expectedField( 'isStarred', ! empty( $entry['isStarred'] ) ),
-					$this->expectedField( 'resumeToken', ! empty( $entry['resumeToken'] ) ? $entry['resumeToken'] : static::IS_NULL ),
-					$this->expectedField( 'sourceUrl', ! empty( $entry['source_url'] ) ? $entry['source_url'] : static::IS_NULL ),
-					$this->expectedField( 'status', ! empty( $entry['status'] ) ? GFHelpers::get_enum_for_value( Enum\EntryStatusEnum::$type, $entry['status'] ) : static::IS_NULL ),
-					$this->expectedField( 'userAgent', ! empty( $entry['user_agent'] ) ? $entry['user_agent'] : static::IS_NULL ),
+					$this->expectedField( 'resumeToken', ! empty( $entry['resumeToken'] ) ? $entry['resumeToken'] : self::IS_NULL ),
+					$this->expectedField( 'sourceUrl', ! empty( $entry['source_url'] ) ? $entry['source_url'] : self::IS_NULL ),
+					$this->expectedField( 'status', ! empty( $entry['status'] ) ? GFHelpers::get_enum_for_value( Enum\EntryStatusEnum::$type, $entry['status'] ) : self::IS_NULL ),
+					$this->expectedField( 'userAgent', ! empty( $entry['user_agent'] ) ? $entry['user_agent'] : self::IS_NULL ),
 				]
 			),
 		];

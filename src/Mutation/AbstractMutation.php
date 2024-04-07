@@ -47,7 +47,8 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 	/**
 	 * Checks that necessary WPGraphQL are set.
 	 *
-	 * @param array $input .
+	 * @param ?array<string,mixed> $input .
+	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
 	protected static function check_required_inputs( ?array $input ): void {

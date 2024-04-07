@@ -16,7 +16,7 @@ abstract class GFHelpers {
 	/**
 	 * Provides access to dummy functions.
 	 *
-	 * @var Dummy
+	 * @var \Dummy
 	 */
 	public $dummy;
 
@@ -26,13 +26,13 @@ abstract class GFHelpers {
 	 * @var array
 	 */
 	public $keys;
+
 	/**
 	 * The generated list of values.
 	 *
 	 * @var array
 	 */
 	public $values;
-
 
 	/**
 	 * Constructor
@@ -49,8 +49,6 @@ abstract class GFHelpers {
 
 	/**
 	 * Flattens key => value pairs to grab all the keys.
-	 *
-	 * @param array $keys
 	 */
 	public function get_keys( array $keys ) {
 		$return_values = [];
@@ -68,7 +66,6 @@ abstract class GFHelpers {
 	/**
 	 * Gets the key => value pair for the given key name.
 	 *
-	 * @param string $key
 	 * @param [type] $value
 	 */
 	public function get( string $key, $value = null ) {
@@ -77,8 +74,6 @@ abstract class GFHelpers {
 
 	/**
 	 * Gets all key => value pairs for the defined keys.
-	 *
-	 * @param array $keys
 	 */
 	public function getAll( array $keys ) {
 		$return_values = [];

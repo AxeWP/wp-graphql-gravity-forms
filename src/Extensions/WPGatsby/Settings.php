@@ -89,9 +89,11 @@ class Settings {
 
 	/**
 	 * Gets an array of Gravity Forms actions that should be monitored.
+	 *
+	 * @return string[] An array of enabled actions.
 	 */
 	public static function get_enabled_actions(): array {
-		/** @var array $options */
+		/** @var array<string,mixed> $options */
 		$options = get_option( self::$section_name, [] );
 
 		// By default monitor everything.
@@ -107,7 +109,7 @@ class Settings {
 		 * Filter for overriding the list of enabled actions.
 		 * Possible array values: `create_form`, `update_form`, `delete_form`, `create_entry`, `update_entry`.
 		 *
-		 * @param array $enabled_actions. An array of enabled actions.
+		 * @param string[] $enabled_actions. An array of enabled actions.
 		 */
 		return apply_filters( 'graphql_gf_gatsby_enabled_actions', array_values( $enabled_actions ) ?: [] );
 	}

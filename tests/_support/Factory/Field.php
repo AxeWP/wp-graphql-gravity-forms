@@ -7,7 +7,6 @@
 
 namespace Tests\WPGraphQL\GF\Factory;
 
-use GF_Field;
 use GF_Fields;
 use WP_UnitTest_Generator_Sequence;
 
@@ -15,7 +14,6 @@ use WP_UnitTest_Generator_Sequence;
  * Class - Field
  */
 class Field extends \WP_UnitTest_Factory_For_Thing {
-
 	/**
 	 * Constructor
 	 *
@@ -23,6 +21,7 @@ class Field extends \WP_UnitTest_Factory_For_Thing {
 	 */
 	public function __construct( $factory = null ) {
 		parent::__construct( $factory );
+
 		$this->default_generation_definitions = [
 			'id'    => new WP_UnitTest_Generator_Sequence( '%s' ),
 			'label' => new WP_UnitTest_Generator_Sequence( 'Field label %s' ),
@@ -58,8 +57,8 @@ class Field extends \WP_UnitTest_Factory_For_Thing {
 	/**
 	 * Updates a field object.
 	 *
-	 * @param GF_Field $field .
-	 * @param array    $args properties to update.
+	 * @param \GF_Field $field .
+	 * @param array     $args properties to update.
 	 */
 	public function update_object( $field, $args ) {
 		foreach ( $args as $key => $value ) {
@@ -71,7 +70,7 @@ class Field extends \WP_UnitTest_Factory_For_Thing {
 	/**
 	 * Get the field object. Returns itself.
 	 *
-	 * @param GF_Field $field .
+	 * @param \GF_Field $field .
 	 */
 	public function get_object_by_id( $field ) {
 		return $field;

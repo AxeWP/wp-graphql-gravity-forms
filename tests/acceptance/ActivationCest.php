@@ -1,7 +1,6 @@
 <?php
 
 class ActivationCest {
-
 	// tests
 	public function testActivation( AcceptanceTester $I ) {
 		$pluginSlug = 'wp-graphql-gravity-forms';

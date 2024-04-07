@@ -16,7 +16,7 @@ interface FormFieldTestCaseInterface {
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function generate_fields() : array;
+	public function generate_fields(): array;
 
 	/**
 	 * The value as expected in GraphQL.
@@ -45,47 +45,44 @@ interface FormFieldTestCaseInterface {
 
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query() : string;
+	public function field_query(): string;
 
 	/**
 	 * SubmitForm mutation string.
 	 */
-	public function submit_form_mutation() : string;
+	public function submit_form_mutation(): string;
 
 	/**
 	 * Returns the UpdateEntry mutation string.
 	 */
-	public function update_entry_mutation() : string;
+	public function update_entry_mutation(): string;
 
 	/**
 	 * Returns the UpdateDraftEntry mutation string.
 	 */
-	public function update_draft_entry_mutation() : string;
+	public function update_draft_entry_mutation(): string;
 
 	/**
 	 * The expected WPGraphQL field response.
 	 *
-	 * @param array $form the current form instance.
+	 * @param array<string,mixed> $form The current form array.
 	 */
-	public function expected_field_response( array $form ) : array;
+	public function expected_field_response( array $form ): array;
 
 	/**
 	 * The expected WPGraphQL mutation response.
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value) : array;
+	public function expected_mutation_response( string $mutationName, $value ): array;
 
 	/**
 	 * Checks if values submitted by GraphQL are the same as whats stored on the server.
 	 *
-	 * @param array $actual_entry .
-	 * @param array $form .
+	 * @param array               $actual_entry .
+	 * @param array<string,mixed> $form The form array.
 	 */
-	public function check_saved_values( $actual_entry, $form ) : void;
+	public function check_saved_values( $actual_entry, $form ): void;
 }

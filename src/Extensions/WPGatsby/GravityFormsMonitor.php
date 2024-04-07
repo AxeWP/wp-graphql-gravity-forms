@@ -24,7 +24,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	/**
 	 * An array of enabled actions to monitor.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	public static array $enabled_actions;
 
@@ -69,8 +69,8 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	/**
 	 * Logs a Gatsby action.
 	 *
-	 * @param string $action_name the name of the action defined in the settings.
-	 * @param array  $args the action config.
+	 * @param string              $action_name the name of the action defined in the settings.
+	 * @param array<string,mixed> $args the action config.
 	 */
 	public function log( string $action_name, array $args ): void {
 		if ( ! in_array( $action_name, self::$enabled_actions, true ) ) {
@@ -141,8 +141,8 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	/**
 	 * Triggers either `after_create_form()` or `after_update_form()`
 	 *
-	 * @param array $form .
-	 * @param bool  $is_new whether the form was created or updated.
+	 * @param array<string,mixed> $form   The form array.
+	 * @param bool                $is_new Whether the form was created or updated.
 	 */
 	public function after_save_form( array $form, bool $is_new ): void {
 		if ( $is_new ) {
@@ -174,7 +174,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	/**
 	 * Triggers a Gatsby `log_action()` after an entry is created.
 	 *
-	 * @param array $entry .
+	 * @param array<int|string,mixed> $entry The entry array.
 	 */
 	public function after_create_entry( array $entry ): void {
 		$args = [
@@ -193,8 +193,8 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	/**
 	 * Triggers a Gatsby `log_action()` after an entry is updated.
 	 *
-	 * @param array $form .
-	 * @param int   $entry_id .
+	 * @param array<string,mixed> $form The form array.
+	 * @param int                 $entry_id The entry ID.
 	 */
 	public function after_update_entry( array $form, int $entry_id ): void {
 		$args = [
@@ -213,7 +213,7 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	/**
 	 * Wraps `after_update_entry()` for specific gf actions.
 	 *
-	 * @param array $entry .
+	 * @param array<int|string,mixed> $entry The entry array.
 	 */
 	public function post_update_entry( array $entry ): void {
 		$this->after_update_entry( [], $entry['id'] );
@@ -224,8 +224,8 @@ class GravityFormsMonitor extends \WPGatsby\ActionMonitor\Monitors\Monitor {
 	 *
 	 * Currently unused, as Draft Entries arent yet part of the schema.
 	 *
-	 * @param array  $submission .
-	 * @param string $resume_token .
+	 * @param array<int|string,mixed> $submission .
+	 * @param string                  $resume_token .
 	 */
 	public function after_save_draft_entry( array $submission, string $resume_token ): void {
 		$args = [

@@ -1,7 +1,6 @@
 <?php
 
 use Helper\GFHelpers\GFHelpers;
-use WPGraphQL\GF\GF;
 use WPGraphQL\GF\Type\Enum\RecaptchaTypeEnum;
 
 class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
@@ -10,10 +9,11 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	 */
 	protected $tester;
 	public $instance;
+
 	/**
 	 * Provides access to dummy functions.
 	 *
-	 * @var Dummy
+	 * @var \Dummy
 	 */
 	public $dummy;
 	public array $options;
@@ -91,7 +91,7 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 		$this->assertQuerySuccessful( $response, $expected );
 	}
 
-	public function expected_field_response() : array {
+	public function expected_field_response(): array {
 		return [
 			$this->expectedObject(
 				'gfSettings',

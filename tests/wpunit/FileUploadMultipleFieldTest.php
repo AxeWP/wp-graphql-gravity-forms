@@ -15,29 +15,29 @@ use WPGraphQL\GF\Utils\GFUtils;
  * Class -FileUploadMultipleFieldTest
  */
 class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
-
 	/**
 	 * Set up.
 	 */
 	public function setUp(): void {
 		// Before...
 
-		copy( dirname( __FILE__ ) . '/../_support/files/img1.png', '/tmp/img1.png' );
+		copy( __DIR__ . '/../_support/files/img1.png', '/tmp/img1.png' );
 		$stat  = stat( dirname( '/tmp/img1.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img1.png', $perms );
-		copy( dirname( __FILE__ ) . '/../_support/files/img2.png', '/tmp/img2.png' );
+		copy( __DIR__ . '/../_support/files/img2.png', '/tmp/img2.png' );
 		$stat  = stat( dirname( '/tmp/img2.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img2.png', $perms );
-		copy( dirname( __FILE__ ) . '/../_support/files/img2.png', '/tmp/img3.png' );
+		copy( __DIR__ . '/../_support/files/img2.png', '/tmp/img3.png' );
 		$stat  = stat( dirname( '/tmp/img3.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img3.png', $perms );
-		copy( dirname( __FILE__ ) . '/../_support/files/img2.png', '/tmp/img4.png' );
+		copy( __DIR__ . '/../_support/files/img2.png', '/tmp/img4.png' );
 		$stat  = stat( dirname( '/tmp/img4.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img4.png', $perms );
+
 		parent::setUp();
 
 		global $_gf_uploaded_files;
@@ -46,36 +46,42 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 
 	public function tearDown(): void {
 		GFFormsModel::delete_files( $this->entry_id, $this->factory->form->get_object_by_id( $this->form_id ) );
+
 		parent::tearDown();
 	}
+
 	/**
 	 * Tests the field properties and values.
 	 */
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -89,7 +95,7 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [ $this->factory->field->create( $this->property_helper->values ) ];
 	}
 
@@ -191,10 +197,8 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query() : string {
+	public function field_query(): string {
 		return '
 			... on FileUploadField {
 				adminLabel
@@ -234,10 +238,8 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 
 	/**
 	 * SubmitForm mutation string.
-	 *
-	 * @return string
 	 */
-	public function submit_form_mutation() : string {
+	public function submit_form_mutation(): string {
 		return '
 			mutation ($formId: ID!, $fieldId: Int!, $value: [Upload!], $draft: Boolean) {
 				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, fileUploadValues: $value}}) {
@@ -271,8 +273,6 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 
 	/**
 	 * Returns the UpdateEntry mutation string.
-	 *
-	 * @return string
 	 */
 	public function update_entry_mutation(): string {
 		return '
@@ -302,8 +302,6 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 
 	/**
 	 * Returns the UpdateDraftEntry mutation string.
-	 *
-	 * @return string
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
@@ -330,13 +328,11 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 			}
 		';
 	}
+
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function expected_field_response( array $form ) : array {
+	public function expected_field_response( array $form ): array {
 		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
 
 		$urls = json_decode( $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] );
@@ -377,9 +373,8 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ) : array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$urls = ! $this->is_draft ? json_decode( $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] ) : [];

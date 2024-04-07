@@ -233,7 +233,6 @@ class FormConnectionQueriesTest extends GFGraphQLTestCase {
 		$this->assertEqualSets( $expected['data']['gfForms']['nodes'], $actual['data']['gfForms']['nodes'] );
 	}
 
-
 	public function testFormIdsWhereArgs() {
 		$form_id_two = $this->form_ids[2];
 		$form_id_one = $this->form_ids[1];

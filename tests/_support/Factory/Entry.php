@@ -15,7 +15,6 @@ use WP_UnitTest_Generator_Sequence;
  * Class - Entry
  */
 class Entry extends \WP_UnitTest_Factory_For_Thing {
-
 	/**
 	 * Constructor
 	 *
@@ -23,6 +22,7 @@ class Entry extends \WP_UnitTest_Factory_For_Thing {
 	 */
 	public function __construct( $factory = null ) {
 		parent::__construct( $factory );
+
 		$this->default_generation_definitions = [
 			'id'       => new WP_UnitTest_Generator_Sequence( '%s' ),
 			'currency' => 'USD',
@@ -34,7 +34,7 @@ class Entry extends \WP_UnitTest_Factory_For_Thing {
 	 *
 	 * @param array $args entry arguments.
 	 */
-	public function create_object( $args ) : int {
+	public function create_object( $args ): int {
 		return GFAPI::add_entry( $args );
 	}
 

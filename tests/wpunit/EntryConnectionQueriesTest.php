@@ -5,12 +5,7 @@
  * @package .
  */
 
-use GraphQLRelay\Relay;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
-use WPGraphQL\GF\Type\Enum;
-use Helper\GFHelpers\GFHelpers;
-use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
-use WPGraphQL\GF\Data\Loader\EntriesLoader;
 
 /**
  * Class - EntryConnectionQueriesTest
@@ -67,7 +62,7 @@ class EntryConnectionQueriesTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `gfEntries`.
 	 */
-	public function testEntriesQuery() : void {
+	public function testEntriesQuery(): void {
 		wp_set_current_user( $this->admin->ID );
 
 		$query = '
@@ -132,7 +127,7 @@ class EntryConnectionQueriesTest extends GFGraphQLTestCase {
 	/**
 	 * Tests the form->entries connection only contains entries on the form.
 	 */
-	public function testFormOnlyContainsRelatedEntries() : void {
+	public function testFormOnlyContainsRelatedEntries(): void {
 		$form_id = $this->factory->form->create(
 			array_merge(
 				[ 'fields' => $this->fields ],

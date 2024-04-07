@@ -93,7 +93,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @return array
+	 * @return array<int|string,array<string,mixed>>
 	 */
 	public function get_query(): array {
 		$form_ids    = $this->query_args['form_ids'];
@@ -118,7 +118,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 			 * client. This hook is somewhat similar to Gravity Forms' gform_pre_render hook
 			 * and can be used for dynamic field input population, among other things.
 			 *
-			 * @param array $form Form meta array.
+			 * @param array<string,mixed> $form Form meta array.
 			 */
 			$modified_form = apply_filters( 'graphql_gf_form_object', $form );
 
@@ -147,6 +147,8 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * Returns form ids.
+	 *
+	 * @return int[]
 	 */
 	private function get_form_ids(): array {
 		if ( empty( $this->args['where']['formIds'] ) ) {
@@ -162,6 +164,8 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * Gets form status from query.
+	 *
+	 * @return array{active:bool,trash:bool}
 	 */
 	private function get_form_status(): array {
 		$status = $this->args['where']['status'] ?? FormStatusEnum::ACTIVE;
@@ -195,6 +199,8 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * Get sort argument for forms ID query.
+	 *
+	 * @return array{key:string,direction:string}
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */

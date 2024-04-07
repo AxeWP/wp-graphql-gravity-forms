@@ -29,28 +29,32 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -74,7 +78,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [
 			$this->factory->field->create( $this->property_helper->values ),
 			$this->factory->field->create( $this->captcha_field_helper->values ),
@@ -112,7 +116,7 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 		/**
 		 * The entire GraphQL query with the form field values added.
 		 */
-	protected function entry_query() : string {
+	protected function entry_query(): string {
 		return "
 			query getFieldValue(\$id: ID!, \$idType: EntryIdTypeEnum) {
 				gfEntry(id: \$id, idType: \$idType ) {
@@ -128,10 +132,8 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query() : string {
+	public function field_query(): string {
 		return '
 			... on CaptchaField {
 				displayOnly
@@ -172,10 +174,8 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * Returns the SubmitForm graphQL query.
 	 *
 	 * The $value can be anything since we're using google's test keys.
-	 *
-	 * @return string
 	 */
-	public function submit_form_mutation() : string {
+	public function submit_form_mutation(): string {
 		return '
 			mutation ($formId: ID!, $fieldId: Int!, $value: String!, $draft: Boolean) {
 				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: [{id: $fieldId, value: $value}, {id:' . $this->fields[1]->id . ' value:"123456"}]}) {
@@ -252,13 +252,11 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 			}
 		';
 	}
+
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function expected_field_response( array $form ) : array {
+	public function expected_field_response( array $form ): array {
 		$expected = $this->getExpectedFormFieldValues( $form['fields'][1] );
 
 		return [
@@ -279,14 +277,14 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 			),
 		];
 	}
+
 	/**
 	 * The expected WPGraphQL mutation response.
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ) : array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [
 			$this->expectedObject(
 				$mutationName,

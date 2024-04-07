@@ -18,14 +18,16 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 		// Before...
 		$this->cat_id_1 = self::factory()->category->create();
 		$this->cat_id_2 = self::factory()->category->create();
+
 		parent::setUp();
 
 		$this->clearSchema();
 	}
 
-	public function tearDown() : void {
+	public function tearDown(): void {
 		wp_delete_category( $this->cat_id_1 );
 		wp_delete_category( $this->cat_id_2 );
+
 		parent::tearDown();
 	}
 
@@ -35,28 +37,32 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -70,7 +76,7 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 	/**
 	 * Generates the form fields from factory. Must be wrapped in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [
 			$this->factory->field->create(
 				array_merge(
@@ -113,6 +119,7 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 	public function field_value_input() {
 		return $this->fields[0]['choices'][0]['value'];
 	}
+
 	/**
 	 * The graphql field value input.
 	 */
@@ -127,7 +134,6 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 		return $this->fields[0]['choices'][2]['text'] . ':' . $this->fields[0]['choices'][2]['value'];
 	}
 
-
 	/**
 	 * The value as expected by Gravity Forms.
 	 */
@@ -135,13 +141,10 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 		return [ (string) $this->fields[0]['id'] => $this->field_value_input ];
 	}
 
-
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query():string {
+	public function field_query(): string {
 		return '... on PostCategoryField {
 				adminLabel
 				canPrepopulate
@@ -274,9 +277,7 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
+	 * {@inheritDoc}
 	 */
 	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
@@ -306,9 +307,8 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ):array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [
 			$this->expectedObject(
 				$mutationName,

@@ -54,7 +54,7 @@ abstract class AbstractFieldValueInput {
 	/**
 	 * The GraphQL input args passed to `fieldValues`.
 	 *
-	 * @var array
+	 * @var array<string,mixed>
 	 */
 	protected array $input_args;
 
@@ -75,11 +75,11 @@ abstract class AbstractFieldValueInput {
 	/**
 	 * The class constructor.
 	 *
-	 * @param array                        $input_args The GraphQL input args for the form field.
-	 * @param array<string,mixed>          $form The current Gravity Forms form object.
-	 * @param bool                         $is_draft Whether the mutation is handling a Draft Entry.
-	 * @param \GF_Field                    $field The current Gravity Forms field object.
-	 * @param array<int|string,mixed>|null $entry The current Gravity Forms entry object.
+	 * @param array<string,mixed>          $input_args The GraphQL input args for the form field.
+	 * @param array<string,mixed>          $form       The current Gravity Forms form object.
+	 * @param bool                         $is_draft   Whether the mutation is handling a Draft Entry.
+	 * @param \GF_Field                    $field      The current Gravity Forms field object.
+	 * @param array<int|string,mixed>|null $entry      The current Gravity Forms entry object.
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
@@ -122,12 +122,12 @@ abstract class AbstractFieldValueInput {
 		/**
 		 * Filters the GraphQL input args for the field value input.
 		 *
-		 * @param array|string $args field value input args.
-		 * @param \GF_Field $field The current Gravity Forms field object.
-		 * @param array $form The current Gravity Forms form object.
-		 * @param array|null $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
-		 * @param bool $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
-		 * @param string $field_name The GraphQL input field name. E.g. `nameValues`.
+		 * @param array|string        $args              Field value input args.
+		 * @param \GF_Field           $field The current Gravity Forms field object.
+		 * @param array<string,mixed> $form The current  Gravity Forms form object.
+		 * @param array|null          $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+		 * @param bool                $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
+		 * @param string              $field_name        The GraphQL input field name. E.g. `nameValues`.
 		 */
 		$this->args = apply_filters(
 			'graphql_gf_field_value_input_args',
@@ -142,13 +142,13 @@ abstract class AbstractFieldValueInput {
 		/**
 		 * Filters the prepared field value to be submitted to Gravity Forms.
 		 *
-		 * @param array|string $prepared_field_value The field value formatted in a way Gravity Forms can understand.
-		 * @param array|string $args field value input args.
-		 * @param \GF_Field $field The current Gravity Forms field object.
-		 * @param array $form The current Gravity Forms form object.
-		 * @param array|null $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
-		 * @param bool $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
-		 * @param string $field_name The GraphQL input field name. E.g. `nameValues`.
+		 * @param array|string        $prepared_field_value The field value formatted in a way Gravity Forms can understand.
+		 * @param array|string        $args                 Field value input args.
+		 * @param \GF_Field           $field                The current Gravity Forms field object.
+		 * @param array<string,mixed> $form                 The current Gravity Forms form object.
+		 * @param array|null          $entry                The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+		 * @param bool                $is_draft_mutation    Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
+		 * @param string              $field_name           The GraphQL input field name. E.g. `nameValues`.
 		 */
 		$this->value = apply_filters(
 			'graphql_gf_field_value_input_prepared_value',

@@ -20,15 +20,17 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 		$this->tag_id_1 = self::factory()->tag->create();
 		$this->tag_id_2 = self::factory()->tag->create();
 		$this->tag_id_3 = self::factory()->tag->create();
+
 		parent::setUp();
 
 		$this->clearSchema();
 	}
 
-	public function tearDown() : void {
+	public function tearDown(): void {
 		wp_delete_term( $this->tag_id_1, 'post_tag' );
 		wp_delete_term( $this->tag_id_2, 'post_tag' );
 		wp_delete_term( $this->tag_id_3, 'post_tag' );
+
 		parent::tearDown();
 	}
 
@@ -38,28 +40,32 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -73,7 +79,7 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 	/**
 	 * Generates the form fields from factory. Must be wrapped in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [
 			$this->factory->field->create(
 				array_merge(
@@ -165,6 +171,7 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 			],
 		];
 	}
+
 	/**
 	 * The graphql field value input.
 	 */
@@ -185,8 +192,6 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 			],
 		];
 	}
-
-
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
@@ -221,13 +226,10 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 		];
 	}
 
-
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query():string {
+	public function field_query(): string {
 		return '... on PostTagsField {
 				adminLabel
 				canPrepopulate
@@ -378,9 +380,7 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
+	 * {@inheritDoc}
 	 */
 	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
@@ -410,9 +410,8 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ):array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [
 			$this->expectedObject(
 				$mutationName,

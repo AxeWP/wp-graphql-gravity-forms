@@ -3,7 +3,6 @@
 namespace Helper\GFHelpers;
 
 class PropertyHelper extends GFHelpers {
-
 	public function addIconUrl( $value = null ) {
 		return ! empty( $value ) ? $value : 'someurl.test';
 	}
@@ -92,7 +91,7 @@ class PropertyHelper extends GFHelpers {
 		return ! empty( $value ) ? $value : null;
 	}
 
-	public function chainedSelectsHideInactive( $value = null ) : bool {
+	public function chainedSelectsHideInactive( $value = null ): bool {
 		return ! empty( $value );
 	}
 
@@ -100,7 +99,7 @@ class PropertyHelper extends GFHelpers {
 		return ! empty( $value ) ? $value : null;
 	}
 
-	public function copyValuesOptionDefault( $value = null ) : bool {
+	public function copyValuesOptionDefault( $value = null ): bool {
 		return ! empty( $value );
 	}
 
@@ -144,91 +143,91 @@ class PropertyHelper extends GFHelpers {
 		return ! empty( $value ) ? $value : $this->dummy->text();
 	}
 
-	public function descriptionPlacement( $value = null ) : string {
+	public function descriptionPlacement( $value = null ): string {
 		return null !== $value ? $value : 'above';
 	}
 
-	public function disableQuantity( $value = null ) : bool {
+	public function disableQuantity( $value = null ): bool {
 		return null !== $value ? $value : false;
 	}
 
-	public function disableMargins( $value = null ) : bool {
+	public function disableMargins( $value = null ): bool {
 		return null !== $value ? $value : $this->dummy->yesno();
 	}
 
-	public function displayAlt( $value = null ) : bool {
+	public function displayAlt( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
-
-	public function displayAllCategories( $value = null ) : bool {
+	public function displayAllCategories( $value = null ): bool {
 		return ! empty( $value );
 	}
 
-	public function displayCaption( $value = null ) : bool {
+	public function displayCaption( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
-	public function displayDescription( $value = null ) : bool {
+	public function displayDescription( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
-	public function displayOnly( $value = null ) : bool {
+	public function displayOnly( $value = null ): bool {
 		return ! empty( $value );
 	}
 
-	public function displayTitle( $value = null ) : bool {
+	public function displayTitle( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
-	public function emailConfirmEnabled( $value = null ) : bool {
+	public function emailConfirmEnabled( $value = null ): bool {
 		return ! empty( $value );
 	}
 
-	public function enableAutocomplete( $value = null ) : bool {
+	public function enableAutocomplete( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();
 	}
 
-	public function enableCalculation( $value = null ) : bool {
+	public function enableCalculation( $value = null ): bool {
 		return ! empty( $value );
 	}
 
-	public function enableChoiceValue( $value = null ) : bool {
+	public function enableChoiceValue( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();
 	}
 
-	public function enableCopyValuesOption( $value = null ) : bool {
+	public function enableCopyValuesOption( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
-	public function enableEnhancedUI( $value = null ) : bool {
+	public function enableEnhancedUI( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
-	public function enableOtherChoice( $value = null ) : bool {
+	public function enableOtherChoice( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
-	public function enablePasswordInput( $value = null ) : bool {
+	public function enablePasswordInput( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
-	public function enablePrice( $value = null ) : bool {
+	public function enablePrice( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : true;
 	}
 
-	public function gquizEnableRandomizeQuizChoices( bool $value = null ) : bool {
+	public function gquizEnableRandomizeQuizChoices( ?bool $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
 
-	public function enableSelectAll( $value = null ) : bool {
+	public function enableSelectAll( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
 	}
-	public function enableColumns( $value = null ) : bool {
+
+	public function enableColumns( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : false;
 	}
 
-	public function gquizWeightedScoreEnabled( bool $value = null ) : ?bool {
+	public function gquizWeightedScoreEnabled( ?bool $value = null ): ?bool {
 		return null !== $value ? $value : $this->dummy->yesno();
 	}
 
@@ -256,14 +255,14 @@ class PropertyHelper extends GFHelpers {
 		return ! empty( $value ) ? $value : null;
 	}
 
-	public function gquizAnswerExplanation( string $value = null ) : ?string {
+	public function gquizAnswerExplanation( ?string $value = null ): ?string {
 		return ! empty( $value ) ? $value : $this->dummy->sentence( 1, 3 );
 	}
 
-	public function gquizIsCorrect( bool $value = null ) : ?bool {
+	public function gquizIsCorrect( ?bool $value = null ): ?bool {
 		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();  }
 
-	public function hasInputMask( bool $value = null ) : ?bool {
+	public function hasInputMask( ?bool $value = null ): ?bool {
 		return null !== $value ? $value : $this->dummy->yesno();
 	}
 
@@ -305,11 +304,12 @@ class PropertyHelper extends GFHelpers {
 	public function maxLength( $value = null ) {
 		return ! empty( $value ) ? $value : ( rand( 100, 550 ) ?: null );
 	}
+
 	public function maxRows( $value = null ) {
 		return ! empty( $value ) ? $value : ( rand( 3, 10 ) ?: null );
 	}
 
-	public function multipleFiles( $value = null ) : bool {
+	public function multipleFiles( $value = null ): bool {
 		return ! empty( $value );
 	}
 
@@ -325,7 +325,7 @@ class PropertyHelper extends GFHelpers {
 		return ! empty( $value ) ? $value : 'advanced';
 	}
 
-	public function noDuplicates( bool $value = null ) : bool {
+	public function noDuplicates( ?bool $value = null ): bool {
 		return null !== $value ? $value : false;
 	}
 
@@ -345,10 +345,10 @@ class PropertyHelper extends GFHelpers {
 		return ! empty( $value ) ? $value : $this->dummy->number( 1, 3 );
 	}
 
-	public function personalDataErase( $value = null ) : bool {
+	public function personalDataErase( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();  }
 
-	public function personalDataExport( $value = null ) : bool {
+	public function personalDataExport( $value = null ): bool {
 		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();
 	}
 
@@ -376,7 +376,7 @@ class PropertyHelper extends GFHelpers {
 		return ! empty( $value ) ? $value : '';
 	}
 
-	public function gquizFieldType( string $value = null ) : string {
+	public function gquizFieldType( ?string $value = null ): string {
 		return ! empty( $value ) ? $value : 'CHECKBOX';
 	}
 
@@ -388,7 +388,7 @@ class PropertyHelper extends GFHelpers {
 		return ! empty( $value ) ? $value : null;
 	}
 
-	public function gquizShowAnswerExplanation( bool $value = null ): ?bool {
+	public function gquizShowAnswerExplanation( ?bool $value = null ): ?bool {
 		return null !== $value ? ! empty( $value ) : (bool) $this->dummy->yesno();
 	}
 
@@ -404,7 +404,7 @@ class PropertyHelper extends GFHelpers {
 		return $this->size( $value );
 	}
 
-	public function size( $value = null ) : string {
+	public function size( $value = null ): string {
 		return $value ?: 'medium';
 	}
 
@@ -461,5 +461,4 @@ class PropertyHelper extends GFHelpers {
 	public function gquizWeight( $value = null ) {
 		return ! empty( $value ) ? $value : $this->dummy->number( 0, 5 );
 	}
-
 }

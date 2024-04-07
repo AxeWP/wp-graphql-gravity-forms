@@ -74,28 +74,32 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -109,7 +113,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [ $this->factory->field->create( $this->property_helper->values ) ];
 	}
 
@@ -182,10 +186,8 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query() : string {
+	public function field_query(): string {
 		return '
 			... on FileUploadField {
 				adminLabel
@@ -225,10 +227,8 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 
 	/**
 	 * SubmitForm mutation string.
-	 *
-	 * @return string
 	 */
-	public function submit_form_mutation() : string {
+	public function submit_form_mutation(): string {
 		return '
 			mutation ($formId: ID!, $fieldId: Int!, $value: [Upload!], $draft: Boolean) {
 				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, fileUploadValues: $value}}) {
@@ -262,8 +262,6 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 
 	/**
 	 * Returns the UpdateEntry mutation string.
-	 *
-	 * @return string
 	 */
 	public function update_entry_mutation(): string {
 		return '
@@ -293,8 +291,6 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 
 	/**
 	 * Returns the UpdateDraftEntry mutation string.
-	 *
-	 * @return string
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
@@ -321,13 +317,11 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 			}
 		';
 	}
+
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function expected_field_response( array $form ) : array {
+	public function expected_field_response( array $form ): array {
 		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
 
 		$expected_field_value    = $this->field_value;
@@ -364,9 +358,8 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ) : array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		$form = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$url = ! $this->is_draft ? $this->factory->entry->get_object_by_id( $this->entry_id )[ $form['fields'][0]->id ] : null;

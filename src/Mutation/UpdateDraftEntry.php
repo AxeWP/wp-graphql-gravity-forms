@@ -131,9 +131,11 @@ class UpdateDraftEntry extends AbstractMutation {
 	/**
 	 * Prepares draft entry object for update.
 	 *
-	 * @param array $input .
-	 * @param array $submission .
-	 * @param array $form .
+	 * @param array<string,mixed>     $input GraphQL mutation input.
+	 * @param array<int|string,mixed> $submission .
+	 * @param array<string,mixed>     $form The form object.
+	 *
+	 * @return array<string,mixed>
 	 */
 	private static function prepare_draft_entry_data( array $input, array $submission, array $form ): array {
 		$should_validate = isset( $input['shouldValidate'] ) ? (bool) $input['shouldValidate'] : true;
@@ -189,11 +191,13 @@ class UpdateDraftEntry extends AbstractMutation {
 	/**
 	 * Converts the provided field values into a format that Gravity Forms can understand.
 	 *
-	 * @param array $field_values .
-	 * @param array $form .
-	 * @param array $entry .
-	 * @param array $submission .
-	 * @param bool  $should_validate .
+	 * @param array<string,mixed>[]   $field_values .
+	 * @param array<string,mixed>     $form The form object.
+	 * @param array<int|string,mixed> $entry The entry object.
+	 * @param array<int|string,mixed> $submission .
+	 * @param bool                    $should_validate .
+	 *
+	 * @return array<int|string,mixed>
 	 */
 	private static function prepare_field_values( array $field_values, array $form, array $entry, array &$submission, bool $should_validate ): array {
 		$formatted_values = [];
