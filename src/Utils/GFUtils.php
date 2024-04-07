@@ -262,9 +262,9 @@ class GFUtils {
 	/**
 	 * Get the draft resume URL.
 	 *
-	 * @param string $resume_token Resume token.
-	 * @param string $source_url   Source URL.
-	 * @param array  $form         Form object.
+	 * @param string              $resume_token Resume token.
+	 * @param string              $source_url   Source URL.
+	 * @param array<string,mixed> $form         Form object.
 	 *
 	 * @return string Resume URL, or empty string if no source URL was provided.
 	 */
@@ -277,7 +277,7 @@ class GFUtils {
 		 * Filters the 'Save and Continue' URL to be used with a partial entry submission.
 		 *
 		 * @param string $resume_url   The URL to be used to resume the partial entry.
-		 * @param array  $form         The Form Object.
+		 * @param array<string,mixed> $form         The Form Object.
 		 * @param string $resume_token The token that is used within the URL.
 		 * @param string $unused       Unused parameter. Included for consistency with the native
 		 *                             Gravity Forms gform_save_and_continue_resume_url hook.

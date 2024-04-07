@@ -53,7 +53,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Return the name of the loader to be used with the connection resolver
+	 * {@inheritDoc}
 	 */
 	public function get_loader_name(): string {
 		return EntriesLoader::$name;
@@ -220,6 +220,8 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * Gets index (array offset) and offset (entry id) from decoded cursor.
 	 *
 	 * @param string $cursor .
+	 *
+	 * @return array{index:int,offset:int}
 	 */
 	protected function parse_cursor( string $cursor ): array {
 		$decoded     = base64_decode( $cursor );
@@ -234,7 +236,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Returns form ids.
 	 *
-	 * @return array|int
+	 * @return int[]|int
 	 */
 	private function get_form_ids() {
 		if ( empty( $this->args['where']['formIds'] ) ) {
@@ -250,6 +252,8 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * Gets search criteria for entry Ids.
+	 *
+	 * @return array<string,mixed>
 	 */
 	private function get_search_criteria(): array {
 		$search_criteria = $this->apply_status_to_search_criteria( [] );
@@ -275,7 +279,9 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Adds 'status' value to search criteria.
 	 *
-	 * @param array $search_criteria The search criteria for the entry Ids.
+	 * @param array<string,mixed> $search_criteria The search criteria for the entry Ids.
+	 *
+	 * @return array<string,mixed>
 	 */
 	private function apply_status_to_search_criteria( array $search_criteria ): array {
 		$status = $this->args['where']['status'] ?? EntryStatusEnum::ACTIVE; // Default to active entries.
@@ -372,6 +378,8 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * Get sort argument for entry ID query.
+	 *
+	 * @return array<string,mixed>
 	 */
 	private function get_sort(): array {
 		// Set default sort direction.
@@ -397,6 +405,8 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * Get paging arguments for entry ID query.
+	 *
+	 * @return array{offset:int,page_size:int}
 	 *
 	 * @throws \GraphQL\Error\UserError When using unsupported pagination.
 	 */

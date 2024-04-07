@@ -108,7 +108,7 @@ class Utils {
 	 *
 	 * @since 0.7.0
 	 *
-	 * @return array|false
+	 * @return array<mixed>|false
 	 */
 	public static function maybe_decode_json( $value ) {
 		if ( is_array( $value ) ) {

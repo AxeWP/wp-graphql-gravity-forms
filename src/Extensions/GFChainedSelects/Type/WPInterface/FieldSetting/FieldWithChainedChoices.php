@@ -75,7 +75,9 @@ class FieldWithChainedChoices extends AbstractFieldSetting implements TypeWithIn
 	/**
 	 * Adds the `chained_choices_setting` setting to the list of settings that have the GraphQL choices field.
 	 *
-	 * @param array $settings the GF Field settings.
+	 * @param string[] $settings the GF Field settings.
+	 *
+	 * @return string[]
 	 */
 	public static function add_setting( array $settings ): array {
 		if ( ! in_array( self::$field_setting, $settings, true ) ) {

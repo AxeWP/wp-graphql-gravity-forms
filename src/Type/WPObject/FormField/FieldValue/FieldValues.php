@@ -25,6 +25,8 @@ use WPGraphQL\GF\Utils\Utils;
 class FieldValues {
 	/**
 	 * Get `value` property.
+	 *
+	 * @return array{value:array<string,mixed>}
 	 */
 	public static function value(): array {
 		return [
@@ -44,6 +46,8 @@ class FieldValues {
 
 	/**
 	 * Get `addressValues` property.
+	 *
+	 * @return array{addressValues:array<string,mixed>}
 	 */
 	public static function address_values(): array {
 		return [
@@ -70,6 +74,8 @@ class FieldValues {
 
 	/**
 	 * Get `checkboxValues` property.
+	 *
+	 * @return array{checkboxValues:array<string,mixed>}
 	 */
 	public static function checkbox_values(): array {
 		return [
@@ -112,6 +118,8 @@ class FieldValues {
 
 	/**
 	 * Get `consentValue` property.
+	 *
+	 * @return array{consentValue:array<string,mixed>}
 	 */
 	public static function consent_value(): array {
 		return [
@@ -132,6 +140,8 @@ class FieldValues {
 
 	/**
 	 * Get `fileUploadValue` property.
+	 *
+	 * @return array{fileUploadValues:array<string,mixed>}
 	 */
 	public static function file_upload_values(): array {
 		return [
@@ -151,6 +161,8 @@ class FieldValues {
 
 	/**
 	 * Get `imageValues` property.
+	 *
+	 * @return array{imageValues:array<string,mixed>}
 	 */
 	public static function image_values(): array {
 		return [
@@ -196,6 +208,8 @@ class FieldValues {
 
 	/**
 	 * Get `listValues` property.
+	 *
+	 * @return array{listValues:array<string,mixed>}
 	 */
 	public static function list_values(): array {
 		return [
@@ -248,6 +262,8 @@ class FieldValues {
 
 	/**
 	 * Get `nameValues` property.
+	 *
+	 * @return array{nameValues:array<string,mixed>}
 	 */
 	public static function name_values(): array {
 		return [
@@ -273,6 +289,8 @@ class FieldValues {
 
 	/**
 	 * Get `productValues` property.
+	 *
+	 * @return array{productValues:array<string,mixed>}
 	 */
 	public static function product_values(): array {
 		return [
@@ -344,6 +362,8 @@ class FieldValues {
 
 	/**
 	 * Get `timeValues` property.
+	 *
+	 * @return array{timeValues:array<string,mixed>}
 	 */
 	public static function time_values(): array {
 		return [
@@ -377,6 +397,8 @@ class FieldValues {
 
 	/**
 	 * Get `values` property.
+	 *
+	 * @return array{values:array<string,mixed>}
 	 */
 	public static function values(): array {
 		return [
@@ -428,9 +450,11 @@ class FieldValues {
 	 *
 	 * Shim GF_Field_FileUpload::get_extra_entry_metadata().
 	 *
-	 * @param \GF_Field_FileUpload $field .
-	 * @param array                $entry .
-	 * @param array                $form .
+	 * @param \GF_Field_FileUpload    $field .
+	 * @param array<int|string,mixed> $entry .
+	 * @param array<string,mixed>     $form The form array.
+	 *
+	 * @return array<int|string,array<string,string>>
 	 */
 	protected static function get_file_upload_extra_entry_metadata( GF_Field_FileUpload $field, array $entry, array $form ): array {
 		$file_values = $entry[ $field->id ] ?? null;
@@ -502,6 +526,8 @@ class FieldValues {
 	 *
 	 * @param \GF_Field $field The gravity forms field object.
 	 * @param int       $input_key The input key that represents field's selected choice.
+	 *
+	 * @return array<string,mixed>
 	 */
 	public static function prepare_connected_choice( GF_Field $field, int $input_key ): array {
 		$type = FieldChoiceRegistry::get_type_name( $field );
@@ -517,6 +543,8 @@ class FieldValues {
 	 *
 	 * @param \GF_Field $field The gravity forms field object.
 	 * @param int       $input_key The input key that represents field's selected input.
+	 *
+	 * @return array<string,mixed>
 	 */
 	public static function prepare_connected_input( GF_Field $field, int $input_key ): array {
 		$type = FieldInputRegistry::get_type_name( $field );

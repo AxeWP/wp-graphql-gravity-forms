@@ -53,11 +53,13 @@ class ChoiceWithOtherChoice extends AbstractFieldChoiceSetting {
 	/**
 	 * Registers a GraphQL field to the GraphQL type that implements this interface.
 	 *
-	 * @param array     $fields An array of GraphQL field configs.
-	 * @param string    $choice_name The name of the choice type.
-	 * @param \GF_Field $field The Gravity Forms Field object.
-	 * @param array     $settings The `form_editor_field_settings()` key.
-	 * @param array     $interfaces The list of interfaces for the GraphQL type.
+	 * @param array<string,array<string,mixed>> $fields An array of GraphQL field configs.
+	 * @param string                            $choice_name The name of the choice type.
+	 * @param \GF_Field                         $field The Gravity Forms Field object.
+	 * @param string[]                          $settings The `form_editor_field_settings()` keys.
+	 * @param string[]                          $interfaces The list of interfaces for the GraphQL type.
+	 *
+	 * @return array<string,array<string,mixed>>
 	 */
 	public static function add_fields_to_child_type( array $fields, string $choice_name, GF_Field $field, array $settings, array $interfaces ): array {
 		if (

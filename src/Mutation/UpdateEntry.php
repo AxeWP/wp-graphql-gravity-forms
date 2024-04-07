@@ -143,9 +143,11 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * Prepares entry object for update.
 	 *
-	 * @param array $input .
-	 * @param array $entry .
-	 * @param array $form .
+	 * @param array<string,mixed>     $input The GraphQL input.
+	 * @param array<int|string,mixed> $entry The entry array.
+	 * @param array<string,mixed>     $form The form array.
+	 *
+	 * @return array<int|string,mixed> The prepared entry data.
 	 * @throws \GraphQL\Error\UserError .
 	 */
 	private static function prepare_entry_data( array $input, array $entry, array $form ): array {
@@ -245,10 +247,10 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * Converts the provided field values into a format that Gravity Forms can understand.
 	 *
-	 * @param array $field_values .
-	 * @param array $entry .
-	 * @param array $form .
-	 * @param bool  $should_validate .
+	 * @param array<string,mixed>[]   $field_values .
+	 * @param array<int|string,mixed> $entry The entry array.
+	 * @param array<string,mixed>     $form The form array.
+	 * @param bool                    $should_validate .
 	 */
 	private static function prepare_field_values( array $field_values, array $entry, array $form, bool $should_validate ): array {
 		$formatted_values = [];
@@ -269,9 +271,9 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * Prepares field values before saving it to the entry.
 	 *
-	 * @param array $values the entry values.
-	 * @param array $entry the existing entry.
-	 * @param array $form the existing form.
+	 * @param array                   $values the entry values.
+	 * @param array<int|string,mixed> $entry the existing entry.
+	 * @param array<string,mixed>     $form The form array.
 	 */
 	public static function prepare_field_values_for_save( array $values, array $entry, array $form ): array {
 		// We need the entry fresh to prepare the values.
@@ -294,8 +296,8 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * Grabs the updated entry, and then updates the post.
 	 *
-	 * @param int   $entry_id .
-	 * @param array $form .
+	 * @param int                 $entry_id .
+	 * @param array<string,mixed> $form The form array.
 	 */
 	public static function update_post( int $entry_id, array $form ): void {
 		$entry = GFUtils::get_entry( $entry_id );
@@ -308,9 +310,9 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * Sets the post id so GFFormsModel::create_post updates the post instead of creating a new one.
 	 *
-	 * @param array $post_data .
-	 * @param array $form .
-	 * @param array $entry .
+	 * @param array<string,mixed>     $post_data .
+	 * @param array<string,mixed>     $form The form array.
+	 * @param array<int|string,mixed> $entry .
 	 */
 	public static function set_post_id_for_update( array $post_data, array $form, array $entry ): array {
 		$post_data['ID'] = $entry['post_id'];

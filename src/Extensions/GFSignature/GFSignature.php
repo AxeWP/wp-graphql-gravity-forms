@@ -45,18 +45,23 @@ class GFSignature implements Hookable {
 	/**
 	 * Register enum classes.
 	 *
-	 * @param array $registered_classes .
+	 * @param class-string[] $registered_classes The registered classes.
+	 *
+	 * @return class-string[]
 	 */
 	public static function enums( array $registered_classes ): array {
 		$registered_classes[] = Enum\SignatureFieldBorderStyleEnum::class;
 		$registered_classes[] = Enum\SignatureFieldBorderWidthEnum::class;
+
 		return $registered_classes;
 	}
 
 	/**
 	 * Registers the mapped list of GF form field settings to their interface classes.
 	 *
-	 * @param array $classes .
+	 * @param array<string,class-string> $classes The registered classes.
+	 *
+	 * @return array<string,class-string>
 	 */
 	public static function form_field_settings( array $classes ): array {
 		$classes['background_color_setting'] = WPInterface\FieldSetting\FieldWithBackgroundColor::class;

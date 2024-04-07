@@ -118,7 +118,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 			 * client. This hook is somewhat similar to Gravity Forms' gform_pre_render hook
 			 * and can be used for dynamic field input population, among other things.
 			 *
-			 * @param array $form Form meta array.
+			 * @param array<string,mixed> $form Form meta array.
 			 */
 			$modified_form = apply_filters( 'graphql_gf_form_object', $form );
 

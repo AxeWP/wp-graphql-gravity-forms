@@ -174,7 +174,9 @@ class SubmitForm extends AbstractMutation {
 	/**
 	 * Prepares draft entry object for update.
 	 *
-	 * @param array $input .
+	 * @param array<string|int,mixed> $input The input values.
+	 *
+	 * @return array{created_by?:int,date_created?:string,ip?:string,source_url?:string,user_agent?:string}
 	 */
 	private static function prepare_entry_data( array $input ): array {
 		$data = [];
@@ -207,7 +209,13 @@ class SubmitForm extends AbstractMutation {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Converts the provided field values into a format that Gravity Forms can understand.
+	 *
+	 * @param array<string,mixed>[] $field_values The field values.
+	 * @param array<string,mixed>   $form The form object.
+	 * @param bool                  $save_as_draft Whether to save the submission as a draft.
+	 *
+	 * @return array<string,mixed>
 	 */
 	private static function prepare_field_values( array $field_values, array $form, bool $save_as_draft ): array {
 		$formatted_values = [];
@@ -225,9 +233,9 @@ class SubmitForm extends AbstractMutation {
 	/**
 	 * Updates entry properties that cannot be set with GFAPI::submit_form().
 	 *
-	 * @param array $form .
-	 * @param array $submission The Gravity Forms submission result array.
-	 * @param array $entry_meta .
+	 * @param array<string,mixed>     $form The Gravity Forms form array.
+	 * @param array<int|string,mixed> $submission The Gravity Forms submission result array.
+	 * @param array<string,mixed>     $entry_meta The entry meta data.
 	 * @throws \GraphQL\Error\UserError .
 	 */
 	private static function update_entry_properties( array $form, array $submission, array $entry_meta ): void {
@@ -273,9 +281,9 @@ class SubmitForm extends AbstractMutation {
 	/**
 	 * Creates the $input_values array required by GFAPI::submit_form().
 	 *
-	 * @param bool  $is_draft .
-	 * @param array $field_values . Required so submit_form() can generate the $_POST object.
-	 * @param array $file_upload_values .
+	 * @param bool                $is_draft .
+	 * @param array<string,mixed> $field_values Required so submit_form() can generate the $_POST object.
+	 * @param array               $file_upload_values .
 	 */
 	private static function get_input_values( bool $is_draft, array $field_values, array $file_upload_values ): array {
 		$input_values = [

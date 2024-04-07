@@ -28,7 +28,7 @@ class FieldChoiceRegistry {
 	 *
 	 * @since 0.12.2
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	public static $registered_types = [];
 
@@ -52,7 +52,7 @@ class FieldChoiceRegistry {
 	 * Registers the Choice property for the GF Form Field as a GraphQL object.
 	 *
 	 * @param \GF_Field $field The Gravity Forms field object.
-	 * @param array     $settings The Gravity Forms field settings used to define the GraphQL object.
+	 * @param string[]  $settings The Gravity Forms field settings used to define the GraphQL object.
 	 * @param bool      $as_interface Whether to register the choice as an interface. Default false.
 	 */
 	public static function register( GF_Field $field, array $settings, bool $as_interface = false ): void {
@@ -98,7 +98,9 @@ class FieldChoiceRegistry {
 	 *
 	 * @param string    $choice_name The name of the choice.
 	 * @param \GF_Field $field The Gravity Forms field object.
-	 * @param array     $settings The Gravity Forms field settings.
+	 * @param string[]  $settings The Gravity Forms field settings.
+	 *
+	 * @return array<string,mixed>
 	 */
 	public static function get_config_from_settings( string $choice_name, GF_Field $field, array $settings ): array {
 		$interfaces = self::get_interfaces( $settings );
@@ -120,7 +122,9 @@ class FieldChoiceRegistry {
 	/**
 	 * Returns the config array used to register the form field choice.
 	 *
-	 * @param array $settings .
+	 * @param string[] $settings .
+	 *
+	 * @return string[]
 	 */
 	public static function get_interfaces( array $settings ): array {
 		// Every Choice is a FieldChoice.
@@ -155,8 +159,10 @@ class FieldChoiceRegistry {
 	 *
 	 * @param string    $choice_name .
 	 * @param \GF_Field $field The Gravity Forms field object.
-	 * @param array     $settings The Gravity Forms field settings.
-	 * @param array     $interfaces The list of interfaces to add to the field.
+	 * @param string[]  $settings The Gravity Forms field settings.
+	 * @param string[]  $interfaces The list of interfaces to add to the field.
+	 *
+	 * @return array<string,array<string,mixed>>
 	 */
 	public static function get_fields( string $choice_name, GF_Field $field, array $settings, array $interfaces ): array {
 		$fields = FieldChoice::get_fields();
@@ -164,11 +170,11 @@ class FieldChoiceRegistry {
 		/**
 		 * Filter to modify the Form Field Choice GraphQL fields.
 		 *
-		 * @param array    $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
-		 * @param string   $choice_name The name of the choice type.
-		 * @param \GF_Field $field The Gravity Forms Field object.
-		 * @param array    $settings The `form_editor_field_settings()` keys.
-		 * @param array    $interfaces The list of interfaces for the GraphQL type.
+		 * @param array<string,array<string,mixed>> $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
+		 * @param string                            $choice_name The name of the choice type.
+		 * @param \GF_Field                         $field The Gravity Forms Field object.
+		 * @param string[]                          $settings The `form_editor_field_settings()` keys.
+		 * @param string[]                          $interfaces The list of interfaces for the GraphQL type.
 		 */
 		$fields = apply_filters( 'graphql_gf_form_field_setting_choice_fields', $fields, $choice_name, $field, $settings, $interfaces );
 

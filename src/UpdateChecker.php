@@ -69,8 +69,8 @@ class UpdateChecker implements Hookable {
 	/**
 	 * Display notice on plugin screen.
 	 *
-	 * @param array  $plugin_data .
-	 * @param object $response .
+	 * @param array<string,mixed> $plugin_data The plugin data.
+	 * @param object              $response The response object from the update check.
 	 */
 	public static function in_plugin_update_message( array $plugin_data, $response ): void {
 		if ( empty( $response->new_version ) ) {
