@@ -19,30 +19,35 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
+
 	/**
 	 * Sets the correct Field Helper.
 	 */
@@ -53,7 +58,7 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [ $this->factory->field->create( $this->property_helper->values ) ];
 	}
 
@@ -111,10 +116,8 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query() : string {
+	public function field_query(): string {
 		return '
 			... on ListField {
 				addIconUrl
@@ -159,7 +162,7 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	/**
 	 * SubmitForm mutation string.
 	 */
-	public function submit_form_mutation() : string {
+	public function submit_form_mutation(): string {
 		return '
 			mutation ($formId: ID!, $fieldId: Int!, $value: [ListFieldInput]!, $draft: Boolean) {
 				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, listValues: $value}}) {
@@ -192,7 +195,7 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	/**
 	 * Returns the UpdateEntry mutation string.
 	 */
-	public function update_entry_mutation() : string {
+	public function update_entry_mutation(): string {
 		return '
 			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: [ListFieldInput] ){
 				updateGfEntry( input: { id: $entryId, shouldValidate: true, fieldValues: {id: $fieldId, listValues: $value} }) {
@@ -219,7 +222,7 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	/**
 	 * Returns the UpdateDraftEntry mutation string.
 	 */
-	public function update_draft_entry_mutation() : string {
+	public function update_draft_entry_mutation(): string {
 		return '
 			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: [ListFieldInput]! ){
 				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, shouldValidate: true, fieldValues: {id: $fieldId, listValues: $value} }) {
@@ -244,11 +247,9 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
+	 * {@inheritDoc}
 	 */
-	public function expected_field_response( array $form ) : array {
+	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
 		$expected[] = $this->expected_field_value( 'listValues', $this->field_value );
 
@@ -276,9 +277,8 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ) : array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [
 			$this->expectedObject(
 				$mutationName,
@@ -310,11 +310,11 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * @param array $actual_entry .
 	 * @param array $form .
 	 */
-	public function check_saved_values( $actual_entry, $form ) : void {
+	public function check_saved_values( $actual_entry, $form ): void {
 		$actual_value = maybe_unserialize( $actual_entry[ $form['fields'][0]->id ], true );
 
 		// Convert to GraphQL ListFieldInput
-		$converted_value = array_map( fn( $value) => [ 'values' => [ $value ] ], $actual_value );
+		$converted_value = array_map( static fn ( $value ) => [ 'values' => [ $value ] ], $actual_value );
 		$this->assertEquals( $this->field_value, $converted_value, 'Submit mutation entry value not equal' );
 	}
 }

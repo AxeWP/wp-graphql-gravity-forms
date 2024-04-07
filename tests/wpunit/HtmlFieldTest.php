@@ -28,7 +28,7 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [ $this->factory->field->create( $this->property_helper->values ) ];
 	}
 
@@ -44,7 +44,6 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function updated_field_value() {
 		return ''; }
 
-
 	/**
 	 * The value as expected by Gravity Forms.
 	 */
@@ -53,10 +52,8 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query() : string {
+	public function field_query(): string {
 		return '
 			... on HtmlField {
 				conditionalLogic {
@@ -79,29 +76,27 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	/**
 	 * SubmitForm mutation string.
 	 */
-	public function submit_form_mutation() : string {
+	public function submit_form_mutation(): string {
 		return ''; }
 
 	/**
 	 * Returns the UpdateEntry mutation string.
 	 */
-	public function update_entry_mutation() : string {
+	public function update_entry_mutation(): string {
 		return '';
 	}
 
 	/**
 	 * Returns the UpdateDraftEntry mutation string.
 	 */
-	public function update_draft_entry_mutation() : string {
+	public function update_draft_entry_mutation(): string {
 		return '';
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
+	 * {@inheritDoc}
 	 */
-	public function expected_field_response( array $form ) : array {
+	public function expected_field_response( array $form ): array {
 		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
 
 		return [
@@ -128,9 +123,8 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ) : array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [];
 	}
 
@@ -140,5 +134,5 @@ class HtmlFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 * @param array $actual_entry .
 	 * @param array $form .
 	 */
-	public function check_saved_values( $actual_entry, $form ) : void {}
+	public function check_saved_values( $actual_entry, $form ): void {}
 }

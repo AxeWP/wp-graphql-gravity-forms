@@ -20,28 +20,32 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -78,7 +82,7 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [
 			$this->factory->field->create(
 				array_merge(
@@ -108,10 +112,9 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 		];
 	}
 
-	public function mutation_value_field_id() : int {
+	public function mutation_value_field_id(): int {
 		return $this->fields[1]->id;
 	}
-
 
 	/**
 	 * The value as expected in GraphQL.
@@ -135,7 +138,6 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 		return $this->updated_field_value;
 	}
 
-
 	/**
 	 * The value as expected by Gravity Forms.
 	 */
@@ -149,10 +151,8 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query() : string {
+	public function field_query(): string {
 		return '
 			... on QuantityField {
 				adminLabel
@@ -195,7 +195,7 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 	/**
 	 * SubmitForm mutation string.
 	 */
-	public function submit_form_mutation() : string {
+	public function submit_form_mutation(): string {
 		return '
 			mutation ($formId: ID!, $fieldId: Int!, $value: String!, $draft: Boolean) {
 				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
@@ -226,7 +226,7 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 	/**
 	 * Returns the UpdateEntry mutation string.
 	 */
-	public function update_entry_mutation() : string {
+	public function update_entry_mutation(): string {
 		return '
 			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: String! ){
 				updateGfEntry( input: { id: $entryId, shouldValidate: true, fieldValues: {id: $fieldId, value: $value} }) {
@@ -252,7 +252,7 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 	/**
 	 * Returns the UpdateDraftEntry mutation string.
 	 */
-	public function update_draft_entry_mutation() : string {
+	public function update_draft_entry_mutation(): string {
 		return '
 			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: String! ){
 				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, shouldValidate: true, fieldValues: {id: $fieldId, value: $value} }) {
@@ -275,11 +275,9 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
+	 * {@inheritDoc}
 	 */
-	public function expected_field_response( array $form ) : array {
+	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][1] );
 		$expected[] = $this->expected_field_value( 'value', $this->field_value );
 
@@ -307,9 +305,8 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ) : array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [
 			$this->expectedObject(
 				$mutationName,
@@ -336,7 +333,7 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 	 * @param array $actual_entry .
 	 * @param array $form .
 	 */
-	public function check_saved_values( $actual_entry, $form ) : void {
+	public function check_saved_values( $actual_entry, $form ): void {
 		$this->assertEquals( $this->field_value, $actual_entry[ $form['fields'][1]->id ], 'Submit mutation entry value not equal' );
 	}
 }

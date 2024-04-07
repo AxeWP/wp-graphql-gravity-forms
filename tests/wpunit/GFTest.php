@@ -12,6 +12,7 @@ class GFTest extends \Codeception\TestCase\WPTestCase {
 	public function setUp(): void {
 		// Before...
 		parent::setUp();
+
 		\WPGraphQL::clear_schema();
 	}
 

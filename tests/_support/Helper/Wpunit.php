@@ -14,15 +14,13 @@ use Helper\GFHelpers\PropertyHelper;
  * All public methods declared in helper class will be available in $I
  */
 class Wpunit extends \Codeception\Module {
-
 	/**
 	 * Generates the property helper for the field.
 	 *
 	 * @param string $type .
 	 * @param array  $args .
-	 * @return PropertyHelper
 	 */
-	public function getPropertyHelper( string $type, array $args = [] ) : PropertyHelper {
+	public function getPropertyHelper( string $type, array $args = [] ): PropertyHelper {
 		$interface_defaults = $this->getDefaultArgs();
 		$field_defaults     = call_user_func( [ $this, "get{$type}Args" ] );
 
@@ -34,7 +32,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Gets the default args used by all fields.
 	 */
-	public function getDefaultArgs() : array {
+	public function getDefaultArgs(): array {
 		return [
 			'displayOnly',
 			[ 'conditionalLogic' => null ],
@@ -53,7 +51,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for an address field.
 	 */
-	public function getAddressFieldArgs() : array {
+	public function getAddressFieldArgs(): array {
 		return [
 			'addressType',
 			'adminLabel',
@@ -87,7 +85,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a Captcha field.
 	 */
-	public function getCaptchaFieldArgs() : array {
+	public function getCaptchaFieldArgs(): array {
 		return [
 			'captchaBadgePosition',
 			'captchaLanguage',
@@ -108,7 +106,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a ChainedSelect field.
 	 */
-	public function getChainedSelectFieldArgs() : array {
+	public function getChainedSelectFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -222,7 +220,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a Checkbox field.
 	 */
-	public function getCheckboxFieldArgs() : array {
+	public function getCheckboxFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -268,7 +266,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a consent field.
 	 */
-	public function getConsentFieldArgs() : array {
+	public function getConsentFieldArgs(): array {
 		return [
 			'adminLabel',
 			'checkboxLabel',
@@ -313,7 +311,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a consent field.
 	 */
-	public function getDateFieldArgs() : array {
+	public function getDateFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -346,7 +344,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for an email field.
 	 */
-	public function getEmailFieldArgs() : array {
+	public function getEmailFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -393,7 +391,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for an email field.
 	 */
-	public function getFileUploadFieldArgs() : array {
+	public function getFileUploadFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowedExtensions',
@@ -414,7 +412,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a hidden field.
 	 */
-	public function getHiddenFieldArgs() : array {
+	public function getHiddenFieldArgs(): array {
 		return [
 			[ 'cssClass' => null ],
 			[ 'adminLabel' => null ],
@@ -431,7 +429,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get args for HTML field.
 	 */
-	public function getHtmlFieldArgs() : array {
+	public function getHtmlFieldArgs(): array {
 		return [
 			'adminLabel',
 			'content',
@@ -442,10 +440,11 @@ class Wpunit extends \Codeception\Module {
 			[ 'type' => 'html' ],
 		];
 	}
+
 	/**
 	 * Get the default args for a list field.
 	 */
-	public function getListFieldArgs() : array {
+	public function getListFieldArgs(): array {
 		return [
 			'addIconUrl',
 			'adminLabel',
@@ -484,7 +483,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a MultiSelect field.
 	 */
-	public function getMultiSelectFieldArgs() : array {
+	public function getMultiSelectFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -525,7 +524,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a name field.
 	 */
-	public function getNameFieldArgs() : array {
+	public function getNameFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -615,7 +614,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a number field.
 	 */
-	public function getNumberFieldArgs() : array {
+	public function getNumberFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -645,7 +644,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for an Option field.
 	 */
-	public function getOptionFieldArgs() : array {
+	public function getOptionFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -694,7 +693,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get args for page field.
 	 */
-	public function getPageFieldArgs() : array {
+	public function getPageFieldArgs(): array {
 		return [
 			'adminLabel',
 			[
@@ -722,7 +721,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a Phone field.
 	 */
-	public function getPhoneFieldArgs() : array {
+	public function getPhoneFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -748,7 +747,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a PostContent field.
 	 */
-	public function getPostContentFieldArgs() : array {
+	public function getPostContentFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -770,7 +769,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a PostContent field.
 	 */
-	public function getPostCategoryFieldArgs() : array {
+	public function getPostCategoryFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -793,7 +792,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a PostExcerpt field.
 	 */
-	public function getPostExcerptFieldArgs() : array {
+	public function getPostExcerptFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -812,11 +811,10 @@ class Wpunit extends \Codeception\Module {
 		];
 	}
 
-
 	/**
 	 * Get the default args for an email field.
 	 */
-	public function getPostImageFieldArgs() : array {
+	public function getPostImageFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowedExtensions',
@@ -839,7 +837,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a PostContent field.
 	 */
-	public function getPostTagsFieldArgs() : array {
+	public function getPostTagsFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -860,7 +858,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a PostTitle field.
 	 */
-	public function getPostTitleFieldArgs() : array {
+	public function getPostTitleFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -882,7 +880,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a Product field
 	 */
-	public function getProductFieldArgs() : array {
+	public function getProductFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -906,11 +904,10 @@ class Wpunit extends \Codeception\Module {
 		];
 	}
 
-
 	/**
 	 * Get the default args for a quantity field.
 	 */
-	public function getQuantityFieldArgs() : array {
+	public function getQuantityFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -933,7 +930,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a Quiz field
 	 */
-	public function getQuizFieldArgs() : array {
+	public function getQuizFieldArgs(): array {
 		return [
 			'autocompleteAttribute',
 			'adminLabel',
@@ -994,7 +991,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a radio field.
 	 */
-	public function getRadioFieldArgs() : array {
+	public function getRadioFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -1034,7 +1031,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get args for section field.
 	 */
-	public function getSectionFieldArgs() : array {
+	public function getSectionFieldArgs(): array {
 		return [
 			'adminLabel',
 			[ 'displayOnly' => true ],
@@ -1047,7 +1044,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a select field.
 	 */
-	public function getSelectFieldArgs() : array {
+	public function getSelectFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -1091,7 +1088,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a shipping field.
 	 */
-	public function getShippingFieldArgs() : array {
+	public function getShippingFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -1108,11 +1105,10 @@ class Wpunit extends \Codeception\Module {
 		];
 	}
 
-
 	/**
 	 * Get the default args for a signature field.
 	 */
-	public function getSignatureFieldArgs() : array {
+	public function getSignatureFieldArgs(): array {
 		return [
 			'adminLabel',
 			'backgroundColor',
@@ -1138,7 +1134,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a text field.
 	 */
-	public function getTextFieldArgs() : array {
+	public function getTextFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -1165,7 +1161,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a textarea field.
 	 */
-	public function getTextAreaFieldArgs() : array {
+	public function getTextAreaFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -1189,7 +1185,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a time field.
 	 */
-	public function getTimeFieldArgs() : array {
+	public function getTimeFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
@@ -1232,7 +1228,7 @@ class Wpunit extends \Codeception\Module {
 	/**
 	 * Get the default args for a total field.
 	 */
-	public function getTotalFieldArgs() : array {
+	public function getTotalFieldArgs(): array {
 		return [
 			'adminLabel',
 			'description',
@@ -1243,11 +1239,10 @@ class Wpunit extends \Codeception\Module {
 		];
 	}
 
-
 	/**
 	 * Get default args for website field.
 	 */
-	public function getWebsiteFieldArgs() : array {
+	public function getWebsiteFieldArgs(): array {
 		return [
 			'adminLabel',
 			'defaultValue',
@@ -1270,7 +1265,7 @@ class Wpunit extends \Codeception\Module {
 	 *
 	 * @param array $args .
 	 */
-	public function getFormDefaultArgs( $args = [] ) : array {
+	public function getFormDefaultArgs( $args = [] ): array {
 		return array_merge(
 			[
 				'button'                     => [
@@ -1479,7 +1474,6 @@ class Wpunit extends \Codeception\Module {
 		);
 	}
 
-
 	/**
 	 * Converts a string value to its Enum equivalent
 	 *
@@ -1502,7 +1496,7 @@ class Wpunit extends \Codeception\Module {
 	 * @param array $default .
 	 * @param array $custom .
 	 */
-	public function merge_default_args( array $default, array $custom = [] ) : array {
+	public function merge_default_args( array $default, array $custom = [] ): array {
 		array_walk(
 			$default,
 			static function ( &$value ) use ( $custom ) {

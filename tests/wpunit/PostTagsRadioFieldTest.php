@@ -20,15 +20,17 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 		$this->tag_id_1 = self::factory()->tag->create();
 		$this->tag_id_2 = self::factory()->tag->create();
 		$this->tag_id_3 = self::factory()->tag->create();
+
 		parent::setUp();
 
 		$this->clearSchema();
 	}
 
-	public function tearDown() : void {
+	public function tearDown(): void {
 		wp_delete_term( $this->tag_id_1, 'post_tag' );
 		wp_delete_term( $this->tag_id_2, 'post_tag' );
 		wp_delete_term( $this->tag_id_3, 'post_tag' );
+
 		parent::tearDown();
 	}
 
@@ -38,28 +40,32 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -73,7 +79,7 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 	/**
 	 * Generates the form fields from factory. Must be wrapped in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [
 			$this->factory->field->create(
 				array_merge(
@@ -116,6 +122,7 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 	public function field_value_input() {
 		return $this->fields[0]['choices'][0]['value'];
 	}
+
 	/**
 	 * The graphql field value input.
 	 */
@@ -130,7 +137,6 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 		return $this->fields[0]['choices'][2]['value'];
 	}
 
-
 	/**
 	 * The value as expected by Gravity Forms.
 	 */
@@ -138,13 +144,10 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 		return [ (string) $this->fields[0]['id'] => $this->field_value_input ];
 	}
 
-
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query():string {
+	public function field_query(): string {
 		return '... on PostTagsField {
 				adminLabel
 				canPrepopulate
@@ -273,9 +276,7 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
+	 * {@inheritDoc}
 	 */
 	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
@@ -305,9 +306,8 @@ class PostTagsFieldRadioTest extends FormFieldTestCase implements FormFieldTestC
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ):array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [
 			$this->expectedObject(
 				$mutationName,

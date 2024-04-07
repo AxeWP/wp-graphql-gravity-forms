@@ -18,14 +18,16 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 		// Before...
 		$this->cat_id_1 = self::factory()->category->create();
 		$this->cat_id_2 = self::factory()->category->create();
+
 		parent::setUp();
 
 		$this->clearSchema();
 	}
 
-	public function tearDown() : void {
+	public function tearDown(): void {
 		wp_delete_category( $this->cat_id_1 );
 		wp_delete_category( $this->cat_id_2 );
+
 		parent::tearDown();
 	}
 
@@ -35,28 +37,32 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -70,7 +76,7 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 	/**
 	 * Generates the form fields from factory. Must be wrapped in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [
 			$this->factory->field->create(
 				array_merge(
@@ -198,6 +204,7 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 			],
 		];
 	}
+
 	/**
 	 * The graphql field value input.
 	 */
@@ -239,8 +246,6 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 		];
 	}
 
-
-
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
@@ -280,13 +285,10 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 		];
 	}
 
-
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query():string {
+	public function field_query(): string {
 		return '... on PostCategoryField {
 				adminLabel
 				canPrepopulate
@@ -466,9 +468,7 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
+	 * {@inheritDoc}
 	 */
 	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
@@ -498,9 +498,8 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ):array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [
 			$this->expectedObject(
 				$mutationName,

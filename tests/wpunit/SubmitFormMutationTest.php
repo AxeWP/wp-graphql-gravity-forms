@@ -24,12 +24,12 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `submitGfDraft
 	 */
-	public function testSubmitFormWithEmptyFieldValues() : void {
+	public function testSubmitFormWithEmptyFieldValues(): void {
 		// Create Form.
 		$helper  = $this->tester->getPropertyHelper( 'TextField' );
 		$fields  = [ $this->factory->field->create( $helper->values ) ];
 		$form_id = $this->factory->form->create( array_merge( [ 'fields' => $fields ], $this->tester->getFormDefaultArgs() ) );
-	
+
 		$query = $this->submit_mutation();
 
 		// Test with errors.
@@ -57,7 +57,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		$this->assertNotEmpty( $actual['data']['submitGfForm']['errors'][0]['message'] );
 	}
 
-	public function testSubmitForm() : void {
+	public function testSubmitForm(): void {
 		// Create Form.
 		$helper  = $this->tester->getPropertyHelper( 'TextField' );
 		$fields  = [ $this->factory->field->create( $helper->values ) ];
@@ -103,13 +103,12 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		$this->assertNotEmpty( $actual['data']['submitGfForm']['entry']['sourceUrl'] );
 		$this->assertEmpty( $actual['data']['submitGfForm']['entry']['userAgent'] );
 
-
 		// Cleanup
 		$this->factory->entry->delete( $actual['data']['submitGfForm']['entry']['databaseId'] );
 		$this->factory->form->delete( $form_id );
 	}
 
-	public function testSubmitWithUrlConfirmation() : void {
+	public function testSubmitWithUrlConfirmation(): void {
 		// Create Form.
 		$helper = $this->tester->getPropertyHelper( 'TextField' );
 		$fields = [ $this->factory->field->create( $helper->values ) ];
@@ -167,7 +166,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		$this->factory->form->delete( $form_id );
 	}
 
-	public function testSubmitWithPageConfirmation() : void {
+	public function testSubmitWithPageConfirmation(): void {
 		// Create page.
 		$page_id = $this->factory()->post->create(
 			[
@@ -200,7 +199,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 						],
 					],
 				]
-			) 
+			)
 		);
 
 		$query = $this->submit_mutation();
@@ -234,7 +233,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		$this->factory->form->delete( $form_id );
 	}
 
-	public function testSubmitWithLoggedInUser() : void {
+	public function testSubmitWithLoggedInUser(): void {
 		// Create Form.
 		$helper  = $this->tester->getPropertyHelper( 'TextField' );
 		$fields  = [ $this->factory->field->create( $helper->values ) ];
@@ -256,7 +255,6 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 			],
 		];
 
-
 		wp_set_current_user( $this->admin->ID );
 
 		$actual = $this->graphql( compact( 'query', 'variables' ) );
@@ -274,7 +272,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		$this->factory->form->delete( $form_id );
 	}
 
-	public function testSubmitWithEntryMeta() : void {
+	public function testSubmitWithEntryMeta(): void {
 		// Create Form.
 		$helper  = $this->tester->getPropertyHelper( 'TextField' );
 		$fields  = [ $this->factory->field->create( $helper->values ) ];
@@ -321,7 +319,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		$this->factory->form->delete( $form_id );
 	}
 
-	public function testSubmitWithPostCreation() : void {
+	public function testSubmitWithPostCreation(): void {
 		$category = $this->factory->category->create_and_get();
 		$tag      = $this->factory->tag->create_and_get();
 
@@ -489,7 +487,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		wp_delete_post( $actual['data']['submitGfForm']['entry']['post']['databaseId'], true );
 	}
 
-	public function testSubmitWithOrderItems() : void {
+	public function testSubmitWithOrderItems(): void {
 
 		// Create Form.
 		$fields = [
@@ -538,7 +536,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 						]
 					)->values,
 					[
-						
+
 						'inputs' => [
 							[
 								'id'    => 2.1,
@@ -617,7 +615,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 				$this->tester->getFormDefaultArgs(),
 				[
 					'fields' => $fields,
-					
+
 				],
 			)
 		);
@@ -719,7 +717,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 	/**
 	 * Creates the mutation.
 	 */
-	public function submit_mutation() : string {
+	public function submit_mutation(): string {
 		return 'mutation SubmitForm( $input:SubmitGfFormInput! ) {
 			submitGfForm(input:$input) {
 				confirmation{

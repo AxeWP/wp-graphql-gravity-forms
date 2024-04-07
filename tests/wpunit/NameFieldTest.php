@@ -17,28 +17,32 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -52,7 +56,7 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [ $this->factory->field->create( $this->property_helper->values ) ];
 	}
 
@@ -104,10 +108,8 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query() : string {
+	public function field_query(): string {
 		return '
 			... on NameField {
 				adminLabel
@@ -168,10 +170,8 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 
 	/**
 	 * SubmitForm mutation string.
-	 *
-	 * @return string
 	 */
-	public function submit_form_mutation() : string {
+	public function submit_form_mutation(): string {
 		return '
 			mutation ($formId: ID!, $fieldId: Int!, $value: NameFieldInput!, $draft: Boolean) {
 				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, nameValues: $value}}) {
@@ -207,8 +207,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 
 	/**
 	 * Returns the UpdateEntry mutation string.
-	 *
-	 * @return string
 	 */
 	public function update_entry_mutation(): string {
 		return '
@@ -240,8 +238,6 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 
 	/**
 	 * Returns the UpdateDraftEntry mutation string.
-	 *
-	 * @return string
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
@@ -270,13 +266,11 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 			}
 		';
 	}
+
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function expected_field_response( array $form ) : array {
+	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
 		$expected[] = $this->expected_field_value( 'nameValues', $this->field_value );
 
@@ -304,9 +298,8 @@ class NameFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ) : array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [
 			$this->expectedObject(
 				$mutationName,

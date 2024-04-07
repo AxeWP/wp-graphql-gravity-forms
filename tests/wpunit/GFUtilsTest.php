@@ -6,8 +6,8 @@
  */
 
 use GraphQL\Error\UserError;
-use WPGraphQL\GF\Utils\GFUtils;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
+use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - GFUtilsTest
@@ -60,7 +60,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::get_ip().
 	 */
-	public function testGetIp() : void {
+	public function testGetIp(): void {
 		$ip = '192.168.0.1';
 
 		$actual = GFUtils::get_ip( $ip );
@@ -75,7 +75,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::get_form().
 	 */
-	public function testGetForm() : void {
+	public function testGetForm(): void {
 		$expected = $this->factory->form->get_object_by_id( $this->form_id );
 
 		// No second parameter.
@@ -88,12 +88,10 @@ class GFUtilsTest extends GFGraphQLTestCase {
 		$actual = GFUtils::get_form( $this->form_id + 1 );
 	}
 
-
-
 	/**
 	 * Tests GFUtils::get_form() for trashed forms.
 	 */
-	public function testGetForm_trash() : void {
+	public function testGetForm_trash(): void {
 		// Create Trash Entry.
 		$form_id    = $this->factory->form->create( array_merge( [ 'fields' => $this->fields ], $this->tester->getFormDefaultArgs() ) );
 		$is_updated = \GFFormsModel::trash_form( $form_id );
@@ -113,7 +111,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::get_forms().
 	 */
-	public function testGetForms() : void {
+	public function testGetForms(): void {
 		$expected = $this->factory->form->get_object_by_id( $this->form_id );
 
 		$actual = GFUtils::get_forms( [ $this->form_id ] );
@@ -123,7 +121,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::get_last_form_page().
 	 */
-	public function testGetLastFormPage() : void {
+	public function testGetLastFormPage(): void {
 		$this->markTestIncomplete(
 			'This test has not been implemented yet. Requires PageField arguments.'
 		);
@@ -132,7 +130,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::get_form_unique_id().
 	 */
-	public function testGetFormUniqueId() : void {
+	public function testGetFormUniqueId(): void {
 		$expected = GFUtils::get_form_unique_id( $this->form_id );
 		$actual   = GFUtils::get_form_unique_id( $this->form_id );
 		$this->assertEquals( $expected, $actual );
@@ -141,7 +139,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::get_field_by_id().
 	 */
-	public function testGetFieldById() : void {
+	public function testGetFieldById(): void {
 		$form     = $this->factory->form->get_object_by_id( $this->form_id );
 		$expected = $this->fields[0];
 		$actual   = GFUtils::get_field_by_id( $form, $this->fields[0]->id );
@@ -158,7 +156,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::get_entry().
 	 */
-	public function testGetEntry() : void {
+	public function testGetEntry(): void {
 		$expected = $this->factory->entry->get_object_by_id( $this->entry_id );
 		$actual   = GFUtils::get_entry( $this->entry_id );
 		$this->assertEquals( $expected, $actual );
@@ -172,7 +170,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::update_entry().
 	 */
-	public function testUpdateEntry() : void {
+	public function testUpdateEntry(): void {
 		$entry_data = $this->factory->entry->get_object_by_id( $this->entry_id );
 
 		$entry_data['is_starred'] = true;
@@ -192,7 +190,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::get_draft_entry().
 	 */
-	public function testGetDraftEntry() : void {
+	public function testGetDraftEntry(): void {
 		$expected = $this->factory->draft_entry->get_object_by_id( $this->draft_token );
 		$actual   = GFUtils::get_draft_entry( $this->draft_token );
 		$this->assertEquals( $expected, $actual );
@@ -206,7 +204,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::get_draft_submission().
 	 */
-	public function testGetDraftSubmission() : void {
+	public function testGetDraftSubmission(): void {
 		$expected_entry = $this->factory->draft_entry->get_object_by_id( $this->draft_token );
 		$expected       = json_decode( $expected_entry['submission'], true );
 
@@ -219,7 +217,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::get_resume_url().
 	 */
-	public function testGetResumeUrl() : void {
+	public function testGetResumeUrl(): void {
 		$url      = site_url();
 		$expected = $url . '?gf_token=' . $this->draft_token;
 		$actual   = GFUtils::get_resume_url( $this->draft_token, $url );
@@ -232,7 +230,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::save_draft_submission();
 	 */
-	public function testSaveDraftSubmission() : void {
+	public function testSaveDraftSubmission(): void {
 		$form       = $this->factory->form->get_object_by_id( $this->form_id );
 		$entry_data = $this->factory->draft_entry->get_object_by_id( $this->draft_token );
 		$submission = json_decode( $entry_data['submission'], true );
@@ -266,7 +264,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::submit_form() when invalid.
 	 */
-	public function testSubmitForm_invalid() : void {
+	public function testSubmitForm_invalid(): void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$input_values = [
 			'input_' . $form['fields'][0]->id => 'value2',
@@ -280,7 +278,7 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	/**
 	 * Tests GFUtils::submit_form().
 	 */
-	public function testSubmitForm() : void {
+	public function testSubmitForm(): void {
 		$form         = $this->factory->form->get_object_by_id( $this->form_id );
 		$input_values = [
 			'input_' . $form['fields'][0]->id => 'value1',
