@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'harness-software/wp-graphql-gravity-forms',
-        'pretty_version' => 'dev-develop',
-        'version' => 'dev-develop',
-        'reference' => '640e050e13f5caa91348da2a1e115cdbfcb58999',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '2dcb7eccf958334e42aed2becfeb5ae6efec4319',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'harness-software/wp-graphql-gravity-forms' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
-            'reference' => '640e050e13f5caa91348da2a1e115cdbfcb58999',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '2dcb7eccf958334e42aed2becfeb5ae6efec4319',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
