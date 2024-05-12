@@ -18,28 +18,32 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -53,7 +57,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [ $this->factory->field->create( $this->property_helper->values ) ];
 	}
 
@@ -63,6 +67,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	public function field_value() {
 		return [ '2015', 'Acura', 'MDX' ];
 	}
+
 	/**
 	 * The graphql field value input.
 	 */
@@ -82,7 +87,6 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 			],
 		];
 	}
-
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
@@ -124,13 +128,10 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 		];
 	}
 
-
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query():string {
+	public function field_query(): string {
 		return '
 			... on ChainedSelectField {
 				adminLabel
@@ -277,9 +278,7 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
+	 * {@inheritDoc}
 	 */
 	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
@@ -309,9 +308,8 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ):array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [
 			$this->expectedObject(
 				$mutationName,

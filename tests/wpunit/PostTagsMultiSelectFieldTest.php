@@ -21,15 +21,17 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 		$this->tag_id_1 = self::factory()->tag->create();
 		$this->tag_id_2 = self::factory()->tag->create();
 		$this->tag_id_3 = self::factory()->tag->create();
+
 		parent::setUp();
 
 		$this->clearSchema();
 	}
 
-	public function tearDown() : void {
+	public function tearDown(): void {
 		wp_delete_term( $this->tag_id_1, 'post_tag' );
 		wp_delete_term( $this->tag_id_2, 'post_tag' );
 		wp_delete_term( $this->tag_id_3, 'post_tag' );
+
 		parent::tearDown();
 	}
 
@@ -39,28 +41,32 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -74,7 +80,7 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 			return [
 				$this->factory->field->create(
 					array_merge(
@@ -123,13 +129,13 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 			$this->fields[0]['choices'][1]['value'],
 		];
 	}
+
 	/**
 	 * The graphql field value input.
 	 */
 	public function updated_field_value_input() {
 		return [ $this->fields[0]['choices'][2]['value'] ];
 	}
-
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
@@ -149,13 +155,10 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 		];
 	}
 
-
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query():string {
+	public function field_query(): string {
 		return '
 			... on PostTagsField {
 				adminLabel
@@ -283,9 +286,7 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
+	 * {@inheritDoc}
 	 */
 	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
@@ -315,9 +316,8 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ):array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [
 			$this->expectedObject(
 				$mutationName,

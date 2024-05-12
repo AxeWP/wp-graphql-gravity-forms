@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 install_gf() {
 	# Install GF plugins and Activate.
 	echo "Installing and Activating Gravity Forms + extensions";
@@ -51,7 +50,6 @@ if ! $( wp plugin is-installed wp-graphql-upload --allow-root ); then
 fi
 wp plugin activate wp-graphql-upload --allow-root
 
-
 # Install WPGatsby and Activate
 if ! $( wp plugin is-installed wp-gatsby --allow-root ); then
 	wp plugin install wp-gatsby --allow-root
@@ -78,7 +76,6 @@ if $(wp maintenance-mode is-active --allow-root); then
 	echo "Deactivating maintenance mode"
 	wp maintenance-mode deactivate --allow-root
 fi
-
 
 chmod 777 -R .
 chown -R $(id -u):$(id -g) .

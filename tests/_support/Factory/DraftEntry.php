@@ -14,7 +14,6 @@ use GFFormsModel;
  * Class - Entry
  */
 class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
-
 	/**
 	 * Constructor
 	 *
@@ -22,6 +21,7 @@ class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
 	 */
 	public function __construct( $factory = null ) {
 		parent::__construct( $factory );
+
 		$this->default_generation_definitions = [
 			'source_url'   => '',
 			'page_number'  => 1,
@@ -34,7 +34,7 @@ class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
 	 *
 	 * @param array $args entry arguments.
 	 */
-	public function create_object( $args ) : string {
+	public function create_object( $args ): string {
 		$form = GFAPI::get_form( $args['form_id'] );
 
 		$entry = array_replace(
@@ -101,9 +101,8 @@ class DraftEntry extends \WP_UnitTest_Factory_For_Thing {
 	 * Gets the draft entry from an object id.
 	 *
 	 * @param string $resume_token .
-	 * @return array
 	 */
-	public function get_object_by_id( $resume_token ) : array {
+	public function get_object_by_id( $resume_token ): array {
 		return GFFormsModel::get_draft_submission_values( $resume_token );
 	}
 

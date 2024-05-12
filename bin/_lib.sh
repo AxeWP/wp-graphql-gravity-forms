@@ -145,7 +145,6 @@ install_plugins() {
 	fi
 	wp plugin activate wp-graphql-upload
 
-
 	# Install WPGatsby and Activate
 	if ! $( wp plugin is-installed wp-gatsby ); then
 		wp plugin install wp-gatsby

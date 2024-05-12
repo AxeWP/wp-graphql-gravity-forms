@@ -8,7 +8,8 @@ A WordPress plugin that adds <a href="https://wpgraphql.com" target="_blank">WPG
 
 -----
 
-![Packagist License](https://img.shields.io/packagist/l/harness-software/wp-graphql-gravity-forms?color=green) ![Packagist Version](https://img.shields.io/packagist/v/harness-software/wp-graphql-gravity-forms?label=stable) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/axewp/wp-graphql-gravity-forms/v0.12.5) ![GitHub forks](https://img.shields.io/github/forks/axewp/wp-graphql-gravity-forms?style=social) ![GitHub Repo stars](https://img.shields.io/github/stars/axewp/wp-graphql-gravity-forms?style=social)<br />
+![Packagist License](https://img.shields.io/packagist/l/harness-software/wp-graphql-gravity-forms?color=green) ![Packagist Version](https://img.shields.io/packagist/v/harness-software/wp-graphql-gravity-forms?label=stable) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/axewp/wp-graphql-gravity-forms/v0.12.6.1) ![GitHub forks](https://img.shields.io/github/forks/axewp/wp-graphql-gravity-forms?style=social) ![GitHub Repo stars](https://img.shields.io/github/stars/axewp/wp-graphql-gravity-forms?style=social)<br />
+![Packagist License](https://img.shields.io/packagist/l/harness-software/wp-graphql-gravity-forms?color=green) ![Packagist Version](https://img.shields.io/packagist/v/harness-software/wp-graphql-gravity-forms?label=stable) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/axewp/wp-graphql-gravity-forms/v0.12.6.1) ![GitHub forks](https://img.shields.io/github/forks/axewp/wp-graphql-gravity-forms?style=social) ![GitHub Repo stars](https://img.shields.io/github/stars/axewp/wp-graphql-gravity-forms?style=social)<br />
 [![Coverage Status](https://coveralls.io/repos/github/AxeWP/wp-graphql-gravity-forms/badge.svg?branch=develop)](https://coveralls.io/github/AxeWP/wp-graphql-gravity-forms?branch=develop) [![WordPress Coding Standards](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/code-standard.yml/badge.svg)](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/code-standard.yml) [![Code Quality](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/code-quality.yml/badge.svg)](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/code-quality.yml) [![Schema Linter](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/schema-linter.yml/badge.svg)](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/schema-linter.yml)
 
 ## Overview
@@ -26,9 +27,9 @@ Our hope for this open source project is that it will enable more teams to lever
 ## System Requirements
 
 * PHP 7.4-8.2+
-* WordPress 5.4.1+
-* WPGraphQL 1.9.0+
-* Gravity Forms 2.5+ (Recommend: v2.6+)
+* WordPress 6.0+
+* WPGraphQL 1.26.0+
+* Gravity Forms 2.7+
 * **Recommended**: [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload) - used for [File Upload and Post Image submissions](docs/submitting-forms.md).
 
 ## Quick Install
@@ -103,6 +104,5 @@ Priority support and custom development are available to [our Sponsors](https://
 <div class="sponsor-grid">
   <a href="https://mysafetyhq.com/" target="_blank" rel="sponsored" title="SafetyHQ (previously Harness Software)"><img src="https://avatars.githubusercontent.com/u/50597878?s=150&v=4" alt="SafetyHQ (previously Harness Software)"></a>
 </div>
-
 
 <a href="https://github.com/sponsors/AxeWP" alt="GitHub Sponsors"><img src="https://img.shields.io/static/v1?label=Sponsor%20Us%20%40%20AxeWP&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86&style=for-the-badge" /></a>

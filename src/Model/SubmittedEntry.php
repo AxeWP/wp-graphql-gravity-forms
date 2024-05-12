@@ -22,14 +22,14 @@ class SubmittedEntry extends Model {
 	/**
 	 * Stores the incoming Gravity Forms entry to be modeled.
 	 *
-	 * @var array $data;
+	 * @var array<int|string,mixed> $data;
 	 */
 	protected $data;
 
 	/**
 	 * Entry constructor.
 	 *
-	 * @param array $entry The incoming entry to be modeled.
+	 * @param array<int|string,mixed> $entry The incoming entry to be modeled.
 	 *
 	 * @throws \Exception .
 	 */
@@ -57,10 +57,10 @@ class SubmittedEntry extends Model {
 		 *
 		 * @since 0.10.0
 		 *
-		 * @param bool      $can_view_entries Whether the current user should be allowed to view form entries.
-		 * @param int       $form_id The specific form ID being queried.
-		 * @param int       $entry_id The specific entry ID being queried.
-		 * @param array     $entry the current entry.
+		 * @param bool                    $can_view_entries Whether the current user should be allowed to view form entries.
+		 * @param int                     $form_id          The specific form ID being queried.
+		 * @param int                     $entry_id         The specific entry ID being queried.
+		 * @param array<int|string,mixed> $entry            The entry array.
 		 */
 		$can_view = apply_filters( 'graphql_gf_can_view_entries', $can_view, $this->data['form_id'], (int) $this->data['id'], $this->data );
 

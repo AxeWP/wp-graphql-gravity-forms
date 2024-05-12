@@ -29,10 +29,10 @@ class Factory {
 	/**
 	 * Registers loaders to AppContext.
 	 *
-	 * @param array                 $loaders Data loaders.
-	 * @param \WPGraphQL\AppContext $context App context.
+	 * @param array<string,\WPGraphQL\Data\Loader\AbstractDataLoader> $loaders Data loaders.
+	 * @param \WPGraphQL\AppContext                                   $context App context.
 	 *
-	 * @return array Data loaders, with new ones added.
+	 * @return array<string,\WPGraphQL\Data\Loader\AbstractDataLoader> Data loaders.
 	 */
 	public static function register_loaders( array $loaders, AppContext $context ): array {
 		$loaders[ DraftEntriesLoader::$name ] = new DraftEntriesLoader( $context );
@@ -71,7 +71,7 @@ class Factory {
 	 *
 	 * @param int                                  $max_query_amount Max query amount.
 	 * @param mixed                                $source     source passed down from the resolve tree.
-	 * @param array                                $args       array of arguments input in the field as part of the GraphQL query.
+	 * @param array<string,mixed>                  $args       array of arguments input in the field as part of the GraphQL query.
 	 * @param \WPGraphQL\AppContext                $context Object containing app context that gets passed down the resolve tree.
 	 * @param \GraphQL\Type\Definition\ResolveInfo $info Info about fields passed down the resolve tree.
 	 *
@@ -99,11 +99,11 @@ class Factory {
 	 * Wrapper for the FormsConnectionResolver::resolve method.
 	 *
 	 * @param mixed                                $source  The object the connection is coming from.
-	 * @param array                                $args    Array of args to be passed down to the resolve method.
+	 * @param array<string,mixed>                  $args    Array of args to be passed down to the resolve method.
 	 * @param \WPGraphQL\AppContext                $context The AppContext object to be passed down.
 	 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo object.
 	 *
-	 * @return mixed|array|\GraphQL\Deferred
+	 * @return \GraphQL\Deferred
 	 */
 	public static function resolve_forms_connection( $source, array $args, AppContext $context, ResolveInfo $info ) {
 		$resolver = new FormsConnectionResolver( $source, $args, $context, $info );
@@ -135,11 +135,11 @@ class Factory {
 	 * Wrapper for the EntriesConnectionResolver::resolve method.
 	 *
 	 * @param mixed                                $source  The object the connection is coming from.
-	 * @param array                                $args    Array of args to be passed down to the resolve method.
+	 * @param array<string,mixed>                  $args    Array of args to be passed down to the resolve method.
 	 * @param \WPGraphQL\AppContext                $context The AppContext object to be passed down.
 	 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo object.
 	 *
-	 * @return mixed|array|\GraphQL\Deferred
+	 * @return \GraphQL\Deferred
 	 */
 	public static function resolve_entries_connection( $source, array $args, AppContext $context, ResolveInfo $info ) {
 		$resolver = new EntriesConnectionResolver( $source, $args, $context, $info );

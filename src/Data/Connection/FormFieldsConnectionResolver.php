@@ -35,7 +35,9 @@ class FormFieldsConnectionResolver {
 	 *
 	 * Instead of a Model.
 	 *
-	 * @param array $data array of form fields.
+	 * @param \GF_Field[] $data array of form fields.
+	 *
+	 * @return \GF_Field[]
 	 */
 	public static function prepare_data( array $data ): array {
 		foreach ( $data as &$field ) {
@@ -75,11 +77,11 @@ class FormFieldsConnectionResolver {
 	 * The connection resolve method.
 	 *
 	 * @param mixed                                $source  The object the connection is coming from.
-	 * @param array                                $args    Array of args to be passed down to the resolve method.
+	 * @param array<string,mixed>                  $args    Array of args to be passed down to the resolve method.
 	 * @param \WPGraphQL\AppContext                $context The AppContext object to be passed down.
 	 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo object.
 	 *
-	 * @return mixed|array|\WPGraphQL\GF\Data\Connection\Deferred
+	 * @return ?array<string,mixed>
 	 */
 	public static function resolve( $source, array $args, AppContext $context, ResolveInfo $info ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( ! is_array( $source ) || empty( $source ) ) {
@@ -106,6 +108,8 @@ class FormFieldsConnectionResolver {
 
 	/**
 	 * Returns input keys for Address field.
+	 *
+	 * @return string[]
 	 */
 	private static function get_address_input_keys(): array {
 		return [
@@ -120,6 +124,8 @@ class FormFieldsConnectionResolver {
 
 	/**
 	 * Returns input keys for Name field.
+	 *
+	 * @return string[]
 	 */
 	private static function get_name_input_keys(): array {
 		return [
@@ -134,8 +140,10 @@ class FormFieldsConnectionResolver {
 		/**
 		 * Filters the form fields by the connection's where args.
 		 *
-		 * @param array $fields .
-		 * @param array $args .
+		 * @param \GF_Field[]         $fields .
+		 * @param array<string,mixed> $args .
+		 *
+		 * @return \GF_Field[]
 		 */
 	private static function filter_form_fields_by_connection_args( $fields, $args ): array {
 		if ( isset( $args['where']['ids'] ) ) {

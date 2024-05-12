@@ -57,8 +57,8 @@ class ChoiceWithName extends AbstractFieldChoiceSetting {
 	/**
 	 * Registers a GraphQL field to the GraphQL type that implements this interface.
 	 *
-	 * @param \GF_Field $field The Gravity Forms Field object.
-	 * @param array     $settings The `form_editor_field_settings()` key.
+	 * @param \GF_Field $field    The Gravity Forms Field object.
+	 * @param string[]  $settings The `form_editor_field_settings()` keys.
 	 */
 	public static function add_choice_to_inputs( GF_Field $field, array $settings ): void {
 		if (

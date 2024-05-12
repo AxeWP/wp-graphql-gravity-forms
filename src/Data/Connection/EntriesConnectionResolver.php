@@ -15,8 +15,6 @@ namespace WPGraphQL\GF\Data\Connection;
 use GFAPI;
 use GF_Query;
 use GraphQL\Error\UserError;
-use GraphQL\Type\Definition\ResolveInfo;
-use WPGraphQL\AppContext;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
@@ -26,6 +24,8 @@ use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - EntriesConnectionResolver
+ *
+ * @extends \WPGraphQL\Data\Connection\AbstractConnectionResolver<\GF_Query>
  */
 class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
@@ -33,7 +33,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @var int
 	 */
-	public int $offset_index = 0;
+	public ?int $offset_index;
 
 	/**
 	 * @var string[]
@@ -48,40 +48,28 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function __construct( $source, array $args, AppContext $context, ResolveInfo $info ) {
-		parent::__construct( $source, $args, $context, $info );
-
-		$this->offset_index = $this->get_query_offset_index();
-	}
-
-	/**
-	 * Return the name of the loader to be used with the connection resolver
-	 */
-	public function get_loader_name(): string {
+	protected function loader_name(): string {
 		return EntriesLoader::$name;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_query_args(): array {
+	protected function prepare_query_args( array $args ): array {
 		$query_args = [
-			'form_ids'        => $this->get_form_ids(),
-			'search_criteria' => $this->get_search_criteria(),
-			'sorting'         => $this->get_sort(),
-			'paging'          => $this->get_paging(),
+			'form_ids'        => $this->prepare_form_ids( $args ),
+			'search_criteria' => $this->prepare_search_criteria( $args ),
+			'sorting'         => $this->prepare_sort( $args ),
+			'paging'          => $this->prepare_paging( $args ),
 		];
 
 		/**
 		 * Filter the $query args to allow folks to customize queries programmatically
 		 *
-		 * @param array       $query_args The args that will be passed to the WP_Query
-		 * @param mixed       $source     The source that's passed down the GraphQL queries
-		 * @param array       $args       The inputArgs on the field
-		 * @param \WPGraphQL\AppContext $context The AppContext passed down the GraphQL tree
-		 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo passed down the GraphQL tree
+		 * @param array<string,mixed> $query_args The args that will be passed to the GF_Query
+		 * @param self                $resolver   The current instance of the resolver
 		 */
-		$query_args = apply_filters( 'graphql_gf_entries_connection_query_args', $query_args, $this->source, $this->args, $this->context, $this->info );
+		$query_args = apply_filters( 'graphql_gf_entries_connection_query_args', $query_args, $this );
 
 		return $query_args;
 	}
@@ -89,11 +77,25 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get_query(): GF_Query {
-		$form_ids        = $this->query_args['form_ids'];
-		$search_criteria = $this->query_args['search_criteria'];
-		$sorting         = $this->query_args['sorting'];
-		$paging          = $this->query_args['paging'];
+	protected function query_class(): string {
+		return GF_Query::class;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function is_valid_query_class( string $query_class ): bool {
+		return method_exists( $query_class, 'get_ids' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function query( array $query_args ): GF_Query {
+		$form_ids        = $query_args['form_ids'] ?? null;
+		$search_criteria = $query_args['search_criteria'] ?? null;
+		$sorting         = $query_args['sorting'] ?? null;
+		$paging          = $query_args['paging'] ?? null;
 
 		return new GF_Query( $form_ids, $search_criteria, $sorting, $paging );
 	}
@@ -112,6 +114,8 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 			$can_view = true;
 		}
 
+		$query_args = $this->get_query_args();
+
 		/**
 		 * Filter to control whether the user should be allowed to view entries.
 		 *
@@ -120,7 +124,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 		 * @param bool $can_view_entries Whether the current user should be allowed to view form entries.
 		 * @param int|int[] $form_ids List of he specific form ID being queried.
 		 */
-		$can_view = apply_filters( 'graphql_gf_can_view_entries', $can_view, $this->get_form_ids() );
+		$can_view = apply_filters( 'graphql_gf_can_view_entries', $can_view, $query_args['form_ids'] );
 
 		return $can_view;
 	}
@@ -142,10 +146,12 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * {@inheritDoc}
 	 */
 	public function get_ids_from_query(): array {
-		$ids = $this->query->get_ids() ?: [];
+		$query = $this->get_query();
+		$ids   = $query->get_ids() ?: [];
 
 		// If we're going backwards, we need to reverse the array.
-		if ( ! empty( $this->args['last'] ) ) {
+		$args = $this->get_args();
+		if ( ! empty( $args['last'] ) ) {
 			$ids = array_reverse( $ids );
 		}
 
@@ -180,17 +186,20 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * @return bool
 	 */
 	protected function is_valid_model( $model ) {
-		return isset( $model->databaseId ) || empty( $model->resumeToken );
+		return ! empty( $model->databaseId ) || ! empty( $model->resumeToken );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	protected function get_cursor_for_node( $id ): string {
-		// The GF_Query offset index is based on the original sort order.
-		$nodes = ! empty( $this->args['last'] ) ? array_reverse( $this->nodes, true ) : $this->nodes;
+		$args  = $this->get_args();
+		$nodes = $this->get_nodes();
 
-		$index = $this->offset_index + array_search( $id, array_keys( $nodes ), true );
+		// The GF_Query offset index is based on the original sort order.
+		$nodes = ! empty( $args['last'] ) ? array_reverse( $nodes, true ) : $nodes;
+
+		$index = $this->get_query_offset_index() + array_search( $id, array_keys( $nodes ), true );
 
 		return base64_encode( 'arrayconnection:' . $index . ':' . $id );
 	}
@@ -199,29 +208,37 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * Gets the array index for offsetting GF_Query.
 	 */
 	public function get_query_offset_index(): int {
-		$offset_index = 0;
+		if ( ! isset( $this->offset_index ) ) {
+			$args         = $this->get_args();
+			$offset_index = 0;
 
-		if ( ! empty( $this->args['first'] ) ) {
-			$cursor_to_offset = ! empty( $this->args['after'] ) ? $this->args['after'] : null;
-		} elseif ( ! empty( $this->args['last'] ) ) {
-			$cursor_to_offset = ! empty( $this->args['before'] ) ? $this->args['before'] : null;
-		}
-
-		if ( ! empty( $cursor_to_offset ) ) {
-			$current_loc = $this->parse_cursor( $cursor_to_offset );
-
-			if ( isset( $current_loc['index'] ) ) {
-				$offset_index = $current_loc['index'] + 1;
+			// If a first/last query, we need to find the offset index.
+			if ( ! empty( $args['first'] ) ) {
+				$cursor_to_offset = ! empty( $args['after'] ) ? $args['after'] : null;
+			} elseif ( ! empty( $args['last'] ) ) {
+				$cursor_to_offset = ! empty( $args['before'] ) ? $args['before'] : null;
 			}
+
+			if ( ! empty( $cursor_to_offset ) ) {
+				$current_loc = $this->parse_cursor( $cursor_to_offset );
+
+				if ( isset( $current_loc['index'] ) ) {
+					$offset_index = $current_loc['index'] + 1;
+				}
+			}
+
+			$this->offset_index = $offset_index;
 		}
 
-		return $offset_index;
+		return $this->offset_index;
 	}
 
 	/**
 	 * Gets index (array offset) and offset (entry id) from decoded cursor.
 	 *
 	 * @param string $cursor .
+	 *
+	 * @return array{index:int,offset:int}
 	 */
 	protected function parse_cursor( string $cursor ): array {
 		$decoded     = base64_decode( $cursor );
@@ -234,40 +251,50 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Returns form ids.
+	 * Prepares the form IDs for the query.
 	 *
-	 * @return array|int
+	 * @param array<string,mixed> $args The GraphQL args.
+	 *
+	 * @return int[]|int
 	 */
-	private function get_form_ids() {
-		if ( empty( $this->args['where']['formIds'] ) ) {
+	private function prepare_form_ids( array $args ) {
+		if ( empty( $args['where']['formIds'] ) ) {
 			return 0;
 		}
 
-		if ( is_string( $this->args['where']['formIds'] ) || is_integer( $this->args['where']['formIds'] ) ) {
-			$this->args['where']['formIds'] = [ $this->args['where']['formIds'] ];
+		// Convert single form ID to array.
+		if ( ! is_array( $args['where']['formIds'] ) ) {
+			$args['where']['formIds'] = [ $args['where']['formIds'] ];
 		}
 
-		return array_map( static fn ( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
+		return array_map(
+			static fn ( $id ) => Utils::get_form_id_from_id( $id ),
+			$args['where']['formIds']
+		);
 	}
 
 	/**
-	 * Gets search criteria for entry Ids.
+	 * Prepares the search criteria for the query.
+	 *
+	 * @param array<string,mixed> $args The GraphQL args.
+	 *
+	 * @return array<string,mixed>
 	 */
-	private function get_search_criteria(): array {
+	private function prepare_search_criteria( array $args ): array {
 		$search_criteria = $this->apply_status_to_search_criteria( [] );
 
-		if ( ! empty( $this->args['where']['dateFilters']['startDate'] ) ) {
-			$search_criteria['start_date'] = sanitize_text_field( $this->args['where']['dateFilters']['startDate'] );
+		if ( ! empty( $args['where']['dateFilters']['startDate'] ) ) {
+			$search_criteria['start_date'] = sanitize_text_field( $args['where']['dateFilters']['startDate'] );
 		}
 
-		if ( ! empty( $this->args['where']['dateFilters']['endDate'] ) ) {
-			$search_criteria['end_date'] = sanitize_text_field( $this->args['where']['dateFilters']['endDate'] );
+		if ( ! empty( $args['where']['dateFilters']['endDate'] ) ) {
+			$search_criteria['end_date'] = sanitize_text_field( $args['where']['dateFilters']['endDate'] );
 		}
 
-		if ( ! empty( $this->args['where']['fieldFilters'] ) && is_array( $this->args['where']['fieldFilters'] ) ) {
+		if ( ! empty( $args['where']['fieldFilters'] ) && is_array( $args['where']['fieldFilters'] ) ) {
 			$search_criteria['field_filters'] = array_merge(
-				[ 'mode' => $this->args['where']['fieldFiltersMode'] ?? FieldFiltersModeEnum::ALL ],
-				$this->format_field_filters( $this->args['where']['fieldFilters'] )
+				[ 'mode' => $args['where']['fieldFiltersMode'] ?? FieldFiltersModeEnum::ALL ],
+				$this->format_field_filters( $args['where']['fieldFilters'] )
 			);
 		}
 
@@ -277,10 +304,14 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Adds 'status' value to search criteria.
 	 *
-	 * @param array $search_criteria The search criteria for the entry Ids.
+	 * @param array<string,mixed> $search_criteria The search criteria for the entry Ids.
+	 *
+	 * @return array<string,mixed>
 	 */
 	private function apply_status_to_search_criteria( array $search_criteria ): array {
-		$status = $this->args['where']['status'] ?? EntryStatusEnum::ACTIVE; // Default to active entries.
+		$args = $this->get_args();
+
+		$status = $args['where']['status'] ?? EntryStatusEnum::ACTIVE; // Default to active entries.
 
 		// For all entries, don't add a 'status' value to search criteria.
 		if ( 'ALL' === $status ) {
@@ -295,7 +326,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Correctly formats the field filters for search criteria.
 	 *
-	 * @param array $field_filters .
+	 * @param array<string,mixed>[] $field_filters The field filters.
 	 */
 	private function format_field_filters( array $field_filters ): array {
 		return array_reduce(
@@ -317,12 +348,12 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Gets filter value for each field used in search criteria.
 	 *
-	 * @param array  $field_filter Field filter.
-	 * @param string $operator     Operator.
-	 *
-	 * @return mixed Filter value.
+	 * @param array<string,mixed> $field_filter Field filter.
+	 * @param string              $operator     Operator.
 	 *
 	 * @throws \GraphQL\Error\UserError Field filters must have one value field.
+	 *
+	 * @return mixed|mixed[]
 	 */
 	private function get_field_filter_value( array $field_filter, string $operator ) {
 		$value_fields = $this->get_field_filter_value_fields( $field_filter );
@@ -359,7 +390,9 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * Get value fields for the field filter.
 	 *
-	 * @param array $field_filter .
+	 * @param array<string,mixed> $field_filter Field filter.
+	 *
+	 * @return string[]
 	 */
 	private function get_field_filter_value_fields( array $field_filter ): array {
 		return array_values(
@@ -373,24 +406,28 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Get sort argument for entry ID query.
+	 * Prepares the sort argument for the query.
+	 *
+	 * @param array<string,mixed> $args The GraphQL args.
+	 *
+	 * @return array<string,mixed>
 	 */
-	private function get_sort(): array {
+	private function prepare_sort( array $args ): array {
 		// Set default sort direction.
 		$sort = [
 			'direction' => 'DESC',
 		];
 
-		if ( ! empty( $this->args['where']['orderby'] ) && is_array( $this->args['where']['orderby'] ) ) {
+		if ( ! empty( $args['where']['orderby'] ) && is_array( $args['where']['orderby'] ) ) {
 			$sort = [
-				'key'        => $this->args['where']['orderby']['key'] ?? '',
-				'direction'  => $this->args['where']['orderby']['order'] ?? 'ASC',
-				'is_numeric' => $this->args['where']['orderby']['isNumeric'] ?? false,
+				'key'        => $args['where']['orderby']['key'] ?? '',
+				'direction'  => $args['where']['orderby']['order'] ?? 'ASC',
+				'is_numeric' => $args['where']['orderby']['isNumeric'] ?? false,
 			];
 		}
 
 		// Flip the direction on `last` query.
-		if ( ! empty( $this->args['last'] ) ) {
+		if ( ! empty( $args['last'] ) ) {
 			$sort['direction'] = 'ASC' === $sort['direction'] ? 'DESC' : 'ASC';
 		}
 
@@ -398,11 +435,15 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Get paging arguments for entry ID query.
+	 * Prepare paging arguments for the query.
+	 *
+	 * @param array<string,mixed> $args The GraphQL args.
+	 *
+	 * @return array{offset:int,page_size:int}
 	 *
 	 * @throws \GraphQL\Error\UserError When using unsupported pagination.
 	 */
-	private function get_paging(): array {
+	private function prepare_paging( array $args ): array {
 		return [
 			'offset'    => $this->get_query_offset_index(),
 			'page_size' => $this->get_query_amount() + 1, // overfetch for prev/next.

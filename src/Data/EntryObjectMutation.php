@@ -23,10 +23,10 @@ class EntryObjectMutation {
 	/**
 	 * Returns the FieldValueInput object relative to the field type.
 	 *
-	 * @param array $args The GraphQL mutation input args for the field.
-	 * @param array $form The GF form object.
-	 * @param bool  $is_draft If the mutation is for a draft entry.
-	 * @param array $entry The GF entry object. Used when updating.
+	 * @param array<string,mixed>     $args     The GraphQL mutation input args for the field.
+	 * @param array<string,mixed>     $form     The GF form object.
+	 * @param bool                    $is_draft If the mutation is for a draft entry.
+	 * @param array<int|string,mixed> $entry    The GF entry object. Used when updating.
 	 *
 	 * @throws \Exception .
 	 */
@@ -94,12 +94,12 @@ class EntryObjectMutation {
 		 *
 		 * Useful for adding mutation support for custom fields.
 		 *
-		 * @param string $field_value_input_class  The FieldValueInput class to use. The referenced class must extend AbstractFieldValueInput.
-		 * @param array    $args The GraphQL input args for the form field.
-		 * @param \GF_Field $field The current Gravity Forms field object.
-		 * @param array $form The current Gravity Forms form object.
-		 * @param array|null $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
-		 * @param bool $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
+		 * @param string              $field_value_input_class  The FieldValueInput class to use. The referenced class must extend AbstractFieldValueInput.
+		 * @param array               $args The GraphQL input args for the form field.
+		 * @param \GF_Field           $field The current Gravity Forms field object.
+		 * @param array<string,mixed> $form The current Gravity Forms form object.
+		 * @param array|null          $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+		 * @param bool                $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
 		 */
 		$field_value_input = apply_filters( 'graphql_gf_field_value_input_class', $field_value_input, $args, $field, $form, $entry, $is_draft );
 
@@ -113,7 +113,9 @@ class EntryObjectMutation {
 	/**
 	 * Generates array of field errors from the submission.
 	 *
-	 * @param array $messages The Gravity Forms submission validation messages.
+	 * @param array<int|string,string> $messages The Gravity Forms submission validation messages.
+	 *
+	 * @return array{message:string,id:int|string}[]
 	 */
 	public static function get_submission_errors( array $messages ): array {
 		return array_map(
@@ -131,7 +133,9 @@ class EntryObjectMutation {
 	/**
 	 * Gets the submission confirmation information in an array formated for WPGraphQL.
 	 *
-	 * @param array $payload the submission response.
+	 * @param array<string,mixed> $payload the submission response.
+	 *
+	 * @return ?array{type:string,message:?string,url:?string}
 	 */
 	public static function get_submission_confirmation( array $payload ): ?array {
 		if ( empty( $payload['confirmation_type'] ) ) {
@@ -148,7 +152,9 @@ class EntryObjectMutation {
 	/**
 	 * Renames $field_value keys to input_{id}_{sub_id}, so Gravity Forms can read them.
 	 *
-	 * @param array $field_values .
+	 * @param array<int|string,mixed> $field_values .
+	 *
+	 * @return array<string,mixed> $formatted .
 	 * */
 	public static function rename_field_names_for_submission( array $field_values ): array {
 		$formatted = [];
@@ -164,9 +170,11 @@ class EntryObjectMutation {
 	 * Initializes the globals needed for file uploads to work.
 	 * This prevents any notices about missing array keys.
 	 *
-	 * @param \GF_Field[] $form_fields .
-	 * @param array       $input_field_values .
-	 * @param bool        $save_as_draft .
+	 * @param \GF_Field[]           $form_fields .
+	 * @param array<string,mixed>[] $input_field_values .
+	 * @param bool                  $save_as_draft .
+	 *
+	 * @return array<string,array<string,mixed>[]>
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */

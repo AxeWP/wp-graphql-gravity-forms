@@ -22,14 +22,14 @@ class DraftEntry extends Model {
 	/**
 	 * Stores the incoming DraftEntry to be modeled.
 	 *
-	 * @var array $data
+	 * @var array<int|string,mixed> $data
 	 */
 	protected $data;
 
 	/**
 	 * Stores the decoded draft entry Submission.
 	 *
-	 * @var array $submission
+	 * @var array<int|string,mixed> $submission
 	 */
 	protected $submission;
 
@@ -43,8 +43,8 @@ class DraftEntry extends Model {
 	/**
 	 * DraftEntry constructor.
 	 *
-	 * @param array  $entry The incoming DraftEntry to be modeled.
-	 * @param string $resume_token the resume token to use.
+	 * @param array<int|string,mixed> $entry The incoming DraftEntry to be modeled.
+	 * @param string                  $resume_token the resume token to use.
 	 *
 	 * @throws \Exception .
 	 */

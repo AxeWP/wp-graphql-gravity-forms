@@ -22,6 +22,7 @@ class Form extends \WP_UnitTest_Factory_For_Thing {
 	 */
 	public function __construct( $factory = null ) {
 		parent::__construct( $factory );
+
 		$this->default_generation_definitions = [
 			'title'       => new WP_UnitTest_Generator_Sequence( 'Form title %s' ),
 			'description' => new WP_UnitTest_Generator_Sequence( 'Form description %s' ),

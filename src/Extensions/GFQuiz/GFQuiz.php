@@ -55,7 +55,9 @@ class GFQuiz implements Hookable {
 	/**
 	 * Register enum classes.
 	 *
-	 * @param array $classes .
+	 * @param class-string[] $classes .
+	 *
+	 * @return class-string[]
 	 */
 	public static function enums( array $classes ): array {
 		$classes[] = Enum\QuizFieldGradingTypeEnum::class;
@@ -67,7 +69,9 @@ class GFQuiz implements Hookable {
 	/**
 	 * Registers the mapped list of GF form field settings to their interface classes.
 	 *
-	 * @param array $classes .
+	 * @param array<string,class-string> $classes .
+	 *
+	 * @return array<string,class-string>
 	 */
 	public static function form_field_settings( array $classes ): array {
 		$classes['gquiz-setting-choices']                 = WPInterface\FieldSetting\FieldWithQuizChoices::class;
@@ -81,7 +85,9 @@ class GFQuiz implements Hookable {
 	/**
 	 * Registers the mapped list of GF form field settings to their choice interface classes.
 	 *
-	 * @param array $classes .
+	 * @param array<string,class-string> $classes .
+	 *
+	 * @return array<string,class-string>
 	 */
 	public static function form_field_setting_choices( array $classes ): array {
 		$classes['gquiz-setting-choices'] = WPInterface\FieldChoiceSetting\ChoiceWithQuizChoices::class;
@@ -92,7 +98,9 @@ class GFQuiz implements Hookable {
 	/**
 	 * Register object classes.
 	 *
-	 * @param array $classes .
+	 * @param class-string[] $classes .
+	 *
+	 * @return class-string[]
 	 */
 	public static function objects( array $classes ): array {
 		$classes[] = WPObject\Entry\EntryQuizResults::class;
@@ -111,8 +119,10 @@ class GFQuiz implements Hookable {
 	/**
 	 * Sets the Form Field child types.
 	 *
-	 * @param array  $child_types An array of GF_Field::$type => GraphQL type names.
-	 * @param string $field_type The 'parent' GF_Field type.
+	 * @param array<string,string> $child_types An array of GF_Field::$type => GraphQL type names.
+	 * @param string               $field_type  The 'parent' GF_Field type.
+	 *
+	 * @return array<string,string>
 	 */
 	public static function field_child_types( array $child_types, string $field_type ): array {
 		if ( 'quiz' === $field_type ) {
@@ -131,9 +141,11 @@ class GFQuiz implements Hookable {
 	/**
 	 * Adds quiz to model
 	 *
-	 * @param array  $fields .
-	 * @param string $model_name .
-	 * @param array  $data .
+	 * @param array<string,mixed> $fields .
+	 * @param string              $model_name .
+	 * @param array<string,mixed> $data .
+	 *
+	 * @return array<string,mixed>
 	 */
 	public static function form_model( $fields, string $model_name, $data ): array {
 		if ( 'FormObject' === $model_name ) {

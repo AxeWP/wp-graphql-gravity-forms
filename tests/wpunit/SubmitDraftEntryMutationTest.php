@@ -16,7 +16,6 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	private $draft_token;
 	private $text_field_helper;
 
-
 	/**
 	 * Run before each test.
 	 */
@@ -57,7 +56,7 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `submitGfDraft
 	 */
-	public function testSubmitGravityFormsDraftEntry() : void {
+	public function testSubmitGravityFormsDraftEntry(): void {
 		$query = $this->submit_mutation();
 
 		$variables = [
@@ -80,7 +79,7 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 		$this->factory->entry->delete( $expected['id'] );
 	}
 
-	public function testSubmitWithUrlConfirmation() : void {
+	public function testSubmitWithUrlConfirmation(): void {
 		$form = GFAPI::get_form( $this->form_id );
 
 		$confirmation_id = array_keys( $form['confirmations'] )[0];
@@ -116,7 +115,7 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 		$this->factory->entry->delete( $expected['id'] );
 	}
 
-	public function testSubmitWithPageConfirmation() : void {
+	public function testSubmitWithPageConfirmation(): void {
 		$form    = GFAPI::get_form( $this->form_id );
 		$page_id = $this->factory()->post->create(
 			[
@@ -163,7 +162,7 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 	/**
 	 * Creates the mutation.
 	 */
-	public function submit_mutation() : string {
+	public function submit_mutation(): string {
 		return '
 			mutation submitGfDraftEntry (
 				$id: ID!

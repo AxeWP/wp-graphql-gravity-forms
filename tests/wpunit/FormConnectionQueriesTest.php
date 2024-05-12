@@ -233,7 +233,6 @@ class FormConnectionQueriesTest extends GFGraphQLTestCase {
 		$this->assertEqualSets( $expected['data']['gfForms']['nodes'], $actual['data']['gfForms']['nodes'] );
 	}
 
-
 	public function testFormIdsWhereArgs() {
 		$form_id_two = $this->form_ids[2];
 		$form_id_one = $this->form_ids[1];
@@ -375,7 +374,7 @@ class FormConnectionQueriesTest extends GFGraphQLTestCase {
 	 * @param array $actual The GraphQL results.
 	 */
 	public function assertValidPagination( $expected, $actual ) {
-		$this->assertIsValidQueryResponse( $actual );
+		$this->assertResponseIsValid( $actual );
 		$this->assertArrayNotHasKey( 'errors', $actual );
 
 		$this->assertEquals( 2, count( $actual['data']['gfForms']['edges'] ) );

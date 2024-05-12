@@ -57,7 +57,7 @@ class DeleteEntryMutationTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `deleteGfEntry`.
 	 */
-	public function testDeleteGfEntry() : void {
+	public function testDeleteGfEntry(): void {
 		$query = $this->delete_mutation();
 
 		$variables = [
@@ -101,7 +101,7 @@ class DeleteEntryMutationTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `deleteGfEntry` when a bad entryId is supplied.
 	 */
-	public function testDeleteGfEntry_badToken() : void {
+	public function testDeleteGfEntry_badToken(): void {
 		$query = $this->delete_mutation();
 
 		// Test Global Id
@@ -127,7 +127,7 @@ class DeleteEntryMutationTest extends GFGraphQLTestCase {
 	 *
 	 * @param array $args .
 	 */
-	public function delete_mutation( array $args = [] ) : string {
+	public function delete_mutation( array $args = [] ): string {
 		return '
 			mutation deleteGfEntry(
 				$id: ID!,

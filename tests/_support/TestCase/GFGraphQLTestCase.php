@@ -11,7 +11,6 @@
 namespace Tests\WPGraphQL\GF\TestCase;
 
 use Helper\GFHelpers\GFHelpers;
-use RuntimeException;
 use WPGraphQL\GF\Type\Enum;
 
 /**
@@ -40,7 +39,7 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	/**
 	 * Creates users and loads factories.
 	 */
-	public function setUp() : void {
+	public function setUp(): void {
 		parent::setUp();
 
 		// Load factories.
@@ -84,7 +83,6 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	 * Programmatically generate an expectedField array for assertions.
 	 *
 	 * @param array $value_array .
-	 * @return array
 	 */
 	protected function get_expected_fields( $value_array ): array {
 		$expected = [];
@@ -96,23 +94,23 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 
 	public function get_expected_conditional_logic_fields( $conditional_logic ) {
 		if ( empty( $conditional_logic ) ) {
-			return $this->expectedField( 'conditionalLogic', static::IS_NULL );
+			return $this->expectedField( 'conditionalLogic', self::IS_NULL );
 		}
 
 		return $this->expectedObject(
 			'conditionalLogic',
 			[
-				$this->expectedField( 'actionType', ! empty( $conditional_logic['actionType'] ) ? GFHelpers::get_enum_for_value( Enum\ConditionalLogicActionTypeEnum::$type, $conditional_logic['actionType'] ) : static::IS_NULL ),
+				$this->expectedField( 'actionType', ! empty( $conditional_logic['actionType'] ) ? GFHelpers::get_enum_for_value( Enum\ConditionalLogicActionTypeEnum::$type, $conditional_logic['actionType'] ) : self::IS_NULL ),
 				$this->expectedField(
 					'logicType',
-					! empty( $conditional_logic['actionType'] ) ? GFHelpers::get_enum_for_value( Enum\ConditionalLogicLogicTypeEnum::$type, $conditional_logic['logicType'] ) : static::IS_NULL
+					! empty( $conditional_logic['actionType'] ) ? GFHelpers::get_enum_for_value( Enum\ConditionalLogicLogicTypeEnum::$type, $conditional_logic['logicType'] ) : self::IS_NULL
 				),
 				$this->expectedNode(
 					'rules',
 					[
-						$this->expectedField( 'fieldId', ! empty( $conditional_logic['rules'][0]['fieldId'] ) ? (float) $conditional_logic['rules'][0]['fieldId'] : static::IS_NULL ),
-						$this->expectedField( 'operator', ! empty( $conditional_logic['rules'][0]['operator'] ) ? GFHelpers::get_enum_for_value( Enum\FormRuleOperatorEnum::$type, $conditional_logic['rules'][0]['operator'] ) : static::IS_NULL ),
-						$this->expectedField( 'value', ! empty( $conditional_logic['rules'][0]['value'] ) ? $conditional_logic['rules'][0]['value'] : static::IS_NULL ),
+						$this->expectedField( 'fieldId', ! empty( $conditional_logic['rules'][0]['fieldId'] ) ? (float) $conditional_logic['rules'][0]['fieldId'] : self::IS_NULL ),
+						$this->expectedField( 'operator', ! empty( $conditional_logic['rules'][0]['operator'] ) ? GFHelpers::get_enum_for_value( Enum\FormRuleOperatorEnum::$type, $conditional_logic['rules'][0]['operator'] ) : self::IS_NULL ),
+						$this->expectedField( 'value', ! empty( $conditional_logic['rules'][0]['value'] ) ? $conditional_logic['rules'][0]['value'] : self::IS_NULL ),
 					],
 					0
 				),

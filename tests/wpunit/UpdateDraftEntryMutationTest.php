@@ -18,7 +18,6 @@ class UpdateDraftEntryMutationTest extends GFGraphQLTestCase {
 	private $draft_token;
 	private $text_field_helper;
 
-
 	/**
 	 * Run before each test.
 	 */
@@ -60,7 +59,7 @@ class UpdateDraftEntryMutationTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `updateGfDraft
 	 */
-	public function testUpdateGfDraftEntry() : void {
+	public function testUpdateGfDraftEntry(): void {
 		$query = $this->update_mutation();
 
 		$variables = [
@@ -95,7 +94,7 @@ class UpdateDraftEntryMutationTest extends GFGraphQLTestCase {
 		$this->assertEquals( $variables['fieldValues'][0]['value'], $response['data']['updateGfDraftEntry']['draftEntry']['formFields']['nodes'][0]['value'], 'Field values dont match' );
 	}
 
-	public function update_mutation() : string {
+	public function update_mutation(): string {
 		return '
 			mutation updateGfDraftEntry (
 				$id: ID!,

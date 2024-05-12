@@ -75,7 +75,6 @@ class Dummy {
 		return( rand( 1943, 2025 ) . '-0' . rand( 1, 9 ) . '-' . rand( 11, 30 ) );
 	}
 
-
 	public function hm( $s = false ) {
 		$t = rand( 1, 12 ) . ':' . rand( 10, 59 );
 

@@ -14,7 +14,7 @@ class UtilsUtilsTest extends \Codeception\Test\Unit {
 		/**
 		 * Tests that deprecationReason is added to the property definition.
 		 */
-	public function testDeprecateProperty() : void {
+	public function testDeprecateProperty(): void {
 		$property = [
 			'propertyName' => [
 				'type'        => 'String',

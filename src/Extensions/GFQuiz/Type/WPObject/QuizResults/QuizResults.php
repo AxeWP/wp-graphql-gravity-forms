@@ -128,8 +128,10 @@ class QuizResults extends AbstractObject implements Field {
 	/**
 	 * Gets the Quiz Results data.
 	 *
-	 * @param array $form .
-	 * @param array $results_config the GFQuiz config array.
+	 * @param array<string,mixed> $form           The form array.
+	 * @param array<string,mixed> $results_config The GFQuiz config array.
+	 *
+	 * @return array<string,mixed>
 	 */
 	protected static function get_quiz_results_data( array $form, array $results_config ): array {
 		if ( ! class_exists( 'GFResults' ) ) {
@@ -150,8 +152,10 @@ class QuizResults extends AbstractObject implements Field {
 	/**
 	 * Transforms the results data for the GraphQL response.
 	 *
-	 * @param array $data The Quiz Results data.
-	 * @param array $form .
+	 * @param array<string,mixed> $data The Quiz Results data.
+	 * @param array<string,mixed> $form The form array.
+	 *
+	 * @return array<string,mixed>
 	 */
 	protected static function prepare_results_data( array $data, array $form ): array {
 		if ( empty( $data['entry_count'] ) ) {
@@ -188,7 +192,9 @@ class QuizResults extends AbstractObject implements Field {
 	/**
 	 * Maps the score frequencies array into a format WPGraphQL can understand.
 	 *
-	 * @param array $score_frequencies the score frequences array. E.g. `[ $score => $count ]`.
+	 * @param array<mixed,mixed> $score_frequencies the score frequences array. E.g. `[ $score => $count ]`.
+	 *
+	 * @return array{score:mixed,count:mixed}[]
 	 */
 	private static function map_score_frequencies( array $score_frequencies ): array {
 		return array_map(
@@ -204,7 +210,8 @@ class QuizResults extends AbstractObject implements Field {
 	/**
 	 * Maps the grade frequencies array into a format WPGraphQL can understand.
 	 *
-	 * @param array $grade_frequencies the score frequences array. E.g. `[ $grade => $count ]`.
+	 * @param array<mixed,mixed> $grade_frequencies the score frequences array. E.g. `[ $grade => $count ]`.
+	 * @return array{grade:mixed,count:mixed}[]
 	 */
 	private static function map_grade_frequencies( array $grade_frequencies ): array {
 		return array_map(
@@ -220,9 +227,11 @@ class QuizResults extends AbstractObject implements Field {
 	/**
 	 * Maps the field data array to a format WPGraphQL can understand.
 	 *
-	 * @param array $field_data . The field data array.
-	 * @param array $form .
-	 * @param int   $entry_count . The number of submitted entries.
+	 * @param array<string,mixed> $field_data  The field data array.
+	 * @param array<string,mixed> $form        The form array.
+	 * @param int                 $entry_count The number of submitted entries.
+	 *
+	 * @return array<int,array<string,mixed>>
 	 */
 	private static function map_field_data( array $field_data, array $form, int $entry_count ): array {
 		return array_map(

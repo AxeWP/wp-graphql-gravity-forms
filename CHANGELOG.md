@@ -2,11 +2,29 @@
 
 ## [Unreleased]
 
+- feat!: Refactor `FormsConnectionResolver` and `EntriesConnectionResolver` for compatibility with WPGraphQL v1.26.0 improvements.
+- chore!: Bump minimum WPGraphQL version to v1.26.0.
+- chore!: Bump minimum WordPress version to v6.0.0.
+- chore!: Bump minimum Gravity Forms version to v2.7.0.
+- chore: Update Composer dev-dependencies and fix test compatibility with `wp-graphql-test-case` v3.0.x.
+
+## v0.12.6.1
+
+This _patch_ release fixes the version number in the plugin header, which was incorrectly set to `0.12.5` instead of `0.12.6`.
+
+- fix: Correct version number in plugin header.
+
+## v0.12.6
+
+This _minor_ release adds explicit support for PHP 8.2 and WordPress 6.5 - including the new Plugin Dependency header. Additionally, we've updated the Composer dependencies, and improved code quality and type safety.
+
 - feat: Add plugin dependency header.
 - chore: Update Composer deps and lint.
 - chore: Lock WPBrowser to <3.5.0 to prevent conflicts with Codeception.
 - chore: Declare `strict_types` in all PHP files.
 - chore: Implement strict PHPStan rules and fix resulting issues.
+- chore: Add traversable type hints throughout the codebase.
+- tests: Lint tests.
 - ci: Update GitHub Actions to latest versions.
 - ci: Test plugin compatibility with WordPress 6.5.0.
 - ci: Test plugin compatibility with PHP 8.2.
@@ -142,7 +160,6 @@ Lastly, we've exposed the `connectedChoice` and `connectedInput` fields on `Chec
 - tests: Add tests for `submitGfForm` mutation.
 - docs: replace `formId` with `id` in `submitGfForm` examples. Props: @mosesintech
 
-
 ## v0.11.11 - Bugfix
 
 This _minor_ release fixes a bug where the `ip` field on `GfEntry` was not being properly stored when submitting a form.
@@ -257,7 +274,6 @@ This _minor_ release adds the reCaptcha V2 `type` and `publicKey` to `gfSettings
 - tests: Fix broken test asserts exposed by PHPUnit v9 + WPGraphQL Test Case v2.3
 - tests: Use `gravityformscli` for installing GF plugins in test envs.
 - chore: Upgrade composer deps
-
 
 ## v0.11.0 - reCAPTCHA Validation, Plugin Updates, and GF 2.6 Support
 

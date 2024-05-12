@@ -17,7 +17,6 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 	private $draft_token;
 	private $text_field_helper;
 
-
 	/**
 	 * Run before each test.
 	 */
@@ -55,7 +54,7 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `deleteGfDraftEntry`.
 	 */
-	public function testDeleteGfDraftEntry() : void {
+	public function testDeleteGfDraftEntry(): void {
 		$query = $this->delete_mutation();
 
 		$variables = [
@@ -85,7 +84,7 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `deleteGfDraftEntry`.
 	 */
-	public function testDeleteGfDraftEntry_globalId() : void {
+	public function testDeleteGfDraftEntry_globalId(): void {
 		$query = $this->delete_mutation();
 
 		// Test Global Id
@@ -108,7 +107,7 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `deleteGfDraftEntry` when a bad resumeToken is supplied.
 	 */
-	public function testDeleteGfDraftEntry_badToken() : void {
+	public function testDeleteGfDraftEntry_badToken(): void {
 		wp_set_current_user( $this->admin->ID );
 
 		$query = $this->delete_mutation();
@@ -124,12 +123,13 @@ class DeleteDraftEntryMutationTest extends GFGraphQLTestCase {
 
 		$this->factory->draft_entry->delete( $this->draft_token );
 	}
+
 	/**
 	 * Creates the mutation.
 	 *
 	 * @param array $args .
 	 */
-	public function delete_mutation() : string {
+	public function delete_mutation(): string {
 		return '
 			mutation deleteGfDraftEntry(
 				$id: ID!,

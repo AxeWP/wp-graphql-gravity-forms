@@ -41,7 +41,7 @@
 		Tests for WordPress version compatibility.
 		https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
 	-->
-	<config name="minimum_supported_wp_version" value="5.4.1"/>
+	<config name="minimum_supported_wp_version" value="6.0"/>
 
 	<!-- Rules: WPGraphQL Coding Standards -->
 	<!-- https://github.com/AxeWP/WPGraphQL-Coding-Standards/WPGraphQL/ruleset.xml -->

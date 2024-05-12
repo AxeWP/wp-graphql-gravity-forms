@@ -39,8 +39,10 @@ class WPGatsby implements Hookable {
 	/**
 	 * Registers the custom Action Monitor.
 	 *
-	 * @param array                                 $monitors .
-	 * @param \WPGatsby\ActionMonitor\ActionMonitor $action_monitor .
+	 * @param array<string,\WPGatsby\ActionMonitor\Monitors\Monitor> $monitors .
+	 * @param \WPGatsby\ActionMonitor\ActionMonitor                  $action_monitor .
+	 *
+	 * @return array<string,\WPGatsby\ActionMonitor\Monitors\Monitor>
 	 */
 	public static function register_monitors( array $monitors, \WPGatsby\ActionMonitor\ActionMonitor $action_monitor ): array {
 		$monitors['GravityFormsMonitor'] = new GravityFormsMonitor( $action_monitor );

@@ -17,28 +17,32 @@ class QuizRadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -52,7 +56,7 @@ class QuizRadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	/**
 	 * Generates the form fields from factory. Must be wrapped in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [
 			$this->factory->field->create(
 				array_merge(
@@ -110,14 +114,13 @@ class QuizRadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	public function field_value_input() {
 		return $this->fields[0]['choices'][0]['text'];
 	}
+
 	/**
 	 * The graphql field value input.
 	 */
 	public function updated_field_value_input() {
 		return $this->fields[0]['choices'][2]['text'];
 	}
-
-
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
@@ -126,7 +129,6 @@ class QuizRadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 		return $this->fields[0]['choices'][2]['text'];
 	}
 
-
 	/**
 	 * The value as expected by Gravity Forms.
 	 */
@@ -134,13 +136,10 @@ class QuizRadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 		return [ (string) $this->fields[0]['id'] => $this->field_value_input ];
 	}
 
-
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query():string {
+	public function field_query(): string {
 		return '... on QuizField {
 				adminLabel
 				answerExplanation
@@ -272,9 +271,7 @@ class QuizRadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
+	 * {@inheritDoc}
 	 */
 	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
@@ -304,9 +301,8 @@ class QuizRadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ):array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		return [
 			$this->expectedObject(
 				$mutationName,

@@ -27,7 +27,7 @@ class TypeRegistry {
 	/**
 	 * The local registry of registered types.
 	 *
-	 * @var array
+	 * @var array<string,class-string<\WPGraphQL\GF\Interfaces\Hookable>>
 	 */
 	public static array $registry = [];
 
@@ -40,6 +40,8 @@ class TypeRegistry {
 
 	/**
 	 * Gets an array of all the registered GraphQL types along with their class name.
+	 *
+	 * @return array<string,class-string<\WPGraphQL\GF\Interfaces\Hookable>>
 	 */
 	public static function get_registered_types(): array {
 		if ( empty( self::$registry ) ) {
@@ -51,6 +53,8 @@ class TypeRegistry {
 
 	/**
 	 * Gets an array of all the registered GraphQL types along with their class name.
+	 *
+	 * @return class-string[]
 	 */
 	public static function get_registered_classes(): array {
 		if ( empty( self::$registered_classes ) ) {
@@ -389,7 +393,7 @@ class TypeRegistry {
 		/**
 		 * Filters the list of PHP classes that register GraphQL Interfaces based on a particular Gravity Forms field setting.
 		 *
-		 * @param array           $classes_to_register Array of classes to be registered to the schema.
+		 * @param array<string,class-string> $classes_to_register Array of classes to be registered to the schema.
 		 */
 		$classes_to_register = apply_filters( 'graphql_gf_registered_form_field_setting_classes', $classes_to_register );
 
@@ -417,7 +421,7 @@ class TypeRegistry {
 		/**
 		 * Filters the list of PHP classes that register GraphQL Interfaces for Form Field choices based on a particular Gravity Forms field setting.
 		 *
-		 * @param array           $classes_to_register Array of classes to be registered to the schema.
+		 * @param array<string,class-string> $classes_to_register Array of classes to be registered to the schema.
 		 */
 		$classes_to_register = apply_filters( 'graphql_gf_registered_form_field_setting_input_classes', $classes_to_register );
 
@@ -441,7 +445,7 @@ class TypeRegistry {
 		/**
 		 * Filters the list of PHP classes that register GraphQL Interfaces for Form Field choices based on a particular Gravity Forms field setting.
 		 *
-		 * @param array           $classes_to_register Array of classes to be registered to the schema.
+		 * @param array<string,class-string> $classes_to_register Array of classes to be registered to the schema.
 		 */
 		$classes_to_register = apply_filters( 'graphql_gf_registered_form_field_setting_choice_classes', $classes_to_register );
 
@@ -450,6 +454,8 @@ class TypeRegistry {
 
 	/**
 	 * List of Field classes to register.
+	 *
+	 * @return class-string[]
 	 */
 	public static function fields(): array {
 		$classes_to_register = [];
@@ -459,13 +465,15 @@ class TypeRegistry {
 		 *
 		 * Useful for adding/removing GF specific fields to the schema.
 		 *
-		 * @param array           $classes_to_register Array of classes to be registered to the schema.
+		 * @param class-string[] $classes_to_register Array of classes to be registered to the schema.
 		 */
 		return apply_filters( 'graphql_gf_registered_field_classes', $classes_to_register );
 	}
 
 	/**
 	 * List of Connection classes to register.
+	 *
+	 * @return class-string[]
 	 */
 	public static function connections(): array {
 		$classes_to_register = [
@@ -479,13 +487,15 @@ class TypeRegistry {
 		 *
 		 * Useful for adding/removing GF specific connections to the schema.
 		 *
-		 * @param array           $classes_to_register Array of classes to be registered to the schema.
+		 * @param class-string[] $classes_to_register Array of classes to be registered to the schema.
 		 */
 		return apply_filters( 'graphql_gf_registered_connection_classes', $classes_to_register );
 	}
 
 	/**
 	 * Registers mutation.
+	 *
+	 * @return class-string[]
 	 */
 	public static function mutations(): array {
 		$classes_to_register = [
@@ -502,7 +512,7 @@ class TypeRegistry {
 		 *
 		 * Useful for adding/removing GF specific connections to the schema.
 		 *
-		 * @param array           $classes_to_register Array of classes to be registered to the schema.
+		 * @param class-string[] $classes_to_register Array of classes to be registered to the schema.
 		 */
 		$classes_to_register = apply_filters( 'graphql_gf_registered_mutation_classes', $classes_to_register );
 
@@ -514,7 +524,7 @@ class TypeRegistry {
 	 *
 	 * Classes must extend WPGraphQL\Type\AbstractType.
 	 *
-	 * @param array $classes_to_register .
+	 * @param class-string[] $classes_to_register .
 	 *
 	 * @throws \Exception .
 	 */
@@ -534,7 +544,10 @@ class TypeRegistry {
 
 			// Saves the Type => ClassName to the local registry.
 			if ( isset( $class::$type ) ) {
-				self::$registry[ $class::$type ] = $class;
+				/** @var string $type */
+				$type = $class::$type;
+
+				self::$registry[ $type ] = $class;
 			}
 		}
 	}

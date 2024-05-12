@@ -37,8 +37,10 @@ class CoreSchemaFilters implements Hookable {
 	/**
 	 * Strip `Connection` interface from form fields.
 	 *
-	 * @param array $interfaces Array of interfaces.
-	 * @param array $config  The type config.
+	 * @param string[]            $interfaces Array of interfaces.
+	 * @param array<string,mixed> $config     The type config.
+	 *
+	 * @return string[]
 	 */
 	public static function strip_connection_interface_from_gf_fields( array $interfaces, array $config ): array {
 		// Bail early if Connection, 'Edge, or 'OneToOneConnection' arent in the interfaces.

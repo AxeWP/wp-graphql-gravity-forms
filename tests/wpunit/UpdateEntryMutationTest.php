@@ -9,7 +9,6 @@ use Helper\GFHelpers\GFHelpers;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
-use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - UpdateEntryMutationTest
@@ -19,7 +18,6 @@ class UpdateEntryMutationTest extends GFGraphQLTestCase {
 	private $form_id;
 	private $entry_id;
 	private $text_field_helper;
-
 
 	/**
 	 * Run before each test.
@@ -60,7 +58,7 @@ class UpdateEntryMutationTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `updateGfDraft
 	 */
-	public function testUpdateGfEntry() : void {
+	public function testUpdateGfEntry(): void {
 		$query = $this->update_mutation();
 
 		$variables = [
@@ -110,7 +108,7 @@ class UpdateEntryMutationTest extends GFGraphQLTestCase {
 		$this->assertEquals( $variables['fieldValues'][0]['value'], $response['data']['updateGfEntry']['entry']['formFields']['nodes'][0]['value'], 'Field values dont match' );
 	}
 
-	public function update_mutation() : string {
+	public function update_mutation(): string {
 		return '
 			mutation updateGfEntry (
 				$id: ID!,

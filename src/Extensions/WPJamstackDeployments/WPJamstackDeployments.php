@@ -26,7 +26,7 @@ class WPJamstackDeployments implements Hookable {
 	/**
 	 * The options array.
 	 *
-	 * @var array
+	 * @var array<string,mixed>
 	 */
 	public static array $options;
 
@@ -63,6 +63,8 @@ class WPJamstackDeployments implements Hookable {
 
 	/**
 	 * Returns the array of options.
+	 *
+	 * @return array<string,mixed>
 	 */
 	public static function get_options(): array {
 		if ( empty( self::$options ) ) {
@@ -108,7 +110,9 @@ class WPJamstackDeployments implements Hookable {
 	/**
 	 * Sanitize user input.
 	 *
-	 * @param array $input .
+	 * @param array<string,mixed> $input .
+	 *
+	 * @return array<string,mixed>
 	 */
 	public static function sanitize( array $input ): array {
 		if ( ! isset( $input[ self::$option_name ] ) || ! is_array( $input[ self::$option_name ] ) ) {
@@ -164,8 +168,8 @@ class WPJamstackDeployments implements Hookable {
 	/**
 	 * Triggers the correct deployment when a form is saved.
 	 *
-	 * @param array $form .
-	 * @param bool  $is_new .
+	 * @param array<string,mixed> $form The form array.
+	 * @param bool                $is_new .
 	 */
 	public static function after_save_form( array $form, bool $is_new ): void {
 		$options = self::get_options();

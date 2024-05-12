@@ -53,7 +53,6 @@ do_action( 'graphql_gf_after_register_form_field_' . $field->graphql_single_name
 * **`$field`** _(GF_Field)_ : The Gravity Forms field object.
 * **`$field_settings`** _(array)_ : The Gravity Forms field settings.
 
-
 #### Parameters
 
 * **`$field`** _(GF_Field)_ : The Gravity Forms field object.
@@ -141,22 +140,18 @@ apply_filters( 'graphql_gf_can_view_entries', bool $can_view_entries, int $form_
 * **`$entry_id`** _(string)_ : The entry ID being queried by GraphQL.
 * **`$draft_entry`** _(array)_ : The Gravity Forms entry data array.
 
-
 ### `graphql_gf_entries_connection_query_args`
 
 Filter the Submitted Entry's  $query_args to allow folks to customize queries programmatically.
 
 ```php
-apply_filters( 'graphql_gf_entries_connection_query_args', array $query_args, mixed $source, array $args, AppContext $context, ResolveInfo $info );
+apply_filters( 'graphql_gf_entries_connection_query_args', array $query_args, \WPGraphQL\GF\Data\Connection\EntriesConnectionResolver $resolver );
 ```
 
 #### Parameters
 
-* **`$query_args`** _(array)_ : The query args that will be passed to `GF_Query`.
-* **`$source`** _(mixed)_ : The source passed down the Resolve Tree.
-* **`$args`** _(array)_ : Array of arguments input in the field as part of the GraphQL query.
-* **`$context`** _(AppContext)_ : Object passed down the GraphQL tree.
-* **`$info`** _(ResolveInfo)_ : The ResolveInfo passed down the GraphQL tree.
+* **`$query_args`** _(array<string,mixed>)_ : The query args that will be passed to `GF_Query`.
+* **`$resolver`** _(WPGraphQL\GF\Data\Connection\EntriesConnectionResolver)_ : The resolver object.
 
 ### `graphql_gf_field_value_input_class`
 
@@ -234,16 +229,13 @@ apply_filters( 'graphql_gf_field_value_input_prepared_value', array|string $prep
 Filter the Form $query_args to allow folks to customize queries programmatically.
 
 ```php
-apply_filters( 'graphql_gf_forms_connection_query_args', array $query_args, mixed $source, array $args, AppContext $context, ResolveInfo $info );
+apply_filters( 'graphql_gf_forms_connection_query_args', array $query_args, \WPGraphQL\GF\Data\Connection\FormsConnectionResolver $resolver );
 ```
 
 #### Parameters
 
-* **`$query_args`** _(array)_ : The query args that will be passed to `GFAPI::get_forms()`.
-* **`$source`** _(mixed)_ : The source passed down the Resolve Tree.
-* **`$args`** _(array)_ : Array of arguments input in the field as part of the GraphQL query.
-* **`$context`** _(AppContext)_ : Object passed down the GraphQL tree.
-* **`$info`** _(ResolveInfo)_ : The ResolveInfo passed down the GraphQL tree.
+* **`$query_args`** _(array<string,mixed>)_ : The query args that will be passed to `GFAPI::get_forms()`.
+* **`$resolver`** _(\WPGraphQL\GF\Data\Connection\FormsConnectionResolver)_ : The resolver object.
 
 ### `graphql_gf_form_field_child_types`
 
@@ -371,7 +363,6 @@ apply_filters( 'graphql_gf_form_field_value_fields_' . $field->graphql_single_na
 * **`$fields`** _(array)_ : An array of [WPGraphQL field `$config` arrays](https://www.wpgraphql.com/functions/register_graphql_fields/).
 * **`$field`** _(GF_Field)_ : The Gravity Forms Field object.
 
-
 ### `graphql_gf_form_field_values_input_fields`
 
 Filter to modify the Form Field value GraphQL fields.
@@ -402,12 +393,13 @@ apply_filters( 'graphql_gf_form_fields_name_map', array $fields_to_map );
 Filter to modify the form data before it is sent to the client. This hook is somewhat similar to GF's `gform_pre_render` hook, and can be used for dynamic field input population among other things.
 
 ```php
-apply_filters( 'graphql_gf_form_object', array $form );
+apply_filters( 'graphql_gf_form_object', array $form, \WPGraphQL\GF\Data\Connection\FormsConnectionResolver $resolver );
 ```
 
 #### Parameters
 
-* **`$form`** _(array)_ : The GF [Form object](https://docs.gravityforms.com/form-object/).
+* **`$form`** _(array<string,mixed>)_ : The GF [Form object](https://docs.gravityforms.com/form-object/).
+* **`$resolver`** _(\WPGraphQL\GF\Data\Connection\FormsConnectionResolver)_ : The resolver object.
 
 ### `graphql_gf_gatsby_enabled_actions`
 
@@ -452,7 +444,6 @@ apply_filters( 'graphql_gf_registered_{$type}_classes', array $classes_to_regist
 ### `graphql_gf_registered_form_field_setting_input_classes`
 
 Filters the list of PHP classes that register GraphQL Interfaces based on a particular Gravity Forms field setting.
-
 
 ```php
 apply_filters( 'graphql_gf_registered_{$type}_classes', array $classes_to_register );

@@ -19,6 +19,8 @@ use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\FieldValues;
 class ValueProperty extends FieldValues {
 	/**
 	 * Get `values` property for Chained Select field.
+	 *
+	 * @return array{values:array<string,mixed>}
 	 */
 	public static function chained_select_values(): array {
 		return [

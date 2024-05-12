@@ -46,11 +46,11 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	public function setUp(): void {
 
 		// Before...
-		copy( dirname( __FILE__ ) . '/../_support/files/img1.png', '/tmp/img1.png' );
+		copy( __DIR__ . '/../_support/files/img1.png', '/tmp/img1.png' );
 		$stat  = stat( dirname( '/tmp/img1.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img1.png', $perms );
-		copy( dirname( __FILE__ ) . '/../_support/files/img2.png', '/tmp/img2.png' );
+		copy( __DIR__ . '/../_support/files/img2.png', '/tmp/img2.png' );
 		$stat  = stat( dirname( '/tmp/img2.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img2.png', $perms );
@@ -73,34 +73,39 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 
 		parent::tearDown();
 	}
+
 	/**
 	 * Tests the field properties and values.
 	 */
 	public function testField(): void {
 		$this->runTestField();
 	}
+
 	/**
 	 * Tests submitting the field values as a draft entry with submitGfForm.
 	 */
 	public function testSubmitDraft(): void {
 		$this->runTestSubmitDraft();
 	}
+
 	/**
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
 		$this->runtestSubmitForm();
 	}
+
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
 		$this->runtestUpdateEntry();
 	}
+
 	/**
 	 * Tests updating the draft field value with updateGfEntry.
 	 */
-	public function testUpdateDraft():void {
+	public function testUpdateDraft(): void {
 		$this->runTestUpdateDraft();
 	}
 
@@ -114,7 +119,7 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	/**
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
-	public function generate_fields() : array {
+	public function generate_fields(): array {
 		return [ $this->factory->field->create( $this->property_helper->values ) ];
 	}
 
@@ -210,10 +215,8 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 
 	/**
 	 * The GraphQL query string.
-	 *
-	 * @return string
 	 */
-	public function field_query() : string {
+	public function field_query(): string {
 		return '
 			... on PostImageField {
 				adminLabel
@@ -260,10 +263,8 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 
 	/**
 	 * SubmitForm mutation string.
-	 *
-	 * @return string
 	 */
-	public function submit_form_mutation() : string {
+	public function submit_form_mutation(): string {
 		return '
 			mutation ($formId: ID!, $fieldId: Int!, $value: ImageInput!, $draft: Boolean) {
 				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, imageValues: $value}}) {
@@ -300,8 +301,6 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 
 	/**
 	 * Returns the UpdateEntry mutation string.
-	 *
-	 * @return string
 	 */
 	public function update_entry_mutation(): string {
 		return '
@@ -334,8 +333,6 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 
 	/**
 	 * Returns the UpdateDraftEntry mutation string.
-	 *
-	 * @return string
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
@@ -365,13 +362,11 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 			}
 		';
 	}
+
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function expected_field_response( array $form ) : array {
+	public function expected_field_response( array $form ): array {
 		$expected = $this->getExpectedFormFieldValues( $form['fields'][0] );
 
 		$value = $this->is_draft ? $this->draft_field_value : $this->field_value;
@@ -405,9 +400,8 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 	 *
 	 * @param string $mutationName .
 	 * @param mixed  $value .
-	 * @return array
 	 */
-	public function expected_mutation_response( string $mutationName, $value ) : array {
+	public function expected_mutation_response( string $mutationName, $value ): array {
 		if ( empty( $value['url'] ) || $this->is_draft ) {
 			unset( $value['url'] );
 		}

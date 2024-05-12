@@ -12,7 +12,6 @@ namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue;
 
 use GFAPI;
 use GFCommon;
-use GFFormsModel;
 use GF_Field;
 use GF_Field_FileUpload;
 use WPGraphQL\AppContext;
@@ -27,6 +26,8 @@ use WPGraphQL\GF\Utils\Utils;
 class FieldValues {
 	/**
 	 * Get `value` property.
+	 *
+	 * @return array{value:array<string,mixed>}
 	 */
 	public static function value(): array {
 		return [
@@ -46,6 +47,8 @@ class FieldValues {
 
 	/**
 	 * Get `addressValues` property.
+	 *
+	 * @return array{addressValues:array<string,mixed>}
 	 */
 	public static function address_values(): array {
 		return [
@@ -72,6 +75,8 @@ class FieldValues {
 
 	/**
 	 * Get `checkboxValues` property.
+	 *
+	 * @return array{checkboxValues:array<string,mixed>}
 	 */
 	public static function checkbox_values(): array {
 		return [
@@ -114,6 +119,8 @@ class FieldValues {
 
 	/**
 	 * Get `consentValue` property.
+	 *
+	 * @return array{consentValue:array<string,mixed>}
 	 */
 	public static function consent_value(): array {
 		return [
@@ -134,6 +141,8 @@ class FieldValues {
 
 	/**
 	 * Get `fileUploadValue` property.
+	 *
+	 * @return array{fileUploadValues:array<string,mixed>}
 	 */
 	public static function file_upload_values(): array {
 		return [
@@ -153,6 +162,8 @@ class FieldValues {
 
 	/**
 	 * Get `imageValues` property.
+	 *
+	 * @return array{imageValues:array<string,mixed>}
 	 */
 	public static function image_values(): array {
 		return [
@@ -198,6 +209,8 @@ class FieldValues {
 
 	/**
 	 * Get `listValues` property.
+	 *
+	 * @return array{listValues:array<string,mixed>}
 	 */
 	public static function list_values(): array {
 		return [
@@ -250,6 +263,8 @@ class FieldValues {
 
 	/**
 	 * Get `nameValues` property.
+	 *
+	 * @return array{nameValues:array<string,mixed>}
 	 */
 	public static function name_values(): array {
 		return [
@@ -275,6 +290,8 @@ class FieldValues {
 
 	/**
 	 * Get `productValues` property.
+	 *
+	 * @return array{productValues:array<string,mixed>}
 	 */
 	public static function product_values(): array {
 		return [
@@ -346,6 +363,8 @@ class FieldValues {
 
 	/**
 	 * Get `timeValues` property.
+	 *
+	 * @return array{timeValues:array<string,mixed>}
 	 */
 	public static function time_values(): array {
 		return [
@@ -379,6 +398,8 @@ class FieldValues {
 
 	/**
 	 * Get `values` property.
+	 *
+	 * @return array{values:array<string,mixed>}
 	 */
 	public static function values(): array {
 		return [
@@ -430,9 +451,11 @@ class FieldValues {
 	 *
 	 * Shim GF_Field_FileUpload::get_extra_entry_metadata().
 	 *
-	 * @param \GF_Field_FileUpload $field .
-	 * @param array                $entry .
-	 * @param array                $form .
+	 * @param \GF_Field_FileUpload    $field .
+	 * @param array<int|string,mixed> $entry .
+	 * @param array<string,mixed>     $form The form array.
+	 *
+	 * @return array<int|string,array<string,string>>
 	 */
 	protected static function get_file_upload_extra_entry_metadata( GF_Field_FileUpload $field, array $entry, array $form ): array {
 		$file_values = $entry[ $field->id ] ?? null;
@@ -449,26 +472,6 @@ class FieldValues {
 
 		// Generate the file info for all files.
 		foreach ( $file_values as $file_value ) {
-			// Backcompat with v2.5x.
-			if ( version_compare( GFCommon::$version, '2.6.0', '<' ) ) {
-				$time                    = current_time( 'mysql' );
-				$y                       = substr( $time, 0, 4 );
-				$m                       = substr( $time, 5, 2 );
-				$default_target_root     = GFFormsModel::get_upload_path( $form['id'] ) . sprintf( '/%s/%s/', $y, $m );
-				$default_target_root_url = GFFormsModel::get_upload_url( $form['id'] ) . sprintf( '/%s/%s/', $y, $m );
-
-				$filename = explode( '/', $file_value );
-
-				$info[ $file_value ] = [
-					'url'      => $file_value,
-					'basePath' => $default_target_root,
-					'baseUrl'  => $default_target_root_url,
-					'filename' => end( $filename ),
-					'hash'     => wp_hash( $form['id'] ),
-				];
-				continue;
-			}
-
 			$stored_path_info = gform_get_meta( $entry['id'], $field::get_file_upload_path_meta_key_hash( $file_value ) );
 
 			if ( empty( $stored_path_info ) ) {
@@ -504,6 +507,8 @@ class FieldValues {
 	 *
 	 * @param \GF_Field $field The gravity forms field object.
 	 * @param int       $input_key The input key that represents field's selected choice.
+	 *
+	 * @return array<string,mixed>
 	 */
 	public static function prepare_connected_choice( GF_Field $field, int $input_key ): array {
 		$type = FieldChoiceRegistry::get_type_name( $field );
@@ -519,6 +524,8 @@ class FieldValues {
 	 *
 	 * @param \GF_Field $field The gravity forms field object.
 	 * @param int       $input_key The input key that represents field's selected input.
+	 *
+	 * @return array<string,mixed>
 	 */
 	public static function prepare_connected_input( GF_Field $field, int $input_key ): array {
 		$type = FieldInputRegistry::get_type_name( $field );

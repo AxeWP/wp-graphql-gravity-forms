@@ -1,8 +1,8 @@
 <?php
 
-
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -14,13 +14,12 @@
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
-*/
-class WpunitTester extends \Codeception\Actor
-{
-    use _generated\WpunitTesterActions;
+ * @SuppressWarnings(\PHPMD)
+ */
+class WpunitTester extends \Codeception\Actor {
+	use _generated\WpunitTesterActions;
 
-    /**
-     * Define custom actions here
-     */
+	/**
+	 * Define custom actions here
+	 */
 }

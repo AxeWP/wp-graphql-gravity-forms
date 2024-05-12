@@ -6,11 +6,11 @@
  */
 
 use GraphQLRelay\Relay;
-use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
-use WPGraphQL\GF\Type\Enum;
-use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum as QuizEnum;
 use Helper\GFHelpers\GFHelpers;
+use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
+use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum as QuizEnum;
+use WPGraphQL\GF\Type\Enum;
 
 /**
  * Class - FormQueriesTest
@@ -59,7 +59,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 	/**
 	 * Tests `gfForm`.
 	 */
-	public function testFormQuery() : void {
+	public function testFormQuery(): void {
 		$global_id        = Relay::toGlobalId( FormsLoader::$name, $this->form_id );
 		$form             = GFAPI::get_form( $this->form_id );
 		$confirmation_key = key( $form['confirmations'] );
@@ -105,7 +105,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 	/**
 	 * Returns the full form query for reuse.
 	 */
-	private function get_form_query() : string {
+	private function get_form_query(): string {
 		return '
 			query getForm( $id: ID!, $idType: FormIdTypeEnum ) {
 				gfForm( id: $id, idType: $idType ) {
@@ -308,12 +308,9 @@ class FormQueriesTest extends GFGraphQLTestCase {
 	}
 
 	/**
-	 * The expected WPGraphQL field response.
-	 *
-	 * @param array $form the current form instance.
-	 * @return array
+	 * {@inheritDoc}
 	 */
-	public function expected_field_response( array $form, string $confirmation_key ) : array {
+	public function expected_field_response( array $form, string $confirmation_key ): array {
 		return [
 			$this->expectedObject(
 				'gfForm',
@@ -338,7 +335,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 							$this->expectedField( 'isDefault', $form['confirmations'][ $confirmation_key ]['isDefault'] ),
 							$this->expectedField( 'message', $form['confirmations'][ $confirmation_key ]['message'] ),
 							$this->expectedField( 'name', $form['confirmations'][ $confirmation_key ]['name'] ),
-							$this->expectedField( 'pageId', $form['confirmations'][ $confirmation_key ]['pageId'] ?? static::IS_NULL ),
+							$this->expectedField( 'pageId', $form['confirmations'][ $confirmation_key ]['pageId'] ?? self::IS_NULL ),
 							$this->expectedField( 'queryString', $form['confirmations'][ $confirmation_key ]['queryString'] ),
 							$this->expectedField( 'type', GFHelpers::get_enum_for_value( Enum\FormConfirmationTypeEnum::$type, $form['confirmations'][ $confirmation_key ]['type'] ) ),
 							$this->expectedField( 'url', $form['confirmations'][ $confirmation_key ]['url'] ),
@@ -519,7 +516,7 @@ class FormQueriesTest extends GFGraphQLTestCase {
 								]
 							),
 							// This is null, since grading type is PASSFAIL.
-							$this->expectedField( 'grades', static::IS_NULL ),
+							$this->expectedField( 'grades', self::IS_NULL ),
 							// $this->expectedNode(
 							// 'grades',
 							// [
@@ -531,11 +528,11 @@ class FormQueriesTest extends GFGraphQLTestCase {
 							$this->expectedField( 'gradingType', GFHelpers::get_enum_for_value( QuizEnum\QuizFieldGradingTypeEnum::$type, $form['gravityformsquiz']['grading'] ) ),
 							$this->expectedField( 'hasInstantFeedback', ! empty( $form['gravityformsquiz']['instantFeedback'] ) ),
 							// This is null because grading type is PASSFAIL.
-							$this->expectedField( 'hasLetterConfirmationMessage', static::IS_NULL ),
+							$this->expectedField( 'hasLetterConfirmationMessage', self::IS_NULL ),
 							$this->expectedField( 'hasPassFailConfirmationMessage', ! empty( $form['gravityformsquiz']['passfailDisplayConfirmation'] ) ),
 							$this->expectedField( 'isShuffleFieldsEnabled', ! empty( $form['gravityformsquiz']['shuffleFields'] ) ),
-							$this->expectedField( 'letterConfirmation', static::IS_NULL ),
-							$this->expectedField( 'maxScore', static::IS_NULL ),
+							$this->expectedField( 'letterConfirmation', self::IS_NULL ),
+							$this->expectedField( 'maxScore', self::IS_NULL ),
 							$this->expectedObject(
 								'passConfirmation',
 								[
