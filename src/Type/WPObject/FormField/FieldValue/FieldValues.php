@@ -471,26 +471,6 @@ class FieldValues {
 
 		// Generate the file info for all files.
 		foreach ( $file_values as $file_value ) {
-			// Backcompat with v2.5x.
-			if ( version_compare( GFCommon::$version, '2.6.0', '<' ) ) {
-				$time                    = current_time( 'mysql' );
-				$y                       = substr( $time, 0, 4 );
-				$m                       = substr( $time, 5, 2 );
-				$default_target_root     = GFFormsModel::get_upload_path( $form['id'] ) . sprintf( '/%s/%s/', $y, $m );
-				$default_target_root_url = GFFormsModel::get_upload_url( $form['id'] ) . sprintf( '/%s/%s/', $y, $m );
-
-				$filename = explode( '/', $file_value );
-
-				$info[ $file_value ] = [
-					'url'      => $file_value,
-					'basePath' => $default_target_root,
-					'baseUrl'  => $default_target_root_url,
-					'filename' => end( $filename ),
-					'hash'     => wp_hash( $form['id'] ),
-				];
-				continue;
-			}
-
 			$stored_path_info = gform_get_meta( $entry['id'], $field::get_file_upload_path_meta_key_hash( $file_value ) );
 
 			if ( empty( $stored_path_info ) ) {

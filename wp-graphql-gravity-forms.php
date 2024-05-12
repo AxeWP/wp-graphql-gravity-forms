@@ -10,12 +10,12 @@
  * Version: 0.12.6
  * Text Domain: wp-graphql-gravity-forms
  * Domain Path: /languages
- * Requires at least: 5.4.1
+ * Requires at least: 6.0
  * Tested up to: 6.5
  * Requires PHP: 7.4
  * Requires Plugins: wp-graphql
  * WPGraphQL requires at least: 1.26.0
- * GravityForms requires at least: 2.5.0
+ * GravityForms requires at least: 2.7.0
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  *
@@ -75,7 +75,7 @@ if ( ! function_exists( 'graphql_gf_dependencies_not_ready' ) ) {
 	 */
 	function gf_graphql_dependencies_not_ready(): array {
 		$wpgraphql_version = '1.26.0';
-		$gf_version        = '2.5.0';
+		$gf_version        = '2.7.0';
 
 		$deps = [];
 

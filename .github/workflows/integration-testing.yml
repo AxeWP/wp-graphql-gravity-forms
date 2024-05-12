@@ -44,12 +44,6 @@ jobs:
             wordpress: '6.1'
           - php: '7.4'
             wordpress: '6.0'
-          - php: '7.4'
-            wordpress: '5.9'
-          - php: '7.4'
-            wordpress: '5.8'
-          - php: '7.4'
-            wordpress: '5.7'
         exclude:
           # New WP versions that dont support older PHP versions
           - php: "8.0"
