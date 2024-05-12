@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## v0.12.6.1
+
+This _patch_ release fixes the version number in the plugin header, which was incorrectly set to `0.12.5` instead of `0.12.6`.
+
+- fix: Correct version number in plugin header.
+
 ## v0.12.6
 
 This _minor_ release adds explicit support for PHP 8.2 and WordPress 6.5 - including the new Plugin Dependency header. Additionally, we've updated the Composer dependencies, and improved code quality and type safety.
