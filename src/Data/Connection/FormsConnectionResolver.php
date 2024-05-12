@@ -20,19 +20,14 @@ use WPGraphQL\GF\Utils\Utils;
 
 /**
  * Class - FormsConnectionResolver
+ *
+ * @extends \WPGraphQL\Data\Connection\AbstractConnectionResolver<array<int|string,array<string,mixed>>>
  */
 class FormsConnectionResolver extends AbstractConnectionResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function should_execute(): bool {
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function get_loader_name(): string {
+	protected function loader_name(): string {
 		return FormsLoader::$name;
 	}
 
@@ -54,7 +49,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 * @return bool
 	 */
 	protected function is_valid_model( $model ) {
-		return isset( $model->databaseId ) && ! empty( $model->databaseId );
+		return ! empty( $model->databaseId );
 	}
 
 	/**
@@ -62,53 +57,54 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @throws \GraphQL\Error\UserError When using `formIds` and `status` together.
 	 */
-	public function get_query_args(): array {
-		/**
-		 * Throw error if trying to filter `where.formIds` by `where.status`.
-		 */
-		if ( isset( $this->args['where']['formIds'] ) && isset( $this->args['where']['status'] ) ) {
-				throw new UserError( esc_html__( 'Sorry, filtering by `formIds` and `status` simultaneously is not currently supported.', 'wp-graphql-gravity-forms' ) );
+	protected function prepare_args( $args ): array {
+		// Throw error if trying to filter `where.formIds` by `where.status`.
+		if ( isset( $args['where']['formIds'] ) && isset( $args['where']['status'] ) ) {
+			throw new UserError( esc_html__( 'Sorry, filtering by `formIds` and `status` simultaneously is not currently supported.', 'wp-graphql-gravity-forms' ) );
 		}
 
+		return $args;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function prepare_query_args( $args ): array {
 		$query_args = [
-			'form_ids' => $this->get_form_ids(),
-			'status'   => $this->get_form_status(),
-			'sort'     => $this->get_sort(),
+			'form_ids' => $this->prepare_form_ids( $args ),
+			'status'   => $this->prepare_form_status( $args ),
+			'sort'     => $this->prepare_sort( $args ),
 		];
 
 		/**
 		 * Filter the $query args to allow folks to customize queries programmatically
 		 *
-		 * @param array       $query_args The args that will be passed to the WP_Query
-		 * @param mixed       $source     The source that's passed down the GraphQL queries
-		 * @param array       $args       The inputArgs on the field
-		 * @param \WPGraphQL\AppContext $context The AppContext passed down the GraphQL tree
-		 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo passed down the GraphQL tree
+		 * @param array<string,mixed> $query_args The args that will be passed to GFAPI::get_forms().
+		 * @param self                $resolver   The current instance of the resolver
 		 */
-		$query_args = apply_filters( 'graphql_gf_forms_connection_query_args', $query_args, $this->source, $this->args, $this->context, $this->info );
+		$query_args = apply_filters( 'graphql_gf_forms_connection_query_args', $query_args, $this );
 
 		return $query_args;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @return array<int|string,array<string,mixed>>
 	 */
-	public function get_query(): array {
-		$form_ids    = $this->query_args['form_ids'];
-		$active      = $this->query_args['status']['active'];
-		$sort_column = $this->query_args['sort']['key'];
-		$sort_dir    = $this->query_args['sort']['direction'];
+	protected function query( array $query_args ) {
+		$form_ids    = $query_args['form_ids'] ?? [];
+		$active      = ! empty( $query_args['status']['active'] );
+		$sort_column = (string) $query_args['sort']['key'];
+		$sort_dir    = (string) $query_args['sort']['direction'];
 
 		// Used to return trashed and untrashed entries, if formIds are passed, and no where args are limiting it.
-		$trash = ! empty( $form_ids ) && ! isset( $this->args['where']['status'] ) ? true : $this->query_args['status']['trash'];
+		$graphql_args = $this->get_args();
+		$trash        = ! empty( $form_ids ) && ! isset( $graphql_args['where']['status'] ) ? true : $query_args['status']['trash'];
 
 		$forms = GFUtils::get_forms( $form_ids, $active, $trash, $sort_column, $sort_dir );
 
 		$query = [];
 
-		$loader = $this->getLoader();
+		$loader = $this->get_loader();
 
 		foreach ( $forms as $form ) {
 			/**
@@ -119,8 +115,9 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 			 * and can be used for dynamic field input population, among other things.
 			 *
 			 * @param array<string,mixed> $form Form meta array.
+			 * @param self                $resolver   The current instance of the resolver
 			 */
-			$modified_form = apply_filters( 'graphql_gf_form_object', $form );
+			$modified_form = apply_filters( 'graphql_gf_form_object', $form, $this );
 
 			// Cache the form in the dataloader.
 			$loader->prime( $modified_form['id'], $modified_form );
@@ -135,10 +132,12 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	 * {@inheritDoc}
 	 */
 	public function get_ids_from_query() {
-		$ids = ! empty( $this->query ) ? array_keys( $this->query ) : [];
+		$queried = $this->get_query();
+		$ids     = ! empty( $queried ) ? array_keys( $queried ) : [];
 
 		// If we're going backwards, we need to reverse the array.
-		if ( ! empty( $this->args['last'] ) ) {
+		$args = $this->get_args();
+		if ( ! empty( $args['last'] ) ) {
 			$ids = array_reverse( $ids );
 		}
 
@@ -146,29 +145,34 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Returns form ids.
+	 * Prepares form ids for query.
+	 *
+	 * @param array<string,mixed> $args GraphQL args.
 	 *
 	 * @return int[]
 	 */
-	private function get_form_ids(): array {
-		if ( empty( $this->args['where']['formIds'] ) ) {
+	private function prepare_form_ids( array $args ): array {
+		if ( empty( $args['where']['formIds'] ) ) {
 			return [];
 		}
 
-		if ( is_string( $this->args['where']['formIds'] ) || is_integer( $this->args['where']['formIds'] ) ) {
-			$this->args['where']['formIds'] = [ $this->args['where']['formIds'] ];
+		if ( ! is_array( $args['where']['formIds'] ) ) {
+			$args['where']['formIds'] = [ $args['where']['formIds'] ];
 		}
 
-		return array_map( static fn ( $id ) => Utils::get_form_id_from_id( $id ), $this->args['where']['formIds'] );
+		return array_map( static fn ( $id ) => Utils::get_form_id_from_id( $id ), $args['where']['formIds'] );
 	}
 
 	/**
-	 * Gets form status from query.
+	 * Prepare form status for query.
+	 *
+	 * @param array<string,mixed> $args GraphQL args.
 	 *
 	 * @return array{active:bool,trash:bool}
 	 */
-	private function get_form_status(): array {
-		$status = $this->args['where']['status'] ?? FormStatusEnum::ACTIVE;
+	private function prepare_form_status( array $args ): array {
+		$status = $args['where']['status'] ?? FormStatusEnum::ACTIVE;
+
 		if ( FormStatusEnum::INACTIVE === $status ) {
 			return [
 				'active' => false,
@@ -198,32 +202,34 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Get sort argument for forms ID query.
+	 * Prepare sort argument for query.
+	 *
+	 * @param array<string,mixed> $args GraphQL args.
 	 *
 	 * @return array{key:string,direction:string}
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
-	private function get_sort(): array {
+	private function prepare_sort( array $args ): array {
 		$sort = [
 			'key'       => '',
 			'direction' => 'DESC',
 		];
 
-		if ( ! empty( $this->args['where']['orderby'] ) && is_array( $this->args['where']['orderby'] ) ) {
+		if ( ! empty( $args['where']['orderby'] ) && is_array( $args['where']['orderby'] ) ) {
 			// @todo remove support for deprecated `field` input.
-			if ( empty( $this->args['where']['orderby']['column'] ) && ! empty( $this->args['where']['orderby']['field'] ) ) {
-				$this->args['where']['orderby']['column'] = $this->args['where']['orderby']['field'];
+			if ( empty( $args['where']['orderby']['column'] ) && ! empty( $args['where']['orderby']['field'] ) ) {
+				$args['where']['orderby']['column'] = $args['where']['orderby']['field'];
 			}
 
 			$sort = [
-				'key'       => $this->args['where']['orderby']['column'] ?? '',
-				'direction' => $this->args['where']['orderby']['order'] ?? 'ASC',
+				'key'       => $args['where']['orderby']['column'] ?? '',
+				'direction' => $args['where']['orderby']['order'] ?? 'ASC',
 			];
 		}
 
 		// Flip the direction on `last` query.
-		if ( ! empty( $this->args['last'] ) ) {
+		if ( ! empty( $args['last'] ) ) {
 			$sort['direction'] = 'ASC' === $sort['direction'] ? 'DESC' : 'ASC';
 		}
 
