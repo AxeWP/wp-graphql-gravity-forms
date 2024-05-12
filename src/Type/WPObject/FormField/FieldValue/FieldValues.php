@@ -10,7 +10,6 @@ namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue;
 
 use GFAPI;
 use GFCommon;
-use GFFormsModel;
 use GF_Field;
 use GF_Field_FileUpload;
 use WPGraphQL\AppContext;
