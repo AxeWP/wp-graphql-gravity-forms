@@ -4,6 +4,7 @@
 
 - feat!: Refactor `FormsConnectionResolver` and `EntriesConnectionResolver` for compatibility with WPGraphQL v1.26.0 improvements.
 - chore!: Bump minimum WPGraphQL to v1.26.0
+- chore: Update Composer dev-dependencies and fix test compatibility with `wp-graphql-test-case` v3.0.x.
 
 ## v0.12.6.1
 
