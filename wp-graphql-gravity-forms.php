@@ -7,7 +7,7 @@
  * Author: AxePress Development
  * Author URI: https://axepress.dev
  * Update URI: https://github.com/axewp/wp-graphql-gravity-forms/releases
- * Version: 0.12.6
+ * Version: 0.12.6.1
  * Text Domain: wp-graphql-gravity-forms
  * Domain Path: /languages
  * Requires at least: 6.0
@@ -36,7 +36,7 @@ if ( ! function_exists( 'gf_graphql_constants' ) ) {
 	function gf_graphql_constants(): void {
 		// Plugin version.
 		if ( ! defined( 'WPGRAPHQL_GF_VERSION' ) ) {
-			define( 'WPGRAPHQL_GF_VERSION', '0.12.6' );
+			define( 'WPGRAPHQL_GF_VERSION', '0.12.6.1' );
 		}
 
 		// Plugin Folder Path.
