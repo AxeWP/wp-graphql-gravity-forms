@@ -6,6 +6,7 @@
 - chore!: Bump minimum WPGraphQL version to v1.26.0.
 - chore!: Bump minimum WordPress version to v6.0.0.
 - chore!: Bump minimum Gravity Forms version to v2.7.0.
+- chore: Declare `strict_types` in all PHP files.
 - chore: Update Composer dev-dependencies and fix test compatibility with `wp-graphql-test-case` v3.0.x.
 
 ## v0.12.6.1
@@ -21,7 +22,6 @@ This _minor_ release adds explicit support for PHP 8.2 and WordPress 6.5 - inclu
 - feat: Add plugin dependency header.
 - chore: Update Composer deps and lint.
 - chore: Lock WPBrowser to <3.5.0 to prevent conflicts with Codeception.
-- chore: Declare `strict_types` in all PHP files.
 - chore: Implement strict PHPStan rules and fix resulting issues.
 - chore: Add traversable type hints throughout the codebase.
 - tests: Lint tests.
