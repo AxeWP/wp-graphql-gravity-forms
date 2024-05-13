@@ -7,6 +7,8 @@
  * @since   0.5.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
 
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;

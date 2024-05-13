@@ -6,6 +6,7 @@
 - chore!: Bump minimum WPGraphQL version to v1.26.0.
 - chore!: Bump minimum WordPress version to v6.0.0.
 - chore!: Bump minimum Gravity Forms version to v2.7.0.
+- chore: Declare `strict_types` in all PHP files.
 - chore: Update Composer dev-dependencies and fix test compatibility with `wp-graphql-test-case` v3.0.x.
 
 ## v0.12.6.1
@@ -159,7 +160,6 @@ Lastly, we've exposed the `connectedChoice` and `connectedInput` fields on `Chec
 - tests: Add tests for `submitGfForm` mutation.
 - docs: replace `formId` with `id` in `submitGfForm` examples. Props: @mosesintech
 
-
 ## v0.11.11 - Bugfix
 
 This _minor_ release fixes a bug where the `ip` field on `GfEntry` was not being properly stored when submitting a form.
@@ -274,7 +274,6 @@ This _minor_ release adds the reCaptcha V2 `type` and `publicKey` to `gfSettings
 - tests: Fix broken test asserts exposed by PHPUnit v9 + WPGraphQL Test Case v2.3
 - tests: Use `gravityformscli` for installing GF plugins in test envs.
 - chore: Upgrade composer deps
-
 
 ## v0.11.0 - reCAPTCHA Validation, Plugin Updates, and GF 2.6 Support
 

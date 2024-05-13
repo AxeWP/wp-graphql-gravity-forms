@@ -6,6 +6,8 @@
  * @since 0.10.3
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Extensions\WPJamstackDeployments;
 
 use WPGraphQL\GF\Interfaces\Hookable;

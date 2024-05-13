@@ -8,6 +8,8 @@
  * @since 0.4.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Mutation;
 
 use GraphQL\Error\UserError;
@@ -107,7 +109,7 @@ class UpdateDraftEntry extends AbstractMutation {
 
 			// Prepare the entry data.
 			$submission = GFUtils::get_draft_submission( $resume_token );
-			$form       = GFUtils::get_form( $submission['partial_entry']['form_id'] );
+			$form       = GFUtils::get_form( (int) $submission['partial_entry']['form_id'] );
 
 			$entry_data = self::prepare_draft_entry_data( $input, $submission, $form );
 

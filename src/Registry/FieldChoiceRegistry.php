@@ -9,13 +9,14 @@
  * @since 0.12.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Registry;
 
 use GF_Field;
 use WPGraphQL\GF\Registry\TypeRegistry as GFTypeRegistry;
 use WPGraphQL\GF\Type\WPInterface\FieldChoice;
 use WPGraphQL\GF\Utils\Utils;
-
 
 /**
  * Class - FieldChoiceRegistry

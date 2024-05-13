@@ -9,6 +9,8 @@
  * @since   0.3.1 `fieldId` changed to type `Int`.
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\WPObject\Form;
 
 use WPGraphQL\GF\Type\Enum\FormRuleOperatorEnum;

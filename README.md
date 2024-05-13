@@ -105,5 +105,4 @@ Priority support and custom development are available to [our Sponsors](https://
   <a href="https://mysafetyhq.com/" target="_blank" rel="sponsored" title="SafetyHQ (previously Harness Software)"><img src="https://avatars.githubusercontent.com/u/50597878?s=150&v=4" alt="SafetyHQ (previously Harness Software)"></a>
 </div>
 
-
 <a href="https://github.com/sponsors/AxeWP" alt="GitHub Sponsors"><img src="https://img.shields.io/static/v1?label=Sponsor%20Us%20%40%20AxeWP&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86&style=for-the-badge" /></a>

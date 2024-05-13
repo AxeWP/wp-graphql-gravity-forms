@@ -6,6 +6,8 @@
  * @since   0.10.2
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\WPObject\Settings;
 
 use GFLogging;

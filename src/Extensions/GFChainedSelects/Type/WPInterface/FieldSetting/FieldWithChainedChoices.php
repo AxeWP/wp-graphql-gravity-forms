@@ -6,6 +6,8 @@
  * @since 0.12.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPInterface\FieldSetting;
 
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;

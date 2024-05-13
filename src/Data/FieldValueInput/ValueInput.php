@@ -6,6 +6,8 @@
  * @since 0.10.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Data\FieldValueInput;
 
 use GFCommon;
@@ -30,7 +32,7 @@ class ValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function prepare_value(): string {
+	protected function prepare_value() {
 		// Handle choices with price.
 		if ( ! empty( $this->field->enablePrice ) && false === strpos( $this->args, '|' ) ) {
 			$value_key  = ! empty( $this->field->enablePrice ) || ! empty( $this->field->enableChoiceValue ) ? 'value' : 'text';

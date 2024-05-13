@@ -53,7 +53,6 @@ do_action( 'graphql_gf_after_register_form_field_' . $field->graphql_single_name
 * **`$field`** _(GF_Field)_ : The Gravity Forms field object.
 * **`$field_settings`** _(array)_ : The Gravity Forms field settings.
 
-
 #### Parameters
 
 * **`$field`** _(GF_Field)_ : The Gravity Forms field object.
@@ -140,7 +139,6 @@ apply_filters( 'graphql_gf_can_view_entries', bool $can_view_entries, int $form_
 * **`$form_id`** _(int)_ : The GF form ID being queried by GraphQL.
 * **`$entry_id`** _(string)_ : The entry ID being queried by GraphQL.
 * **`$draft_entry`** _(array)_ : The Gravity Forms entry data array.
-
 
 ### `graphql_gf_entries_connection_query_args`
 
@@ -365,7 +363,6 @@ apply_filters( 'graphql_gf_form_field_value_fields_' . $field->graphql_single_na
 * **`$fields`** _(array)_ : An array of [WPGraphQL field `$config` arrays](https://www.wpgraphql.com/functions/register_graphql_fields/).
 * **`$field`** _(GF_Field)_ : The Gravity Forms Field object.
 
-
 ### `graphql_gf_form_field_values_input_fields`
 
 Filter to modify the Form Field value GraphQL fields.
@@ -447,7 +444,6 @@ apply_filters( 'graphql_gf_registered_{$type}_classes', array $classes_to_regist
 ### `graphql_gf_registered_form_field_setting_input_classes`
 
 Filters the list of PHP classes that register GraphQL Interfaces based on a particular Gravity Forms field setting.
-
 
 ```php
 apply_filters( 'graphql_gf_registered_{$type}_classes', array $classes_to_register );

@@ -23,7 +23,6 @@ run_tests() {
       wp maintenance-mode deactivate --allow-root
     fi
 
-
     # Suites is the comma separated list of suites/tests to run.
     echo "Running Test Suite $suites"
     vendor/bin/codecept run -c codeception.dist.yml "${suites}" ${coverage:-} ${debug:-} --no-exit
@@ -86,7 +85,6 @@ fi
 echo "Running composer install"
 COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction
 
-
 # Install pcov/clobber if PHP7.1+
 if version_gt $PHP_VERSION 7.0 && [[ -n "$COVERAGE" ]] && [[ -z "$USING_XDEBUG" ]]; then
     echo "Using pcov/clobber for codecoverage"
@@ -144,7 +142,6 @@ if [ -n "$(ls "$TESTS_OUTPUT")" ]; then
     echo 'Setting result files permissions'.
     chmod 777 -R "$TESTS_OUTPUT"/*
 fi
-
 
 # Check results and exit accordingly.
 if [ -f "${TESTS_OUTPUT}/failed" ]; then

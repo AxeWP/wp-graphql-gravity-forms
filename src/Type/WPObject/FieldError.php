@@ -7,6 +7,8 @@
  * @since   0.4.0 add `id` property.
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\WPObject;
 
 use WPGraphQL\GF\Type\WPObject\AbstractObject;

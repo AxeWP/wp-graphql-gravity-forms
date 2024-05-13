@@ -8,7 +8,6 @@
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 
-
 /**
  * Class -PostTitleFieldTest.
  */

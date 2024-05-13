@@ -8,6 +8,8 @@
  * @since 0.10.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Mutation;
 
 use GFAPI;
@@ -147,7 +149,7 @@ class SubmitForm extends AbstractMutation {
 			$input_values = self::get_input_values( $save_as_draft, $field_values, $files );
 
 			$submission = GFUtils::submit_form(
-				$input['id'],
+				(int) $input['id'],
 				$input_values,
 				$field_values,
 				$target_page,

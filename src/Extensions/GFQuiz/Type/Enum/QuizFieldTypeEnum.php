@@ -6,6 +6,8 @@
  * @since   0.9.1
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Extensions\GFQuiz\Type\Enum;
 
 use WPGraphQL\GF\Type\Enum\AbstractEnum;

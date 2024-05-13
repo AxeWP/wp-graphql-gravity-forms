@@ -8,6 +8,8 @@
  * @since 0.10.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Mutation;
 
 use GFCommon;
@@ -110,7 +112,7 @@ class UpdateEntry extends AbstractMutation {
 			}
 
 			// Prepare the entry data.
-			$form = GFUtils::get_form( $entry['form_id'] );
+			$form = GFUtils::get_form( (int) $entry['form_id'] );
 
 			$entry_data = self::prepare_entry_data( $input, $entry, $form );
 
@@ -227,7 +229,7 @@ class UpdateEntry extends AbstractMutation {
 						array_column( $files, 'uploaded_filename' )
 					);
 
-					$field_id = (int) str_replace( 'input_', '', $input_name );
+					$field_id = (int) str_replace( 'input_', '', (string) $input_name );
 
 					$field = GFUtils::get_field_by_id( $form, $field_id );
 
@@ -280,8 +282,8 @@ class UpdateEntry extends AbstractMutation {
 		$entry = array_merge( $entry, $values );
 
 		foreach ( $values as $id => &$value ) {
-			$input_name = 'input_' . str_replace( '.', '_', $id );
-			$field_id   = strtok( $id, '.' );
+			$input_name = 'input_' . str_replace( '.', '_', (string) $id );
+			$field_id   = strtok( (string) $id, '.' );
 			$field      = GFUtils::get_field_by_id( $form, (int) $field_id );
 
 			// Post images can sometimes already be prepared.

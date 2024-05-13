@@ -8,6 +8,8 @@
  * @since   0.11.1
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Type\WPObject;
 
 use GraphQL\Type\Definition\ResolveInfo;

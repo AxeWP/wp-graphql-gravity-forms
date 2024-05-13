@@ -6,6 +6,8 @@
  * @since 0.12.0
  */
 
+declare( strict_types = 1 );
+
 namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPInterface\FieldInputSetting;
 
 use WPGraphQL\GF\Type\WPInterface\FieldInputSetting\AbstractFieldInputSetting;
