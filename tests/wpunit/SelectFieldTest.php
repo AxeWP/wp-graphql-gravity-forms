@@ -92,11 +92,9 @@ class SelectFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 				autocompleteAttribute
 				canPrepopulate
 				choices {
-					... on SelectFieldChoice {
-						isSelected
-						text
-						value
-					}
+					isSelected
+					text
+					value
 				}
 				conditionalLogic {
 					actionType

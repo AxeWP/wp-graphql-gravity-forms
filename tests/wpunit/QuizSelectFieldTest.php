@@ -131,14 +131,12 @@ class QuizSelectFieldTest extends FormFieldTestCase implements FormFieldTestCase
 				answerExplanation
 				canPrepopulate
 				choices {
-					... on QuizSelectFieldChoice {
-						isCorrect
-						isOtherChoice
-						isSelected
-						text
-						value
-						weight
-					}
+					isCorrect
+					isOtherChoice
+					isSelected
+					text
+					value
+					weight
 				}
 				conditionalLogic{
 					actionType

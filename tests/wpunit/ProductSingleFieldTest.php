@@ -160,11 +160,9 @@ class ProductSingleFieldTest extends FormFieldTestCase implements FormFieldTestC
 					formattedPrice
 					hasQuantity
 					inputs {
-						... on ProductSingleInputProperty {
-							id
-							label
-							name
-						}
+						id
+						label
+						name
 					}
 					isRequired
 					price

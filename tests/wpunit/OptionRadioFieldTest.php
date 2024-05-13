@@ -153,14 +153,12 @@ class OptionRadioFieldTest extends FormFieldTestCase implements FormFieldTestCas
 			... on OptionField {
 				adminLabel
 				canPrepopulate
-				choices{
-					... on OptionFieldChoice {
-						formattedPrice
-						isSelected
-						price
-						text
-						value
-					}
+				choices {
+					formattedPrice
+					isSelected
+					price
+					text
+					value
 				}
 				cssClass
 				defaultValue

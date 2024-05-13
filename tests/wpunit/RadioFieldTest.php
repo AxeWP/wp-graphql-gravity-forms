@@ -90,12 +90,10 @@ class RadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 				adminLabel
 				canPrepopulate
 				choices {
-					... on RadioFieldChoice {
-						isOtherChoice
-						isSelected
-						text
-						value
-					}
+					isOtherChoice
+					isSelected
+					text
+					value
 				}
 				conditionalLogic {
 					actionType

@@ -227,14 +227,12 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 				answerExplanation
 				canPrepopulate
 				choices {
-					... on QuizCheckboxFieldChoice {
-						isCorrect
-						isOtherChoice
-						isSelected
-						text
-						value
-						weight
-					}
+					isCorrect
+					isOtherChoice
+					isSelected
+					text
+					value
+					weight
 				}
 				conditionalLogic{
 					actionType
@@ -270,11 +268,9 @@ class QuizCheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					}
 					hasSelectAll
 					inputs {
-						... on QuizCheckboxInputProperty {
-							id
-							label
-							name
-						}
+						id
+						label
+						name
 					}
 				}
 			}

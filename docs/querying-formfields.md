@@ -144,6 +144,9 @@ As of v0.10.0, all `formFields` have access to the `value` GraphQL field, which 
           checkboxValues {
             inputId
             value
+            ... on CheckboxFieldChoice {
+              isSelected
+            }
           }
         }
         ... on NameField {

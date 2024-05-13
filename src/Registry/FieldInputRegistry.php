@@ -90,6 +90,8 @@ class FieldInputRegistry {
 					register_graphql_object_type( $input_name, $config );
 				}
 
+				Utils::overload_graphql_field_type( $field->graphql_single_name, 'inputs', [ 'list_of' => $input_name ] );
+
 				// Store in static array to prevent duplicate registration.
 				self::$registered_types[] = $input_name;
 			}

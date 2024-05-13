@@ -191,11 +191,9 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 				size
 				... on PostTagsMultiSelectField {
 					choices {
-						... on PostTagsMultiSelectFieldChoice {
-							isSelected
-							text
-							value
-						}
+						isSelected
+						text
+						value
 					}
 					hasChoiceValue
 					hasEnhancedUI
