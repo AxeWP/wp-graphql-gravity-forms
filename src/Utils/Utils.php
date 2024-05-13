@@ -387,4 +387,30 @@ class Utils {
 
 		return absint( $id_parts['id'] );
 	}
+
+	/**
+	 * Overloads the field type of an existing GraphQL field.
+	 *
+	 * This is necessary because register_graphql_field() doesn't have a way to check inheritance.
+	 *
+	 * @see https://github.com/wp-graphql/wp-graphql/issues/3096
+	 *
+	 * @param string                      $object_type The WPGraphQL object type name where the field is located.
+	 * @param string                      $field_name  The field name to overload.
+	 * @param string|array<string|string> $new_type_name The new GraphQL type name to use.
+	 */
+	public static function overload_graphql_field_type( string $object_type, string $field_name, $new_type_name ): void {
+		add_filter(
+			'graphql_' . $object_type . '_fields',
+			static function ( array $fields ) use ( $field_name, $new_type_name ) {
+				if ( isset( $fields[ $field_name ] ) ) {
+					$fields[ $field_name ]['type'] = $new_type_name;
+				}
+
+				return $fields;
+			},
+			10,
+			1
+		);
+	}
 }

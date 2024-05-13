@@ -160,13 +160,11 @@ class ProductSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 				visibility
 				... on ProductSelectField {
 					choices {
-						... on ProductSelectFieldChoice {
-							formattedPrice
-							isSelected
-							price
-							text
-							value
-						}
+						formattedPrice
+						isSelected
+						price
+						text
+						value
 					}
 					errorMessage
 					hasAutocomplete

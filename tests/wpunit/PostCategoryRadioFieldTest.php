@@ -149,11 +149,9 @@ class PostCategoryFieldRadioTest extends FormFieldTestCase implements FormFieldT
 				adminLabel
 				canPrepopulate
 				choices {
-					... on PostCategoryFieldChoice {
-						isSelected
-						text
-						value
-					}
+					isSelected
+					text
+					value
 				}
 				conditionalLogic {
 					actionType

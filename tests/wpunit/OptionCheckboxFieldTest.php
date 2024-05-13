@@ -271,13 +271,11 @@ class OptionCheckboxFieldTest extends FormFieldTestCase implements FormFieldTest
 				adminLabel
 				canPrepopulate
 				choices{
-					... on OptionFieldChoice {
-						formattedPrice
-						isSelected
-						price
-						text
-						value
-					}
+					formattedPrice
+					isSelected
+					price
+					text
+					value
 				}
 				cssClass
 				defaultValue
@@ -322,11 +320,9 @@ class OptionCheckboxFieldTest extends FormFieldTestCase implements FormFieldTest
 					}
 					hasSelectAll
 					inputs {
-						... on OptionCheckboxInputProperty {
-							id
-							label
-							name
-						}
+						id
+						label
+						name
 					}
 				}
 			}

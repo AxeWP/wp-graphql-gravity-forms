@@ -18,6 +18,7 @@ use WPGraphQL\GF\Registry\TypeRegistry as GFTypeRegistry;
 use WPGraphQL\GF\Type\WPInterface\FieldChoice;
 use WPGraphQL\GF\Utils\Utils;
 
+
 /**
  * Class - FieldChoiceRegistry
  */
@@ -87,6 +88,9 @@ class FieldChoiceRegistry {
 
 					register_graphql_object_type( $choice_name, $config );
 				}
+
+				// Overload the field type with the new choice type.
+				Utils::overload_graphql_field_type( $field->graphql_single_name, 'choices', [ 'list_of' => $choice_name ] );
 
 				// Store in static array to prevent duplicate registration.
 				self::$registered_types[] = $choice_name;

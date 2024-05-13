@@ -145,14 +145,12 @@ class QuizRadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 				answerExplanation
 				canPrepopulate
 				choices {
-					... on QuizFieldChoice {
-						isCorrect
-						isOtherChoice
-						isSelected
-						text
-						value
-						weight
-					}
+					isCorrect
+					isOtherChoice
+					isSelected
+					text
+					value
+					weight
 				}
 				conditionalLogic{
 					actionType

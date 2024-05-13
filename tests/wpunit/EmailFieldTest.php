@@ -128,15 +128,13 @@ class EmailFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 				hasAutocomplete
 				hasEmailConfirmation
 				inputs {
-					... on EmailInputProperty {
-						autocompleteAttribute
-						customLabel
-						defaultValue
-						id
-						label
-						name
-						placeholder
-					}
+					autocompleteAttribute
+					customLabel
+					defaultValue
+					id
+					label
+					name
+					placeholder
 				}
 				isRequired
 				label

@@ -138,25 +138,19 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 				canPrepopulate
 				chainedSelectsAlignment
 				choices {
-					... on ChainedSelectFieldChoice {
+					choices {
 						choices {
-							... on ChainedSelectFieldChoice {
-								choices {
-									... on ChainedSelectFieldChoice {
-										isSelected
-										text
-										value
-									}
-								}
 								isSelected
 								text
 								value
 							}
-						}
 						isSelected
 						text
 						value
 					}
+					isSelected
+					text
+					value
 				}
 				conditionalLogic {
 					actionType
@@ -174,11 +168,9 @@ class ChainedSelectFieldTest extends FormFieldTestCase implements FormFieldTestC
 				hasChoiceValue
 				inputName
 				inputs {
-					... on ChainedSelectInputProperty {
-						label
-						id
-						name
-					}
+					label
+					id
+					name
 				}
 				isRequired
 				label
