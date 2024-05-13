@@ -311,14 +311,14 @@ class FieldValues {
 					switch ( true ) {
 						case $source instanceof \GF_Field_SingleProduct:
 						case $source instanceof \GF_Field_HiddenProduct:
-							$product_name = trim( $context->gfEntry->entry[ $source->id . '.1' ] ?? '' );
-							$price        = trim( $context->gfEntry->entry[ $source->id . '.2' ] ?? '' );
-							$quantity     = trim( $context->gfEntry->entry[ $source->id . '.3' ] ?? '' );
+							$product_name = isset( $context->gfEntry->entry[ $source->id . '.1' ] ) ? trim( (string) $context->gfEntry->entry[ $source->id . '.1' ] ) : '';
+							$price        = isset( $context->gfEntry->entry[ $source->id . '.2' ] ) ? trim( (string) $context->gfEntry->entry[ $source->id . '.2' ] ) : '';
+							$quantity     = isset( $context->gfEntry->entry[ $source->id . '.3' ] ) ? trim( (string) $context->gfEntry->entry[ $source->id . '.3' ] ) : '';
 							break;
 						case $source instanceof \GF_Field_Calculation:
-							$product_name = trim( $context->gfEntry->entry[ $source->id . '.1' ] ?? '' );
+							$product_name = isset( $context->gfEntry->entry[ $source->id . '.1' ] ) ? trim( (string) $context->gfEntry->entry[ $source->id . '.1' ] ) : '';
 							$price        = GFCommon::calculate( $source, $context->gfForm->form, $context->gfEntry->entry );
-							$quantity     = trim( $context->gfEntry->entry[ $source->id . '.3' ] ?? '' );
+							$quantity     = isset( $context->gfEntry->entry[ $source->id . '.3' ] ) ? trim( (string) $context->gfEntry->entry[ $source->id . '.3' ] ) : '';
 							break;
 
 						case $source instanceof \GF_Field_Select:
