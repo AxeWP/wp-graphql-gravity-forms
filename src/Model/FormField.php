@@ -1,0 +1,289 @@
+<?php
+/**
+ * FormField Model class
+ *
+ * @package \WPGraphQL\GF\Model
+ * @since   @todo
+ */
+
+declare( strict_types = 1 );
+
+namespace WPGraphQL\GF\Model;
+
+use GF_Field;
+use GraphQLRelay\Relay;
+use WPGraphQL\GF\Data\Loader\FormFieldsLoader;
+use WPGraphQL\GF\Registry\FieldChoiceRegistry;
+use WPGraphQL\GF\Registry\FieldInputRegistry;
+use WPGraphQL\GF\Utils\GFUtils;
+use WPGraphQL\Model\Model;
+
+/**
+ * Class - FormField
+ *
+ * @property int       $databaseId The database ID of the field.
+ * @property string    $id         The Relay ID of the field.
+ * @property \GF_Field $gfField    The Gravity Forms field object.
+ */
+class FormField extends Model {
+	/**
+	 * @var array<string,null>
+	 */
+	private const EMPTY_CHOICES = [
+		'text'       => null,
+		'value'      => null,
+		'isSelected' => null,
+		'price'      => null,
+	];
+
+	/**
+	 * The unmodified Gravity Forms field object.
+	 *
+	 * @var \GF_Field
+	 */
+	protected $gf_field;
+
+	/**
+	 * The GF Form associated with the field.
+	 *
+	 * @var array<string,mixed>
+	 */
+	protected $form;
+
+	/**
+	 * The prepared Gravity Forms field object.
+	 *
+	 * @var \GF_Field
+	 */
+	protected $data;
+
+	/**
+	 * Form constructor.
+	 *
+	 * @param \GF_Field            $field The incoming field to be modeled.
+	 * @param ?array<string,mixed> $form The source form data.
+	 *
+	 * @throws \Exception .
+	 */
+	public function __construct( GF_Field $field, ?array $form = null ) {
+		$this->form = ! empty( $form ) ? $form : GFUtils::get_form( $field->formId, false );
+		$this->data = self::prepare_model_data( $field );
+
+		parent::__construct();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function __isset( $key ) {
+		return isset( $this->fields[ $key ] ) || property_exists( $this->data, $key );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function __get( $key ) {
+		// First check the fields array.
+		if ( isset( $this->fields[ $key ] ) ) {
+
+			/**
+			 * If the property has already been processed and cached to the model
+			 * return the processed value.
+			 *
+			 * Otherwise, if it's a callable, process it and cache the value.
+			 */
+			if ( is_scalar( $this->fields[ $key ] ) || ( is_object( $this->fields[ $key ] ) && ! is_callable( $this->fields[ $key ] ) ) || is_array( $this->fields[ $key ] ) ) {
+				return $this->fields[ $key ];
+			} elseif ( is_callable( $this->fields[ $key ] ) ) {
+				$data       = call_user_func( $this->fields[ $key ] );
+				$this->$key = $data;
+
+				return $data;
+			} else {
+				return $this->fields[ $key ];
+			}
+		}
+
+		// Pass through to the \GF_Field object.
+		if ( property_exists( $this->data, $key ) ) {
+			$data       = $this->data->$key;
+			$this->$key = $data;
+			return $data;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Pass calls to the GF_Field object.
+	 *
+	 * @param string $name      The method name.
+	 * @param array  $arguments The method arguments.
+	 *
+	 * @return mixed
+	 * @throws \BadMethodCallException .
+	 */
+	public function __call( $name, $arguments ) {
+		if ( method_exists( $this->data, $name ) ) {
+			return $this->data->$name( ...$arguments );
+		}
+
+		throw new \BadMethodCallException( 'Method ' . esc_html( $name ) . ' does not exist on ' . self::class . ' or the underlying' . \GF_Field::class );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function is_private(): bool {
+		if ( ! isset( $this->form['requireLogin'] ) || ! $this->form['requireLogin'] || is_user_logged_in() ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function init(): void {
+		if ( empty( $this->fields ) ) {
+			$fields = $this->prepare_model_fields( $this->data );
+
+			$this->fields = $fields;
+		}
+	}
+
+	/**
+	 * Prepares the GF field data for the model.
+	 *
+	 * @param \GF_Field $field The field to prepare.
+	 */
+	protected static function prepare_model_data( GF_Field $field ): GF_Field {
+		// Set empty values to null.
+		$data = get_object_vars( $field );
+		foreach ( $data as $key => $value ) {
+			if ( '' !== $value ) {
+				continue;
+			}
+
+			$field->$key = null;
+		}
+
+		return $field;
+	}
+
+	/**
+	 * Prepares the Model fields.
+	 *
+	 * @param \GF_Field $data The model data.
+	 */
+	protected function prepare_model_fields( \GF_Field $data ): array {
+		$fields = array_merge(
+			[
+				'databaseId'          => static fn (): int => (int) $data->id,
+				'id'                  => static fn (): string => Relay::toGlobalId( FormFieldsLoader::$name, $data->formId . ':' . $data->id ),
+				'gfField'             => static fn (): GF_Field => $data,
+				'layoutGridColumSpan' => static fn (): ?int => ! empty( $data->layoutGridColumnSpan ) ? (int) $data->layoutGridColumnSpan : null,
+				'choices'             => static function () use ( $data ): ?array {
+					if ( empty( $data->choices ) || ! is_array( $data->choices ) ) {
+						return null;
+					}
+
+					$choices = $data->choices;
+
+					// Set choices for single-column list fields, so we can use the same mutation for both.
+					if ( 'list' === $data->type && isset( $data->columns ) && 1 === $data->columns ) {
+						$choices = self::EMPTY_CHOICES;
+					}
+
+					// Include GraphQL Type in resolver.
+					return array_map(
+						static function ( $choice ) use ( $data ) {
+							$choice['graphql_type'] = FieldChoiceRegistry::get_type_name( $data );
+
+							return $choice;
+						},
+						$choices
+					);
+				},
+				'inputs'              => static function () use ( $data ): ?array {
+					// Emails fields are handled later.
+					if ( ( empty( $data->inputs ) || ! is_array( $data->inputs ) ) && 'email' !== $data->type ) {
+						return null;
+					}
+
+					$inputs = $data->inputs;
+
+					// Prime inputs for address and name fields.
+					if ( in_array( $data->type, [ 'address', 'name' ], true ) ) {
+						foreach ( $inputs as $input_index => $input ) {
+							// set isHidden to boolean.
+							$inputs[ $input_index ]['isHidden'] = ! empty( $inputs[ $input_index ]['isHidden'] );
+
+							$input_keys = 'address' === $data['type'] ? self::get_address_input_keys() : self::get_name_input_keys();
+
+							$inputs[ $input_index ]['key'] = $input_keys[ $input_index ];
+						}
+					} elseif ( 'email' === $data->type && empty( $data->emailConfirmEnabled ) ) {
+						// Prime inputs for email fields without confirmation.
+						$inputs = [
+							[
+								'autocompleteAttribute' => $data->autocompleteAttribute ?? null,
+								'defaultValue'          => $data->defaultValue ?? null,
+								'customLabel'           => $data->customLabel ?? null,
+								'id'                    => $data->id ?? null,
+								'label'                 => $data->label ?? null,
+								'name'                  => $data->inputName ?? null,
+								'placeholder'           => $data->placeholder ?? null,
+							],
+						];
+					}
+
+					$inputs = array_map(
+						static function ( $input ) use ( $data ) {
+							$input['graphql_type'] = FieldInputRegistry::get_type_name( $data );
+
+							return $input;
+						},
+						$inputs
+					);
+
+					return $inputs;
+				},
+			]
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Returns input keys for Address field.
+	 *
+	 * @return string[]
+	 */
+	private static function get_address_input_keys(): array {
+		return [
+			'street',
+			'lineTwo',
+			'city',
+			'state',
+			'zip',
+			'country',
+		];
+	}
+
+	/**
+	 * Returns input keys for Name field.
+	 *
+	 * @return string[]
+	 */
+	private static function get_name_input_keys(): array {
+		return [
+			'prefix',
+			'first',
+			'middle',
+			'last',
+			'suffix',
+		];
+	}
+}

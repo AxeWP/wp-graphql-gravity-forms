@@ -88,7 +88,7 @@ Entries that include [Pricing Fields](https://docs.gravityforms.com/category/use
         name
         price
         options {
-          connectedFormField{
+          connectedFormField {
             ... on OptionCheckboxField {
               databaseId
             }

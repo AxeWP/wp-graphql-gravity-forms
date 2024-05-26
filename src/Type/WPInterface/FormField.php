@@ -62,14 +62,12 @@ class FormField extends AbstractInterface {
 				'resolve'     => static fn ( $source ): bool => ! empty( $source->displayOnly ),
 			],
 			'id'                         => [
-				'type'              => [ 'non_null' => 'Int' ],
-				'description'       => __( 'Field database ID.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'This field will be changing to return a Global ID in a future release. Future-proof your code and use databaseId instead.', 'wp-graphql-gravity-forms' ),
+				'type'        => [ 'non_null' => 'ID' ],
+				'description' => __( 'Global ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'databaseId'                 => [
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'Field database ID.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source ): int => absint( $source->id ),
 			],
 			'inputType'                  => [
 				'type'        => FormFieldTypeEnum::$type,

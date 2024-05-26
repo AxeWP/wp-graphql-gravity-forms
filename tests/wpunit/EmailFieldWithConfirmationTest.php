@@ -1,6 +1,6 @@
 <?php
 /**
- * Test Email type.
+ * Test EmailField type with confirmation.
  *
  * @package Tests\WPGraphQL\GF
  */
@@ -9,9 +9,9 @@ use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 
 /**
- * Class -EmailFieldTest.
+ * Class -EmailFieldWithConfirmationTest.
  */
-class EmailFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+class EmailFieldWithConfirmationTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -30,14 +30,14 @@ class EmailFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 	 * Tests submitting the field values as an entry with submitGfForm.
 	 */
 	public function testSubmitForm(): void {
-		$this->runTestSubmitForm();
+		$this->runtestSubmitForm();
 	}
 
 	/**
 	 * Tests updating the field value with updateGfEntry.
 	 */
 	public function testUpdateEntry(): void {
-		$this->runTestUpdateEntry();
+		$this->runtestUpdateEntry();
 	}
 
 	/**
@@ -58,28 +58,33 @@ class EmailFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
 	public function generate_fields(): array {
-		$field = $this->factory->field->create(
+		$field = 	$this->factory->field->create( 
 			array_merge(
 				$this->property_helper->values,
-				[
-					'autocompleteAttribute',
-					'customLabel',
-				],
+				[ 'emailConfirmEnabled' => true ],
 			)
 		);
 
-		// Mimic the Form Field model.
-		// $field->inputs = [
-		// 	[
-		// 		'autocompleteAttribute' => $field->autocompleteAttribute ?? null,
-		// 		'defaultValue'          => $field->defaultValue ?? null,
-		// 		'customLabel'           => $field->customLabel ?? null,
-		// 		'id'                    => $field->id ?? null,
-		// 		'label'                 => $field->label ?? null,
-		// 		'name'                  => $field->inputName ?? null,
-		// 		'placeholder'           => $field->placeholder ?? null,
-		// 	]
-		// ];
+		$field->inputs = [
+			[
+				'autocompleteAttribute' => 'email',
+				'customLabel'           => 'enter email',
+				'defaultValue'          => 'user@someemail.com',
+				'id'                    => 1,
+				'label'                 => 'Enter Email',
+				'name'                  => null,
+				'placeholder'           => 'place',
+			],
+			[
+				'autocompleteAttribute' => 'email',
+				'customLabel'           => 'confirm email',
+				'defaultValue'          => 'user@someemail.com',
+				'id'                    => '1.2',
+				'label'                 => 'Confirm Email',
+				'name'                  => null,
+				'placeholder'           => 'holder',
+			],
+		];
 
 		return [ $field ];
 	}

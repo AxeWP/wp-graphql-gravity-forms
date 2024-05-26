@@ -31,6 +31,7 @@ class ValueProperty extends FieldValues {
 					if ( ! self::is_field_and_entry( $source, $context ) ) {
 						return null;
 					}
+
 					return array_map(
 						static function ( $input ) use ( $context ) {
 							return $context->gfEntry->entry[ $input['id'] ] ?: null;

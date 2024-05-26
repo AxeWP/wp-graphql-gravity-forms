@@ -15,6 +15,7 @@ use GFCommon;
 use GF_Field;
 use GF_Field_FileUpload;
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Model\FormField;
 use WPGraphQL\GF\Registry\FieldChoiceRegistry;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
@@ -39,7 +40,7 @@ class FieldValues {
 						return null;
 					}
 
-					return $source->get_value_export( $context->gfEntry->entry, $source->id ) ?: null;
+					return $source->gfField->get_value_export( $context->gfEntry->entry, $source->databaseId ) ?: null;
 				},
 			],
 		];
@@ -90,7 +91,7 @@ class FieldValues {
 
 					// Category choices aren't saved to the field by default.
 					if ( 'post_category' === $source->type ) {
-						GFCommon::add_categories_as_choices( $source, '' );
+						GFCommon::add_categories_as_choices( $source->gfField, '' );
 					}
 
 					$field_input_ids = wp_list_pluck( $source->inputs, 'id' );
@@ -106,8 +107,8 @@ class FieldValues {
 							'inputId'         => $input_id,
 							'value'           => $value,
 							'text'            => $text,
-							'connectedInput'  => self::prepare_connected_input( $source, $input_key ),
-							'connectedChoice' => self::prepare_connected_choice( $source, $input_key ),
+							'connectedInput'  => self::prepare_connected_input( $source->gfField, $input_key ),
+							'connectedChoice' => self::prepare_connected_choice( $source->gfField, $input_key ),
 						];
 					}
 
@@ -154,7 +155,7 @@ class FieldValues {
 						return null;
 					}
 
-					return self::get_file_upload_extra_entry_metadata( $source, $context->gfEntry->entry, $context->gfForm->form ) ?: null;
+					return self::get_file_upload_extra_entry_metadata( $source->gfField, $context->gfEntry->entry, $context->gfForm->form ) ?: null;
 				},
 			],
 		];
@@ -175,7 +176,7 @@ class FieldValues {
 						return null;
 					}
 
-					$image_data = array_pad( explode( '|:|', $context->gfEntry->entry[ $source->id ] ), 5, false );
+					$image_data = array_pad( explode( '|:|', $context->gfEntry->entry[ $source->databaseId ] ), 5, false );
 
 					$values_to_return = [
 						'altText'     => $image_data[4] ?: null,
@@ -194,9 +195,9 @@ class FieldValues {
 
 					// Draft entries don't upload files.
 					if ( ! $context->gfEntry->isDraft ) {
-						$entry                = $context->gfEntry->entry;
-						$entry[ $source->id ] = $image_data[0];
-						$file_values          = self::get_file_upload_extra_entry_metadata( $source, $entry, $context->gfForm->form );
+						$entry                        = $context->gfEntry->entry;
+						$entry[ $source->databaseId ] = $image_data[0];
+						$file_values                  = self::get_file_upload_extra_entry_metadata( $source->gfField, $entry, $context->gfForm->form );
 						// Add the file values if they exist.
 						$values_to_return = array_merge( $file_values[ $image_data[0] ] ?? [], $values_to_return );
 					}
@@ -222,13 +223,13 @@ class FieldValues {
 						return null;
 					}
 
-					$values = $context->gfEntry->entry[ $source->id ] ?: null;
+					$values = $context->gfEntry->entry[ $source->databaseId ] ?: null;
 
 					if ( empty( $values ) ) {
 						return null;
 					}
 
-					$values = is_string( $values ) ? maybe_unserialize( $values ) : $source->create_list_array_recursive( $values );
+					$values = is_string( $values ) ? maybe_unserialize( $values ) : $source->gfField->create_list_array_recursive( $values );
 					// If columns are enabled, save each row-value pair.
 					if ( $source->enableColumns ) {
 						// Save each row-value pair.
@@ -309,21 +310,21 @@ class FieldValues {
 					$quantity     = null;
 
 					switch ( true ) {
-						case $source instanceof \GF_Field_SingleProduct:
-						case $source instanceof \GF_Field_HiddenProduct:
-							$product_name = isset( $context->gfEntry->entry[ $source->id . '.1' ] ) ? trim( (string) $context->gfEntry->entry[ $source->id . '.1' ] ) : '';
-							$price        = isset( $context->gfEntry->entry[ $source->id . '.2' ] ) ? trim( (string) $context->gfEntry->entry[ $source->id . '.2' ] ) : '';
-							$quantity     = isset( $context->gfEntry->entry[ $source->id . '.3' ] ) ? trim( (string) $context->gfEntry->entry[ $source->id . '.3' ] ) : '';
+						case $source->gfField instanceof \GF_Field_SingleProduct:
+						case $source->gfField instanceof \GF_Field_HiddenProduct:
+							$product_name = isset( $context->gfEntry->entry[ $source->databaseId . '.1' ] ) ? trim( (string) $context->gfEntry->entry[ $source->databaseId . '.1' ] ) : '';
+							$price        = isset( $context->gfEntry->entry[ $source->databaseId . '.2' ] ) ? trim( (string) $context->gfEntry->entry[ $source->databaseId . '.2' ] ) : '';
+							$quantity     = isset( $context->gfEntry->entry[ $source->databaseId . '.3' ] ) ? trim( (string) $context->gfEntry->entry[ $source->databaseId . '.3' ] ) : '';
 							break;
-						case $source instanceof \GF_Field_Calculation:
-							$product_name = isset( $context->gfEntry->entry[ $source->id . '.1' ] ) ? trim( (string) $context->gfEntry->entry[ $source->id . '.1' ] ) : '';
+						case $source->gfField instanceof \GF_Field_Calculation:
+							$product_name = isset( $context->gfEntry->entry[ $source->databaseId . '.1' ] ) ? trim( (string) $context->gfEntry->entry[ $source->databaseId . '.1' ] ) : '';
 							$price        = GFCommon::calculate( $source, $context->gfForm->form, $context->gfEntry->entry );
-							$quantity     = isset( $context->gfEntry->entry[ $source->id . '.3' ] ) ? trim( (string) $context->gfEntry->entry[ $source->id . '.3' ] ) : '';
+							$quantity     = isset( $context->gfEntry->entry[ $source->databaseId . '.3' ] ) ? trim( (string) $context->gfEntry->entry[ $source->databaseId . '.3' ] ) : '';
 							break;
 
-						case $source instanceof \GF_Field_Select:
-						case $source instanceof \GF_Field_Radio:
-							$value = explode( '|', $context->gfEntry->entry[ $source->id ] ?? '' );
+						case $source->gfField instanceof \GF_Field_Select:
+						case $source->gfField instanceof \GF_Field_Radio:
+							$value = explode( '|', $context->gfEntry->entry[ $source->databaseId ] ?? '' );
 
 							$choice_key = array_search( $value[0], array_column( $source->choices, 'value' ), true );
 
@@ -331,9 +332,9 @@ class FieldValues {
 							$price        = $source->choices[ $choice_key ]['price'] ?? null;
 							break;
 
-						case $source instanceof \GF_Field_Price:
+						case $source->gfField instanceof \GF_Field_Price:
 							$product_name = $source->label ?? '';
-							$price        = trim( $context->gfEntry->entry[ $source->id ] ?? '' );
+							$price        = trim( $context->gfEntry->entry[ $source->databaseId ] ?? '' );
 					}
 
 					// Get quantity from quantity field.
@@ -341,7 +342,7 @@ class FieldValues {
 						$quantity_fields = GFAPI::get_fields_by_type( $context->gfForm->form, 'quantity' );
 
 						foreach ( $quantity_fields as $field ) {
-							if ( ! isset( $field->productField ) || (int) $field->productField !== $source->id ) {
+							if ( ! isset( $field->productField ) || (int) $field->productField !== $source->databaseId ) {
 								continue;
 							}
 
@@ -376,7 +377,7 @@ class FieldValues {
 						return null;
 					}
 
-					$display_value = $context->gfEntry->entry[ $source->id ];
+					$display_value = $context->gfEntry->entry[ $source->databaseId ];
 
 					$parts_by_colon = explode( ':', $display_value );
 					$parts_by_space = explode( ' ', $parts_by_colon[1] ?? '' );
@@ -411,14 +412,14 @@ class FieldValues {
 						return null;
 					}
 
-					$values = ! empty( $context->gfEntry->entry[ $source->id ] ) ? $context->gfEntry->entry[ $source->id ] : null;
+					$values = ! empty( $context->gfEntry->entry[ $source->databaseId ] ) ? $context->gfEntry->entry[ $source->databaseId ] : null;
 
 					if ( null === $values ) {
 						return $values;
 					}
 
 					if ( 'multiselect' === $source->inputType ) {
-						$values = $source->to_array( $values );
+						$values = $source->gfField->to_array( $values );
 					}
 
 					$values = Utils::maybe_decode_json( $values );
@@ -441,7 +442,7 @@ class FieldValues {
 	 * @param \WPGraphQL\AppContext $context .
 	 */
 	protected static function is_field_and_entry( $source, AppContext $context ): bool {
-		return $source instanceof GF_Field
+		return $source instanceof FormField
 			&& isset( $context->gfEntry )
 			&& isset( $context->gfEntry->entry );
 	}

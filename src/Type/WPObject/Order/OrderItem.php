@@ -11,6 +11,7 @@ declare( strict_types = 1 );
 namespace WPGraphQL\GF\Type\WPObject\Order;
 
 use WPGraphQL\AppContext;
+use WPGraphQL\GF\Model\FormField as FormFieldModel;
 use WPGraphQL\GF\Type\Enum\CurrencyEnum;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
@@ -109,7 +110,9 @@ class OrderItem extends AbstractObject {
 				'type'        => FormField::$type,
 				'description' => __( 'The form field that the order item is connected to', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					return GFUtils::get_field_by_id( $context->gfForm->form, $source['id'] );
+					$field = GFUtils::get_field_by_id( $context->gfForm->form, $source['id'] );
+
+					return new FormFieldModel( $field, $context->gfForm->form );
 				},
 			],
 		];
