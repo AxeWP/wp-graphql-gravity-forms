@@ -14,6 +14,7 @@ declare( strict_types = 1 );
 namespace WPGraphQL\GF\Type\WPInterface;
 
 use GraphQL\Error\UserError;
+use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
 use WPGraphQL\GF\Type\Enum\FormFieldVisibilityEnum;
 use WPGraphQL\GF\Type\WPInterface\AbstractInterface;
@@ -23,7 +24,7 @@ use WPGraphQL\Registry\TypeRegistry;
 /**
  * Class - FormField
  */
-class FormField extends AbstractInterface {
+class FormField extends AbstractInterface implements TypeWithInterfaces {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -37,11 +38,22 @@ class FormField extends AbstractInterface {
 	public static function get_type_config( ?TypeRegistry $type_registry = null ): array {
 		$config = parent::get_type_config( $type_registry );
 
+		$config['interfaces'] = static::get_interfaces();
+
 		if ( null !== $type_registry ) {
 			$config['resolveType'] = static::resolve_type( $type_registry );
 		}
 
 		return $config;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_interfaces(): array {
+		return [
+			'Node',
+		];
 	}
 
 	/**
@@ -62,14 +74,12 @@ class FormField extends AbstractInterface {
 				'resolve'     => static fn ( $source ): bool => ! empty( $source->displayOnly ),
 			],
 			'id'                         => [
-				'type'              => [ 'non_null' => 'Int' ],
-				'description'       => __( 'Field database ID.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'This field will be changing to return a Global ID in a future release. Future-proof your code and use databaseId instead.', 'wp-graphql-gravity-forms' ),
+				'type'        => [ 'non_null' => 'ID' ],
+				'description' => __( 'Global ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'databaseId'                 => [
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => __( 'Field database ID.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $source ): int => absint( $source->id ),
 			],
 			'inputType'                  => [
 				'type'        => FormFieldTypeEnum::$type,

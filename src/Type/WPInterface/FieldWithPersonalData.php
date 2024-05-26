@@ -10,7 +10,6 @@ declare( strict_types = 1 );
 
 namespace WPGraphQL\GF\Type\WPInterface;
 
-use GF_Field;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Type\WPObject\FormField\FormFieldDataPolicy;
 
@@ -40,14 +39,14 @@ class FieldWithPersonalData extends AbstractInterface {
 			'personalData' => [
 				'type'        => FormFieldDataPolicy::$type,
 				'description' => __( 'The form field-specifc policies for exporting and erasing personal data.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( GF_Field $source, array $args, AppContext $context ) {
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( empty( $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] ) ) {
 						return null;
 					}
 
 					return [
-						'id'                    => $source->id ?? null,
-						'isIdentificationField' => isset( $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] ) && $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] === $source->id,
+						'id'                    => $source->databaseId ?? null,
+						'isIdentificationField' => isset( $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] ) && $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] === $source->databaseId,
 						'shouldErase'           => ! empty( $source->personalDataErase ),
 						'shouldExport'          => ! empty( $source->personalDataExport ),
 					];

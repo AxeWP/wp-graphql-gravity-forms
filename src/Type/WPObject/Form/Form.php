@@ -17,7 +17,6 @@ use WPGraphQL\AppContext;
 use WPGraphQL\GF\Connection\EntriesConnection;
 use WPGraphQL\GF\Connection\FormFieldsConnection;
 use WPGraphQL\GF\Data\Connection\EntriesConnectionResolver;
-use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
 use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Interfaces\TypeWithConnections;
@@ -120,7 +119,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 						return null;
 					}
 
-					return FormFieldsConnectionResolver::resolve( $source->formFields, $args, $context, $info );
+					return Factory::resolve_form_fields_connection( $source, $args, $context, $info );
 				},
 			],
 		];

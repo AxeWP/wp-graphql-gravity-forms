@@ -10,6 +10,7 @@ use Helper\GFHelpers\GFHelpers;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
+use WPGraphQL\GF\Data\Loader\FormFieldsLoader;
 use WPGraphQL\GF\Type\Enum;
 
 /**
@@ -280,7 +281,7 @@ class EntryQueriesTest extends GFGraphQLTestCase {
 							$this->expectedNode(
 								'nodes',
 								[
-									$this->expectedField( 'id', (int) $form['fields'][0]['id'] ),
+									$this->expectedField( 'id', Relay::toGlobalId( FormFieldsLoader::$name, (string) $form['id'] . ':' . (string) $form['fields'][0]['id'] ) ),
 									$this->expectedField( 'databaseId', (int) $form['fields'][0]['id'] ),
 								]
 							),

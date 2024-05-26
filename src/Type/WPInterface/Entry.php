@@ -16,7 +16,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Connection\FormFieldsConnection;
-use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
+use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
@@ -102,7 +102,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 						return null;
 					}
 
-					return FormFieldsConnectionResolver::resolve( $context->gfForm->formFields, $args, $context, $info );
+					return Factory::resolve_form_fields_connection( $context->gfForm, $args, $context, $info );
 				},
 			],
 		];

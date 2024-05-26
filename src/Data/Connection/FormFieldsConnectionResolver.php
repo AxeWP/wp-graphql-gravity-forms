@@ -13,173 +13,171 @@ declare( strict_types = 1 );
 namespace WPGraphQL\GF\Data\Connection;
 
 use GraphQL\Type\Definition\ResolveInfo;
-use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
+use WPGraphQL\Data\Connection\AbstractConnectionResolver;
+use WPGraphQL\GF\Data\Loader\FormFieldsLoader;
+use WPGraphQL\GF\Model\Form;
+use WPGraphQL\GF\Model\FormField;
 
 /**
  * Class - FormFieldsConnectionResolver
+ *
+ * @extends \WPGraphQL\Data\Connection\AbstractConnectionResolver<array<int,\GF_Field>>
  */
-class FormFieldsConnectionResolver {
+class FormFieldsConnectionResolver extends AbstractConnectionResolver {
 	/**
-	 * @var array<string,null>
+	 * The form model.
+	 *
+	 * @var \WPGraphQL\GF\Model\Form
 	 */
-	private const EMPTY_CHOICES = [
-		'text'       => null,
-		'value'      => null,
-		'isSelected' => null,
-		'price'      => null,
-	];
+	protected Form $form;
 
 	/**
-	 * Coerces form fields into a format GraphQL can understand.
+	 * The unmodified array of Form Fields.
 	 *
-	 * Instead of a Model.
-	 *
-	 * @param \GF_Field[] $data array of form fields.
-	 *
-	 * @return \GF_Field[]
+	 * @var array<int,\GF_Field>
 	 */
-	public static function prepare_data( array $data ): array {
-		foreach ( $data as &$field ) {
-			// Set layoutGridColumnSpan to int.
-			$field->layoutGridColumnSpan = empty( $field->layoutGridColumnSpan ) ? null : (int) $field->layoutGridColumnSpan;
+	protected array $form_fields;
 
-			// Set empty values to null.
-			foreach ( get_object_vars( $field ) as $key => $value ) {
-				if ( '' !== $value ) {
-					continue;
-				}
+	/**
+	 * {@inheritDoc}
+	 */
+	public function __construct( $source, array $args, AppContext $context, ResolveInfo $info ) {
+		$this->form        = $context->gfForm;
+		$this->form_fields = ! empty( $source->formFields ) ? $source->formFields : [];
 
-				$field->$key = null;
-			}
-
-			if ( in_array( $field->type, [ 'address', 'name' ], true ) ) {
-				foreach ( $field->inputs as $input_index => $input ) {
-					// set isHidden to boolean.
-					$field->inputs[ $input_index ]['isHidden'] = ! empty( $field->inputs[ $input_index ]['isHidden'] );
-
-					$input_keys = 'address' === $field->type ? self::get_address_input_keys() : self::get_name_input_keys();
-
-					$field->inputs[ $input_index ]['key'] = $input_keys[ $input_index ];
-				}
-			}
-
-			// Set choices for single-column list fields, so we can use the same mutation for both.
-			if ( 'list' === $field->type && empty( $field['choices'] ) ) {
-				$field['choices'] = self::EMPTY_CHOICES;
-			}
-		}
-
-		return $data;
+		parent::__construct( $source, $args, $context, $info );
 	}
 
 	/**
-	 * The connection resolve method.
-	 *
-	 * @param mixed                                $source  The object the connection is coming from.
-	 * @param array<string,mixed>                  $args    Array of args to be passed down to the resolve method.
-	 * @param \WPGraphQL\AppContext                $context The AppContext object to be passed down.
-	 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo object.
-	 *
-	 * @return ?array<string,mixed>
+	 * {@inheritDoc}
 	 */
-	public static function resolve( $source, array $args, AppContext $context, ResolveInfo $info ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
-		if ( ! is_array( $source ) || empty( $source ) ) {
-			return null;
-		}
-
-		$fields = self::filter_form_fields_by_connection_args( $source, $args );
-
-		$fields = self::prepare_data( $fields );
-
-		$connection = Relay::connectionFromArray( $fields, $args );
-
-		$nodes = [];
-		if ( ! empty( $connection['edges'] ) && is_array( $connection['edges'] ) ) {
-			foreach ( $connection['edges'] as $edge ) {
-				$nodes[] = empty( $edge['node'] ) ? null : $edge['node'];
-			}
-		}
-
-		$connection['nodes'] = empty( $nodes ) ? null : $nodes;
-
-		return $connection;
+	protected function loader_name(): string {
+		return FormFieldsLoader::$name;
 	}
 
 	/**
-	 * Returns input keys for Address field.
-	 *
-	 * @return string[]
+	 * {@inheritDoc}
 	 */
-	private static function get_address_input_keys(): array {
-		return [
-			'street',
-			'lineTwo',
-			'city',
-			'state',
-			'zip',
-			'country',
-		];
+	public function is_valid_offset( $offset ) {
+		foreach ( $this->form_fields as $field ) {
+			if ( $field->id === $offset ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
-	 * Returns input keys for Name field.
-	 *
-	 * @return string[]
+	 * {@inheritDoc}
 	 */
-	private static function get_name_input_keys(): array {
-		return [
-			'prefix',
-			'first',
-			'middle',
-			'last',
-			'suffix',
-		];
+	public function get_ids_from_query() {
+		$queried = $this->get_query() ?: [];
+
+		if ( empty( $queried ) ) {
+			return [];
+		}
+
+		$ids = [];
+		foreach ( $queried as $item ) {
+			$ids[ $item->id ] = $item->id;
+		}
+
+		return $ids;
 	}
 
-		/**
-		 * Filters the form fields by the connection's where args.
-		 *
-		 * @param \GF_Field[]         $fields .
-		 * @param array<string,mixed> $args .
-		 *
-		 * @return \GF_Field[]
-		 */
-	private static function filter_form_fields_by_connection_args( $fields, $args ): array {
-		if ( isset( $args['where']['ids'] ) ) {
-			if ( ! is_array( $args['where']['ids'] ) ) {
-				$args['where']['ids'] = [ $args['where']['ids'] ];
-			}
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function prepare_args( array $args ): array {
+		// Ensure that the ids are an array.
+		if ( isset( $args['where']['ids'] ) && ! is_array( $args['where']['ids'] ) ) {
+			$args['where']['ids'] = [ $args['where']['ids'] ];
 
-			$ids = array_map( 'absint', $args['where']['ids'] );
-
-			$fields = array_filter( $fields, static fn ( $field ) => in_array( (int) $field['id'], $ids, true ) );
+			// Sanitize the IDs.
+			$args['where']['ids'] = array_map( 'absint', $args['where']['ids'] );
 		}
 
-		if ( isset( $args['where']['adminLabels'] ) ) {
-			if ( ! is_array( $args['where']['adminLabels'] ) ) {
-				$args['where']['adminLabels'] = [ $args['where']['adminLabels'] ];
-			}
+		// Ensure that Admin labels are an array.
+		if ( isset( $args['where']['adminLabels'] ) && ! is_array( $args['where']['adminLabels'] ) ) {
+			$args['where']['adminLabels'] = [ $args['where']['adminLabels'] ];
 
-			$admin_labels = array_map( 'sanitize_text_field', $args['where']['adminLabels'] );
-
-			$fields = array_filter( $fields, static fn ( $field ) => in_array( $field['adminLabel'], $admin_labels, true ) );
+			// Sanitize the Admin labels.
+			$args['where']['adminLabels'] = array_map( 'sanitize_text_field', $args['where']['adminLabels'] );
 		}
 
-		if ( isset( $args['where']['fieldTypes'] ) ) {
-			if ( ! is_array( $args['where']['fieldTypes'] ) ) {
-				$args['where']['fieldTypes'] = [ $args['where']['fieldTypes'] ];
-			}
+		// Ensure that Field types are an array.
+		if ( isset( $args['where']['fieldTypes'] ) && ! is_array( $args['where']['fieldTypes'] ) ) {
+			$args['where']['fieldTypes'] = [ $args['where']['fieldTypes'] ];
 
-			$fields = array_filter( $fields, static fn ( $field ) => in_array( $field['type'], $args['where']['fieldTypes'], true ) );
+			// Sanitize the Field types.
+			$args['where']['fieldTypes'] = array_map( 'sanitize_text_field', $args['where']['fieldTypes'] );
 		}
 
+		// Ensure that Page number is an integer.
 		if ( isset( $args['where']['pageNumber'] ) ) {
-			$page = absint( $args['where']['pageNumber'] );
+			$args['where']['pageNumber'] = absint( $args['where']['pageNumber'] );
+		}
 
-			$fields = array_filter( $fields, static fn ( $field ) => $page === (int) $field->pageNumber );
+		return $args;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function prepare_query_args( array $args ): array {
+		return [
+			'ids'         => $args['where']['ids'] ?? null,
+			'adminLabels' => $args['where']['adminLabels'] ?? null,
+			'fieldTypes'  => $args['where']['fieldTypes'] ?? null,
+			'pageNumber'  => $args['where']['pageNumber'] ?? null,
+		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function query( array $query_args ): array {
+		$fields = $this->form_fields;
+
+		// Filter by IDs.
+		if ( ! empty( $query_args['ids'] ) ) {
+			$fields = array_filter( $fields, static fn ( $field ) => in_array( (int) $field['id'], $query_args['ids'], true ) );
+		}
+
+		// Filter by Admin labels.
+		if ( ! empty( $query_args['adminLabels'] ) ) {
+			$fields = array_filter( $fields, static fn ( $field ) => in_array( $field['adminLabel'], $query_args['adminLabels'], true ) );
+		}
+
+		// Filter by Field types.
+		if ( ! empty( $query_args['fieldTypes'] ) ) {
+			$fields = array_filter( $fields, static fn ( $field ) => in_array( $field['type'], $query_args['fieldTypes'], true ) );
+		}
+
+		// Filter by Page number.
+		if ( ! empty( $query_args['pageNumber'] ) ) {
+			$fields = array_filter( $fields, static fn ( $field ) => $query_args['pageNumber'] === (int) $field['pageNumber'] );
 		}
 
 		return $fields;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function is_valid_model( $model ) {
+		return $model instanceof FormField;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_node_by_id( $id ) {
+		// The id needs to include the form.
+		$id_for_loader = (string) $this->form->databaseId . ':' . (string) $id;
+
+		return parent::get_node_by_id( $id_for_loader );
 	}
 }

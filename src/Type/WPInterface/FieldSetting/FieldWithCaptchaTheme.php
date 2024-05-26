@@ -38,7 +38,7 @@ class FieldWithCaptchaTheme extends AbstractFieldSetting {
 			'captchaTheme' => [
 				'type'        => CaptchaFieldThemeEnum::$type,
 				'description' => __( 'Determines the theme to be used for the reCAPTCHA field. Only applicable to the recaptcha captcha type.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static fn ( $root ) => $root['captchaTheme'] ?: null,
+				'resolve'     => static fn ( $source ) => ! empty( $source->captchaTheme ) ? $source->captchaTheme : null,
 			],
 		];
 	}

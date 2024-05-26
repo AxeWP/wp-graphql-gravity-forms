@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf35655797d6bdd77951f2274b8dc4a3f
+class ComposerStaticInit15520cc730459b54805c9b10144520df
 {
     public static $files = array (
         'd05ecc14ff93fd612a81ec7e8ab4c2c9' => __DIR__ . '/..' . '/yahnis-elsts/plugin-update-checker/load-v5p4.php',
@@ -51,6 +51,7 @@ class ComposerStaticInitf35655797d6bdd77951f2274b8dc4a3f
         'WPGraphQL\\GF\\Data\\FieldValueInput\\ValuesInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/ValuesInput.php',
         'WPGraphQL\\GF\\Data\\Loader\\DraftEntriesLoader' => __DIR__ . '/../..' . '/src/Data/Loader/DraftEntriesLoader.php',
         'WPGraphQL\\GF\\Data\\Loader\\EntriesLoader' => __DIR__ . '/../..' . '/src/Data/Loader/EntriesLoader.php',
+        'WPGraphQL\\GF\\Data\\Loader\\FormFieldsLoader' => __DIR__ . '/../..' . '/src/Data/Loader/FormFieldsLoader.php',
         'WPGraphQL\\GF\\Data\\Loader\\FormsLoader' => __DIR__ . '/../..' . '/src/Data/Loader/FormsLoader.php',
         'WPGraphQL\\GF\\Extensions\\Extensions' => __DIR__ . '/../..' . '/src/Extensions/Extensions.php',
         'WPGraphQL\\GF\\Extensions\\GFChainedSelects\\Data\\FieldValueInput\\ChainedSelectValuesInput' => __DIR__ . '/../..' . '/src/Extensions/GFChainedSelects/Data/FieldValueInput/ChainedSelectValuesInput.php',
@@ -107,6 +108,7 @@ class ComposerStaticInitf35655797d6bdd77951f2274b8dc4a3f
         'WPGraphQL\\GF\\Interfaces\\TypeWithInterfaces' => __DIR__ . '/../..' . '/src/Interfaces/TypeWithInterfaces.php',
         'WPGraphQL\\GF\\Model\\DraftEntry' => __DIR__ . '/../..' . '/src/Model/DraftEntry.php',
         'WPGraphQL\\GF\\Model\\Form' => __DIR__ . '/../..' . '/src/Model/Form.php',
+        'WPGraphQL\\GF\\Model\\FormField' => __DIR__ . '/../..' . '/src/Model/FormField.php',
         'WPGraphQL\\GF\\Model\\SubmittedEntry' => __DIR__ . '/../..' . '/src/Model/SubmittedEntry.php',
         'WPGraphQL\\GF\\Mutation\\AbstractMutation' => __DIR__ . '/../..' . '/src/Mutation/AbstractMutation.php',
         'WPGraphQL\\GF\\Mutation\\DeleteDraftEntry' => __DIR__ . '/../..' . '/src/Mutation/DeleteDraftEntry.php',
@@ -333,9 +335,9 @@ class ComposerStaticInitf35655797d6bdd77951f2274b8dc4a3f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf35655797d6bdd77951f2274b8dc4a3f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf35655797d6bdd77951f2274b8dc4a3f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitf35655797d6bdd77951f2274b8dc4a3f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit15520cc730459b54805c9b10144520df::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit15520cc730459b54805c9b10144520df::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit15520cc730459b54805c9b10144520df::$classMap;
 
         }, null, ClassLoader::class);
     }

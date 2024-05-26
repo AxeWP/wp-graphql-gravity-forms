@@ -16,9 +16,11 @@ use GraphQL\Deferred;
 use GraphQL\Type\Definition\ResolveInfo;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Connection\EntriesConnectionResolver;
+use WPGraphQL\GF\Data\Connection\FormFieldsConnectionResolver;
 use WPGraphQL\GF\Data\Connection\FormsConnectionResolver;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Data\Loader\EntriesLoader;
+use WPGraphQL\GF\Data\Loader\FormFieldsLoader;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Model;
 
@@ -38,6 +40,7 @@ class Factory {
 		$loaders[ DraftEntriesLoader::$name ] = new DraftEntriesLoader( $context );
 		$loaders[ EntriesLoader::$name ]      = new EntriesLoader( $context );
 		$loaders[ FormsLoader::$name ]        = new FormsLoader( $context );
+		$loaders[ FormFieldsLoader::$name ]   = new FormFieldsLoader( $context );
 
 		return $loaders;
 	}
@@ -107,6 +110,22 @@ class Factory {
 	 */
 	public static function resolve_forms_connection( $source, array $args, AppContext $context, ResolveInfo $info ) {
 		$resolver = new FormsConnectionResolver( $source, $args, $context, $info );
+
+		return $resolver->get_connection();
+	}
+
+	/**
+	 * Wrapper for the FormFieldsConnectionResolver::resolve method.
+	 *
+	 * @param mixed                                $source The form model.
+	 * @param array<string,mixed>                  $args Array of args to be passed down to the resolve method.
+	 * @param \WPGraphQL\AppContext                $context The AppContext object to be passed down.
+	 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo object.
+	 *
+	 * @return \GraphQL\Deferred
+	 */
+	public static function resolve_form_fields_connection( $source, array $args, AppContext $context, ResolveInfo $info ) {
+		$resolver = new FormFieldsConnectionResolver( $source, $args, $context, $info );
 
 		return $resolver->get_connection();
 	}

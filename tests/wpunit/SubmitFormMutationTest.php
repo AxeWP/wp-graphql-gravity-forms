@@ -792,6 +792,7 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 							currency
 							items{
 								connectedFormField {
+									type
 									databaseId
 								}
 								currency

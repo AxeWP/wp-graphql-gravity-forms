@@ -355,28 +355,6 @@ class Wpunit extends \Codeception\Module {
 			'enableAutocomplete',
 			'enableEnhancedUI',
 			'errorMessage',
-			[
-				'inputs' => [
-					[
-						'autocompleteAttribute' => 'email',
-						'customLabel'           => 'enter email',
-						'defaultValue'          => 'user@someemail.com',
-						'id'                    => 1,
-						'label'                 => 'Enter Email',
-						'name'                  => null,
-						'placeholder'           => 'place',
-					],
-					[
-						'autocompleteAttribute' => 'email',
-						'customLabel'           => 'confirm email',
-						'defaultValue'          => 'user@someemail.com',
-						'id'                    => '1.2',
-						'label'                 => 'Confirm Email',
-						'name'                  => null,
-						'placeholder'           => 'holder',
-					],
-				],
-			],
 			'inputName',
 			'isRequired',
 			'label',

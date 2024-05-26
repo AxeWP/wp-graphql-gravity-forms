@@ -24,14 +24,13 @@ trait ExpectedFormFields {
 
 		$properties[] = $this->expectedField( 'defaultCountry', ! empty( $field->defaultCountry ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldCountryEnum::$type, $field->defaultCountry ) : self::IS_NULL );
 		$properties[] = $this->expectedField( 'defaultProvince', ! empty( $field->defaultProvince ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldProvinceEnum::$type, $field->defaultProvince ) : self::IS_NULL );
-		$properties[] = $this->expectedField( 'defaultState', ! empty( $field->defaultState ) ? GFHelpers::get_enum_for_value( Enum\AddressFielStateeEnum::$type, $field->defaultState ) : self::IS_NULL );
+		$properties[] = $this->expectedField( 'defaultState', ! empty( $field->defaultState ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldStateEnum::$type, $field->defaultState ) : self::IS_NULL );
 
 		$input_keys = [
 			'autocompleteAttribute' => 'autocompleteAttribute',
 			'customLabel'           => 'customLabel',
 			'defaultValue'          => 'defaultValue',
 			'isHidden'              => 'isHidden',
-			'key'                   => 'key',
 			'label'                 => 'label',
 			'name'                  => 'name',
 			'placeholder'           => 'placeholder',
@@ -39,6 +38,12 @@ trait ExpectedFormFields {
 		];
 
 		$properties[] = $this->expected_inputs( $input_keys, ! empty( $field->inputs ) ? $field->inputs : [] );
+		$properties[] = $this->expectedField( 'inputs.0.key', 'street' );
+		$properties[] = $this->expectedField( 'inputs.1.key', 'lineTwo' );
+		$properties[] = $this->expectedField( 'inputs.2.key', 'city' );
+		$properties[] = $this->expectedField( 'inputs.3.key', 'state' );
+		$properties[] = $this->expectedField( 'inputs.4.key', 'zip' );
+		$properties[] = $this->expectedField( 'inputs.5.key', 'country' );
 	}
 
 	public function admin_label_setting( GF_Field $field, array &$properties ): void {
@@ -262,7 +267,19 @@ trait ExpectedFormFields {
 			'placeholder'           => 'placeholder',
 		];
 
-		$properties[] = $this->expected_inputs( $keys, ! empty( $field->inputs ) ? $field->inputs : [] );
+		$inputs = $field->emailConfirmEnabled ? $field->inputs : [
+			[
+				'autocompleteAttribute' => $field->autocompleteAttribute ?? null,
+				'defaultValue'          => $field->defaultValue ?? null,
+				'customLabel'           => $field->customLabel ?? null,
+				'id'                    => $field->id ?? null,
+				'label'                 => $field->label ?? null,
+				'name'                  => $field->inputName ?? null,
+				'placeholder'           => $field->placeholder ?? null,
+			]
+		];
+
+		$properties[] = $this->expected_inputs( $keys, ! empty( $inputs ) ? $inputs : [] );
 	}
 
 	public function enable_enhanced_ui_setting( GF_Field $field, array &$properties ): void {

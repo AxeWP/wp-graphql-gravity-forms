@@ -10,9 +10,6 @@ declare( strict_types = 1 );
 
 namespace WPGraphQL\GF\Type\WPInterface;
 
-use WPGraphQL\AppContext;
-use WPGraphQL\GF\Registry\FieldChoiceRegistry;
-
 /**
  * Class - FieldWithChoices
  */
@@ -39,22 +36,6 @@ class FieldWithChoices extends AbstractInterface {
 			'choices' => [
 				'type'        => [ 'list_of' => FieldChoice::$type ],
 				'description' => __( 'The choices for the field.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					/** @var \GF_Field $source */
-					$context->gfField = $source;
-
-					return ! empty( $source->choices )
-						// Include GraphQL Type in resolver.
-						? array_map(
-							static function ( $choice ) use ( $source ) {
-								$choice['graphql_type'] = FieldChoiceRegistry::get_type_name( $source );
-
-								return $choice;
-							},
-							$source->choices
-						)
-						: null;
-				},
 			],
 		];
 	}

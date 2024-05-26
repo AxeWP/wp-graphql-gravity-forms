@@ -16,6 +16,9 @@ use WPGraphQL\Model\Model;
 
 /**
  * Class - Form
+ *
+ * @property array<string,mixed> $form The underlying form to be modeled.
+ * @property int                 $databaseId The database ID of the form.
  */
 class Form extends Model {
 	/**
