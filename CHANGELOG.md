@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- feat!: Implement `FormField` model and `DataLoader`, and refactor `FormFieldsConnectionResolver` to extend `AbstractConnectionResolver`.
 - feat!: Refactor `FormsConnectionResolver` and `EntriesConnectionResolver` for compatibility with WPGraphQL v1.26.0 improvements.
 - feat!: Narrow `FormField.choices` and `FormField.inputs` field types to their implementations.
 - chore!: Bump minimum WPGraphQL version to v1.26.0.
