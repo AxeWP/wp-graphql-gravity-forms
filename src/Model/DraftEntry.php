@@ -17,6 +17,27 @@ use WPGraphQL\Model\Model;
 
 /**
  * Class - DraftEntry
+ *
+ * @property ?int                     $createdByDatabaseId The database ID of the user who created the draft entry.
+ * @property ?string                  $createdById         The Global ID of the user who created the draft entry.
+ * @property ?string                  $dateCreated         The date the draft entry was created.
+ * @property ?string                  $dateCreatedGmt      The date the draft entry was created in GMT.
+ * @property ?string                  $dateUpdated         The date the draft entry was updated.
+ * @property ?string                  $dateUpdatedGmt      The date the draft entry was updated in GMT.
+ * @property array<int|string,mixed>  $entry               The underlying DraftEntry to be modeled.
+ * @property ?array<int|string,mixed> $entryValues         The values of the draft entry.
+ * @property ?string                  $formId              The Global ID of the form the draft entry belongs to.
+ * @property ?int                     $formDatabaseId      The database ID of the form the draft entry belongs to.
+ * @property string                   $id                  The Global ID of the draft entry.
+ * @property ?string                  $ip                  The IP address of the user who created the draft entry.
+ * @property bool                     $isDraft             Whether the entry is a draft.
+ * @property bool                     $isSubmitted         Whether the entry has been submitted.
+ * @property ?string                  $sourceUrl           The source URL of the draft entry.
+ * @property ?string                  $userAgent           The user agent of the user who created the draft entry.
+ *
+ * --- Fields specific to the model ---
+ * @property ?int                     $currency            The currency of the draft entry.
+ * @property string                   $resumeToken         The resume token of the draft entry.
  */
 class DraftEntry extends Model {
 	/**

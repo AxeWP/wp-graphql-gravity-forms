@@ -41,8 +41,14 @@ class FormFieldsConnectionResolver extends AbstractConnectionResolver {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws \Exception If the Form model is not set on the AppContext.
 	 */
 	public function __construct( $source, array $args, AppContext $context, ResolveInfo $info ) {
+		if ( ! isset( $context->gfForm ) ) {
+			throw new \Exception( 'The FormFieldsConnectionResolver requires a Form to be set on the AppContext.' );
+		}
+
 		$this->form        = $context->gfForm;
 		$this->form_fields = ! empty( $source->formFields ) ? $source->formFields : [];
 
@@ -176,7 +182,7 @@ class FormFieldsConnectionResolver extends AbstractConnectionResolver {
 	 */
 	public function get_node_by_id( $id ) {
 		// The id needs to include the form.
-		$id_for_loader = (string) $this->form->databaseId . ':' . (string) $id;
+		$id_for_loader = FormFieldsLoader::prepare_loader_id( $this->form->databaseId, (int) $id );
 
 		return parent::get_node_by_id( $id_for_loader );
 	}

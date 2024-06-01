@@ -140,6 +140,10 @@ class FormQuiz extends AbstractObject implements Field {
 				'type'        => 'Float',
 				'description' => __( 'The maximum score for this form.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ): ?float {
+					if ( ! isset( $context->gfForm ) ) {
+						return null;
+					}
+
 					return ( gf_quiz() )->get_max_score( $context->gfForm->form ) ?: null;
 				},
 			],

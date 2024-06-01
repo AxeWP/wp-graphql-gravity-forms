@@ -6,7 +6,6 @@ parameters:
 		checkExplicitMixedMissingReturn: true
 		checkFunctionNameCase: true
 		checkInternalClassCaseSensitivity: true
-		checkMissingIterableValueType: false # @todo make true
 		checkTooWideReturnTypesInProtectedAndPublicMethods: true
 		inferPrivatePropertyTypeFromConstructor: true
 		polluteScopeWithAlwaysIterableForeach: false
@@ -15,14 +14,12 @@ parameters:
 		reportStaticMethodSignatures: true
 		reportWrongPhpDocTypeInVarTag: true
 		treatPhpDocTypesAsCertain: false
-		featureToggles:
-			disableRuntimeReflectionProvider: true
 		dynamicConstantNames:
 			- WPGRAPHQL_GF_AUTOLOAD
 		stubFiles:
 			# Simulate added properties
-			- phpstan/class-app-context.stub
-			- phpstan/class-gf-quiz.stub
+			- phpstan/class-app-context.php
+			- phpstan/class-gf-quiz.php
 		bootstrapFiles:
 			- phpstan/constants.php
 			- wp-graphql-gravity-forms.php
@@ -38,4 +35,5 @@ parameters:
 			- ../wp-gatsby/
 			- ../wp-jamstack-deployments/
 		ignoreErrors:
+			- identifier: missingType.iterableValue
 			- '#^Function gf_apply_filters(_ref_array)? invoked with ([1-9]|1[0-2]) parameters, 2 required\.$#'

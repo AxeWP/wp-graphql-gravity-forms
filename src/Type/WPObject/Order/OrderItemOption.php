@@ -11,10 +11,9 @@ declare( strict_types = 1 );
 namespace WPGraphQL\GF\Type\WPObject\Order;
 
 use WPGraphQL\AppContext;
-use WPGraphQL\GF\Model\FormField as FormFieldModel;
+use WPGraphQL\GF\Data\Loader\FormFieldsLoader;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-use WPGraphQL\GF\Utils\GFUtils;
 
 /**
  * Class - OrderItemOption
@@ -43,9 +42,13 @@ class OrderItemOption extends AbstractObject {
 				'type'        => FormField::$type,
 				'description' => __( 'The form field that the order item is connected to', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$field = GFUtils::get_field_by_id( $context->gfForm->form, $source['id'] );
+					if ( ! isset( $context->gfForm ) || ! isset( $source['id'] ) ) {
+						return null;
+					}
 
-					return new FormFieldModel( $field, $source );
+					$id_for_loader = (string) $context->gfForm->databaseId . ':' . (string) $source['id'];
+
+					return $context->get_loader( FormFieldsLoader::$name )->load_deferred( $id_for_loader );
 				},
 			],
 			'fieldLabel'         => [
