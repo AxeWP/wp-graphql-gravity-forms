@@ -12,6 +12,7 @@ declare( strict_types = 1 );
 
 namespace WPGraphQL\GF\Data\Loader;
 
+use GraphQL\Deferred;
 use WPGraphQL;
 use WPGraphQL\Data\Loader\AbstractDataLoader;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
@@ -27,6 +28,54 @@ class FormFieldsLoader extends AbstractDataLoader {
 	 * @var string
 	 */
 	public static string $name = 'gf_form_field';
+
+	/**
+	 * Formatted ID for the DataLoader.
+	 *
+	 * @param int $form_id The ID of the form.
+	 * @param int $field_id The ID of the field.
+	 */
+	public static function prepare_loader_id( int $form_id, int $field_id ): string {
+		return "{$form_id}:{$field_id}";
+	}
+
+	/**
+	 * Parses the ID for the DataLoader.
+	 *
+	 * @param string $id The ID of the DataLoader.
+	 * @return ?array{form_id:int,field_id:int}
+	 */
+	public static function parse_loader_id( string $id ): ?array {
+		$exploded = explode( ':', $id );
+
+		if ( empty( $exploded ) || count( $exploded ) < 2 ) {
+			return null;
+		}
+
+		return [
+			'form_id'  => (int) $exploded[0],
+			'field_id' => (int) $exploded[1],
+		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function load_deferred( $id ) {
+		$id = sanitize_text_field( $id );
+
+		if ( empty( $id ) ) {
+			return null;
+		}
+
+		$this->buffer( [ $id ] );
+
+		return new Deferred(
+			function () use ( $id ) {
+				return $this->load( $id );
+			}
+		);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -54,27 +103,22 @@ class FormFieldsLoader extends AbstractDataLoader {
 				continue;
 			}
 
-			// The key consists of the {form_id}:{field_id}.
-			$key_parts = explode( ':', (string) $key );
+			$parsed_id = self::parse_loader_id( (string) $key );
 
-			// Bail if no key parts.
-			if ( empty( $key_parts ) || count( $key_parts ) < 2 ) {
+			if ( null === $parsed_id ) {
 				continue;
 			}
 
-			$form_id  = (int) $key_parts[0];
-			$field_id = (int) $key_parts[1];
-
 			// Get the form from the dataloader.
-			if ( ! isset( $loaded_forms[ $form_id ] ) ) {
+			if ( ! isset( $loaded_forms[ $parsed_id['form_id'] ] ) ) {
 				$app_context = WPGraphQL::get_app_context();
 
-				$form = $app_context->get_loader( FormsLoader::$name )->load( $key_parts[0] );
+				$form = $app_context->get_loader( FormsLoader::$name )->load( $parsed_id['form_id'] );
 
-				$loaded_forms[ $form_id ] = $form ?? null;
+				$loaded_forms[ $parsed_id['form_id'] ] = $form ?? null;
 			}
 
-			if ( empty( $loaded_forms[ $form_id ] ) ) {
+			if ( empty( $loaded_forms[ $parsed_id['form_id'] ] ) ) {
 				continue;
 			}
 
@@ -83,17 +127,17 @@ class FormFieldsLoader extends AbstractDataLoader {
 			 *
 			 * @var array<int,\GF_Field> $model_form_fields The form fields from the model.
 			 */
-			$model_form_fields = $loaded_forms[ $form_id ]->formFields;
+			$model_form_fields = $loaded_forms[ $parsed_id['form_id'] ]->formFields;
 
 			if ( empty( $model_form_fields ) ) {
-				$loaded_fields[ $field_id ] = null;
+				$loaded_fields[ $parsed_id['field_id'] ] = null;
 				continue;
 			}
 
 			// Get the Field with the ID matching the key.
 			$form_field = null;
 			foreach ( $model_form_fields as $field ) {
-				if ( (int) $field->id === $field_id ) {
+				if ( (int) $field->id === $parsed_id['field_id'] ) {
 					$form_field = $field;
 					break;
 				}
@@ -101,7 +145,7 @@ class FormFieldsLoader extends AbstractDataLoader {
 
 			$loaded_fields[ $key ] = [
 				'field' => $form_field,
-				'form'  => $loaded_forms[ $form_id ],
+				'form'  => $loaded_forms[ $parsed_id['form_id'] ],
 			];
 		}
 

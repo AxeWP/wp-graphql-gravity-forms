@@ -13,17 +13,20 @@ namespace WPGraphQL\GF\Model;
 use GF_Field;
 use GraphQLRelay\Relay;
 use WPGraphQL\GF\Data\Loader\FormFieldsLoader;
+use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Registry\FieldChoiceRegistry;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
-use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\Model\Model;
 
 /**
  * Class - FormField
  *
- * @property int       $databaseId The database ID of the field.
- * @property string    $id         The Relay ID of the field.
- * @property \GF_Field $gfField    The Gravity Forms field object.
+ * @property array<string,mixed>[] $choices    The choices for the field.
+ * @property int                   $databaseId The database ID of the field.
+ * @property string                $id         The global Relay ID of the field.
+ * @property array<string,mixed>[] $inputs     The inputs for the field.
+ * @property \GF_Field             $gfField    The Gravity Forms field object.
+ * @property int                   $layoutGridColumSpan The layout grid column span of the field.
  */
 class FormField extends Model {
 	/**
@@ -66,7 +69,26 @@ class FormField extends Model {
 	 * @throws \Exception .
 	 */
 	public function __construct( GF_Field $field, ?array $form = null ) {
-		$this->form = ! empty( $form ) ? $form : GFUtils::get_form( $field->formId, false );
+		if ( empty( $form ) ) {
+			$context = \WPGraphQL::get_app_context();
+
+			$form_model = $context->get_loader( FormsLoader::$name )->load( $field->formId );
+
+			if ( empty( $form_model->form ) ) {
+				throw new \Exception(
+					sprintf(
+						/* translators: %s: GF_Field */
+						esc_html__( 'Form ID % not found for Field ID %s', 'wp-graphql-gravity-forms' ),
+						esc_html( $field->formId ),
+						esc_html( $field->id )
+					)
+				);
+			}
+
+			$form = $form_model->form;
+		}
+
+		$this->form = $form;
 		$this->data = self::prepare_model_data( $field );
 
 		parent::__construct();
@@ -76,7 +98,7 @@ class FormField extends Model {
 	 * {@inheritDoc}
 	 */
 	public function __isset( $key ) {
-		return isset( $this->fields[ $key ] ) || property_exists( $this->data, $key );
+		return isset( $this->fields[ $key ] ) || isset( $this->data->$key );
 	}
 
 	/**
@@ -102,10 +124,8 @@ class FormField extends Model {
 			} else {
 				return $this->fields[ $key ];
 			}
-		}
-
-		// Pass through to the \GF_Field object.
-		if ( property_exists( $this->data, $key ) ) {
+		} elseif ( property_exists( $this->data, $key ) ) {
+			// Pass through to the \GF_Field object.
 			$data       = $this->data->$key;
 			$this->$key = $data;
 			return $data;
@@ -180,10 +200,6 @@ class FormField extends Model {
 	protected function prepare_model_fields( \GF_Field $data ): array {
 		$fields = array_merge(
 			[
-				'databaseId'          => static fn (): int => (int) $data->id,
-				'id'                  => static fn (): string => Relay::toGlobalId( FormFieldsLoader::$name, $data->formId . ':' . $data->id ),
-				'gfField'             => static fn (): GF_Field => $data,
-				'layoutGridColumSpan' => static fn (): ?int => ! empty( $data->layoutGridColumnSpan ) ? (int) $data->layoutGridColumnSpan : null,
 				'choices'             => static function () use ( $data ): ?array {
 					if ( empty( $data->choices ) || ! is_array( $data->choices ) ) {
 						return null;
@@ -206,6 +222,8 @@ class FormField extends Model {
 						$choices
 					);
 				},
+				'databaseId'          => static fn (): int => (int) $data->id,
+				'id'                  => static fn (): string => Relay::toGlobalId( FormFieldsLoader::$name, $data->formId . ':' . $data->id ),
 				'inputs'              => static function () use ( $data ): ?array {
 					// Emails fields are handled later.
 					if ( ( empty( $data->inputs ) || ! is_array( $data->inputs ) ) && 'email' !== $data->type ) {
@@ -250,6 +268,8 @@ class FormField extends Model {
 
 					return $inputs;
 				},
+				'gfField'             => static fn (): GF_Field => $data,
+				'layoutGridColumSpan' => static fn (): ?int => ! empty( $data->layoutGridColumnSpan ) ? (int) $data->layoutGridColumnSpan : null,
 			]
 		);
 

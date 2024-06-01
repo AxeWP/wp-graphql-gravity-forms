@@ -113,6 +113,10 @@ class QuizResults extends AbstractObject implements Field {
 				'type'        => static::$type,
 				'description' => __( 'The quiz results for the given form.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
+					if ( ! isset( $context->gfForm ) ) {
+						return null;
+					}
+
 					$form           = $context->gfForm->form;
 					$quiz           = GFQuiz::get_instance();
 					$results_config = $quiz->get_results_page_config();

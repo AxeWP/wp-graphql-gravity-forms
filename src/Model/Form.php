@@ -17,8 +17,39 @@ use WPGraphQL\Model\Model;
 /**
  * Class - Form
  *
- * @property array<string,mixed> $form The underlying form to be modeled.
- * @property int                 $databaseId The database ID of the form.
+ * @property array<string,mixed>  $confirmations                The confirmations for the form.
+ * @property ?string              $cssClass                     The CSS class for the form.
+ * @property ?string              $customRequiredIndicator      The custom required indicator for the form.
+ * @property int                  $databaseId                   The database ID of the form.
+ * @property ?string              $dateCreatedGmt               The date created in GMT for the form.
+ * @property ?string              $dateCreated                  The date created for the form.
+ * @property ?string              $description                  The description for the form.
+ * @property ?string              $descriptionPlacement         The description placement for the form.
+ * @property array<string,mixed>  $entryLimits                  The form entry limits.
+ * @property bool                 $hasConditionalLogicAnimation Whether the form has conditional logic animation.
+ * @property bool                 $hasHoneypot                  Whether the form has a honeypot.
+ * @property ?string              $firstPageCssClass            The first page CSS class for the form.
+ * @property array<string,mixed>  $form                         The underlying form being modeled.
+ * @property ?\GF_Field[]         $formFields                   The form fields for the form.
+ * @property string               $id                           The global Relay ID of the form.
+ * @property bool                 $isActive                     Whether the form is active.
+ * @property bool                 $isTrash                      Whether the form is in the trash.
+ * @property ?string              $labelPlacement               The label placement for the form.
+ * @property array<string,mixed>  $login                        The login settings for the form.
+ * @property ?string              $markupVersion                The markup version for the form.
+ * @property ?array<string,mixed> $notifications                The notifications for the form.
+ * @property ?int                 $nextFieldId                  The next field ID for the form.
+ * @property ?array<string,mixed> $pagination                   The pagination settings for the form.
+ * @property ?array<string,mixed> $personalData                 The personal data settings for the form.
+ * @property array<string,mixed>  $postCreation                 The post creation settings for the form.
+ * @property ?string              $requiredIndicator            The required indicator for the form.
+ * @property ?array<string,mixed> $saveAndContinue              The save and continue settings for the form.
+ * @property array<string,mixed>  $scheduling                   The scheduling settings for the form.
+ * @property ?string              $subLabelPlacement            The sub label placement for the form.
+ * @property ?array<string,mixed> $submitButton                 The submit button settings for the form.
+ * @property ?string              $title                        The title for the form.
+ * @property bool                 $hasValidationSummary         Whether the form has a validation summary.
+ * @property ?string              $version                      The version for the form.
  */
 class Form extends Model {
 	/**

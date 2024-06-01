@@ -17,6 +17,37 @@ use WPGraphQL\Model\Model;
 
 /**
  * Class - Entry
+ *
+ * @property ?int                     $createdByDatabaseId The database ID of the user who created the entry.
+ * @property ?string                  $createdById         The Global ID of the user who created the entry.
+ * @property ?string                  $dateCreated         The date the entry was created.
+ * @property ?string                  $dateCreatedGmt      The date the entry was created in GMT.
+ * @property ?string                  $dateUpdated         The date the entry was updated.
+ * @property ?string                  $dateUpdatedGmt      The date the entry was updated in GMT.
+ * @property array<int|string,mixed>  $entry               The underlying Entry to be modeled.
+ * @property ?array<int|string,mixed> $entryValues         The values of the entry.
+ * @property ?string                  $formId              The Global ID of the form the entry belongs to.
+ * @property ?int                     $formDatabaseId      The database ID of the form the entry belongs to.
+ * @property string                   $id                  The Global ID of the entry.
+ * @property ?string                  $ip                  The IP address of the user who created the entry.
+ * @property bool                     $isDraft             Whether the entry is a draft.
+ * @property bool                     $isSubmitted         Whether the entry has been submitted.
+ * @property ?string                  $sourceUrl           The source URL of the entry.
+ * @property ?string                  $userAgent           The user agent of the user who created the entry.
+ *
+ * --- Fields specific to the model ---
+ * @property ?int                     $databaseId          The database ID of the entry.
+ * @property bool                     $isFulfilled         Whether the entry has been fulfilled.
+ * @property bool                     $isStarred           Whether the entry has been starred.
+ * @property bool                     $isRead              Whether the entry has been read.
+ * @property ?float                   $paymentAmount       The payment amount of the entry.
+ * @property ?string                  $paymentDate         The payment date of the entry.
+ * @property ?string                  $paymentMethod       The payment method of the entry.
+ * @property ?string                  $paymentStatus       The payment status of the entry.
+ * @property ?int                     $postDatabaseId      The database ID of the post the entry is associated with.
+ * @property ?string                  $status              The status of the entry.
+ * @property ?string                  $transactionId       The transaction ID of the entry.
+ * @property ?string                  $transactionType     The transaction type of the entry.
  */
 class SubmittedEntry extends Model {
 	/**

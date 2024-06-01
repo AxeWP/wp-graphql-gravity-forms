@@ -36,11 +36,11 @@ class FieldValues {
 				'type'        => 'String',
 				'description' => __( 'The string-formatted entry value for the `formField`. For complex fields this might be a JSON-encoded or serialized array.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
+					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
 					}
 
-					return $source->gfField->get_value_export( $context->gfEntry->entry, $source->databaseId ) ?: null;
+					return $source->gfField->get_value_export( $context->gfEntry->entry, (string) $source->databaseId ) ?: null;
 				},
 			],
 		];
@@ -57,7 +57,7 @@ class FieldValues {
 				'type'        => ValueProperty\AddressFieldValue::$type,
 				'description' => __( 'Address field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
+					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
 					}
 
@@ -85,12 +85,12 @@ class FieldValues {
 				'type'        => [ 'list_of' => ValueProperty\CheckboxFieldValue::$type ],
 				'description' => __( 'Checkbox field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
+					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
 					}
 
 					// Category choices aren't saved to the field by default.
-					if ( 'post_category' === $source->type ) {
+					if ( 'post_category' === $source->gfField->type ) {
 						GFCommon::add_categories_as_choices( $source->gfField, '' );
 					}
 
@@ -129,7 +129,7 @@ class FieldValues {
 				'type'        => 'Boolean',
 				'description' => __( 'Consent field value. This is `true` when consent is given, `false` when it is not.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
+					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
 					}
 
@@ -151,7 +151,12 @@ class FieldValues {
 				'type'        => [ 'list_of' => ValueProperty\FileUploadFieldValue::$type ],
 				'description' => __( 'File upload value', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
+					if (
+						! $source instanceof FormField ||
+						! $source->gfField instanceof \GF_Field_FileUpload ||
+						! isset( $context->gfEntry ) ||
+						! isset( $context->gfForm )
+					) {
 						return null;
 					}
 
@@ -172,7 +177,12 @@ class FieldValues {
 				'type'        => ValueProperty\ImageFieldValue::$type,
 				'description' => __( 'Image field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
+					if (
+						! $source instanceof FormField ||
+						! $source->gfField instanceof \GF_Field_FileUpload ||
+						! isset( $context->gfEntry ) ||
+						! isset( $context->gfForm )
+					) {
 						return null;
 					}
 
@@ -219,7 +229,7 @@ class FieldValues {
 				'type'        => [ 'list_of' => ValueProperty\ListFieldValue::$type ],
 				'description' => __( 'List field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
+					if ( ! $source instanceof FormField || ! $source->gfField instanceof \GF_Field_List || ! isset( $context->gfEntry ) ) {
 						return null;
 					}
 
@@ -230,29 +240,30 @@ class FieldValues {
 					}
 
 					$values = is_string( $values ) ? maybe_unserialize( $values ) : $source->gfField->create_list_array_recursive( $values );
-					// If columns are enabled, save each row-value pair.
-					if ( $source->enableColumns ) {
-						// Save each row-value pair.
+
+					// If no columns, entry values can be mapped directly to 'value'.
+					if ( empty( $source->gfField->enableColumns ) ) {
 						return array_map(
-							static function ( $row ): array {
-								$row_values = [];
-
-								foreach ( $row as $single_value ) {
-									$row_values[] = $single_value;
-								}
-
+							static function ( $single_value ): array {
 								return [
-									'values' => $row_values,
+									'values' => [ $single_value ], // $single_value must be Iteratable.
 								];
 							},
 							$values
 						);
 					}
-					// If no columns, entry values can be mapped directly to 'value'.
+
+					// If columns are enabled, save each row-value pair.
 					return array_map(
-						static function ( $single_value ): array {
+						static function ( $row ): array {
+							$row_values = [];
+
+							foreach ( $row as $single_value ) {
+								$row_values[] = $single_value;
+							}
+
 							return [
-								'values' => [ $single_value ], // $single_value must be Iteratable.
+								'values' => $row_values,
 							];
 						},
 						$values
@@ -273,7 +284,7 @@ class FieldValues {
 				'type'        => ValueProperty\NameFieldValue::$type,
 				'description' => __( 'Name field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
+					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
 					}
 
@@ -300,7 +311,7 @@ class FieldValues {
 				'type'        => ValueProperty\ProductFieldValue::$type,
 				'description' => __( 'Product field values.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
+					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) || ! isset( $context->gfForm ) ) {
 						return null;
 					}
 
@@ -373,7 +384,7 @@ class FieldValues {
 				'type'        => ValueProperty\TimeFieldValue::$type,
 				'description' => __( 'Time field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
+					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
 					}
 
@@ -408,7 +419,7 @@ class FieldValues {
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => __( 'An array of field values.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! self::is_field_and_entry( $source, $context ) ) {
+					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
 					}
 
@@ -418,13 +429,13 @@ class FieldValues {
 						return $values;
 					}
 
-					if ( 'multiselect' === $source->inputType ) {
+					if ( 'multiselect' === $source->gfField->inputType && method_exists( $source->gfField, 'to_array' ) ) {
 						$values = $source->gfField->to_array( $values );
 					}
 
 					$values = Utils::maybe_decode_json( $values );
 
-					// Sometimes GF likes to nest their jsons twice.
+					// Sometimes GF likes to nest their JSONs twice.
 					if ( is_string( $values ) ) {
 						$values = Utils::maybe_decode_json( $values );
 					}
@@ -433,18 +444,6 @@ class FieldValues {
 				},
 			],
 		];
-	}
-
-	/**
-	 * Checks that the necessary values to retrieve the values are set in the resolver.
-	 *
-	 * @param mixed                 $source .
-	 * @param \WPGraphQL\AppContext $context .
-	 */
-	protected static function is_field_and_entry( $source, AppContext $context ): bool {
-		return $source instanceof FormField
-			&& isset( $context->gfEntry )
-			&& isset( $context->gfEntry->entry );
 	}
 
 	/**
@@ -535,5 +534,20 @@ class FieldValues {
 		$input['graphql_type'] = $type;
 
 		return $input;
+	}
+
+	/**
+	 * Checks that the necessary values to retrieve the values are set in the resolver.
+	 *
+	 * @param mixed                 $source .
+	 * @param \WPGraphQL\AppContext $context .
+	 *
+	 * @deprecated @todo
+	 */
+	protected static function is_field_and_entry( $source, AppContext $context ): bool {
+		_deprecated_function( __METHOD__, '@todo' );
+		return $source instanceof FormField
+			&& isset( $context->gfEntry )
+			&& isset( $context->gfEntry->entry );
 	}
 }
