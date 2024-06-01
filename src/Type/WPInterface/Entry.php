@@ -10,10 +10,11 @@ declare( strict_types = 1 );
 
 namespace WPGraphQL\GF\Type\WPInterface;
 
-use GFCommon;
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
+use Gravity_Forms\Gravity_Forms\Orders\Factories\GF_Order_Factory;
+use Gravity_Forms\Gravity_Forms\Orders\Items\GF_Order_Item;
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Connection\FormFieldsConnection;
 use WPGraphQL\GF\Data\Factory;
@@ -23,11 +24,9 @@ use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Interfaces\TypeWithConnections;
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
-use WPGraphQL\GF\Model\Form;
 use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\AbstractInterface;
 use WPGraphQL\GF\Type\WPObject\Order\OrderSummary;
-use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -89,13 +88,14 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 
 					// If the form isn't stored in the context, we need to fetch it.
 					if ( empty( $context->gfForm ) ) {
-						$form = GFUtils::get_form( $source->formDatabaseId, false );
+						$form = $context->get_loader( FormsLoader::$name )->load( $source->formDatabaseId );
 
-						// Cache the form for later use.
-						$context->get_loader( FormsLoader::$name )->prime( $form['id'], $form );
+						if ( null === $form ) {
+							return null;
+						}
 
 						// Store it in the context for easy access.
-						$context->gfForm = new Form( $form );
+						$context->gfForm = $form;
 					}
 
 					if ( empty( $context->gfForm->formFields ) ) {
@@ -119,7 +119,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 	 * {@inheritDoc}
 	 */
 	public static function get_fields(): array {
-		$fields = [
+		return [
 			'createdBy'           => [
 				'type'        => 'User',
 				'description' => __( 'The user who created the entry.', 'wp-graphql-gravity-forms' ),
@@ -175,28 +175,21 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 				'type'        => 'String',
 				'description' => __( 'Provides the name and version of both the browser and operating system from which the entry was submitted.', 'wp-graphql-gravity-forms' ),
 			],
-			/**
-			 * TODO: Add support for these pricing properties that are only relevant
-			 * when a Gravity Forms payment gateway add-on is being used:
-			 * https://docs.gravityforms.com/entry-object/#pricing-properties
-			 */
-		];
-
-		// Order Summaries are only available in GF 2.6+.
-		if ( version_compare( GFCommon::$version, '2.6.0', '>=' ) ) {
-			$fields['orderSummary'] = [
+			'orderSummary'        => [
 				'type'        => OrderSummary::$type,
 				'description' => __( 'The entry order summary. Null if the entry has no pricing fields', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! class_exists( 'Gravity_Forms\Gravity_Forms\Orders\Factories\GF_Order_Factory' ) ) {
-						return null;
-					}
-
 					if ( empty( $context->gfForm ) ) {
-						$context->gfForm = new Form( GFUtils::get_form( $source->formDatabaseId, false ) );
+						$form = $context->get_loader( FormsLoader::$name )->load( $source->formDatabaseId );
+
+						if ( null === $form ) {
+							return null;
+						}
+
+						$context->gfForm = $form;
 					}
 
-					$order = \Gravity_Forms\Gravity_Forms\Orders\Factories\GF_Order_Factory::create_from_entry( $context->gfForm->form, $source->entry );
+					$order = GF_Order_Factory::create_from_entry( $context->gfForm->form, $source->entry );
 
 					/** @var \Gravity_Forms\Gravity_Forms\Orders\Items\GF_Order_Item[]|\Gravity_Forms\Gravity_Forms\Orders\Items\GF_Order_Item|null $items */
 					$items = $order->get_items();
@@ -204,7 +197,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 						return null;
 					}
 
-					if ( $items instanceof \Gravity_Forms\Gravity_Forms\Orders\Items\GF_Order_Item ) {
+					if ( $items instanceof GF_Order_Item ) {
 						$items = [ $items ];
 					}
 
@@ -224,10 +217,15 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 						'total'    => $totals['total'] ?? null,
 					];
 				},
-			];
-		}
-
-		return $fields;
+			],
+			/**
+			 * @todo
+			 *
+			 * Add support for these pricing properties that are only relevant
+			 * when a Gravity Forms payment gateway add-on is being used:
+			 * https://docs.gravityforms.com/entry-object/#pricing-properties
+			 */
+		];
 	}
 
 	/**

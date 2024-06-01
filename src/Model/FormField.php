@@ -13,9 +13,9 @@ namespace WPGraphQL\GF\Model;
 use GF_Field;
 use GraphQLRelay\Relay;
 use WPGraphQL\GF\Data\Loader\FormFieldsLoader;
+use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Registry\FieldChoiceRegistry;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
-use WPGraphQL\GF\Utils\GFUtils;
 use WPGraphQL\Model\Model;
 
 /**
@@ -69,7 +69,26 @@ class FormField extends Model {
 	 * @throws \Exception .
 	 */
 	public function __construct( GF_Field $field, ?array $form = null ) {
-		$this->form = ! empty( $form ) ? $form : GFUtils::get_form( $field->formId, false );
+		if ( empty( $form ) ) {
+			$context = \WPGraphQL::get_app_context();
+
+			$form_model = $context->get_loader( FormsLoader::$name )->load( $field->formId );
+
+			if ( empty( $form_model->form ) ) {
+				throw new \Exception(
+					sprintf(
+						/* translators: %s: GF_Field */
+						esc_html__( 'Form ID % not found for Field ID %s', 'wp-graphql-gravity-forms' ),
+						esc_html( $field->formId ),
+						esc_html( $field->id )
+					)
+				);
+			}
+
+			$form = $form_model->form;
+		}
+
+		$this->form = $form;
 		$this->data = self::prepare_model_data( $field );
 
 		parent::__construct();
