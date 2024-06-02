@@ -20,14 +20,14 @@ class ProductValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array{quantity:?float,price:?float}
 	 */
 	protected $args;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array<string,mixed>
 	 */
 	public $value;
 
@@ -83,7 +83,7 @@ class ProductValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @return array
+	 * @return array{quantity:?float,price:?float}
 	 */
 	public function get_args() {
 		return $this->input_args[ $this->field_name ] ?? [

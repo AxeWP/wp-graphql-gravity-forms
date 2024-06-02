@@ -21,7 +21,7 @@ abstract class AbstractFieldValueInput {
 	/**
 	 * The GraphQL field input args provided to the mutation.
 	 *
-	 * @var array|string
+	 * @var mixed[]|string
 	 */
 	protected $args;
 
@@ -70,7 +70,7 @@ abstract class AbstractFieldValueInput {
 	/**
 	 * The field value for submission.
 	 *
-	 * @var array|string
+	 * @var mixed[]|string
 	 */
 	public $value;
 
@@ -124,12 +124,12 @@ abstract class AbstractFieldValueInput {
 		/**
 		 * Filters the GraphQL input args for the field value input.
 		 *
-		 * @param array|string        $args              Field value input args.
-		 * @param \GF_Field           $field The current Gravity Forms field object.
-		 * @param array<string,mixed> $form The current  Gravity Forms form object.
-		 * @param array|null          $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
-		 * @param bool                $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
-		 * @param string              $field_name        The GraphQL input field name. E.g. `nameValues`.
+		 * @param array<string,mixed>|string $args              Field value input args.
+		 * @param \GF_Field                  $field             The current Gravity Forms field object.
+		 * @param array<string,mixed>        $form              The current  Gravity Forms form object.
+		 * @param ?array<int|string,mixed>   $entry             The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+		 * @param bool                       $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
+		 * @param string                     $field_name        The GraphQL input field name. E.g. `nameValues`.
 		 */
 		$this->args = apply_filters(
 			'graphql_gf_field_value_input_args',
@@ -144,13 +144,13 @@ abstract class AbstractFieldValueInput {
 		/**
 		 * Filters the prepared field value to be submitted to Gravity Forms.
 		 *
-		 * @param array|string        $prepared_field_value The field value formatted in a way Gravity Forms can understand.
-		 * @param array|string        $args                 Field value input args.
-		 * @param \GF_Field           $field                The current Gravity Forms field object.
-		 * @param array<string,mixed> $form                 The current Gravity Forms form object.
-		 * @param array|null          $entry                The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
-		 * @param bool                $is_draft_mutation    Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
-		 * @param string              $field_name           The GraphQL input field name. E.g. `nameValues`.
+		 * @param array|string               $prepared_field_value The field value formatted in a way Gravity Forms can understand.
+		 * @param array<string,mixed>|string $args                 Field value input args.
+		 * @param \GF_Field                  $field                The current Gravity Forms field object.
+		 * @param array<string,mixed>        $form                 The current Gravity Forms form object.
+		 * @param ?array<int|string,mixed>   $entry                The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+		 * @param bool                       $is_draft_mutation    Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
+		 * @param string                     $field_name           The GraphQL input field name. E.g. `nameValues`.
 		 */
 		$this->value = apply_filters(
 			'graphql_gf_field_value_input_prepared_value',
@@ -189,7 +189,7 @@ abstract class AbstractFieldValueInput {
 	/**
 	 * Gets the input args for the specified field value input.
 	 *
-	 * @return string|array
+	 * @return string|mixed[]
 	 */
 	public function get_args() {
 		$key = $this->field_name;
@@ -200,7 +200,7 @@ abstract class AbstractFieldValueInput {
 	/**
 	 * Converts the field value args to a format GravityForms can understand.
 	 *
-	 * @return string|array the sanitized value.
+	 * @return string|mixed[] the sanitized value.
 	 */
 	protected function prepare_value() {
 		// You probably want to replace this.
@@ -210,7 +210,7 @@ abstract class AbstractFieldValueInput {
 	/**
 	 * Manually runs GF_Field::validate, and grabs any validation errors.
 	 *
-	 * @param array $errors .
+	 * @param array{id:int,message:string}[] $errors the array of validation errors.
 	 */
 	public function validate_value( array &$errors ): void {
 		$this->field->validate( $this->value, $this->form );
@@ -226,7 +226,7 @@ abstract class AbstractFieldValueInput {
 	/**
 	 * Adds the prepared value to the field values array for processing by Gravity Forms.
 	 *
-	 * @param array $field_values the existing field values array.
+	 * @param array<int|string,mixed> $field_values the existing field values array.
 	 */
 	public function add_value_to_submission( array &$field_values ): void {
 		$field_values[ $this->field->id ] = $this->value;

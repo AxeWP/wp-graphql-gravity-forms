@@ -137,8 +137,8 @@ class FormField extends Model {
 	/**
 	 * Pass calls to the GF_Field object.
 	 *
-	 * @param string $name      The method name.
-	 * @param array  $arguments The method arguments.
+	 * @param string  $name      The method name.
+	 * @param mixed[] $arguments The method arguments.
 	 *
 	 * @return mixed
 	 * @throws \BadMethodCallException .
@@ -196,84 +196,82 @@ class FormField extends Model {
 	 * Prepares the Model fields.
 	 *
 	 * @param \GF_Field $data The model data.
+	 *
+	 * @return array<string,callable> The model fields.
 	 */
 	protected function prepare_model_fields( \GF_Field $data ): array {
-		$fields = array_merge(
-			[
-				'choices'             => static function () use ( $data ): ?array {
-					if ( empty( $data->choices ) || ! is_array( $data->choices ) ) {
-						return null;
+		return [
+			'choices'             => static function () use ( $data ): ?array {
+				if ( empty( $data->choices ) || ! is_array( $data->choices ) ) {
+					return null;
+				}
+
+				$choices = $data->choices;
+
+				// Set choices for single-column list fields, so we can use the same mutation for both.
+				if ( 'list' === $data->type && isset( $data->columns ) && 1 === $data->columns ) {
+					$choices = self::EMPTY_CHOICES;
+				}
+
+				// Include GraphQL Type in resolver.
+				return array_map(
+					static function ( $choice ) use ( $data ) {
+						$choice['graphql_type'] = FieldChoiceRegistry::get_type_name( $data );
+
+						return $choice;
+					},
+					$choices
+				);
+			},
+			'databaseId'          => static fn (): int => (int) $data->id,
+			'id'                  => static fn (): string => Relay::toGlobalId( FormFieldsLoader::$name, $data->formId . ':' . $data->id ),
+			'inputs'              => static function () use ( $data ): ?array {
+				// Emails fields are handled later.
+				if ( ( empty( $data->inputs ) || ! is_array( $data->inputs ) ) && 'email' !== $data->type ) {
+					return null;
+				}
+
+				$inputs = $data->inputs;
+
+				// Prime inputs for address and name fields.
+				if ( in_array( $data->type, [ 'address', 'name' ], true ) ) {
+					foreach ( $inputs as $input_index => $input ) {
+						// set isHidden to boolean.
+						$inputs[ $input_index ]['isHidden'] = ! empty( $inputs[ $input_index ]['isHidden'] );
+
+						$input_keys = 'address' === $data['type'] ? self::get_address_input_keys() : self::get_name_input_keys();
+
+						$inputs[ $input_index ]['key'] = $input_keys[ $input_index ];
 					}
+				} elseif ( 'email' === $data->type && empty( $data->emailConfirmEnabled ) ) {
+					// Prime inputs for email fields without confirmation.
+					$inputs = [
+						[
+							'autocompleteAttribute' => $data->autocompleteAttribute ?? null,
+							'defaultValue'          => $data->defaultValue ?? null,
+							'customLabel'           => $data->customLabel ?? null,
+							'id'                    => $data->id ?? null,
+							'label'                 => $data->label ?? null,
+							'name'                  => $data->inputName ?? null,
+							'placeholder'           => $data->placeholder ?? null,
+						],
+					];
+				}
 
-					$choices = $data->choices;
+				$inputs = array_map(
+					static function ( $input ) use ( $data ) {
+						$input['graphql_type'] = FieldInputRegistry::get_type_name( $data );
 
-					// Set choices for single-column list fields, so we can use the same mutation for both.
-					if ( 'list' === $data->type && isset( $data->columns ) && 1 === $data->columns ) {
-						$choices = self::EMPTY_CHOICES;
-					}
+						return $input;
+					},
+					$inputs
+				);
 
-					// Include GraphQL Type in resolver.
-					return array_map(
-						static function ( $choice ) use ( $data ) {
-							$choice['graphql_type'] = FieldChoiceRegistry::get_type_name( $data );
-
-							return $choice;
-						},
-						$choices
-					);
-				},
-				'databaseId'          => static fn (): int => (int) $data->id,
-				'id'                  => static fn (): string => Relay::toGlobalId( FormFieldsLoader::$name, $data->formId . ':' . $data->id ),
-				'inputs'              => static function () use ( $data ): ?array {
-					// Emails fields are handled later.
-					if ( ( empty( $data->inputs ) || ! is_array( $data->inputs ) ) && 'email' !== $data->type ) {
-						return null;
-					}
-
-					$inputs = $data->inputs;
-
-					// Prime inputs for address and name fields.
-					if ( in_array( $data->type, [ 'address', 'name' ], true ) ) {
-						foreach ( $inputs as $input_index => $input ) {
-							// set isHidden to boolean.
-							$inputs[ $input_index ]['isHidden'] = ! empty( $inputs[ $input_index ]['isHidden'] );
-
-							$input_keys = 'address' === $data['type'] ? self::get_address_input_keys() : self::get_name_input_keys();
-
-							$inputs[ $input_index ]['key'] = $input_keys[ $input_index ];
-						}
-					} elseif ( 'email' === $data->type && empty( $data->emailConfirmEnabled ) ) {
-						// Prime inputs for email fields without confirmation.
-						$inputs = [
-							[
-								'autocompleteAttribute' => $data->autocompleteAttribute ?? null,
-								'defaultValue'          => $data->defaultValue ?? null,
-								'customLabel'           => $data->customLabel ?? null,
-								'id'                    => $data->id ?? null,
-								'label'                 => $data->label ?? null,
-								'name'                  => $data->inputName ?? null,
-								'placeholder'           => $data->placeholder ?? null,
-							],
-						];
-					}
-
-					$inputs = array_map(
-						static function ( $input ) use ( $data ) {
-							$input['graphql_type'] = FieldInputRegistry::get_type_name( $data );
-
-							return $input;
-						},
-						$inputs
-					);
-
-					return $inputs;
-				},
-				'gfField'             => static fn (): GF_Field => $data,
-				'layoutGridColumSpan' => static fn (): ?int => ! empty( $data->layoutGridColumnSpan ) ? (int) $data->layoutGridColumnSpan : null,
-			]
-		);
-
-		return $fields;
+				return $inputs;
+			},
+			'gfField'             => static fn (): GF_Field => $data,
+			'layoutGridColumSpan' => static fn (): ?int => ! empty( $data->layoutGridColumnSpan ) ? (int) $data->layoutGridColumnSpan : null,
+		];
 	}
 
 	/**

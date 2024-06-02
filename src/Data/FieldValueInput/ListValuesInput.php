@@ -19,14 +19,14 @@ class ListValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array{rowValues:string[]}[]
 	 */
 	protected $args;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var string[]|string
 	 */
 	public $value;
 
@@ -39,6 +39,8 @@ class ListValuesInput extends AbstractFieldValueInput {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @return string[]|string
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */

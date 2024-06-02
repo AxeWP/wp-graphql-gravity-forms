@@ -17,14 +17,14 @@ class EmailValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array{value?:string,confirmationValue?:string}
 	 */
 	protected $args;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array<int,?string>
 	 */
 	public $value;
 
@@ -38,7 +38,7 @@ class EmailValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @return mixed[]
+	 * @return array<int,?string>
 	 */
 	protected function prepare_value() {
 		$value = $this->args;
@@ -46,7 +46,7 @@ class EmailValuesInput extends AbstractFieldValueInput {
 		$values_to_save   = [];
 		$values_to_save[] = $value['value'] ?? null;
 
-		if ( $this->field->emailConfirmEnabled ) {
+		if ( ! empty( $this->field->emailConfirmEnabled ) ) {
 			$values_to_save[] = $value['confirmationValue'] ?? null;
 		}
 
@@ -61,7 +61,7 @@ class EmailValuesInput extends AbstractFieldValueInput {
 		$field_values[ $this->field->id ] = $this->value[0];
 
 		// Confirmation values are stored in a subfield.
-		if ( isset( $this->value[1] ) ) {
+		if ( isset( $this->value[1] ) && isset( $this->field->inputs[1]['id'] ) ) {
 			$field_values[ $this->field->inputs[1]['id'] ] = $this->value[0];
 		}
 	}

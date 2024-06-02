@@ -94,12 +94,12 @@ class EntryObjectMutation {
 		 *
 		 * Useful for adding mutation support for custom fields.
 		 *
-		 * @param string              $field_value_input_class  The FieldValueInput class to use. The referenced class must extend AbstractFieldValueInput.
-		 * @param array               $args The GraphQL input args for the form field.
-		 * @param \GF_Field           $field The current Gravity Forms field object.
-		 * @param array<string,mixed> $form The current Gravity Forms form object.
-		 * @param array|null          $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
-		 * @param bool                $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
+		 * @param string                   $field_value_input_class  The FieldValueInput class to use. The referenced class must extend AbstractFieldValueInput.
+		 * @param array                    $args The GraphQL input args for the form field.
+		 * @param \GF_Field                $field The current Gravity Forms field object.
+		 * @param array<string,mixed>      $form The current Gravity Forms form object.
+		 * @param ?array<int|string,mixed> $entry The current Gravity Forms entry object. Only available when using update (`gfUpdateEntry`, `gfUpdateDraftEntry`) mutations.
+		 * @param bool                     $is_draft_mutation Whether the mutation is handling a Draft Entry (`gfUpdateDraftEntry`, or `gfSubmitForm` when `saveAsDraft` is `true`).
 		 */
 		$field_value_input = apply_filters( 'graphql_gf_field_value_input_class', $field_value_input, $args, $field, $form, $entry, $is_draft );
 

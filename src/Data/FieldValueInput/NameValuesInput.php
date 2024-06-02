@@ -17,14 +17,14 @@ class NameValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array{prefix?:string,first?:string,middle?:string,last?:string,suffix?:string}
 	 */
 	protected $args;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array<string,?string>
 	 */
 	public $value;
 
@@ -38,7 +38,7 @@ class NameValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @return array
+	 * @return array<int|string,?string>
 	 */
 	protected function prepare_value() {
 		$value = $this->args;

@@ -32,14 +32,14 @@ class ImageValuesInput extends FileUploadValuesInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array<string,?string>
 	 */
 	public $value;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @return array<string,mixed>
+	 * @return array<string,?string>
 	 *
 	 * @throws \GraphQL\Error\UserError
 	 */

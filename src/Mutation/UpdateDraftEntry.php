@@ -37,7 +37,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	/**
 	 * Gravity Forms field validation errors.
 	 *
-	 * @var array
+	 * @var array{id:int,message:string}[]
 	 */
 	protected static array $errors = [];
 
@@ -113,15 +113,23 @@ class UpdateDraftEntry extends AbstractMutation {
 
 			$entry_data = self::prepare_draft_entry_data( $input, $submission, $form );
 
-			// Return early if field errors.
-			if ( ! empty( $entry_data['errors'] ) ) {
+			// Return early if field errors or doesn't compile.
+			if ( isset( $entry_data['errors'] ) || ! isset( $entry_data['form'] ) ) {
 				return $entry_data;
 			}
 
-			$entry_data['resumeToken'] = $resume_token;
-
 			// Update the entry.
-			$resume_token = GFUtils::save_draft_submission( ...array_values( $entry_data ) );
+			$resume_token = GFUtils::save_draft_submission(
+				$entry_data['form'],
+				$entry_data['partial_entry'],
+				$entry_data['field_values'],
+				$entry_data['page_number'],
+				$entry_data['files'],
+				$entry_data['gform_unique_id'],
+				$entry_data['ip'],
+				$entry_data['source_url'],
+				$resume_token
+			);
 
 			return [
 				'resumeToken' => $resume_token,
@@ -137,7 +145,7 @@ class UpdateDraftEntry extends AbstractMutation {
 	 * @param array<int|string,mixed> $submission .
 	 * @param array<string,mixed>     $form The form object.
 	 *
-	 * @return array<string,mixed>
+	 * @return array{errors:array{id:int,message:string}[]}|array{form:array<string,mixed>,partial_entry:array<int|string,mixed>,field_values:array<string,mixed>,page_number:int,files:array<int|string,mixed>,gform_unique_id:?string,ip:string,source_url:string}
 	 */
 	private static function prepare_draft_entry_data( array $input, array $submission, array $form ): array {
 		$should_validate = isset( $input['shouldValidate'] ) ? (bool) $input['shouldValidate'] : true;

@@ -39,7 +39,7 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * Gravity Forms field validation errors.
 	 *
-	 * @var array
+	 * @var array{id:int,message:string}[]
 	 */
 	protected static array $errors = [];
 
@@ -253,6 +253,8 @@ class UpdateEntry extends AbstractMutation {
 	 * @param array<int|string,mixed> $entry The entry array.
 	 * @param array<string,mixed>     $form The form array.
 	 * @param bool                    $should_validate .
+	 *
+	 * @return array<int|string,mixed> The prepared field values.
 	 */
 	private static function prepare_field_values( array $field_values, array $entry, array $form, bool $should_validate ): array {
 		$formatted_values = [];
@@ -273,9 +275,11 @@ class UpdateEntry extends AbstractMutation {
 	/**
 	 * Prepares field values before saving it to the entry.
 	 *
-	 * @param array                   $values the entry values.
+	 * @param array<int|string,mixed> $values the field values.
 	 * @param array<int|string,mixed> $entry the existing entry.
 	 * @param array<string,mixed>     $form The form array.
+	 *
+	 * @return array<int|string,mixed> The prepared values.
 	 */
 	public static function prepare_field_values_for_save( array $values, array $entry, array $form ): array {
 		// We need the entry fresh to prepare the values.
@@ -315,6 +319,8 @@ class UpdateEntry extends AbstractMutation {
 	 * @param array<string,mixed>     $post_data .
 	 * @param array<string,mixed>     $form The form array.
 	 * @param array<int|string,mixed> $entry .
+	 *
+	 * @return array<string,mixed> The post data.
 	 */
 	public static function set_post_id_for_update( array $post_data, array $form, array $entry ): array {
 		$post_data['ID'] = $entry['post_id'];

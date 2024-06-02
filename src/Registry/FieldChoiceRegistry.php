@@ -105,7 +105,7 @@ class FieldChoiceRegistry {
 	 * @param \GF_Field $field The Gravity Forms field object.
 	 * @param string[]  $settings The Gravity Forms field settings.
 	 *
-	 * @return array<string,mixed>
+	 * @return array{description:string,interfaces:string[],fields:array<string,array<string,mixed>>,eagerlyLoadType:bool}
 	 */
 	public static function get_config_from_settings( string $choice_name, GF_Field $field, array $settings ): array {
 		$interfaces = self::get_interfaces( $settings );

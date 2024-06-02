@@ -26,7 +26,7 @@ class ConsentValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array<string,mixed>
 	 */
 	public $value;
 
@@ -40,7 +40,7 @@ class ConsentValueInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @return array
+	 * @return array<int|string,mixed>
 	 */
 	protected function prepare_value() {
 		$field = $this->field;

@@ -327,6 +327,8 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 * Correctly formats the field filters for search criteria.
 	 *
 	 * @param array<string,mixed>[] $field_filters The field filters.
+	 *
+	 * @return array{key?:string,operator:string,value:mixed}[]
 	 */
 	private function format_field_filters( array $field_filters ): array {
 		return array_reduce(
