@@ -301,9 +301,9 @@ class GFUtils {
 	 *
 	 * @param array<string,mixed>     $form .
 	 * @param array<int|string,mixed> $entry .
-	 * @param array                   $field_values .
+	 * @param ?array<string,mixed>    $field_values .
 	 * @param int                     $page_number .
-	 * @param array                   $files .
+	 * @param mixed[]                 $files .
 	 * @param string                  $form_unique_id .
 	 * @param string                  $ip .
 	 * @param string                  $source_url .
@@ -343,11 +343,11 @@ class GFUtils {
 	 *
 	 * @see https://docs.gravityforms.com/api-functions/#submit-form
 	 *
-	 * @param int   $form_id .
-	 * @param array $input_values .
-	 * @param array $field_values .
-	 * @param int   $target_page .
-	 * @param int   $source_page .
+	 * @param int                 $form_id .
+	 * @param array<string,mixed> $input_values .
+	 * @param array<string,mixed> $field_values .
+	 * @param int                 $target_page .
+	 * @param int                 $source_page .
 	 *
 	 * @return array<int|string,mixed> The submission object.
 	 *

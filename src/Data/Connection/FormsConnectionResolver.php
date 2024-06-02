@@ -41,14 +41,7 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Validates Model.
-	 *
-	 * If model isn't a class with a `fields` member, this function with have be overridden in
-	 * the Connection class.
-	 *
-	 * @param mixed $model model.
-	 *
-	 * @return bool
+	 * {@inheritDoc}
 	 */
 	protected function is_valid_model( $model ) {
 		return ! empty( $model->databaseId );

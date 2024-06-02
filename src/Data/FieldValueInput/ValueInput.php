@@ -31,6 +31,8 @@ class ValueInput extends AbstractFieldValueInput {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @return string
 	 */
 	protected function prepare_value() {
 		// Handle choices with price.
@@ -44,7 +46,7 @@ class ValueInput extends AbstractFieldValueInput {
 
 		if ( 'total' === $this->field->type ) {
 			// Convert to number so draft updates dont return the currency.
-			return GFCommon::to_number( $this->args );
+			return (string) GFCommon::to_number( $this->args );
 		}
 
 		return $this->args;

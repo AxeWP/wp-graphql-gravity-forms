@@ -20,14 +20,14 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array{inputId:float,value:string}[]
 	 */
 	protected $args;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array<string,string>
 	 */
 	public $value;
 
@@ -41,7 +41,7 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
@@ -65,7 +65,7 @@ class CheckboxValuesInput extends AbstractFieldValueInput {
 						// translators: field ID, input ID.
 						esc_html__( 'Field %1$s has no input with an id of %2$s.', 'wp-graphql-gravity-forms' ),
 						esc_html( $this->field->id ),
-						esc_html( $single_value['inputId'] ),
+						esc_html( (string) $single_value['inputId'] ),
 					)
 				);
 			}

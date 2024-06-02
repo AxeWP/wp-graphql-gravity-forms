@@ -20,7 +20,7 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @var array
+	 * @var array{error:int,name:string,size:int,tmp_name:string,type:string}[]
 	 */
 	protected $args;
 
@@ -37,11 +37,8 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 	 * @return string|mixed
 	 *
 	 * @throws \GraphQL\Error\UserError
-	 *
-	 * @return string|mixed
 	 */
 	protected function prepare_value() {
-		// Draft entries don't upload files.
 		if ( $this->is_draft ) {
 			return '';
 		}
@@ -66,8 +63,6 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @param array $field_values.
 	 */
 	public function add_value_to_submission( array &$field_values ): void {
 		if ( empty( $this->entry ) || $this->is_draft || ! empty( $this->field->multipleFields ) ) {
