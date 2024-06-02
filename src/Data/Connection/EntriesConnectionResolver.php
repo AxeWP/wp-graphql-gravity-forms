@@ -179,11 +179,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	}
 
 	/**
-	 * Validates Model.
-	 *
-	 * @param mixed $model model.
-	 *
-	 * @return bool
+	 * {@inheritDoc}
 	 */
 	protected function is_valid_model( $model ) {
 		return ! empty( $model->databaseId ) || ! empty( $model->resumeToken );
@@ -394,7 +390,7 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 	 *
 	 * @param array<string,mixed> $field_filter Field filter.
 	 *
-	 * @return string[]
+	 * @return mixed[]
 	 */
 	private function get_field_filter_value_fields( array $field_filter ): array {
 		return array_values(
