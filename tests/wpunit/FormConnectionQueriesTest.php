@@ -222,7 +222,7 @@ class FormConnectionQueriesTest extends GFGraphQLTestCase {
 		$this->assertEquals( true, $actual['data']['gfForms']['pageInfo']['hasNextPage'] );
 
 		/**
-		 * Test the last two results are equal to `last:2`.
+		 * Test the last two results are equal to `first:2`.
 		 */
 		$variables = [
 			'first' => 2,

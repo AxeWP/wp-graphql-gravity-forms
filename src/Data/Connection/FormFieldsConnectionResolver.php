@@ -67,7 +67,7 @@ class FormFieldsConnectionResolver extends AbstractConnectionResolver {
 	 */
 	public function is_valid_offset( $offset ) {
 		foreach ( $this->form_fields as $field ) {
-			if ( $field->id === $offset ) {
+			if ( (int) $field->id === (int) $offset ) {
 				return true;
 			}
 		}
@@ -87,7 +87,41 @@ class FormFieldsConnectionResolver extends AbstractConnectionResolver {
 
 		$ids = [];
 		foreach ( $queried as $item ) {
-			$ids[ $item->id ] = $item->id;
+			$ids[ (int) $item->id ] = $item->id;
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function apply_cursors_to_ids( array $ids ) {
+		if ( empty( $ids ) ) {
+			return [];
+		}
+		$args = $this->get_args();
+
+		// First we slice the array from the front.
+		if ( ! empty( $args['after'] ) ) {
+			$offset = $this->get_offset_for_cursor( $args['after'] );
+			$index  = $this->get_array_index_for_offset( $offset, $ids );
+
+			if ( false !== $index ) {
+				// We want to start with the first id after the index.
+				$ids = array_slice( $ids, $index + 1, null, true );
+			}
+		}
+
+		// Then we slice the array from the back.
+		if ( ! empty( $args['before'] ) ) {
+			$offset = $this->get_offset_for_cursor( $args['before'] );
+			$index  = $this->get_array_index_for_offset( $offset, $ids );
+
+			if ( false !== $index ) {
+				// We want to end with the id before the index.
+				$ids = array_slice( $ids, 0, $index, true );
+			}
 		}
 
 		return $ids;
@@ -97,25 +131,31 @@ class FormFieldsConnectionResolver extends AbstractConnectionResolver {
 	 * {@inheritDoc}
 	 */
 	protected function prepare_args( array $args ): array {
-		// Ensure that the ids are an array.
-		if ( isset( $args['where']['ids'] ) && ! is_array( $args['where']['ids'] ) ) {
-			$args['where']['ids'] = [ $args['where']['ids'] ];
+			// Ensure that the ids are an array of ints.
+		if ( isset( $args['where']['ids'] ) ) {
+			if ( ! is_array( $args['where']['ids'] ) ) {
+				$args['where']['ids'] = [ $args['where']['ids'] ];
+			}
 
 			// Sanitize the IDs.
 			$args['where']['ids'] = array_map( 'absint', $args['where']['ids'] );
 		}
 
-		// Ensure that Admin labels are an array.
-		if ( isset( $args['where']['adminLabels'] ) && ! is_array( $args['where']['adminLabels'] ) ) {
-			$args['where']['adminLabels'] = [ $args['where']['adminLabels'] ];
+		// Ensure that Admin labels are an array of strings.
+		if ( isset( $args['where']['adminLabels'] ) ) {
+			if ( ! is_array( $args['where']['adminLabels'] ) ) {
+				$args['where']['adminLabels'] = [ $args['where']['adminLabels'] ];
+			}
 
 			// Sanitize the Admin labels.
 			$args['where']['adminLabels'] = array_map( 'sanitize_text_field', $args['where']['adminLabels'] );
 		}
 
-		// Ensure that Field types are an array.
-		if ( isset( $args['where']['fieldTypes'] ) && ! is_array( $args['where']['fieldTypes'] ) ) {
-			$args['where']['fieldTypes'] = [ $args['where']['fieldTypes'] ];
+		// Ensure that Field types are an array of strings.
+		if ( isset( $args['where']['fieldTypes'] ) ) {
+			if ( ! is_array( $args['where']['fieldTypes'] ) ) {
+				$args['where']['fieldTypes'] = [ $args['where']['fieldTypes'] ];
+			}
 
 			// Sanitize the Field types.
 			$args['where']['fieldTypes'] = array_map( 'sanitize_text_field', $args['where']['fieldTypes'] );
@@ -149,22 +189,40 @@ class FormFieldsConnectionResolver extends AbstractConnectionResolver {
 
 		// Filter by IDs.
 		if ( ! empty( $query_args['ids'] ) ) {
-			$fields = array_filter( $fields, static fn ( $field ) => in_array( (int) $field['id'], $query_args['ids'], true ) );
+			$fields = array_filter( $fields, static fn ( \GF_Field $field ) => isset( $field->id ) && in_array( (int) $field->id, $query_args['ids'], true ) );
 		}
 
 		// Filter by Admin labels.
 		if ( ! empty( $query_args['adminLabels'] ) ) {
-			$fields = array_filter( $fields, static fn ( $field ) => in_array( $field['adminLabel'], $query_args['adminLabels'], true ) );
+			$fields = array_filter( $fields, static fn ( \GF_Field $field ) => isset( $field->adminLabel ) && in_array( $field->adminLabel, $query_args['adminLabels'], true ) );
 		}
 
 		// Filter by Field types.
 		if ( ! empty( $query_args['fieldTypes'] ) ) {
-			$fields = array_filter( $fields, static fn ( $field ) => in_array( $field['type'], $query_args['fieldTypes'], true ) );
+			$fields = array_filter( $fields, static fn ( \GF_Field $field ) => isset( $field->type ) && in_array( $field->type, $query_args['fieldTypes'], true ) );
 		}
 
 		// Filter by Page number.
+		$has_page_number = false;
 		if ( ! empty( $query_args['pageNumber'] ) ) {
-			$fields = array_filter( $fields, static fn ( $field ) => $query_args['pageNumber'] === (int) $field['pageNumber'] );
+			$filtered_fields = array_filter(
+				$fields,
+				static function ( \GF_Field $field ) use ( $query_args, &$has_page_number ) {
+					if ( ! isset( $field->pageNumber ) ) {
+						return false;
+					}
+
+					// Set the flag to true if the page number is found.
+					$has_page_number = true;
+
+					return $query_args['pageNumber'] === (int) $field->pageNumber;
+				}
+			);
+
+			// Dont use filtered fileds if the form isnt paged.
+			if ( $has_page_number || 1 < $query_args['pageNumber'] ) {
+				$fields = $filtered_fields;
+			}
 		}
 
 		return $fields;
