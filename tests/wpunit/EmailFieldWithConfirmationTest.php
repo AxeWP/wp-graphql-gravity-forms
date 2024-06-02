@@ -58,7 +58,7 @@ class EmailFieldWithConfirmationTest extends FormFieldTestCase implements FormFi
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
 	public function generate_fields(): array {
-		$field = 	$this->factory->field->create( 
+		$field = $this->factory->field->create(
 			array_merge(
 				$this->property_helper->values,
 				[ 'emailConfirmEnabled' => true ],

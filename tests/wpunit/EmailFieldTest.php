@@ -70,15 +70,15 @@ class EmailFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 
 		// Mimic the Form Field model.
 		// $field->inputs = [
-		// 	[
-		// 		'autocompleteAttribute' => $field->autocompleteAttribute ?? null,
-		// 		'defaultValue'          => $field->defaultValue ?? null,
-		// 		'customLabel'           => $field->customLabel ?? null,
-		// 		'id'                    => $field->id ?? null,
-		// 		'label'                 => $field->label ?? null,
-		// 		'name'                  => $field->inputName ?? null,
-		// 		'placeholder'           => $field->placeholder ?? null,
-		// 	]
+		// [
+		// 'autocompleteAttribute' => $field->autocompleteAttribute ?? null,
+		// 'defaultValue'          => $field->defaultValue ?? null,
+		// 'customLabel'           => $field->customLabel ?? null,
+		// 'id'                    => $field->id ?? null,
+		// 'label'                 => $field->label ?? null,
+		// 'name'                  => $field->inputName ?? null,
+		// 'placeholder'           => $field->placeholder ?? null,
+		// ]
 		// ];
 
 		return [ $field ];
