@@ -47,6 +47,7 @@ class ComposerStaticInit15520cc730459b54805c9b10144520df
         'WPGraphQL\\GF\\Data\\FieldValueInput\\ListValuesInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/ListValuesInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\NameValuesInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/NameValuesInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\ProductValueInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/ProductValueInput.php',
+        'WPGraphQL\\GF\\Data\\FieldValueInput\\RadioValueInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/RadioValueInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\ValueInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/ValueInput.php',
         'WPGraphQL\\GF\\Data\\FieldValueInput\\ValuesInput' => __DIR__ . '/../..' . '/src/Data/FieldValueInput/ValuesInput.php',
         'WPGraphQL\\GF\\Data\\Loader\\DraftEntriesLoader' => __DIR__ . '/../..' . '/src/Data/Loader/DraftEntriesLoader.php',

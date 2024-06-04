@@ -40,6 +40,11 @@ class FieldValues {
 						return null;
 					}
 
+					// If its a radio field with a "other" choice on a draft entry, the value is stored in a different field.
+					if ( 'radio' === $source->inputType && isset( $context->gfEntry->entry[ $source->databaseId ] ) && 'gf_other_choice' === $context->gfEntry->entry[ $source->databaseId ] && isset( $context->gfEntry->entry[ $source->databaseId . '_other' ] ) ) {
+						return $context->gfEntry->entry[ $source->databaseId . '_other' ];
+					}
+
 					return $source->gfField->get_value_export( $context->gfEntry->entry, (string) $source->databaseId ) ?: null;
 				},
 			],

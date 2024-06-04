@@ -5,6 +5,7 @@
 - feat!: Implement `FormField` model and `DataLoader`, and refactor `FormFieldsConnectionResolver` to extend `AbstractConnectionResolver`.
 - feat!: Refactor `FormsConnectionResolver` and `EntriesConnectionResolver` for compatibility with WPGraphQL v1.26.0 improvements.
 - feat!: Narrow `FormField.choices` and `FormField.inputs` field types to their implementations.
+- fix: Handle RadioField submission values when using a custom "other" choice. H/t @Gytjarek .
 - dev: Use `FormFieldsDataLoader` to resolve fields instead of instantiating a new `Model`.
 - chore: Add iterable type hints.
 - chore!: Bump minimum WPGraphQL version to v1.26.0.

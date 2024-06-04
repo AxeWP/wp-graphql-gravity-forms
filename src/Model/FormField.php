@@ -25,6 +25,7 @@ use WPGraphQL\Model\Model;
  * @property int                   $databaseId The database ID of the field.
  * @property string                $id         The global Relay ID of the field.
  * @property array<string,mixed>[] $inputs     The inputs for the field.
+ * @property string                $inputType  The input type of the field.
  * @property \GF_Field             $gfField    The Gravity Forms field object.
  * @property int                   $layoutGridColumSpan The layout grid column span of the field.
  */
@@ -224,6 +225,7 @@ class FormField extends Model {
 				);
 			},
 			'databaseId'          => static fn (): int => (int) $data->id,
+			'gfField'             => static fn (): GF_Field => $data,
 			'id'                  => static fn (): string => Relay::toGlobalId( FormFieldsLoader::$name, $data->formId . ':' . $data->id ),
 			'inputs'              => static function () use ( $data ): ?array {
 				// Emails fields are handled later.
@@ -269,7 +271,7 @@ class FormField extends Model {
 
 				return $inputs;
 			},
-			'gfField'             => static fn (): GF_Field => $data,
+			'inputType'           => static fn (): string => $data->get_input_type(),
 			'layoutGridColumSpan' => static fn (): ?int => ! empty( $data->layoutGridColumnSpan ) ? (int) $data->layoutGridColumnSpan : null,
 		];
 	}
