@@ -28,6 +28,7 @@ return array(
     'WPGraphQL\\GF\\Data\\FieldValueInput\\ListValuesInput' => $baseDir . '/src/Data/FieldValueInput/ListValuesInput.php',
     'WPGraphQL\\GF\\Data\\FieldValueInput\\NameValuesInput' => $baseDir . '/src/Data/FieldValueInput/NameValuesInput.php',
     'WPGraphQL\\GF\\Data\\FieldValueInput\\ProductValueInput' => $baseDir . '/src/Data/FieldValueInput/ProductValueInput.php',
+    'WPGraphQL\\GF\\Data\\FieldValueInput\\RadioValueInput' => $baseDir . '/src/Data/FieldValueInput/RadioValueInput.php',
     'WPGraphQL\\GF\\Data\\FieldValueInput\\ValueInput' => $baseDir . '/src/Data/FieldValueInput/ValueInput.php',
     'WPGraphQL\\GF\\Data\\FieldValueInput\\ValuesInput' => $baseDir . '/src/Data/FieldValueInput/ValuesInput.php',
     'WPGraphQL\\GF\\Data\\Loader\\DraftEntriesLoader' => $baseDir . '/src/Data/Loader/DraftEntriesLoader.php',

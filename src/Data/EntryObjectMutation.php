@@ -71,6 +71,9 @@ class EntryObjectMutation {
 			case 'calculation':
 				$field_value_input = FieldValueInput\ProductValueInput::class;
 				break;
+			case 'radio':
+				$field_value_input = FieldValueInput\RadioValueInput::class;
+				break;
 			case 'date':
 			case 'hidden':
 			case 'number':
@@ -79,7 +82,6 @@ class EntryObjectMutation {
 			case 'post_excerpt':
 			case 'post_title':
 			case 'price':
-			case 'radio':
 			case 'select':
 			case 'text':
 			case 'textarea':

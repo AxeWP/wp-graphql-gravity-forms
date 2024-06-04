@@ -995,7 +995,6 @@ class Wpunit extends \Codeception\Module {
 			'description',
 			'descriptionPlacement',
 			'enableChoiceValue',
-			'enableOtherChoice',
 			'errorMessage',
 			'inputName',
 			'isRequired',

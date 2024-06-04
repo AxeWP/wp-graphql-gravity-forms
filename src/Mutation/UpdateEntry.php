@@ -290,6 +290,11 @@ class UpdateEntry extends AbstractMutation {
 			$field_id   = strtok( (string) $id, '.' );
 			$field      = GFUtils::get_field_by_id( $form, (int) $field_id );
 
+			// Radio fields use the `_other` field for the other choice.
+			if ( 'radio' === $field->get_input_type() && 'gf_other_choice' === $value ) {
+				$value = $values[ $id . '_other' ];
+			}
+
 			// Post images can sometimes already be prepared.
 			if ( 'post_image' !== $field->type || is_array( $value ) ) {
 				$value = GFFormsModel::prepare_value( $form, $field, $value, $input_name, $entry['id'], $entry );
