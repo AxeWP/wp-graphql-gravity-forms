@@ -215,12 +215,17 @@ class FormFieldsConnectionResolver extends AbstractConnectionResolver {
 					// Set the flag to true if the page number is found.
 					$has_page_number = true;
 
+					// PageFields use the next page number.
+					if ( $field instanceof \GF_Field_Page ) {
+						return $field->pageNumber === $query_args['pageNumber'] + 1;
+					}
+
 					return $query_args['pageNumber'] === (int) $field->pageNumber;
 				}
 			);
 
-			// Dont use filtered fileds if the form isnt paged.
-			if ( $has_page_number || 1 < $query_args['pageNumber'] ) {
+			// Dont use filtered filds if the form isnt paged.
+			if ( $has_page_number ) {
 				$fields = $filtered_fields;
 			}
 		}
