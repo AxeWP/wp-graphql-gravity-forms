@@ -79,50 +79,6 @@ class FormFieldConnectionQueriesTest extends GFGraphQLTestCase {
 		return $fields;
 	}
 
-	private function create_fields_for_paged_form( int $pages = 1 ): array {
-		$fields      = [];
-		$field_count = 0;
-		for ( $i = 0; $i < $pages; $i++ ) {
-			$fields[] = $this->factory->field->create(
-				array_merge(
-					$this->tester->getPropertyHelper( 'TextField' )->values,
-					[
-						'id' => ++$field_count,
-					]
-				)
-			);
-			$fields[] = $this->factory->field->create(
-				array_merge(
-					$this->tester->getPropertyHelper( 'NumberField' )->values,
-					[
-						'id' => ++$field_count,
-					]
-				)
-			);
-			$fields[] = $this->factory->field->create(
-				array_merge(
-					$this->tester->getPropertyHelper( 'RadioField' )->values,
-					[
-						'id' => ++$field_count,
-					]
-				)
-			);
-
-			// Add a page field if we are not on the last page.
-			if ( $i < $pages - 1 ) {
-				$fields[] = $this->factory->field->create(
-					array_merge(
-						$this->tester->getPropertyHelper( 'PageField' )->values,
-						[
-							'id' => ++$field_count,
-						]
-					)
-				);
-			}
-		}
-		return $fields;
-	}
-
 	public function getQuery(): string {
 		return '
 			query FormFields($formId: ID!, $first: Int, $last: Int, $after: String, $before: String, $where: GfFormToFormFieldConnectionWhereArgs) {
