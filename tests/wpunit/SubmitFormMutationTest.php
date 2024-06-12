@@ -55,6 +55,8 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		$this->assertCount( 1, $actual['data']['submitGfForm']['errors'] );
 		$this->assertNotEmpty( $actual['data']['submitGfForm']['errors'][0]['id'] );
 		$this->assertNotEmpty( $actual['data']['submitGfForm']['errors'][0]['message'] );
+		$this->assertNotEmpty( $actual['data']['submitGfForm']['errors'][0]['connectedFormField'] );
+		$this->assertEquals( $actual['data']['submitGfForm']['errors'][0]['id'], $actual['data']['submitGfForm']['errors'][0]['connectedFormField']['databaseId'] );
 	}
 
 	public function testSubmitForm(): void {
@@ -827,6 +829,10 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 				errors {
 					id
 					message
+					connectedFormField {
+						databaseId
+						type
+					}
 				}
 				resumeUrl
 			}

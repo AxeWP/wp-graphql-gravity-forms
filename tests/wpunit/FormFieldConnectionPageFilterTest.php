@@ -135,8 +135,6 @@ class FormFieldConnectionPageFilterTest extends GFGraphQLTestCase {
 		$form     = GFAPI::get_form( $this->form_id );
 		$wp_query = $form['fields'];
 
-		error_log( print_r( $wp_query, true ) );
-
 		/**
 		 * Test with empty offset.
 		 */

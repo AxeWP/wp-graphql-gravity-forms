@@ -246,6 +246,10 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -281,6 +285,10 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -310,6 +318,10 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

@@ -140,6 +140,10 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -171,6 +175,10 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -196,6 +204,10 @@ class MultiSelectFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

@@ -139,6 +139,10 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -170,6 +174,10 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -195,6 +203,10 @@ class NumberFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

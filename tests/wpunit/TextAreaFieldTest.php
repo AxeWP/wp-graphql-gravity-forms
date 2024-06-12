@@ -133,6 +133,10 @@ class TextAreaFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -164,6 +168,10 @@ class TextAreaFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -189,6 +197,10 @@ class TextAreaFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

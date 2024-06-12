@@ -177,6 +177,10 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -215,6 +219,10 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -247,6 +255,10 @@ class AddressFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

@@ -27,8 +27,12 @@ You can update a [Gravity Forms entry](https://docs.gravityforms.com/entry-objec
     }
   ) {
     errors {
-      id # The field that failed validation.
+      id # The field ID that failed validation.
       message
+      connectedFormField { # The full FormField object if you need more info.
+        id
+        type
+      }
     }
     entry {
       # See above section on querying Entries.

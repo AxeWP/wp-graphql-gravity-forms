@@ -203,6 +203,10 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -234,6 +238,10 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -259,6 +267,10 @@ class PostCategoryFieldSelectTest extends FormFieldTestCase implements FormField
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

@@ -208,6 +208,10 @@ class OptionSelectFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -239,6 +243,10 @@ class OptionSelectFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -265,6 +273,10 @@ class OptionSelectFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

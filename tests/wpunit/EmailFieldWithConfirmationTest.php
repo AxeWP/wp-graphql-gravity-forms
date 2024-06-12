@@ -191,6 +191,10 @@ class EmailFieldWithConfirmationTest extends FormFieldTestCase implements FormFi
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -222,6 +226,10 @@ class EmailFieldWithConfirmationTest extends FormFieldTestCase implements FormFi
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -247,6 +255,10 @@ class EmailFieldWithConfirmationTest extends FormFieldTestCase implements FormFi
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

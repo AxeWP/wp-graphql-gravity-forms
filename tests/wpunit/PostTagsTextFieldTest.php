@@ -168,6 +168,10 @@ class PostTagsTextFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -199,6 +203,10 @@ class PostTagsTextFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -224,6 +232,10 @@ class PostTagsTextFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

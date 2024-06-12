@@ -177,6 +177,10 @@ class ShippingSelectFieldTest extends FormFieldTestCase implements FormFieldTest
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -208,6 +212,10 @@ class ShippingSelectFieldTest extends FormFieldTestCase implements FormFieldTest
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -233,6 +241,10 @@ class ShippingSelectFieldTest extends FormFieldTestCase implements FormFieldTest
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

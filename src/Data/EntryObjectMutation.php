@@ -119,12 +119,13 @@ class EntryObjectMutation {
 	 *
 	 * @return array{message:string,id:int|string}[]
 	 */
-	public static function get_submission_errors( array $messages ): array {
+	public static function get_submission_errors( array $messages, int $form_id ): array {
 		return array_map(
-			static function ( $id, $message ): array {
+			static function ( $id, $message ) use ( $form_id ): array {
 				return [
 					'id'      => $id,
 					'message' => $message,
+					'formId'  => $form_id,
 				];
 			},
 			array_keys( $messages ),

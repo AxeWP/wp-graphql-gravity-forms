@@ -212,6 +212,10 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -243,6 +247,10 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -268,6 +276,10 @@ class PostTagsMultiSelectFieldTest extends FormFieldTestCase implements FormFiel
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

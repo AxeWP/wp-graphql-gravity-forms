@@ -106,7 +106,7 @@ class SubmitDraftEntry extends AbstractMutation {
 			return [
 				'confirmation' => isset( $result['confirmation_type'] ) ? EntryObjectMutation::get_submission_confirmation( $result ) : null,
 				'entryId'      => ! empty( $result['entry_id'] ) ? absint( $result['entry_id'] ) : null,
-				'errors'       => isset( $result['validation_messages'] ) ? EntryObjectMutation::get_submission_errors( $result['validation_messages'] ) : null,
+				'errors'       => isset( $result['validation_messages'] ) ? EntryObjectMutation::get_submission_errors( $result['validation_messages'], (int) $form['id'] ) : null,
 			];
 		};
 	}

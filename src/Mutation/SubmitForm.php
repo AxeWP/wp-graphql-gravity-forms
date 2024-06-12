@@ -165,7 +165,7 @@ class SubmitForm extends AbstractMutation {
 			return [
 				'confirmation' => isset( $submission['confirmation_type'] ) ? EntryObjectMutation::get_submission_confirmation( $submission ) : null,
 				'entryId'      => ! empty( $submission['entry_id'] ) ? absint( $submission['entry_id'] ) : null,
-				'errors'       => isset( $submission['validation_messages'] ) ? EntryObjectMutation::get_submission_errors( $submission['validation_messages'] ) : null,
+				'errors'       => isset( $submission['validation_messages'] ) ? EntryObjectMutation::get_submission_errors( $submission['validation_messages'], $form_id ) : null,
 				'resumeToken'  => $submission['resume_token'] ?? null,
 				'resumeUrl'    => isset( $submission['resume_token'] ) ? GFUtils::get_resume_url( $submission['resume_token'], $entry_data['source_url'] ?? '', $form ) : null,
 				'submission'   => $submission,

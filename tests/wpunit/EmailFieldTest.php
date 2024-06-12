@@ -186,6 +186,10 @@ class EmailFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -217,6 +221,10 @@ class EmailFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -242,6 +250,10 @@ class EmailFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

@@ -202,6 +202,10 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -233,6 +237,10 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -259,6 +267,10 @@ class QuantityNumberFieldTest extends FormFieldTestCase implements FormFieldTest
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {
