@@ -188,6 +188,10 @@ class QuizSelectFieldTest extends FormFieldTestCase implements FormFieldTestCase
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -219,6 +223,10 @@ class QuizSelectFieldTest extends FormFieldTestCase implements FormFieldTestCase
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -244,6 +252,10 @@ class QuizSelectFieldTest extends FormFieldTestCase implements FormFieldTestCase
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

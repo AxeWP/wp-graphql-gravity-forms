@@ -187,6 +187,10 @@ class SubmitDraftEntryMutationTest extends GFGraphQLTestCase {
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					confirmation {
 						message

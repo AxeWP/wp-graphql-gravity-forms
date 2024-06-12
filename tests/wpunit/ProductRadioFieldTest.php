@@ -190,6 +190,10 @@ class ProductRadioFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -225,6 +229,10 @@ class ProductRadioFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -254,6 +262,10 @@ class ProductRadioFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

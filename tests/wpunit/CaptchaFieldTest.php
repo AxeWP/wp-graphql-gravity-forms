@@ -182,6 +182,10 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields(where:{fieldTypes:TEXT}) {
@@ -213,6 +217,10 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -238,6 +246,10 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields (where:{fieldTypes:TEXT}){

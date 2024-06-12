@@ -130,6 +130,10 @@ class PostExcerptFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -161,6 +165,10 @@ class PostExcerptFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -186,6 +194,10 @@ class PostExcerptFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

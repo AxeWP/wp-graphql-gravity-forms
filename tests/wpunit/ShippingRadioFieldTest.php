@@ -171,6 +171,10 @@ class ShippingRadioFieldTest extends FormFieldTestCase implements FormFieldTestC
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -202,6 +206,10 @@ class ShippingRadioFieldTest extends FormFieldTestCase implements FormFieldTestC
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -227,6 +235,10 @@ class ShippingRadioFieldTest extends FormFieldTestCase implements FormFieldTestC
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

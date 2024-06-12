@@ -271,6 +271,10 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -309,6 +313,10 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -341,6 +349,10 @@ class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseI
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

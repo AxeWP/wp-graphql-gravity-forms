@@ -292,6 +292,10 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -327,6 +331,10 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -356,6 +364,10 @@ class PostTagsCheckboxFieldTest extends FormFieldTestCase implements FormFieldTe
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

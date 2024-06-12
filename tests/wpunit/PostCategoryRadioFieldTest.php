@@ -200,6 +200,10 @@ class PostCategoryFieldRadioTest extends FormFieldTestCase implements FormFieldT
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -231,6 +235,10 @@ class PostCategoryFieldRadioTest extends FormFieldTestCase implements FormFieldT
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -256,6 +264,10 @@ class PostCategoryFieldRadioTest extends FormFieldTestCase implements FormFieldT
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

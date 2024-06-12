@@ -112,6 +112,10 @@ class HiddenFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -143,6 +147,10 @@ class HiddenFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -169,6 +177,10 @@ class HiddenFieldTest extends FormFieldTestCase implements FormFieldTestCaseInte
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

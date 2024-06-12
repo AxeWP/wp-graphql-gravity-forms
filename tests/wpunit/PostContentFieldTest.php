@@ -132,6 +132,10 @@ class PostContentFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -163,6 +167,10 @@ class PostContentFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -188,6 +196,10 @@ class PostContentFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

@@ -176,6 +176,10 @@ class TotalFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -210,6 +214,10 @@ class TotalFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -239,6 +247,10 @@ class TotalFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

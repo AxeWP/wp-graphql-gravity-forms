@@ -142,6 +142,10 @@ class RadioFieldOtherChoice extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -173,6 +177,10 @@ class RadioFieldOtherChoice extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -198,6 +206,10 @@ class RadioFieldOtherChoice extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

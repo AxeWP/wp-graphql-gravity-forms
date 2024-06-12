@@ -258,6 +258,10 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -307,6 +311,10 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -336,6 +344,10 @@ class CheckboxFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

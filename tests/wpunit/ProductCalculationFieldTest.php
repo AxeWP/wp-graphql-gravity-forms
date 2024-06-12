@@ -194,6 +194,10 @@ class ProductCalculationFieldTest extends FormFieldTestCase implements FormField
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -229,6 +233,10 @@ class ProductCalculationFieldTest extends FormFieldTestCase implements FormField
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -258,6 +266,10 @@ class ProductCalculationFieldTest extends FormFieldTestCase implements FormField
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

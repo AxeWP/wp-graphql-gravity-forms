@@ -366,6 +366,10 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -415,6 +419,10 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -444,6 +452,10 @@ class PostCategoryCheckboxFieldTest extends FormFieldTestCase implements FormFie
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

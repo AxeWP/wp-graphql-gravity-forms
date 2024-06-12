@@ -135,6 +135,10 @@ class RadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -166,6 +170,10 @@ class RadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -191,6 +199,10 @@ class RadioFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

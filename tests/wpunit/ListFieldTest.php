@@ -168,6 +168,10 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -201,6 +205,10 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -228,6 +236,10 @@ class ListFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterf
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

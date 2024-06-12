@@ -11,6 +11,9 @@ declare( strict_types = 1 );
 
 namespace WPGraphQL\GF\Type\WPObject;
 
+use WPGraphQL\AppContext;
+use WPGraphQL\GF\Data\Loader\FormFieldsLoader;
+use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 
 /**
@@ -36,13 +39,26 @@ class FieldError extends AbstractObject {
 	 */
 	public static function get_fields(): array {
 		return [
-			'id'      => [
+			'id'                 => [
 				'type'        => 'Float',
 				'description' => __( 'The field with the associated error message.', 'wp-graphql-gravity-forms' ),
 			],
-			'message' => [
+			'message'            => [
 				'type'        => 'String',
 				'description' => __( 'Error message.', 'wp-graphql-gravity-forms' ),
+			],
+			'connectedFormField' => [
+				'type'        => FormField::$type,
+				'description' => __( 'The form field that the error is connected to.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
+					if ( ! isset( $source['id'] ) || ! isset( $source['formId'] ) ) {
+						return null;
+					}
+
+					$id_for_loader = (string) $source['formId'] . ':' . (string) $source['id'];
+
+					return $context->get_loader( FormFieldsLoader::$name )->load_deferred( $id_for_loader );
+				},
 			],
 		];
 	}

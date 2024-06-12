@@ -121,8 +121,12 @@ The `fieldValues` input takes an array of objects containing the `id` of the fie
       url     # The redirect URL - if the confirmation type is a "REDIRECT".
     }
     errors {
-      id # The field that failed validation.
+      id # The field ID that failed validation.
       message
+      connectedFormField { # The full FormField object if you need more info.
+        database
+        type
+      }
     }
     entry {
       # See docs on querying Entries.
@@ -150,7 +154,11 @@ If the field is NOT updated successfully, such as when a field validation error 
 "errors": [
   {
     "id": "1",
-    "message": "The text entered exceeds the maximum number of characters."
+    "message": "The text entered exceeds the maximum number of characters.",
+    "connectedFormField": {
+      "database": 1,
+      "type": "TEXT"
+    }
   }
 ]
 ```

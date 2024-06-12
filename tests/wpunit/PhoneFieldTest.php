@@ -134,6 +134,10 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -165,6 +169,10 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -190,6 +198,10 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {

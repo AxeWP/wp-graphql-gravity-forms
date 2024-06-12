@@ -158,6 +158,10 @@ class ProductPriceFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -193,6 +197,10 @@ class ProductPriceFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry {
 						formFields {
@@ -222,6 +230,10 @@ class ProductPriceFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					errors {
 						id
 						message
+						connectedFormField {
+							databaseId
+							type
+						}
 					}
 					entry: draftEntry {
 						formFields {
