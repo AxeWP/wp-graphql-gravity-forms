@@ -22,7 +22,7 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 
 		wp_set_current_user( $this->admin->ID );
 
-		$this->fields = $this->generate_form_fields();
+		$this->fields  = $this->generate_form_fields();
 		$this->form_id = $this->factory->form->create(
 			array_merge(
 				[ 'fields' => $this->fields ],
@@ -32,7 +32,6 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 
 		$this->clearSchema();
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -47,7 +46,7 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 
 	private function generate_form_fields(): array {
 		// This will increment as we use them.
-		$id = 1;
+		$id          = 1;
 		$page_number = 1;
 
 		return [
@@ -55,7 +54,7 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 				array_merge(
 					$this->tester->getPropertyHelper( 'NumberField' )->values,
 					[
-						'id' => $id++,
+						'id'         => $id++,
 						'pageNumber' => $page_number,
 						'isRequired' => true,
 					]
@@ -65,20 +64,20 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 				array_merge(
 					$this->tester->getPropertyHelper( 'PageField' )->values,
 					[
-						'id'         => $id++,
-						'pageNumber' => ++$page_number,
-						'isRequired' => false,
+						'id'               => $id++,
+						'pageNumber'       => ++$page_number,
+						'isRequired'       => false,
 						'conditionalLogic' => [
 							'actionType' => 'show',
-							'logicType' => 'all',
-							'rules' => [
+							'logicType'  => 'all',
+							'rules'      => [
 								[
-									'fieldId' => 1,
+									'fieldId'  => 1,
 									'operator' => 'is',
-									'value' => 2
-								]
-							]
-						]
+									'value'    => 2,
+								],
+							],
+						],
 					]
 				)
 			),
@@ -86,7 +85,7 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 				array_merge(
 					$this->tester->getPropertyHelper( 'NumberField' )->values,
 					[
-						'id' => $id++,
+						'id'         => $id++,
 						'pageNumber' => $page_number,
 						'isRequired' => true,
 					]
@@ -105,13 +104,13 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 				array_merge(
 					$this->tester->getPropertyHelper( 'NumberField' )->values,
 					[
-						'id' => $id++,
-						'pageNumber' => $page_number,
-						'isRequired' => true,
+						'id'           => $id++,
+						'pageNumber'   => $page_number,
+						'isRequired'   => true,
 						'defaultValue' => 'default value',
 					]
 				)
-			)
+			),
 		];
 	}
 
@@ -158,12 +157,12 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 			'input' => [
 				'id'          => $this->form_id,
 				'saveAsDraft' => false,
-			]
+			],
 		];
 
 		// Submit the first page with invalid value.
-		$variables['input']['sourcePage'] = 1;
-		$variables['input']['targetPage'] = 2;
+		$variables['input']['sourcePage']  = 1;
+		$variables['input']['targetPage']  = 2;
 		$variables['input']['fieldValues'] = [];
 
 		$actual = $this->graphql( compact( 'query', 'variables' ) );
@@ -173,12 +172,12 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 		$this->assertNotEmpty( $actual['data']['submitGfForm']['errors'] );
 		$this->assertEquals( 1, $actual['data']['submitGfForm']['targetPageNumber'], 'The target page number should be the invalid page' );
 
-		$this->clear_form_field_state();		
+		$this->clear_form_field_state();
 
 		// On a value that isnt 2, the 3rd page should be the target page.
 		$variables['input']['fieldValues'] = [
 			[
-				'id' => 1,
+				'id'    => 1,
 				'value' => '0',
 			],
 		];
@@ -200,7 +199,7 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 
 		$variables['input']['fieldValues'] = [
 			[
-				'id' => 1,
+				'id'    => 1,
 				'value' => '2',
 			],
 		];
@@ -244,7 +243,7 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 			$variables['input']['fieldValues'],
 			[
 				[
-					'id' => 3,
+					'id'    => 3,
 					'value' => '2',
 				],
 			]
@@ -284,7 +283,7 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 			$variables['input']['fieldValues'],
 			[
 				[
-					'id' => 5,
+					'id'    => 5,
 					'value' => '1',
 				],
 			]
@@ -298,14 +297,13 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 		$this->assertNull( $actual['data']['submitGfForm']['targetPageNumber'] );
 		$this->assertEmpty( $actual['data']['submitGfForm']['targetPageFormFields'] );
 
-
 		// Test as Draft.
 		$this->clear_form_field_state();
 
 		$variables['input']['saveAsDraft'] = true;
 		$variables['input']['fieldValues'] = [];
-		$variables['input']['sourcePage'] = 1;
-		$variables['input']['targetPage'] = 3;
+		$variables['input']['sourcePage']  = 1;
+		$variables['input']['targetPage']  = 3;
 
 		$actual = $this->graphql( compact( 'query', 'variables' ) );
 
@@ -324,7 +322,7 @@ class SubmitFormMultipageTest extends GFGraphQLTestCase {
 	private function clear_form_field_state(): void {
 		$form = GFAPI::get_form( $this->form_id );
 
-		foreach( $form['fields'] as $field ) {
+		foreach ( $form['fields'] as $field ) {
 			unset( $field->failed_validation );
 			unset( $field->validation_message );
 		}

@@ -122,9 +122,80 @@ class GFUtilsTest extends GFGraphQLTestCase {
 	 * Tests GFUtils::get_last_form_page().
 	 */
 	public function testGetLastFormPage(): void {
-		$this->markTestIncomplete(
-			'This test has not been implemented yet. Requires PageField arguments.'
+		// These will increment.
+		$id          = 1;
+		$page_number = 1;
+
+		$form_id = $this->factory->form->create(
+			array_merge(
+				[
+					'fields' => [
+						$this->factory->field->create(
+							array_merge(
+								$this->tester->getPropertyHelper( 'NumberField' )->values,
+								[
+									'id'         => $id++,
+									'pageNumber' => $page_number,
+									'isRequired' => true,
+								]
+							)
+						),
+						$this->factory->field->create(
+							array_merge(
+								$this->tester->getPropertyHelper( 'PageField' )->values,
+								[
+									'id'               => $id++,
+									'pageNumber'       => ++$page_number,
+									'isRequired'       => false,
+									'conditionalLogic' => [
+										'actionType' => 'show',
+										'logicType'  => 'all',
+										'rules'      => [
+											[
+												'fieldId'  => 1,
+												'operator' => 'is',
+												'value'    => 2,
+											],
+										],
+									],
+								]
+							)
+						),
+						$this->factory->field->create(
+							array_merge(
+								$this->tester->getPropertyHelper( 'NumberField' )->values,
+								[
+									'id'         => $id++,
+									'pageNumber' => $page_number,
+									'isRequired' => true,
+								]
+							)
+						),
+						$this->factory->field->create(
+							array_merge(
+								$this->tester->getPropertyHelper( 'PageField' )->values,
+								[
+									'id'         => $id++,
+									'pageNumber' => ++$page_number,
+								]
+							)
+						),
+					],
+				],
+				$this->tester->getFormDefaultArgs()
+			)
 		);
+
+		$expected = 3;
+
+		$form = $this->factory->form->get_object_by_id( $form_id );
+
+		$actual = GFUtils::get_last_form_page( $form );
+
+		$this->assertEquals( $expected, $actual );
+
+		// Cleanup.
+		$this->factory->form->delete( $form_id );
 	}
 
 	/**

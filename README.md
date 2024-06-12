@@ -3,7 +3,7 @@
 
 A WordPress plugin that adds <a href="https://wpgraphql.com" target="_blank">WPGraphQL</a> support for <a href="https://gravityforms.com" target="_blank">Gravity Forms</a>.
 
-* [Join the WPGraphQL community on Slack.](https://join.slack.com/t/wp-graphql/shared_invite/zt-3vloo60z-PpJV2PFIwEathWDOxCTTLA)
+* [Join the WPGraphQL community on Discord.](https://discord.gg/Hp6fQbqvwe)
 * [Documentation](#documentation)
 
 -----
@@ -58,7 +58,7 @@ v0.x.y.z: "Patch" releases. These releases are reserved for addressing issue wit
 
 Development of WPGraphQL for Gravity Forms is provided by [AxePress Development](https://axepress.dev). Community contributions are _welcome_ and **encouraged**.
 
-Basic support is provided for free, both in [this repo](https://github.com/axewp/wp-graphql-gravity-forms/issues) and in [WPGraphQL Slack](https://join.slack.com/t/wp-graphql/shared_invite/zt-3vloo60z-PpJV2PFIwEathWDOxCTTLA).
+Basic support is provided for free, both in [this repo](https://github.com/axewp/wp-graphql-gravity-forms/issues) and in [WPGraphQL's official Discord](https://discord.gg/Hp6fQbqvwe).
 
 Priority support and custom development are available to [our Sponsors](https://github.com/sponsors/AxeWP).
 
