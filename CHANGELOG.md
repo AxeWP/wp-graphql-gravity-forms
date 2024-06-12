@@ -7,6 +7,7 @@
 - feat!: Narrow `FormField.choices` and `FormField.inputs` field types to their implementations.
 - fix!: Keep `PageField` with previous page data when filtering `formFields` by `pageNumber`. H/t @SamuelHadsall .
 - fix: Handle RadioField submission values when using a custom "other" choice. H/t @Gytjarek .
+- fix: Check for Submission Confirmation url before attempting to get the associated post ID.
 - dev: Use `FormFieldsDataLoader` to resolve fields instead of instantiating a new `Model`.
 - chore: Add iterable type hints.
 - chore!: Bump minimum WPGraphQL version to v1.26.0.
