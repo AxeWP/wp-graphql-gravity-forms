@@ -19,6 +19,7 @@
 - chore: Declare `strict_types` in all PHP files.
 - chore: Update Composer dev-dependencies and fix test compatibility with `wp-graphql-test-case` v3.0.x.
 - docs: Add docs on using Multi-page forms.
+- tests: Add test for `GFUtils::get_last_form_page()`.
 
 ## v0.12.6.1
 

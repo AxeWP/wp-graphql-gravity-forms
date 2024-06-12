@@ -46,7 +46,7 @@ class FormFieldConnectionPageFilterTest extends GFGraphQLTestCase {
 	}
 
 	private function generate_form_pages( int $count = 1 ): array {
-		$fields = [];
+		$fields   = [];
 		$field_id = 1;
 
 		for ( $i = 0; $i < $count; $i++ ) {
@@ -137,12 +137,12 @@ class FormFieldConnectionPageFilterTest extends GFGraphQLTestCase {
 		 * Test with empty offset.
 		 */
 		$variables = [
-			'formId' => $this->form_id,
+			'formId'     => $this->form_id,
 			'pageNumber' => 0,
 		];
 
 		$expected = $wp_query;
-		$actual = $this->graphql( compact( 'query', 'variables' ) );
+		$actual   = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertResponseIsValid( $actual );
 		$this->assertArrayNotHasKey( 'errors', $actual );
@@ -169,7 +169,6 @@ class FormFieldConnectionPageFilterTest extends GFGraphQLTestCase {
 		$actual   = $this->graphql( compact( 'query', 'variables' ) );
 
 		$this->assertValidPageFields( $expected, $actual );
-
 
 		/**
 		 * Test the last two results.
@@ -198,14 +197,15 @@ class FormFieldConnectionPageFilterTest extends GFGraphQLTestCase {
 		$this->assertArrayHasKey( 'data', $actual );
 		$this->assertCount( 2, $actual['data']['gfForm']['formFields']['nodes'] );
 
-	
 		$this->assertEquals( $expected[0]['id'], $actual['data']['gfForm']['formFields']['nodes'][0]['databaseId'] );
 		$this->assertEquals( $expected[0]['pageNumber'], $actual['data']['gfForm']['formFields']['nodes'][0]['pageNumber'] );
 		$this->assertEquals( $expected[1]['id'], $actual['data']['gfForm']['formFields']['nodes'][1]['databaseId'] );
 		$this->assertEquals( $expected[1]['pageNumber'], $actual['data']['gfForm']['formFields']['nodes'][1]['pageNumber'] );
 		$this->assertEquals( GFHelpers::get_enum_for_value( FormFieldTypeEnum::$type, $expected[1]['type'] ), $actual['data']['gfForm']['formFields']['nodes'][1]['type'] );
 		$this->assertEquals( $expected[1]['nextButton']['text'], $actual['data']['gfForm']['formFields']['nodes'][1]['nextButton']['text'] );
-		$this->assertEquals( 
-		$expected[1]['previousButton']['text'], $actual['data']['gfForm']['formFields']['nodes'][1]['previousButton']['text'] );
+		$this->assertEquals(
+			$expected[1]['previousButton']['text'],
+			$actual['data']['gfForm']['formFields']['nodes'][1]['previousButton']['text']
+		);
 	}
 }

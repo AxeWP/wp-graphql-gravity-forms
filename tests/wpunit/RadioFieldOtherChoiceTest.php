@@ -58,14 +58,16 @@ class RadioFieldOtherChoice extends FormFieldTestCase implements FormFieldTestCa
 	 * Generates the form fields from factory. Must be wrappend in an array.
 	 */
 	public function generate_fields(): array {
-		return [ $this->factory->field->create(
-			array_merge( 
-				$this->property_helper->values,
-				[
-					'enableOtherChoice' => true,
-				]
-			)
-		) ];
+		return [
+			$this->factory->field->create(
+				array_merge(
+					$this->property_helper->values,
+					[
+						'enableOtherChoice' => true,
+					]
+				)
+			),
+		];
 	}
 
 	/**
