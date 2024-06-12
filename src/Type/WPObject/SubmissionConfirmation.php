@@ -50,7 +50,11 @@ class SubmissionConfirmation extends AbstractObject implements TypeWithConnectio
 				'toType'   => 'Page',
 				'oneToOne' => true,
 				'resolve'  => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
-					$page_id = url_to_postid( $source['url'] ); //phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.url_to_postid_url_to_postid
+					$page_id = isset( $source['url'] ) ? url_to_postid( $source['url'] ) : null; //phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.url_to_postid_url_to_postid
+
+					if ( empty( $page_id ) ) {
+						return null;
+					}
 
 					$resolver = new PostObjectConnectionResolver( $source, $args, $context, $info, 'page' );
 
@@ -90,7 +94,7 @@ class SubmissionConfirmation extends AbstractObject implements TypeWithConnectio
 				'type'        => 'Int',
 				'description' => __( 'Contains the Id of the WordPress page that the browser will be redirected to. Only applicable when type is set to `PAGE`.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source ) {
-					$post_id = url_to_postid( $source['url'] ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.url_to_postid_url_to_postid
+					$post_id = isset( $source['url'] ) ? url_to_postid( $source['url'] ) : null; // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.url_to_postid_url_to_postid
 
 					return ! empty( $post_id ) ? $post_id : null;
 				},
