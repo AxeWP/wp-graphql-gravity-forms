@@ -232,6 +232,10 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function errorMessage( $value = null ) {
+		if ( null === $value ) {
+			return null;
+		}
+
 		return ! empty( $value ) ? $value : 'Some error message';
 	}
 
@@ -267,7 +271,7 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function isRequired( $value = null ) {
-		return null !== $value ? $value : false;
+		return null !== $value ? ! empty( $value ) : false;
 	}
 
 	public function isSelected( $value = null ) {

@@ -17,13 +17,11 @@ class FormFieldConnectionPageFilterTest extends GFGraphQLTestCase {
 	private $fields;
 
 	/**
-	 * run before each test.
+	 * {@inheritDoc}
 	 */
 	public function setUp(): void {
 		// Before...
 		parent::setUp();
-
-		wp_set_current_user( $this->admin->ID );
 
 		$this->fields  = $this->generate_form_pages( 3 );
 		$this->form_id = $this->factory->form->create(
@@ -37,7 +35,7 @@ class FormFieldConnectionPageFilterTest extends GFGraphQLTestCase {
 	}
 
 	/**
-	 * Run after each test.
+	 * {@inheritDoc}
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
