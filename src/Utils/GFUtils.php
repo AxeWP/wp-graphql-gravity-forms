@@ -362,6 +362,11 @@ class GFUtils {
 			$source_page,
 		);
 
+		// Cleanup GF state.
+		unset( $_POST );
+		\GFFormsModel::flush_current_lead();
+		\GFFormDisplay::$submission = [];
+
 		if ( $submission instanceof \WP_Error ) {
 			throw new UserError( esc_html( $submission->get_error_message() ) );
 		}

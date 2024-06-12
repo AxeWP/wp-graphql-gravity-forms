@@ -317,3 +317,52 @@ mutation submit {
   }
 }
 ```
+
+## Submitting Multi-page Forms
+
+When submitting a multi-page form, you can use the `sourcePage` and `targetPage` inputs to validate a specific page of the form before proceeding to the next page. This can then be combined with the Mutation payload's `targetPageNumber` and `targetPageFormFields` to serve the correct fields for the next _valid_ page.
+
+When using a `sourcePage`, only the fields on that page will be validated. If that page fails validation, the `targetPageNumber` and `targetPageFormFields` will return the current page number and fields, instead of the provided `targetPage` input. Similarly, if the page passes validation, but the `targetPage` is not available (e.g. due to conditional page logic), the `targetPageNumber` and `targetPageFormFields` will return the next available page number and fields.
+
+Only once the `targetPage` input is greater than the number of pages in the form, will the submission be processed, _all_ the values validated, and the entry created. As such, when using this pattern, it is recommended to submit all the user-provided `fieldValues` inputs to the mutation, and not just the fields on the current page.
+
+### Example Mutation
+
+```graphql
+mutation submit {
+	submitGfForm(
+		input: {
+			id: 50
+			fieldValues: [
+				# other form fields would go here.
+				{
+					# Text field value
+					id: 1
+					value: "This is a text field value."
+				}
+			]
+			saveAsDraft: false
+			sourcePage: 1 # The page we are validating
+			targetPage: 2 # The page we want to navigate to.
+		}
+	) {
+		errors {
+			id
+			message
+		}
+		confirmation {
+			message
+		}
+		entry { # Will only be returned if the `targetPage` is greater than the number of pages in the form.
+			databaseId
+		}
+		targetPageNumber # The page number to navigate to. Will be the same as the `sourcePage` if validation fails, and different than the `targetPage` if the `targetPage` is not available.
+		targetPageFormFields { # The form fields for the next page.
+			nodes {
+				databaseId
+				# Other field data
+			}
+		}
+	}
+}
+```

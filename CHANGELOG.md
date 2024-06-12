@@ -5,9 +5,11 @@
 - feat!: Implement `FormField` model and `DataLoader`, and refactor `FormFieldsConnectionResolver` to extend `AbstractConnectionResolver`.
 - feat!: Refactor `FormsConnectionResolver` and `EntriesConnectionResolver` for compatibility with WPGraphQL v1.26.0 improvements.
 - feat!: Narrow `FormField.choices` and `FormField.inputs` field types to their implementations.
+- feat: Add `targetPageNumber` and `targetPageFormFields` to `SubmitGfFormPayload` for better multi-page form support.
 - fix!: Keep `PageField` with previous page data when filtering `formFields` by `pageNumber`. H/t @SamuelHadsall .
 - fix: Handle RadioField submission values when using a custom "other" choice. H/t @Gytjarek .
 - fix: Check for Submission Confirmation url before attempting to get the associated post ID.
+- fix: Flush static Gravity Forms state between multiple calls to `GFUtils::submit_form()`. 
 - feat: Add `FieldError.connectedFormField` connection to `FieldError` type.
 - dev: Use `FormFieldsDataLoader` to resolve fields instead of instantiating a new `Model`.
 - chore: Add iterable type hints.
@@ -16,6 +18,7 @@
 - chore!: Bump minimum Gravity Forms version to v2.7.0.
 - chore: Declare `strict_types` in all PHP files.
 - chore: Update Composer dev-dependencies and fix test compatibility with `wp-graphql-test-case` v3.0.x.
+- docs: Add docs on using Multi-page forms.
 
 ## v0.12.6.1
 

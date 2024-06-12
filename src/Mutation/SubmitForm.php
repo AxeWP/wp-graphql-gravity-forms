@@ -35,7 +35,7 @@ class SubmitForm extends AbstractMutation {
 	 *
 	 * @var string
 	 */
-	public static $name = 'submitGfForm';
+	public static $name = 'SubmitGfForm';
 
 	/**
 	 * {@inheritDoc}
@@ -74,11 +74,11 @@ class SubmitForm extends AbstractMutation {
 	 */
 	public static function get_output_fields(): array {
 		return [
-			'confirmation' => [
+			'confirmation'     => [
 				'type'        => SubmissionConfirmation::$type,
 				'description' => __( 'The form confirmation data. Null if the submission has `errors`', 'wp-graphql-gravity-forms' ),
 			],
-			'entry'        => [
+			'entry'            => [
 				'type'        => Entry::$type,
 				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( array $payload, array $args, AppContext $context ) {
@@ -117,13 +117,17 @@ class SubmitForm extends AbstractMutation {
 					}
 				},
 			],
-			'errors'       => [
+			'errors'           => [
 				'type'        => [ 'list_of' => FieldError::$type ],
 				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
-			'resumeUrl'    => [
+			'resumeUrl'        => [
 				'type'        => 'String',
 				'description' => __( 'Draft resume URL. Null if submitting an entry. If the "Referer" header is not included in the request, this will be an empty string.', 'wp-graphql-gravity-forms' ),
+			],
+			'targetPageNumber' => [
+				'type'        => 'Int',
+				'description' => __( 'The page number of the form that should be displayed after submission. This will be different than the `targetPage` provided to the mutation if a field on a previous field failed validation.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -161,14 +165,15 @@ class SubmitForm extends AbstractMutation {
 			if ( $submission['is_valid'] ) {
 				self::update_entry_properties( $form, $submission, $entry_data );
 			}
-
 			return [
-				'confirmation' => isset( $submission['confirmation_type'] ) ? EntryObjectMutation::get_submission_confirmation( $submission ) : null,
-				'entryId'      => ! empty( $submission['entry_id'] ) ? absint( $submission['entry_id'] ) : null,
-				'errors'       => isset( $submission['validation_messages'] ) ? EntryObjectMutation::get_submission_errors( $submission['validation_messages'], $form_id ) : null,
-				'resumeToken'  => $submission['resume_token'] ?? null,
-				'resumeUrl'    => isset( $submission['resume_token'] ) ? GFUtils::get_resume_url( $submission['resume_token'], $entry_data['source_url'] ?? '', $form ) : null,
-				'submission'   => $submission,
+				'confirmation'     => isset( $submission['confirmation_type'] ) ? EntryObjectMutation::get_submission_confirmation( $submission ) : null,
+				'entryId'          => ! empty( $submission['entry_id'] ) ? absint( $submission['entry_id'] ) : null,
+				'errors'           => isset( $submission['validation_messages'] ) ? EntryObjectMutation::get_submission_errors( $submission['validation_messages'], $form_id ) : null,
+				'form_id'          => $form_id,
+				'resumeToken'      => $submission['resume_token'] ?? null,
+				'resumeUrl'        => isset( $submission['resume_token'] ) ? GFUtils::get_resume_url( $submission['resume_token'], $entry_data['source_url'] ?? '', $form ) : null,
+				'submission'       => $submission,
+				'targetPageNumber' => self::get_target_page_number( $target_page, $submission ),
 			];
 		};
 	}
@@ -299,5 +304,22 @@ class SubmitForm extends AbstractMutation {
 		}
 
 		return $input_values + $field_values;
+	}
+
+	/**
+	 * Get the target page number use to resolve the mutation.
+	 *
+	 * @param int                     $original_target_page The original target page number.
+	 * @param array<int|string,mixed> $submission The Gravity Forms submission result array.
+	 */
+	private static function get_target_page_number( int $original_target_page, array $submission ): ?int {
+		// Valid Draft submissions should pass through to the original target page.
+		if ( ! empty( $submission['resume_token'] ) && ! empty( $submission['is_valid'] ) ) {
+			return ! empty( $original_target_page ) ? $original_target_page : null;
+		}
+
+		// Regular submissions should return the target page.
+		// In draft submissions, the target page is the source page, so this will work with invalid submissions.
+		return ! empty( $submission['page_number'] ) ? (int) $submission['page_number'] : null;
 	}
 }
