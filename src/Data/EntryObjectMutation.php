@@ -116,6 +116,7 @@ class EntryObjectMutation {
 	 * Generates array of field errors from the submission.
 	 *
 	 * @param array<int|string,string> $messages The Gravity Forms submission validation messages.
+	 * @param int                      $form_id  The ID of the form.
 	 *
 	 * @return array{message:string,id:int|string}[]
 	 */
