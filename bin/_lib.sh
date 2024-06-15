@@ -145,12 +145,6 @@ install_plugins() {
 	fi
 	wp plugin activate wp-graphql-upload
 
-	# Install WPGraphQL Content Blocks and Activate
-	if ! $( wp plugin is-installed wp-graphql-content-blocks ); then
-		wp plugin install https://github.com/wpengine/wp-graphql-content-blocks/releases/latest/download/wp-graphql-content-blocks.zip
-	fi
-	wp plugin activate wp-graphql-content-blocks
-
 	# Install WPGatsby and Activate
 	if ! $( wp plugin is-installed wp-gatsby ); then
 		wp plugin install wp-gatsby

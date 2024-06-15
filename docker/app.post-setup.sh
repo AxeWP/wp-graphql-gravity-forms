@@ -44,13 +44,6 @@ if ! $( wp plugin is-installed wp-graphql --allow-root ); then
 fi
 wp plugin activate wp-graphql --allow-root
 
-
-# Install WPGraphQL Content Blocks and Activate
-if ! $( wp plugin is-installed wp-graphql-content-blocks --allow-root ); then
-	wp plugin install https://github.com/wpengine/wp-graphql-content-blocks/releases/latest/download/wp-graphql-content-blocks.zip --allow-root
-fi
-wp plugin activate wp-graphql-content-blocks --allow-root
-
 # Install WPGraphQL Upload and Activate
 if ! $( wp plugin is-installed wp-graphql-upload --allow-root ); then
 	wp plugin install https://github.com/dre1080/wp-graphql-upload/archive/refs/heads/master.zip --allow-root
