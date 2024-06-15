@@ -163,7 +163,8 @@ The code comments in the example query below shows how you can fetch and filter 
 
 By default, WPGraphQL sets the maximum query amount to 100. This can be overridden using the [ `graphql_connection_max_query_amount` filter](https://www.wpgraphql.com/filters/graphql_connection_max_query_amount/).
 
-**Note**: Currently, only lists of Submitted Entries are supported. Future versions will add support for querying lists of Draft and Partial entries.
+> [!NOTE]
+> Currently, only lists of Submitted Entries are supported. Future versions will add support for querying lists of Draft and Partial entries.
 
 ```graphql
 {
