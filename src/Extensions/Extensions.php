@@ -14,6 +14,7 @@ use WPGraphQL\GF\Extensions\GFChainedSelects\GFChainedSelects;
 use WPGraphQL\GF\Extensions\GFQuiz\GFQuiz;
 use WPGraphQL\GF\Extensions\GFSignature\GFSignature;
 use WPGraphQL\GF\Extensions\WPGatsby\WPGatsby;
+use WPGraphQL\GF\Extensions\WPGraphQLContentBlocks\WPGraphQLContentBlocks;
 use WPGraphQL\GF\Extensions\WPJamstackDeployments\WPJamstackDeployments;
 use WPGraphQL\GF\Interfaces\Hookable;
 
@@ -29,6 +30,7 @@ class Extensions implements Hookable {
 		GFQuiz::register_hooks();
 		GFSignature::register_hooks();
 		WPGatsby::register_hooks();
+		WPGraphQLContentBlocks::register_hooks();
 		WPJamstackDeployments::register_hooks();
 	}
 }

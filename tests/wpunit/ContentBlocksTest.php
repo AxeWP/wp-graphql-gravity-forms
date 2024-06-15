@@ -1,0 +1,95 @@
+<?php
+/**
+ * Tests a Form block.
+ *
+ * @package WPGraphQL\GF\Tests
+ */
+
+use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
+
+/** 
+ * Class - ContentBlocksTest
+ */
+class ContentBlocksTest extends GFGraphQLTestCase {
+	private $form_id;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function setUp(): void {
+		parent::setUp();
+
+		$fields = [
+			$this->factory->field->create(
+				$this->tester->getPropertyHelper( 'TextField')->values
+			)
+		];
+
+		$this->form_id = $this->factory->form->create(
+			array_merge(
+				$this->tester->getFormDefaultArgs(),
+				[
+					'fields' => $fields
+				]
+			)
+		);
+
+		$this->clearSchema();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function tearDown(): void {
+		$this->factory->form->delete( $this->form_id );
+
+		parent::tearDown();
+	}
+
+	/**
+	 * Test the form field on the GravityformsFormAttributes block.
+	 */
+	public function testFormBlock(): void {
+		$post_id = $this->factory->post->create(
+			[
+				'post_content' => sprintf(
+					'<!-- wp:gravityforms/form {"formId":%d} /-->',
+					$this->form_id
+				)
+			]
+		);
+
+		$query = $this->get_query();
+		$variables = [
+			'post_id' => $post_id
+		];
+
+		$actual = $this->graphql( compact( 'query', 'variables' ) );
+
+		$this->assertArrayHasKey( 'data', $actual );
+
+		$this->assertEquals( $post_id, $actual['data']['post']['databaseId'] );
+		$this->assertEquals( 'gravityforms/form', $actual['data']['post']['editorBlocks'][0]['name'] );
+		$this->assertEquals( $this->form_id, $actual['data']['post']['editorBlocks'][0]['attributes']['form']['databaseId'] );
+	}
+
+	private function get_query(): string {
+		return '
+			query GetFormBlock($post_id: ID!) {
+				post(id: $post_id, idType: DATABASE_ID) {
+					databaseId
+					editorBlocks {
+						name
+						... on GravityformsForm {
+							attributes {
+								form {
+									databaseId
+								}
+							}
+						}
+					}
+				}
+			}
+		';
+	}
+}
