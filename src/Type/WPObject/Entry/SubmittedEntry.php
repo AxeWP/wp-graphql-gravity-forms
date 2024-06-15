@@ -72,12 +72,6 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 	 */
 	public static function get_fields(): array {
 		return [
-			'entryId'        => [
-				'type'              => 'Int',
-				'description'       => __( 'The entry ID. Returns null for draft entries.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Deprecated in favor of the databaseId field.', 'wp-graphql-gravity-forms' ),
-				'resolve'           => static fn ( $source ) => $source->databaseId ?? null,
-			],
 			'isStarred'      => [
 				'type'        => 'Boolean',
 				'description' => __( 'Indicates if the entry has been starred (i.e marked with a star).', 'wp-graphql-gravity-forms' ),

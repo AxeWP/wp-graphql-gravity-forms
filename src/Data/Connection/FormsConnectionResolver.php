@@ -212,11 +212,6 @@ class FormsConnectionResolver extends AbstractConnectionResolver {
 		];
 
 		if ( ! empty( $args['where']['orderby'] ) && is_array( $args['where']['orderby'] ) ) {
-			// @todo remove support for deprecated `field` input.
-			if ( empty( $args['where']['orderby']['column'] ) && ! empty( $args['where']['orderby']['field'] ) ) {
-				$args['where']['orderby']['column'] = $args['where']['orderby']['field'];
-			}
-
 			$sort = [
 				'key'       => $args['where']['orderby']['column'] ?? '',
 				'direction' => $args['where']['orderby']['order'] ?? 'ASC',
