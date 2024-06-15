@@ -7,6 +7,7 @@ This mutation can be used either to submit an Entry or to submit a draft entry, 
 The `fieldValues` input takes an array of objects containing the `id` of the field, and a value input that corresponds to the Gravity Forms Field type.
 
 > [!IMPORTANT]
+>
 > Due to [GraphQL's current lack of support for Input Union types](https://github.com/axewp/wp-graphql-gravity-forms/issues/4#issuecomment-563305561), you must use the specific value type specific to that field. A full list of field value types and their corresponding field fragments are below.
 
 ## Supported Field Value input types
@@ -203,6 +204,7 @@ mutation submit( $token: String ) {
 To enable WPGraphQL support for submitting files (via the `fileUploadValues` or `postImageValues` inputs ), you must first install and activate the [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload) extension, which will add the `Upload` scalar type to the GraphQL schema.
 
 > [!IMPORTANT]
+>
 > The GraphQL Spec - and many GraphQL clients - does not natively implement support the [`graphql-multipart-request-spec`](https://github.com/jaydenseric/graphql-multipart-request-spec) and may require an additional dependency such as [apollo-upload-client](https://github.com/jaydenseric/apollo-upload-client).
 
 ### Example Mutation

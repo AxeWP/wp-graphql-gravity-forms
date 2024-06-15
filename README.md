@@ -14,15 +14,11 @@ A WordPress plugin that adds <a href="https://wpgraphql.com" target="_blank">WPG
 
 ## Overview
 
-Using WordPress as a headless CMS with a separate JavaScript-powered frontend single-page app is an increasingly popular tech stack. Traditionally, REST APIs have been used for the purpose of sending data back & forth between the frontend and backend in setups like this but the REST architecture has its limitations.
+The WPGraphQL for Gravity Forms plugin is a powerful extension for [WPGraphQL](https://www.wpgraphql.com/) that provides a comprehensive suite of features that allows developers to interact with [Gravity Forms](https://www.gravityforms.com/) via GraphQL.
 
-Using GraphQL means that if your frontend app needs to fetch data for a number of different resources, all of that data can be fetched from the server with a single request. Your frontend app can even define which fields it requires for each of the resources, giving it full control over which pieces of data are fetched and included in the response.
+This plugin enhances the developer experience by offering a GraphQL schema tailored for Gravity Forms. The schema provides improved type safety, prevents over-fetching, and makes it easier to interact with your forms and entries than (and even provides functionality not available in) Gravity Form's traditional PHP and REST APIs.
 
-Fortunately, a GraphQL implementation exists for WordPress - [WPGraphQL](https://www.wpgraphql.com/).
-
-WPGraphQL for Gravity Forms extends the WPGraphQL plugin, allowing frontend apps to interact with the Gravity Forms data stored in a headless WordPress backend. This plugin couples the great forms functionality of Gravity Forms with the powerful WordPress-specific GraphQL implementation that WPGraphQL provides.
-
-Our hope for this open source project is that it will enable more teams to leverage GraphQL for building fast, interactive frontend apps that source their data from WordPress and Gravity Forms.
+WPGraphQL for Gravity Forms is an essential tool for those leveraging decoupled and headless WordPress architectures. Whether you're using WordPress as a data source for your headless application, integrating Gravity Forms data into an external service, or building custom, interactive form experiences, this plugin offers improved developer experience and features to make your frontend code more robust. It's designed to be a versatile tool, capable of handling any decoupled project from simple form submissions to complex, form-driven applications scalable at an enterprise level.
 
 ## System Requirements
 
@@ -38,10 +34,11 @@ Our hope for this open source project is that it will enable more teams to lever
 2. Install & activate [Gravity Forms](https://www.gravityforms.com/) and any supported addons.
 3. Download the `wp-graphql-gravity-forms.zip` file from the [latest release](https://github.com/AxeWP/wp-graphql-gravity-forms/releases/latest) upload it to your WordPress install, and activate the plugin.
 
-   > [!IMPORTANT]
-   > Make sure you are downloading the [`wp-graphql-gravity-forms.zip`](https://github.com/axewp/wp-graphql-gravity-forms/releases/latest/download/wp-graphql-gravity-forms.zip) file from the releases page, not the `Source code (zip)` file nor a clone of the repository.
-   >
-   > If you wish to use the source code, you will need to run `composer install` inside the plugin folder to install the required dependencies.
+> [!IMPORTANT]
+>
+> Make sure you are downloading the [`wp-graphql-gravity-forms.zip`](https://github.com/axewp/wp-graphql-gravity-forms/releases/latest/download/wp-graphql-gravity-forms.zip) file from the releases page, not the `Source code (zip)` file nor a clone of the repository.
+>
+> If you wish to use the source code, you will need to run `composer install` inside the plugin folder to install the required dependencies.
 
 ### With Composer
 
