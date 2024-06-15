@@ -35,7 +35,6 @@ class FieldWithProductField extends AbstractFieldSetting {
 	 * {@inheritDoc}
 	 */
 	public static function get_fields(): array {
-		// @todo make connection.
 		return [
 			'productField'          => [
 				'type'              => 'Int',
