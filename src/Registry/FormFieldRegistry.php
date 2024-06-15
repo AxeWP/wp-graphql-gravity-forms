@@ -351,22 +351,6 @@ class FormFieldRegistry {
 	public static function get_fields( GF_Field $field, array $settings, $interfaces ): array {
 		$fields = [];
 
-		if ( has_filter( 'graphql_gf_form_field_setting_properties' ) ) {
-			foreach ( $settings as $setting_key ) {
-				/**
-				 * Filter to modify the Form Field GraphQL fields based on GF_Field::form_editor_field_settings().
-				 *
-				 * @deprecated 0.12.0 Use `graphql_gf_form_field_setting_fields` instead.
-				 *
-				 * @param array<string,array<string,mixed>> $fields      An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
-				 * @param string                            $setting_key The `form_editor_field_settings()` key.
-				 * @param \GF_Field                         $field       The Gravity Forms Field object.
-				 * @param string[]                          $interfaces  The list of interfaces for the GraphQL type.
-				 */
-				$fields = apply_filters_deprecated( 'graphql_gf_form_field_setting_properties', [ $fields, $setting_key, $field ], '0.12.0', 'graphql_gf_form_field_setting_fields' );
-			}
-		}
-
 		/**
 		 * Filter to modify the Form Field GraphQL fields.
 		 *
@@ -408,11 +392,6 @@ class FormFieldRegistry {
 				$fields += FieldValues::consent_value();
 				break;
 			case 'fileupload':
-				// Deprecate values field.
-				$values                                = FieldValues::values();
-				$values['values']['deprecationReason'] = __( 'Use `fileUploadValues` instead.', 'wp-graphql-gravity-forms' );
-				$fields                               += $values;
-
 				$fields += FieldValues::file_upload_values();
 				break;
 			case 'list':
@@ -440,16 +419,6 @@ class FormFieldRegistry {
 			default:
 				break;
 		}
-
-		/**
-		 * Filter to modify the Form Field value GraphQL fields.
-		 *
-		 * @deprecated 0.12.0 Use `graphql_gf_form_field_value_fields` instead.
-		 *
-		 * @param array<string,array<string,mixed>> $fields An array of GraphQL field configs. See https://www.wpgraphql.com/functions/register_graphql_fields/
-		 * @param \GF_Field                         $field The Gravity Forms Field object.
-		 */
-		$fields = apply_filters_deprecated( 'graphql_gf_form_field_value_properties', [ $fields, $field ], '0.12.0', 'graphql_gf_form_field_value_fields' );
 
 		/**
 		 * Filter to modify the Form Field Value GraphQL fields.

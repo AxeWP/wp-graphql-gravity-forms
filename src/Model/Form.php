@@ -255,15 +255,6 @@ class Form extends Model {
 				'hasValidationSummary'         => fn (): bool => ! empty( $this->data['validationSummary'] ),
 				'version'                      => fn (): ?string => ! empty( $this->data['version'] ) ? $this->data['version'] : null,
 			];
-
-			/**
-			 * Internal Filter for modifying the model.
-			 *
-			 * To be replaced by https://github.com/wp-graphql/wp-graphql/issues/2198
-			 *
-			 * @deprecated 0.11.0 use "graphql_model_prepare_fields"
-			 */
-			$this->fields = apply_filters_deprecated( 'graphql_gf_form_modeled_data_experimental', [ $this->fields, $this->data ], '0.11.0', 'graphql_model_prepare_fields' );
 		}
 	}
 }

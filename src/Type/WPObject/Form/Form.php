@@ -25,7 +25,6 @@ use WPGraphQL\GF\Type\Enum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-use WPGraphQL\GF\Type\WPObject\Button;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
@@ -137,12 +136,6 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 	 */
 	public static function get_fields(): array {
 		return [
-			'button'                       => [
-				'type'              => FormSubmitButton::$type,
-				'description'       => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Use `submitButton` field instead', 'wp-graphql-gravity-forms' ),
-				'resolve'           => static fn ( $source ) => $source->submitButton,
-			],
 			'confirmations'                => [
 				'type'        => [ 'list_of' => FormConfirmation::$type ],
 				'description' => __( 'Contains the form confirmation settings such as confirmation text or redirect URL.', 'wp-graphql-gravity-forms' ),
@@ -187,12 +180,6 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 				'type'        => 'String',
 				'description' => __( 'CSS class for the first page.', 'wp-graphql-gravity-forms' ),
 			],
-			'formId'                       => [
-				'type'              => 'Int',
-				'description'       => __( 'Form ID.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Deprecated in favor of the databaseId field.', 'wp-graphql-gravity-forms' ),
-				'resolve'           => static fn ( $source ) => $source->databaseId,
-			],
 			'hasValidationSummary'         => [
 				'type'        => 'Boolean',
 				'description' => __( 'If enabled, will show a summary that lists form validation errors at the top of the form when a user attempts a failed submission.', 'wp-graphql-gravity-forms' ),
@@ -208,12 +195,6 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 			'labelPlacement'               => [
 				'type'        => Enum\FormLabelPlacementEnum::$type,
 				'description' => __( 'Determines where the field labels should be placed in relation to the field.', 'wp-graphql-gravity-forms' ),
-			],
-			'lastPageButton'               => [
-				'type'              => Button\FormLastPageButton::$type,
-				'description'       => __( 'Last page button data.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Use `pagination.lastPageButton` instead', 'wp-graphql-gravity-forms' ),
-				'resolve'           => static fn ( $source ) => ! empty( $source->pagination ) ? $source->pagination['lastPageButton'] : null,
 			],
 			'login'                        => [
 				'type'        => FormLogin::$type,
