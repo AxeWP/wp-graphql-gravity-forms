@@ -118,6 +118,7 @@ Luckily, we can use [GraphQL Interfaces](https://graphql.org/learn/schema/#inter
 Entry values can be accessed similarly to other Gravity Forms Field properties, by including the corresonding GraphQL field in the fragment.
 
 > [!IMPORTANT]
+>
 > Due to GraphQL limitations regarding Union types, you must use the specific value type specific to that field. A full list of field value types and their corresponding field fragments are below.
 
 
