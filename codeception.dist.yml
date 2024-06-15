@@ -79,8 +79,9 @@ modules:
                 - gravityformsquiz/quiz.php
                 - gravityformssignature/signature.php
                 - wp-graphql/wp-graphql.php
-                - wp-graphql-gravity-forms/wp-graphql-gravity-forms.php
                 - wp-graphql-upload/wp-graphql-upload.php
+                - wp-graphql-content-blocks/wp-graphql-content-blocks.php
+                - wp-graphql-gravity-forms/wp-graphql-gravity-forms.php
             activatePlugins:
                 - gravityforms/gravityforms.php
                 - gravityformschainedselects/chainedselects.php
@@ -88,4 +89,6 @@ modules:
                 - gravityformssignature/signature.php
                 - wp-graphql/wp-graphql.php
                 - wp-graphql-upload/wp-graphql-upload.php
+                - wp-graphql-content-blocks/wp-graphql-content-blocks.php
+                - wp-graphql-gravity-forms/wp-graphql-gravity-forms.php
             configFile: 'tests/_data/config.php'

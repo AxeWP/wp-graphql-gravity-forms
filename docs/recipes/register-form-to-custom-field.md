@@ -34,7 +34,7 @@ function my_add_form_to_post() {
         $form_id = get_post_meta( $source->ID, 'my_custom_meta_field_form_id', true );
 
         // Return the form.
-        return $context->get_loader( \WPGraphQL\GF\Data\Loader\FormsLoader::$name )->load_deferred( (int) $form_id );
+        return \WPGraphQL\GF\Data\Factory::resolve_form( $form_id, $context );
       }
     ]
   );

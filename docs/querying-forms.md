@@ -83,3 +83,43 @@ The code comments in the example query below shows how you can fetch and filter 
   }
 }
 ```
+## Get an embedded Form from the Gravity Forms Block.
+
+Gravity Forms can be embedded in a post or page using the [Gravity Forms block](https://docs.gravityforms.com/adding-a-form-using-block/).
+
+When coupled with [WPGraphQL Content Blocks](https://github.com/wpengine/wp-graphql-content-blocks), you can query the embedded form directly from the parsed block content, using the `GravityformsForm.attributes.form` field.
+
+> [!IMPORTANT]
+> To query the `GfForm` object from the block content, you must have the `WPGraphQL Content Blocks` plugin version v4.0+ installed and activated.
+
+### Example Query
+
+```graphql
+{
+  post(id: $post_id, idType: DATABASE_ID) {
+    databaseId
+    editorBlocks { # Added by WPGraphQL Content Blocks
+      name
+      ... on GravityformsForm {
+        attributes {
+          form { # The GfForm object.
+            databaseId
+            formFields {
+              nodes {
+                databaseId
+                type
+                ... on TextField {
+                  label
+                  description
+                }
+              }
+            }
+            title
+            # other GraphQL fields. 
+          }
+        }
+      }
+    }
+  }
+}
+```
