@@ -88,8 +88,16 @@ class SignatureValuesInput extends ValueInput {
 		$folder   = \GFSignature::get_signatures_folder();
 		$filename = uniqid( '', true ) . '.png';
 		$path     = $folder . $filename;
-		// @todo: switch to WP Filesystem.
-		$number_of_bytes = file_put_contents( $path, $signature_decoded ); //phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents, WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_file_put_contents
+
+		// Use WP_Filesystem to save the signature image.
+		global $wp_filesystem;
+		if ( ! $wp_filesystem instanceof \WP_Filesystem_Base ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+
+		/** @var \WP_Filesystem_Base $wp_filesystem */
+		$number_of_bytes = $wp_filesystem->put_contents( $path, $signature_decoded, FS_CHMOD_FILE );
 
 		if ( false === $number_of_bytes ) {
 			throw new UserError( esc_html__( 'An error occurred while saving the signature image.', 'wp-graphql-gravity-forms' ) );
