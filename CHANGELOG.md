@@ -13,6 +13,7 @@
 - fix: Add missing descriptions to types.
 - feat: Add `FieldError.connectedFormField` connection to `FieldError` type.
 - feat: Add support for WPGraphQL Content Blocks.
+- feat: Add `GfFieldWithProductFieldSetting.connectedProductField` connection and deprecate `.productField` field.
 - dev: Remove `vendor` directory from the GitHub repository.
 - dev: Use `FormFieldsDataLoader` to resolve fields instead of instantiating a new `Model`.
 - dev: use WP_Filesystem to handle Signature field uploads.
