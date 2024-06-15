@@ -41,9 +41,10 @@ class QuizResultsFieldCount extends AbstractObject implements TypeWithConnection
 	public static function get_connections(): array {
 		return [
 			'formField' => [
-				'toType'   => 'QuizField',
-				'oneToOne' => true,
-				'resolve'  => static function ( $source ): array {
+				'toType'      => 'QuizField',
+				'description' => __( 'The quiz field.', 'wp-graphql-gravity-forms' ),
+				'oneToOne'    => true,
+				'resolve'     => static function ( $source ): array {
 					return [ 'node' => $source['field'] ];
 				},
 			],

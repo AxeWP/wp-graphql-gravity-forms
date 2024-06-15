@@ -48,9 +48,10 @@ class FormConfirmation extends AbstractObject implements TypeWithConnections {
 	public static function get_connections(): array {
 		return [
 			'page' => [
-				'toType'   => 'Page',
-				'oneToOne' => true,
-				'resolve'  => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
+				'toType'      => 'Page',
+				'description' => __( 'The page that the browser will be redirected to. Only applicable when type is set to `PAGE`.', 'wp-graphql-gravity-forms' ),
+				'oneToOne'    => true,
+				'resolve'     => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
 					$page_id = $source['pageId'];
 
 					$resolver = new PostObjectConnectionResolver( $source, $args, $context, $info, 'page' );

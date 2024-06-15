@@ -15,9 +15,9 @@ namespace WPGraphQL\GF\Interfaces;
  */
 interface TypeWithFields {
 	/**
-	 * Gets the GraphQL fields for the type.
+	 * Gets the fields for the type.
 	 *
-	 * @return array<string,array<string,mixed>> The GraphQL field configs for the type.
+	 * @return array<string,array{type:string|array<string,string|array<string,string>>,description:string,args?:array<string,array{type:string|array<string,string|array<string,string>>,description:string,defaultValue?:mixed}>,resolve?:callable,deprecationReason?:string}>
 	 */
 	public static function get_fields(): array;
 }

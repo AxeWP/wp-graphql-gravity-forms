@@ -26,6 +26,13 @@ abstract class AbstractEnum extends AbstractType implements Enum, TypeWithDescri
 	public static string $type;
 
 	/**
+	 * Gets the Enum values configuration array.
+	 *
+	 * @return array<string,array{description:string,value:mixed,deprecationReason?:string}>
+	 */
+	abstract public static function get_values(): array;
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public static function register(): void {

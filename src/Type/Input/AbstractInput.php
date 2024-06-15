@@ -11,13 +11,13 @@ declare( strict_types = 1 );
 namespace WPGraphQL\GF\Type\Input;
 
 use WPGraphQL\GF\Interfaces\TypeWithDescription;
-use WPGraphQL\GF\Interfaces\TypeWithFields;
+use WPGraphQL\GF\Interfaces\TypeWithInputFields;
 use WPGraphQL\GF\Type\AbstractType;
 
 /**
  * Class - AbstractInput
  */
-abstract class AbstractInput extends AbstractType implements TypeWithDescription, TypeWithFields {
+abstract class AbstractInput extends AbstractType implements TypeWithDescription, TypeWithInputFields {
 	/**
 	 * Type registered in WPGraphQL.
 	 *

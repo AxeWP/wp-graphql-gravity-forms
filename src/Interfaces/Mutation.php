@@ -15,20 +15,16 @@ namespace WPGraphQL\GF\Interfaces;
  */
 interface Mutation {
 	/**
-	 * Defines the input field configuration.
+	 * Gets the input fields for the mutation.
 	 *
-	 * @return array<string,array<string,mixed>>
-	 *
-	 * @since 0.4.0
+	 * @return array<string,array{type:string|array<string,string|array<string,string>>,description:string,defaultValue?:string}>
 	 */
 	public static function get_input_fields(): array;
 
 	/**
-	 * Defines the output field configuration.
+	 * Gets the fields for the type.
 	 *
-	 * @return array<string,array<string,mixed>>
-	 *
-	 * @since 0.4.0
+	 * @return array<string,array{type:string|array<string,string|array<string,string>>,description:string,args?:array<string,array{type:string|array<string,string|array<string,string>>,description:string,defaultValue?:mixed}>,resolve?:callable,deprecationReason?:string}>
 	 */
 	public static function get_output_fields(): array;
 

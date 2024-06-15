@@ -83,6 +83,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 			'formFields' => [
 				'toType'         => FormField::$type,
 				'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
+				'description'    => __( 'The form fields associated with the entry.', 'wp-graphql-gravity-forms' ),
 				'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
 					$context->gfEntry = $source;
 
