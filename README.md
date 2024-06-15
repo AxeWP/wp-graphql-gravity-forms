@@ -13,9 +13,10 @@ A WordPress plugin that adds <a href="https://wpgraphql.com" target="_blank">WPG
 [![Coverage Status](https://coveralls.io/repos/github/AxeWP/wp-graphql-gravity-forms/badge.svg?branch=develop)](https://coveralls.io/github/AxeWP/wp-graphql-gravity-forms?branch=develop) [![WordPress Coding Standards](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/code-standard.yml/badge.svg)](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/code-standard.yml) [![Code Quality](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/code-quality.yml/badge.svg)](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/code-quality.yml) [![Schema Linter](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/schema-linter.yml/badge.svg)](https://github.com/axewp/wp-graphql-gravity-forms/actions/workflows/schema-linter.yml)
 
 ## Overview
+
 The WPGraphQL for Gravity Forms plugin is a powerful extension for [WPGraphQL](https://www.wpgraphql.com/) that provides a comprehensive suite of features that allows developers to interact with [Gravity Forms](https://www.gravityforms.com/) via GraphQL.
 
-This plugin enhances the developer experience by offering a GraphQL schema tailored for Gravity Forms. This schema provides improved type safety, prevents over-fetching, and makes it easier to interact with (and even introduces functionality not available in) the Gravity Forms REST API.
+This plugin enhances the developer experience by offering a GraphQL schema tailored for Gravity Forms. The schema provides improved type safety, prevents over-fetching, and makes it easier to interact with your forms and entries than (and even provides functionality not available in) Gravity Form's traditional PHP and REST APIs.
 
 WPGraphQL for Gravity Forms is an essential tool for those leveraging decoupled and headless WordPress architectures. Whether you're using WordPress as a data source for your headless application, integrating Gravity Forms data into an external service, or building custom, interactive form experiences, this plugin offers improved developer experience and features to make your frontend code more robust. It's designed to be a versatile tool, capable of handling any decoupled project from simple form submissions to complex, form-driven applications scalable at an enterprise level.
 
