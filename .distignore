@@ -17,10 +17,10 @@
 .DS_Store
 .env
 .env.dist
-.gitattributes
 .gitignore
 .phpcs.xml
 .phpcs.xml.dist
+auth.json
 CHANGELOG.md
 codeception.dist.yml
 codeception.yml
@@ -28,6 +28,6 @@ composer.json
 composer.lock
 docker-compose.yml
 phpstan.neon.dist
-phpunit.xml.dist
+phpstan.neon
 README.md
 schema.graphql

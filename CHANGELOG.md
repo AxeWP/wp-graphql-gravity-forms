@@ -11,6 +11,7 @@
 - fix: Check for Submission Confirmation url before attempting to get the associated post ID.
 - fix: Flush static Gravity Forms state between multiple calls to `GFUtils::submit_form()`. 
 - feat: Add `FieldError.connectedFormField` connection to `FieldError` type.
+- dev: Remove `vendor` directory from the GitHub repository.
 - dev: Use `FormFieldsDataLoader` to resolve fields instead of instantiating a new `Model`.
 - chore: Add iterable type hints.
 - chore!: Bump minimum WPGraphQL version to v1.26.0.

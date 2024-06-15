@@ -22,17 +22,19 @@ parameters:
 			- phpstan/class-gf-quiz.php
 		bootstrapFiles:
 			- phpstan/constants.php
-			- wp-graphql-gravity-forms.php
 		paths:
 			- wp-graphql-gravity-forms.php
+			- activation.php
+			- deactivation.php
 			- src/
 		scanDirectories:
-			- ../wp-graphql/
 			- ../gravityforms/
 			- ../gravityformssignature/
 			- ../gravityformschainedselects/
 			- ../gravityformsquiz/
 			- ../wp-gatsby/
 			- ../wp-jamstack-deployments/
+		scanFiles:
+			- vendor/axepress/wp-graphql-stubs/wp-graphql-stubs.php
 		ignoreErrors:
 			- '#^Function gf_apply_filters(_ref_array)? invoked with ([1-9]|1[0-2]) parameters, 2 required\.$#'

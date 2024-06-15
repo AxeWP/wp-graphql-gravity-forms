@@ -20,13 +20,13 @@ jobs:
           tools: composer
 
       - name: Install dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: "--no-progress --no-dev --optimize-autoloader"
+
+      - name: Build and zip
         run: |
-          composer install --no-dev --optimize-autoloader
-      - name: Create Artifact
-        run: |
-          mkdir -p plugin-build/wp-graphql-gravity-forms
-          rsync -rc --exclude-from=.distignore --exclude=plugin-build . plugin-build/wp-graphql-gravity-forms/ --delete --delete-excluded -v
-          cd plugin-build ; zip -r wp-graphql-gravity-forms.zip wp-graphql-gravity-forms
+          composer run-script zip
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
