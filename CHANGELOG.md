@@ -9,7 +9,8 @@
 - fix!: Keep `PageField` with previous page data when filtering `formFields` by `pageNumber`. H/t @SamuelHadsall .
 - fix: Handle RadioField submission values when using a custom "other" choice. H/t @Gytjarek .
 - fix: Check for Submission Confirmation url before attempting to get the associated post ID.
-- fix: Flush static Gravity Forms state between multiple calls to `GFUtils::submit_form()`. 
+- fix: Flush static Gravity Forms state between multiple calls to `GFUtils::submit_form()`.
+- fix: Add missing descriptions to types.
 - feat: Add `FieldError.connectedFormField` connection to `FieldError` type.
 - feat: Add support for WPGraphQL Content Blocks.
 - dev: Remove `vendor` directory from the GitHub repository.
@@ -21,6 +22,7 @@
 - chore!: Bump minimum WPGraphQL version to v1.26.0.
 - chore!: Bump minimum WordPress version to v6.0.0.
 - chore!: Bump minimum Gravity Forms version to v2.7.0.
+- chore: Update PHP interfaces and Abstract classes with better type hints.
 - chore: Declare `strict_types` in all PHP files.
 - chore: Update Composer dev-dependencies and fix test compatibility with `wp-graphql-test-case` v3.0.x.
 - docs: Add docs on using Multi-page forms.
