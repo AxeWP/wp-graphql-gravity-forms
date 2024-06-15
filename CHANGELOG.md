@@ -14,6 +14,7 @@
 - feat: Add support for WPGraphQL Content Blocks.
 - dev: Remove `vendor` directory from the GitHub repository.
 - dev: Use `FormFieldsDataLoader` to resolve fields instead of instantiating a new `Model`.
+- dev: use WP_Filesystem to handle Signature field uploads.
 - chore!: Remove deprecated fields from the schema: `FormsConnectionOrderbyInput.field`, `GfFieldWithDisableQuantitySetting.isQuantityDisabled`. `GfSubmittedEntry.entryId`. `GfForm.button`, `gfForm.entryId`, `gfForm.lastPageButton`.
 - chore!: Remove deprecated hooks: `graphql_gf_form_modeled_data_experimental`, `graphql_gf_form_field_setting_properties`, `graphql_gf_form_field_value_properties`.
 - chore!: Remove deprecated helper method: `GFUtils::handle_file_upload()`.
