@@ -10,6 +10,9 @@ declare( strict_types = 1 );
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
+use WPGraphQL\AppContext;
+use WPGraphQL\GF\Data\Loader\FormFieldsLoader;
+
 /**
  * Class - FieldWithProductField
  */
@@ -34,9 +37,23 @@ class FieldWithProductField extends AbstractFieldSetting {
 	public static function get_fields(): array {
 		// @todo make connection.
 		return [
-			'productField' => [
-				'type'        => 'Int',
-				'description' => __( 'The id of the product field to which the field is associated.', 'wp-graphql-gravity-forms' ),
+			'productField'          => [
+				'type'              => 'Int',
+				'description'       => __( 'The id of the product field to which the field is associated.', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => __( 'Use `connectedProductField` field instead.', 'wp-graphql-gravity-forms' ),
+			],
+			'connectedProductField' => [
+				'type'        => 'ProductField',
+				'description' => __( 'The product field to which the field is associated.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
+					if ( ! isset( $context->gfForm ) || empty( $source->productField ) ) {
+						return null;
+					}
+
+					$id_for_loader = FormFieldsLoader::prepare_loader_id( $context->gfForm->databaseId, (int) $source->productField );
+
+					return $context->get_loader( FormFieldsLoader::$name )->load_deferred( $id_for_loader );
+				},
 			],
 		];
 	}

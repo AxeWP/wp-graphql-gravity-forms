@@ -161,8 +161,10 @@ class FormFieldRegistry {
 
 				$config['resolveType'] = static function ( $value ) use ( $type_registry, $possible_types ) {
 					$input_type = $value->get_input_type();
+
 					if ( isset( $possible_types[ $input_type ] ) ) {
-						$type = $type_registry->get_type( $possible_types[ $value->$input_type ] );
+						$type = $type_registry->get_type( $possible_types[ $input_type ] );
+
 						if ( null !== $type ) {
 							return $type;
 						}
@@ -173,7 +175,7 @@ class FormFieldRegistry {
 						/* translators: %s: GF field type */
 							esc_html__( 'The "%1$1s" Gravity Forms field does not yet support the %2$2s input type.', 'wp-graphql-gravity-forms' ),
 							esc_html( $value->type ),
-							esc_html( $value->inputType ),
+							esc_html( $input_type ?? $value->inputType ),
 						)
 					);
 				};

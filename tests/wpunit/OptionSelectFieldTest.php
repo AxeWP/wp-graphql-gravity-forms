@@ -184,7 +184,10 @@ class OptionSelectFieldTest extends FormFieldTestCase implements FormFieldTestCa
 					shouldExport
 				}
 				placeholder
-				productField
+				connectedProductField {
+					databaseId
+					type
+				}
 				type
 				... on OptionSelectField {
 					autocompleteAttribute

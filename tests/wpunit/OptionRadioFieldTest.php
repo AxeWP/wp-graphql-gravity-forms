@@ -177,7 +177,10 @@ class OptionRadioFieldTest extends FormFieldTestCase implements FormFieldTestCas
 					shouldExport
 				}
 				placeholder
-				productField
+				connectedProductField {
+					databaseId
+					type
+				}
 				type
 				... on OptionRadioField {
 					hasOtherChoice

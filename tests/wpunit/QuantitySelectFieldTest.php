@@ -199,7 +199,10 @@ class QuantitySelectFieldTest extends FormFieldTestCase implements FormFieldTest
 					shouldExport
 				}
 				placeholder
-				productField
+				connectedProductField {
+					databaseId
+					type
+				}
 				type
 				value
 				... on QuantitySelectField {

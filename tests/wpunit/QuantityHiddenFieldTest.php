@@ -164,7 +164,10 @@ class QuantityHiddenFieldTest extends FormFieldTestCase implements FormFieldTest
 					shouldExport
 				}
 				placeholder
-				productField
+				connectedProductField {
+					databaseId
+					type
+				}
 				type
 				... on QuantityHiddenField {
 					value
