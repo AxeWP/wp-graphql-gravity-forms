@@ -29,13 +29,12 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		 * Constructor
 		 */
 		public static function instance(): self {
-			if ( ! isset( self::$instance ) || ! ( is_a( self::$instance, self::class ) ) ) {
-				if ( ! function_exists( 'is_plugin_active' ) ) {
-					require_once ABSPATH . 'wp-admin/includes/plugin.php';
-				}
+			if ( ! isset( self::$instance ) ) {
+				// You cant test a singleton.
+				// @codeCoverageIgnoreStart .
 				self::$instance = new self();
-				self::$instance->includes();
 				self::$instance->setup();
+				// @codeCoverageIgnoreEnd
 			}
 
 			/**
@@ -49,25 +48,13 @@ if ( ! class_exists( 'WPGraphQL\GF\GF' ) ) :
 		}
 
 		/**
-		 * Includes the required files with Composer's autoload.
-		 *
-		 * @since 0.10.0
-		 */
-		private function includes(): void {
-			if ( defined( 'WPGRAPHQL_GF_AUTOLOAD' ) && false !== WPGRAPHQL_GF_AUTOLOAD && defined( 'WPGRAPHQL_GF_PLUGIN_DIR' ) ) {
-				require_once WPGRAPHQL_GF_PLUGIN_DIR . 'vendor/autoload.php';
-			}
-		}
-
-		/**
 		 * Sets up the schema.
 		 */
 		private function setup(): void {
+			// Setup Plugin.
 			Extensions::register_hooks();
 			CoreSchemaFilters::register_hooks();
 			UpdateChecker::register_hooks();
-
-			// Initialize GF type registry.
 			TypeRegistry::init();
 		}
 

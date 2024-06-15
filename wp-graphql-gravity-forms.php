@@ -26,109 +26,133 @@
 
 declare( strict_types = 1 );
 
+namespace WPGraphQL\GF;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'gf_graphql_constants' ) ) {
-	/**
-	 * Define plugin constants.
-	 */
-	function gf_graphql_constants(): void {
-		// Plugin version.
-		if ( ! defined( 'WPGRAPHQL_GF_VERSION' ) ) {
-			define( 'WPGRAPHQL_GF_VERSION', '0.12.6.1' );
-		}
+// If the codeception remote coverage file exists, require it.
+// This file should only exist locally or when CI bootstraps the environment for testing.
+if ( file_exists( __DIR__ . '/c3.php' ) ) {
+	require_once __DIR__ . '/c3.php';
+}
 
-		// Plugin Folder Path.
-		if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_DIR' ) ) {
-			define( 'WPGRAPHQL_GF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-		}
+// Load the autoloader.
+require_once __DIR__ . '/src/Autoloader.php';
+if ( ! \WPGraphQL\GF\Autoloader::autoload() ) {
+	return;
+}
 
-		// Plugin Folder URL.
-		if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_URL' ) ) {
-			define( 'WPGRAPHQL_GF_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-		}
+/**
+ * Define plugin constants.
+ */
+function constants(): void {
+	// Plugin version.
+	if ( ! defined( 'WPGRAPHQL_GF_VERSION' ) ) {
+		define( 'WPGRAPHQL_GF_VERSION', '0.12.6.1' );
+	}
 
-		// Plugin Root File.
-		if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_FILE' ) ) {
-			define( 'WPGRAPHQL_GF_PLUGIN_FILE', __FILE__ );
-		}
+	// Plugin Folder Path.
+	if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_DIR' ) ) {
+		define( 'WPGRAPHQL_GF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+	}
 
-		// Whether to autoload the files or not.
-		if ( ! defined( 'WPGRAPHQL_GF_AUTOLOAD' ) ) {
-			define( 'WPGRAPHQL_GF_AUTOLOAD', true );
-		}
+	// Plugin Folder URL.
+	if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_URL' ) ) {
+		define( 'WPGRAPHQL_GF_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+	}
 
-		// Whether to enable untested form fields the files or not.
-		if ( ! defined( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS' ) ) {
-			define( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS', false );
-		}
+	// Plugin Root File.
+	if ( ! defined( 'WPGRAPHQL_GF_PLUGIN_FILE' ) ) {
+		define( 'WPGRAPHQL_GF_PLUGIN_FILE', __FILE__ );
+	}
+
+	// Whether to autoload the files or not.
+	if ( ! defined( 'WPGRAPHQL_GF_AUTOLOAD' ) ) {
+		define( 'WPGRAPHQL_GF_AUTOLOAD', true );
+	}
+
+	// Whether to enable untested form fields the files or not.
+	if ( ! defined( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS' ) ) {
+		define( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS', false );
 	}
 }
 
-if ( ! function_exists( 'graphql_gf_dependencies_not_ready' ) ) {
+// Run this function when the plugin is activated.
+if ( file_exists( __DIR__ . '/activation.php' ) ) {
+	require_once __DIR__ . '/activation.php';
+	register_activation_hook(
+		__FILE__,
+		'WPGraphQL\GF\activation_callback'
+	);
+}
 
-	/**
-	 * Checks if all the the required plugins are installed and activated.
-	 *
-	 * @return array<string,string> List of dependencies not ready.
-	 */
-	function gf_graphql_dependencies_not_ready(): array {
-		$wpgraphql_version = '1.26.0';
-		$gf_version        = '2.7.0';
+// Run this function when the plugin is deactivated.
+if ( file_exists( __DIR__ . '/deactivation.php' ) ) {
+	require_once __DIR__ . '/deactivation.php';
+	register_activation_hook( __FILE__, 'WPGraphQL\GF\deactivation_callback' );
+}
 
-		$deps = [];
+/**
+ * Checks if all the the required plugins are installed and activated.
+ *
+ * @return array<string,string> List of dependencies not ready.
+ */
+function dependencies_not_ready(): array {
+	$wpgraphql_version = '1.26.0';
+	$gf_version        = '2.7.0';
 
-		if ( ! class_exists( 'WPGraphQL' ) || ( defined( 'WPGRAPHQL_VERSION' ) && version_compare( WPGRAPHQL_VERSION, $wpgraphql_version, '<' ) ) ) {
-			$deps['WPGraphQL'] = $wpgraphql_version;
-		}
+	$deps = [];
 
-		if ( ! class_exists( 'GFCommon' ) || ( ! empty( GFCommon::$version ) && version_compare( GFCommon::$version, $gf_version, '<' ) ) ) {
-			$deps['Gravity Forms'] = $gf_version;
-		}
+	if ( ! class_exists( 'WPGraphQL' ) || ( defined( 'WPGRAPHQL_VERSION' ) && version_compare( WPGRAPHQL_VERSION, $wpgraphql_version, '<' ) ) ) {
+		$deps['WPGraphQL'] = $wpgraphql_version;
+	}
 
-		return $deps;
+	if ( ! class_exists( 'GFCommon' ) || ( ! empty( \GFCommon::$version ) && version_compare( \GFCommon::$version, $gf_version, '<' ) ) ) {
+		$deps['Gravity Forms'] = $gf_version;
+	}
+
+	return $deps;
+}
+
+/**
+ * Initializes WPGraphQL for GF.
+ */
+function init(): void {
+	constants();
+
+	$not_ready = dependencies_not_ready();
+
+	if ( empty( $not_ready ) && defined( 'WPGRAPHQL_GF_PLUGIN_DIR' ) ) {
+		require_once WPGRAPHQL_GF_PLUGIN_DIR . 'src/GF.php';
+		\WPGraphQL\GF\GF::instance();
+	}
+
+	// Output an error notice for the dependencies that are not ready.
+	foreach ( $not_ready as $dep => $version ) {
+		add_action(
+			'admin_notices',
+			static function () use ( $dep, $version ) {
+				?>
+				<div class="error notice">
+					<p>
+						<?php
+							printf(
+								/* translators: dependency not ready error message */
+								esc_html__( '%1$s (v%2$s) must be active for WPGraphQL for Gravity Forms to work.', 'wp-graphql-gravity-forms' ),
+								esc_attr( $dep ),
+								esc_attr( $version ),
+							);
+						?>
+					</p>
+				</div>
+				<?php
+			}
+		);
 	}
 }
 
-if ( ! function_exists( 'gf_graphql_init' ) ) {
-	/**
-	 * Initializes WPGraphQL for GF.
-	 */
-	function gf_graphql_init(): void {
-		gf_graphql_constants();
-
-		$not_ready = gf_graphql_dependencies_not_ready();
-
-		if ( empty( $not_ready ) && defined( 'WPGRAPHQL_GF_PLUGIN_DIR' ) ) {
-			require_once WPGRAPHQL_GF_PLUGIN_DIR . 'src/GF.php';
-			\WPGraphQL\GF\GF::instance();
-		}
-
-		foreach ( $not_ready as $dep => $version ) {
-			add_action(
-				'admin_notices',
-				static function () use ( $dep, $version ) {
-					?>
-					<div class="error notice">
-						<p>
-							<?php
-								printf(
-									/* translators: dependency not ready error message */
-									esc_html__( '%1$s (v%2$s) must be active for WPGraphQL for Gravity Forms to work.', 'wp-graphql-gravity-forms' ),
-									esc_attr( $dep ),
-									esc_attr( $version ),
-								);
-							?>
-						</p>
-					</div>
-					<?php
-				}
-			);
-		}
-	}
-}
-
-add_action( 'graphql_init', 'gf_graphql_init' );
+// Initialize the plugin.
+add_action( 'graphql_init', 'WPGraphQL\GF\init' );

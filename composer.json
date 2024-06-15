@@ -1,11 +1,12 @@
 {
 	"name": "harness-software/wp-graphql-gravity-forms",
-	"description": "WPGraphQL for Gravity Forms",
+	"description": "Adds WPGraphQL support for Gravity Forms",
 	"type": "wordpress-plugin",
 	"license": "GPL-3.0-or-later",
 	"support": {
-		"issues": "https://github.com/axewp/wp-graphql-gravity-forms/issues",
-		"source": "https://github.com/axewp/wp-graphql-gravity-forms"
+		"email": "support@axepress.dev",
+		"issues": "https://github.com/AxeWP/wp-graphql-gravity-forms/issues",
+		"forum": "https://github.com/AxeWP/wp-graphql-gravity-forms/discussions"
 	},
 	"authors": [
 		{
@@ -47,15 +48,17 @@
 		"phpcompatibility/php-compatibility": "dev-develop as 9.99.99"
 	},
 	"config": {
-		"optimize-autoloader": true,
-		"process-timeout": 0,
-		"platform": {
-			"php": "7.4.0"
-		},
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"phpstan/extension-installer": true
-		}
+		},
+		"platform": {
+			"php": "7.4"
+		},
+		"preferred-install": "dist",
+		"sort-packages": true,
+		"optimize-autoloader": true,
+		"process-timeout": 0
 	},
 	"autoload": {
 		"psr-4": {
@@ -92,29 +95,14 @@
 			"php ./vendor/bin/phpcbf"
 		],
 		"phpstan": [
-			"phpstan analyze --ansi --memory-limit=1G -v"
-		]
-	},
-	"archive": {
-		"name": "wp-graphql-gravity-forms",
-		"exclude": [
-			"/.*",
-			"bin",
-			"docker",
-			"docs",
-			"phpstan",
-			"plugin-build",
-			"tests",
-			"!vendor",
-			"!.wordpress-org",
-			"/codeception.dist.yml",
-			"/codeception.yml",
-			"/composer.json",
-			"/composer.lock",
-			"/docker-compose.yml",
-			"/phpstan.neon.dist",
-			"/phpunit.xml.dist",
-			"README.md"
+			"vendor/bin/phpstan analyze --ansi --memory-limit=1G -v"
+		],
+		"zip": [
+			"composer install --no-dev --optimize-autoloader",
+			"mkdir -p plugin-build/wp-graphql-gravity-forms",
+			"rsync -rc --exclude-from=.distignore --exclude=plugin-build . plugin-build/wp-graphql-gravity-forms/ --delete --delete-excluded -v",
+			"cd plugin-build ; zip -r wp-graphql-gravity-forms.zip wp-graphql-gravity-forms",
+			"rm -rf plugin-build/wp-graphql-gravity-forms/"
 		]
 	}
 }
