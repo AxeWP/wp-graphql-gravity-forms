@@ -1,9 +1,9 @@
 <?php
 /**
- * Enables and initializes the Gravity Forms Action Monitor
+ * Enables support for WPGraphQLContentBlocks.
  *
  * @package WPGraphQL\GF\Extensions\WPGraphQLContentBlocks
- * @since 0.10.0
+ * @since 0.13.0
  */
 
 declare( strict_types = 1 );

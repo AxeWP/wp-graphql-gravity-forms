@@ -1,11 +1,11 @@
 <?php
 /**
- * DataLoader - Forms
+ * DataLoader - FormFields
  *
- * Loads Models for Gravity Forms Forms.
+ * Loads Models for Gravity Forms Form Fields.
  *
  * @package WPGraphQL\GF\Data\Loader
- * @since 0.0.1
+ * @since 0.13.0
  */
 
 declare( strict_types = 1 );

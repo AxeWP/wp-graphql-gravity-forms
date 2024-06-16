@@ -3,7 +3,7 @@
  * Interface for a GraphQL TypeWithInputFields.
  *
  * @package WPGraphQL\GF\Interfaces
- * @since 0.10.0
+ * @since 0.13.0
  */
 
 declare( strict_types = 1 );

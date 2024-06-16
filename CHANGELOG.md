@@ -2,33 +2,72 @@
 
 ## [Unreleased]
 
-- feat!: Implement `FormField` model and `DataLoader`, and refactor `FormFieldsConnectionResolver` to extend `AbstractConnectionResolver`.
-- feat!: Refactor `FormsConnectionResolver` and `EntriesConnectionResolver` for compatibility with WPGraphQL v1.26.0 improvements.
-- feat!: Narrow `FormField.choices` and `FormField.inputs` field types to their implementations.
-- feat: Add `targetPageNumber` and `targetPageFormFields` to `SubmitGfFormPayload` for better multi-page form support.
-- fix!: Keep `PageField` with previous page data when filtering `formFields` by `pageNumber`. H/t @SamuelHadsall .
-- fix: Handle RadioField submission values when using a custom "other" choice. H/t @Gytjarek .
+## v0.13.0
+
+**:warning: This release contains multiple breaking changes.**
+
+This _major_ release leverages new WPGraphQL v1.26 features to enhance our schema and resolvers. The `FormsConnectionResolver` and `EntriesConnectionResolver` have been refactored to take advantage of upstream API changes, and a new `FormField` model, `Dataloader`, and `ConnectionResolver` is used to boost performance and flexibility. The schema DX by narrowing down types from their interfaces, we've adding other new features, bug fixes, and code quality improvements.
+
+In this release, we've also removed the `vendor` directory from the GitHub repository. If you have been downloading the plugin's source code instead of the release zip, you will need to run `composer install` to install the required dependencies.
+
+**Note:** As a result of these changes, the following minimum versions have been bumped:
+- WPGraphQL: v1.26.0
+- WordPress: v6.0.0
+- Gravity Forms: v2.7.0
+
+### What's New:
+
+- We've added support for the Gravity Forms Block when using WPGraphQL Content Blocks, by exposing the `GfForm` on the `GravityformsFormAttributes.form` field.
+
+- We've implemented a complete `Model`->`Dataloader`->`ConnectionResolver` pattern for Form Fields. As a result resolving form field data is significantly more performant and flexible, and our FormField connections are fully Relay compliant.
+  - **🚨 Breaking**: The deprecated (int) `FormField.id` has been reinstated as a relay-compliant `ID`. If you are still using `id` as the integer database ID, you will need to update your queries to use `FormField.databaseId`.
+  - **🚨 Breaking**: Form Field resolvers now return a `FormField` model instead of the underlying form. While you can update your custom resolvers to access the underlying form via `$source->gfForm`, it's recommended to rely on the `Model`'s fields for better performance and reliability.
+  - Thanks to the new dataloader, we can now more easily and scalably resolve `FormField`s in more places in the schema. In this release we have:
+    - Added the `FieldError.connectedFormField` field.
+    - Deprecated (int) `GfFieldWithProductFieldSetting.productField` in favor of `.connectedProductField`.
+    - Updated our existing `.connectedFormField`s across the schema to use the new Dataloader.
+    - Exposed `SubmitGfFormPayload.targetPageFormFields` to help with multi-page form support. See notes below for more information.
+
+- **🚨 Breaking**: We've improved the DX for `FormField.choices` and `.inputs` by narrowing down the field definitions on the implementing Types. For example, instead of `CheckboxField.choices` resolving to a generic `GfFieldChoice` interface, it now resolves directly to `CheckboxFieldChoice.
+
+   **Note**: If your queries are checking for "impossible" interfaces, (e.g. `... on ListFieldChoice` on a `CheckboxField.choices` query), you will need to update your queries. A full list of breaking schema changes can be found below.
+
+
+- We've improved the DX and handling of multi-page forms:
+  - **🚨 Breaking**: `PageField`s are now paginated to be at the _bottom of the previous page_, instead of at the top of the following page. H/t @SamuelHadsall.
+
+     **Note**: If you are currently working around the old pagination on your frontend (e.g. overfetching and post-processing your `formFields`), you may need to update your code.
+
+  - We've added `targetPageNumber` and `targetPageFormFields` to the `SubmitGfFormPayload` to help with multi-page form support, allowing you to fetch, submit, and validate a single page at a time before navigating to the next page. Check out the updated docs for more information and usage.
+
+-  **🚨 Breaking**: We've refactored the `EntriesConnectionResolver` and `FormsConnectionResolver` classes to use the new API methods available as of WPGraphQL v1.26.0, leading to improved performance and reliability.
+
+   **Note**: If you are extending these classes in your custom code, you will need to update your code to match the new method signatures.
+
+- **🚨 Breaking**: We've removed the following _deprecated_ code. If you are still referencing these in your GraphQL queries or custom PHP, you will need to update your code:
+  - Deprecated GraphQL fields: `FormsConnectionOrderbyInput.field`, `GfFieldWithDisableQuantitySetting.isQuantityDisabled`. `GfSubmittedEntry.entryId`. `GfForm.button`, `gfForm.entryId`, `gfForm.lastPageButton`.
+  - Deprecated hooks: `graphql_gf_form_modeled_data_experimental`, `graphql_gf_form_field_setting_properties`, `graphql_gf_form_field_value_properties`.
+  - Deprecated helper methods: `GFUtils::handle_file_upload()`.
+
+### Fixes
+- fix: Add missing descriptions to various GraphQL types.
 - fix: Check for Submission Confirmation url before attempting to get the associated post ID.
 - fix: Flush static Gravity Forms state between multiple calls to `GFUtils::submit_form()`.
-- fix: Add missing descriptions to types.
-- feat: Add `FieldError.connectedFormField` connection to `FieldError` type.
-- feat: Add support for WPGraphQL Content Blocks.
-- feat: Add `GfFieldWithProductFieldSetting.connectedProductField` connection and deprecate `.productField` field.
-- dev: Remove `vendor` directory from the GitHub repository.
-- dev: Use `FormFieldsDataLoader` to resolve fields instead of instantiating a new `Model`.
-- dev: use WP_Filesystem to handle Signature field uploads.
-- chore!: Remove deprecated fields from the schema: `FormsConnectionOrderbyInput.field`, `GfFieldWithDisableQuantitySetting.isQuantityDisabled`. `GfSubmittedEntry.entryId`. `GfForm.button`, `gfForm.entryId`, `gfForm.lastPageButton`.
-- chore!: Remove deprecated hooks: `graphql_gf_form_modeled_data_experimental`, `graphql_gf_form_field_setting_properties`, `graphql_gf_form_field_value_properties`.
-- chore!: Remove deprecated helper method: `GFUtils::handle_file_upload()`.
-- chore: Add iterable type hints.
-- chore!: Bump minimum WPGraphQL version to v1.26.0.
-- chore!: Bump minimum WordPress version to v6.0.0.
-- chore!: Bump minimum Gravity Forms version to v2.7.0.
-- chore: Update PHP interfaces and Abstract classes with better type hints.
-- chore: Declare `strict_types` in all PHP files.
+- fix: Handle `RadioField` submission values when using a custom "other" choice. H/t @Gytjarek .
+
+### Behind the Scenes
+- dev: Add new `graphql_gf_activate` and `graphql_gf_deactivate` actions.
+- dev: Deprecate `FieldValues::is_field_and_entry()` and remove internal usage.
+- dev: Remove `vendor` directory from the GitHub repository, and improve plugin initialization and autoload handling.
+- dev: use `WP_Filesystem` to handle Signature field uploads.
+- chore: Declare `strict_types` in all PHP files, add type hints to all iterable types. and fix exposed type errors.
 - chore: Update Composer dev-dependencies and fix test compatibility with `wp-graphql-test-case` v3.0.x.
-- docs: Add docs on using Multi-page forms.
+- chore: Update PHP interfaces and Abstract classes with better type hints.
+- chore!: Bump minimum Gravity Forms version to v2.7.0.
+- chore!: Bump minimum WordPress version to v6.0.0.
+- chore!: Bump minimum WPGraphQL version to v1.26.0.
 - tests: Add test for `GFUtils::get_last_form_page()`.
+
 
 ## v0.12.6.1
 

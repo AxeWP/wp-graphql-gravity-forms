@@ -3,6 +3,7 @@
  * Includes the composer Autoloader used for packages and classes in the src/ directory.
  *
  * @package WPGraphQL\GF
+ * @since 0.13.0
  */
 
 declare( strict_types = 1 );
