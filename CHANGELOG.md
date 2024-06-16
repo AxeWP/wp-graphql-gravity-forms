@@ -49,6 +49,18 @@ In this release, we've also removed the `vendor` directory from the GitHub repos
   - Deprecated hooks: `graphql_gf_form_modeled_data_experimental`, `graphql_gf_form_field_setting_properties`, `graphql_gf_form_field_value_properties`.
   - Deprecated helper methods: `GFUtils::handle_file_upload()`.
 
+### Breaking Schema Changes
+- Field `FormField.id` changed type from `Int!` to `ID!`
+- Field `{$TYPE}Field.inputs` changed type from `[GfFieldInput]` to `[{$TYPE}InputProperty]`
+- Field `{$TYPE}Field.choices` changed type from `[GfFieldChoice]` to `[{$TYPE}FieldChoice]`
+- Field `values` (deprecated) was removed from object type `FileUploadField`
+- Input field `field` (deprecated) was removed from input object type `FormsConnectionOrderbyInput`
+- Field `isQuantityDisabled` (deprecated) was removed from interface `GfFieldWithDisableQuantitySetting`
+- Field `button` (deprecated) was removed from object type `GfForm`
+- Field `formId` (deprecated) was removed from object type `GfForm`
+- Field `lastPageButton` (deprecated) was removed from object type `GfForm`
+- Field `entryId` (deprecated) was removed from object type `GfSubmittedEntry`
+
 ### Fixes
 - fix: Add missing descriptions to various GraphQL types.
 - fix: Check for Submission Confirmation url before attempting to get the associated post ID.
