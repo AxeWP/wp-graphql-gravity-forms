@@ -4,11 +4,12 @@
 
 	<!-- What to scan: include any root-level PHP files, and the /src folder -->
 	<file>./src/</file>
+	<file>./activation.php</file>
+	<file>./deactivation.php</file>
 	<file>./wp-graphql-gravity-forms.php</file>
 	<exclude-pattern>/vendor/</exclude-pattern>
 	<exclude-pattern>/node_modules/</exclude-pattern>
 	<exclude-pattern>/phpstan/</exclude-pattern>
-	<exclude-pattern>*/tests/*</exclude-pattern>
 
 	<!-- How to scan -->
 	<!-- Usage instructions: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage -->
@@ -61,8 +62,7 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<!-- Value: replace the function, class, and variable prefixes used. Separate multiple prefixes with a comma. -->
-			<!-- @todo drop gf_graphql -->
-			<property name="prefixes" type="array" value="WPGraphQL\GF, wp_graphql, gf_graphql, graphql_gf, _gf, WPGRAPHQL_GF" />
+			<property name="prefixes" type="array" value="WPGraphQL\GF, wp_graphql, graphql_gf, _gf, WPGRAPHQL_GF" />
 		</properties>
 	</rule>
 	<rule ref="WordPress.WP.I18n">

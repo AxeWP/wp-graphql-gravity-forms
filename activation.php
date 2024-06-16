@@ -3,6 +3,7 @@
  * Activation Hook
  *
  * @package WPGraphql\GF
+ * @since 0.13.0
  */
 
 declare( strict_types = 1 );

@@ -547,10 +547,10 @@ class FieldValues {
 	 * @param mixed                 $source .
 	 * @param \WPGraphQL\AppContext $context .
 	 *
-	 * @deprecated @todo
+	 * @deprecated 0.13.0
 	 */
 	protected static function is_field_and_entry( $source, AppContext $context ): bool {
-		_deprecated_function( __METHOD__, '@todo' );
+		_deprecated_function( __METHOD__, '0.13.0' );
 		return $source instanceof FormField
 			&& isset( $context->gfEntry )
 			&& isset( $context->gfEntry->entry );
