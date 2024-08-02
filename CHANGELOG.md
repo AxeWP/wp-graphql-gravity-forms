@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - fix: Check if classes are loaded by a different autoloader before attempting to autoload them. H/t @cvanh
+- ci: Replace calls to `docker-compose` with `docker compose`.
 
 
 ## v0.13.0

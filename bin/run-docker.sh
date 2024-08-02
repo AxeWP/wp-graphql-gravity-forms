@@ -87,7 +87,7 @@ case "$subcommand" in
 			export APACHE_RUN_GROUP=$(id -g)
 			echo "APACHE RUN USER ${APACHE_RUN_USER} ${APACHE_RUN_GROUP}"
 
-			docker-compose run --rm \
+			docker compose run --rm \
 				-e COVERAGE=${COVERAGE-} \
 				-e USING_XDEBUG=${USING_XDEBUG-} \
 				-e DEBUG=${DEBUG-} \
