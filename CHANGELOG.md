@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [v0.13.0.1]
+
+This _patch_ release fixes compatibility with Composer-based WordPress installations, and a few minor issues introduced in the previous release.
+
 - fix: Check if classes are loaded by a different autoloader before attempting to autoload them. H/t @cvanh
 - fix: Return `wp_max_upload_size()` instead of `null` if `GfFieldWithFileSizeSetting.maxFileSize` is `null`. H/t @Gytjarek
 - fix: Fix typo in Autoloader release URL.
