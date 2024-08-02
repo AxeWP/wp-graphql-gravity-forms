@@ -4,6 +4,7 @@
 
 - fix: Check if classes are loaded by a different autoloader before attempting to autoload them. H/t @cvanh
 - fix: Return `wp_max_upload_size()` instead of `null` if `GfFieldWithFileSizeSetting.maxFileSize` is `null`. H/t @Gytjarek
+- fix: Fix typo in Autoloader release URL.
 - ci: Replace calls to `docker-compose` with `docker compose`.
 
 ## v0.13.0
