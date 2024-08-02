@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- fix: Check if classes are loaded by a different autoloader before attempting to autoload them.
+
 ## v0.13.0
 
 **:warning: This release contains multiple breaking changes.**
