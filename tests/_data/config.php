@@ -1,6 +1,8 @@
 <?php
 // We use GRAPHQL_DEBUG responses in our tests.
-define( 'GRAPHQL_DEBUG', true );
+if ( ! defined( 'GRAPHQL_DEBUG' ) ) {
+	define( 'GRAPHQL_DEBUG', true );
+}
 
 // Use reCAPTCHA test keys: https://developers.google.com/recaptcha/docs/faq
 define( 'GF_RECAPTCHA_PUBLIC_KEY', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' );

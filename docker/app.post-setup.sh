@@ -40,7 +40,7 @@ install_gf || true
 
 # Install WPGraphQL and Activate
 if ! $( wp plugin is-installed wp-graphql --allow-root ); then
-	wp plugin install wp-graphql --allow-root
+	wp plugin install wp-graphql --version=1.32.1 --allow-root
 fi
 wp plugin activate wp-graphql --allow-root
 
@@ -67,6 +67,8 @@ wp plugin activate wp-graphql-gravity-forms --allow-root
 
 # Set pretty permalinks.
 wp rewrite structure '/%year%/%monthnum%/%postname%/' --allow-root
+
+wp plugin list --allow-root
 
 # Export the db for codeception to use
 wp db export "${DATA_DUMP_DIR}/dump.sql" --allow-root

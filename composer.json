@@ -25,6 +25,8 @@
 		"yahnis-elsts/plugin-update-checker": "^5.2.0"
 	},
 	"require-dev": {
+		"axepress/wp-graphql-cs": "^2.0.0",
+		"axepress/wp-graphql-stubs": "^2.3.0",
 		"codeception/lib-innerbrowser": "^1.0",
 		"codeception/module-asserts": "^1.0",
 		"codeception/module-cli": "^1.0",
@@ -36,16 +38,14 @@
 		"codeception/phpunit-wrapper": "^9.0",
 		"codeception/util-universalframework": "^1.0",
 		"lucatume/wp-browser": "<3.5",
-		"wp-graphql/wp-graphql-testcase": "~3.3.0",
-		"phpunit/phpunit": "^9.0",
-		"phpstan/phpstan": "^1.2",
-		"phpstan/extension-installer": "^1.1",
-		"szepeviktor/phpstan-wordpress": "^1.0",
-		"axepress/wp-graphql-stubs": "^1.11.1",
-		"axepress/wp-graphql-cs": "^2.0.0-beta",
-		"wp-cli/wp-cli-bundle": "^2.8.1",
 		"php-coveralls/php-coveralls": "^2.5",
-		"phpcompatibility/php-compatibility": "dev-develop as 9.99.99"
+		"phpcompatibility/php-compatibility": "dev-develop as 9.99.99",
+		"phpstan/extension-installer": "^1.1",
+		"phpstan/phpstan": "^2.0",
+		"phpunit/phpunit": "^9.0",
+		"szepeviktor/phpstan-wordpress": "^2.0",
+		"wp-cli/wp-cli-bundle": "^2.8.1",
+		"wp-graphql/wp-graphql-testcase": "~3.4.0"
 	},
 	"config": {
 		"allow-plugins": {
@@ -55,9 +55,9 @@
 		"platform": {
 			"php": "7.4"
 		},
+		"optimize-autoloader": true,
 		"preferred-install": "dist",
 		"sort-packages": true,
-		"optimize-autoloader": true,
 		"process-timeout": 0
 	},
 	"autoload": {
@@ -67,7 +67,9 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Tests\\WPGraphQL\\GF\\": "tests/_support/"
+			"Tests\\WPGraphQL\\GF\\Factory\\": "tests/_support/Factory",
+			"Tests\\WPGraphQL\\GF\\Helper\\": "tests/_support/Helper",
+			"Tests\\WPGraphQL\\GF\\TestCase\\": "tests/_support/TestCase"
 		}
 	},
 	"scripts": {

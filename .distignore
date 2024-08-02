@@ -1,3 +1,4 @@
+/.devcontainer
 /.git
 /.github
 /.idea
@@ -6,7 +7,9 @@
 /.wordpress-org
 /bin
 /docker
+/docker-output
 /docs
+/img
 /phpstan
 /plugin-build
 /tests
@@ -17,6 +20,7 @@
 .DS_Store
 .env
 .env.dist
+.gitattributes
 .gitignore
 .phpcs.xml
 .phpcs.xml.dist

@@ -1,0 +1,19 @@
+/.github export-ignore
+/bin export-ignore
+/docker export-ignore
+/docs export-ignore
+/phpstan export-ignore
+/plugin-build export-ignore
+/tests export-ignore
+/.coveralls.yml export-ignore
+/.distignore export-ignore
+/.dockerignore export-ignore
+/.editorconfig
+/.env.dist export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.phpcs.xml.dist export-ignore
+/codeception.dist.yml export-ignore
+/composer.lock export-ignore
+/docker-compose.yml export-ignore
+/phpstan.neon.dist export-ignore

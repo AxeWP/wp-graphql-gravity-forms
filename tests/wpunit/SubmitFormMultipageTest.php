@@ -3,7 +3,7 @@
  * Tests submitting a form with multiple pages.
  */
 
-use Helper\GFHelpers\GFHelpers;
+use Tests\WPGraphQL\GF\Helper\GFHelpers\GFHelpers;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
 

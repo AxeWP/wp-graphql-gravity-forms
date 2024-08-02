@@ -5,9 +5,9 @@
  * @package Helper.
  */
 
-namespace Helper;
+namespace Tests\WPGraphQL\GF\Helper;
 
-use Helper\GFHelpers\PropertyHelper;
+use Tests\WPGraphQL\GF\Helper\GFHelpers\PropertyHelper;
 
 /**
  * Class - Wpunit

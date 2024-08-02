@@ -155,9 +155,6 @@ class Utils {
 			}
 		}
 
-		/**
-		 * @var array<string,string> $types An array of GF_Field::$type => GraphQL Type names.
-		 */
 		return $types;
 	}
 

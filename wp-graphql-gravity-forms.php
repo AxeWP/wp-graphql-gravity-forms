@@ -7,15 +7,16 @@
  * Author: AxePress Development
  * Author URI: https://axepress.dev
  * Update URI: https://github.com/axewp/wp-graphql-gravity-forms/releases
- * Version: 0.13.0
+ * Version: 0.13.0.1
  * Text Domain: wp-graphql-gravity-forms
  * Domain Path: /languages
  * Requires at least: 6.0
- * Tested up to: 6.5
+ * Tested up to: 6.8
  * Requires PHP: 7.4
  * Requires Plugins: wp-graphql
+ * Gravity Forms requires at least: 2.7.0
  * WPGraphQL requires at least: 1.26.0
- * GravityForms requires at least: 2.7.0
+ * WPGraphQL tested up to: 1.32.1
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  *
@@ -45,13 +46,29 @@ if ( ! \WPGraphQL\GF\Autoloader::autoload() ) {
 	return;
 }
 
+
+// Run this function when the plugin is activated.
+if ( file_exists( __DIR__ . '/activation.php' ) ) {
+	require_once __DIR__ . '/activation.php';
+	register_activation_hook(
+		__FILE__,
+		'WPGraphQL\GF\activation_callback'
+	);
+}
+
+// Run this function when the plugin is deactivated.
+if ( file_exists( __DIR__ . '/deactivation.php' ) ) {
+	require_once __DIR__ . '/deactivation.php';
+	register_deactivation_hook( __FILE__, 'WPGraphQL\GF\deactivation_callback' );
+}
+
 /**
  * Define plugin constants.
  */
 function constants(): void {
 	// Plugin version.
 	if ( ! defined( 'WPGRAPHQL_GF_VERSION' ) ) {
-		define( 'WPGRAPHQL_GF_VERSION', '0.13.0' );
+		define( 'WPGRAPHQL_GF_VERSION', '0.13.1' );
 	}
 
 	// Plugin Folder Path.
@@ -78,21 +95,6 @@ function constants(): void {
 	if ( ! defined( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS' ) ) {
 		define( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS', false );
 	}
-}
-
-// Run this function when the plugin is activated.
-if ( file_exists( __DIR__ . '/activation.php' ) ) {
-	require_once __DIR__ . '/activation.php';
-	register_activation_hook(
-		__FILE__,
-		'WPGraphQL\GF\activation_callback'
-	);
-}
-
-// Run this function when the plugin is deactivated.
-if ( file_exists( __DIR__ . '/deactivation.php' ) ) {
-	require_once __DIR__ . '/deactivation.php';
-	register_activation_hook( __FILE__, 'WPGraphQL\GF\deactivation_callback' );
 }
 
 /**
@@ -155,4 +157,4 @@ function init(): void {
 }
 
 // Initialize the plugin.
-add_action( 'graphql_init', 'WPGraphQL\GF\init' );
+add_action( 'plugins_loaded', 'WPGraphQL\GF\init' );

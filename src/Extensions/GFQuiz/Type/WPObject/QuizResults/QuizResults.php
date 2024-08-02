@@ -168,7 +168,7 @@ class QuizResults extends AbstractObject implements Field {
 
 		$entry_count = (int) $data['entry_count'];
 		$sum         = ! empty( $data['sum'] ) ? (int) $data['sum'] : 0;
-		$max_score   = isset( $data['score_frequencies'] ) && is_array( $data['score_frequencies'] ) ? max( array_keys( $data['score_frequencies'] ) ) : null;
+		$max_score   = ! empty( $data['score_frequencies'] ) && is_array( $data['score_frequencies'] ) ? max( array_keys( $data['score_frequencies'] ) ) : null;
 		$pass_rate   = $data['pass_rate'] ?? null;
 
 		$average_score = round( $sum / $entry_count, 2 );

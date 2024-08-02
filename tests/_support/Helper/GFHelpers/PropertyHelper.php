@@ -1,6 +1,6 @@
 <?php
 
-namespace Helper\GFHelpers;
+namespace Tests\WPGraphQL\GF\Helper\GFHelpers;
 
 class PropertyHelper extends GFHelpers {
 	public function addIconUrl( $value = null ) {

@@ -1,6 +1,7 @@
 <?php
 
-use Helper\GFHelpers\GFHelpers;
+use Tests\WPGraphQL\GF\Helper\GFHelpers\Dummy;
+use Tests\WPGraphQL\GF\Helper\GFHelpers\GFHelpers;
 use WPGraphQL\GF\Type\Enum\RecaptchaTypeEnum;
 
 class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
@@ -13,15 +14,13 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	/**
 	 * Provides access to dummy functions.
 	 *
-	 * @var \Dummy
+	 * @var \Tests\WPGraphQL\GF\Helper\Dummy
 	 */
 	public $dummy;
 	public array $options;
 
 	public function setUp(): void {
-		require_once __DIR__ . '/../_support/Helper/GFHelpers/inc/Dummy.php';
 		$this->dummy = new Dummy();
-
 		// Before...
 		parent::setUp();
 

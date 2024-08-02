@@ -192,7 +192,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 
 					$order = GF_Order_Factory::create_from_entry( $context->gfForm->form, $source->entry );
 
-					/** @var \Gravity_Forms\Gravity_Forms\Orders\Items\GF_Order_Item[]|\Gravity_Forms\Gravity_Forms\Orders\Items\GF_Order_Item|null $items */
+					/** @var \Gravity_Forms\Gravity_Forms\Orders\Items\GF_Order_Item[]|\Gravity_Forms\Gravity_Forms\Orders\Items\GF_Order_Item $items */
 					$items = $order->get_items();
 					if ( empty( $items ) ) {
 						return null;

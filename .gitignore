@@ -25,6 +25,14 @@ auth.json
 
 # Composer deps
 vendor
+vendor-prefixed
+
+# NPM deps
+node_modules
+
+# Built assets - enable once this is on wpackagist
+# build
+build/tsconfig.tsbuildinfo
 
 # Generated Schema used in some tooling. Versioned Schema is uploaded as a Release artifact to Github.
 schema.graphql
@@ -34,6 +42,9 @@ wp-cli.local.yml
 
 # Tests
 *.sql
+*.tar.gz
 !tests
 tests/*.suite.yml
 coverage/*
+.log/
+c3.php

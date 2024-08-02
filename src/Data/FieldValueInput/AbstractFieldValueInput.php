@@ -211,6 +211,8 @@ abstract class AbstractFieldValueInput {
 	 * Manually runs GF_Field::validate, and grabs any validation errors.
 	 *
 	 * @param array{id:int,message:string}[] $errors the array of validation errors.
+	 *
+	 * @param-out array{id:mixed,message:mixed}[] $errors
 	 */
 	public function validate_value( array &$errors ): void {
 		$this->field->validate( $this->value, $this->form );

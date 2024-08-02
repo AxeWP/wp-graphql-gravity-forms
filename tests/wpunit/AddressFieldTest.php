@@ -5,7 +5,7 @@
  * @package Tests\WPGraphQL\GF
  */
 
-use Helper\GFHelpers\GFHelpers;
+use Tests\WPGraphQL\GF\Helper\GFHelpers\GFHelpers;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;

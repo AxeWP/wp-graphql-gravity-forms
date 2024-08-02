@@ -10,7 +10,7 @@
 
 namespace Tests\WPGraphQL\GF\TestCase;
 
-use Helper\GFHelpers\GFHelpers;
+use Tests\WPGraphQL\GF\Helper\GFHelpers\GFHelpers;
 use WPGraphQL\GF\Type\Enum;
 
 /**
@@ -32,7 +32,7 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	/**
 	 * Holds a helper class to easily get default properties.
 	 *
-	 * @var \Helper\GFHelpers\PropertyHelper .
+	 * @var \Tests\WPGraphQL\GF\TestCase\Tests\WPGraphQL\GF\Helper\GFHelpers\PropertyHelper
 	 */
 	protected $property_helper;
 

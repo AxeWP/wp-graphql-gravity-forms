@@ -92,7 +92,7 @@ class SignatureValuesInput extends ValueInput {
 		// Use WP_Filesystem to save the signature image.
 		global $wp_filesystem;
 		if ( ! $wp_filesystem instanceof \WP_Filesystem_Base ) {
-			require_once ABSPATH . 'wp-admin/includes/file.php';
+			require_once ABSPATH . 'wp-admin/includes/file.php'; // @phpstan-ignore requireOnce.fileNotFound
 			WP_Filesystem();
 		}
 

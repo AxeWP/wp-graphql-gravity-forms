@@ -1,25 +1,28 @@
 <?php
 
 class ActivationCest {
-	// tests
+	/**
+	 * Tests activation and deactivation.
+	 */
 	public function testActivation( AcceptanceTester $I ) {
-		$pluginSlug = 'wp-graphql-gravity-forms';
+		$slug = 'wp-graphql-gravity-forms';
 
 		$I->wantTo( 'activate and deactivate the plugin correctly' );
 
 		$I->loginAsAdmin();
 		$I->amOnPluginsPage();
-		$I->seePluginActivated( $pluginSlug );
-		$I->deactivatePlugin( $pluginSlug );
 
-		$I->loginAsAdmin();
-		$I->amOnPluginsPage();
-		// Not sure why the slug changes
+		$I->seePluginInstalled( $slug );
+
+		$I->activatePlugin( $slug );
+		$I->seePluginActivated( $slug );
+
+		$I->deactivatePlugin( $slug );
+
+		// For some reason, it switches slugs here.
 		$I->seePluginDeactivated( 'wpgraphql-for-gravity-forms' );
 		$I->activatePlugin( 'wpgraphql-for-gravity-forms' );
 
-		$I->loginAsAdmin();
-		$I->amOnPluginsPage();
-		$I->seePluginActivated( $pluginSlug );
+		$I->seePluginActivated( $slug );
 	}
 }
