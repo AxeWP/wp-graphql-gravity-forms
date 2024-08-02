@@ -75,7 +75,7 @@
 		"install-stan-env": "bash bin/install-stan-env.sh",
 		"docker-build": "bash bin/run-docker.sh build",
 		"docker-run": "bash bin/run-docker.sh run",
-		"docker-destroy": "docker-compose down",
+		"docker-destroy": "docker compose down",
 		"build-and-run": [
 			"@docker-build",
 			"@docker-run"

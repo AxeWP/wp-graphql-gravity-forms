@@ -32,8 +32,14 @@ class Autoloader {
 			return true;
 		}
 
+		// If the autoloader has already been loaded, then return true.
 		if ( self::$is_loaded ) {
 			return self::$is_loaded;
+		}
+
+		// If the main class has already been loaded, then they must be using a different autoloader.
+		if ( class_exists( 'WPGraphQL\GF\GF' ) ) {
+			return true;
 		}
 
 		$autoloader      = dirname( __DIR__ ) . '/vendor/autoload.php';
