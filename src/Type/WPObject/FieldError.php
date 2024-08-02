@@ -51,7 +51,7 @@ class FieldError extends AbstractObject {
 				'type'        => FormField::$type,
 				'description' => __( 'The form field that the error is connected to.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! isset( $source['id'] ) || ! isset( $source['formId'] ) ) {
+					if ( empty( $source['id'] ) || empty( $source['formId'] ) ) {
 						return null;
 					}
 
