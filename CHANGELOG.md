@@ -2,7 +2,8 @@
 
 ## [Unreleased]
 
-- fix: Check if classes are loaded by a different autoloader before attempting to autoload them.
+- fix: Check if classes are loaded by a different autoloader before attempting to autoload them. H/t @cvanh
+
 
 ## v0.13.0
 
