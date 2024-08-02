@@ -3,8 +3,8 @@
 ## [Unreleased]
 
 - fix: Check if classes are loaded by a different autoloader before attempting to autoload them. H/t @cvanh
+- fix: Return `wp_max_upload_size()` instead of `null` if `FieldWithFileSize.maxFileSize` is `null`. H/t @Gytjarek
 - ci: Replace calls to `docker-compose` with `docker compose`.
-
 
 ## v0.13.0
 
