@@ -10,6 +10,7 @@ This _patch_ release fixes compatibility with Composer-based WordPress installat
 - fix: Return `wp_max_upload_size()` instead of `null` if `GfFieldWithFileSizeSetting.maxFileSize` is `null`. H/t @Gytjarek
 - fix: Fix typo in Autoloader release URL.
 - fix: Ensure a valid source ID exists before attempting to resolve a `connectedFormField`.
+- ci: Test compatibility against WP 6.6.
 - ci: Replace calls to `docker-compose` with `docker compose`.
 
 ## v0.13.0
