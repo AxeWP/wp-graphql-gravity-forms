@@ -109,7 +109,7 @@ class OrderItem extends AbstractObject {
 				'type'        => FormField::$type,
 				'description' => __( 'The form field that the order item is connected to', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! isset( $context->gfForm ) || ! isset( $source['id'] ) ) {
+					if ( ! isset( $context->gfForm ) || empty( $source['id'] ) ) {
 						return null;
 					}
 
