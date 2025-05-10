@@ -42,7 +42,7 @@
 		"phpstan/extension-installer": "^1.1",
 		"szepeviktor/phpstan-wordpress": "^1.0",
 		"axepress/wp-graphql-stubs": "^2.3.0",
-		"axepress/wp-graphql-cs": "^2.0.0-beta",
+		"axepress/wp-graphql-cs": "^2.0.0",
 		"wp-cli/wp-cli-bundle": "^2.8.1",
 		"php-coveralls/php-coveralls": "^2.5",
 		"phpcompatibility/php-compatibility": "dev-develop as 9.99.99"

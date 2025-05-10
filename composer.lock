@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "119710b1230578f621bdba39131a3b24",
+    "content-hash": "cbbb6d7d99b2ec66284c8bd416ac1878",
     "packages": [
         {
             "name": "yahnis-elsts/plugin-update-checker",
@@ -11234,7 +11234,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "axepress/wp-graphql-cs": 10,
         "phpcompatibility/php-compatibility": 20
     },
     "prefer-stable": false,
