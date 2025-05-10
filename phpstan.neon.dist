@@ -36,5 +36,3 @@ parameters:
 			- ../wp-jamstack-deployments/
 		scanFiles:
 			- vendor/axepress/wp-graphql-stubs/wp-graphql-stubs.php
-		ignoreErrors:
-			- '#^Function gf_apply_filters(_ref_array)? invoked with ([1-9]|1[0-2]) parameters, 2 required\.$#'

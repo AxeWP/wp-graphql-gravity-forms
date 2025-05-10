@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- ci: Test compatibility against WP 6.8.x and WPGraphQL 2.3.x.
+
 ## [v0.13.0.1]
 
 This _patch_ release fixes compatibility with Composer-based WordPress installations, and a few minor issues introduced in the previous release.
