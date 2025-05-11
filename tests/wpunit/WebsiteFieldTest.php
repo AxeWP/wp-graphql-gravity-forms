@@ -103,6 +103,7 @@ class WebsiteFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 				description
 				descriptionPlacement
 				errorMessage
+				hasAutocomplete
 				inputName
 				isRequired
 				label
