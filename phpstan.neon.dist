@@ -1,19 +1,16 @@
 parameters:
 		level: 8
-		checkAlwaysTrueCheckTypeFunctionCall: true
-		checkAlwaysTrueInstanceof: true
-		checkAlwaysTrueStrictComparison: true
+		treatPhpDocTypesAsCertain: false
+		inferPrivatePropertyTypeFromConstructor: true
 		checkExplicitMixedMissingReturn: true
 		checkFunctionNameCase: true
 		checkInternalClassCaseSensitivity: true
 		checkTooWideReturnTypesInProtectedAndPublicMethods: true
-		inferPrivatePropertyTypeFromConstructor: true
 		polluteScopeWithAlwaysIterableForeach: false
 		polluteScopeWithLoopInitialAssignments: false
 		reportAlwaysTrueInLastCondition: true
 		reportStaticMethodSignatures: true
 		reportWrongPhpDocTypeInVarTag: true
-		treatPhpDocTypesAsCertain: false
 		dynamicConstantNames:
 			- WPGRAPHQL_GF_AUTOLOAD
 		stubFiles:
@@ -36,3 +33,4 @@ parameters:
 			- ../wp-jamstack-deployments/
 		scanFiles:
 			- vendor/axepress/wp-graphql-stubs/wp-graphql-stubs.php
+		

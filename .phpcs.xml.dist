@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="WordPress Coding Standards for WPGraphQL for Gravity Forms" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="WordPress Coding Standards for WPGraphQL for Gravity Forms" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
 	<description>Sniffs for the WPGraphQL plugin ecosystem.</description>
 
 	<!-- What to scan: include any root-level PHP files, and the /src folder -->
@@ -28,7 +28,7 @@
 	<!-- Enables parallel processing when available for faster results. -->
 	<arg name="parallel" value="20"/>
 	<!-- Set severity to 1 to see everything that isn't effectively turned off. -->
-	<arg name="severity" value="1"/>
+	<arg name="severity" value="1" />
 
 	<!-- Ruleset Config: set these to match your project constraints-->
 
@@ -42,7 +42,7 @@
 		Tests for WordPress version compatibility.
 		https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
 	-->
-	<config name="minimum_supported_wp_version" value="6.0"/>
+	<config name="minimum_wp_version" value="6.2"/>
 
 	<!-- Rules: WPGraphQL Coding Standards -->
 	<!-- https://github.com/AxeWP/WPGraphQL-Coding-Standards/WPGraphQL/ruleset.xml -->
@@ -50,25 +50,37 @@
 		<exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification" />
 		<exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification" />
 		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification" />
+		<!-- @todo remove after PHPCS v4-->
+		<exclude name="WordPressVIPMinimum.JS" />
+		<exclude name="Generic.Functions.CallTimePassByReference" />
 	</rule>
 
 	<!-- Individual rule configuration -->
 	<rule ref="WordPress.WP.Capabilities">
 		<properties>
-			<!-- Value: replace the capabilities used. Separate multiple capabilities with a comma. -->
-			<property name="custom_capabilities" type="array" value="gravityforms_view_entries, gform_full_access" />
+			<property name="custom_capabilities" type="array">
+				<element value="gravityforms_view_entries" />
+				<element value="gform_full_access" />
+			</property>
 		</properties>
 	</rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<!-- Value: replace the function, class, and variable prefixes used. Separate multiple prefixes with a comma. -->
-			<property name="prefixes" type="array" value="WPGraphQL\GF, wp_graphql, graphql_gf, _gf, WPGRAPHQL_GF" />
+			<property name="prefixes" type="array">
+				<element value="graphql_gf"/>
+				<element value="WPGRAPHQL_GF"/>
+				<element value="_gf"/>
+				<element value="wp_graphql"/>
+				<element value="WPGraphQL\GF" />
+			</property>
 		</properties>
 	</rule>
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<!-- Value: replace the text domain used. -->
-			<property name="text_domain" type="array" value="wp-graphql-gravity-forms"/>
+			<property name="text_domain" type="array">
+				<element value="wp-graphql-gravity-forms" />
+			</property>
 		</properties>
 	</rule>
 
