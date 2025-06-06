@@ -32,7 +32,7 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	/**
 	 * Holds a helper class to easily get default properties.
 	 *
-	 * @var Tests\WPGraphQL\GF\Helper\GFHelpers\PropertyHelper
+	 * @var \Tests\WPGraphQL\GF\TestCase\Tests\WPGraphQL\GF\Helper\GFHelpers\PropertyHelper
 	 */
 	protected $property_helper;
 
