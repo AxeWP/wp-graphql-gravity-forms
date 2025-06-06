@@ -2,7 +2,9 @@
 
 ## [Unreleased]
 
-- ci: Test compatibility against WP 6.8.x and WPGraphQL 2.3.x.
+- ci: Test compatibility against WP 6.8.x and WPGraphQL 1.31.x
+- chore: Update Composer dependencies, and remediate PHPCS/PHPStan issues.
+- tests: Fix Composer-dev namespace for tests.
 
 ## [v0.13.0.1]
 
