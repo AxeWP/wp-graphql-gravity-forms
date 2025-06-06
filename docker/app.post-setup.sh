@@ -79,6 +79,5 @@ if $(wp maintenance-mode is-active --allow-root); then
 	wp maintenance-mode deactivate --allow-root
 fi
 
-
 chmod 777 -R .
 chown -R $(id -u):$(id -g) .

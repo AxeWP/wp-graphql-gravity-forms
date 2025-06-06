@@ -6,4 +6,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-        - \Helper\Unit
+        - \Tests\WPGraphQL\GF\Helper\Unit
