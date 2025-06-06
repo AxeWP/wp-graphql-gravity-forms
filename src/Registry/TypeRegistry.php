@@ -72,8 +72,7 @@ class TypeRegistry {
 		 * Fires before all types have been registered.
 		 */
 		do_action( 'graphql_gf_before_register_types' );
-
-		self::initialize_registry();
+		add_action( 'graphql_init', static fn() => self::initialize_registry(), 10, 0 );
 
 		/**
 		 * Fires after all types have been registered.

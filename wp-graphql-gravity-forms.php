@@ -156,4 +156,4 @@ function init(): void {
 }
 
 // Initialize the plugin.
-add_action( 'graphql_init', 'WPGraphQL\GF\init' );
+add_action( 'plugins_loaded', 'WPGraphQL\GF\init' );

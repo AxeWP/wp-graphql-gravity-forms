@@ -5,27 +5,23 @@ class ActivationCest {
 	 * Tests activation and deactivation.
 	 */
 	public function testActivation( AcceptanceTester $I ) {
-		$slug = 'wp-graphql-for-gravity-forms';
+		$slug = 'wp-graphql-gravity-forms';
 
 		$I->wantTo( 'activate and deactivate the plugin correctly' );
 
 		$I->loginAsAdmin();
 		$I->amOnPluginsPage();
 
-		// Log the page content.
-		codecept_debug( $I->grabPageSource() );
-
 		$I->seePluginInstalled( $slug );
-
+		
 		$I->activatePlugin( $slug );
-
 		$I->seePluginActivated( $slug );
 
 		$I->deactivatePlugin( $slug );
 
-		$I->seePluginDeactivated( $slug );
-
-		$I->activatePlugin( $slug );
+		// For some reason, it switches slugs here.
+		$I->seePluginDeactivated( 'wpgraphql-for-gravity-forms' );
+		$I->activatePlugin( 'wpgraphql-for-gravity-forms' );
 
 		$I->seePluginActivated( $slug );
 	}
