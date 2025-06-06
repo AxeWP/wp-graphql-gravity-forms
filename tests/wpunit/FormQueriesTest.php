@@ -6,7 +6,7 @@
  */
 
 use GraphQLRelay\Relay;
-use Helper\GFHelpers\GFHelpers;
+use Tests\WPGraphQL\GF\Helper\GFHelpers\GFHelpers;
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum as QuizEnum;

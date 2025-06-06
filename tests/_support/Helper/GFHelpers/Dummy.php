@@ -6,6 +6,8 @@
  * @link https://github.com/the-events-calendar/ql-events/blob/65e10caa181edc9c41ff439c9ab634059bb18863/tests/_support/Helper/tec-helpers/includes/class-dummy.php
  */
 
+namespace Tests\WPGraphQL\GF\Helper\GFHelpers;
+
 /**
  * Class - Dummy
  */

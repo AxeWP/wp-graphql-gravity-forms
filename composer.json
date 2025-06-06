@@ -55,9 +55,9 @@
 		"platform": {
 			"php": "7.4"
 		},
+		"optimize-autoloader": true,
 		"preferred-install": "dist",
 		"sort-packages": true,
-		"optimize-autoloader": true,
 		"process-timeout": 0
 	},
 	"autoload": {
@@ -67,7 +67,9 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Tests\\WPGraphQL\\GF\\": "tests/_support/"
+			"Tests\\WPGraphQL\\GF\\Factory\\": "tests/_support/Factory",
+			"Tests\\WPGraphQL\\GF\\Helper\\": "tests/_support/Helper",
+			"Tests\\WPGraphQL\\GF\\TestCase\\": "tests/_support/TestCase"
 		}
 	},
 	"scripts": {

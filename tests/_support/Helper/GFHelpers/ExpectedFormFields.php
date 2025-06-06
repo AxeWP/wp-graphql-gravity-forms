@@ -2,10 +2,10 @@
 /**
  * Abstract class - GFHelpers.
  *
- * @package Helper\GFHelpers
+ * @package Tests\WPGraphQL\GF\Helper\GFHelpers
  */
 
-namespace Helper\GFHelpers;
+namespace Tests\WPGraphQL\GF\Helper\GFHelpers;
 
 use GF_Field;
 use WPGraphQL\GF\Extensions\GFChainedSelects\Type\Enum\ChainedSelectFieldAlignmentEnum;
@@ -276,7 +276,7 @@ trait ExpectedFormFields {
 				'label'                 => $field->label ?? null,
 				'name'                  => $field->inputName ?? null,
 				'placeholder'           => $field->placeholder ?? null,
-			]
+			],
 		];
 
 		$properties[] = $this->expected_inputs( $keys, ! empty( $inputs ) ? $inputs : [] );

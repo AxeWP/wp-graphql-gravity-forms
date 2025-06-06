@@ -46,6 +46,22 @@ if ( ! \WPGraphQL\GF\Autoloader::autoload() ) {
 	return;
 }
 
+
+// Run this function when the plugin is activated.
+if ( file_exists( __DIR__ . '/activation.php' ) ) {
+	require_once __DIR__ . '/activation.php';
+	register_activation_hook(
+		__FILE__,
+		'WPGraphQL\GF\activation_callback'
+	);
+}
+
+// Run this function when the plugin is deactivated.
+if ( file_exists( __DIR__ . '/deactivation.php' ) ) {
+	require_once __DIR__ . '/deactivation.php';
+	register_deactivation_hook( __FILE__, 'WPGraphQL\GF\deactivation_callback' );
+}
+
 /**
  * Define plugin constants.
  */
@@ -79,21 +95,6 @@ function constants(): void {
 	if ( ! defined( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS' ) ) {
 		define( 'WPGRAPHQL_GF_EXPERIMENTAL_FIELDS', false );
 	}
-}
-
-// Run this function when the plugin is activated.
-if ( file_exists( __DIR__ . '/activation.php' ) ) {
-	require_once __DIR__ . '/activation.php';
-	register_activation_hook(
-		__FILE__,
-		'WPGraphQL\GF\activation_callback'
-	);
-}
-
-// Run this function when the plugin is deactivated.
-if ( file_exists( __DIR__ . '/deactivation.php' ) ) {
-	require_once __DIR__ . '/deactivation.php';
-	register_activation_hook( __FILE__, 'WPGraphQL\GF\deactivation_callback' );
 }
 
 /**

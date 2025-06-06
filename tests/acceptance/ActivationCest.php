@@ -13,7 +13,7 @@ class ActivationCest {
 		$I->amOnPluginsPage();
 
 		$I->seePluginInstalled( $slug );
-		
+
 		$I->activatePlugin( $slug );
 		$I->seePluginActivated( $slug );
 

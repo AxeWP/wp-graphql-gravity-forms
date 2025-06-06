@@ -13,7 +13,7 @@ namespace Tests\WPGraphQL\GF\TestCase;
 use GFAPI;
 use GFFormsModel;
 use GF_Field;
-use Helper\GFHelpers\ExpectedFormFields;
+use Tests\WPGraphQL\GF\Helper\GFHelpers\ExpectedFormFields;
 use WPGraphQL\GF\Registry\FieldChoiceRegistry;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Registry\FormFieldRegistry;

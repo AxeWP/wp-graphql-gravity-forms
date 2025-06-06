@@ -2,12 +2,12 @@
 /**
  * Abstract class - GFHelpers.
  *
- * @package Helper\GFHelpers
+ * @package Tests\WPGraphQL\GF\Helper\GFHelpers
  */
 
-namespace Helper\GFHelpers;
+namespace Tests\WPGraphQL\GF\Helper\GFHelpers;
 
-use Dummy;
+use Tests\WPGraphQL\GF\Helper\GFHelpers\Dummy;
 
 /**
  * Abstract Class - GFHelpers.
@@ -16,7 +16,7 @@ abstract class GFHelpers {
 	/**
 	 * Provides access to dummy functions.
 	 *
-	 * @var \Dummy
+	 * @var Tests\WPGraphQL\GF\Helper\GFHelpers\Dummy;
 	 */
 	public $dummy;
 
@@ -40,7 +40,6 @@ abstract class GFHelpers {
 	 * @param array $keys default properties to include.
 	 */
 	public function __construct( array $keys ) {
-		require_once __DIR__ . '/inc/Dummy.php';
 		$this->dummy = new Dummy();
 
 		$this->keys   = $this->get_keys( $keys );
