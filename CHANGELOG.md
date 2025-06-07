@@ -1,6 +1,11 @@
 # Changelog
 
-## [Unreleased]
+## [v0.13.1]
+
+This _minor_ release tests compatibility against WordPress 6.8.x and WPGraphQL 1.31.x.
+
+> **NOTE**:
+> Technically, this release is compatible with WPGraphQL v2.x except for a regression when Type Tracking is enabled. Once https://github.com/wp-graphql/wp-graphql/issues/3341 is resolved, we will bump the WPGraphQL tested headers to v2.x
 
 - ci: Test compatibility against WP 6.8.x and WPGraphQL 1.31.x
 - chore: Update Composer dependencies, and remediate PHPCS/PHPStan issues.
