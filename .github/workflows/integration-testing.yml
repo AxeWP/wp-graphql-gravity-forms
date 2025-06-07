@@ -46,7 +46,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Install PHP
-        uses: shivammathur/setup-php@v3
+        uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: json, mbstring
