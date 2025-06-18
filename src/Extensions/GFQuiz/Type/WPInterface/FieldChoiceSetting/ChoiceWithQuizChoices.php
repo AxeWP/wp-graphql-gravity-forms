@@ -45,6 +45,10 @@ class ChoiceWithQuizChoices extends AbstractFieldChoiceSetting {
 				'type'        => 'Float',
 				'description' => __( 'The weighted score awarded for the choice.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
+					if ( ! property_exists( $context, 'gfField' ) || ! $context->gfField instanceof \GF_Field ) {
+						return null;
+					}
+
 					if ( isset( $context->gfField->gquizWeightedScoreEnabled ) && false === $context->gfField->gquizWeightedScoreEnabled ) {
 						return isset( $source['gquizIsCorrect'] ) ? (float) $source['gquizIsCorrect'] : 0;
 					}
