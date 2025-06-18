@@ -2,8 +2,13 @@
 
 ## [Unreleased]
 
+## [v0.13.2]
+
+This _minor_ release adds support for WPGraphQL v2.3.3, including lazy-loaded descriptions for GraphQL types which should result in significant performance improvements when querying the schema, especially for i18n users.
+
 - dev: Add support for lazy-loaded descriptions.
 - ci: Test compatibility against WPGraphWL v2.3.3.
+- chore: Update Composer dependencies, and remediate PHPCS/PHPStan issues.
 
 ## [v0.13.1]
 
@@ -61,7 +66,7 @@ In this release, we've also removed the `vendor` directory from the GitHub repos
 - We've improved the DX and handling of multi-page forms:
   - **🚨 Breaking**: `PageField`s are now paginated to be at the _bottom of the previous page_, instead of at the top of the following page. H/t @SamuelHadsall.
 
-     **Note**: If you are currently working around the old pagination on your frontend (e.g. overfetching and post-processing your `formFields`), you may need to update your code.
+     **Note**: If you are currently working around the old pagination on your frontend (e.g. over-fetching and post-processing your `formFields`), you may need to update your code.
 
   - We've added `targetPageNumber` and `targetPageFormFields` to the `SubmitGfFormPayload` to help with multi-page form support, allowing you to fetch, submit, and validate a single page at a time before navigating to the next page. Check out the updated docs for more information and usage.
 
@@ -169,7 +174,7 @@ This _minor_ release expands the ability to use database and global IDs intercha
 
 We've also implemented the new WPGraphQL Coding Standards ruleset for `PHP_CodeSniffer`. While many of the (over 1000+) addressed sniffs are cosmetic, numerous smells regarding performance, type safety, sanitization, and 3rd-party interoperability have been fixed as well.
 
-- dev: Refactor database ID resolution when the GraphQL `ID` type is indeterminate. Note: The following input args now work with both database and global IDs: `GfEntriesConnectionWhereArgs.formIds`, `GfFormsConnectionwhereArgs.formIds`.
+- dev: Refactor database ID resolution when the GraphQL `ID` type is indeterminate. Note: The following input args now work with both database and global IDs: `GfEntriesConnectionWhereArgs.formIds`, `GfFormsConnectionWhereArgs.formIds`.
 - dev: Remove usage of deprecated `WPGraphQL\Data\DataSource::resolve_post_object()` method.
 - dev: Prime the GfForm dataloader when querying form connections, to prevent unnecessary database queries.
 - chore: Implement `axepress/wp-graphql-cs` PHP_Codesniffer ruleset, and fix all resulting issues.
@@ -177,7 +182,7 @@ We've also implemented the new WPGraphQL Coding Standards ruleset for `PHP_CodeS
 
 ## v0.12.1 - Bug fix
 
-This _minor_ release fixes an issue where certain complex Field Input and Field Choice types would try to implement a non-existent parent inteface, causing GraphQL debug messages to be returned in the response.
+This _minor_ release fixes an issue where certain complex Field Input and Field Choice types would try to implement a non-existent parent interface, causing GraphQL debug messages to be returned in the response.
 
 - fix: Use local store for `FieldInputRegistry` and `FieldChoiceRegistry` to prevent the registration of duplicate/nonexistent types.
 - chore: Update Composer dev deps.
@@ -237,7 +242,7 @@ Lastly, we've exposed the `connectedChoice` and `connectedInput` fields on `Chec
 - dev!: Remove nullable `$type_registry` param from `Registrable::register()` interface method.
 - dev!: Remove the `$type_registry` param from the `graphql_gf_after_register_types` and `graphql_gf_before_register_types` actions.
 - dev!: Remove the `PropertyMapper`, `ChoiceMapper`, `InputMapper`, and `FieldProperties` PHP classes in favor of the `FormFieldRegistry`, `FieldInputRegistry` and `FieldChoiceRegistry` classes.
-- dev!: Check if plugin dependences meet the minimum version requirements.
+- dev!: Check if plugin dependencies meet the minimum version requirements.
 - dev: Add following actions: `graphql_gf_after_register_form_field`, `graphql_gf_after_register_form_field_object`.
 - dev: Add the following filters: 
 `graphql_gf_form_field_settings_with_inputs`
@@ -384,7 +389,7 @@ Lastly, we fixed the GraphQL type names on some of the Product and Shipping fiel
 
 ### What's new
 * **🚨 Breaking**: We've added support for server-side captcha validation with reCAPTCHA. **Note**: If you are already using captcha fields in your form, you will need to modify your code to to pass the validation token to `fieldValues`.
-* **🚨 Breaking**: The `button` field on `GfForm` has been _deprecated_ in favor of `form.submitButon`. Both now use the new `FormSubmitButton` GraphQL type (instead of the old `FormButton`), which adds support for `layoutGridColumnSpan`, `location` and `width` properties added in GF v2.6.
+* **🚨 Breaking**: The `button` field on `GfForm` has been _deprecated_ in favor of `form.submitButton`. Both now use the new `FormSubmitButton` GraphQL type (instead of the old `FormButton`), which adds support for `layoutGridColumnSpan`, `location` and `width` properties added in GF v2.6.
 * We've added support for plugin updates on the WordPress backend. A warning is displayed along with the update notice when upgrading to a version with possible breaking changes (e.g. v0.**X**.y ).
 * We've added a new `FileUploadValues` GraphQL type to the `FileUploadField` which includes the `basePath`, `baseUrl`, and `filename` fields in addition to the existing `url`. These fields have also been added to `ImageFieldValues`.
 
@@ -408,7 +413,7 @@ This _minor_ release fixes a few bugs in the `FormsConnectionResolver`. We've al
 
 - fix: Prevent `gfForms` queries with the `last` argument from truncating the final node.
 - fix: Correctly return `hasNextPage` and `hasPreviousPage` values on `gfForms` connections.
-- dev: Refactor `bin/install-test-env` into resuable functions.
+- dev: Refactor `bin/install-test-env` into reusable functions.
 - chore: Update Composer dependencies.
 - chore: Add GH action to save GraphQL artifact to release.
 - tests: Add GH Action for GraphQL schema linting.
@@ -505,9 +510,9 @@ We expect this release to be the **last major breaking release** before v1.0. Wh
 
 ### What's new
 
-* **🚨 Breaking**: Gravity Forms form fields are now autoregistered to the GraphQL schema using their registered GF field settings. That means all form fields (including custom fields) are implictly supported. For development purposes, certain core fields are hidden behind the `WPGRAPHQL_GF_EXPERIMENTAL_FIELDS` PHP constant. [Learn more](/docs/form-field-support.md).
+* **🚨 Breaking**: Gravity Forms form fields are now autoregistered to the GraphQL schema using their registered GF field settings. That means all form fields (including custom fields) are implicitly supported. For development purposes, certain core fields are hidden behind the `WPGRAPHQL_GF_EXPERIMENTAL_FIELDS` PHP constant. [Learn more](/docs/form-field-support.md).
 **Note**: As a result of this change, the available fields on by the `FormField` interface and on individual Form field objects have changed.
-* **🚨 Breaking**: Complex Gravity Forms form fields now inherit the properties of their parent `$inputType`s. Form fields that can resolve to multiple types are now registed as GraphQL Interfaces (e.g. `PostCategoryField`), with their child types as GraphQL objects ( e.g. `PostCategoryCheckboxField` ).
+* **🚨 Breaking**: Complex Gravity Forms form fields now inherit the properties of their parent `$inputType`s. Form fields that can resolve to multiple types are now registered as GraphQL Interfaces (e.g. `PostCategoryField`), with their child types as GraphQL objects ( e.g. `PostCategoryCheckboxField` ).
 * **🚨 Breaking**: GraphQL objects and fields have been renamed to be self documenting and prevent naming conflicts. Many fields have also been grouped into new GraphQL objects to improve DX and harden against future breaking schema changes. This is equally true for mutation inputs and payloads. 
 * **🚨 Breaking**: We've replaced the use of `gravityForms` in the schema with the `gf` shorthand for improved dx. `gravityFormsForms` are now `gfForms`,  `updateGravityFormsEntry` is now `updateGfEntry`, etc. 
 * **🚨 Breaking**: Gravity Forms entries and draft entries now inherit the `gfEntry` interface, and use the `GfSubmittedEntry` and `GfDraftEntry` object types.
@@ -627,7 +632,7 @@ We expect this release to be the **last major breaking release** before v1.0. Wh
 * Field `adminOnly` was removed from all FormFields in favor of `visibility`.
 * Field `autocompleteAttribute` was removed from object type `EmailField`
 * Field `conditionalLogic` was removed from object type `HiddenField`
-* Field `copyValuesOptionDefault` was removed from object type AddressField, in favor of `shoudCopyValuesOption`
+* Field `copyValuesOptionDefault` was removed from object type AddressField, in favor of `shouldCopyValuesOption`
 * Field `cssClass` was removed from object type `HiddenField`
 * Field `cssClassList` (deprecated) was removed from all `FormField` objects.
 * Field `defaultValue` was removed from object type `EmailField`
@@ -787,7 +792,7 @@ This release adds compatibility with WPGraphQL v1.6.x, [and its new lazy/eager t
 
 ## v0.7.2.1 - Bugfix
 
-* (Re-released, as the last one incorectly contained the old version.)
+* (Re-released, as the last one incorrectly contained the old version.)
 
 * Fixes bug where unset `formFields` properties would cause a type error for `Enums`. (h/t @natac13)
 
@@ -802,7 +807,7 @@ This release adds compatibility with WPGraphQL v1.6.x, [and its new lazy/eager t
 The big highlight in this release is _experimental<sup>[\*\*\*](#uploadWarning)</sup>_ support for File Upload / Post Image submissions. We also added a feature that updates WordPress post meta when the corresponding Gravity Forms entry is updated.
 
 We added some new WordPress filters, and changed the way some of our PHP classes work, to make it easier for people to add support for their own custom Gravity Forms fields.
-We even gave the docs some love. We've added info about filters and using specific form field value inputs, and updated many of the example snippets. You can find the new documnetation in the repo's [/docs folder](/docs).
+We even gave the docs some love. We've added info about filters and using specific form field value inputs, and updated many of the example snippets. You can find the new documentation in the repo's [/docs folder](/docs).
 
 Note: These changes did necessitate refactoring many of the plugin classes, so if you're extending any of them in your own projects, make sure to update your class methods!
 
@@ -824,7 +829,7 @@ Note: These changes did necessitate refactoring many of the plugin classes, so i
 * feat: add `altText` to `PostImage` field values.
 * feat: The `pageNumber` field is now available on _all_ `formFields`.
 * dev: `AbstractEnum::set_values()` has been deprecated in favor of `AbstractEnum::get_values()`.
-* dev: `Button`,      `LastPageButton`,      `ConditionalLogic`,      `ConditionalLogicRule`,      `Entry`,      `EntryForm`,      `EntryUser`,      `FieldError`,      `Form`,      `FormComfirmation`,      `FormNotification`,      `FormNotificationRouting`,      `FormPagination`,      `SaveAndContinue`, now extend AbstractObject`. Their functions have changed accordingly.
+* dev: `Button`,      `LastPageButton`,      `ConditionalLogic`,      `ConditionalLogicRule`,      `Entry`,      `EntryForm`,      `EntryUser`,      `FieldError`,      `Form`,      `FormConfirmation`,      `FormNotification`,      `FormNotificationRouting`,      `FormPagination`,      `SaveAndContinue`, now extend AbstractObject`. Their functions have changed accordingly.
 * dev: Added `GFUtils::get_gravity_forms_upload_dir()` and `GUtils::handle_file_upload()`.
 * dev: Added `Utils::maybe_decode_json()` and `Utils::apply_filters`.
 * dev: deprecated `wp_graphql_{$enumType}_values` filter, in favor of `wp_graphql_gf_{$enumType}_values`.
@@ -859,7 +864,7 @@ Note: These changes did necessitate refactoring many of the plugin classes, so i
 
 ## v0.6.2 - Bugfixes
 
-* Fixes `updateGravityFormsEntry` mutation not propery saving complex field values (h/t @natac13 )
+* Fixes `updateGravityFormsEntry` mutation not properly saving complex field values (h/t @natac13 )
 * Fixes mutations not correctly deleting old `SignatureField` files from the server (h/t @natac13 )
 * Fixes `SignatureFieldValue`s failing Gravity Forms `isRequired` validation (h/t/ @natac13).
 * Fixes empty `formFields.layoutGridColumnSpan` values not returning as `null`.
@@ -896,7 +901,7 @@ This release adds support for all the new goodies in Gravity Forms v2.5, squashe
 
 ### Under the hood
 
-* Refactor various `InputProperty` classes. `InputDefaultValueProperty`,      `InputLabelProperty`, and `InputplaceholderProperty` have been removed for their `FieldProperty` cousins, and `EmailInputProperty` is now being used for `EmailField`.
+* Refactor various `InputProperty` classes. `InputDefaultValueProperty`,      `InputLabelProperty`, and `InputPlaceholderProperty` have been removed for their `FieldProperty` cousins, and `EmailInputProperty` is now being used for `EmailField`.
 * Tests: Clear `GFFormDisplay::$submission` between individual tests.
 * Tests: Allow overriding the default field factories.
 * Tests: Adds tests for `CaptchaField`.
@@ -1127,7 +1132,7 @@ query {
 * `SaveAndContinue` now uses `buttonText` instead of the `Button` type.
 * `lastPageButton` now uses its own GraphQL type with the relevant fields.
 * The `resumeToken` input field on the `deleteGravityFormsDraftEntry`,      `SubmitGravityFormsDraftEntry`, and all the `updateDraftEntry{fieldType}Value` mutations is now a non-nullable `String!`.
-* When querying entries, we check that `createdByID` is set before trying to fetch the uerdata.
+* When querying entries, we check that `createdByID` is set before trying to fetch the userdata.
 * Where possible, mutations and queries now try to return an `errors` object instead of throwing an Exception.
 * We've added more descriptive `Exception` messages across the plugin, to help you figure out what went wrong.
 * We fixed a type conflict with `ConsentFieldValue`. `value` now returns a `String` with the consent message, or `null` if false.
