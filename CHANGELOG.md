@@ -7,7 +7,7 @@
 This _minor_ release adds support for WPGraphQL v2.3.3, including lazy-loaded descriptions for GraphQL types which should result in significant performance improvements when querying the schema, especially for i18n users.
 
 - dev: Add support for lazy-loaded descriptions.
-- ci: Test compatibility against WPGraphWL v2.3.3.
+- ci: Test compatibility against WPGraphQL v2.3.3.
 - chore: Update Composer dependencies, and remediate PHPCS/PHPStan issues.
 
 ## [v0.13.1]
