@@ -37,7 +37,7 @@ class FieldWithBoxWidth extends AbstractFieldSetting {
 		return [
 			'boxWidth' => [
 				'type'        => 'Int',
-				'description' => __( 'Width of the signature field in pixels.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Width of the signature field in pixels.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

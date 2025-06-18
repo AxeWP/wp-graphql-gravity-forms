@@ -35,7 +35,7 @@ class FieldWithPlaceholder extends AbstractFieldSetting {
 		return [
 			'placeholder' => [
 				'type'        => 'String',
-				'description' => __( 'Placeholder text to give the user a hint on how to fill out the field. This is not submitted with the form.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Placeholder text to give the user a hint on how to fill out the field. This is not submitted with the form.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

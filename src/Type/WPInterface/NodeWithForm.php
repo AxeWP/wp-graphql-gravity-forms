@@ -40,15 +40,15 @@ class NodeWithForm extends AbstractInterface {
 		return [
 			'formDatabaseId' => [
 				'type'        => 'Int',
-				'description' => __( 'The database identifier of the form of the node.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The database identifier of the form of the node.', 'wp-graphql-gravity-forms' ),
 			],
 			'formId'         => [
 				'type'        => 'ID',
-				'description' => __( 'The globally unique identifier of the form of the node.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The globally unique identifier of the form of the node.', 'wp-graphql-gravity-forms' ),
 			],
 			'form'           => [
 				'type'        => Form::$type,
-				'description' => __( 'The form object of the node.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form object of the node.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( empty( $source->formDatabaseId ) ) {
 						return null;

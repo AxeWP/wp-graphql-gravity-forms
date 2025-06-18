@@ -38,11 +38,11 @@ class RecaptchaTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'CHECKBOX'  => [
-				'description' => __( 'A checkbox reCAPTCHA type.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A checkbox reCAPTCHA type.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::CHECKBOX,
 			],
 			'INVISIBLE' => [
-				'description' => __( 'An invisible reCAPTCHA type.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'An invisible reCAPTCHA type.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::INVISIBLE,
 			],
 		];

@@ -35,7 +35,7 @@ class FieldWithMaxRows extends AbstractFieldSetting {
 		return [
 			'maxRows' => [
 				'type'        => 'Int',
-				'description' => __( 'The maximum number of rows the user can add to the field.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The maximum number of rows the user can add to the field.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

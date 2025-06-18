@@ -39,19 +39,19 @@ class EntryStatusEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'ACTIVE' => [
-				'description' => __( 'Active entries (default).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Active entries (default).', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ACTIVE,
 			],
 			'SPAM'   => [
-				'description' => __( 'Spam entries.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Spam entries.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::SPAM,
 			],
 			'TRASH'  => [
-				'description' => __( 'Entries in the trash.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Entries in the trash.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::TRASH,
 			],
 			'ALL'    => [
-				'description' => __( 'All entries.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'All entries.', 'wp-graphql-gravity-forms' ),
 				'value'       => null,
 			],
 		];

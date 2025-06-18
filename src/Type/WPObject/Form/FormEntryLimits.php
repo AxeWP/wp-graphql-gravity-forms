@@ -38,19 +38,19 @@ class FormEntryLimits extends AbstractObject {
 		return [
 			'hasLimit'            => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the form has a limit on the number of submissions.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether the form has a limit on the number of submissions.', 'wp-graphql-gravity-forms' ),
 			],
 			'limitationPeriod'    => [
 				'type'        => FormLimitEntriesPeriodEnum::$type,
-				'description' => __( 'The time period during which submissions are allowed.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The time period during which submissions are allowed.', 'wp-graphql-gravity-forms' ),
 			],
 			'limitReachedMessage' => [
 				'type'        => 'String',
-				'description' => __( 'Message that will be displayed when the maximum number of submissions have been reached.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Message that will be displayed when the maximum number of submissions have been reached.', 'wp-graphql-gravity-forms' ),
 			],
 			'maxEntries'          => [
 				'type'        => 'Int',
-				'description' => __( 'The number of submissions allowed.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The number of submissions allowed.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

@@ -38,7 +38,7 @@ class FieldWithBorderStyle extends AbstractFieldSetting {
 		return [
 			'borderStyle' => [
 				'type'        => SignatureFieldBorderStyleEnum::$type,
-				'description' => __( 'Border style to be used around the signature area.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Border style to be used around the signature area.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

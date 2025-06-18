@@ -39,19 +39,19 @@ class TimeFieldValue extends AbstractObject {
 		return [
 			'displayValue' => [
 				'type'        => 'String',
-				'description' => __( 'The full display value in 12-hour format. Example: "08:25 am".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The full display value in 12-hour format. Example: "08:25 am".', 'wp-graphql-gravity-forms' ),
 			],
 			'hours'        => [
 				'type'        => 'String',
-				'description' => __( 'The hours, in this format: hh.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The hours, in this format: hh.', 'wp-graphql-gravity-forms' ),
 			],
 			'minutes'      => [
 				'type'        => 'String',
-				'description' => __( 'The minutes, in this format: mm.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The minutes, in this format: mm.', 'wp-graphql-gravity-forms' ),
 			],
 			'amPm'         => [
 				'type'        => AmPmEnum::$type,
-				'description' => __( 'AM or PM.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'AM or PM.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

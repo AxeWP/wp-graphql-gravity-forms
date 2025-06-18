@@ -27,7 +27,7 @@ function my_add_form_to_post() {
     'form', // The field name to add.
     // The config object:
     [
-      'description' => __( 'The Gravity Forms form for the post', 'my-plugin' ),
+      'description' => static fn () => __( 'The Gravity Forms form for the post', 'my-plugin' ),
       'type' => \WPGraphQL\GF\Type\WPObject\Form\Form::$type,
       'resolve' => static function( $source, array $args, \WPGraphQL\AppContext $context ){
         // Get the form id from the post meta.

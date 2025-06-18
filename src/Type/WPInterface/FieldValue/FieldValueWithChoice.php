@@ -38,7 +38,7 @@ class FieldValueWithChoice extends AbstractInterface {
 		return [
 			'connectedChoice' => [
 				'type'        => FieldChoice::$type,
-				'description' => __( 'The selected Gravity Forms field choice object.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The selected Gravity Forms field choice object.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

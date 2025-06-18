@@ -38,15 +38,15 @@ class FieldWithDateInputType extends AbstractFieldSetting {
 		return [
 			'calendarIconType' => [
 				'type'        => FormFieldCalendarIconTypeEnum::$type,
-				'description' => __( 'Determines how the date field displays it’s calendar icon.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines how the date field displays it’s calendar icon.', 'wp-graphql-gravity-forms' ),
 			],
 			'calendarIconUrl'  => [
 				'type'        => 'String',
-				'description' => __( 'Contains the URL to the custom calendar icon. Only applicable when calendarIconType is set to custom.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Contains the URL to the custom calendar icon. Only applicable when calendarIconType is set to custom.', 'wp-graphql-gravity-forms' ),
 			],
 			'dateType'         => [
 				'type'        => DateFieldTypeEnum::$type,
-				'description' => __( 'The type of date field to display.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The type of date field to display.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

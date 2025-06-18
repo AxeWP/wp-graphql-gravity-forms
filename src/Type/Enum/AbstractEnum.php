@@ -30,7 +30,7 @@ abstract class AbstractEnum extends AbstractType implements Enum, TypeWithDescri
 	 * Gets the Enum values configuration array.
 	 *
 	 * @return array<string,array{
-	 *   description:string|callable():string,
+	 *   description:callable():string|callable():string,
 	 *   value:mixed,
 	 *   deprecationReason?:callable():string
 	 * }>
@@ -54,10 +54,10 @@ abstract class AbstractEnum extends AbstractType implements Enum, TypeWithDescri
 	 * {@inheritDoc}
 	 *
 	 * @return array{
-	 *  description: string|callable():string,
+	 *  description: callable():string,
 	 *  eagerlyLoadType?: bool,
 	 *  values:array<string,array{
-	 *   description:string|callable():string,
+	 *   description:callable():string,
 	 *   value:mixed,
 	 *   deprecationReason?:callable():string
 	 * }>,

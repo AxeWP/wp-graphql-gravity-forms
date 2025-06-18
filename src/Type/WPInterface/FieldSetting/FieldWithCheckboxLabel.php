@@ -35,7 +35,7 @@ class FieldWithCheckboxLabel extends AbstractFieldSetting {
 		return [
 			'checkboxLabel' => [
 				'type'        => 'String',
-				'description' => __( 'Text of the consent checkbox.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Text of the consent checkbox.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

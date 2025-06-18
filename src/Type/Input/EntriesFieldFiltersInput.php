@@ -38,28 +38,28 @@ class EntriesFieldFiltersInput extends AbstractInput {
 		return [
 			'key'          => [
 				'type'        => 'String',
-				'description' => __( 'Optional. The entry meta key to filter by. You can use the ID of the form field, or the names of any of the columns in Gravity Form\'s database table for entries, such as "date_created", "is_read, "created_by", etc. If omitted, the value will be checked against all meta keys. .', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Optional. The entry meta key to filter by. You can use the ID of the form field, or the names of any of the columns in Gravity Form\'s database table for entries, such as "date_created", "is_read, "created_by", etc. If omitted, the value will be checked against all meta keys. .', 'wp-graphql-gravity-forms' ),
 			],
 			'operator'     => [
 				'type'        => FieldFiltersOperatorInputEnum::$type,
-				'description' => __( 'The operator to use for filtering.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The operator to use for filtering.', 'wp-graphql-gravity-forms' ),
 			],
 			// @todo - Is there a cleaner way to do this? Values can be any of these types.
 			'stringValues' => [
 				'type'        => [ 'list_of' => 'String' ],
-				'description' => __( 'The field value(s) to filter by. Must be string values. If using this field, do not also use intValues, floatValues or boolValues.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field value(s) to filter by. Must be string values. If using this field, do not also use intValues, floatValues or boolValues.', 'wp-graphql-gravity-forms' ),
 			],
 			'intValues'    => [
 				'type'        => [ 'list_of' => 'Int' ],
-				'description' => __( 'The field value(s) to filter by. Must be integer values. If using this field, do not also use stringValues, floatValues or boolValues.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field value(s) to filter by. Must be integer values. If using this field, do not also use stringValues, floatValues or boolValues.', 'wp-graphql-gravity-forms' ),
 			],
 			'floatValues'  => [
 				'type'        => [ 'list_of' => 'Float' ],
-				'description' => __( 'The field value(s) to filter by. Must be float values. If using this field, do not also use stringValues, intValues or boolValues.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field value(s) to filter by. Must be float values. If using this field, do not also use stringValues, intValues or boolValues.', 'wp-graphql-gravity-forms' ),
 			],
 			'boolValues'   => [
 				'type'        => [ 'list_of' => 'Boolean' ],
-				'description' => __( 'The field value(s) to filter by. Must be boolean values. If using this field, do not also use stringValues, intValues or floatValues.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field value(s) to filter by. Must be boolean values. If using this field, do not also use stringValues, intValues or floatValues.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

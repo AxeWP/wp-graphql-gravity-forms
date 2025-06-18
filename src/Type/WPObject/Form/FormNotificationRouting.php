@@ -41,19 +41,19 @@ class FormNotificationRouting extends AbstractObject {
 		return [
 			'fieldId'  => [
 				'type'        => 'Int',
-				'description' => __( 'Target field ID. The field that will have it’s value compared with the value property to determine if this rule is a match.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Target field ID. The field that will have it’s value compared with the value property to determine if this rule is a match.', 'wp-graphql-gravity-forms' ),
 			],
 			'operator' => [
 				'type'        => FormRuleOperatorEnum::$type,
-				'description' => __( 'Operator to be used when evaluating this rule.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Operator to be used when evaluating this rule.', 'wp-graphql-gravity-forms' ),
 			],
 			'value'    => [
 				'type'        => 'String',
-				'description' => __( 'The value to compare with the field specified by fieldId.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The value to compare with the field specified by fieldId.', 'wp-graphql-gravity-forms' ),
 			],
 			'email'    => [
 				'type'        => 'String',
-				'description' => __( 'The email or merge tag to be used as the email To address if this rule is a match.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The email or merge tag to be used as the email To address if this rule is a match.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

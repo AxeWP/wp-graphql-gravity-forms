@@ -36,11 +36,11 @@ class CheckboxFieldInput extends AbstractInput {
 		return [
 			'inputId' => [
 				'type'        => 'Float',
-				'description' => __( 'Input ID.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Input ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'value'   => [
 				'type'        => 'String',
-				'description' => __( 'Input value.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Input value.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

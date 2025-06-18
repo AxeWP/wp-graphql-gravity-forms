@@ -47,7 +47,7 @@ class ChoiceWithChoices extends AbstractFieldChoiceSetting {
 		return [
 			'isSelected' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -73,12 +73,12 @@ class ChoiceWithChoices extends AbstractFieldChoiceSetting {
 
 		$fields['price']          = [
 			'type'        => 'Float',
-			'description' => __( 'The price associated with the choice.', 'wp-graphql-gravity-forms' ),
+			'description' => static fn () => __( 'The price associated with the choice.', 'wp-graphql-gravity-forms' ),
 			'resolve'     => static fn ( $source ) => ! empty( $source['price'] ) ? floatval( preg_replace( '/[^\d\.]/', '', $source['price'] ) ) : null,
 		];
 		$fields['formattedPrice'] = [
 			'type'        => 'String',
-			'description' => __( 'The price associated with the choice.', 'wp-graphql-gravity-forms' ),
+			'description' => static fn () => __( 'The price associated with the choice.', 'wp-graphql-gravity-forms' ),
 			'resolve'     => static fn ( $source ) => ! empty( $source['price'] ) ? $source['price'] : null,
 		];
 

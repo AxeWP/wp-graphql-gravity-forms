@@ -46,7 +46,7 @@ class FieldWithPrepopulateField extends AbstractFieldSetting {
 		return [
 			'canPrepopulate' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Determines if the field’s value can be pre-populated dynamically.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines if the field’s value can be pre-populated dynamically.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->allowsPrepopulate ),
 			],
 		];
@@ -76,7 +76,7 @@ class FieldWithPrepopulateField extends AbstractFieldSetting {
 
 		$fields['inputName'] = [
 			'type'        => 'String',
-			'description' => __( 'Assigns a name to this field so that it can be populated dynamically via this input name. Only applicable when canPrepopulate is `true`.', 'wp-graphql-gravity-forms' ),
+			'description' => static fn () => __( 'Assigns a name to this field so that it can be populated dynamically via this input name. Only applicable when canPrepopulate is `true`.', 'wp-graphql-gravity-forms' ),
 		];
 
 		return $fields;

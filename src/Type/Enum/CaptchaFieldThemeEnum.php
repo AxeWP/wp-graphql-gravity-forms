@@ -38,11 +38,11 @@ class CaptchaFieldThemeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'LIGHT' => [
-				'description' => __( 'Light reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Light reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::LIGHT,
 			],
 			'DARK'  => [
-				'description' => __( 'Dark reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Dark reCAPTCHA theme.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DARK,
 			],
 		];

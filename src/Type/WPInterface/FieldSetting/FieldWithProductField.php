@@ -38,12 +38,12 @@ class FieldWithProductField extends AbstractFieldSetting {
 		return [
 			'productField'          => [
 				'type'              => 'Int',
-				'description'       => __( 'The id of the product field to which the field is associated.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => __( 'Use `connectedProductField` field instead.', 'wp-graphql-gravity-forms' ),
+				'description'       => static fn () => __( 'The id of the product field to which the field is associated.', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => static fn () => __( 'Use `connectedProductField` field instead.', 'wp-graphql-gravity-forms' ),
 			],
 			'connectedProductField' => [
 				'type'        => 'ProductField',
-				'description' => __( 'The product field to which the field is associated.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The product field to which the field is associated.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! isset( $context->gfForm ) || empty( $source->productField ) ) {
 						return null;

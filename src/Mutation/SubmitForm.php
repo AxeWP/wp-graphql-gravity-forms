@@ -44,27 +44,27 @@ class SubmitForm extends AbstractMutation {
 		return [
 			'id'          => [
 				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'The form ID. Accepts either a global or Database ID.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form ID. Accepts either a global or Database ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'entryMeta'   => [
 				'type'        => SubmitFormMetaInput::$type,
-				'description' => __( 'The entry meta associated with the submission.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The entry meta associated with the submission.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues' => [
 				'type'        => [ 'non_null' => [ 'list_of' => FormFieldValuesInput::$type ] ],
-				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
 			],
 			'saveAsDraft' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Set to `true` if submitting a draft entry. Defaults to `false`.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Set to `true` if submitting a draft entry. Defaults to `false`.', 'wp-graphql-gravity-forms' ),
 			],
 			'sourcePage'  => [
 				'type'        => 'Int',
-				'description' => __( 'Useful for multi-page forms to indicate which page of the form was just submitted.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Useful for multi-page forms to indicate which page of the form was just submitted.', 'wp-graphql-gravity-forms' ),
 			],
 			'targetPage'  => [
 				'type'        => 'Int',
-				'description' => __( 'Useful for multi-page forms to indicate which page is to be loaded if the current page passes validation.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Useful for multi-page forms to indicate which page is to be loaded if the current page passes validation.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -76,11 +76,11 @@ class SubmitForm extends AbstractMutation {
 		return [
 			'confirmation'     => [
 				'type'        => SubmissionConfirmation::$type,
-				'description' => __( 'The form confirmation data. Null if the submission has `errors`', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form confirmation data. Null if the submission has `errors`', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'            => [
 				'type'        => Entry::$type,
-				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( array $payload, array $args, AppContext $context ) {
 					// Return early if bad or nonexistent entry.
 					if ( ! empty( $payload['errors'] ) || ( ! $payload['entryId'] && ! $payload['resumeToken'] ) ) {
@@ -119,15 +119,15 @@ class SubmitForm extends AbstractMutation {
 			],
 			'errors'           => [
 				'type'        => [ 'list_of' => FieldError::$type ],
-				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
 			'resumeUrl'        => [
 				'type'        => 'String',
-				'description' => __( 'Draft resume URL. Null if submitting an entry. If the "Referer" header is not included in the request, this will be an empty string.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Draft resume URL. Null if submitting an entry. If the "Referer" header is not included in the request, this will be an empty string.', 'wp-graphql-gravity-forms' ),
 			],
 			'targetPageNumber' => [
 				'type'        => 'Int',
-				'description' => __( 'The page number of the form that should be displayed after submission. This will be different than the `targetPage` provided to the mutation if a field on a previous field failed validation.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The page number of the form that should be displayed after submission. This will be different than the `targetPage` provided to the mutation if a field on a previous field failed validation.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

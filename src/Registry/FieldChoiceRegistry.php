@@ -106,7 +106,7 @@ class FieldChoiceRegistry {
 	 * @param \GF_Field $field The Gravity Forms field object.
 	 * @param string[]  $settings The Gravity Forms field settings.
 	 *
-	 * @return array{description:string,interfaces:string[],fields:array<string,array<string,mixed>>,eagerlyLoadType:bool}
+	 * @return array{description:callable():string,interfaces:string[],fields:array<string,array<string,mixed>>,eagerlyLoadType:bool}
 	 */
 	public static function get_config_from_settings( string $choice_name, GF_Field $field, array $settings ): array {
 		$interfaces = self::get_interfaces( $settings );
@@ -114,7 +114,7 @@ class FieldChoiceRegistry {
 		$fields = self::get_fields( $choice_name, $field, $settings, $interfaces );
 
 		return [
-			'description'     => sprintf(
+			'description'     => static fn () => sprintf(
 				// translators: GF field choice type.
 				__( '%s choice values.', 'wp-graphql-gravity-forms' ),
 				ucfirst( $choice_name )

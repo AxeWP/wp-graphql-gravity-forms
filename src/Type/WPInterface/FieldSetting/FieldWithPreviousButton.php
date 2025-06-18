@@ -37,7 +37,7 @@ class FieldWithPreviousButton extends AbstractFieldSetting {
 		return [
 			'previousButton' => [
 				'type'        => FormButton::$type,
-				'description' => __( 'An array containing the the individual properties for the "Previous" button.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'An array containing the the individual properties for the "Previous" button.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

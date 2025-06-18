@@ -38,23 +38,23 @@ class FormScheduleDetails extends AbstractObject {
 		return [
 			'amPm'    => [
 				'type'        => AmPmEnum::$type,
-				'description' => __( 'Whether the date is in the AM or PM of a 12-hour clock.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether the date is in the AM or PM of a 12-hour clock.', 'wp-graphql-gravity-forms' ),
 			],
 			'date'    => [
 				'type'        => 'String',
-				'description' => __( 'The schedule date in local time.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The schedule date in local time.', 'wp-graphql-gravity-forms' ),
 			],
 			'dateGmt' => [
 				'type'        => 'String',
-				'description' => __( 'The schedule date in GMT.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The schedule date in GMT.', 'wp-graphql-gravity-forms' ),
 			],
 			'hour'    => [
 				'type'        => 'Int',
-				'description' => __( 'The hour (1-12).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The hour (1-12).', 'wp-graphql-gravity-forms' ),
 			],
 			'minute'  => [
 				'type'        => 'Int',
-				'description' => __( 'The minute.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The minute.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

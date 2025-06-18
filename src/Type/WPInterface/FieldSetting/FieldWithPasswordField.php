@@ -35,7 +35,7 @@ class FieldWithPasswordField extends AbstractFieldSetting {
 		return [
 			'isPasswordInput' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Determines if a text field input tag should be created with a "password" type.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines if a text field input tag should be created with a "password" type.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->enablePasswordInput ),
 			],
 		];

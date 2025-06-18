@@ -18,7 +18,7 @@ For example:
 register_graphql_input_type(
 	'MyCustomFieldValueInput',
 	[
-		'description' => __( 'The `fieldValues` input for a MyCustomField field.', 'my-plugin' ),
+		'description' => static fn () => __( 'The `fieldValues` input for a MyCustomField field.', 'my-plugin' ),
 		'fields' => [ 
 			//see https://www.wpgraphql.com/functions/register_graphql_input_type/
 		],
@@ -37,7 +37,7 @@ add_filter(
 	function( array $fields ) : array {
 		$fields['myCustomFieldValues'] = [ // The field value name.
 			'type' => 'MyCustomFieldValueInput', // This is registered above.
-			'description' => __( 'The form field values for MyCustomField fields.', 'my-plugin'),
+			'description' => static fn () => __( 'The form field values for MyCustomField fields.', 'my-plugin'),
 		];
 	}
 );

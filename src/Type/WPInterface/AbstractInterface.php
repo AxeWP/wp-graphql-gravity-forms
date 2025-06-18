@@ -52,7 +52,7 @@ abstract class AbstractInterface extends AbstractType implements TypeWithDescrip
 	 */
 	public static function get_type_config( ?TypeRegistry $type_registry = null ): array {
 		return [
-			'description'     => static::get_description(),
+			'description'     => static fn () => static::get_description(),
 			'fields'          => static::get_fields(),
 			'eagerlyLoadType' => static::$should_load_eagerly,
 		];

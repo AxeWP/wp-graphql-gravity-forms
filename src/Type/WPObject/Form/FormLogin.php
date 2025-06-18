@@ -37,11 +37,11 @@ class FormLogin extends AbstractObject {
 		return [
 			'isLoginRequired'      => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the form is configured to be displayed only to logged in users.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether the form is configured to be displayed only to logged in users.', 'wp-graphql-gravity-forms' ),
 			],
 			'loginRequiredMessage' => [
 				'type'        => 'String',
-				'description' => __( 'When `isLoginRequired` is set to true, this controls the message displayed when non-logged in user tries to access the form.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'When `isLoginRequired` is set to true, this controls the message displayed when non-logged in user tries to access the form.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

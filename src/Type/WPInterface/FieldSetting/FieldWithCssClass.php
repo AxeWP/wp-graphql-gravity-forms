@@ -35,7 +35,7 @@ class FieldWithCssClass extends AbstractFieldSetting {
 		return [
 			'cssClass' => [
 				'type'        => 'String',
-				'description' => __( 'String containing the custom CSS classes to be added to the <li> tag that contains the field. Useful for applying custom formatting to specific fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'String containing the custom CSS classes to be added to the <li> tag that contains the field. Useful for applying custom formatting to specific fields.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source ) {
 					return $source->cssClass;
 				},

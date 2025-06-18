@@ -39,11 +39,11 @@ class FormQuizGrades extends AbstractObject {
 		return [
 			'text'  => [
 				'type'        => 'String',
-				'description' => __( 'The grade label.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The grade label.', 'wp-graphql-gravity-forms' ),
 			],
 			'value' => [
 				'type'        => 'Int',
-				'description' => __( 'The minimum percentage score required to achieve this grade.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The minimum percentage score required to achieve this grade.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

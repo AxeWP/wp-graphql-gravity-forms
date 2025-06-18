@@ -35,7 +35,7 @@ class FieldWithMaxLength extends AbstractFieldSetting {
 		return [
 			'maxLength' => [
 				'type'        => 'Int',
-				'description' => __( 'Specifies the maximum number of characters allowed in a text or textarea (paragraph) field.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Specifies the maximum number of characters allowed in a text or textarea (paragraph) field.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $field ): ?int {
 					return isset( $field->maxLength ) ? (int) $field->maxLength : null;
 				},

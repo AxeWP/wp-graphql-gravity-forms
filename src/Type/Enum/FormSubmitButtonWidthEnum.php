@@ -38,11 +38,11 @@ class FormSubmitButtonWidthEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'AUTO' => [
-				'description' => __( 'The width is set to match that of the button text.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The width is set to match that of the button text.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::AUTO,
 			],
 			'FULL' => [
-				'description' => __( 'The width is set to fill 100% of the container.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The width is set to fill 100% of the container.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::FULL,
 			],
 		];

@@ -37,15 +37,15 @@ class FormFieldDataPolicy extends AbstractObject {
 		return [
 			'shouldErase'           => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether this field should be included when erasing personal data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether this field should be included when erasing personal data.', 'wp-graphql-gravity-forms' ),
 			],
 			'shouldExport'          => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether this field should be included when exporting personal data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether this field should be included when exporting personal data.', 'wp-graphql-gravity-forms' ),
 			],
 			'isIdentificationField' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether this field is used to identify the user\'s personal data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether this field is used to identify the user\'s personal data.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

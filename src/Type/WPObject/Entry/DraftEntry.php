@@ -75,7 +75,7 @@ class DraftEntry extends AbstractObject implements TypeWithInterfaces, Field {
 		return [
 			'resumeToken' => [
 				'type'        => 'String',
-				'description' => __( 'The resume token. Only applies to draft entries.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The resume token. Only applies to draft entries.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -96,16 +96,16 @@ class DraftEntry extends AbstractObject implements TypeWithInterfaces, Field {
 			self::$field_name,
 			Compat::resolve_graphql_config(
 				[
-					'description' => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
+					'description' => static fn () => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
 					'type'        => self::$type,
 					'args'        => [
 						'id'     => [
 							'type'        => [ 'non_null' => 'ID' ],
-							'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
+							'description' => static fn () => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
 						],
 						'idType' => [
 							'type'        => DraftEntryIdTypeEnum::$type,
-							'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
+							'description' => static fn () => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 						],
 					],
 					'resolve'     => static function ( $root, array $args, AppContext $context ) {

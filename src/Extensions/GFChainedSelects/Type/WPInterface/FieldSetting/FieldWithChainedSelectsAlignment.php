@@ -38,7 +38,7 @@ class FieldWithChainedSelectsAlignment extends AbstractFieldSetting {
 		return [
 			'chainedSelectsAlignment' => [
 				'type'        => ChainedSelectFieldAlignmentEnum::$type,
-				'description' => __( 'Alignment of the dropdown fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Alignment of the dropdown fields.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

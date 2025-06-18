@@ -35,7 +35,7 @@ class FieldWithContent extends AbstractFieldSetting {
 		return [
 			'content' => [
 				'type'        => 'String',
-				'description' => __( 'Content of an HTML block field to be displayed on the form.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Content of an HTML block field to be displayed on the form.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

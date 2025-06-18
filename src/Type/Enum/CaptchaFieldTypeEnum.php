@@ -39,15 +39,15 @@ class CaptchaFieldTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'RECAPTCHA' => [
-				'description' => __( 'reCAPTCHA type.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'reCAPTCHA type.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::RECAPTCHA,
 			],
 			'SIMPLE'    => [
-				'description' => __( 'Simple CAPTCHA type.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Simple CAPTCHA type.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::SIMPLE,
 			],
 			'MATH'      => [
-				'description' => __( 'Math CAPTCHA type.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Math CAPTCHA type.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::MATH,
 			],
 		];

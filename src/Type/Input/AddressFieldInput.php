@@ -38,27 +38,27 @@ class AddressFieldInput extends AbstractInput {
 		return [
 			'street'  => [
 				'type'        => 'String',
-				'description' => __( 'Street address.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Street address.', 'wp-graphql-gravity-forms' ),
 			],
 			'lineTwo' => [
 				'type'        => 'String',
-				'description' => __( 'Address line two.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Address line two.', 'wp-graphql-gravity-forms' ),
 			],
 			'city'    => [
 				'type'        => 'String',
-				'description' => __( 'Address city.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Address city.', 'wp-graphql-gravity-forms' ),
 			],
 			'state'   => [
 				'type'        => 'String',
-				'description' => __( 'Address state/region/province name.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Address state/region/province name.', 'wp-graphql-gravity-forms' ),
 			],
 			'zip'     => [
 				'type'        => 'String',
-				'description' => __( 'Address zip code.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Address zip code.', 'wp-graphql-gravity-forms' ),
 			],
 			'country' => [
 				'type'        => AddressFieldCountryEnum::$type,
-				'description' => __( 'Address country.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Address country.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

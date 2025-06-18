@@ -78,7 +78,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 				'connectionFields' => [
 					'count' => [
 						'type'        => 'Int',
-						'description' => __( 'The number of (filtered) entries submitted to the form.', 'wp-graphql-gravity-forms' ),
+						'description' => static fn () => __( 'The number of (filtered) entries submitted to the form.', 'wp-graphql-gravity-forms' ),
 						'resolve'     => static function ( $root ) {
 							// Bail early if no entries.
 							if ( empty( $root['edges'][0]['connection'] ) ) {
@@ -101,7 +101,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 						},
 					],
 				],
-				'description'      => __( 'The entries submitted to the form.', 'wp-graphql-gravity-forms' ),
+				'description'      => static fn () => __( 'The entries submitted to the form.', 'wp-graphql-gravity-forms' ),
 				'resolve'          => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
 					$context->gfForm = $source;
 
@@ -112,7 +112,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 			],
 			'formFields' => [
 				'toType'         => FormField::$type,
-				'description'    => __( 'The form fields associated with the form.', 'wp-graphql-gravity-forms' ),
+				'description'    => static fn () => __( 'The form fields associated with the form.', 'wp-graphql-gravity-forms' ),
 				'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
 				'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
 					$context->gfForm = $source;
@@ -141,119 +141,119 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 		return [
 			'confirmations'                => [
 				'type'        => [ 'list_of' => FormConfirmation::$type ],
-				'description' => __( 'Contains the form confirmation settings such as confirmation text or redirect URL.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Contains the form confirmation settings such as confirmation text or redirect URL.', 'wp-graphql-gravity-forms' ),
 			],
 			'cssClass'                     => [
 				'type'        => 'String',
-				'description' => __( 'String containing the custom CSS classes to be added to the <form> tag.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'String containing the custom CSS classes to be added to the <form> tag.', 'wp-graphql-gravity-forms' ),
 			],
 			'customRequiredIndicator'      => [
 				'type'        => 'String',
-				'description' => __( 'The custom text to use to indicate a field is required.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The custom text to use to indicate a field is required.', 'wp-graphql-gravity-forms' ),
 			],
 			'dateCreated'                  => [
 				'type'        => 'String',
-				'description' => __( 'The date and time that the entry was created in local time.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The date and time that the entry was created in local time.', 'wp-graphql-gravity-forms' ),
 			],
 			'dateCreatedGmt'               => [
 				'type'        => 'String',
-				'description' => __( 'The date and time that the entry was created in GMT.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The date and time that the entry was created in GMT.', 'wp-graphql-gravity-forms' ),
 			],
 			'description'                  => [
 				'type'        => 'String',
-				'description' => __( 'Form description.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Form description.', 'wp-graphql-gravity-forms' ),
 			],
 			'descriptionPlacement'         => [
 				'type'        => Enum\FormDescriptionPlacementEnum::$type,
-				'description' => __( 'Determines if the field description is displayed above the field input (i.e. immediately after the field label) or below the field input.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines if the field description is displayed above the field input (i.e. immediately after the field label) or below the field input.', 'wp-graphql-gravity-forms' ),
 			],
 			'entryLimits'                  => [
 				'type'        => FormEntryLimits::$type,
-				'description' => __( 'The entry limit settings.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The entry limit settings.', 'wp-graphql-gravity-forms' ),
 			],
 			'hasConditionalLogicAnimation' => [
 				'type'        => 'Boolean',
-				'description' => __( 'When enabled, conditional logic hide/show operation will be performed with a jQuery slide animation. Only applicable to forms with conditional logic.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'When enabled, conditional logic hide/show operation will be performed with a jQuery slide animation. Only applicable to forms with conditional logic.', 'wp-graphql-gravity-forms' ),
 			],
 			'hasHoneypot'                  => [
 				'type'        => 'Boolean',
-				'description' => __( 'Specifies if the form has the Honeypot spam-protection feature.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Specifies if the form has the Honeypot spam-protection feature.', 'wp-graphql-gravity-forms' ),
 			],
 			'firstPageCssClass'            => [
 				'type'        => 'String',
-				'description' => __( 'CSS class for the first page.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'CSS class for the first page.', 'wp-graphql-gravity-forms' ),
 			],
 			'hasValidationSummary'         => [
 				'type'        => 'Boolean',
-				'description' => __( 'If enabled, will show a summary that lists form validation errors at the top of the form when a user attempts a failed submission.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'If enabled, will show a summary that lists form validation errors at the top of the form when a user attempts a failed submission.', 'wp-graphql-gravity-forms' ),
 			],
 			'isActive'                     => [
 				'type'        => 'Boolean',
-				'description' => __( 'Determines whether the form is active.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines whether the form is active.', 'wp-graphql-gravity-forms' ),
 			],
 			'isTrash'                      => [
 				'type'        => 'Boolean',
-				'description' => __( 'Determines whether the form is in the trash.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines whether the form is in the trash.', 'wp-graphql-gravity-forms' ),
 			],
 			'labelPlacement'               => [
 				'type'        => Enum\FormLabelPlacementEnum::$type,
-				'description' => __( 'Determines where the field labels should be placed in relation to the field.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines where the field labels should be placed in relation to the field.', 'wp-graphql-gravity-forms' ),
 			],
 			'login'                        => [
 				'type'        => FormLogin::$type,
-				'description' => __( 'Login requirements data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Login requirements data.', 'wp-graphql-gravity-forms' ),
 			],
 			'markupVersion'                => [
 				'type'        => 'Int',
-				'description' => __( 'The Gravity Forms markup version.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The Gravity Forms markup version.', 'wp-graphql-gravity-forms' ),
 			],
 			'notifications'                => [
 				'type'        => [ 'list_of' => FormNotification::$type ],
-				'description' => __( 'The properties for all the email notifications which exist for a form.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The properties for all the email notifications which exist for a form.', 'wp-graphql-gravity-forms' ),
 			],
 			'nextFieldId'                  => [
 				'type'        => 'Int',
-				'description' => __( 'The ID to assign to the next field that is added to the form.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The ID to assign to the next field that is added to the form.', 'wp-graphql-gravity-forms' ),
 			],
 			'pagination'                   => [
 				'type'        => FormPagination::$type,
-				'description' => __( 'Pagination data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Pagination data.', 'wp-graphql-gravity-forms' ),
 			],
 			'personalData'                 => [
 				'type'        => FormPersonalData::$type,
-				'description' => __( 'Personal data settings.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Personal data settings.', 'wp-graphql-gravity-forms' ),
 			],
 			'postCreation'                 => [
 				'type'        => FormPostCreation::$type,
-				'description' => __( 'Post creation data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Post creation data.', 'wp-graphql-gravity-forms' ),
 			],
 			'requiredIndicator'            => [
 				'type'        => Enum\FormFieldRequiredIndicatorEnum::$type,
-				'description' => __( 'Type of indicator to use when field is required.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Type of indicator to use when field is required.', 'wp-graphql-gravity-forms' ),
 			],
 			'saveAndContinue'              => [
 				'type'        => FormSaveAndContinue::$type,
-				'description' => __( '\"Save and Continue\" data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( '\"Save and Continue\" data.', 'wp-graphql-gravity-forms' ),
 			],
 			'scheduling'                   => [
 				'type'        => FormSchedule::$type,
-				'description' => __( 'Form scheduling data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Form scheduling data.', 'wp-graphql-gravity-forms' ),
 			],
 			'subLabelPlacement'            => [
 				'type'        => Enum\FormSubLabelPlacementEnum::$type,
-				'description' => __( 'How sub-labels are aligned.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'How sub-labels are aligned.', 'wp-graphql-gravity-forms' ),
 			],
 			'submitButton'                 => [
 				'type'        => FormSubmitButton::$type,
-				'description' => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Contains the form button settings such as the button text or image button source.', 'wp-graphql-gravity-forms' ),
 			],
 			'title'                        => [
 				'type'        => 'String',
-				'description' => __( 'Form title.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Form title.', 'wp-graphql-gravity-forms' ),
 			],
 			'version'                      => [
 				'type'        => 'String',
-				'description' => __( 'The version of Gravity Forms used to create this form.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The version of Gravity Forms used to create this form.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -274,16 +274,16 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 			self::$field_name,
 			Compat::resolve_graphql_config(
 				[
-					'description' => __( 'Get a Gravity Forms form.', 'wp-graphql-gravity-forms' ),
+					'description' => static fn () => __( 'Get a Gravity Forms form.', 'wp-graphql-gravity-forms' ),
 					'type'        => self::$type,
 					'args'        => [
 						'id'     => [
 							'type'        => [ 'non_null' => 'ID' ],
-							'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
+							'description' => static fn () => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
 						],
 						'idType' => [
 							'type'        => Enum\FormIdTypeEnum::$type,
-							'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
+							'description' => static fn () => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
 						],
 					],
 					'resolve'     => static function ( $source, array $args, AppContext $context ) {

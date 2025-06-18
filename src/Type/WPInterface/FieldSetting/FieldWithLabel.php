@@ -35,7 +35,7 @@ class FieldWithLabel extends AbstractFieldSetting {
 		return [
 			'label' => [
 				'type'        => 'String',
-				'description' => __( 'Field label that will be displayed on the form and on the admin pages.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Field label that will be displayed on the form and on the admin pages.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

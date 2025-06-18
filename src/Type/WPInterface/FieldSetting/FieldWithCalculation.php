@@ -35,16 +35,16 @@ class FieldWithCalculation extends AbstractFieldSetting {
 		return [
 			'isCalculation'       => [
 				'type'        => 'Boolean',
-				'description' => __( 'Indicates whether the number field is a calculation.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Indicates whether the number field is a calculation.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->enableCalculation ),
 			],
 			'calculationFormula'  => [
 				'type'        => 'String',
-				'description' => __( 'The formula used for the number field.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The formula used for the number field.', 'wp-graphql-gravity-forms' ),
 			],
 			'calculationRounding' => [
 				'type'        => 'Int',
-				'description' => __( 'Specifies to how many decimal places the number should be rounded. This is available when `isCalculation` is true, but will return null if the number format is `CURRENCY` or if the calculation is set to `Do not round`.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Specifies to how many decimal places the number should be rounded. This is available when `isCalculation` is true, but will return null if the number format is `CURRENCY` or if the calculation is set to `Do not round`.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source ) {
 					// Bail if the field doesn't have a calculationRounding property.
 					if ( empty( $source->enableCalculation ) || ! isset( $source->calculationRounding ) ) {

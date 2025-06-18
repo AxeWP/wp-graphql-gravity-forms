@@ -37,12 +37,12 @@ class Logger extends AbstractObject {
 		return [
 			'isEnabled' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the logger is enabled.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether the logger is enabled.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source['enable'] ),
 			],
 			'name'      => [
 				'type'        => 'String',
-				'description' => __( 'The name of the Gravity Forms logger.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The name of the Gravity Forms logger.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

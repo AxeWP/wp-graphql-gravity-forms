@@ -39,7 +39,7 @@ class FieldWithConditionalLogic extends AbstractFieldSetting {
 		return [
 			'conditionalLogic' => [
 				'type'        => ConditionalLogic::$type,
-				'description' => __( 'Controls the visibility of the field based on values selected by the user.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Controls the visibility of the field based on values selected by the user.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

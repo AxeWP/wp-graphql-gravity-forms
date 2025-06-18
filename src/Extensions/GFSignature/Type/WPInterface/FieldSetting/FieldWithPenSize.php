@@ -37,7 +37,7 @@ class FieldWithPenSize extends AbstractFieldSetting {
 		return [
 			'penSize' => [
 				'type'        => 'Int',
-				'description' => __( 'Size of the pen cursor.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Size of the pen cursor.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

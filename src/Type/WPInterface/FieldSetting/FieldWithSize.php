@@ -37,7 +37,7 @@ class FieldWithSize extends AbstractFieldSetting {
 		return [
 			'size' => [
 				'type'        => FormFieldSizeEnum::$type,
-				'description' => __( 'Determines the size of the field when displayed on the page.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines the size of the field when displayed on the page.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

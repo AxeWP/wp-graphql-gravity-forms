@@ -35,7 +35,7 @@ class FieldWithPostCategoryInitialItem extends AbstractFieldSetting {
 		return [
 			'dropdownPlaceholder' => [
 				'type'        => 'String',
-				'description' => __( 'The dropdown placeholder for the field.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The dropdown placeholder for the field.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->categoryInitialItem ) ? $source->categoryInitialItem : null,
 			],
 		];

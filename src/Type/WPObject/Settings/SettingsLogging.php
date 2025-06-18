@@ -38,12 +38,12 @@ class SettingsLogging extends AbstractObject {
 		return [
 			'isLoggingEnabled' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether Gravity Forms internal logging is enabled. Logging allows you to easily debug the inner workings of Gravity Forms to solve any possible issues.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether Gravity Forms internal logging is enabled. Logging allows you to easily debug the inner workings of Gravity Forms to solve any possible issues.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn (): bool => (bool) get_option( 'gform_enable_logging' ),
 			],
 			'loggers'          => [
 				'type'        => [ 'list_of' => Logger::$type ],
-				'description' => __( 'A list of registered Gravity Forms loggers and their configurations.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A list of registered Gravity Forms loggers and their configurations.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function () {
 					$logging_instance  = GFLogging::get_instance();
 					$settings          = $logging_instance->get_plugin_settings();

@@ -42,37 +42,37 @@ class FormPagination extends AbstractObject {
 		return [
 			'backgroundColor'              => [
 				'type'        => 'String',
-				'description' => __( 'Progress bar background color. Can be any CSS color value. Only applies when `style` is set to "CUSTOM".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Progress bar background color. Can be any CSS color value. Only applies when `style` is set to "CUSTOM".', 'wp-graphql-gravity-forms' ),
 			],
 			'color'                        => [
 				'type'        => 'String',
-				'description' => __( 'Progress bar text color. Can be any CSS color value. Only applies when `style` is set to "CUSTOM".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Progress bar text color. Can be any CSS color value. Only applies when `style` is set to "CUSTOM".', 'wp-graphql-gravity-forms' ),
 			],
 			'hasProgressbarOnConfirmation' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the confirmation bar should be displayed with the confirmation text.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether the confirmation bar should be displayed with the confirmation text.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source['displayProgressbarOnConfirmation'] ),
 			],
 			'lastPageButton'               => [
 				'type'        => FormLastPageButton::$type,
-				'description' => __( 'Last page button data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Last page button data.', 'wp-graphql-gravity-forms' ),
 			],
 			'pageNames'                    => [
 				'type'        => [ 'list_of' => 'String' ],
-				'description' => __( 'Names of the form\'s pages.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Names of the form\'s pages.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source['pages'] ) ? $source['pages'] : null,
 			],
 			'progressbarCompletionText'    => [
 				'type'        => 'String',
-				'description' => __( 'The confirmation text to display once the end of the progress bar has been reached. Only applies when `hasProgressbarOnConfirmation` is set to true.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The confirmation text to display once the end of the progress bar has been reached. Only applies when `hasProgressbarOnConfirmation` is set to true.', 'wp-graphql-gravity-forms' ),
 			],
 			'style'                        => [
 				'type'        => FormPageProgressStyleEnum::$type,
-				'description' => __( 'Style of progress bar.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Style of progress bar.', 'wp-graphql-gravity-forms' ),
 			],
 			'type'                         => [
 				'type'        => FormPageProgressTypeEnum::$type,
-				'description' => __( 'Type of progress indicator.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Type of progress indicator.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

@@ -101,7 +101,7 @@ class WPJamstackDeployments implements Hookable {
 					'update_entry'       => __( 'Entry Updates', 'wp-graphql-gravity-forms' ),
 					'create_draft_entry' => __( 'Draft Entry Creation', 'wp-graphql-gravity-forms' ),
 				],
-				'description' => __( 'Only selected Gravity Forms actions will trigger a deployment.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Only selected Gravity Forms actions will trigger a deployment.', 'wp-graphql-gravity-forms' ),
 				'legend'      => __( 'Gravity Forms', 'wp-graphql-gravity-forms' ),
 			]
 		);

@@ -35,7 +35,7 @@ class FieldWithAddIconUrl extends AbstractFieldSetting {
 		return [
 			'addIconUrl' => [
 				'type'        => 'String',
-				'description' => __( 'The URL of the image to be used for the add row button.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The URL of the image to be used for the add row button.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

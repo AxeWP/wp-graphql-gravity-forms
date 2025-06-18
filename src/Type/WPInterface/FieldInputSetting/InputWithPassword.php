@@ -37,15 +37,15 @@ class InputWithPassword extends AbstractFieldInputSetting {
 		return [
 			'customLabel' => [
 				'type'        => 'String',
-				'description' => __( 'The custom label for the input. When set, this is used in place of the label.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The custom label for the input. When set, this is used in place of the label.', 'wp-graphql-gravity-forms' ),
 			],
 			'isHidden'    => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether or not this field should be hidden.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether or not this field should be hidden.', 'wp-graphql-gravity-forms' ),
 			],
 			'placeholder' => [
 				'type'        => 'String',
-				'description' => __( 'Placeholder text to give the user a hint on how to fill out the field. This is not submitted with the form.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Placeholder text to give the user a hint on how to fill out the field. This is not submitted with the form.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

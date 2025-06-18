@@ -38,23 +38,23 @@ class NameFieldValue extends AbstractObject {
 		return [
 			'prefix' => [
 				'type'        => 'String',
-				'description' => __( 'Prefix, such as Mr., Mrs. etc.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Prefix, such as Mr., Mrs. etc.', 'wp-graphql-gravity-forms' ),
 			],
 			'first'  => [
 				'type'        => 'String',
-				'description' => __( 'First name.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'First name.', 'wp-graphql-gravity-forms' ),
 			],
 			'middle' => [
 				'type'        => 'String',
-				'description' => __( 'Middle name.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Middle name.', 'wp-graphql-gravity-forms' ),
 			],
 			'last'   => [
 				'type'        => 'String',
-				'description' => __( 'Last name.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Last name.', 'wp-graphql-gravity-forms' ),
 			],
 			'suffix' => [
 				'type'        => 'String',
-				'description' => __( 'Suffix, such as Sr., Jr. etc.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Suffix, such as Sr., Jr. etc.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

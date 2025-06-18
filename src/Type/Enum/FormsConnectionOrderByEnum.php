@@ -41,23 +41,23 @@ class FormsConnectionOrderByEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'DATE_CREATED' => [
-				'description' => __( 'The date the form was created.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The date the form was created.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DATE_CREATED,
 			],
 			'ID'           => [
-				'description' => __( 'The database ID of the form.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The database ID of the form.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ID,
 			],
 			'IS_ACTIVE'    => [
-				'description' => __( 'The Form\'s active status.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The Form\'s active status.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::IS_ACTIVE,
 			],
 			'IS_TRASH'     => [
-				'description' => __( 'The form\'s trash status .', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form\'s trash status .', 'wp-graphql-gravity-forms' ),
 				'value'       => self::IS_TRASH,
 			],
 			'TITLE'        => [
-				'description' => __( 'The title of the form.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The title of the form.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::TITLE,
 			],
 		];

@@ -40,11 +40,11 @@ class ChainedSelectFieldAlignmentEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'HORIZONTAL' => [
-				'description' => __( 'Horizontal alignment (in a row).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Horizontal alignment (in a row).', 'wp-graphql-gravity-forms' ),
 				'value'       => self::HORIZONTAL,
 			],
 			'VERTICAL'   => [
-				'description' => __( 'Vertical alignment (in a column).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Vertical alignment (in a column).', 'wp-graphql-gravity-forms' ),
 				'value'       => self::VERTICAL,
 			],
 		];

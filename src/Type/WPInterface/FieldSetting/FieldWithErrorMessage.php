@@ -35,7 +35,7 @@ class FieldWithErrorMessage extends AbstractFieldSetting {
 		return [
 			'errorMessage' => [
 				'type'        => 'String',
-				'description' => __( 'Contains the message that is displayed for fields that fail validation.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Contains the message that is displayed for fields that fail validation.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

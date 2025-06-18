@@ -38,7 +38,7 @@ class ListFieldValue extends AbstractObject {
 		return [
 			'values' => [
 				'type'        => [ 'list_of' => 'String' ],
-				'description' => __( 'Input values.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Input values.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

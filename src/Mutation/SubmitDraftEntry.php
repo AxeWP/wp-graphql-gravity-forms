@@ -41,11 +41,11 @@ class SubmitDraftEntry extends AbstractMutation {
 		return [
 			'id'     => [
 				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'Either the global ID of the draft entry, or its resume token.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Either the global ID of the draft entry, or its resume token.', 'wp-graphql-gravity-forms' ),
 			],
 			'idType' => [
 				'type'        => DraftEntryIdTypeEnum::$type,
-				'description' => __( 'The ID type for the draft entry. Defaults to `ID` .', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The ID type for the draft entry. Defaults to `ID` .', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -57,11 +57,11 @@ class SubmitDraftEntry extends AbstractMutation {
 		return [
 			'confirmation' => [
 				'type'        => SubmissionConfirmation::$type,
-				'description' => __( 'The form confirmation data. Null if the submission has `errors`', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form confirmation data. Null if the submission has `errors`', 'wp-graphql-gravity-forms' ),
 			],
 			'entry'        => [
 				'type'        => SubmittedEntry::$type,
-				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( array $payload, array $args, AppContext $context ) {
 					if ( ! empty( $payload['errors'] ) || empty( $payload['entryId'] ) ) {
 						return null;
@@ -72,7 +72,7 @@ class SubmitDraftEntry extends AbstractMutation {
 			],
 			'errors'       => [
 				'type'        => [ 'list_of' => FieldError::$type ],
-				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

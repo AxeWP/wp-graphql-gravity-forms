@@ -18,7 +18,7 @@ interface Enum {
 	/**
 	 * Gets the Enum values configuration array.
 	 *
-	 * @return array<string,array{description:string,value:mixed,deprecationReason?:string}>
+	 * @return array<string,array{description:callable():string,value:mixed,deprecationReason?:callable():string}>
 	 */
 	public static function get_values(): array;
 }

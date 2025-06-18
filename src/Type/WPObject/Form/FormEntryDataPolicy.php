@@ -37,15 +37,15 @@ class FormEntryDataPolicy extends AbstractObject {
 		return [
 			'key'          => [
 				'type'        => 'String',
-				'description' => __( 'The array key for the Gravity Forms Entry.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The array key for the Gravity Forms Entry.', 'wp-graphql-gravity-forms' ),
 			],
 			'shouldErase'  => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether this field should be included when erasing personal data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether this field should be included when erasing personal data.', 'wp-graphql-gravity-forms' ),
 			],
 			'shouldExport' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether this field should be included when exporting personal data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether this field should be included when exporting personal data.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

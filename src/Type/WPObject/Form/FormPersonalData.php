@@ -38,19 +38,19 @@ class FormPersonalData extends AbstractObject {
 		return [
 			'daysToRetain'    => [
 				'type'        => 'Int',
-				'description' => __( 'The number of days to retain entries. `null` if `retentionPolicy` is set to `RETAIN` entries indefinitely.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The number of days to retain entries. `null` if `retentionPolicy` is set to `RETAIN` entries indefinitely.', 'wp-graphql-gravity-forms' ),
 			],
 			'retentionPolicy' => [
 				'type'        => FormRetentionPolicyEnum::$type,
-				'description' => __( 'The policy for retaining old entry data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The policy for retaining old entry data.', 'wp-graphql-gravity-forms' ),
 			],
 			'shouldSaveIP'    => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the IP address should be saved to the form submission.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether the IP address should be saved to the form submission.', 'wp-graphql-gravity-forms' ),
 			],
 			'dataPolicies'    => [
 				'type'        => FormDataPolicies::$type,
-				'description' => __( 'The policies governing which entry data to include when erasing and exporting personal data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The policies governing which entry data to include when erasing and exporting personal data.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

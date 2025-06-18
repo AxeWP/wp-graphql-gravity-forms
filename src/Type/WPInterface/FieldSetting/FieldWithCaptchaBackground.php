@@ -35,7 +35,7 @@ class FieldWithCaptchaBackground extends AbstractFieldSetting {
 		return [
 			'simpleCaptchaBackgroundColor' => [
 				'type'        => 'String',
-				'description' => __( 'Determines the image’s background color, in HEX format (i.e. #CCCCCC). Only applicable to simple_captcha and math captcha types.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines the image’s background color, in HEX format (i.e. #CCCCCC). Only applicable to simple_captcha and math captcha types.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

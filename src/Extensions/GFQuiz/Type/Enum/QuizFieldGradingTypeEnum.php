@@ -41,15 +41,15 @@ class QuizFieldGradingTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'NONE'     => [
-				'description' => __( 'No grading.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'No grading.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::NONE,
 			],
 			'PASSFAIL' => [
-				'description' => __( 'Pass-fail grading system.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Pass-fail grading system.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::PASSFAIL,
 			],
 			'LETTER'   => [
-				'description' => __( 'Letter grading system.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Letter grading system.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::LETTER,
 			],
 		];

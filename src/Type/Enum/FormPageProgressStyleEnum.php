@@ -42,27 +42,27 @@ class FormPageProgressStyleEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'BLUE'   => [
-				'description' => __( 'Blue progress bar style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Blue progress bar style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::BLUE,
 			],
 			'GREY'   => [
-				'description' => __( 'Grey progress bar style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Grey progress bar style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::GREY,
 			],
 			'GREEN'  => [
-				'description' => __( 'Green progress bar style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Green progress bar style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::GREEN,
 			],
 			'ORANGE' => [
-				'description' => __( 'Orange progress bar style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Orange progress bar style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ORANGE,
 			],
 			'RED'    => [
-				'description' => __( 'Red progress bar style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Red progress bar style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::RED,
 			],
 			'CUSTOM' => [
-				'description' => __( 'Custom progress bar style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Custom progress bar style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::CUSTOM,
 			],
 		];

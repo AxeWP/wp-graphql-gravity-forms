@@ -38,11 +38,11 @@ class FormsConnectionOrderbyInput extends AbstractInput {
 		return [
 			'column' => [
 				'type'        => FormsConnectionOrderByEnum::$type,
-				'description' => __( 'The form column name used to sort the results.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form column name used to sort the results.', 'wp-graphql-gravity-forms' ),
 			],
 			'order'  => [
 				'type'        => 'OrderEnum',
-				'description' => __( 'The cardinality of the order of the connection.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The cardinality of the order of the connection.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

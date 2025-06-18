@@ -38,11 +38,11 @@ class ConditionalLogicActionTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'SHOW' => [
-				'description' => __( 'Image button.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Image button.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::SHOW,
 			],
 			'HIDE' => [
-				'description' => __( 'Text button (default).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Text button (default).', 'wp-graphql-gravity-forms' ),
 				'value'       => self::HIDE,
 			],
 		];

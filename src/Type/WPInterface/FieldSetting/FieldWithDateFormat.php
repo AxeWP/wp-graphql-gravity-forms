@@ -51,7 +51,7 @@ class FieldWithDateFormat extends AbstractFieldSetting implements TypeWithInterf
 		return [
 			'dateFormat' => [
 				'type'        => DateFieldFormatEnum::$type,
-				'description' => __( 'Determines how the date is displayed.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines how the date is displayed.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

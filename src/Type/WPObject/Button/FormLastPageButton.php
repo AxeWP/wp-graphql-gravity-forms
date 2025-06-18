@@ -40,15 +40,15 @@ class FormLastPageButton extends AbstractObject {
 		return [
 			'type'     => [
 				'type'        => FormButtonTypeEnum::$type,
-				'description' => __( 'Specifies the type of button to be displayed. Defaults to TEXT.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Specifies the type of button to be displayed. Defaults to TEXT.', 'wp-graphql-gravity-forms' ),
 			],
 			'text'     => [
 				'type'        => 'String',
-				'description' => __( 'Contains the button text. Only applicable when type is set to text.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Contains the button text. Only applicable when type is set to text.', 'wp-graphql-gravity-forms' ),
 			],
 			'imageUrl' => [
 				'type'        => 'String',
-				'description' => __( 'Contains the URL for the image button. Only applicable when type is set to image.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Contains the URL for the image button. Only applicable when type is set to image.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

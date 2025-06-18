@@ -43,7 +43,7 @@ class CurrencyEnum extends AbstractEnum {
 			$values[ WPEnumType::get_safe_name( $code ) ] = [
 				'value'       => $currency['code'],
 				// translators: Currency Name.
-				'description' => sprintf( __( '%s .', 'wp-graphql-gravity-forms' ), $currency['name'] ),
+				'description' => static fn () => sprintf( __( '%s .', 'wp-graphql-gravity-forms' ), $currency['name'] ),
 			];
 		}
 

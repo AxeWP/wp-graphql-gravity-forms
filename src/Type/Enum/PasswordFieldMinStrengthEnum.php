@@ -40,19 +40,19 @@ class PasswordFieldMinStrengthEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'SHORT'  => [
-				'description' => __( 'The password strength must be "short" or better.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The password strength must be "short" or better.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::SHORT,
 			],
 			'BAD'    => [
-				'description' => __( 'The password strength must be "bad" or better.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The password strength must be "bad" or better.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::BAD,
 			],
 			'GOOD'   => [
-				'description' => __( 'The password strength must be "good" or better.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The password strength must be "good" or better.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::GOOD,
 			],
 			'STRONG' => [
-				'description' => __( 'The password strength must be "strong".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The password strength must be "strong".', 'wp-graphql-gravity-forms' ),
 				'value'       => self::STRONG,
 			],
 		];

@@ -40,19 +40,19 @@ class FormStatusEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			self::ACTIVE           => [
-				'description' => __( 'Active forms (default).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Active forms (default).', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ACTIVE,
 			],
 			self::INACTIVE         => [
-				'description' => __( 'Inactive forms.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Inactive forms.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::INACTIVE,
 			],
 			self::TRASHED          => [
-				'description' => __( 'Active forms in the trash.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Active forms in the trash.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::TRASHED,
 			],
 			self::INACTIVE_TRASHED => [
-				'description' => __( 'Inactive forms in the trash.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Inactive forms in the trash.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::INACTIVE_TRASHED,
 			],
 		];

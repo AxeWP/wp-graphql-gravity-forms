@@ -37,12 +37,12 @@ class FieldWithPasswordStrength extends AbstractFieldSetting {
 		return [
 			'hasPasswordStrengthIndicator' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Indicates whether the field displays the password strength indicator.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Indicates whether the field displays the password strength indicator.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->passwordStrengthEnabled ),
 			],
 			'minPasswordStrength'          => [
 				'type'        => PasswordFieldMinStrengthEnum::$type,
-				'description' => __( 'Indicates how strong the password should be.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Indicates how strong the password should be.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

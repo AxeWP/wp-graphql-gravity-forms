@@ -38,11 +38,11 @@ class SubmissionConfirmationTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'MESSAGE'  => [
-				'description' => __( 'A confirmation "message".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A confirmation "message".', 'wp-graphql-gravity-forms' ),
 				'value'       => self::MESSAGE,
 			],
 			'REDIRECT' => [
-				'description' => __( 'A "redirect" to a given URL.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A "redirect" to a given URL.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::REDIRECT,
 			],
 		];

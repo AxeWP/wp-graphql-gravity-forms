@@ -39,15 +39,15 @@ class FormFieldSizeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'SMALL'  => [
-				'description' => __( 'Small field size.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Small field size.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::SMALL,
 			],
 			'MEDIUM' => [
-				'description' => __( 'Medium field size.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Medium field size.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::MEDIUM,
 			],
 			'LARGE'  => [
-				'description' => __( 'Large field size.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Large field size.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::LARGE,
 			],
 		];

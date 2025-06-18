@@ -39,15 +39,15 @@ class FormFieldVisibilityEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'VISIBLE'        => [
-				'description' => __( 'The field is "visible".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field is "visible".', 'wp-graphql-gravity-forms' ),
 				'value'       => self::VISIBLE,
 			],
 			'HIDDEN'         => [
-				'description' => __( 'The field is "hidden".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field is "hidden".', 'wp-graphql-gravity-forms' ),
 				'value'       => self::HIDDEN,
 			],
 			'ADMINISTRATIVE' => [
-				'description' => __( 'The field is for "administrative" use.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field is for "administrative" use.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ADMINISTRATIVE,
 			],
 		];

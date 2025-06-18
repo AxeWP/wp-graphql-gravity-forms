@@ -40,7 +40,7 @@ install_gf || true
 
 # Install WPGraphQL and Activate
 if ! $( wp plugin is-installed wp-graphql --allow-root ); then
-	wp plugin install wp-graphql --version=1.32.1 --allow-root
+	wp plugin install wp-graphql --allow-root
 fi
 wp plugin activate wp-graphql --allow-root
 

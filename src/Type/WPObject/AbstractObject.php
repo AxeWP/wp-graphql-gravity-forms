@@ -49,7 +49,7 @@ abstract class AbstractObject extends AbstractType implements TypeWithDescriptio
 	 */
 	public static function get_type_config(): array {
 		return [
-			'description'     => static::get_description(),
+			'description'     => static fn () => static::get_description(),
 			'fields'          => static::get_fields(),
 			'eagerlyLoadType' => static::$should_load_eagerly,
 		];

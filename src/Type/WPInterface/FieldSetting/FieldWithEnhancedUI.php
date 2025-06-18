@@ -35,7 +35,7 @@ class FieldWithEnhancedUI extends AbstractFieldSetting {
 		return [
 			'hasEnhancedUI' => [
 				'type'        => 'Boolean',
-				'description' => __( 'When set to true, the "Chosen" jQuery script will be applied to this field, enabling search capabilities to Drop Down fields and a more user-friendly interface for Multi Select fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'When set to true, the "Chosen" jQuery script will be applied to this field, enabling search capabilities to Drop Down fields and a more user-friendly interface for Multi Select fields.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->enableEnhancedUI ),
 			],
 		];

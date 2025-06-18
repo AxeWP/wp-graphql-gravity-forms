@@ -76,31 +76,31 @@ class EntriesConnection extends AbstractConnection {
 		return [
 			'dateFilters'      => [
 				'type'        => EntriesDateFiltersInput::$type,
-				'description' => __( 'Date filters to apply.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Date filters to apply.', 'wp-graphql-gravity-forms' ),
 			],
 			'entryType'        => [
 				'type'        => EntryTypeEnum::$type,
-				'description' => __( 'Entry status. Default is `SUBMITTED`. Currently no other types are supported.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Entry status. Default is `SUBMITTED`. Currently no other types are supported.', 'wp-graphql-gravity-forms' ),
 			],
 			'formIds'          => [
 				'type'        => [ 'list_of' => 'ID' ],
-				'description' => __( 'Array of form IDs to limit the entries to. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Array of form IDs to limit the entries to. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldFilters'     => [
 				'type'        => [ 'list_of' => EntriesFieldFiltersInput::$type ],
-				'description' => __( 'Field-specific filters to apply.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Field-specific filters to apply.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldFiltersMode' => [
 				'type'        => FieldFiltersModeEnum::$type,
-				'description' => __( 'Whether to filter by ALL or ANY of the field filters. Default is ALL.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether to filter by ALL or ANY of the field filters. Default is ALL.', 'wp-graphql-gravity-forms' ),
 			],
 			'orderby'          => [
 				'type'        => EntriesConnectionOrderbyInput::$type,
-				'description' => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'How to sort the entries.', 'wp-graphql-gravity-forms' ),
 			],
 			'status'           => [
 				'type'        => EntryStatusEnum::$type,
-				'description' => __( 'Entry status. Default is "ACTIVE".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Entry status. Default is "ACTIVE".', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

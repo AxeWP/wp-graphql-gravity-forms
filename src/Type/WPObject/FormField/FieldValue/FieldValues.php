@@ -34,7 +34,7 @@ class FieldValues {
 		return [
 			'value' => [
 				'type'        => 'String',
-				'description' => __( 'The string-formatted entry value for the `formField`. For complex fields this might be a JSON-encoded or serialized array.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The string-formatted entry value for the `formField`. For complex fields this might be a JSON-encoded or serialized array.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
@@ -60,7 +60,7 @@ class FieldValues {
 		return [
 			'addressValues' => [
 				'type'        => ValueProperty\AddressFieldValue::$type,
-				'description' => __( 'Address field value.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Address field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
@@ -88,7 +88,7 @@ class FieldValues {
 		return [
 			'checkboxValues' => [
 				'type'        => [ 'list_of' => ValueProperty\CheckboxFieldValue::$type ],
-				'description' => __( 'Checkbox field value.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Checkbox field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
@@ -132,7 +132,7 @@ class FieldValues {
 		return [
 			'consentValue' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Consent field value. This is `true` when consent is given, `false` when it is not.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Consent field value. This is `true` when consent is given, `false` when it is not.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
@@ -154,7 +154,7 @@ class FieldValues {
 		return [
 			'fileUploadValues' => [
 				'type'        => [ 'list_of' => ValueProperty\FileUploadFieldValue::$type ],
-				'description' => __( 'File upload value', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'File upload value', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if (
 						! $source instanceof FormField ||
@@ -180,7 +180,7 @@ class FieldValues {
 		return [
 			'imageValues' => [
 				'type'        => ValueProperty\ImageFieldValue::$type,
-				'description' => __( 'Image field value.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Image field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if (
 						! $source instanceof FormField ||
@@ -232,7 +232,7 @@ class FieldValues {
 		return [
 			'listValues' => [
 				'type'        => [ 'list_of' => ValueProperty\ListFieldValue::$type ],
-				'description' => __( 'List field value.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'List field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! $source instanceof FormField || ! $source->gfField instanceof \GF_Field_List || ! isset( $context->gfEntry ) ) {
 						return null;
@@ -287,7 +287,7 @@ class FieldValues {
 		return [
 			'nameValues' => [
 				'type'        => ValueProperty\NameFieldValue::$type,
-				'description' => __( 'Name field value.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Name field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
@@ -314,7 +314,7 @@ class FieldValues {
 		return [
 			'productValues' => [
 				'type'        => ValueProperty\ProductFieldValue::$type,
-				'description' => __( 'Product field values.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Product field values.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) || ! isset( $context->gfForm ) ) {
 						return null;
@@ -387,7 +387,7 @@ class FieldValues {
 		return [
 			'timeValues' => [
 				'type'        => ValueProperty\TimeFieldValue::$type,
-				'description' => __( 'Time field value.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Time field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;
@@ -422,7 +422,7 @@ class FieldValues {
 		return [
 			'values' => [
 				'type'        => [ 'list_of' => 'String' ],
-				'description' => __( 'An array of field values.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'An array of field values.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;

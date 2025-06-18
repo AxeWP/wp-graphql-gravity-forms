@@ -53,19 +53,19 @@ class FieldWithAddress extends AbstractFieldSetting implements TypeWithInterface
 		return [
 			'addressType'     => [
 				'type'        => AddressFieldTypeEnum::$type,
-				'description' => __( 'Determines the type of address to be displayed.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines the type of address to be displayed.', 'wp-graphql-gravity-forms' ),
 			],
 			'defaultCountry'  => [
 				'type'        => AddressFieldCountryEnum::$type,
-				'description' => __( 'Contains the country that will be selected by default. Only applicable when "addressType" is set to "INTERATIONAL".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Contains the country that will be selected by default. Only applicable when "addressType" is set to "INTERATIONAL".', 'wp-graphql-gravity-forms' ),
 			],
 			'defaultProvince' => [
 				'type'        => AddressFieldProvinceEnum::$type,
-				'description' => __( 'Contains the province that will be selected by default. Only applicable when "addressType" is set to "CANADA".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Contains the province that will be selected by default. Only applicable when "addressType" is set to "CANADA".', 'wp-graphql-gravity-forms' ),
 			],
 			'defaultState'    => [
 				'type'        => AddressFieldProvinceEnum::$type,
-				'description' => __( 'Contains the state that will be selected by default. Only applicable when "addressType" is set to "US".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Contains the state that will be selected by default. Only applicable when "addressType" is set to "US".', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

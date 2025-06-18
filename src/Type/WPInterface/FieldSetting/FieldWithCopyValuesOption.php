@@ -35,17 +35,17 @@ class FieldWithCopyValuesOption extends AbstractFieldSetting {
 		return [
 			'shouldCopyValuesOption'  => [
 				'type'        => 'Boolean',
-				'description' => __( 'Indicates whether the copy values option can be used. This option allows users to skip filling out the field and use the same values as another. For example, if the mailing and billing address are the same.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Indicates whether the copy values option can be used. This option allows users to skip filling out the field and use the same values as another. For example, if the mailing and billing address are the same.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->enableCopyValuesOption ),
 			],
 			'copyValuesOptionFieldId' => [
 				'type'        => 'Int',
-				'description' => __( 'The field id of the field being used as the copy source.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field id of the field being used as the copy source.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->copyValuesOptionField ) ? $source->copyValuesOptionField : null,
 			],
 			'copyValuesOptionLabel'   => [
 				'type'        => 'String',
-				'description' => __( 'The label that appears next to the copy values option when the form is displayed. The default value is \“Same as previous\”.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The label that appears next to the copy values option when the form is displayed. The default value is \“Same as previous\”.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

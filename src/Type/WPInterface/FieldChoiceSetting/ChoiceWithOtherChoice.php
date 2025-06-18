@@ -47,7 +47,7 @@ class ChoiceWithOtherChoice extends AbstractFieldChoiceSetting {
 		return [
 			'isOtherChoice' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Indicates the radio button item is the “Other” choice.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Indicates the radio button item is the “Other” choice.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -73,7 +73,7 @@ class ChoiceWithOtherChoice extends AbstractFieldChoiceSetting {
 
 		$fields['isOtherChoice'] = [
 			'type'        => 'Boolean',
-			'description' => __( 'Indicates the radio button item is the “Other” choice.', 'wp-graphql-gravity-forms' ),
+			'description' => static fn () => __( 'Indicates the radio button item is the “Other” choice.', 'wp-graphql-gravity-forms' ),
 		];
 
 		return $fields;

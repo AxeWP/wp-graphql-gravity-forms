@@ -39,15 +39,15 @@ class DateFieldTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'FIELD'    => [
-				'description' => __( 'A simple date field.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A simple date field.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::FIELD,
 			],
 			'DROPDOWN' => [
-				'description' => __( 'A date dropdown.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A date dropdown.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DROPDOWN,
 			],
 			'PICKER'   => [
-				'description' => __( 'A datepicker.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A datepicker.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::PICKER,
 			],
 		];

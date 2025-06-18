@@ -47,7 +47,7 @@ class ChoiceWithChainedChoices extends AbstractFieldChoiceSetting {
 		return [
 			'isSelected' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -71,7 +71,7 @@ class ChoiceWithChainedChoices extends AbstractFieldChoiceSetting {
 
 		$fields['choices'] = [
 			'type'        => [ 'list_of' => $choice_name ],
-			'description' => sprintf(
+			'description' => static fn () => sprintf(
 				// translators: The choice object GraphQL name.
 				__( 'The nested %s choice.', 'wp-graphql-gravity-forms' ),
 				ucfirst( $choice_name ),

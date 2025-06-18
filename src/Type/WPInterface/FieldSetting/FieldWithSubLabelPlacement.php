@@ -37,7 +37,7 @@ class FieldWithSubLabelPlacement extends AbstractFieldSetting {
 		return [
 			'subLabelPlacement' => [
 				'type'        => FormFieldSubLabelPlacementEnum::$type,
-				'description' => __( 'The placement of the labels for the subfields within the group. This setting controls all of the subfields, they cannot be set individually. They may be aligned above or below the inputs. If this property is not set, the “Sub-Label Placement” setting on the Form Settings->Form Layout page is used. If no setting is specified, the default is above inputs.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The placement of the labels for the subfields within the group. This setting controls all of the subfields, they cannot be set individually. They may be aligned above or below the inputs. If this property is not set, the “Sub-Label Placement” setting on the Form Settings->Form Layout page is used. If no setting is specified, the default is above inputs.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source ) {
 					return ! empty( $source->subLabelPlacement ) ? $source->subLabelPlacement : 'inherit';
 				},

@@ -76,19 +76,19 @@ class FormFieldsConnection extends AbstractConnection {
 		return [
 			'ids'         => [
 				'type'        => [ 'list_of' => 'ID' ],
-				'description' => __( 'Array of form field IDs to return.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Array of form field IDs to return.', 'wp-graphql-gravity-forms' ),
 			],
 			'adminLabels' => [
 				'type'        => [ 'list_of' => 'String' ],
-				'description' => __( 'Array of form field adminLabels to return.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Array of form field adminLabels to return.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldTypes'  => [
 				'type'        => [ 'list_of' => FormFieldTypeEnum::$type ],
-				'description' => __( 'Array of Gravity Forms Field types to return.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Array of Gravity Forms Field types to return.', 'wp-graphql-gravity-forms' ),
 			],
 			'pageNumber'  => [
 				'type'        => 'Int',
-				'description' => __( 'The form page number to return.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form page number to return.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

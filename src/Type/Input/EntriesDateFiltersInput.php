@@ -36,11 +36,11 @@ class EntriesDateFiltersInput extends AbstractInput {
 		return [
 			'startDate' => [
 				'type'        => 'String',
-				'description' => __( 'Start date in Y-m-d H:i:s format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Start date in Y-m-d H:i:s format.', 'wp-graphql-gravity-forms' ),
 			],
 			'endDate'   => [
 				'type'        => 'String',
-				'description' => __( 'End date in Y-m-d H:i:s format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'End date in Y-m-d H:i:s format.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

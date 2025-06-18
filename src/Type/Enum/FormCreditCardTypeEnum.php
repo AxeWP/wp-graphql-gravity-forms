@@ -43,7 +43,7 @@ class FormCreditCardTypeEnum extends AbstractEnum {
 			$values[ WPEnumType::get_safe_name( $type['slug'] ) ] = [
 				'value'       => $type['slug'],
 				// translators: Credit card name.
-				'description' => sprintf( __( ' A %s type credit card.', 'wp-graphql-gravity-forms' ), $type['name'] ),
+				'description' => static fn () => sprintf( __( ' A %s type credit card.', 'wp-graphql-gravity-forms' ), $type['name'] ),
 			];
 		}
 

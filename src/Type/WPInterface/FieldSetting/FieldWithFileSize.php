@@ -35,7 +35,7 @@ class FieldWithFileSize extends AbstractFieldSetting {
 		return [
 			'maxFileSize' => [
 				'type'        => 'Int',
-				'description' => __( 'The maximum size (in MB) an uploaded file may be .', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The maximum size (in MB) an uploaded file may be .', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source ) {
 					// Fall back to the WP max upload size if the field setting is not set, to mimic GF frontend behavior.
 					return ! empty( $source->maxFileSize ) ? (int) $source->maxFileSize : ( wp_max_upload_size() / 1048576 );

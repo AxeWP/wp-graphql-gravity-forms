@@ -36,23 +36,23 @@ class PostImageFieldInput extends AbstractInput {
 		return [
 			'image'       => [
 				'type'        => [ 'non_null' => 'Upload' ],
-				'description' => __( 'The image to be uploaded.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The image to be uploaded.', 'wp-graphql-gravity-forms' ),
 			],
 			'altText'     => [
 				'type'        => 'String',
-				'description' => __( 'The image alt text.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The image alt text.', 'wp-graphql-gravity-forms' ),
 			],
 			'title'       => [
 				'type'        => 'String',
-				'description' => __( 'The image title.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The image title.', 'wp-graphql-gravity-forms' ),
 			],
 			'caption'     => [
 				'type'        => 'String',
-				'description' => __( 'The image caption.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The image caption.', 'wp-graphql-gravity-forms' ),
 			],
 			'description' => [
 				'type'        => 'String',
-				'description' => __( 'The image description.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The image description.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

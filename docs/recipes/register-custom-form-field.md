@@ -22,7 +22,7 @@ register_graphql_field(
   'myCustomProperty',
   [
     'type' => 'String',
-    'description' => __( 'This is a custom property that exists on my custom GF field', 'my-plugin' ),
+    'description' => static fn () => __( 'This is a custom property that exists on my custom GF field', 'my-plugin' ),
     'resolve' => fn( $source ) => $source->my_custom_property // if the GF_Field property is the same name as the GraphQL field, this can be ommitted.
   ]
 );
@@ -36,7 +36,7 @@ register_graphql_field(
   'myCustomFormFieldValue',
   [
     'type' => 'MyCustomFormFieldValueObject',
-    'description' => __( 'The Field Value object for my custom GF field.', 'my-plugin'),
+    'description' => static fn () => __( 'The Field Value object for my custom GF field.', 'my-plugin'),
     'resolve' => function( $source ){
       /**
        * Usually, the entry is saved in the formField's context/
@@ -78,7 +78,7 @@ add_filter(
     // Add `myCustomField` to the GraphQL type.
     $fields['myCustomField'] = [
       'type'        => 'String',
-      'description' => __( 'The autocomplete attribute for the field.', 'wp-graphql-gravity-forms' ),
+      'description' => static fn () => __( 'The autocomplete attribute for the field.', 'wp-graphql-gravity-forms' ),
     ];
 
     return $fields;

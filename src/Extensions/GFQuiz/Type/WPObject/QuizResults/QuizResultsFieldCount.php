@@ -42,7 +42,7 @@ class QuizResultsFieldCount extends AbstractObject implements TypeWithConnection
 		return [
 			'formField' => [
 				'toType'      => 'QuizField',
-				'description' => __( 'The quiz field.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The quiz field.', 'wp-graphql-gravity-forms' ),
 				'oneToOne'    => true,
 				'resolve'     => static function ( $source ): array {
 					return [ 'node' => $source['field'] ];
@@ -65,19 +65,19 @@ class QuizResultsFieldCount extends AbstractObject implements TypeWithConnection
 		return [
 			'choiceCounts'   => [
 				'type'        => [ 'list_of' => QuizResultsChoiceCount::$type ],
-				'description' => __( 'A list of the individual responses and their counts.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A list of the individual responses and their counts.', 'wp-graphql-gravity-forms' ),
 			],
 			'correctCount'   => [
 				'type'        => 'Int',
-				'description' => __( 'The number of correct responses across all entries received.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The number of correct responses across all entries received.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldId'        => [
 				'type'        => 'Int',
-				'description' => __( 'The quiz field ID.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The quiz field ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'incorrectCount' => [
 				'type'        => 'Int',
-				'description' => __( 'The number of incorrect responses across all entries received.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The number of incorrect responses across all entries received.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

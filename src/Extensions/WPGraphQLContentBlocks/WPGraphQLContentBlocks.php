@@ -50,7 +50,7 @@ class WPGraphQLContentBlocks implements Hookable, Registrable {
 			Compat::resolve_graphql_config(
 				[
 					'type'        => Form::$type,
-					'description' => __( 'The form object associated with the block.', 'wp-graphql-gravity-forms' ),
+					'description' => static fn () => __( 'The form object associated with the block.', 'wp-graphql-gravity-forms' ),
 					'resolve'     => static function ( $source, array $args, AppContext $context ) {
 						if ( empty( $source['attrs']['formId'] ) ) {
 							return null;

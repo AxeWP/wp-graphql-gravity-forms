@@ -62,15 +62,15 @@ class CheckboxFieldValue extends AbstractObject implements TypeWithInterfaces {
 		return [
 			'inputId' => [
 				'type'        => 'Float',
-				'description' => __( 'Input ID.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Input ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'value'   => [
 				'type'        => 'String',
-				'description' => __( 'Input value.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Input value.', 'wp-graphql-gravity-forms' ),
 			],
 			'text'    => [
 				'type'        => 'String',
-				'description' => __( 'Input text.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Input text.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
