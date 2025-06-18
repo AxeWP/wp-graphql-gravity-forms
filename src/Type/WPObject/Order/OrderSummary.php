@@ -40,19 +40,19 @@ class OrderSummary extends AbstractObject {
 		return [
 			'currency' => [
 				'type'        => CurrencyEnum::$type,
-				'description' => __( 'The currency used for the order', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The currency used for the order', 'wp-graphql-gravity-forms' ),
 			],
 			'items'    => [
 				'type'        => [ 'list_of' => OrderItem::$type ],
-				'description' => __( 'The order item details.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The order item details.', 'wp-graphql-gravity-forms' ),
 			],
 			'subtotal' => [
 				'type'        => 'Float',
-				'description' => __( 'The order subtotal.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The order subtotal.', 'wp-graphql-gravity-forms' ),
 			],
 			'total'    => [
 				'type'        => 'Float',
-				'description' => __( 'The order total', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The order total', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

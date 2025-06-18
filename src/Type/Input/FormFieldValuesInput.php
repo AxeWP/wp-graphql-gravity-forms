@@ -39,50 +39,50 @@ class FormFieldValuesInput extends AbstractInput {
 		$fields = [
 			'id'             => [
 				'type'        => [ 'non_null' => 'Int' ],
-				'description' => __( 'The field id.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field id.', 'wp-graphql-gravity-forms' ),
 			],
 			'addressValues'  => [
 				'type'        => AddressFieldInput::$type,
-				'description' => __( 'The form field values for Address fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field values for Address fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'checkboxValues' => [
 				'type'        => [ 'list_of' => CheckboxFieldInput::$type ],
-				'description' => __( 'The form field values for Checkbox fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field values for Checkbox fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'emailValues'    => [
 				'type'        => EmailFieldInput::$type,
-				'description' => __( 'The form field values for Email fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field values for Email fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'listValues'     => [
 				'type'        => [ 'list_of' => ListFieldInput::$type ],
-				'description' => __( 'The form field values for List fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field values for List fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'nameValues'     => [
 				'type'        => NameFieldInput::$type,
-				'description' => __( 'The form field values for Name fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field values for Name fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'productValues'  => [
 				'type'        => ProductFieldInput::$type,
-				'description' => __( 'The form field values for Name fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field values for Name fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'values'         => [
 				'type'        => [ 'list_of' => 'String' ],
-				'description' => __( 'The form field values for fields that accept multiple string values. Used by MultiSelect, Post Category, Post Custom, and Post Tags fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field values for fields that accept multiple string values. Used by MultiSelect, Post Category, Post Custom, and Post Tags fields.', 'wp-graphql-gravity-forms' ),
 			],
 			'value'          => [
 				'type'        => 'String',
-				'description' => __( 'The form field values for basic fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field values for basic fields.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 
 		if ( Utils::is_graphql_upload_enabled() ) {
 			$fields['fileUploadValues'] = [
 				'type'        => [ 'list_of' => 'Upload' ],
-				'description' => __( 'The form field values for file upload fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field values for file upload fields.', 'wp-graphql-gravity-forms' ),
 			];
 			$fields['imageValues']      = [
 				'type'        => PostImageFieldInput::$type,
-				'description' => __( 'The form field values for post image fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field values for post image fields.', 'wp-graphql-gravity-forms' ),
 			];
 		}
 

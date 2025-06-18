@@ -38,11 +38,11 @@ class DeleteDraftEntry extends AbstractMutation {
 		return [
 			'id'     => [
 				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'Either the global ID of the draft entry, or its resume token.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Either the global ID of the draft entry, or its resume token.', 'wp-graphql-gravity-forms' ),
 			],
 			'idType' => [
 				'type'        => DraftEntryIdTypeEnum::$type,
-				'description' => __( 'The ID type for the draft entry. Defaults to `ID` .', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The ID type for the draft entry. Defaults to `ID` .', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -54,7 +54,7 @@ class DeleteDraftEntry extends AbstractMutation {
 		return [
 			'deletedId'  => [
 				'type'        => 'ID',
-				'description' => __( 'The global ID of the draft entry that was deleted.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The global ID of the draft entry that was deleted.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $payload ) {
 					$deleted = (object) $payload['deletedEntry'];
 					return ! empty( $deleted->id ) ? $deleted->id : null;
@@ -62,7 +62,7 @@ class DeleteDraftEntry extends AbstractMutation {
 			],
 			'draftEntry' => [
 				'type'        => DraftEntry::$type,
-				'description' => __( 'The draft entry object before it was deleted.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The draft entry object before it was deleted.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $payload ) => $payload['deletedEntry'] ?? null,
 			],
 		];

@@ -38,11 +38,11 @@ class FormSubLabelPlacementEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'ABOVE' => [
-				'description' => __( 'The sub-label is displayed above the sub-field input (i.e. immediately after the field label).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The sub-label is displayed above the sub-field input (i.e. immediately after the field label).', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ABOVE,
 			],
 			'BELOW' => [
-				'description' => __( 'The sub-label is displayed below the sub-field input.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The sub-label is displayed below the sub-field input.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::BELOW,
 			],
 		];

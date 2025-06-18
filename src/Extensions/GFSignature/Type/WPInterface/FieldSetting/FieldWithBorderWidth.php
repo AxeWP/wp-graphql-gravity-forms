@@ -38,7 +38,7 @@ class FieldWithBorderWidth extends AbstractFieldSetting {
 		return [
 			'borderWidth' => [
 				'type'        => SignatureFieldBorderWidthEnum::$type,
-				'description' => __( 'Width of the border around the signature area.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Width of the border around the signature area.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

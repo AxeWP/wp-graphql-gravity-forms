@@ -50,15 +50,10 @@ use WPGraphQL\Model\Model;
  * @property ?string              $title                        The title for the form.
  * @property bool                 $hasValidationSummary         Whether the form has a validation summary.
  * @property ?string              $version                      The version for the form.
+ *
+ * @extends \WPGraphQL\Model\Model<array<string,mixed>>
  */
 class Form extends Model {
-	/**
-	 * Stores the incoming form to be modeled.
-	 *
-	 * @var array<string,mixed> $data;
-	 */
-	protected $data;
-
 	/**
 	 * Form constructor.
 	 *

@@ -37,7 +37,7 @@ class FieldWithBorderColor extends AbstractFieldSetting {
 		return [
 			'borderColor' => [
 				'type'        => 'String',
-				'description' => __( 'Color to be used for the border around the signature area. Can be any valid CSS color value.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Color to be used for the border around the signature area. Can be any valid CSS color value.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

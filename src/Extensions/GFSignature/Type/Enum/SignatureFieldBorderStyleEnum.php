@@ -46,35 +46,35 @@ class SignatureFieldBorderStyleEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'DOTTED' => [
-				'description' => __( 'A "dotted" border style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A "dotted" border style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DOTTED,
 			],
 			'DASHED' => [
-				'description' => __( 'A "dashed" border style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A "dashed" border style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DASHED,
 			],
 			'DOUBLE' => [
-				'description' => __( 'A "double" border style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A "double" border style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DOUBLE,
 			],
 			'GROOVE' => [
-				'description' => __( 'A "dashed" border style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A "dashed" border style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::GROOVE,
 			],
 			'INSET'  => [
-				'description' => __( 'An "inset" border style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'An "inset" border style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::INSET,
 			],
 			'OUTSET' => [
-				'description' => __( 'An "outset" border style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'An "outset" border style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::OUTSET,
 			],
 			'RIDGE'  => [
-				'description' => __( 'A "ridge" border style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A "ridge" border style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::RIDGE,
 			],
 			'SOLID'  => [
-				'description' => __( 'A "solid" border style.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A "solid" border style.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::SOLID,
 			],
 		];

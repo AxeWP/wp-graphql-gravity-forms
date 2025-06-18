@@ -42,19 +42,19 @@ class SignatureFieldBorderWidthEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'NONE'   => [
-				'description' => __( 'No border width.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'No border width.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::NONE,
 			],
 			'SMALL'  => [
-				'description' => __( 'A small border width.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A small border width.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::SMALL,
 			],
 			'MEDIUM' => [
-				'description' => __( 'A medium border width.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A medium border width.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::MEDIUM,
 			],
 			'LARGE'  => [
-				'description' => __( 'A large border width.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A large border width.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::LARGE,
 			],
 		];

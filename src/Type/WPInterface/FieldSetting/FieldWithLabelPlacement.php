@@ -38,14 +38,14 @@ class FieldWithLabelPlacement extends AbstractFieldSetting {
 		return [
 			'descriptionPlacement' => [
 				'type'        => FormFieldDescriptionPlacementEnum::$type,
-				'description' => __( 'The placement of the field description.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The placement of the field description.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source ) {
 					return ! empty( $source->descriptionPlacement ) ? $source->descriptionPlacement : 'inherit';
 				},
 			],
 			'labelPlacement'       => [
 				'type'        => FormFieldLabelPlacementEnum::$type,
-				'description' => __( 'The field label position.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field label position.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source ) {
 					return ! empty( $source->labelPlacement ) ? $source->labelPlacement : 'inherit';
 				},

@@ -41,15 +41,15 @@ class QuizFieldTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'CHECKBOX' => [
-				'description' => __( 'Gravity Forms `CheckboxField`.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Gravity Forms `CheckboxField`.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::CHECKBOX,
 			],
 			'RADIO'    => [
-				'description' => __( 'Gravity Forms `RadioField`.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Gravity Forms `RadioField`.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::RADIO,
 			],
 			'SELECT'   => [
-				'description' => __( 'Gravity Forms `SelectField`.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Gravity Forms `SelectField`.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::SELECT,
 			],
 		];

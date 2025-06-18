@@ -35,12 +35,12 @@ class FieldWithBasePrice extends AbstractFieldSetting {
 		return [
 			'price'          => [
 				'type'        => 'Float',
-				'description' => __( 'The price of the product.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The price of the product.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->basePrice ) ? floatval( preg_replace( '/[^\d\.]/', '', $source->basePrice ) ) : null,
 			],
 			'formattedPrice' => [
 				'type'        => 'String',
-				'description' => __( 'The price of the product, prefixed by the currency.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The price of the product, prefixed by the currency.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->basePrice ) ? $source->basePrice : null,
 			],
 		];

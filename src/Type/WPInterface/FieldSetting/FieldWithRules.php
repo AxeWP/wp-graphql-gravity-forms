@@ -35,7 +35,7 @@ class FieldWithRules extends AbstractFieldSetting {
 		return [
 			'isRequired' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Determines if the field requires the user to enter a value. Fields marked as required will prevent the form from being submitted if the user has not entered a value in it.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines if the field requires the user to enter a value. Fields marked as required will prevent the form from being submitted if the user has not entered a value in it.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

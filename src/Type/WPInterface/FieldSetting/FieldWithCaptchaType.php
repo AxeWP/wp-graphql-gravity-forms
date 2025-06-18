@@ -37,7 +37,7 @@ class FieldWithCaptchaType extends AbstractFieldSetting {
 		return [
 			'captchaType' => [
 				'type'        => CaptchaFieldTypeEnum::$type,
-				'description' => __( 'Determines the type of CAPTCHA field to be used.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines the type of CAPTCHA field to be used.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->captchaType ) ? $source->captchaType : 'recaptcha',
 			],
 		];

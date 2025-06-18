@@ -31,6 +31,7 @@ use WPGraphQL\GF\Type\WPInterface\FieldSetting\FieldWithTimeFormat;
 use WPGraphQL\GF\Type\WPInterface\FieldWithPersonalData;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\FieldValues;
+use WPGraphQL\GF\Utils\Compat;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -95,7 +96,7 @@ class FormFieldRegistry {
 				}
 
 				// Register the FormField to the schema.
-				register_graphql_object_type( $field->graphql_single_name, $config );
+				register_graphql_object_type( $field->graphql_single_name, Compat::resolve_graphql_config( $config ) );
 
 				/**
 				 * Fires after the Gravity Forms field object has been registered to WPGraphQL schema.
@@ -180,7 +181,7 @@ class FormFieldRegistry {
 					);
 				};
 
-				register_graphql_interface_type( $field->graphql_single_name, $config );
+				register_graphql_interface_type( $field->graphql_single_name, Compat::resolve_graphql_config( $config ) );
 			}
 		);
 

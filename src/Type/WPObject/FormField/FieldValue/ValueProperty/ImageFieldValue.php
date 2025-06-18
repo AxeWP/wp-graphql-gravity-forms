@@ -38,35 +38,35 @@ class ImageFieldValue extends AbstractObject {
 		return [
 			'altText'     => [
 				'type'        => 'String',
-				'description' => __( 'The image alt text.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The image alt text.', 'wp-graphql-gravity-forms' ),
 			],
 			'basePath'    => [
 				'type'        => 'String',
-				'description' => __( 'The path to the parent directory of the file.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The path to the parent directory of the file.', 'wp-graphql-gravity-forms' ),
 			],
 			'baseUrl'     => [
 				'type'        => 'String',
-				'description' => __( 'The base url to the parent directory of the file.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The base url to the parent directory of the file.', 'wp-graphql-gravity-forms' ),
 			],
 			'caption'     => [
 				'type'        => 'String',
-				'description' => __( 'The image caption.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The image caption.', 'wp-graphql-gravity-forms' ),
 			],
 			'description' => [
 				'type'        => 'String',
-				'description' => __( 'The image description.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The image description.', 'wp-graphql-gravity-forms' ),
 			],
 			'filename'    => [
 				'type'        => 'String',
-				'description' => __( 'The filename.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The filename.', 'wp-graphql-gravity-forms' ),
 			],
 			'title'       => [
 				'type'        => 'String',
-				'description' => __( 'The image title.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The image title.', 'wp-graphql-gravity-forms' ),
 			],
 			'url'         => [
 				'type'        => 'String',
-				'description' => __( 'The url to the file.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The url to the file.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

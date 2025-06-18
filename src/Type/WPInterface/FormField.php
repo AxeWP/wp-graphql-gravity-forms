@@ -70,42 +70,42 @@ class FormField extends AbstractInterface implements TypeWithInterfaces {
 		return [
 			'displayOnly'                => [
 				'type'        => 'Boolean',
-				'description' => __( 'Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ): bool => ! empty( $source->displayOnly ),
 			],
 			'id'                         => [
 				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'Global ID.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Global ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'databaseId'                 => [
 				'type'        => [ 'non_null' => 'Int' ],
-				'description' => __( 'Field database ID.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Field database ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'inputType'                  => [
 				'type'        => FormFieldTypeEnum::$type,
-				'description' => __( 'The base form field type used to display the input. A good example is the Post Custom Field that can be displayed as various different types of fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The base form field type used to display the input. A good example is the Post Custom Field that can be displayed as various different types of fields.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->inputType ) ? $source->inputType : null,
 			],
 			'layoutGridColumnSpan'       => [
 				'type'        => 'Int',
-				'description' => __( 'The number of CSS grid columns the field should span.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The number of CSS grid columns the field should span.', 'wp-graphql-gravity-forms' ),
 			],
 			'layoutSpacerGridColumnSpan' => [
 				'type'        => 'Int',
-				'description' => __( 'The number of CSS grid columns the spacer field following this one should span.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The number of CSS grid columns the spacer field following this one should span.', 'wp-graphql-gravity-forms' ),
 			],
 			'pageNumber'                 => [
 				'type'        => 'Int',
-				'description' => __( 'The form page this field is located on. Default is 1.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form page this field is located on. Default is 1.', 'wp-graphql-gravity-forms' ),
 			],
 			// @todo make non-null once gatsby-source-wordpress supports it: https://github.com/gatsbyjs/gatsby/issues/34489 .
 			'type'                       => [
 				'type'        => FormFieldTypeEnum::$type,
-				'description' => __( 'The type of field to be displayed.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The type of field to be displayed.', 'wp-graphql-gravity-forms' ),
 			],
 			'visibility'                 => [
 				'type'        => FormFieldVisibilityEnum::$type,
-				'description' => __( 'Field visibility.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Field visibility.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ): string => ! empty( $source->visibility ) ? $source->visibility : ( ! empty( $source->adminOnly ) ? 'administrative' : 'visible' ),
 			],
 		];

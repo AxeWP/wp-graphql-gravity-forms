@@ -37,7 +37,7 @@ class FieldWithNumberFormat extends AbstractFieldSetting {
 		return [
 			'numberFormat' => [
 				'type'        => NumberFieldFormatEnum::$type,
-				'description' => __( 'Specifies the format allowed for the number field.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Specifies the format allowed for the number field.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

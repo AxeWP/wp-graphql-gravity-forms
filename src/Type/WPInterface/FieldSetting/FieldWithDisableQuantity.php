@@ -35,7 +35,7 @@ class FieldWithDisableQuantity extends AbstractFieldSetting {
 		return [
 			'hasQuantity' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the field has the quantity property enabled.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether the field has the quantity property enabled.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => empty( $source->disableQuantity ),
 			],
 		];

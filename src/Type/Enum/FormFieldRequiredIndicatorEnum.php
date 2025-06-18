@@ -39,15 +39,15 @@ class FormFieldRequiredIndicatorEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'ASTERISK' => [
-				'description' => __( 'Asterisk (*) indicator.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Asterisk (*) indicator.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ASTERISK,
 			],
 			'CUSTOM'   => [
-				'description' => __( 'Custom indicator.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Custom indicator.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::CUSTOM,
 			],
 			'TEXT'     => [
-				'description' => __( 'Text (Required) indicator (default).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Text (Required) indicator (default).', 'wp-graphql-gravity-forms' ),
 				'value'       => self::TEXT,
 			],
 		];

@@ -37,7 +37,7 @@ class FieldWithPhoneFormat extends AbstractFieldSetting {
 		return [
 			'phoneFormat' => [
 				'type'        => PhoneFieldFormatEnum::$type,
-				'description' => __( 'Determines the allowed format for phones. If the phone value does not conform with the specified format, the field will fail validation.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines the allowed format for phones. If the phone value does not conform with the specified format, the field will fail validation.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

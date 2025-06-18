@@ -13,6 +13,7 @@ namespace WPGraphQL\GF\Type\WPObject;
 use WPGraphQL\GF\Interfaces\TypeWithDescription;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
+use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - AbstractType
@@ -40,7 +41,7 @@ abstract class AbstractObject extends AbstractType implements TypeWithDescriptio
 	public static function register(): void {
 		$config = static::get_type_config();
 
-		register_graphql_object_type( static::$type, $config );
+		register_graphql_object_type( static::$type, Compat::resolve_graphql_config( $config ) );
 	}
 
 	/**
@@ -48,7 +49,7 @@ abstract class AbstractObject extends AbstractType implements TypeWithDescriptio
 	 */
 	public static function get_type_config(): array {
 		return [
-			'description'     => static::get_description(),
+			'description'     => static fn () => static::get_description(),
 			'fields'          => static::get_fields(),
 			'eagerlyLoadType' => static::$should_load_eagerly,
 		];

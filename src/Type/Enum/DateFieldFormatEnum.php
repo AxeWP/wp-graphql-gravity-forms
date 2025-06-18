@@ -43,31 +43,31 @@ class DateFieldFormatEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'MDY'       => [
-				'description' => __( 'mm/dd/yyyy format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'mm/dd/yyyy format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::MDY,
 			],
 			'DMY'       => [
-				'description' => __( 'dd/mm/yyyy format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'dd/mm/yyyy format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DMY,
 			],
 			'DMY_DASH'  => [
-				'description' => __( 'dd-mm-yyyy format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'dd-mm-yyyy format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DMY_DASH,
 			],
 			'DMY_DOT'   => [
-				'description' => __( 'dd.mm.yyyy format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'dd.mm.yyyy format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DMY_DOT,
 			],
 			'YMD_SLASH' => [
-				'description' => __( 'yyyy/mm/dd format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'yyyy/mm/dd format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::YMD_SLASH,
 			],
 			'YMD_DASH'  => [
-				'description' => __( 'yyyy/mm/dd format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'yyyy/mm/dd format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::YMD_DASH,
 			],
 			'YMD_DOT'   => [
-				'description' => __( 'yyyy.mm.dd format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'yyyy.mm.dd format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::YMD_DOT,
 			],
 		];

@@ -39,15 +39,15 @@ class FormFieldCalendarIconTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'CALENDAR' => [
-				'description' => __( 'Default calendar icon.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Default calendar icon.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::CALENDAR,
 			],
 			'CUSTOM'   => [
-				'description' => __( 'Custom calendar icon.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Custom calendar icon.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::CUSTOM,
 			],
 			'NONE'     => [
-				'description' => __( 'No calendar icon.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'No calendar icon.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::NONE,
 			],
 		];

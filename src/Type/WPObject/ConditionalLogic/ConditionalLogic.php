@@ -41,15 +41,15 @@ class ConditionalLogic extends AbstractObject {
 		return [
 			'actionType' => [
 				'type'        => ConditionalLogicActionTypeEnum::$type,
-				'description' => __( 'The type of action the conditional logic will perform.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The type of action the conditional logic will perform.', 'wp-graphql-gravity-forms' ),
 			],
 			'logicType'  => [
 				'type'        => ConditionalLogicLogicTypeEnum::$type,
-				'description' => __( 'Determines how to the rules should be evaluated.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines how to the rules should be evaluated.', 'wp-graphql-gravity-forms' ),
 			],
 			'rules'      => [
 				'type'        => [ 'list_of' => ConditionalLogicRule::$type ],
-				'description' => __( 'Conditional logic rules.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Conditional logic rules.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

@@ -19,6 +19,7 @@ use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
+use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - QuizResults
@@ -67,35 +68,35 @@ class QuizResults extends AbstractObject implements Field {
 		return [
 			'averagePercentage' => [
 				'type'        => 'Float',
-				'description' => __( 'Average percentage score as calculated across all entries received.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Average percentage score as calculated across all entries received.', 'wp-graphql-gravity-forms' ),
 			],
 			'averageScore'      => [
 				'type'        => 'Float',
-				'description' => __( 'Average score as calculated across all entries received.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Average score as calculated across all entries received.', 'wp-graphql-gravity-forms' ),
 			],
 			'entryCount'        => [
 				'type'        => 'Int',
-				'description' => __( 'Quantity of all the entries received for this quiz.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Quantity of all the entries received for this quiz.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldCounts'       => [
 				'type'        => [ 'list_of' => QuizResultsFieldCount::$type ],
-				'description' => __( 'A list of fields and frequency of each answer provided.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A list of fields and frequency of each answer provided.', 'wp-graphql-gravity-forms' ),
 			],
 			'gradeCounts'       => [
 				'type'        => [ 'list_of' => QuizResultsGradeCount::$type ],
-				'description' => __( 'If using letter grades, will show the frequency of each letter grade across all entries received.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'If using letter grades, will show the frequency of each letter grade across all entries received.', 'wp-graphql-gravity-forms' ),
 			],
 			'passRate'          => [
 				'type'        => 'Float',
-				'description' => __( 'The pass-fail rate for all the entries received for this quiz.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The pass-fail rate for all the entries received for this quiz.', 'wp-graphql-gravity-forms' ),
 			],
 			'scoreCounts'       => [
 				'type'        => [ 'list_of' => QuizResultsScoreCount::$type ],
-				'description' => __( 'Displays a frequency bar chart showing the spread of each quiz score.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Displays a frequency bar chart showing the spread of each quiz score.', 'wp-graphql-gravity-forms' ),
 			],
 			'sum'               => [
 				'type'        => 'Float',
-				'description' => __( 'The total sum of all entry scores. Useful for calculating custom result statistics.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The total sum of all entry scores. Useful for calculating custom result statistics.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -109,23 +110,25 @@ class QuizResults extends AbstractObject implements Field {
 		register_graphql_field(
 			$from_type,
 			self::$field_name,
-			[
-				'type'        => static::$type,
-				'description' => __( 'The quiz results for the given form.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( ! isset( $context->gfForm ) ) {
-						return null;
-					}
+			Compat::resolve_graphql_config(
+				[
+					'type'        => static::$type,
+					'description' => static fn () => __( 'The quiz results for the given form.', 'wp-graphql-gravity-forms' ),
+					'resolve'     => static function ( $source, array $args, AppContext $context ) {
+						if ( ! isset( $context->gfForm ) ) {
+							return null;
+						}
 
-					$form           = $context->gfForm->form;
-					$quiz           = GFQuiz::get_instance();
-					$results_config = $quiz->get_results_page_config();
+						$form           = $context->gfForm->form;
+						$quiz           = GFQuiz::get_instance();
+						$results_config = $quiz->get_results_page_config();
 
-					$results = self::get_quiz_results_data( $form, $results_config );
+						$results = self::get_quiz_results_data( $form, $results_config );
 
-					return self::prepare_results_data( $results, $form );
-				},
-			]
+						return self::prepare_results_data( $results, $form );
+					},
+				]
+			)
 		);
 	}
 

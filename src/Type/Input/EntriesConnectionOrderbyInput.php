@@ -36,15 +36,15 @@ class EntriesConnectionOrderbyInput extends AbstractInput {
 		return [
 			'field'     => [
 				'type'        => 'String',
-				'description' => __( 'The field name used to sort the results.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field name used to sort the results.', 'wp-graphql-gravity-forms' ),
 			],
 			'order'     => [
 				'type'        => 'OrderEnum',
-				'description' => __( 'The cardinality of the order of the connection.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The cardinality of the order of the connection.', 'wp-graphql-gravity-forms' ),
 			],
 			'isNumeric' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the sorting field\'s values are numeric.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether the sorting field\'s values are numeric.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

@@ -35,7 +35,7 @@ class FieldWithCaptchaLanguage extends AbstractFieldSetting {
 		return [
 			'captchaLanguage' => [
 				'type'        => 'String',
-				'description' => __( 'The language used when the captcha is displayed. This property is available when the captchaType is “captcha”, the default. The possible values are the language codes used by WordPress.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The language used when the captcha is displayed. This property is available when the captchaType is “captcha”, the default. The possible values are the language codes used by WordPress.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

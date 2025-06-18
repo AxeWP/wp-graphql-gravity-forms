@@ -37,11 +37,11 @@ class QuizResultsScoreCount extends AbstractObject {
 		return [
 			'count' => [
 				'type'        => 'Int',
-				'description' => __( 'The number of entries that received this score across all entries received.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The number of entries that received this score across all entries received.', 'wp-graphql-gravity-forms' ),
 			],
 			'score' => [
 				'type'        => 'Float',
-				'description' => __( 'The quiz score.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The quiz score.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

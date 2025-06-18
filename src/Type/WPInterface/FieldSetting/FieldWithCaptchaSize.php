@@ -37,7 +37,7 @@ class FieldWithCaptchaSize extends AbstractFieldSetting {
 		return [
 			'simpleCaptchaSize' => [
 				'type'        => FormFieldSizeEnum::$type,
-				'description' => __( 'Determines the CAPTCHA image size. Only applicable to simple_captcha and math captcha types.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines the CAPTCHA image size. Only applicable to simple_captcha and math captcha types.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

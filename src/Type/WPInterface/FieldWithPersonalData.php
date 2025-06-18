@@ -38,7 +38,7 @@ class FieldWithPersonalData extends AbstractInterface {
 		return [
 			'personalData' => [
 				'type'        => FormFieldDataPolicy::$type,
-				'description' => __( 'The form field-specifc policies for exporting and erasing personal data.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field-specifc policies for exporting and erasing personal data.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( empty( $context->gfForm->personalData['dataPolicies']['identificationFieldDatabaseId'] ) ) {
 						return null;

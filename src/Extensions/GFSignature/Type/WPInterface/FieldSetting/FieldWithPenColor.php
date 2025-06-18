@@ -37,7 +37,7 @@ class FieldWithPenColor extends AbstractFieldSetting {
 		return [
 			'penColor' => [
 				'type'        => 'String',
-				'description' => __( 'Color of the pen to be used for the signature. Can be any valid CSS color value.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Color of the pen to be used for the signature. Can be any valid CSS color value.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

@@ -58,11 +58,11 @@ class FieldChoice extends AbstractInterface {
 		return [
 			'text'  => [
 				'type'        => 'String',
-				'description' => __( 'The text to be displayed to the user when displaying this choice.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The text to be displayed to the user when displaying this choice.', 'wp-graphql-gravity-forms' ),
 			],
 			'value' => [
 				'type'        => 'String',
-				'description' => __( 'The value to be stored in the database when this choice is selected. Note: This property is only supported by the Drop Down and Post Category fields. Checkboxes and Radio fields will store the text property in the database regardless of the value property.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The value to be stored in the database when this choice is selected. Note: This property is only supported by the Drop Down and Post Category fields. Checkboxes and Radio fields will store the text property in the database regardless of the value property.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

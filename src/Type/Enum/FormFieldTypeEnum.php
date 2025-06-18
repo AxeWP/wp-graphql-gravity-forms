@@ -43,7 +43,7 @@ class FormFieldTypeEnum extends AbstractEnum {
 			$values[ WPEnumType::get_safe_name( $gf_type ) ] = [
 				'value'       => $gf_type,
 				// translators: GF Field type.
-				'description' => sprintf( __( 'A Gravity Forms %s field.', 'wp-graphql-gravity-forms' ), $gf_type ),
+				'description' => static fn () => sprintf( __( 'A Gravity Forms %s field.', 'wp-graphql-gravity-forms' ), $gf_type ),
 			];
 		}
 

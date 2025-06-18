@@ -50,7 +50,7 @@ class FieldWithColumns extends AbstractFieldSetting implements TypeWithInterface
 		return [
 			'hasColumns' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Determines if the field should use multiple columns. Default is false.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines if the field should use multiple columns. Default is false.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->enableColumns ),
 			],
 		];

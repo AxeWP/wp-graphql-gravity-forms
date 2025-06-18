@@ -40,19 +40,19 @@ class FormNotificationToTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'EMAIL'   => [
-				'description' => __( 'Email address.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Email address.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::EMAIL,
 			],
 			'FIELD'   => [
-				'description' => __( 'Form field.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Form field.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::FIELD,
 			],
 			'ROUTING' => [
-				'description' => __( 'Routing using conditional rules.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Routing using conditional rules.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ROUTING,
 			],
 			'HIDDEN'  => [
-				'description' => __( 'Hidden.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Hidden.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::HIDDEN,
 			],
 		];

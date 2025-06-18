@@ -36,11 +36,11 @@ class ProductFieldInput extends AbstractInput {
 		return [
 			'quantity' => [
 				'type'        => 'Float',
-				'description' => __( 'Product quantity.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Product quantity.', 'wp-graphql-gravity-forms' ),
 			],
 			'price'    => [
 				'type'        => 'Float',
-				'description' => __( 'Product price.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Product price.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

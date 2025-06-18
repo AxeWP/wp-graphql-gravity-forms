@@ -37,7 +37,7 @@ class PostFormatTypeEnum extends AbstractEnum {
 		$values = [
 			'STANDARD' => [
 				'value'       => '0',
-				'description' => __( 'A standard post format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A standard post format.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 
@@ -49,7 +49,7 @@ class PostFormatTypeEnum extends AbstractEnum {
 				$values[ WPEnumType::get_safe_name( $type ) ] = [
 					'value'       => $type,
 					// translators: Post format.
-					'description' => sprintf( __( 'A %s post format.', 'wp-graphql-gravity-forms' ), $type ),
+					'description' => static fn () => sprintf( __( 'A %s post format.', 'wp-graphql-gravity-forms' ), $type ),
 				];
 			}
 		}

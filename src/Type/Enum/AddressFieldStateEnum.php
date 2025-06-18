@@ -49,7 +49,7 @@ class AddressFieldStateEnum extends AbstractEnum {
 			$values[ WPEnumType::get_safe_name( $state ) ] = [
 				'value'       => $state,
 				// translators: State.
-				'description' => sprintf( __( '%s .', 'wp-graphql-gravity-forms' ), $state ),
+				'description' => static fn () => sprintf( __( '%s .', 'wp-graphql-gravity-forms' ), $state ),
 			];
 		}
 

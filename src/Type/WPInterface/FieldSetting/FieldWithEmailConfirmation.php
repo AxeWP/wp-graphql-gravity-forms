@@ -50,7 +50,7 @@ class FieldWithEmailConfirmation extends AbstractFieldSetting implements TypeWit
 		return [
 			'hasEmailConfirmation' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Determines whether the Confirm Email field is active.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines whether the Confirm Email field is active.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->emailConfirmEnabled ),
 			],
 		];

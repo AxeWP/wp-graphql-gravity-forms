@@ -38,11 +38,11 @@ class AmPmEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'AM' => [
-				'description' => __( 'AM. The first 12-hour cycle of the day.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'AM. The first 12-hour cycle of the day.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::AM,
 			],
 			'PM' => [
-				'description' => __( 'PM. The second 12-hour cycle of the day.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'PM. The second 12-hour cycle of the day.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::PM,
 			],
 		];

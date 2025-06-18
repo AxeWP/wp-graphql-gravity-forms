@@ -20,6 +20,7 @@ use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Enum\SubmittedEntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
+use WPGraphQL\GF\Utils\Compat;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
@@ -74,24 +75,24 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 		return [
 			'isStarred'      => [
 				'type'        => 'Boolean',
-				'description' => __( 'Indicates if the entry has been starred (i.e marked with a star).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Indicates if the entry has been starred (i.e marked with a star).', 'wp-graphql-gravity-forms' ),
 			],
 			'isRead'         => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the entry has been read.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether the entry has been read.', 'wp-graphql-gravity-forms' ),
 			],
 			'post'           => [
 				'type'        => 'Post',
-				'description' => __( 'For forms with Post fields, this is the post object that was created.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'For forms with Post fields, this is the post object that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source, array $args, AppContext $context ) => ! empty( $source->postDatabaseId ) ? $context->get_loader( 'post' )->load_deferred( $source->postDatabaseId ) : null,
 			],
 			'postDatabaseId' => [
 				'type'        => 'Int',
-				'description' => __( 'For forms with Post fields, this property contains the Id of the Post that was created.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'For forms with Post fields, this property contains the Id of the Post that was created.', 'wp-graphql-gravity-forms' ),
 			],
 			'status'         => [
 				'type'        => EntryStatusEnum::$type,
-				'description' => __( 'The current status of the entry.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The current status of the entry.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -110,25 +111,27 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 		register_graphql_field(
 			'RootQuery',
 			self::$field_name,
-			[
-				'description' => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
-				'type'        => self::$type,
-				'args'        => [
-					'id'     => [
-						'type'        => [ 'non_null' => 'ID' ],
-						'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
+			Compat::resolve_graphql_config(
+				[
+					'description' => static fn () => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
+					'type'        => self::$type,
+					'args'        => [
+						'id'     => [
+							'type'        => [ 'non_null' => 'ID' ],
+							'description' => static fn () => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
+						],
+						'idType' => [
+							'type'        => SubmittedEntryIdTypeEnum::$type,
+							'description' => static fn () => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
+						],
 					],
-					'idType' => [
-						'type'        => SubmittedEntryIdTypeEnum::$type,
-						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$id = Utils::get_entry_id_from_id( $args['id'] );
+					'resolve'     => static function ( $source, array $args, AppContext $context ) {
+						$id = Utils::get_entry_id_from_id( $args['id'] );
 
-					return Factory::resolve_entry( (int) $id, $context );
-				},
-			]
+						return Factory::resolve_entry( (int) $id, $context );
+					},
+				]
+			)
 		);
 	}
 }

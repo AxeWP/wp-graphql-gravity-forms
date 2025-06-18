@@ -38,11 +38,11 @@ class PhoneFieldFormatEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'STANDARD'      => [
-				'description' => __( 'Standard phone number format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Standard phone number format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::STANDARD,
 			],
 			'INTERNATIONAL' => [
-				'description' => __( 'International phone number format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'International phone number format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::INTERNATIONAL,
 			],
 		];

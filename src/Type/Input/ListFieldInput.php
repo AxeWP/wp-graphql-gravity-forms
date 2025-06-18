@@ -36,7 +36,7 @@ class ListFieldInput extends AbstractInput {
 		return [
 			'rowValues' => [
 				'type'        => [ 'list_of' => 'String' ],
-				'description' => __( 'Input values for the specific listField row.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Input values for the specific listField row.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

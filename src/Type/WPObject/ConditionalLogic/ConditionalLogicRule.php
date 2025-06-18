@@ -40,15 +40,15 @@ class ConditionalLogicRule extends AbstractObject {
 		return [
 			'fieldId'  => [
 				'type'        => 'Float',
-				'description' => __( 'Target field Id. Field that will have it’s value compared with the value property to determine if this rule is a match.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Target field Id. Field that will have it’s value compared with the value property to determine if this rule is a match.', 'wp-graphql-gravity-forms' ),
 			],
 			'operator' => [
 				'type'        => FormRuleOperatorEnum::$type,
-				'description' => __( 'Operator to be used when evaluating this rule.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Operator to be used when evaluating this rule.', 'wp-graphql-gravity-forms' ),
 			],
 			'value'    => [
 				'type'        => 'String',
-				'description' => __( 'The value to compare with field specified by fieldId.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The value to compare with field specified by fieldId.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

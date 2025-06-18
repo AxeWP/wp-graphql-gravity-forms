@@ -38,11 +38,11 @@ class FormSubmitButtonLocationEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'BOTTOM' => [
-				'description' => __( 'The submit button will be placed in a new row after all fields of the form.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The submit button will be placed in a new row after all fields of the form.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::BOTTOM,
 			],
 			'INLINE' => [
-				'description' => __( 'The submit button will be placed on the last row of the form where it will fill the remaining space left by field columns.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The submit button will be placed on the last row of the form where it will fill the remaining space left by field columns.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::INLINE,
 			],
 		];

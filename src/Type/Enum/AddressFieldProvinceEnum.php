@@ -49,7 +49,7 @@ class AddressFieldProvinceEnum extends AbstractEnum {
 			$values[ WPEnumType::get_safe_name( $province ) ] = [
 				'value'       => $province,
 				// translators: Province.
-				'description' => sprintf( __( '%s .', 'wp-graphql-gravity-forms' ), $province ),
+				'description' => static fn () => sprintf( __( '%s .', 'wp-graphql-gravity-forms' ), $province ),
 			];
 		}
 

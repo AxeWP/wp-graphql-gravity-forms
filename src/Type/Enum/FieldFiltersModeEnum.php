@@ -38,11 +38,11 @@ class FieldFiltersModeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'ALL' => [
-				'description' => __( 'All field filters (default).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'All field filters (default).', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ALL,
 			],
 			'ANY' => [
-				'description' => __( 'Any field filters.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Any field filters.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ANY,
 			],
 		];

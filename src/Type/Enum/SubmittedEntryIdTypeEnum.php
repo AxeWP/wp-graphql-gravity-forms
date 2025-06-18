@@ -38,11 +38,11 @@ class SubmittedEntryIdTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'ID'          => [
-				'description' => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Unique global ID for the object.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ID,
 			],
 			'DATABASE_ID' => [
-				'description' => __( 'The database ID assigned by Gravity Forms. Used by submitted entries.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The database ID assigned by Gravity Forms. Used by submitted entries.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DATABASE_ID,
 			],
 		];

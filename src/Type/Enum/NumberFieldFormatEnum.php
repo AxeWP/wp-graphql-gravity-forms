@@ -39,15 +39,15 @@ class NumberFieldFormatEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'CURRENCY'      => [
-				'description' => __( 'Currency format.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Currency format.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::CURRENCY,
 			],
 			'DECIMAL_DOT'   => [
-				'description' => __( 'Decimal-dot format (e.g. 9,999.99).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Decimal-dot format (e.g. 9,999.99).', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DECIMAL_DOT,
 			],
 			'DECIMAL_COMMA' => [
-				'description' => __( 'Decimal-comma format (e.g. 9.999,99).', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Decimal-comma format (e.g. 9.999,99).', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DECIMAL_COMMA,
 			],
 		];

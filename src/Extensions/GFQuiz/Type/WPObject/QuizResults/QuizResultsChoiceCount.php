@@ -37,15 +37,15 @@ class QuizResultsChoiceCount extends AbstractObject {
 		return [
 			'count' => [
 				'type'        => 'Int',
-				'description' => __( 'The number of entries with this choice provided.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The number of entries with this choice provided.', 'wp-graphql-gravity-forms' ),
 			],
 			'text'  => [
 				'type'        => 'String',
-				'description' => __( 'The choice text.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The choice text.', 'wp-graphql-gravity-forms' ),
 			],
 			'value' => [
 				'type'        => 'String',
-				'description' => __( 'The internal value used to represent the quiz choice.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The internal value used to represent the quiz choice.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

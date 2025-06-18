@@ -35,7 +35,7 @@ class FieldWithDisableMargins extends AbstractFieldSetting {
 		return [
 			'hasMargins' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Indicates whether the default margins are turned on to align the HTML content with other fields.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Indicates whether the default margins are turned on to align the HTML content with other fields.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => empty( $source->disableMargins ),
 			],
 		];

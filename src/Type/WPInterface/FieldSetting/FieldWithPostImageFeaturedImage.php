@@ -35,7 +35,7 @@ class FieldWithPostImageFeaturedImage extends AbstractFieldSetting {
 		return [
 			'isFeaturedImage' => [
 				'type'        => 'Boolean',
-				'description' => __( "Whether the image field should be used to set the post's Featured Image", 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( "Whether the image field should be used to set the post's Featured Image", 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ) => ! empty( $source->postFeaturedImage ),
 			],
 		];

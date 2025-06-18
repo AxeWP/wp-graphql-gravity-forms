@@ -41,15 +41,15 @@ class FieldError extends AbstractObject {
 		return [
 			'id'                 => [
 				'type'        => 'Float',
-				'description' => __( 'The field with the associated error message.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field with the associated error message.', 'wp-graphql-gravity-forms' ),
 			],
 			'message'            => [
 				'type'        => 'String',
-				'description' => __( 'Error message.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Error message.', 'wp-graphql-gravity-forms' ),
 			],
 			'connectedFormField' => [
 				'type'        => FormField::$type,
-				'description' => __( 'The form field that the error is connected to.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The form field that the error is connected to.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( empty( $source['id'] ) || empty( $source['formId'] ) ) {
 						return null;

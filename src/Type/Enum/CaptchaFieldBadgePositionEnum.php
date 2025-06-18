@@ -39,15 +39,15 @@ class CaptchaFieldBadgePositionEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'BOTTOM_LEFT'  => [
-				'description' => __( 'Bottom-left position.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Bottom-left position.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::BOTTOM_LEFT,
 			],
 			'BOTTOM_RIGHT' => [
-				'description' => __( 'Bottom-right position.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Bottom-right position.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::BOTTOM_RIGHT,
 			],
 			'INLINE'       => [
-				'description' => __( 'Inline position.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Inline position.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::INLINE,
 			],
 		];

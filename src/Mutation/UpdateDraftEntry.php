@@ -48,23 +48,23 @@ class UpdateDraftEntry extends AbstractMutation {
 		return [
 			'id'             => [
 				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'Either the global ID of the draft entry, or its resume token.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Either the global ID of the draft entry, or its resume token.', 'wp-graphql-gravity-forms' ),
 			],
 			'idType'         => [
 				'type'        => DraftEntryIdTypeEnum::$type,
-				'description' => __( 'The ID type for the draft entry. Defaults to `ID` .', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The ID type for the draft entry. Defaults to `ID` .', 'wp-graphql-gravity-forms' ),
 			],
 			'entryMeta'      => [
 				'type'        => UpdateDraftEntryMetaInput::$type,
-				'description' => __( 'The entry meta values to update.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The entry meta values to update.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues'    => [
 				'type'        => [ 'list_of' => FormFieldValuesInput::$type ],
-				'description' => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field ids and their values.', 'wp-graphql-gravity-forms' ),
 			],
 			'shouldValidate' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the field values should be validated on submission. Defaults to false.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether the field values should be validated on submission. Defaults to false.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -76,7 +76,7 @@ class UpdateDraftEntry extends AbstractMutation {
 		return [
 			'draftEntry' => [
 				'type'        => DraftEntry::$type,
-				'description' => __( 'The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( array $payload, array $args, AppContext $context ) {
 					if ( ! empty( $payload['errors'] ) || empty( $payload['resumeToken'] ) ) {
 						return null;
@@ -86,11 +86,11 @@ class UpdateDraftEntry extends AbstractMutation {
 			],
 			'errors'     => [
 				'type'        => [ 'list_of' => FieldError::$type ],
-				'description' => __( 'Field validation errors.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Field validation errors.', 'wp-graphql-gravity-forms' ),
 			],
 			'resumeUrl'  => [
 				'type'        => 'String',
-				'description' => __( 'Draft resume URL. If the "Referer" header is not included in the request, this will be an empty string.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Draft resume URL. If the "Referer" header is not included in the request, this will be an empty string.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

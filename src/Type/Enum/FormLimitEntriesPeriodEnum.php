@@ -40,19 +40,19 @@ class FormLimitEntriesPeriodEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'DAY'   => [
-				'description' => __( 'Limit entries by "day".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Limit entries by "day".', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DAY,
 			],
 			'WEEK'  => [
-				'description' => __( 'Limit entries by "week".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Limit entries by "week".', 'wp-graphql-gravity-forms' ),
 				'value'       => self::WEEK,
 			],
 			'MONTH' => [
-				'description' => __( 'Limit entries by "month".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Limit entries by "month".', 'wp-graphql-gravity-forms' ),
 				'value'       => self::MONTH,
 			],
 			'YEAR'  => [
-				'description' => __( 'Limit entries by "year".', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Limit entries by "year".', 'wp-graphql-gravity-forms' ),
 				'value'       => self::YEAR,
 			],
 		];

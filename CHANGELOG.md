@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+- dev: Add support for lazy-loaded descriptions.
+- ci: Test compatibility against WPGraphWL v2.3.3.
+
 ## [v0.13.1]
 
 This _minor_ release tests compatibility against WordPress 6.8.x and WPGraphQL 1.31.x.

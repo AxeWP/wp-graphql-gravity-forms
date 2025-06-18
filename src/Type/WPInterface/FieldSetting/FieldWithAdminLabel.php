@@ -35,7 +35,7 @@ class FieldWithAdminLabel extends AbstractFieldSetting {
 		return [
 			'adminLabel' => [
 				'type'        => 'String',
-				'description' => __( 'When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

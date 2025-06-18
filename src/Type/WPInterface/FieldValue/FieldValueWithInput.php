@@ -38,7 +38,7 @@ class FieldValueWithInput extends AbstractInterface {
 		return [
 			'connectedInput' => [
 				'type'        => FieldInput::$type,
-				'description' => __( 'The selected Gravity Forms field input object.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The selected Gravity Forms field input object.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

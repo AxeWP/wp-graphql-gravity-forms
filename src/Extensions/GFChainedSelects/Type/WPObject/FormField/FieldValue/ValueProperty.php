@@ -27,7 +27,7 @@ class ValueProperty extends FieldValues {
 		return [
 			'values' => [
 				'type'        => [ 'list_of' => 'String' ],
-				'description' => __( 'ChainedSelect field value.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'ChainedSelect field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ): ?array {
 					if ( ! $source instanceof FormField || ! isset( $context->gfEntry ) ) {
 						return null;

@@ -46,7 +46,7 @@ class FieldWithQuizChoices extends AbstractFieldSetting {
 		return [
 			'hasWeightedScore' => [
 				'type'        => 'Boolean',
-				'description' => __( 'If this setting is disabled then the response will be awarded a score of 1 if correct and 0 if incorrect.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'If this setting is disabled then the response will be awarded a score of 1 if correct and 0 if incorrect.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ): bool => ! empty( $source->gquizWeightedScoreEnabled ),
 			],
 		];

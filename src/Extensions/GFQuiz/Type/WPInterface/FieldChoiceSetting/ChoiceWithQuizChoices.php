@@ -38,13 +38,17 @@ class ChoiceWithQuizChoices extends AbstractFieldChoiceSetting {
 		return [
 			'isCorrect'     => [
 				'type'        => 'Boolean',
-				'description' => __( 'Indicates the choice item is the correct answer.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Indicates the choice item is the correct answer.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( $source ): bool => ! empty( $source['gquizIsCorrect'] ),
 			],
 			'weight'        => [
 				'type'        => 'Float',
-				'description' => __( 'The weighted score awarded for the choice.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The weighted score awarded for the choice.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
+					if ( ! property_exists( $context, 'gfField' ) || ! $context->gfField instanceof \GF_Field ) {
+						return null;
+					}
+
 					if ( isset( $context->gfField->gquizWeightedScoreEnabled ) && false === $context->gfField->gquizWeightedScoreEnabled ) {
 						return isset( $source['gquizIsCorrect'] ) ? (float) $source['gquizIsCorrect'] : 0;
 					}
@@ -54,11 +58,11 @@ class ChoiceWithQuizChoices extends AbstractFieldChoiceSetting {
 			],
 			'isOtherChoice' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Indicates the radio button item is the “Other” choice.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Indicates the radio button item is the “Other” choice.', 'wp-graphql-gravity-forms' ),
 			],
 			'isSelected'    => [
 				'type'        => 'Boolean',
-				'description' => __( 'Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

@@ -23,19 +23,19 @@ use WPGraphQL\GF\Interfaces\Registrable;
  *   toType?: string,
  *   connectionArgs?: array<string,array{
  *     type: string|array<string,string | array<string,string>>,
- *     description: string,
+ *     description: callable():string,
  *     defaultValue?: mixed
  *   }>,
  *   connectionFields?: array<string,array{
  *     type: string|array<string,string | array<string,string>>,
- *     description: string,
+ *     description: callable():string,
  *     args?: array<string,array{
  *       type: string|array<string,string | array<string,string>>,
- *       description: string,
+ *       description: callable():string,
  *       defaultValue?: mixed,
  *     }>,
  *     resolve?: callable,
- *     deprecationReason?: string,
+ *     deprecationReason?: callable():string,
  *   }>,
  * }
  */
@@ -57,7 +57,7 @@ abstract class AbstractConnection implements Hookable, Registrable {
 	/**
 	 * Gets custom connection configuration arguments, such as the resolver, edgeFields, connectionArgs, etc.
 	 *
-	 * @return array<string,array{type:string|array<string,string|array<string,string>>,description:string,defaultValue?:mixed}>
+	 * @return array<string,array{type:string|array<string,string|array<string,string>>,description:callable():string,defaultValue?:mixed}>
 	 */
 	public static function get_connection_args(): array {
 		return [];
@@ -68,7 +68,7 @@ abstract class AbstractConnection implements Hookable, Registrable {
 	 *
 	 * @param ?string[] $filter_by an array of specific connections to return.
 	 *
-	 * @return array<string,array{type:string|array<string,string|array<string,string>>,description:string,defaultValue?:mixed}>
+	 * @return array<string,array{type:string|array<string,string|array<string,string>>,description:callable():string,defaultValue?:mixed}>
 	 */
 	public static function get_filtered_connection_args( ?array $filter_by = null ): array {
 		$connection_args = static::get_connection_args();

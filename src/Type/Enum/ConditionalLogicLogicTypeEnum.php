@@ -38,11 +38,11 @@ class ConditionalLogicLogicTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'ALL' => [
-				'description' => __( 'Evaulate all logic rules.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Evaulate all logic rules.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ALL,
 			],
 			'ANY' => [
-				'description' => __( 'Evaluate any logic rule.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Evaluate any logic rule.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::ANY,
 			],
 		];

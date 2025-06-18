@@ -51,7 +51,7 @@ class FieldWithTimeFormat extends AbstractFieldSetting implements TypeWithInterf
 		return [
 			'timeFormat' => [
 				'type'        => TimeFieldFormatEnum::$type,
-				'description' => __( 'Determines how the time is displayed.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Determines how the time is displayed.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

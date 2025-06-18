@@ -39,15 +39,15 @@ class EntryTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'DRAFT'     => [
-				'description' => __( 'A Gravity Forms draft entry.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A Gravity Forms draft entry.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DRAFT,
 			],
 			'PARTIAL'   => [
-				'description' => __( 'A Gravity Forms partial entry.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A Gravity Forms partial entry.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::PARTIAL,
 			],
 			'SUBMITTED' => [
-				'description' => __( 'A submitted Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'A submitted Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::SUBMITTED,
 			],
 		];

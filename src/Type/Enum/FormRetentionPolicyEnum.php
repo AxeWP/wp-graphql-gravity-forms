@@ -39,15 +39,15 @@ class FormRetentionPolicyEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'DELETE' => [
-				'description' => __( 'Entries will be deleted automatically after a specified number of days.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Entries will be deleted automatically after a specified number of days.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::DELETE,
 			],
 			'RETAIN' => [
-				'description' => __( 'Entries will be retain indefinitely.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Entries will be retain indefinitely.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::RETAIN,
 			],
 			'TRASH'  => [
-				'description' => __( 'Entries will be trashed automatically after a specified number of days.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Entries will be trashed automatically after a specified number of days.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::TRASH,
 			],
 		];

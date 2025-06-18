@@ -35,7 +35,7 @@ class FieldWithDescription extends AbstractFieldSetting {
 		return [
 			'description' => [
 				'type'        => 'String',
-				'description' => __( 'Field description.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Field description.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

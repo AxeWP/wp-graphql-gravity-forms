@@ -38,15 +38,15 @@ class ProductFieldValue extends AbstractObject {
 		return [
 			'name'     => [
 				'type'        => 'String',
-				'description' => __( 'The product name.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The product name.', 'wp-graphql-gravity-forms' ),
 			],
 			'price'    => [
 				'type'        => 'String',
-				'description' => __( 'The product price.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The product price.', 'wp-graphql-gravity-forms' ),
 			],
 			'quantity' => [
 				'type'        => 'Float',
-				'description' => __( 'The product quantity.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The product quantity.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

@@ -37,23 +37,23 @@ class FormSchedule extends AbstractObject {
 		return [
 			'closedMessage'  => [
 				'type'        => 'String',
-				'description' => __( 'Message to be displayed when form is no longer available.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Message to be displayed when form is no longer available.', 'wp-graphql-gravity-forms' ),
 			],
 			'endDetails'     => [
 				'type'        => FormScheduleDetails::$type,
-				'description' => __( 'The Date/time details when the form will become inactive.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The Date/time details when the form will become inactive.', 'wp-graphql-gravity-forms' ),
 			],
 			'hasSchedule'    => [
 				'type'        => 'Boolean',
-				'description' => __( 'Specifies if this form is scheduled to be displayed only during a certain configured date/time.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Specifies if this form is scheduled to be displayed only during a certain configured date/time.', 'wp-graphql-gravity-forms' ),
 			],
 			'pendingMessage' => [
 				'type'        => 'String',
-				'description' => __( 'Message to be displayed when form is not yet available.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Message to be displayed when form is not yet available.', 'wp-graphql-gravity-forms' ),
 			],
 			'startDetails'   => [
 				'type'        => FormScheduleDetails::$type,
-				'description' => __( 'The Date/time details when the form will become active/visible.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The Date/time details when the form will become active/visible.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}

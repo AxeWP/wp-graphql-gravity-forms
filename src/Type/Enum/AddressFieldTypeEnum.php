@@ -39,15 +39,15 @@ class AddressFieldTypeEnum extends AbstractEnum {
 	public static function get_values(): array {
 		return [
 			'INTERNATIONAL' => [
-				'description' => __( 'International address type.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'International address type.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::INTERNATIONAL,
 			],
 			'US'            => [
-				'description' => __( 'United States address type.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'United States address type.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::US,
 			],
 			'CANADA'        => [
-				'description' => __( 'Canada address type.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Canada address type.', 'wp-graphql-gravity-forms' ),
 				'value'       => self::CANADIAN,
 			],
 		];

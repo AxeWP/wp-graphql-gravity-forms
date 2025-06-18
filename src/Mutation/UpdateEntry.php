@@ -50,19 +50,19 @@ class UpdateEntry extends AbstractMutation {
 		return [
 			'id'             => [
 				'type'        => [ 'non_null' => 'ID' ],
-				'description' => __( 'ID of the entry to update, either a global or database ID.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'ID of the entry to update, either a global or database ID.', 'wp-graphql-gravity-forms' ),
 			],
 			'entryMeta'      => [
 				'type'        => UpdateEntryMetaInput::$type,
-				'description' => __( 'The entry meta values to update.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The entry meta values to update.', 'wp-graphql-gravity-forms' ),
 			],
 			'fieldValues'    => [
 				'type'        => [ 'list_of' => FormFieldValuesInput::$type ],
-				'description' => __( 'The field ids and their values to update.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The field ids and their values to update.', 'wp-graphql-gravity-forms' ),
 			],
 			'shouldValidate' => [
 				'type'        => 'Boolean',
-				'description' => __( 'Whether the field values should be validated on submission. Defaults to false.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Whether the field values should be validated on submission. Defaults to false.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
@@ -74,7 +74,7 @@ class UpdateEntry extends AbstractMutation {
 		return [
 			'entry'  => [
 				'type'        => SubmittedEntry::$type,
-				'description' => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The entry that was created.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( array $payload, array $args, AppContext $context ) {
 					if ( ! empty( $payload['errors'] ) || empty( $payload['entryId'] ) ) {
 						return null;
@@ -85,7 +85,7 @@ class UpdateEntry extends AbstractMutation {
 			],
 			'errors' => [
 				'type'        => [ 'list_of' => FieldError::$type ],
-				'description' => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'Field errors.', 'wp-graphql-gravity-forms' ),
 			],
 		];
 	}
