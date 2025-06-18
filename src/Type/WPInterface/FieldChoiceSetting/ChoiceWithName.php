@@ -14,6 +14,7 @@ use GF_Field;
 use WPGraphQL\GF\Registry\FieldChoiceRegistry;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Type\WPInterface\FieldChoiceSetting\AbstractFieldChoiceSetting;
+use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - ChoiceWithName
@@ -79,6 +80,6 @@ class ChoiceWithName extends AbstractFieldChoiceSetting {
 			),
 		];
 
-		register_graphql_field( $input_name, 'choices', $config );
+		register_graphql_field( $input_name, 'choices', Compat::resolve_graphql_config( $config ) );
 	}
 }

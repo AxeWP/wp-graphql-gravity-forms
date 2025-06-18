@@ -48,15 +48,10 @@ use WPGraphQL\Model\Model;
  * @property ?string                  $status              The status of the entry.
  * @property ?string                  $transactionId       The transaction ID of the entry.
  * @property ?string                  $transactionType     The transaction type of the entry.
+ *
+ * @extends \WPGraphQL\Model\Model<array<int|string,mixed>>
  */
 class SubmittedEntry extends Model {
-	/**
-	 * Stores the incoming Gravity Forms entry to be modeled.
-	 *
-	 * @var array<int|string,mixed> $data;
-	 */
-	protected $data;
-
 	/**
 	 * Entry constructor.
 	 *

@@ -28,6 +28,8 @@ use WPGraphQL\Model\Model;
  * @property string                $inputType  The input type of the field.
  * @property \GF_Field             $gfField    The Gravity Forms field object.
  * @property int                   $layoutGridColumSpan The layout grid column span of the field.
+ *
+ * @extends \WPGraphQL\Model\Model<\GF_Field>
  */
 class FormField extends Model {
 	/**
@@ -53,13 +55,6 @@ class FormField extends Model {
 	 * @var array<string,mixed>
 	 */
 	protected $form;
-
-	/**
-	 * The prepared Gravity Forms field object.
-	 *
-	 * @var \GF_Field
-	 */
-	protected $data;
 
 	/**
 	 * Form constructor.

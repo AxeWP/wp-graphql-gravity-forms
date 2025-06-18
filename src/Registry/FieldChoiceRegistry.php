@@ -16,6 +16,7 @@ namespace WPGraphQL\GF\Registry;
 use GF_Field;
 use WPGraphQL\GF\Registry\TypeRegistry as GFTypeRegistry;
 use WPGraphQL\GF\Type\WPInterface\FieldChoice;
+use WPGraphQL\GF\Utils\Compat;
 use WPGraphQL\GF\Utils\Utils;
 
 
@@ -77,7 +78,7 @@ class FieldChoiceRegistry {
 
 					$config['eagerlyLoadType'] = true;
 
-					register_graphql_interface_type( $choice_name, $config );
+					register_graphql_interface_type( $choice_name, Compat::resolve_graphql_config( $config ) );
 				} else {
 					$parent_choice_name = Utils::get_safe_form_field_type_name( $field->type ) . 'FieldChoice';
 
@@ -86,7 +87,7 @@ class FieldChoiceRegistry {
 						$config['interfaces'] = array_merge( $config['interfaces'], [ $parent_choice_name ] );
 					}
 
-					register_graphql_object_type( $choice_name, $config );
+					register_graphql_object_type( $choice_name, Compat::resolve_graphql_config( $config ) );
 				}
 
 				// Overload the field type with the new choice type.

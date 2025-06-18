@@ -27,6 +27,7 @@ use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\AbstractInterface;
 use WPGraphQL\GF\Type\WPObject\Order\OrderSummary;
+use WPGraphQL\GF\Utils\Compat;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -89,6 +90,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 
 					// If the form isn't stored in the context, we need to fetch it.
 					if ( empty( $context->gfForm ) ) {
+						/** @var ?\WPGraphQL\GF\Model\Form $form */
 						$form = $context->get_loader( FormsLoader::$name )->load( $source->formDatabaseId );
 
 						if ( null === $form ) {
@@ -181,6 +183,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 				'description' => __( 'The entry order summary. Null if the entry has no pricing fields', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
 					if ( empty( $context->gfForm ) ) {
+						/** @var ?\WPGraphQL\GF\Model\Form $form */
 						$form = $context->get_loader( FormsLoader::$name )->load( $source->formDatabaseId );
 
 						if ( null === $form ) {
@@ -272,39 +275,41 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 		register_graphql_field(
 			'RootQuery',
 			self::$field_name,
-			[
-				'description' => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
-				'type'        => self::$type,
-				'args'        => [
-					'id'     => [
-						'type'        => [ 'non_null' => 'ID' ],
-						'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
+			Compat::resolve_graphql_config(
+				[
+					'description' => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
+					'type'        => self::$type,
+					'args'        => [
+						'id'     => [
+							'type'        => [ 'non_null' => 'ID' ],
+							'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
+						],
+						'idType' => [
+							'type'        => EntryIdTypeEnum::$type,
+							'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
+						],
 					],
-					'idType' => [
-						'type'        => EntryIdTypeEnum::$type,
-						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-				'resolve'     => static function ( $root, array $args, AppContext $context ) {
-					$id_type = $args['idType'] ?? 'global_id';
+					'resolve'     => static function ( $root, array $args, AppContext $context ) {
+						$id_type = $args['idType'] ?? 'global_id';
 
-					if ( 'global_id' === $id_type ) {
-						$id_parts = Relay::fromGlobalId( $args['id'] );
+						if ( 'global_id' === $id_type ) {
+							$id_parts = Relay::fromGlobalId( $args['id'] );
 
-						if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-							throw new UserError( esc_html__( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
+							if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
+								throw new UserError( esc_html__( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
+							}
+
+							$loader = $id_parts['type'];
+							$id     = sanitize_text_field( $id_parts['id'] );
+						} else {
+							$loader = 'database_id' === $id_type ? EntriesLoader::$name : DraftEntriesLoader::$name;
+							$id     = sanitize_text_field( $args['id'] );
 						}
 
-						$loader = $id_parts['type'];
-						$id     = sanitize_text_field( $id_parts['id'] );
-					} else {
-						$loader = 'database_id' === $id_type ? EntriesLoader::$name : DraftEntriesLoader::$name;
-						$id     = sanitize_text_field( $args['id'] );
-					}
-
-					return $context->get_loader( $loader )->load_deferred( $id );
-				},
-			]
+						return $context->get_loader( $loader )->load_deferred( $id );
+					},
+				]
+			)
 		);
 	}
 }

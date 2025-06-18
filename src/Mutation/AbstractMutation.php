@@ -15,6 +15,7 @@ use GraphQLRelay\Relay;
 use WPGraphQL\GF\Data\Loader\DraftEntriesLoader;
 use WPGraphQL\GF\Interfaces\Mutation;
 use WPGraphQL\GF\Type\AbstractType;
+use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - AbstractMutation
@@ -32,7 +33,7 @@ abstract class AbstractMutation extends AbstractType implements Mutation {
 	 */
 	public static function register(): void {
 		$config = static::get_type_config();
-		register_graphql_mutation( static::$name, $config );
+		register_graphql_mutation( static::$name, Compat::resolve_graphql_config( $config ) );
 	}
 
 	/**

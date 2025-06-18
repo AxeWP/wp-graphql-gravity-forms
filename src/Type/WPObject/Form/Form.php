@@ -25,6 +25,7 @@ use WPGraphQL\GF\Type\Enum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPInterface\FormField;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
+use WPGraphQL\GF\Utils\Compat;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
@@ -271,25 +272,27 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 		register_graphql_field(
 			'RootQuery',
 			self::$field_name,
-			[
-				'description' => __( 'Get a Gravity Forms form.', 'wp-graphql-gravity-forms' ),
-				'type'        => self::$type,
-				'args'        => [
-					'id'     => [
-						'type'        => [ 'non_null' => 'ID' ],
-						'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
+			Compat::resolve_graphql_config(
+				[
+					'description' => __( 'Get a Gravity Forms form.', 'wp-graphql-gravity-forms' ),
+					'type'        => self::$type,
+					'args'        => [
+						'id'     => [
+							'type'        => [ 'non_null' => 'ID' ],
+							'description' => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
+						],
+						'idType' => [
+							'type'        => Enum\FormIdTypeEnum::$type,
+							'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
+						],
 					],
-					'idType' => [
-						'type'        => Enum\FormIdTypeEnum::$type,
-						'description' => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
-					],
-				],
-				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$id = Utils::get_form_id_from_id( $args['id'] );
+					'resolve'     => static function ( $source, array $args, AppContext $context ) {
+						$id = Utils::get_form_id_from_id( $args['id'] );
 
-					return Factory::resolve_form( $id, $context );
-				},
-			]
+						return Factory::resolve_form( $id, $context );
+					},
+				]
+			)
 		);
 	}
 }

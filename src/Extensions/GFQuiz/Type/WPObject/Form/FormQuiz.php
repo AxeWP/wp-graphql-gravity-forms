@@ -17,6 +17,7 @@ use WPGraphQL\GF\Extensions\GFQuiz\Type\Enum\QuizFieldGradingTypeEnum;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
+use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - FormConfirmation
@@ -182,15 +183,17 @@ class FormQuiz extends AbstractObject implements Field {
 		register_graphql_field(
 			Form::$type,
 			self::$field_name,
-			[
-				'type'        => static::$type,
-				'description' => __( 'Quiz-specific settings that will affect ALL Quiz fields in the form. Requires Gravity Forms Quiz addon.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $source, array $args, AppContext $context ): ?array {
-					// FYI: If a user doesn't explicitly save the quiz settings on the backend, this will be null.
-					$context->gfForm = $source;
-					return empty( $source->quiz ) ? null : $source->quiz;
-				},
-			]
+			Compat::resolve_graphql_config(
+				[
+					'type'        => static::$type,
+					'description' => __( 'Quiz-specific settings that will affect ALL Quiz fields in the form. Requires Gravity Forms Quiz addon.', 'wp-graphql-gravity-forms' ),
+					'resolve'     => static function ( $source, array $args, AppContext $context ): ?array {
+						// FYI: If a user doesn't explicitly save the quiz settings on the backend, this will be null.
+						$context->gfForm = $source;
+						return empty( $source->quiz ) ? null : $source->quiz;
+					},
+				]
+			)
 		);
 	}
 }

@@ -13,6 +13,7 @@ namespace WPGraphQL\GF\Type\WPInterface;
 use WPGraphQL\GF\Interfaces\TypeWithDescription;
 use WPGraphQL\GF\Interfaces\TypeWithFields;
 use WPGraphQL\GF\Type\AbstractType;
+use WPGraphQL\GF\Utils\Compat;
 use WPGraphQL\Registry\TypeRegistry;
 
 /**
@@ -43,7 +44,7 @@ abstract class AbstractInterface extends AbstractType implements TypeWithDescrip
 	public static function register( ?TypeRegistry $type_registry = null ): void {
 		$config = static::get_type_config( $type_registry );
 
-		register_graphql_interface_type( static::$type, $config );
+		register_graphql_interface_type( static::$type, Compat::resolve_graphql_config( $config ) );
 	}
 
 	/**

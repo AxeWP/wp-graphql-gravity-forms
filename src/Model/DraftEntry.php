@@ -38,15 +38,10 @@ use WPGraphQL\Model\Model;
  * --- Fields specific to the model ---
  * @property ?int                     $currency            The currency of the draft entry.
  * @property string                   $resumeToken         The resume token of the draft entry.
+ *
+ * @extends \WPGraphQL\Model\Model<array<int|string,mixed>>
  */
 class DraftEntry extends Model {
-	/**
-	 * Stores the incoming DraftEntry to be modeled.
-	 *
-	 * @var array<int|string,mixed> $data
-	 */
-	protected $data;
-
 	/**
 	 * Stores the decoded draft entry Submission.
 	 *

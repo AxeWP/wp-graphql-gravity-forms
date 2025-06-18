@@ -113,9 +113,10 @@ class FormFieldsLoader extends AbstractDataLoader {
 			if ( ! isset( $loaded_forms[ $parsed_id['form_id'] ] ) ) {
 				$app_context = WPGraphQL::get_app_context();
 
+				/** @var ?\WPGraphQL\GF\Model\Form $form */
 				$form = $app_context->get_loader( FormsLoader::$name )->load( $parsed_id['form_id'] );
 
-				$loaded_forms[ $parsed_id['form_id'] ] = $form ?? null;
+				$loaded_forms[ $parsed_id['form_id'] ] = $form;
 			}
 
 			if ( empty( $loaded_forms[ $parsed_id['form_id'] ] ) ) {
