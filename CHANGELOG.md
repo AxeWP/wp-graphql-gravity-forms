@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- perf: migrate DataLoader registration to use lazy-loaded `graphql_data_loader_classes` filter.
+- fix: cleanup activation lifecycle.
 - fix: Prevent duplicate file counts for Single File Upload fields. Props @Gytjarek
 - chore: Update Composer dependencies.
 
