@@ -137,9 +137,6 @@ function init(): void {
 
 constants();
 
-add_action( 'plugins_loaded', 'WPGraphQL\GF\init' );
-
-
 // Load the autoloader.
 require_once __DIR__ . '/src/Autoloader.php';
 if ( ! \WPGraphQL\GF\Autoloader::autoload() ) {
@@ -157,3 +154,6 @@ if ( file_exists( __DIR__ . '/deactivation.php' ) ) {
 	require_once __DIR__ . '/deactivation.php';
 	register_deactivation_hook( __FILE__, 'WPGraphQL\GF\deactivation_callback' );
 }
+
+add_action( 'plugins_loaded', 'WPGraphQL\GF\init' );
+
