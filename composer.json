@@ -39,7 +39,6 @@
 		"codeception/util-universalframework": "^1.0",
 		"lucatume/wp-browser": "<3.5",
 		"php-coveralls/php-coveralls": "^2.5",
-		"phpcompatibility/php-compatibility": "dev-develop as 9.99.99",
 		"phpstan/extension-installer": "^1.1",
 		"phpstan/phpstan": "^2.0",
 		"phpunit/phpunit": "^9.0",
