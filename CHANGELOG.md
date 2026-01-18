@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- chore: Update Composer dependencies.
+
 ## [v0.13.2]
 
 This _minor_ release adds support for WPGraphQL v2.3.3, including lazy-loaded descriptions for GraphQL types which should result in significant performance improvements when querying the schema, especially for i18n users.

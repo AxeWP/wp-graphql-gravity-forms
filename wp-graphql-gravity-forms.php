@@ -50,10 +50,7 @@ if ( ! \WPGraphQL\GF\Autoloader::autoload() ) {
 // Run this function when the plugin is activated.
 if ( file_exists( __DIR__ . '/activation.php' ) ) {
 	require_once __DIR__ . '/activation.php';
-	register_activation_hook(
-		__FILE__,
-		'WPGraphQL\GF\activation_callback'
-	);
+	register_activation_hook( __FILE__, 'WPGraphQL\GF\activation_callback' );
 }
 
 // Run this function when the plugin is deactivated.
