@@ -40,25 +40,6 @@ if ( file_exists( __DIR__ . '/c3.php' ) ) {
 	require_once __DIR__ . '/c3.php';
 }
 
-// Load the autoloader.
-require_once __DIR__ . '/src/Autoloader.php';
-if ( ! \WPGraphQL\GF\Autoloader::autoload() ) {
-	return;
-}
-
-
-// Run this function when the plugin is activated.
-if ( file_exists( __DIR__ . '/activation.php' ) ) {
-	require_once __DIR__ . '/activation.php';
-	register_activation_hook( __FILE__, 'WPGraphQL\GF\activation_callback' );
-}
-
-// Run this function when the plugin is deactivated.
-if ( file_exists( __DIR__ . '/deactivation.php' ) ) {
-	require_once __DIR__ . '/deactivation.php';
-	register_deactivation_hook( __FILE__, 'WPGraphQL\GF\deactivation_callback' );
-}
-
 /**
  * Define plugin constants.
  */
@@ -120,7 +101,6 @@ function dependencies_not_ready(): array {
  * Initializes WPGraphQL for GF.
  */
 function init(): void {
-	constants();
 
 	$not_ready = dependencies_not_ready();
 
@@ -154,4 +134,26 @@ function init(): void {
 }
 
 // Initialize the plugin.
+
+constants();
+
 add_action( 'plugins_loaded', 'WPGraphQL\GF\init' );
+
+
+// Load the autoloader.
+require_once __DIR__ . '/src/Autoloader.php';
+if ( ! \WPGraphQL\GF\Autoloader::autoload() ) {
+	return;
+}
+
+// Run this function when the plugin is activated.
+if ( file_exists( __DIR__ . '/activation.php' ) ) {
+	require_once __DIR__ . '/activation.php';
+	register_activation_hook( __FILE__, 'WPGraphQL\GF\activation_callback' );
+}
+
+// Run this function when the plugin is deactivated.
+if ( file_exists( __DIR__ . '/deactivation.php' ) ) {
+	require_once __DIR__ . '/deactivation.php';
+	register_deactivation_hook( __FILE__, 'WPGraphQL\GF\deactivation_callback' );
+}

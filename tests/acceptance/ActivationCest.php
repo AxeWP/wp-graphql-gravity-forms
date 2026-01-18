@@ -19,10 +19,10 @@ class ActivationCest {
 
 		$I->deactivatePlugin( $slug );
 
-		// For some reason, it switches slugs here.
+		// For some reason, data-slug changes after deactivation.
 		$I->seePluginDeactivated( 'wpgraphql-for-gravity-forms' );
-		$I->activatePlugin( 'wpgraphql-for-gravity-forms' );
 
+		$I->activatePlugin( 'wpgraphql-for-gravity-forms' );
 		$I->seePluginActivated( $slug );
 	}
 }
