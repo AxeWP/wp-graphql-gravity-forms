@@ -13,6 +13,14 @@ use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 use WPGraphQL\GF\Utils\GFUtils;
 
 class FooFileUpload extends \GF_Field_FileUpload {
+	public function is_invalid_file( $file, $is_new = true ) {
+		// Mock valid upload for test files in /tmp
+		if ( $is_new && isset( $file['tmp_name'] ) && strpos( $file['tmp_name'], '/tmp/img' ) === 0 ) {
+			return false;
+		}
+		return parent::is_invalid_file( $file, $is_new );
+	}
+
 	public function upload_file( $form_id, $file ) {
 		\GFCommon::log_debug( __METHOD__ . '(): Uploading file: ' . $file['name'] );
 		$target = GFFormsModel::get_file_upload_path( $form_id, $file['name'] );
