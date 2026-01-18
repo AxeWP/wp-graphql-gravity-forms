@@ -195,11 +195,11 @@ class EntryObjectMutation {
 			$input_name = 'input_' . $field->id;
 
 			// Single files should only use $_FILES, never gform_uploaded_files.
-			// This prevents duplicate file counts when files are submitted via GraphQL multipart,
-			if (! $field->multipleFiles) {
+			// This prevents duplicate file counts when files are submitted via GraphQL multipart.
+			if ( ! $field->multipleFiles ) {
 				// Initialize $_FILES array if it doesn't exist to prevent notices.
-				if (! isset($_FILES[$input_name])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-					$_FILES[$input_name] = [
+				if ( ! isset( $_FILES[ $input_name ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					$_FILES[ $input_name ] = [
 						'name'     => null,
 						'type'     => null,
 						'size'     => null,
