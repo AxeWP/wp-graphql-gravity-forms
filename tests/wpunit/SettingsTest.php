@@ -21,6 +21,7 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 
 	public function setUp(): void {
 		$this->dummy = new Dummy();
+
 		// Before...
 		parent::setUp();
 
@@ -54,6 +55,7 @@ class SettingsTest extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	}
 
 	// Tests.
+
 	/**
 	 * Tests GfSettings object.
 	 */
