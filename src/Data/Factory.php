@@ -31,16 +31,15 @@ class Factory {
 	/**
 	 * Registers loaders to AppContext.
 	 *
-	 * @param array<string,\WPGraphQL\Data\Loader\AbstractDataLoader> $loaders Data loaders.
-	 * @param \WPGraphQL\AppContext                                   $context App context.
+	 * @param array<string,class-string<\WPGraphQL\Data\Loader\AbstractDataLoader>> $loaders Data loaders.
 	 *
-	 * @return array<string,\WPGraphQL\Data\Loader\AbstractDataLoader> Data loaders.
+	 * @return array<string,class-string<\WPGraphQL\Data\Loader\AbstractDataLoader>> Data loaders.
 	 */
-	public static function register_loaders( array $loaders, AppContext $context ): array {
-		$loaders[ DraftEntriesLoader::$name ] = new DraftEntriesLoader( $context );
-		$loaders[ EntriesLoader::$name ]      = new EntriesLoader( $context );
-		$loaders[ FormsLoader::$name ]        = new FormsLoader( $context );
-		$loaders[ FormFieldsLoader::$name ]   = new FormFieldsLoader( $context );
+	public static function register_loader_classes( array $loaders ): array {
+		$loaders[ DraftEntriesLoader::$name ] = DraftEntriesLoader::class;
+		$loaders[ EntriesLoader::$name ]      = EntriesLoader::class;
+		$loaders[ FormsLoader::$name ]        = FormsLoader::class;
+		$loaders[ FormFieldsLoader::$name ]   = FormFieldsLoader::class;
 
 		return $loaders;
 	}
