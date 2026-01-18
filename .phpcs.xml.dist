@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
-<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="WordPress Coding Standards for WPGraphQL for Gravity Forms" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+<ruleset
+	name="WordPress Coding Standards for WPGraphQL for Gravity Forms"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://schema.phpcodesniffer.com/phpcs.xsd"
+>
 	<description>Sniffs for the WPGraphQL plugin ecosystem.</description>
 
 	<!-- What to scan: include any root-level PHP files, and the /src folder -->
@@ -50,8 +54,6 @@
 		<exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification" />
 		<exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification" />
 		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification" />
-		<!-- @todo remove after PHPCS v4-->
-		<exclude name="WordPressVIPMinimum.JS" />
 		<exclude name="Generic.Functions.CallTimePassByReference" />
 	</rule>
 
@@ -70,7 +72,6 @@
 			<property name="prefixes" type="array">
 				<element value="graphql_gf"/>
 				<element value="WPGRAPHQL_GF"/>
-				<element value="_gf"/>
 				<element value="wp_graphql"/>
 				<element value="WPGraphQL\GF" />
 			</property>
