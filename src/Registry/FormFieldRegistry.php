@@ -241,7 +241,7 @@ class FormFieldRegistry {
 		$inherited_field    = GF_Fields::get( $input_type );
 		$inherited_settings = $inherited_field->get_form_editor_field_settings();
 
-		return array_merge( $settings, $inherited_settings );
+		return array_values( array_unique( array_merge( $settings, $inherited_settings ) ) );
 	}
 
 	/**

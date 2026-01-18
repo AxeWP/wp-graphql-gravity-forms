@@ -40,6 +40,7 @@ class FooPostImage extends \GF_Field_Post_Image {
  */
 class PostImageFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	// Since we cant detect if draft field is queried.
+
 	/**
 	 * Set up.
 	 */
