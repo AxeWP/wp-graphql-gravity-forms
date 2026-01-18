@@ -28,7 +28,7 @@ class CoreSchemaFilters implements Hookable {
 		add_filter( 'graphql_connection_max_query_amount', [ Factory::class, 'set_max_query_amount' ], 11, 5 );
 
 		if ( defined( 'WPGRAPHQL_VERSION' ) && version_compare( WPGRAPHQL_VERSION, '2.3.2', '>=' ) ) {
-			// Register data loaders classes
+			// Register data loaders classes.
 			add_filter( 'graphql_data_loader_classes', [ Factory::class, 'register_loader_classes' ], 10 );
 		} else {
 			// @todo remove once WPGraphQL 2.3.2+ is required.
