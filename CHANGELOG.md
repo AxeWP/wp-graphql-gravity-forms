@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- fix: Prevent duplicate file counts for Single File Upload fields. Props @Gytjarek
 - chore: Update Composer dependencies.
 
 ## [v0.13.2]
