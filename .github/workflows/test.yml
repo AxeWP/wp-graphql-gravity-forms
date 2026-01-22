@@ -270,7 +270,7 @@ jobs:
           path: |
             tests/_data/plugins
             tests/_data/mu-plugins
-          key: ${{ runner.os }}-wp-plugins-${{ hashFiles('.wp-env.json', 'bin/_lib.sh') }}
+          key: ${{ runner.os }}-wp-plugins-${{ hashFiles('.wp-env.json', 'bin/_lib.sh', 'bin/after-start.sh', 'bin/setup.sh') }}
           restore-keys: |
             ${{ runner.os }}-wp-plugins-
 
@@ -406,7 +406,7 @@ jobs:
           path: |
             tests/_data/plugins
             tests/_data/mu-plugins
-          key: ${{ runner.os }}-wp-plugins-${{ hashFiles('.wp-env.json', 'bin/_lib.sh') }}
+          key: ${{ runner.os }}-wp-plugins-${{ hashFiles('.wp-env.json', 'bin/_lib.sh', 'bin/after-start.sh', 'bin/setup.sh') }}
           restore-keys: |
             ${{ runner.os }}-wp-plugins-
 
