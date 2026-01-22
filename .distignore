@@ -14,7 +14,7 @@
 /plugin-build
 /tests
 
-.coveralls.yml
+.codecov.yml
 .distignore
 .dockerignore
 .DS_Store
