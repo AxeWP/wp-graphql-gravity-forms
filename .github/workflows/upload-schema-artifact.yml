@@ -54,7 +54,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-wp-env-
 
-      - name: Setup WordPress
+      - name: Setup .env file
         run: |
           cp .env.dist .env
           echo GF_KEY=${{ secrets.GF_KEY }} >> .env

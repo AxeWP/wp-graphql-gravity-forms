@@ -167,7 +167,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-wp-plugins-
 
-      - name: Setup WordPress
+      - name: Setup .env file
         run: |
           cp .env.dist .env
           echo GF_KEY=${{ secrets.GF_KEY }} >> .env
@@ -274,7 +274,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-wp-plugins-
 
-      - name: Setup WordPress
+      - name: Setup .env file
         run: |
           cp .env.dist .env
           echo GF_KEY=${{ secrets.GF_KEY }} >> .env
@@ -414,7 +414,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-wp-plugins-
 
-      - name: Setup WordPress
+      - name: Setup Setup .env file
         run: |
           cp .env.dist .env
           echo GF_KEY=${{ secrets.GF_KEY }} >> .env
@@ -425,12 +425,8 @@ jobs:
           timeout_minutes: 10
           max_attempts: 3
           command: |
-            # Set the COVERAGE env var if coverage is enabled
-            if [ "${{ matrix.coverage }}" -eq "1" ]; then
-              echo "COVERAGE=1" >> $GITHUB_ENV
-            fi
+            ${{ matrix.coverage ? 'PCOV_ENABLED=1' : '' }} npm run wp-env start -- ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
 
-            npm run wp-env start -- ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
 
       - name: Log versions
         run: |

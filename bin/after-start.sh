@@ -36,7 +36,7 @@ if [[ -n "$CONTAINER_ID" ]]; then
 	install_pdo_mysql "$CONTAINER_ID" "tests-cli"
 fi
 
-if [[ "$COVERAGE" == "1" ]]; then
+if [[ "$PCOV_ENABLED" == "1" ]]; then
 	echo "Installing and enabling pcov extension for code coverage."
 	npm run wp-env run tests-cli -- sudo pecl install pcov
 
