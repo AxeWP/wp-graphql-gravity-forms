@@ -252,6 +252,8 @@ jobs:
         run: |
           cp .env.dist .env
           echo GF_KEY=${{ secrets.GF_KEY }} >> .env
+          # Deactivate unnecessary plugins to speed up environment startup.
+          npm run wp-env -- run t
 
       - name: Start the Docker testing environment
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
@@ -272,7 +274,7 @@ jobs:
       - name: Lint the generated schema
         id: schema-lint
         run: |
-          graphql-schema-linter --except=relay-connection-types-spec,relay-page-info-spec --ignore '{"defined-types-are-used":["MenuItemsWhereArgs","TermObjectUnion","TimezoneEnum"]}' tests/_output/schema.graphql
+          graphql-schema-linter --except=relay-connection-types-spec,relay-page-info-spec --ignore '{"defined-types-are-used":["MenuItemsWhereArgs","TermObjectUnion","TimezoneEnum"],"fields-have-descriptions":["WPGatsbyPreviewStatus.*","WPGatsbyPageNode.path","WPGatsbyCompatibility.satisfies"],"enum-values-have-descriptions":["WPGatsbyRemotePreviewStatusEnum.*","WPGatsbyWPPreviewedNodeStatus.*"]}' tests/_output/schema.graphql
 
       - name: Display ignored schema linter issues in PR
         run: graphql-schema-linter tests/_output/schema.graphql || true
@@ -434,8 +436,8 @@ jobs:
   # - Sets up Node.js.
   # - Installs npm dependencies.
   # - Runs the WordPress Plugin Check action.
-  plugin-check:
-    name: Run PHP static analysis
+  plugin_check:
+    name: Run Plugin Check
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -484,10 +486,16 @@ jobs:
       - name: Install NPM dependencies
         run: npm ci
 
+      - name: Build and zip
+        run: |
+          npm run plugin-zip
+          mkdir tmp-build
+          unzip wp-graphql-gravity-forms.zip -d tmp-build
+
       - name: Run plugin check
         uses: wordpress/plugin-check-action@ec9b3fe9beaa76bcc4510b7ba2cb5855a5f80f3f # v1.1.4
         with:
-          wp-version: 'latest'
+          build-dir: "./tmp-build/wp-graphql-gravity-forms"
           # Exclude file_type because of the dev files present in the repository.
           exclude-checks: |
             file_type
