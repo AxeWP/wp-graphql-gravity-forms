@@ -30,10 +30,10 @@ install_pdo_mysql() {
 	echo "pdo_mysql Extension on $ENV_NAME: Installed."
 }
 
-# Install pdo_mysql extension in the tests
-CONTAINER_ID_CLI="$(docker ps | grep tests-wordpress  | awk '{print $1}')"
-if [[ -n "$CONTAINER_ID_CLI" ]]; then
-	install_pdo_mysql "$CONTAINER_ID_CLI" "tests-cli"
+# Install pdo_mysql extension in the tests-cli environment
+CONTAINER_ID="$(docker ps | grep tests-cli  | awk '{print $1}')"
+if [[ -n "$CONTAINER_ID" ]]; then
+	install_pdo_mysql "$CONTAINER_ID" "tests-cli"
 fi
 
 if [[ "$COVERAGE" == "1" ]]; then
