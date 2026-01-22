@@ -30,16 +30,18 @@ install_pdo_mysql() {
 	echo "pdo_mysql Extension on $ENV_NAME: Installed."
 }
 
-# Install pdo_mysql extension in the cli
+# Install pdo_mysql extension in the tests
 CONTAINER_ID_CLI="$(docker ps | grep tests-wordpress  | awk '{print $1}')"
 if [[ -n "$CONTAINER_ID_CLI" ]]; then
-	install_pdo_mysql "$CONTAINER_ID_CLI" "tests"
+	install_pdo_mysql "$CONTAINER_ID_CLI" "tests-cli"
 fi
 
-# Install pdo_mysql extension in the tests-cli environment
-CONTAINER_ID_TESTS_CLI="$(docker ps | grep tests-cli  | awk '{print $1}')"
-if [[ -n "$CONTAINER_ID_TESTS_CLI" ]]; then
-	install_pdo_mysql "$CONTAINER_ID_TESTS_CLI" "tests-cli"
+if [[ "$COVERAGE" == "1" ]]; then
+	echo "Installing and enabling pcov extension for code coverage."
+	npm run wp-env run tests-cli -- sudo pecl install pcov
+
+	npm run wp-env run tests-cli bash -- -c 'echo "extension=pcov" | sudo tee /usr/local/etc/php/conf.d/99-pcov.ini > /dev/null'
+	npm run wp-env run tests-cli bash -- -c 'echo "pcov.enabled=1" | sudo tee -a /usr/local/etc/php/conf.d/99-pcov.ini > /dev/null'
 fi
 
 # Dump clean test database

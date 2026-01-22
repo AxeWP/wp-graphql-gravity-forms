@@ -328,7 +328,7 @@ jobs:
   # - Installs Composer dependencies.
   # - Sets up Node.js.
   # - Installs npm dependencies.
-  # - Starts the WordPress Docker testing environment (with or without Xdebug coverage).
+  # - Starts the WordPress Docker testing environment (with or without pcov coverage).
   # - Logs PHP and WordPress versions from the container.
   # - Runs Codeception tests (with coverage if enabled).
   # - Uploads code coverage report to Codecov.io (if coverage is enabled).
@@ -425,7 +425,12 @@ jobs:
           timeout_minutes: 10
           max_attempts: 3
           command: |
-            npm run wp-env start -- ${{ matrix.coverage && '--xdebug=coverage' || '' }} ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
+            # Set the COVERAGE env var if coverage is enabled
+            if [ "${{ matrix.coverage }}" -eq "1" ]; then
+              echo "COVERAGE=1" >> $GITHUB_ENV
+            fi
+
+            npm run wp-env start -- ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
 
       - name: Log versions
         run: |
