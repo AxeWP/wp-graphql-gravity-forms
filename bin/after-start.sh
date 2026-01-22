@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 
-# Run the setup scripts for the plugin inside the wp-env environment
-npm run wp-env run cli -- --env-cwd=wp-content/plugins/wp-graphql-gravity-forms -- bash bin/setup.sh
-npm run wp-env run tests-cli -- --env-cwd=wp-content/plugins/wp-graphql-gravity-forms -- bash bin/setup.sh
+# Run the setup scripts for the plugin inside the wp-env environment in parallel
+(npm run wp-env run cli -- --env-cwd=wp-content/plugins/wp-graphql-gravity-forms -- bash bin/setup.sh) &
+(npm run wp-env run tests-cli -- --env-cwd=wp-content/plugins/wp-graphql-gravity-forms -- bash bin/setup.sh) &
+wait
 
 # Install the pdo_mysql extension on the provided container
 install_pdo_mysql() {
