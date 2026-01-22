@@ -53,7 +53,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@ec406be512d7077f68eed36e63f4d91bc006edc4 # v2.35.4
         with:
-          php-version: '8.3'
+          php-version: 8.4
           coverage: none
           tools: cs2pr
 
@@ -116,7 +116,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@ec406be512d7077f68eed36e63f4d91bc006edc4 # v2.35.4
         with:
-          php-version: 8.3
+          php-version: 8.4
           coverage: none
           tools: cs2pr
 
@@ -231,7 +231,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@ec406be512d7077f68eed36e63f4d91bc006edc4 # v2.35.4
         with:
-          php-version: 8.3
+          php-version: 8.4
           coverage: none
           tools: cs2pr
 
@@ -343,13 +343,17 @@ jobs:
       fail-fast: false
       matrix:
         ## GF 2.9.x only supports from WP 6.5, and we have no way to access earlier versions.
-        php: ['8.2', '8.1']
-        wordpress: ['6.8', '6.7', '6.6', '6.5']
+        php: ['8.4', '8.3', '8.2', '8.1']
+        wordpress: ['6.9','6.8', '6.7', '6.6', '6.5']
         coverage: [0]
         include:
-          - php: '8.3'
-            wordpress: '6.8'
+          - php: '8.4'
+            wordpress: '6.9'
             coverage: 1
+        # Unsupported combinated by wp-env
+        exclude:
+          - php: '8.4'
+            wordpress: ['6.5', '6.6']
     env:
       WP_ENV_PHP_VERSION: ${{ matrix.php }}
       WP_ENV_CORE: ${{ matrix.wordpress == 'trunk' && 'WordPress/WordPress' || format( 'https://wordpress.org/wordpress-{0}.zip', matrix.wordpress ) }}
@@ -491,7 +495,7 @@ jobs:
   #     - name: Set up PHP
   #       uses: shivammathur/setup-php@ec406be512d7077f68eed36e63f4d91bc006edc4 # v2.35.4
   #       with:
-  #         php-version: 8.3
+  #         php-version: 8.4
   #         coverage: none
   #         tools: cs2pr
 

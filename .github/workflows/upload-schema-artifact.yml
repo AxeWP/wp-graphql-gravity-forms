@@ -22,7 +22,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@ec406be512d7077f68eed36e63f4d91bc006edc4 # v2.35.4
         with:
-          php-version: 8.3
+          php-version: 8.4
           coverage: none
 
       # This date is used to ensure that the PHPCS cache is cleared at least once every week.
