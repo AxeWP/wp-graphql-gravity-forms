@@ -67,11 +67,10 @@ jobs:
           command: |
             npm run wp-env start -- --update ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
 
-      - name: Generate the Static Schema
+      - name: Generate GraphQL schema
         run: |
-          cd /tmp/wordpress/
-          # Output: /tmp/schema.graphql
-          wp graphql generate-static-schema
+          npm run wp-env -- run cli --env-cwd=wp-content/plugins/wp-graphql-gravity-forms  wp graphql generate-static-schema --output=tests/_output/schema.graphql
+          echo "Schema generated: $(wc -l < tests/_output/schema.graphql) lines"
 
       - name: Upload schema as release artifact
         uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
