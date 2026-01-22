@@ -11,8 +11,8 @@ wait
 #   $1 - Docker Container ID
 #   $2 - wp-env Environment Name
 install_pdo_mysql() {
-	CONTAINER_ID="$1"
-	ENV_NAME="$2"
+	local CONTAINER_ID="$1"
+	local ENV_NAME="$2"
 
 	if docker exec -u root "$CONTAINER_ID" php -m | grep -q pdo_mysql; then
 		echo "pdo_mysql Extension on $ENV_NAME: Already installed."
@@ -37,7 +37,7 @@ install_pdo_mysql() {
 # Arguments:
 #   $1 - wp-env Environment Name
 install_pcov() {
-	ENV_NAME="$1"
+	local ENV_NAME="$1"
 
 	if npm run wp-env run $ENV_NAME -- php -m | grep -q pcov; then
 		echo "pcov Extension on $ENV_NAME: Already installed."
