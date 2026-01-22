@@ -349,7 +349,7 @@ jobs:
         include:
           - php: '8.4'
             wordpress: '6.9'
-            coverage: 1
+            coverage: '1'
         # Unsupported combinated by wp-env
         exclude:
           - php: '8.4'
@@ -458,7 +458,7 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: wp-code-coverage-${{ matrix.php }}-${{ matrix.wordpress }}
-          path: tests/_output/html
+          path: tests/_output/coverage
           overwrite: true
 
       - name: Upload code coverage report
