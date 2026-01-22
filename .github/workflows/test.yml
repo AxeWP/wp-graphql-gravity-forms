@@ -425,7 +425,7 @@ jobs:
           timeout_minutes: 10
           max_attempts: 3
           command: |
-            ${{ matrix.coverage && 'PCOV_ENABLED=1' || '' }}npm run wp-env start -- ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
+            ${{ matrix.coverage && 'PCOV_ENABLED=1 ' || '' }}npm run wp-env start -- ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
 
 
       - name: Log versions
