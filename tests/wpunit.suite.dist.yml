@@ -4,11 +4,6 @@
 actor: WpunitTester
 modules:
   enabled:
-    - WPLoader
+    - Asserts
     - \Tests\WPGraphQL\GF\Helper\Wpunit
-  disabled:
-    - WPDb
-    - WPBrowser
-  config:
-    WPDb:
-      cleanup: false
+    - lucatume\WPBrowser\Module\WPLoader

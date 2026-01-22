@@ -1,4 +1,6 @@
-# Hidden files
+### WordPress ###
+
+# macOS/IDE
 .DS_Store
 Thumbs.db
 
@@ -7,44 +9,56 @@ Thumbs.db
 .devcontainer.json
 .vscode
 .idea
+*.sublime-project
+*.sublime-workspace
 
-# Environment variables for testing
+# Log files
+*.log
+/tests/logs
+
+# Dependencies
+/vendor/
+/node_modules/
+
+# Build output
+build/
+build-module/
+build-types/
+wp-graphql-gravity-forms.zip
+
+# Environment
 .env
 .env.*
 !.env.dist
 
-# Ruleset Overrides
-phpcs.xml
-phpstan.neon
+# AI files
+.gemini/
+.claude/
+AGENTS.md
+GEMINI.md
+CLAUDE.md
 
-# Directory to generate the dist zipfile
-plugin-build
+# Cache
+.phpunit.result.cache
 
-# Composer auth
-auth.json
-
-# Composer deps
-vendor
-vendor-prefixed
-
-# NPM deps
-node_modules
-
-# Built assets - enable once this is on wpackagist
-# build
-build/tsconfig.tsbuildinfo
-
-# Generated Schema used in some tooling. Versioned Schema is uploaded as a Release artifact to Github.
-schema.graphql
-
-# WP CLI config overrides
-wp-cli.local.yml
-
-# Tests
-*.sql
-*.tar.gz
-!tests
+# Test output
+/tests/_output/*
+!/tests/_output/.gitkeep
+/tests/e2e/artifacts
 tests/*.suite.yml
-coverage/*
-.log/
 c3.php
+
+# Configs
+/phpcs.xml
+/phpunit.xml
+/phpstan.neon
+
+# WP ENV
+/.wp-env.override.json
+
+# Tests & Coverage
+/coverage/
+
+# TypeScript
+*.tsbuildinfo
+

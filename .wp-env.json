@@ -1,0 +1,37 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/wp-env.json",
+	"core": null,
+	"plugins": [
+		"https://downloads.wordpress.org/plugin/gravityformscli.zip",
+		"https://downloads.wordpress.org/plugin/wp-graphql.zip",
+		"https://downloads.wordpress.org/plugin/wpgraphql-ide.zip",
+		"dre1080/wp-graphql-upload",
+		"."
+	],
+	"mappings": {
+		"/wp-content/plugins": "./tests/_data/plugins",
+		"/wp-content/mu-plugins": "./tests/_data/mu-plugins"
+	},
+	"env": {
+		"development": {
+			"config": {
+				"WP_DEVELOPMENT_MODE": "plugin",
+				"WP_ENVIRONMENT_TYPE": "development",
+				"WP_DEBUG": true,
+				"WP_DEBUG_LOG": "/var/www/html/wp-content/plugins/wp-graphql-gravity-forms/tests/_output/debug.log"
+			}
+		},
+		"tests": {
+			"config": {
+				"WP_DEBUG": true,
+				"FS_METHOD": "direct"
+			},
+			"mappings": {
+				"/wp-content/plugins/wp-graphql-gravity-forms": "."
+			}
+		}
+	},
+	"lifecycleScripts": {
+		"afterStart": "bash ./bin/after-start.sh"
+	}
+}

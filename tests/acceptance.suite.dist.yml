@@ -7,30 +7,14 @@
 
 actor: AcceptanceTester
 modules:
-    enabled:
-        - Asserts
-        - REST
-        - WPBrowser
-        - WPDb
-        - WPLoader
-    config:
-        WPLoader:
-            loadOnly: true
-            plugins:
-                - gravityforms/gravityforms.php
-                - gravityformschainedselects/chainedselects.php
-                - gravityformsquiz/quiz.php
-                - gravityformssignature/signature.php
-                - wp-graphql/wp-graphql.php
-                - wp-graphql-upload/wp-graphql-upload.php
-            #   - wp-graphql-content-blocks/wp-graphql-content-blocks.php
-                - wp-graphql-gravity-forms/wp-graphql-gravity-forms.php
-            activatePlugins:
-                - gravityforms/gravityforms.php
-                - gravityformschainedselects/chainedselects.php
-                - gravityformsquiz/quiz.php
-                - gravityformssignature/signature.php
-                - wp-graphql/wp-graphql.php
-                - wp-graphql-upload/wp-graphql-upload.php
-             #  - wp-graphql-content-blocks/wp-graphql-content-blocks.php
-                - wp-graphql-gravity-forms/wp-graphql-gravity-forms.php
+  enabled:
+    - Asserts
+    - REST
+    - lucatume\WPBrowser\Module\WPBrowser
+    - lucatume\WPBrowser\Module\WPDb
+    - lucatume\WPBrowser\Module\WPLoader
+  config:
+    lucatume\WPBrowser\Module\WPDb:
+      cleanup: false
+    lucatume\WPBrowser\Module\WPLoader:
+      loadOnly: true

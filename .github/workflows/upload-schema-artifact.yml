@@ -2,39 +2,67 @@ name: Upload Schema Artifact
 
 on:
   release:
-    types: [ published ]
+    types: [published]
 
 jobs:
   run:
-    runs-on: ubuntu-latest
     name: Generate and Upload WPGraphQL Schema Artifact
-    services:
-      mariadb:
-        image: mariadb:10
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_ROOT_PASSWORD: root
-        # Ensure docker waits for mariadb to start
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    timeout-minutes: 20
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup PHP w/ Composer & WP-CLI
-        uses: shivammathur/setup-php@v2
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          php-version: 7.4
-          extensions: mbstring, intl, bcmath, exif, gd, mysqli, opcache, zip, pdo_mysql
+          show-progress: ${{ runner.debug == '1' && 'true' || 'false' }}
+          persist-credentials: false
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@ec406be512d7077f68eed36e63f4d91bc006edc4 # v2.35.4
+        with:
+          php-version: 8.3
           coverage: none
-          tools: composer, wp-cli
+
+      # This date is used to ensure that the PHPCS cache is cleared at least once every week.
+      # http://man7.org/linux/man-pages/man1/date.1.html
+      - name: "Get last Monday's date"
+        id: get-date
+        run: echo "date=$(/bin/date -u --date='last Mon' "+%F")" >> "$GITHUB_OUTPUT"
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520 # v3.1.1
+
+      - name: Make Composer packages available globally
+        run: echo "${PWD}/vendor/bin" >> "$GITHUB_PATH"
+
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          cache: 'npm'
+          node-version-file: '.nvmrc'
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      - name: Cache Docker images
+        uses: ScribeMD/docker-cache@0.5.0
+        with:
+          key: ${{ runner.os }}-date-${{ steps.get-date.outputs.date }}-docker-images-phpstan
 
       - name: Setup WordPress
         run: |
           cp .env.dist .env
           echo GF_KEY=${{ secrets.GF_KEY }} >> .env
-          composer run install-test-env
+
+      - name: Start the Docker testing environment
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: |
+            npm run wp-env start -- ${{ inputs.coverage && '--xdebug=coverage' || '' }} ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
 
       - name: Generate the Static Schema
         run: |
@@ -43,6 +71,6 @@ jobs:
           wp graphql generate-static-schema
 
       - name: Upload schema as release artifact
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
         with:
           files: /tmp/schema.graphql
