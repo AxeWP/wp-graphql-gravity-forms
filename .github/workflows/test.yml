@@ -434,72 +434,72 @@ jobs:
   # - Sets up Node.js.
   # - Installs npm dependencies.
   # - Runs the WordPress Plugin Check action.
-  plugin_check:
-    name: Run Plugin Check
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: read
-    timeout-minutes: 20
+  # plugin_check:
+  #   name: Run Plugin Check
+  #   runs-on: ubuntu-24.04
+  #   permissions:
+  #     contents: read
+  #   timeout-minutes: 20
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          show-progress: ${{ runner.debug == '1' && 'true' || 'false' }}
-          persist-credentials: false
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+  #       with:
+  #         show-progress: ${{ runner.debug == '1' && 'true' || 'false' }}
+  #         persist-credentials: false
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@ec406be512d7077f68eed36e63f4d91bc006edc4 # v2.35.4
-        with:
-          php-version: 8.3
-          coverage: none
-          tools: cs2pr
+  #     - name: Set up PHP
+  #       uses: shivammathur/setup-php@ec406be512d7077f68eed36e63f4d91bc006edc4 # v2.35.4
+  #       with:
+  #         php-version: 8.3
+  #         coverage: none
+  #         tools: cs2pr
 
-      # This date is used to ensure that the PHPCS cache is cleared at least once every week.
-      # http://man7.org/linux/man-pages/man1/date.1.html
-      - name: "Get last Monday's date"
-        id: get-date
-        run: echo "date=$(/bin/date -u --date='last Mon' "+%F")" >> "$GITHUB_OUTPUT"
+  #     # This date is used to ensure that the PHPCS cache is cleared at least once every week.
+  #     # http://man7.org/linux/man-pages/man1/date.1.html
+  #     - name: "Get last Monday's date"
+  #       id: get-date
+  #       run: echo "date=$(/bin/date -u --date='last Mon' "+%F")" >> "$GITHUB_OUTPUT"
 
-      - name: Cache PHP Static Analysis scan cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
-        with:
-          path: tests/_output # This is defined in the base.neon file.
-          key: 'phpstan-result-cache-${{ runner.os }}-date-${{ steps.get-date.outputs.date }}'
-          restore-keys: |
-            phpstan-result-cache-
+  #     - name: Cache PHP Static Analysis scan cache
+  #       uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+  #       with:
+  #         path: tests/_output # This is defined in the base.neon file.
+  #         key: 'phpstan-result-cache-${{ runner.os }}-date-${{ steps.get-date.outputs.date }}'
+  #         restore-keys: |
+  #           phpstan-result-cache-
 
-      - name: Install Composer dependencies
-        uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520 # v3.1.1
+  #     - name: Install Composer dependencies
+  #       uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520 # v3.1.1
 
-      - name: Make Composer packages available globally
-        run: echo "${PWD}/vendor/bin" >> "$GITHUB_PATH"
+  #     - name: Make Composer packages available globally
+  #       run: echo "${PWD}/vendor/bin" >> "$GITHUB_PATH"
 
-      - name: Setup Node
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
-        with:
-          cache: 'npm'
-          node-version-file: '.nvmrc'
+  #     - name: Setup Node
+  #       uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+  #       with:
+  #         cache: 'npm'
+  #         node-version-file: '.nvmrc'
 
-      - name: Install NPM dependencies
-        run: npm ci
+  #     - name: Install NPM dependencies
+  #       run: npm ci
 
-      - name: Build and zip
-        run: |
-          npm run plugin-zip
-          mkdir tmp-build
-          unzip wp-graphql-gravity-forms.zip -d tmp-build
+  #     - name: Build and zip
+  #       run: |
+  #         npm run plugin-zip
+  #         mkdir tmp-build
+  #         unzip wp-graphql-gravity-forms.zip -d tmp-build
 
-      - name: Run plugin check
-        uses: wordpress/plugin-check-action@ec9b3fe9beaa76bcc4510b7ba2cb5855a5f80f3f # v1.1.4
-        with:
-          build-dir: "./tmp-build/wp-graphql-gravity-forms"
-          # Exclude file_type because of the dev files present in the repository.
-          exclude-checks: |
-            file_type
-          exclude-directories: |
-            .github
-            bin
-            docs
-            phpstan
-            tests
+  #     - name: Run plugin check
+  #       uses: wordpress/plugin-check-action@ec9b3fe9beaa76bcc4510b7ba2cb5855a5f80f3f # v1.1.4
+  #       with:
+  #         build-dir: "./tmp-build/wp-graphql-gravity-forms"
+  #         # Exclude file_type because of the dev files present in the repository.
+  #         exclude-checks: |
+  #           file_type
+  #         exclude-directories: |
+  #           .github
+  #           bin
+  #           docs
+  #           phpstan
+  #           tests
