@@ -348,8 +348,8 @@ jobs:
         coverage: [0]
         include:
           - php: '8.3'
-          - wordpress: '6.8'
-          - coverage: 1
+            wordpress: '6.8'
+            coverage: 1
     env:
       WP_ENV_PHP_VERSION: ${{ matrix.php }}
       WP_ENV_CORE: ${{ matrix.wordpress == 'trunk' && 'WordPress/WordPress' || format( 'https://wordpress.org/wordpress-{0}.zip', matrix.wordpress ) }}
