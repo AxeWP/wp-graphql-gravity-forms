@@ -165,7 +165,7 @@ jobs:
           timeout_minutes: 10
           max_attempts: 3
           command: |
-            npm run wp-env start -- ${{ inputs.coverage && '--xdebug=coverage' || '' }} ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
+            npm run wp-env start -- ${{ matrix.coverage && '--xdebug=coverage' || '' }} ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
 
       - name: Run PHP static analysis tests
         id: phpstan
@@ -252,8 +252,6 @@ jobs:
         run: |
           cp .env.dist .env
           echo GF_KEY=${{ secrets.GF_KEY }} >> .env
-          # Deactivate unnecessary plugins to speed up environment startup.
-          npm run wp-env -- run t
 
       - name: Start the Docker testing environment
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
@@ -261,7 +259,7 @@ jobs:
           timeout_minutes: 10
           max_attempts: 3
           command: |
-            npm run wp-env start -- ${{ inputs.coverage && '--xdebug=coverage' || '' }} ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
+            npm run wp-env start -- ${{ matrix.coverage && '--xdebug=coverage' || '' }} ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
 
       - name: Setup GraphQL Schema Linter
         run: npm install -g graphql-schema-linter@^3.0 graphql@16
@@ -383,7 +381,7 @@ jobs:
           timeout_minutes: 10
           max_attempts: 3
           command: |
-            npm run wp-env start -- ${{ inputs.coverage && '--xdebug=coverage' || '' }} ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
+            npm run wp-env start -- ${{ matrix.coverage && '--xdebug=coverage' || '' }} ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
 
       - name: Log versions
         run: |
@@ -400,7 +398,7 @@ jobs:
 
       - name: Run WPUnit Tests ${{ matrix.coverage && ' with coverage report' || '' }}
         run: |
-          npm run test:codecept -- run wpunit ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }} ${{ inputs.coverage && '--coverage --coverage-xml' || '' }}
+          npm run test:codecept -- run wpunit ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }} ${{ matrix.coverage && '--coverage --coverage-xml' || '' }}
 
       - name: Upload test failure artifacts
         if: failure()
@@ -505,4 +503,3 @@ jobs:
             docs
             phpstan
             tests
-          exclude-files: |
