@@ -272,10 +272,10 @@ jobs:
       - name: Lint the generated schema
         id: schema-lint
         run: |
-          graphql-schema-linter --except=relay-connection-types-spec,relay-page-info-spec --ignore '{"defined-types-are-used":["MenuItemsWhereArgs","TermObjectUnion","TimezoneEnum"],"fields-have-descriptions":["WPGatsbyPreviewStatus.*","WPGatsbyPageNode.path","WPGatsbyCompatibility.satisfies"],"enum-values-have-descriptions":["WPGatsbyRemotePreviewStatusEnum.*","WPGatsbyWPPreviewedNodeStatus.*"]}' tests/_output/schema.graphql
+          graphql-schema-linter --rules arguments-have-descriptions,defined-types-are-used,deprecations-have-a-reason,descriptions-are-capitalized,enum-values-all-caps,enum-values-have-descriptions,fields-have-descriptions,input-object-values-have-descriptions,relay-connection-arguments-spec,types-have-descriptions,types-are-capitalized --ignore '{"defined-types-are-used":["MenuItemsWhereArgs","TermObjectUnion","TimezoneEnum"],"fields-have-descriptions":["WPGatsbyPreviewStatus","WPGatsbyPageNode.path","WPGatsbyCompatibility.satisfies"],"enum-values-have-descriptions":["WPGatsbyRemotePreviewStatusEnum","WPGatsbyWPPreviewedNodeStatus"]}' tests/_output/schema.graphql
 
       - name: Display ignored schema linter issues in PR
-        run: graphql-schema-linter tests/_output/schema.graphql || true
+        run: graphql-schema-linter --rules arguments-have-descriptions,defined-types-are-used,deprecations-have-a-reason,descriptions-are-capitalized,enum-values-all-caps,enum-values-have-descriptions,fields-have-descriptions,input-object-values-have-descriptions,relay-connection-arguments-spec,types-have-descriptions,types-are-capitalized tests/_output/schema.graphql || true
 
       - name: Get Latest tag
         uses: actions-ecosystem/action-get-latest-tag@b7c32daec3395a9616f88548363a42652b22d435 # v1.6.0
@@ -291,7 +291,7 @@ jobs:
       - name: Run Schema Inspector
         run: |
           # This schema and previous release schema
-          node_modules/.bin/graphql-inspector diff /tmp/${{ steps.get-latest-tag.outputs.tag }}.graphql /tmp/schema.graphql
+          graphql-inspector diff /tmp/${{ steps.get-latest-tag.outputs.tag }}.graphql tests/_output/schema.graphql
 
   # Runs the Codeception tests for WordPress.
   #
@@ -319,6 +319,7 @@ jobs:
         ## GF 2.9.x only supports from WP 6.5, and we have no way to access earlier versions.
         php: ['8.2', '8.1']
         wordpress: ['6.8', '6.7', '6.6', '6.5']
+        coverage: [0]
         include:
           - php: '8.2'
           - wordpress: '6.8'
