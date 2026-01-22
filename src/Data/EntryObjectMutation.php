@@ -135,7 +135,7 @@ class EntryObjectMutation {
 	}
 
 	/**
-	 * Gets the submission confirmation information in an array formated for WPGraphQL.
+	 * Gets the submission confirmation information in an array formatted for WPGraphQL.
 	 *
 	 * @param array<string,mixed> $payload the submission response.
 	 *
@@ -177,12 +177,13 @@ class EntryObjectMutation {
 	 * @param \GF_Field[]           $form_fields .
 	 * @param array<string,mixed>[] $input_field_values .
 	 * @param bool                  $save_as_draft .
+	 * @param bool                  $include_single_files .
 	 *
 	 * @return array<string,array<string,mixed>[]>
 	 *
 	 * @throws \GraphQL\Error\UserError .
 	 */
-	public static function initialize_files( array $form_fields, array $input_field_values, bool $save_as_draft ): array {
+	public static function initialize_files( array $form_fields, array $input_field_values, bool $save_as_draft, bool $include_single_files = true ): array {
 		$files = [];
 
 		// Loop through all the fields to see if there are any upload types.
@@ -194,27 +195,24 @@ class EntryObjectMutation {
 
 			$input_name = 'input_' . $field->id;
 
-			// Single files should only use $_FILES, never gform_uploaded_files.
-			// This prevents duplicate file counts when files are submitted via GraphQL multipart.
-			if ( ! $field->multipleFiles ) {
-				// Initialize $_FILES array if it doesn't exist to prevent notices.
-				if ( ! isset( $_FILES[ $input_name ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-					$_FILES[ $input_name ] = [
-						'name'     => null,
-						'type'     => null,
-						'size'     => null,
-						'tmp_name' => null,
-						'error'    => null,
-					];
+			// Even though draft entries don't upload anything, GF still needs the $_FILES array.
+			if ( $save_as_draft ) {
+				if ( ! $field->multipleFiles ) {
+					// Initialize $_FILES array if it doesn't exist to prevent notices.
+					if ( ! isset( $_FILES[ $input_name ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+						$_FILES[ $input_name ] = [
+							'name'     => null,
+							'type'     => null,
+							'size'     => null,
+							'tmp_name' => null,
+							'error'    => null,
+						];
+					}
 				}
-
-				// Skip multi-upload processing for single-file fields.
-				// They should only be processed via $_FILES by FileUploadValuesInput.
 				continue;
 			}
 
-			// Even though draft entries don't upload anything, GF still needs the $_FILES array.
-			if ( $save_as_draft ) {
+			if ( ! $field->multipleFiles && ! $include_single_files ) {
 				continue;
 			}
 
@@ -228,11 +226,22 @@ class EntryObjectMutation {
 				}
 			}
 			foreach ( $input_field_values as $value ) {
-				if ( $value['id'] !== $field->id || empty( $value['fileUploadValues'] ) ) {
+				if ( (int) $value['id'] !== (int) $field->id ) {
 					continue;
 				}
 
-				foreach ( $value['fileUploadValues'] as $file ) {
+				$files_input = [];
+				if ( ! empty( $value['fileUploadValues'] ) ) {
+					$files_input = $value['fileUploadValues'];
+				} elseif ( ! empty( $value['imageValues']['image'] ) ) {
+					$files_input = [ $value['imageValues']['image'] ];
+				}
+
+				if ( empty( $files_input ) ) {
+					continue;
+				}
+
+				foreach ( $files_input as $file ) {
 					// Uploads the files to the GF temp directory.
 					$temp_filename = 'input_' . $field->id . '_' . \GFCommon::random_str( 16 ) . '_' . $file['name'];
 					$target_file   = $target_dir . wp_basename( $temp_filename );

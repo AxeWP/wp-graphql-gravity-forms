@@ -21,6 +21,18 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 
 		update_option( 'rg_gforms_captcha_private_key', GF_RECAPTCHA_PRIVATE_KEY );
 		update_option( 'rg_gforms_captcha_public_key', GF_RECAPTCHA_PUBLIC_KEY );
+
+		// Mock reCAPTCHA verification to return success.
+		add_filter( 'pre_http_request', [ $this, 'mock_recaptcha_response' ], 10, 3 );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function tearDown(): void {
+		remove_filter( 'pre_http_request', [ $this, 'mock_recaptcha_response' ], 10 );
+
+		parent::tearDown();
 	}
 
 	/**
@@ -324,4 +336,31 @@ class CaptchaFieldTest extends FormFieldTestCase implements FormFieldTestCaseInt
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {}
+
+	/**
+	 * Mock reCAPTCHA response for testing.
+	 *
+	 * @param mixed  $preempt .
+	 * @param array  $args .
+	 * @param string $url .
+	 * @return array|null
+	 */
+	public function mock_recaptcha_response( $preempt, $args, $url ) {
+		if ( strpos( $url, 'www.google.com/recaptcha/api/siteverify' ) !== false ) {
+			return [
+				'body'     => wp_json_encode(
+					[
+						'success'      => true,
+						'challenge_ts' => gmdate( 'c' ),
+						'hostname'     => 'test',
+					]
+				),
+				'response' => [
+					'code'    => 200,
+					'message' => 'OK',
+				],
+			];
+		}
+		return $preempt;
+	}
 }

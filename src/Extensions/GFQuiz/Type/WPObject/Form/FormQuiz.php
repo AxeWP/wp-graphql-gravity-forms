@@ -141,11 +141,12 @@ class FormQuiz extends AbstractObject implements Field {
 				'type'        => 'Float',
 				'description' => static fn () => __( 'The maximum score for this form.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ): ?float {
-					if ( ! isset( $context->gfForm ) ) {
+					$form_model = Compat::get_app_context( $context, 'gfForm' );
+					if ( ! isset( $form_model ) ) {
 						return null;
 					}
 
-					return ( gf_quiz() )->get_max_score( $context->gfForm->form ) ?: null;
+					return ( gf_quiz() )->get_max_score( $form_model->form ) ?: null;
 				},
 			],
 			'passPercent'                    => [
@@ -189,7 +190,7 @@ class FormQuiz extends AbstractObject implements Field {
 					'description' => static fn () => __( 'Quiz-specific settings that will affect ALL Quiz fields in the form. Requires Gravity Forms Quiz addon.', 'wp-graphql-gravity-forms' ),
 					'resolve'     => static function ( $source, array $args, AppContext $context ): ?array {
 						// FYI: If a user doesn't explicitly save the quiz settings on the backend, this will be null.
-						$context->gfForm = $source;
+						Compat::set_app_context( $context, 'gfForm', $source );
 						return empty( $source->quiz ) ? null : $source->quiz;
 					},
 				]

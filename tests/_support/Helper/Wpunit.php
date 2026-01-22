@@ -383,6 +383,7 @@ class Wpunit extends \Codeception\Module {
 			'maxFiles',
 			'maxFileSize',
 			'multipleFiles',
+			'allowsPrepopulate',
 			[ 'type' => 'fileupload' ],
 		];
 	}

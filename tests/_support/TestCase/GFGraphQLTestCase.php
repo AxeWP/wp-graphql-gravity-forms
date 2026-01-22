@@ -66,14 +66,16 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	 */
 	public function tearDown(): void {
 		// Your tear down methods here.
-		wp_delete_user( $this->admin->id );
+		wp_delete_user( $this->admin->ID );
 		global $_gf_state, $_gf_uploaded_files;
-		$_gf_state = [];
-		unset( $_gf_uploaded_files );
+		$_gf_state          = [];
+		$_gf_uploaded_files = [];
+		$_FILES             = [];
+		$_POST              = [];
 
-		global $_gf_state, $_gf_uploaded_files;
-		$_gf_state = [];
-		unset( $_gf_uploaded_files );
+		if ( class_exists( 'GFFormsModel' ) ) {
+			\GFFormsModel::$uploaded_files = [];
+		}
 
 		// Then...
 		parent::tearDown();

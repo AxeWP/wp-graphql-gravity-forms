@@ -43,7 +43,8 @@ class FormFieldsConnection extends AbstractConnection {
 						}
 
 						// If the form isn't stored in the context, we need to fetch it.
-						if ( empty( $context->gfForm ) && ! empty( $source['form_id'] ) ) {
+						$form = Compat::get_app_context( $context, 'gfForm' );
+						if ( empty( $form ) && ! empty( $source['form_id'] ) ) {
 							/** @var \WPGraphQL\GF\Model\Form $form */
 							$form = $context->get_loader( FormsLoader::$name )->load( (int) $source['form_id'] );
 
@@ -52,17 +53,17 @@ class FormFieldsConnection extends AbstractConnection {
 							}
 
 							// Store it in the context for easy access.
-							$context->gfForm = $form;
+							Compat::set_app_context( $context, 'gfForm', $form );
 						}
 
-						if ( empty( $context->gfForm->formFields ) ) {
+						if ( empty( $form->formFields ) ) {
 							return null;
 						}
 
 						// Set the Args for the connection resolver.
 						$args['where']['pageNumber'] = $source['targetPageNumber'];
 
-						return Factory::resolve_form_fields_connection( $context->gfForm, $args, $context, $info );
+						return Factory::resolve_form_fields_connection( $form, $args, $context, $info );
 					},
 				]
 			)

@@ -91,4 +91,50 @@ class Compat {
 
 		return $config;
 	}
+
+	/**
+	 * Gets context from AppContext.
+	 *
+	 * @todo remove when WPGraphQL < 2.3.8 is no longer supported.
+	 *
+	 * @param \WPGraphQL\AppContext $app_context The app context.
+	 * @param string                $key The context key.
+	 *
+	 * @return (
+	 *   $key is 'gfForm' ? ?\WPGraphQL\GF\Model\Form : (
+	 *     $key is 'gfEntry' ? \WPGraphQL\GF\Model\SubmittedEntry|\WPGraphQL\GF\Model\DraftEntry|null : (
+	 *       $key is 'gfField' ? ?\WPGraphQL\GF\Model\FormField : mixed
+	 *     )
+	 *   )
+	 * )
+	 */
+	public static function get_app_context( \WPGraphQL\AppContext $app_context, string $key ) {
+		// @phpstan-ignore function.alreadyNarrowedType (@todo remove when we don't support WPGraphQL < 2.3.8.)
+		if ( method_exists( $app_context, 'get' ) ) {
+			return $app_context->get( 'gf', $key );
+		}
+
+		// Old versions don't have namespaced context keys.
+		return property_exists( $app_context, $key ) ? $app_context->$key : null;
+	}
+
+	/**
+	 * Sets context on AppContext.
+	 *
+	 * @todo remove when WPGraphQL < 2.3.8 is no longer supported.
+	 *
+	 * @param \WPGraphQL\AppContext $app_context The app context.
+	 * @param string                $key The context key.
+	 * @param mixed                 $value The context value.
+	 */
+	public static function set_app_context( \WPGraphQL\AppContext $app_context, string $key, $value ): void {
+		// @phpstan-ignore function.alreadyNarrowedType (@todo remove when we don't support WPGraphQL < 2.3.8.)
+		if ( method_exists( $app_context, 'set' ) ) {
+			$app_context->set( 'gf', $key, $value );
+			return;
+		}
+
+		// Old versions don't have namespaced context keys.
+		$app_context->$key = $value;
+	}
 }

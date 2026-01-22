@@ -13,13 +13,11 @@ class ActivationCest {
 		$I->amOnPluginsPage();
 
 		$I->seePluginInstalled( $slug );
-
-		$I->activatePlugin( $slug );
 		$I->seePluginActivated( $slug );
 
 		$I->deactivatePlugin( $slug );
 
-		// For some reason, data-slug changes after deactivation.
+		// For some reason, data-slug changes after live-refresh.
 		$I->seePluginDeactivated( 'wpgraphql-for-gravity-forms' );
 
 		$I->activatePlugin( 'wpgraphql-for-gravity-forms' );

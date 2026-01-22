@@ -210,6 +210,7 @@ class FileUploadFieldTest extends FormFieldTestCase implements FormFieldTestCase
 						value
 					}
 				}
+				canPrepopulate
 				cssClass
 				description
 				descriptionPlacement

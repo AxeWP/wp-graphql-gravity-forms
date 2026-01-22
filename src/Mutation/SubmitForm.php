@@ -149,7 +149,7 @@ class SubmitForm extends AbstractMutation {
 
 			$field_values = self::prepare_field_values( $input['fieldValues'], $form, $save_as_draft );
 
-			$files        = EntryObjectMutation::initialize_files( $form['fields'], $input['fieldValues'], $save_as_draft );
+			$files        = EntryObjectMutation::initialize_files( $form['fields'], $input['fieldValues'], $save_as_draft, false );
 			$input_values = self::get_input_values( $save_as_draft, $field_values, $files );
 
 			$submission = GFUtils::submit_form(

@@ -11,6 +11,38 @@ use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 use WPGraphQL\GF\Utils\GFUtils;
 
+class FooFileUploadMultiple extends \GF_Field_FileUpload {
+	public function is_invalid_file( $file, $is_new = true ) {
+		// Mock valid upload for test files in /tmp
+		if ( $is_new && isset( $file['tmp_name'] ) && strpos( $file['tmp_name'], '/tmp/img' ) === 0 ) {
+			return false;
+		}
+		return parent::is_invalid_file( $file, $is_new );
+	}
+
+	public function upload_file( $form_id, $file ) {
+		\GFCommon::log_debug( __METHOD__ . '(): Uploading file: ' . $file['name'] );
+		$target = GFFormsModel::get_file_upload_path( $form_id, $file['name'] );
+		if ( ! $target ) {
+			\GFCommon::log_debug( __METHOD__ . '(): FAILED (Upload folder could not be created.)' );
+
+			return 'FAILED (Upload folder could not be created.)';
+		}
+		\GFCommon::log_debug( __METHOD__ . '(): Upload folder is ' . print_r( $target, true ) );
+
+		if ( copy( $file['tmp_name'], $target['path'] ) ) {
+			\GFCommon::log_debug( __METHOD__ . '(): File ' . $file['tmp_name'] . ' successfully moved to ' . $target['path'] . '.' );
+			$this->set_permissions( $target['path'] );
+
+			return $target['url'];
+		} else {
+			\GFCommon::log_debug( __METHOD__ . '(): FAILED (Temporary file ' . $file['tmp_name'] . ' could not be copied to ' . $target['path'] . ').' );
+
+			return 'FAILED (Temporary file could not be copied.)';
+		}
+	}
+}
+
 /**
  * Class -FileUploadMultipleFieldTest
  */
@@ -37,6 +69,7 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 		$stat  = stat( dirname( '/tmp/img4.png' ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( '/tmp/img4.png', $perms );
+		add_filter( 'gform_gf_field_create', [ $this, 'mock_file_upload_multiple_field' ], 10, 2 );
 
 		parent::setUp();
 
@@ -44,8 +77,17 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 		$_gf_uploaded_files = [];
 	}
 
+	public function mock_file_upload_multiple_field( $field, $properties ) {
+		if ( $field->type !== 'fileupload' || $field instanceof FooFileUploadMultiple ) {
+			return $field;
+		}
+
+		return new FooFileUploadMultiple( $properties );
+	}
+
 	public function tearDown(): void {
 		GFFormsModel::delete_files( $this->entry_id, $this->factory->form->get_object_by_id( $this->form_id ) );
+		remove_filter( 'gform_gf_field_create', [ $this, 'mock_file_upload_multiple_field' ] );
 
 		parent::tearDown();
 	}
@@ -213,6 +255,7 @@ class FileUploadMultipleFieldTest extends FormFieldTestCase implements FormField
 						value
 					}
 				}
+				canPrepopulate
 				cssClass
 				description
 				descriptionPlacement

@@ -8,6 +8,41 @@
 use Tests\WPGraphQL\GF\TestCase\GFGraphQLTestCase;
 
 /**
+ * Mock class for Post Image field to allow test files.
+ */
+class FooPostImage extends \GF_Field_Post_Image {
+	public function is_invalid_file( $file, $is_new = true ) {
+		// Mock valid upload for test files in /tmp
+		if ( $is_new && isset( $file['tmp_name'] ) && strpos( $file['tmp_name'], '/tmp/img' ) === 0 ) {
+			return false;
+		}
+		return parent::is_invalid_file( $file, $is_new );
+	}
+
+	public function upload_file( $form_id, $file ) {
+		\GFCommon::log_debug( __METHOD__ . '(): Uploading file: ' . $file['name'] );
+		$target = GFFormsModel::get_file_upload_path( $form_id, $file['name'] );
+		if ( ! $target ) {
+			\GFCommon::log_debug( __METHOD__ . '(): FAILED (Upload folder could not be created.)' );
+
+			return 'FAILED (Upload folder could not be created.)';
+		}
+		\GFCommon::log_debug( __METHOD__ . '(): Upload folder is ' . print_r( $target, true ) );
+
+		if ( copy( $file['tmp_name'], $target['path'] ) ) {
+			\GFCommon::log_debug( __METHOD__ . '(): File ' . $file['tmp_name'] . ' successfully moved to ' . $target['path'] . '.' );
+			$this->set_permissions( $target['path'] );
+
+			return $target['url'];
+		} else {
+			\GFCommon::log_debug( __METHOD__ . '(): FAILED (Temporary file ' . $file['tmp_name'] . ' could not be copied to ' . $target['path'] . '.)' );
+
+			return 'FAILED (Temporary file could not be copied.)';
+		}
+	}
+}
+
+/**
  * Class - SubmitFormMutationTest
  */
 class SubmitFormMutationTest extends GFGraphQLTestCase {
@@ -19,6 +54,15 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		parent::setUp();
 
 		$this->clearSchema();
+	}
+
+	/**
+	 * Tear down
+	 */
+	public function tearDown(): void {
+		remove_filter( 'gform_gf_field_create', [ $this, 'mock_post_image_field' ], 10 );
+
+		parent::tearDown();
 	}
 
 	/**
@@ -322,6 +366,14 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 	}
 
 	public function testSubmitWithPostCreation(): void {
+		// Copy the test image file to /tmp for the test.
+		copy( __DIR__ . '/../_support/files/img1.png', '/tmp/img1.png' );
+		$stat  = stat( dirname( '/tmp/img1.png' ) );
+		$perms = $stat['mode'] & 0000666;
+		@chmod( '/tmp/img1.png', $perms );
+
+		add_filter( 'gform_gf_field_create', [ $this, 'mock_post_image_field' ], 10, 2 );
+
 		$category = $this->factory->category->create_and_get();
 		$tag      = $this->factory->tag->create_and_get();
 
@@ -487,6 +539,11 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		wp_delete_category( $category->term_id );
 		wp_delete_term( $tag->term_id, 'post_tag' );
 		wp_delete_post( $actual['data']['submitGfForm']['entry']['post']['databaseId'], true );
+
+		// Clean up the copied file.
+		if ( file_exists( '/tmp/img1.png' ) ) {
+			unlink( '/tmp/img1.png' );
+		}
 	}
 
 	public function testSubmitWithOrderItems(): void {
@@ -714,6 +771,14 @@ class SubmitFormMutationTest extends GFGraphQLTestCase {
 		// Cleanup.
 		$this->factory->entry->delete( $actual['data']['submitGfForm']['entry']['databaseId'] );
 		$this->factory->form->delete( $form_id );
+	}
+
+	public function mock_post_image_field( $field, $properties ) {
+		if ( $field->type !== 'post_image' || $field instanceof FooPostImage ) {
+			return $field;
+		}
+
+		return new FooPostImage( $properties );
 	}
 
 	/**
