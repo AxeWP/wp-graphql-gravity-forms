@@ -20,32 +20,6 @@
 			"email": "david@axepress.dev"
 		}
 	],
-	"require": {
-		"php": ">=7.4",
-		"yahnis-elsts/plugin-update-checker": "^5.2.0"
-	},
-	"require-dev": {
-		"axepress/wp-graphql-cs": "^2.0.0",
-		"axepress/wp-graphql-stubs": "^2.3.0",
-		"codeception/lib-innerbrowser": "^1.0",
-		"codeception/module-asserts": "^1.0",
-		"codeception/module-cli": "^1.0",
-		"codeception/module-db": "^1.0",
-		"codeception/module-filesystem": "^1.0",
-		"codeception/module-phpbrowser": "^1.0",
-		"codeception/module-rest": "^1.0",
-		"codeception/module-webdriver": "^1.0",
-		"codeception/phpunit-wrapper": "^9.0",
-		"codeception/util-universalframework": "^1.0",
-		"lucatume/wp-browser": "<3.5",
-		"php-coveralls/php-coveralls": "^2.5",
-		"phpstan/extension-installer": "^1.1",
-		"phpstan/phpstan": "^2.0",
-		"phpunit/phpunit": "^9.0",
-		"szepeviktor/phpstan-wordpress": "^2.0",
-		"wp-cli/wp-cli-bundle": "^2.8.1",
-		"wp-graphql/wp-graphql-testcase": "~3.4.0"
-	},
 	"config": {
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true,
@@ -71,39 +45,25 @@
 			"Tests\\WPGraphQL\\GF\\TestCase\\": "tests/_support/TestCase"
 		}
 	},
+	"require": {
+		"php": ">=7.4",
+		"yahnis-elsts/plugin-update-checker": "^5.2.0"
+	},
+	"require-dev": {
+		"axepress/wp-graphql-cs": "^2.0.0",
+		"axepress/wp-graphql-stubs": "^2.3.0",
+		"codeception/module-rest": "^2.0",
+		"lucatume/wp-browser": "^3.7.0",
+		"phpstan/extension-installer": "^1.1",
+		"phpstan/phpstan": "^2.0",
+		"phpstan/phpstan-deprecation-rules": "^2.0.1",
+		"szepeviktor/phpstan-wordpress": "^2.0",
+		"wp-cli/wp-cli-bundle": "^2.8.1",
+		"wp-graphql/wp-graphql-testcase": "~3.4.0"
+	},
 	"scripts": {
-		"install-test-env": "bash bin/install-test-env.sh",
-		"install-stan-env": "bash bin/install-stan-env.sh",
-		"docker-build": "bash bin/run-docker.sh build",
-		"docker-run": "bash bin/run-docker.sh run",
-		"docker-destroy": "docker compose down",
-		"build-and-run": [
-			"@docker-build",
-			"@docker-run"
-		],
-		"build-app": "@docker-build -a",
-		"build-test": "@docker-build -t",
-		"run-app": "@docker-run -a",
-		"run-test": "@docker-run -t",
-		"lint": "vendor/bin/phpcs",
-		"phpcs-i": [
-			"php ./vendor/bin/phpcs -i"
-		],
-		"check-cs": [
-			"php ./vendor/bin/phpcs"
-		],
-		"fix-cs": [
-			"php ./vendor/bin/phpcbf"
-		],
-		"phpstan": [
-			"vendor/bin/phpstan analyze --ansi --memory-limit=1G -v"
-		],
-		"zip": [
-			"composer install --no-dev --optimize-autoloader",
-			"mkdir -p plugin-build/wp-graphql-gravity-forms",
-			"rsync -rc --exclude-from=.distignore --exclude=plugin-build . plugin-build/wp-graphql-gravity-forms/ --delete --delete-excluded -v",
-			"cd plugin-build ; zip -r wp-graphql-gravity-forms.zip wp-graphql-gravity-forms",
-			"rm -rf plugin-build/wp-graphql-gravity-forms/"
-		]
+		"lint": "phpcs",
+		"format": "phpcbf",
+		"phpstan": "vendor/bin/phpstan analyse --memory-limit=1G"
 	}
 }

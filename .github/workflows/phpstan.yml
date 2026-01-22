@@ -1,4 +1,4 @@
-name: Schema Linter
+name: PHPStan
 
 on:
   workflow_dispatch:
@@ -13,9 +13,10 @@ on:
       - ready_for_review
     paths:
       - 'bin/**'
+      - 'phpstan/**'
       - 'src/**'
-      - '.github/workflows/schema-linter.yml'
       - '**.php'
+      - '.github/workflows/phpstan.yml'
       - '.env.dist'
       - '.nvmrc'
       - '.wp-env.json'
@@ -23,6 +24,7 @@ on:
       - 'composer.lock'
       - 'package-lock.json'
       - 'package.json'
+      - 'phpstan.neon.dist'
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
@@ -32,7 +34,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Runs GraphQL schema linter checks.
+  # Runs PHP static analysis tests.
   #
   # Violations are reported inline with annotations.
   #
@@ -40,6 +42,7 @@ jobs:
   # - Checks out the repository.
   # - Sets up PHP.
   # - Gets last Monday's date (for cache invalidation).
+  # - Configures caching for PHP static analysis scans.
   # - Installs Composer dependencies.
   # - Makes Composer packages available globally.
   # - Sets up Node.js.
@@ -48,15 +51,10 @@ jobs:
   # - Sets up WordPress environment.
   # - Starts the WordPress Docker testing environment.
   # - Starts the Docker testing environment.
-  # - Setup GraphQL Schema Linter
-  # - Generate GraphQL schema.
-  # - Lint the generated schema.
-  # - Get latest tag version.
-  # - Get previously released schema.
-  # - Install Schema Inspector.
-  # - Run Schema Inspector
-  schema_linter:
-    name: Lint GraphQL schema
+  # - Runs PHPStan static analysis (with Pull Request annotations).
+  # - Saves the PHPStan result cache.
+  phpstan:
+    name: Run PHP static analysis
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -82,6 +80,14 @@ jobs:
         id: get-date
         run: echo "date=$(/bin/date -u --date='last Mon' "+%F")" >> "$GITHUB_OUTPUT"
 
+      - name: Cache PHP Static Analysis scan cache
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: tests/_output # This is defined in the base.neon file.
+          key: 'phpstan-result-cache-${{ runner.os }}-date-${{ steps.get-date.outputs.date }}'
+          restore-keys: |
+            phpstan-result-cache-
+
       - name: Install Composer dependencies
         uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520 # v3.1.1
 
@@ -98,7 +104,7 @@ jobs:
         run: npm ci
 
       - name: Create cache directories
-        run: mkdir -p ~/.wp-env/downloads tests/_data/plugins tests/_data/mu-plugins
+        run: mkdir -p ~/.wp-env/downloads
 
       - name: Cache WordPress downloads
         uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
@@ -114,7 +120,7 @@ jobs:
           path: |
             tests/_data/plugins
             tests/_data/mu-plugins
-          key: ${{ runner.os }}-wp-plugins-${{ hashFiles('.wp-env.json', 'bin/_lib.sh', 'bin/after-start.sh', 'bin/setup.sh') }}
+          key: ${{ runner.os }}-wp-plugins-${{ hashFiles('.wp-env.json', 'bin/_lib.sh') }}
           restore-keys: |
             ${{ runner.os }}-wp-plugins-
 
@@ -131,34 +137,13 @@ jobs:
           command: |
             npm run wp-env start -- ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
 
-      - name: Setup GraphQL Schema Linter
-        run: npm install -g graphql-schema-linter@^3.0 graphql@16
+      - name: Run PHP static analysis tests
+        id: phpstan
+        run: phpstan analyse -vvv --error-format=checkstyle | cs2pr
 
-      - name: Generate GraphQL schema
-        run: |
-          npm run wp-env -- run cli --env-cwd=wp-content/plugins/wp-graphql-gravity-forms  wp graphql generate-static-schema --output=tests/_output/schema.graphql
-          echo "Schema generated: $(wc -l < tests/_output/schema.graphql) lines"
-
-      - name: Lint the generated schema
-        id: schema-lint
-        run: |
-          graphql-schema-linter --rules arguments-have-descriptions,defined-types-are-used,deprecations-have-a-reason,descriptions-are-capitalized,enum-values-all-caps,enum-values-have-descriptions,fields-have-descriptions,input-object-values-have-descriptions,relay-connection-arguments-spec,types-have-descriptions,types-are-capitalized --ignore '{"defined-types-are-used":["MenuItemsWhereArgs","TermObjectUnion","TimezoneEnum"],"fields-have-descriptions":["WPGatsbyPreviewStatus","WPGatsbyPageNode.path","WPGatsbyCompatibility.satisfies"],"enum-values-have-descriptions":["WPGatsbyRemotePreviewStatusEnum","WPGatsbyWPPreviewedNodeStatus"]}' tests/_output/schema.graphql
-
-      - name: Display ignored schema linter issues in PR
-        run: graphql-schema-linter --rules arguments-have-descriptions,defined-types-are-used,deprecations-have-a-reason,descriptions-are-capitalized,enum-values-all-caps,enum-values-have-descriptions,fields-have-descriptions,input-object-values-have-descriptions,relay-connection-arguments-spec,types-have-descriptions,types-are-capitalized tests/_output/schema.graphql || true
-
-      - name: Get Latest tag
-        uses: actions-ecosystem/action-get-latest-tag@b7c32daec3395a9616f88548363a42652b22d435 # v1.6.0
-        id: get-latest-tag
-
-      - name: Get previously released schema
-        run: curl 'https://github.com/axewp/wp-graphql-gravity-forms/releases/download/${{ steps.get-latest-tag.outputs.tag }}/schema.graphql' -L  --output /tmp/${{ steps.get-latest-tag.outputs.tag }}.graphql
-
-      # https://github.com/marketplace/actions/graphql-inspector
-      - name: Install Schema Inspector
-        run: npm install -g @graphql-inspector/config @graphql-inspector/cli graphql@latest
-
-      - name: Run Schema Inspector
-        run: |
-          # This schema and previous release schema
-          graphql-inspector diff /tmp/${{ steps.get-latest-tag.outputs.tag }}.graphql tests/_output/schema.graphql
+      - name: Save result cache
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        if: ${{ !cancelled() }}
+        with:
+          path: tests/_output
+          key: 'phpstan-result-cache-${{ runner.os }}-date-${{ steps.get-date.outputs.date }}'

@@ -1,1 +1,3 @@
 dump.sql
+plugins/*
+!plugins/.gitkeep

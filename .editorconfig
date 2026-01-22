@@ -2,25 +2,30 @@
 # editorconfig.org
 
 # WordPress Coding Standards
-# https://make.wordpress.org/core/handbook/coding-standards/
+# https://developer.wordpress.org/coding-standards/wordpress-coding-standards/
 
 root = true
 
 [*]
 charset = utf-8
 end_of_line = lf
-indent_size = 4
-indent_style = tab
 insert_final_newline = true
 trim_trailing_whitespace = true
+indent_style = tab
 
-[*.txt]
-trim_trailing_whitespace = false
+[*.json]
+indent_size = 2
 
-[*.{md,json,yml}]
+[*.md]
 trim_trailing_whitespace = false
 indent_style = space
 indent_size = 2
 
-[*.json]
-indent_style = tab
+[*.txt]
+trim_trailing_whitespace = false
+
+[*.{yml,yaml}]
+insert_final_newline = false
+quote_type = single
+indent_style = space
+indent_size = 2

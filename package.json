@@ -1,0 +1,41 @@
+{
+	"name": "wp-graphql-gravity-forms",
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/axewp/wp-graphql-gravity-forms.git"
+	},
+	"files": [
+		"src",
+		"vendor",
+		"activation.php",
+		"deactivation.php",
+		"LICENSE",
+		"README.md",
+		"readme.txt",
+		"wp-graphql-gravity-forms.php"
+	],
+	"scripts": {
+		"plugin-zip": "wp-scripts plugin-zip",
+		"format": "wp-scripts format",
+		"lint:php": "wp-env run tests-cli --env-cwd=wp-content/plugins/$(basename \"$(pwd)\")/ -- composer run-script lint",
+		"lint:php:fix": "wp-env run tests-cli --env-cwd=wp-content/plugins/$(basename \"$(pwd)\")/ -- composer run-script format",
+		"lint:php:stan": "wp-env run tests-cli --env-cwd=wp-content/plugins/$(basename \"$(pwd)\")/ -- composer run-script phpstan",
+		"test:codecept": "wp-env run tests-cli --env-cwd=wp-content/plugins/$(basename \"$(pwd)\")/ -- vendor/bin/codecept",
+		"wp-env": "wp-env"
+	},
+	"devDependencies": {
+		"@wordpress/env": "^10.38.0",
+		"@wordpress/prettier-config": "^4.38.0",
+		"@wordpress/scripts": "^31.3.0"
+	},
+	"overrides": {
+		"webpack-dev-server@<=5.2.0": ">=5.2.1",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
+	},
+	"engines": {
+		"node": ">=22.21.1",
+		"npm": ">=10.9.4"
+	}
+}

@@ -25,12 +25,11 @@ parameters:
 			- deactivation.php
 			- src/
 		scanDirectories:
-			- ../gravityforms/
-			- ../gravityformssignature/
-			- ../gravityformschainedselects/
-			- ../gravityformsquiz/
-			- ../wp-gatsby/
-			- ../wp-jamstack-deployments/
+			- tests/_data/plugins/gravityforms/
+			- tests/_data/plugins/gravityformssignature/
+			- tests/_data/plugins/gravityformschainedselects/
+			- tests/_data/plugins/gravityformsquiz/
+			- tests/_data/plugins/wp-gatsby/
+			- tests/_data/plugins/wp-jamstack-deployments/
 		scanFiles:
 			- vendor/axepress/wp-graphql-stubs/wp-graphql-stubs.php
-		
