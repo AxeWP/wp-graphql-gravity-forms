@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- dev: Migrate development and testing environment to `@wordpress/env` (`wp-env`), and update scaffolding for best practices.
+- ci: Cleanup and optimize GitHub workflows.
+- dev: Integrated Prettier and `@wordpress/scripts` for standardized codebase management.
 - perf: Add support for AppContext::get() and ::set() in WPGraphQL v2.3.8+.
 - feat: Refactor File Upload handling for Gravity Forms 2.8.6+ compatibility.
 - ci: Test compatibility against WPGraphQL v2.6.0 and WordPress 6.8.3.
