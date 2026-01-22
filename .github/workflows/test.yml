@@ -443,7 +443,7 @@ jobs:
 
       - name: Run WPUnit Tests ${{ matrix.coverage && ' with coverage report' || '' }}
         run: |
-          npm run test:codecept -- run wpunit ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }} ${{ matrix.coverage && '--coverage --coverage-xml' || '' }}
+          npm run test:codecept -- run wpunit ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }} ${{ matrix.coverage && '--coverage --coverage-xml --coverage-html' || '' }}
 
       - name: Upload test failure artifacts
         if: failure()
