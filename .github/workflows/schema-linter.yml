@@ -1,0 +1,164 @@
+name: Schema Linter
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - ready_for_review
+    paths:
+      - 'bin/**'
+      - 'src/**'
+      - '.github/workflows/schema-linter.yml'
+      - '**.php'
+      - '.env.dist'
+      - '.nvmrc'
+      - '.wp-env.json'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'package-lock.json'
+      - 'package.json'
+
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name for pull requests
+  # or the commit hash for any other events.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  # Runs GraphQL schema linter checks.
+  #
+  # Violations are reported inline with annotations.
+  #
+  # Performs the following steps:
+  # - Checks out the repository.
+  # - Sets up PHP.
+  # - Gets last Monday's date (for cache invalidation).
+  # - Installs Composer dependencies.
+  # - Makes Composer packages available globally.
+  # - Sets up Node.js.
+  # - Installs npm dependencies.
+  # - Configures caching for Docker images.
+  # - Sets up WordPress environment.
+  # - Starts the WordPress Docker testing environment.
+  # - Starts the Docker testing environment.
+  # - Setup GraphQL Schema Linter
+  # - Generate GraphQL schema.
+  # - Lint the generated schema.
+  # - Get latest tag version.
+  # - Get previously released schema.
+  # - Install Schema Inspector.
+  # - Run Schema Inspector
+  schema_linter:
+    name: Lint GraphQL schema
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          show-progress: ${{ runner.debug == '1' && 'true' || 'false' }}
+          persist-credentials: false
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@ec406be512d7077f68eed36e63f4d91bc006edc4 # v2.35.4
+        with:
+          php-version: 8.4
+          coverage: none
+          tools: cs2pr
+
+      # This date is used to ensure that the PHPCS cache is cleared at least once every week.
+      # http://man7.org/linux/man-pages/man1/date.1.html
+      - name: "Get last Monday's date"
+        id: get-date
+        run: echo "date=$(/bin/date -u --date='last Mon' "+%F")" >> "$GITHUB_OUTPUT"
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520 # v3.1.1
+
+      - name: Make Composer packages available globally
+        run: echo "${PWD}/vendor/bin" >> "$GITHUB_PATH"
+
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          cache: 'npm'
+          node-version-file: '.nvmrc'
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      - name: Create cache directories
+        run: mkdir -p ~/.wp-env/downloads tests/_data/plugins tests/_data/mu-plugins
+
+      - name: Cache WordPress downloads
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: ~/.wp-env/downloads
+          key: ${{ runner.os }}-wp-env-downloads-${{ hashFiles('.wp-env.json') }}
+          restore-keys: |
+            ${{ runner.os }}-wp-env-downloads-
+
+      - name: Cache WordPress Plugins
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: |
+            tests/_data/plugins
+            tests/_data/mu-plugins
+          key: ${{ runner.os }}-wp-plugins-${{ hashFiles('.wp-env.json', 'bin/_lib.sh', 'bin/after-start.sh', 'bin/setup.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-wp-plugins-
+
+      - name: Setup .env file
+        run: |
+          cp .env.dist .env
+          echo GF_KEY=${{ secrets.GF_KEY }} >> .env
+
+      - name: Start the Docker testing environment
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: |
+            npm run wp-env start -- ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
+
+      - name: Setup GraphQL Schema Linter
+        run: npm install -g graphql-schema-linter@^3.0 graphql@16
+
+      - name: Generate GraphQL schema
+        run: |
+          npm run wp-env -- run cli --env-cwd=wp-content/plugins/wp-graphql-gravity-forms  wp graphql generate-static-schema --output=tests/_output/schema.graphql
+          echo "Schema generated: $(wc -l < tests/_output/schema.graphql) lines"
+
+      - name: Lint the generated schema
+        id: schema-lint
+        run: |
+          graphql-schema-linter --rules arguments-have-descriptions,defined-types-are-used,deprecations-have-a-reason,descriptions-are-capitalized,enum-values-all-caps,enum-values-have-descriptions,fields-have-descriptions,input-object-values-have-descriptions,relay-connection-arguments-spec,types-have-descriptions,types-are-capitalized --ignore '{"defined-types-are-used":["MenuItemsWhereArgs","TermObjectUnion","TimezoneEnum"],"fields-have-descriptions":["WPGatsbyPreviewStatus","WPGatsbyPageNode.path","WPGatsbyCompatibility.satisfies"],"enum-values-have-descriptions":["WPGatsbyRemotePreviewStatusEnum","WPGatsbyWPPreviewedNodeStatus"]}' tests/_output/schema.graphql
+
+      - name: Display ignored schema linter issues in PR
+        run: graphql-schema-linter --rules arguments-have-descriptions,defined-types-are-used,deprecations-have-a-reason,descriptions-are-capitalized,enum-values-all-caps,enum-values-have-descriptions,fields-have-descriptions,input-object-values-have-descriptions,relay-connection-arguments-spec,types-have-descriptions,types-are-capitalized tests/_output/schema.graphql || true
+
+      - name: Get Latest tag
+        uses: actions-ecosystem/action-get-latest-tag@b7c32daec3395a9616f88548363a42652b22d435 # v1.6.0
+        id: get-latest-tag
+
+      - name: Get previously released schema
+        run: curl 'https://github.com/axewp/wp-graphql-gravity-forms/releases/download/${{ steps.get-latest-tag.outputs.tag }}/schema.graphql' -L  --output /tmp/${{ steps.get-latest-tag.outputs.tag }}.graphql
+
+      # https://github.com/marketplace/actions/graphql-inspector
+      - name: Install Schema Inspector
+        run: npm install -g @graphql-inspector/config @graphql-inspector/cli graphql@latest
+
+      - name: Run Schema Inspector
+        run: |
+          # This schema and previous release schema
+          graphql-inspector diff /tmp/${{ steps.get-latest-tag.outputs.tag }}.graphql tests/_output/schema.graphql

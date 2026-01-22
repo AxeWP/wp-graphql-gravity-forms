@@ -1,0 +1,149 @@
+name: PHP Static Analysis
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - ready_for_review
+    paths:
+      - 'bin/**'
+      - 'phpstan/**'
+      - 'src/**'
+      - '**.php'
+      - '.github/workflows/phpstan.yml'
+      - '.env.dist'
+      - '.nvmrc'
+      - '.wp-env.json'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'package-lock.json'
+      - 'package.json'
+      - 'phpstan.neon.dist'
+
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name for pull requests
+  # or the commit hash for any other events.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  # Runs PHP static analysis tests.
+  #
+  # Violations are reported inline with annotations.
+  #
+  # Performs the following steps:
+  # - Checks out the repository.
+  # - Sets up PHP.
+  # - Gets last Monday's date (for cache invalidation).
+  # - Configures caching for PHP static analysis scans.
+  # - Installs Composer dependencies.
+  # - Makes Composer packages available globally.
+  # - Sets up Node.js.
+  # - Installs npm dependencies.
+  # - Configures caching for Docker images.
+  # - Sets up WordPress environment.
+  # - Starts the WordPress Docker testing environment.
+  # - Starts the Docker testing environment.
+  # - Runs PHPStan static analysis (with Pull Request annotations).
+  # - Saves the PHPStan result cache.
+  phpstan:
+    name: Run PHP static analysis
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          show-progress: ${{ runner.debug == '1' && 'true' || 'false' }}
+          persist-credentials: false
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@ec406be512d7077f68eed36e63f4d91bc006edc4 # v2.35.4
+        with:
+          php-version: 8.4
+          coverage: none
+          tools: cs2pr
+
+      # This date is used to ensure that the PHPCS cache is cleared at least once every week.
+      # http://man7.org/linux/man-pages/man1/date.1.html
+      - name: "Get last Monday's date"
+        id: get-date
+        run: echo "date=$(/bin/date -u --date='last Mon' "+%F")" >> "$GITHUB_OUTPUT"
+
+      - name: Cache PHP Static Analysis scan cache
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: tests/_output # This is defined in the base.neon file.
+          key: 'phpstan-result-cache-${{ runner.os }}-date-${{ steps.get-date.outputs.date }}'
+          restore-keys: |
+            phpstan-result-cache-
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520 # v3.1.1
+
+      - name: Make Composer packages available globally
+        run: echo "${PWD}/vendor/bin" >> "$GITHUB_PATH"
+
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          cache: 'npm'
+          node-version-file: '.nvmrc'
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      - name: Create cache directories
+        run: mkdir -p ~/.wp-env/downloads
+
+      - name: Cache WordPress downloads
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: ~/.wp-env/downloads
+          key: ${{ runner.os }}-wp-env-downloads-${{ hashFiles('.wp-env.json') }}
+          restore-keys: |
+            ${{ runner.os }}-wp-env-downloads-
+
+      - name: Cache WordPress Plugins
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: |
+            tests/_data/plugins
+            tests/_data/mu-plugins
+          key: ${{ runner.os }}-wp-plugins-${{ hashFiles('.wp-env.json', 'bin/_lib.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-wp-plugins-
+
+      - name: Setup .env file
+        run: |
+          cp .env.dist .env
+          echo GF_KEY=${{ secrets.GF_KEY }} >> .env
+
+      - name: Start the Docker testing environment
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: |
+            npm run wp-env start -- ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
+
+      - name: Run PHP static analysis tests
+        id: phpstan
+        run: phpstan analyse -vvv --error-format=checkstyle | cs2pr
+
+      - name: Save result cache
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        if: ${{ !cancelled() }}
+        with:
+          path: tests/_output
+          key: 'phpstan-result-cache-${{ runner.os }}-date-${{ steps.get-date.outputs.date }}'
