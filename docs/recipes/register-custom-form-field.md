@@ -37,17 +37,18 @@ register_graphql_field(
   [
     'type' => 'MyCustomFormFieldValueObject',
     'description' => static fn () => __( 'The Field Value object for my custom GF field.', 'my-plugin'),
-    'resolve' => function( $source ){
+    'resolve' => function( $source, array $args, AppContext $context ) {
       /**
        * Usually, the entry is saved in the formField's context/
        * If you are fetching this field in a custom setup, you may need to use GFAPI::get_entry().
        */
-      if( ! isset( $context->gfEntry->entry ) ){
+      $gf_entry = $context->get( 'gf', 'gfEntry' );
+      if( ! isset( $gf_entry, $gf_entry->entry ) ){
         return null;
       }
 
       // Grab the field value from the entry, null if it isnt set.
-      $value = $context->gfEntry->entry[ $source->id ] ?? null;
+      $value = $gf_entry->entry[ $source->id ] ?? null;
 
       // This will be resolved by `MyCustomFieldFieldValueObject`.
       return process_my_custom_field_value($value);

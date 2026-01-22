@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- perf: Add support for AppContext::get() and ::set() in WPGraphQL v2.3.8+.
+- feat: Refactor File Upload handling for Gravity Forms 2.8.6+ compatibility.
+- ci: Test compatibility against WPGraphQL v2.6.0 and WordPress 6.8.3.
 - perf: migrate DataLoader registration to use lazy-loaded `graphql_data_loader_classes` filter. H/t @bpkennedy
 - fix: cleanup activation lifecycle.
 - fix: Prevent duplicate file counts for Single File Upload fields. Props @Gytjarek

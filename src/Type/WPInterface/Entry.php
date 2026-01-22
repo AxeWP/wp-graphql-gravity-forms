@@ -86,10 +86,11 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 				'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
 				'description'    => static fn () => __( 'The form fields associated with the entry.', 'wp-graphql-gravity-forms' ),
 				'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
-					$context->gfEntry = $source;
+					Compat::set_app_context( $context, 'gfEntry', $source );
 
 					// If the form isn't stored in the context, we need to fetch it.
-					if ( empty( $context->gfForm ) ) {
+					$form = Compat::get_app_context( $context, 'gfForm' );
+					if ( empty( $form ) ) {
 						/** @var ?\WPGraphQL\GF\Model\Form $form */
 						$form = $context->get_loader( FormsLoader::$name )->load( $source->formDatabaseId );
 
@@ -97,15 +98,14 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 							return null;
 						}
 
-						// Store it in the context for easy access.
-						$context->gfForm = $form;
+						Compat::set_app_context( $context, 'gfForm', $form );
 					}
 
-					if ( empty( $context->gfForm->formFields ) ) {
+					if ( empty( $form->formFields ) ) {
 						return null;
 					}
 
-					return Factory::resolve_form_fields_connection( $context->gfForm, $args, $context, $info );
+					return Factory::resolve_form_fields_connection( $form, $args, $context, $info );
 				},
 			],
 		];
@@ -182,18 +182,19 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 				'type'        => OrderSummary::$type,
 				'description' => static fn () => __( 'The entry order summary. Null if the entry has no pricing fields', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					if ( empty( $context->gfForm ) ) {
-						/** @var ?\WPGraphQL\GF\Model\Form $form */
-						$form = $context->get_loader( FormsLoader::$name )->load( $source->formDatabaseId );
+					$form_model = Compat::get_app_context( $context, 'gfForm' );
+					if ( empty( $form_model ) ) {
+						/** @var ?\WPGraphQL\GF\Model\Form $form_model */
+						$form_model = $context->get_loader( FormsLoader::$name )->load( $source->formDatabaseId );
 
-						if ( null === $form ) {
+						if ( null === $form_model ) {
 							return null;
 						}
 
-						$context->gfForm = $form;
+						Compat::set_app_context( $context, 'gfForm', $form_model );
 					}
 
-					$order = GF_Order_Factory::create_from_entry( $context->gfForm->form, $source->entry );
+					$order = GF_Order_Factory::create_from_entry( $form_model->form, $source->entry );
 
 					/** @var \Gravity_Forms\Gravity_Forms\Orders\Items\GF_Order_Item[]|\Gravity_Forms\Gravity_Forms\Orders\Items\GF_Order_Item $items */
 					$items = $order->get_items();

@@ -39,7 +39,7 @@ class FileUploadValuesInput extends AbstractFieldValueInput {
 	 * @throws \GraphQL\Error\UserError
 	 */
 	protected function prepare_value() {
-		if ( $this->is_draft ) {
+		if ( $this->is_draft && 'post_image' !== $this->field->type ) {
 			return '';
 		}
 

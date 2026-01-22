@@ -103,7 +103,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 				],
 				'description'      => static fn () => __( 'The entries submitted to the form.', 'wp-graphql-gravity-forms' ),
 				'resolve'          => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
-					$context->gfForm = $source;
+					Compat::set_app_context( $context, 'gfForm', $source );
 
 					$args['where']['formIds'] = $source->databaseId;
 
@@ -115,7 +115,7 @@ class Form extends AbstractObject implements TypeWithConnections, TypeWithInterf
 				'description'    => static fn () => __( 'The form fields associated with the form.', 'wp-graphql-gravity-forms' ),
 				'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
 				'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
-					$context->gfForm = $source;
+					Compat::set_app_context( $context, 'gfForm', $source );
 
 					if ( empty( $source->formFields ) ) {
 						return null;
