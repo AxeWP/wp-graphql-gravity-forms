@@ -1,4 +1,4 @@
-name: WordPress PHP Code Standards
+name: PHPCS
 
 on:
   workflow_dispatch:
@@ -39,7 +39,7 @@ jobs:
   # - Runs PHPCS on the full codebase.
   # - Generate a report for displaying issues as pull request annotations.
   phpcs:
-    name: Run PHPCS coding standards checks
+    name: Lint PHP
     runs-on: ubuntu-24.04
     permissions:
       contents: read

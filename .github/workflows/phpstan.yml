@@ -1,4 +1,4 @@
-name: PHP Static Analysis
+name: PHPStan
 
 on:
   workflow_dispatch:

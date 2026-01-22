@@ -1,4 +1,4 @@
-name: Integration Testing (Codeception)
+name: Codeception
 
 on:
   workflow_dispatch:
@@ -50,7 +50,7 @@ jobs:
   # - Uploads code coverage report to Codecov.io (if coverage is enabled).
   # - Uploads HTML coverage report as an artifact (if coverage is enabled).
   codeception:
-    name: Test PHP ${{ matrix.php }} WP ${{ matrix.wordpress }}${{ matrix.coverage && ' with coverage' || '' }}
+    name: PHP ${{ matrix.php }} WP ${{ matrix.wordpress }}${{ matrix.coverage && ' (coverage)' || '' }}
     runs-on: ubuntu-24.04
     permissions:
       contents: read
