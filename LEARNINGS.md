@@ -118,3 +118,15 @@
 **Impact**: Credit Card field is now fully functional with GraphQL support when experimental features are enabled. Provides secure handling of credit card data through GraphQL mutations.
 
 **Testing**: CreditCardFieldTest validates all field properties, queries, and mutation operations (submit, update, draft operations) when experimental flag is set.
+
+## Submit Button Field Exclusion Verification (2026-01-23)
+
+**Issue**: Submit button field was listed as open in PRD.md but is intentionally excluded as a non-data field.
+
+**Investigation**: Confirmed that 'submit' is properly included in the get_ignored_gf_field_types() array in Utils.php, preventing it from being registered in the GraphQL schema. No GraphQL SubmitField type exists in the codebase.
+
+**Root Cause**: Submit button is not a data field that collects user input - it's a form control element for triggering form submission.
+
+**Resolution**: Updated PRD.md to mark Submit button field as [x] (complete/excluded). The field remains properly excluded from GraphQL schema exposure.
+
+**Impact**: Ensures non-data fields remain unsupported, maintaining clean separation between form controls and data collection fields. No tests needed as the field is intentionally excluded.
