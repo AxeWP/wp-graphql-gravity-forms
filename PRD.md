@@ -100,7 +100,7 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 | `singleshipping` | class-gf-field-singleshipping.php | SingleShippingFieldTest.php | Pricing | **Added** |
 | `total` | class-gf-field-total.php | TotalFieldTest.php | Pricing | Listed |
 | `price` | class-gf-field-price.php | PriceFieldTest.php | Pricing | **Added** |
-| `calculation` | class-gf-field-calculation.php | CalculationFieldTest.php | Pricing | Cannot Implement |
+| `calculation` | class-gf-field-calculation.php | ProductCalculationFieldTest.php | Pricing | Supported via Product Field |
 | `creditcard` | class-gf-field-creditcard.php | - | Ignored | Experimental |
 | `donation` | class-gf-field-donation.php | - | Ignored | Deprecated |
 | `repeater` | class-gf-field-repeater.php | - | Ignored | Beta |
@@ -160,7 +160,7 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 - [x] **Single Shipping** (`singleshipping`) -> `SingleShippingFieldTest.php` | `class-gf-field-singleshipping.php` - **MISSING FROM PRD**
 - [x] **Total** (`total`) -> `TotalFieldTest.php` | `class-gf-field-total.php`
 - [x] **Price** (`price`) -> `PriceFieldTest.php` | `class-gf-field-price.php`
-- [x] **Calculation** (`calculation`) -> `CalculationFieldTest.php` | `class-gf-field-calculation.php` - *CANNOT IMPLEMENT* (GF 2.9 incompatibility)
+- [x] **Calculation** (`calculation`) -> Supported via Product Field variants (inputType = 'calculation') | `class-gf-field-calculation.php` - *Supported as Product Field input type*
 
 ### 🟠 Quiz Fields (Add-on Support)
 - [x] **Quiz** (`quiz`) -> `QuizFieldTest.php` - *Add-on field (GFQuiz extension)*
