@@ -1,6 +1,6 @@
 
 > wp-env
-> wp-env run tests-cli --env-cwd=wp-content/plugins/wp-graphql-gravity-forms wp graphql generate-static-schema
+> wp-env run tests-cli wp graphql generate-static-schema
 
 Getting the Schema...
 Formatting the Schema...

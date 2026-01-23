@@ -137,7 +137,7 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 - [ ] **Multiple Choice** (`multi_choice`) -> `MultipleChoiceFieldTest.php` | `class-gf-field-multiple-choice.php` - **CANNOT IMPLEMENT** (GF 2.9 test environment incompatibility)
 - [x] **Consent** (`consent`) -> `ConsentFieldTest.php` | `class-gf-field-consent.php`
 - [x] **Captcha** (`captcha`) -> `CaptchaFieldTest.php` | `class-gf-field-captcha.php` (Check: Validation bypass in tests)
-- [ ] **Password** (`password`) -> `PasswordFieldTest.php` - **CANNOT IMPLEMENT** (GF 2.9 test environment incompatibility)
+- [x] **Password** (`password`) -> `PasswordFieldTest.php`
 - [x] **Image Choice** (`image_choice`) -> `ImageChoiceFieldTest.php` (GF 2.5+)
 - [x] **Signature** (`signature`) -> `SignatureFieldTest.php` - *Add-on field (GFSignature extension)*
 
@@ -159,7 +159,7 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 - [x] **Shipping** (`shipping`) -> `ShippingFieldTest.php` | `class-gf-field-shipping.php` (Base shipping field)
 - [x] **Single Shipping** (`singleshipping`) -> `SingleShippingFieldTest.php` | `class-gf-field-singleshipping.php` - **MISSING FROM PRD**
 - [x] **Total** (`total`) -> `TotalFieldTest.php` | `class-gf-field-total.php`
-- [ ] **Price** (`price`) -> `PriceFieldTest.php` | `class-gf-field-price.php` - **CREATED BUT CANNOT RUN** (GF 2.9 incompatibility)
+- [ ] **Price** (`price`) -> `PriceFieldTest.php` | `class-gf-field-price.php` - *CANNOT IMPLEMENT* (GF 2.9 incompatibility)
 - [ ] **Calculation** (`calculation`) -> `CalculationFieldTest.php` | `class-gf-field-calculation.php` - *CANNOT IMPLEMENT* (GF 2.9 incompatibility)
 
 ### 🟠 Quiz Fields (Add-on Support)
