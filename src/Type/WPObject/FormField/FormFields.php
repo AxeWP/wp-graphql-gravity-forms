@@ -55,7 +55,6 @@ class FormFields implements Hookable, Registrable {
 						'hiddenproduct',
 						'singleproduct',
 						'singleshipping',
-						'price',
 					]
 				),
 				true

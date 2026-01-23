@@ -159,7 +159,7 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 - [x] **Shipping** (`shipping`) -> `ShippingFieldTest.php` | `class-gf-field-shipping.php` (Base shipping field)
 - [x] **Single Shipping** (`singleshipping`) -> `SingleShippingFieldTest.php` | `class-gf-field-singleshipping.php` - **MISSING FROM PRD**
 - [x] **Total** (`total`) -> `TotalFieldTest.php` | `class-gf-field-total.php`
-- [x] **Price** (`price`) -> `PriceFieldTest.php` | `class-gf-field-price.php` - *CANNOT IMPLEMENT* (GF 2.9 incompatibility)
+- [x] **Price** (`price`) -> `PriceFieldTest.php` | `class-gf-field-price.php`
 - [x] **Calculation** (`calculation`) -> `CalculationFieldTest.php` | `class-gf-field-calculation.php` - *CANNOT IMPLEMENT* (GF 2.9 incompatibility)
 
 ### 🟠 Quiz Fields (Add-on Support)

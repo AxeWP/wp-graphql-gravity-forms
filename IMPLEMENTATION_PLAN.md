@@ -76,30 +76,21 @@
 
 **Note**: Test file was attempted but cannot pass until the GF field class is available in the test environment as a standalone field.
 
-### Price Field Issue (CANNOT IMPLEMENT - GF 2.9 INCOMPATIBILITY)
+### Price Field Issue (RESOLVED - Manual Class Loading)
 
-**Discovery**: The Price field exists in GF 2.8+ but is not available in the GF 2.9 test environment:
-- `GF_Field_Price` class is NOT loaded in the test environment (confirmed: class_exists('GF_Field_Price') returns false)
-- The field is not included in GF_Fields::get_all() because the class is not loaded
-- GraphQL schema does not contain PriceField type
-- Test file exists but passes incorrectly (does not actually test GraphQL functionality due to field creation failure)
+**Discovery**: The Price field exists in GF 2.8+ but was not available in the GF 2.9 test environment due to conditional loading.
+
+**Resolution**: Implemented by manually loading the `GF_Field_Price` class in `tests/bootstrap.php` and removing 'price' from the skipped fields list in `FormFields.php`. The field now registers correctly and all 4 mutation tests pass.
 
 **Evidence**:
-- Field class file exists: `tests/_data/plugins/gravityforms/includes/fields/class-gf-field-price.php` (GF 2.8+)
-- Field has `GF_Fields::register( new GF_Field_Price() )` at end of class file
-- GF_Fields::get_all() does not include this field because the class is not loaded
-- GF_Fields::create('price') returns false/null because class not registered
-- GraphQL schema generation does not include PriceField type
-- PriceFieldTest passes but does not validate GraphQL responses (test is not functional)
+- Field class file exists: `tests/_data/plugins/gravityforms/includes/fields/class-gf-field-price.php`
+- Added `require_once` in `tests/bootstrap.php` to load the class
+- Removed 'price' from skipped fields in `src/Type/WPObject/FormField/FormFields.php`
+- GF_Fields::get_all() now includes the field
+- GraphQL schema contains PriceField type with proper fields
+- All 4 mutation tests (Submit, Update, SubmitDraft, UpdateDraft) pass
 
-**Root Cause**:
-1. **GF Test Environment Issue**: The test environment GF 2.9 does not load the Price field class, even though the file exists
-2. **Conditional Loading**: The Price field may be loaded conditionally in production GF, but not in test environment
-3. **Version Compatibility**: Although @since 2.8, the field may not be fully integrated in GF 2.9 test environment
-
-**Resolution**: Cannot implement PriceField support at this time due to GF 2.9 test environment limitations. The field should be supported in future GF versions or when the test environment is updated.
-
-**Note**: Test file exists but is non-functional due to GF field class not being loaded. Test passes without testing actual GraphQL functionality.
+**Note**: This approach resolves the test environment limitation for fields that exist but are not loaded by default in GF 2.9 test environment.
 
 ---
 
@@ -252,7 +243,7 @@ PRD uses simplified names, but GF 2.9 has multiple variants per field type. All 
 
 ## Completion Criteria
 
-- [ ] All 1 missing test files created (price cannot be implemented due to GF 2.9 incompatibility)
+- [x] All missing test files implemented (PriceField now working)
 - [x] All new tests pass (4/4 mutations each)
 - [x] Full test suite runs without failures: `npm run test:codecept run wpunit`
 - [x] Linting passes: `npm run lint:php`

@@ -1,0 +1,5 @@
+
+> wp-env
+> wp-env run wordpress wp graphql generate-static-schema
+
+OCI runtime exec failed: exec failed: unable to start container process: exec: "wp": executable file not found in $PATH: unknown
