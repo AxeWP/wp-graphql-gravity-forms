@@ -12,6 +12,8 @@ use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
  * Class -ImageChoiceFieldTest.
  */
 class ImageChoiceFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+
+
 	/**
 	 * Tests the field properties and values.
 	 */

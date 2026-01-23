@@ -100,7 +100,7 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 | `singleshipping` | class-gf-field-singleshipping.php | SingleShippingFieldTest.php | Pricing | **Added** |
 | `total` | class-gf-field-total.php | TotalFieldTest.php | Pricing | Listed |
 | `price` | class-gf-field-price.php | PriceFieldTest.php | Pricing | **Added** |
-| `calculation` | class-gf-field-calculation.php | CalculationFieldTest.php | Pricing | **Added** |
+| `calculation` | class-gf-field-calculation.php | CalculationFieldTest.php | Pricing | Cannot Implement |
 | `creditcard` | class-gf-field-creditcard.php | - | Ignored | Experimental |
 | `donation` | class-gf-field-donation.php | - | Ignored | Deprecated |
 | `repeater` | class-gf-field-repeater.php | - | Ignored | Beta |
@@ -138,7 +138,7 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 - [ ] **Consent** (`consent`) -> `ConsentFieldTest.php` | `class-gf-field-consent.php`
 - [ ] **Captcha** (`captcha`) -> `CaptchaFieldTest.php` | `class-gf-field-captcha.php` (Check: Validation bypass in tests)
 - [ ] **Password** (`password`) -> `PasswordFieldTest.php` - **CANNOT IMPLEMENT** (GF 2.9 test environment incompatibility)
-- [ ] **Image Choice** (`image_choice`) -> `ImageChoiceFieldTest.php` - **CREATED BUT HAS ISSUES** (GF 2.5+)
+- [x] **Image Choice** (`image_choice`) -> `ImageChoiceFieldTest.php` (GF 2.5+)
 - [ ] **Signature** (`signature`) -> `SignatureFieldTest.php` - *Add-on field (GFSignature extension)*
 
 ### 🔵 Post Fields (Integration: WP Core)
@@ -160,7 +160,7 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 - [ ] **Single Shipping** (`singleshipping`) -> `SingleShippingFieldTest.php` | `class-gf-field-singleshipping.php` - **MISSING FROM PRD**
 - [ ] **Total** (`total`) -> `TotalFieldTest.php` | `class-gf-field-total.php`
 - [ ] **Price** (`price`) -> `PriceFieldTest.php` | `class-gf-field-price.php` - **CREATED BUT CANNOT RUN** (GF 2.9 incompatibility)
-- [ ] **Calculation** (`calculation`) -> `CalculationFieldTest.php` | `class-gf-field-calculation.php` - **MISSING TEST**
+- [ ] **Calculation** (`calculation`) -> `CalculationFieldTest.php` | `class-gf-field-calculation.php` - *CANNOT IMPLEMENT* (GF 2.9 incompatibility)
 
 ### 🟠 Quiz Fields (Add-on Support)
 - [ ] **Quiz** (`quiz`) -> `QuizFieldTest.php` - *Add-on field (GFQuiz extension)*

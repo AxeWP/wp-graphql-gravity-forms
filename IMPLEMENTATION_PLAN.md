@@ -10,16 +10,16 @@
 
 ### Current Status
 - **Total Test Files**: 57 test files exist in `tests/wpunit/` (Password test file created)
-- **Fields with Complete Tests** (4/4 mutations): 53 fields
+- **Fields with Complete Tests** (4/4 mutations): 54 fields
 - **Fields with No Mutations** (expected): 3 fields (display/structure-only)
 - **Test Pass Rate**: 100% (all existing tests passing)
-- **Missing Test Files**: 4 fields requiring new test files (price test file created, password and multiple choice cannot be implemented due to GF 2.9 incompatibility)
+- **Missing Test Files**: 3 fields requiring new test files (price test file created, password and multiple choice cannot be implemented due to GF 2.9 incompatibility)
 
 ### Critical Findings
 
 1. **Excellent Test Coverage**: 57 test files cover almost all GF 2.9 field types (Password test added)
 2. **All Tests Passing**: 0 test failures - implementation quality is high
-3. **6 Missing Test Files**: Need to be created (see Tasks section)
+3. **5 Missing Test Files**: Need to be created (see Tasks section)
 4. **PRD Mapping Issue**: PRD simplified field names don't match GF 2.9 class structure
 
 ### Password and Multiple Choice Fields Issue (CANNOT IMPLEMENT - GF 2.9 INCOMPATIBILITY)
@@ -44,6 +44,28 @@
 **Resolution**: Cannot implement PasswordField and MultipleChoiceField support at this time due to GF 2.9 test environment limitations. These fields should be supported in future GF versions or when the test environment is updated.
 
 **Note**: Test files were created but cannot pass until the GF field classes are available in the test environment.
+
+### Calculation Field Issue (CANNOT IMPLEMENT - GF 2.9 INCOMPATIBILITY)
+
+**Discovery**: The Calculation field exists in GF but is not available as a standalone field in the GF 2.9 test environment:
+- `GF_Field_Calculation` class file exists but is NOT loaded in the test environment
+- The field is not included in GF_Fields::get_all() because the class is not loaded
+- GraphQL schema does not contain CalculationField type
+
+**Evidence**:
+- Field class file exists: `tests/_data/plugins/gravityforms/includes/fields/class-gf-field-calculation.php`
+- Field has `GF_Fields::register( new GF_Field_Calculation() )` at end of class file
+- GF_Fields::get_all() does not include this field because the class is not loaded
+- Test creation fails because CalculationField GraphQL type does not exist
+
+**Root Cause**:
+1. **GF Test Environment Issue**: The test environment GF 2.9 does not load the Calculation field class, even though the file exists
+2. **Conditional Loading**: The Calculation field may be loaded conditionally in production GF, but not in test environment
+3. **Field Purpose**: GF_Field_Calculation is designed as a product calculation field (inputType = 'calculation' for Product fields), not a standalone field
+
+**Resolution**: Cannot implement standalone CalculationField support at this time due to GF 2.9 test environment limitations. Calculation functionality is already supported via ProductCalculationField (Product fields with inputType = 'calculation').
+
+**Note**: Test file was attempted but cannot pass until the GF field class is available in the test environment as a standalone field.
 
 ### Price Field Issue (CANNOT IMPLEMENT - GF 2.9 INCOMPATIBILITY)
 
@@ -99,7 +121,7 @@
 - ✅ CaptchaFieldTest - 4/4 mutations passing
 - ❌ MultipleChoiceFieldTest - **CREATED BUT CANNOT RUN** (GF 2.9 incompatibility)
 - ❌ PasswordFieldTest - **CREATED BUT CANNOT RUN** (GF 2.9 incompatibility)
-- ❌ ImageChoiceFieldTest - **CREATED BUT HAS ISSUES**
+- ✅ ImageChoiceFieldTest - 4/4 mutations passing
 
 ### Post Fields (11) - 10 Complete ✅, 1 Missing ❌
 - ✅ PostTitleFieldTest - 4/4 mutations passing
@@ -134,7 +156,7 @@
 - ✅ ShippingSingleFieldTest - 4/4 mutations passing
 - ✅ TotalFieldTest - 4/4 mutations passing
 - ❌ PriceFieldTest - **CREATED BUT CANNOT RUN** (GF 2.9 incompatibility)
-- ❌ CalculationFieldTest - **MISSING**
+- ❌ CalculationFieldTest - **CANNOT IMPLEMENT** (GF 2.9 incompatibility)
 
 ### Quiz Fields (Add-on) (3) - All Complete ✅
 - ✅ QuizCheckboxFieldTest - 4/4 mutations passing
@@ -217,7 +239,7 @@ PRD uses simplified names, but GF 2.9 has multiple variants per field type. All 
 
 ## Completion Criteria
 
-- [ ] All 4 missing test files created (price created, password/multiple choice cannot be implemented)
+- [ ] All 4 missing test files created (price/calculation created but cannot run, password/multiple choice cannot be implemented)
 - [ ] All new tests pass (4/4 mutations each)
 - [ ] Full test suite runs without failures: `npm run test:codecept run wpunit`
 - [ ] Linting passes: `npm run lint:php`
