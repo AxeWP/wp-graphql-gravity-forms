@@ -37,31 +37,31 @@ class FormFieldValuesInput extends AbstractInput {
 	 */
 	public static function get_fields(): array {
 		$fields = [
-			'id'             => [
+			'id'               => [
 				'type'        => [ 'non_null' => 'Int' ],
 				'description' => static fn () => __( 'The field id.', 'wp-graphql-gravity-forms' ),
 			],
-			'addressValues'  => [
+			'addressValues'    => [
 				'type'        => AddressFieldInput::$type,
 				'description' => static fn () => __( 'The form field values for Address fields.', 'wp-graphql-gravity-forms' ),
 			],
-			'checkboxValues' => [
+			'checkboxValues'   => [
 				'type'        => [ 'list_of' => CheckboxFieldInput::$type ],
 				'description' => static fn () => __( 'The form field values for Checkbox fields.', 'wp-graphql-gravity-forms' ),
 			],
-			'emailValues'    => [
+			'emailValues'      => [
 				'type'        => EmailFieldInput::$type,
 				'description' => static fn () => __( 'The form field values for Email fields.', 'wp-graphql-gravity-forms' ),
 			],
-			'listValues'     => [
+			'listValues'       => [
 				'type'        => [ 'list_of' => ListFieldInput::$type ],
 				'description' => static fn () => __( 'The form field values for List fields.', 'wp-graphql-gravity-forms' ),
 			],
-			'nameValues'     => [
+			'nameValues'       => [
 				'type'        => NameFieldInput::$type,
 				'description' => static fn () => __( 'The form field values for Name fields.', 'wp-graphql-gravity-forms' ),
 			],
-			'productValues'  => [
+			'productValues'    => [
 				'type'        => ProductFieldInput::$type,
 				'description' => static fn () => __( 'The form field values for Name fields.', 'wp-graphql-gravity-forms' ),
 			],
@@ -69,11 +69,11 @@ class FormFieldValuesInput extends AbstractInput {
 				'type'        => CreditCardFieldInput::$type,
 				'description' => static fn () => __( 'The form field values for Credit Card fields.', 'wp-graphql-gravity-forms' ),
 			],
-			'values'         => [
+			'values'           => [
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => static fn () => __( 'The form field values for fields that accept multiple string values. Used by MultiSelect, Post Category, Post Custom, and Post Tags fields.', 'wp-graphql-gravity-forms' ),
 			],
-			'value'          => [
+			'value'            => [
 				'type'        => 'String',
 				'description' => static fn () => __( 'The form field values for basic fields.', 'wp-graphql-gravity-forms' ),
 			],
