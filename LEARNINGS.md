@@ -1,5 +1,17 @@
 # Learnings: WPGraphQL Gravity Forms Implementation
 
+## PHP Coding Standards Fix (2026-01-23)
+
+**Issue**: FormFieldValuesInput.php had 9 WPCS warnings for array double arrow alignment.
+
+**Resolution**: Applied PHPCBF auto-fix to align array keys consistently. All linting violations resolved.
+
+**Code Change**: `npm run lint:php:fix` automatically corrected spacing in array declarations.
+
+**Impact**: Code now passes WPCS linting without warnings. Maintains clean, consistent formatting across the codebase.
+
+**Testing**: Linting now passes cleanly with 0 warnings/errors.
+
 ## Donation Field Exclusion Verification (2026-01-23)
 
 **Issue**: Donation field was listed as open in PRD.md but documented as intentionally excluded.
