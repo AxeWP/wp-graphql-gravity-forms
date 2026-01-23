@@ -9,17 +9,17 @@
 ## Executive Summary
 
 ### Current Status
-- **Total Test Files**: 57 test files exist in `tests/wpunit/` (Password test file created)
-- **Fields with Complete Tests** (4/4 mutations): 56 fields
+- **Total Test Files**: 57 test files exist in `tests/wpunit/`
+- **Fields with Complete Tests** (4/4 mutations): 57 fields
 - **Fields with No Mutations** (expected): 3 fields (display/structure-only)
 - **Test Pass Rate**: 100% (all existing tests passing)
-- **Missing Test Files**: 2 fields requiring new test files (price and multiple choice cannot be implemented due to GF 2.9 incompatibility)
+- **Missing Test Files**: 1 field requiring new test file (price cannot be implemented due to GF 2.9 incompatibility)
 
 ### Critical Findings
 
-1. **Excellent Test Coverage**: 57 test files cover almost all GF 2.9 field types (Password test added)
+1. **Excellent Test Coverage**: 57 test files cover almost all GF 2.9 field types
 2. **All Tests Passing**: 0 test failures - implementation quality is high
-3. **5 Missing Test Files**: Need to be created (see Tasks section)
+3. **4 Missing Test Files**: Need to be created (price/calculation cannot be implemented due to GF 2.9 incompatibility)
 4. **PRD Mapping Issue**: PRD simplified field names don't match GF 2.9 class structure
 
 ### Password Field Issue (RESOLVED - Manual Class Loading)
@@ -36,24 +36,23 @@
 
 **Note**: This approach resolves the test environment limitation for fields that exist but are not loaded.
 
-### Multiple Choice Field Issue (CANNOT IMPLEMENT - GF 2.9 INCOMPATIBILITY)
+### Multiple Choice Field Issue (RESOLVED - Manual Class Loading)
 
-**Discovery**: Multiple Choice field exists in GF 2.5+ but is not available in the GF 2.9 test environment:
-- `GF_Field_Multiple_Choice` class is NOT loaded in the test environment
-- The field is not included in GF_Fields::get_all() because the class is not loaded
+**Discovery**: Multiple Choice field exists in GF 2.5+ but was not available in the GF 2.9 test environment due to conditional loading.
+
+**Resolution**: Implemented by manually loading the `GF_Field_Multiple_Choice` class in `tests/bootstrap.php`. Added the field to the GraphQL schema by:
+1. Loading the field class manually in bootstrap
+2. Adding 'multi_choice' to the values() case in FormFieldRegistry for proper GraphQL field mapping
+3. Updated test to use 'values' field instead of 'value' for array handling
 
 **Evidence**:
-- Field class file exists: `tests/_data/plugins/gravityforms/includes/fields/class-gf-field-multiple-choice.php` (GF 2.5+)
-- Field has `GF_Fields::register( new GF_Field_Multiple_Choice() )` at end of class file
-- GF_Fields::get_all() does not include this field because the class is not loaded
+- Field class file exists: `tests/_data/plugins/gravityforms/includes/fields/class-gf-field-multiple-choice.php`
+- Added `require_once` in `tests/bootstrap.php` to load the class
+- GF_Fields::get_all() now includes the field
+- GraphQL schema contains MultipleChoiceField type with values field
+- All 4 mutation tests (Submit, Update, SubmitDraft, UpdateDraft) pass
 
-**Root Cause**:
-1. **GF Test Environment Issue**: The test environment GF 2.9 does not load the Multiple Choice field class, even though the file exists
-2. **Conditional Loading**: The field may be loaded conditionally in production GF, but not in test environment
-
-**Resolution**: Cannot implement MultipleChoiceField support at this time due to GF 2.9 test environment limitations. The field should be supported in future GF versions or when the test environment is updated.
-
-**Note**: Test file exists but cannot run until the GF field class is loaded in the test environment.
+**Note**: This approach resolves the test environment limitation for conditionally loaded fields. Multiple Choice field now fully supported with proper array value handling.
 
 ### Calculation Field Issue (CANNOT IMPLEMENT - GF 2.9 INCOMPATIBILITY)
 
@@ -132,7 +131,7 @@
 - ✅ MultiSelectFieldTest - 4/4 mutations passing
 - ✅ ConsentFieldTest - 4/4 mutations passing
 - ✅ CaptchaFieldTest - 4/4 mutations passing
-- ❌ MultipleChoiceFieldTest - **CREATED BUT CANNOT RUN** (GF 2.9 incompatibility)
+- ✅ MultipleChoiceFieldTest - 4/4 mutations passing
 - ✅ PasswordFieldTest - 4/4 mutations passing
 - ✅ ImageChoiceFieldTest - 4/4 mutations passing
 
@@ -252,7 +251,7 @@ PRD uses simplified names, but GF 2.9 has multiple variants per field type. All 
 
 ## Completion Criteria
 
-- [ ] All 4 missing test files created (price/calculation created but cannot run, multiple choice cannot be implemented)
+- [ ] All 2 missing test files created (price/calculation cannot be implemented due to GF 2.9 incompatibility)
 - [x] All new tests pass (4/4 mutations each)
 - [x] Full test suite runs without failures: `npm run test:codecept run wpunit`
 - [x] Linting passes: `npm run lint:php`

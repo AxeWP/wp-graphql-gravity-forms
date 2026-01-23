@@ -414,6 +414,7 @@ class FormFieldRegistry {
 				$fields += FieldValues::time_values();
 				break;
 			case 'multiselect':
+			case 'multi_choice':
 				$fields += FieldValues::values();
 				break;
 			case 'post_category':

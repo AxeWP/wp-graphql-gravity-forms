@@ -134,7 +134,7 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 - [x] **File Upload** (`fileupload`) -> `FileUploadFieldTest.php` | `class-gf-field-fileupload.php` (Check: `map_input` logic)
 - [x] **List** (`list`) -> `ListFieldTest.php` | `class-gf-field-list.php` (Check: Serialized data)
 - [x] **MultiSelect** (`multiselect`) -> `MultiSelectFieldTest.php` | `class-gf-field-multiselect.php`
-- [ ] **Multiple Choice** (`multi_choice`) -> `MultipleChoiceFieldTest.php` | `class-gf-field-multiple-choice.php` - **CANNOT IMPLEMENT** (GF 2.9 test environment incompatibility)
+- [x] **Multiple Choice** (`multi_choice`) -> `MultipleChoiceFieldTest.php` | `class-gf-field-multiple-choice.php`
 - [x] **Consent** (`consent`) -> `ConsentFieldTest.php` | `class-gf-field-consent.php`
 - [x] **Captcha** (`captcha`) -> `CaptchaFieldTest.php` | `class-gf-field-captcha.php` (Check: Validation bypass in tests)
 - [x] **Password** (`password`) -> `PasswordFieldTest.php`

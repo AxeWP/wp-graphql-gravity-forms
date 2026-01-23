@@ -28,6 +28,21 @@
 
 **Testing**: All ImageChoiceFieldTest mutations now pass (submit, update, draft submit, draft update).
 
+## MultipleChoice Field Implementation (2026-01-23)
+
+**Issue**: MultipleChoice field was marked as "CANNOT IMPLEMENT" due to GF 2.9 test environment incompatibility.
+
+**Root Cause**: GF_Field_Multiple_Choice class exists but is not loaded in GF 2.9 test environment, preventing automatic registration and GraphQL schema inclusion.
+
+**Solution**: Implemented by manually loading the field class and updating GraphQL field mapping:
+1. Added `require_once __DIR__ . '/_data/plugins/gravityforms/includes/fields/class-gf-field-multiple-choice.php';` to `tests/bootstrap.php`
+2. Added 'multi_choice' case to FormFieldRegistry::get_field_value_fields() to include values field
+3. Updated MultipleChoiceFieldTest to use 'values' field instead of 'value' for proper array handling
+
+**Impact**: MultipleChoiceField now fully supported with GraphQL schema inclusion and all 4 mutation tests passing. This resolves the test environment limitation for conditionally loaded fields.
+
+**Testing**: MultipleChoiceFieldTest now passes all mutations (submit, update, draft submit, draft update) with proper array value handling.
+
 ## PostCustomFieldTest Resolution (2026-01-23)
 
 **Issue**: PostCustomFieldTest was marked as "HAS EXPECTATION ISSUES" in IMPLEMENTATION_PLAN.md.

@@ -112,7 +112,7 @@ class MultipleChoiceFieldTest extends FormFieldTestCase implements FormFieldTest
 				choices {
 					isSelected
 					text
-					value
+					values
 				}
 				conditionalLogic {
 					actionType
@@ -120,7 +120,7 @@ class MultipleChoiceFieldTest extends FormFieldTestCase implements FormFieldTest
 					rules {
 						fieldId
 						operator
-						value
+						values
 					}
 				}
 				cssClass
@@ -136,7 +136,7 @@ class MultipleChoiceFieldTest extends FormFieldTestCase implements FormFieldTest
 				label
 				labelPlacement
 				selectAllText
-				value
+				values
 				visibility
 			}
 		';
@@ -161,7 +161,7 @@ class MultipleChoiceFieldTest extends FormFieldTestCase implements FormFieldTest
 						formFields {
 							nodes {
 								... on MultipleChoiceField {
-									value
+									values
 								}
 							}
 						}
@@ -196,7 +196,7 @@ class MultipleChoiceFieldTest extends FormFieldTestCase implements FormFieldTest
 						formFields {
 							nodes {
 								... on MultipleChoiceField {
-									value
+									values
 								}
 							}
 						}
@@ -231,7 +231,7 @@ class MultipleChoiceFieldTest extends FormFieldTestCase implements FormFieldTest
 						formFields {
 							nodes {
 								... on MultipleChoiceField {
-									value
+									values
 								}
 							}
 						}
@@ -249,7 +249,7 @@ class MultipleChoiceFieldTest extends FormFieldTestCase implements FormFieldTest
 	 */
 	public function expected_field_response( array $form ): array {
 		$expected   = $this->getExpectedFormFieldValues( $form['fields'][0] );
-		$expected[] = $this->expected_field_value( 'value', $this->field_value );
+		$expected[] = $this->expected_field_value( 'values', $this->field_value );
 
 		return [
 			$this->expectedObject(
@@ -290,7 +290,7 @@ class MultipleChoiceFieldTest extends FormFieldTestCase implements FormFieldTest
 									$this->expectedNode(
 										'nodes',
 										[
-											$this->expected_field_value( 'value', $value ),
+											$this->expected_field_value( 'values', $value ),
 										]
 									),
 								]
