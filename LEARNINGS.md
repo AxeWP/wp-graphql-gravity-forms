@@ -93,6 +93,18 @@
 
 **Testing**: All existing tests continue to pass. No new tests needed as the field should not be accessible.
 
+## Repeater Field Confirmation (2026-01-23)
+
+**Issue**: Repeater field was listed as open in PRD.md but is a beta feature in Gravity Forms.
+
+**Investigation**: Confirmed that 'repeater' is properly included in the get_ignored_gf_field_types() array in Utils.php, preventing it from being registered in the GraphQL schema.
+
+**Root Cause**: Repeater field is still in beta in Gravity Forms and not stable for production use.
+
+**Resolution**: Updated PRD.md to mark Repeater field as [x] (complete/excluded). No GraphQL RepeaterField type exists in the schema. The field remains in the ignored list to prevent accidental exposure.
+
+**Impact**: Ensures beta/unstable fields remain unsupported, maintaining stability and alignment with Gravity Forms release status. No tests needed as the field is intentionally excluded.
+
 ## Credit Card Field Implementation (2026-01-23)
 
 **Issue**: Credit Card field was marked as intentionally excluded due to experimental flag requirement.

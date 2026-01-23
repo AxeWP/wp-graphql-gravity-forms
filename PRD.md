@@ -169,7 +169,7 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 *Verified in `src/Utils/Utils.php` as ignored/unsupported. These field class files exist in GF core but are not always handled the same way if at all. We don't need to support deprecated fields, but we should confirm if/how we're supporting the functionality even if it isn't via the automagical field registration.*
 - [x] **Credit Card** (`creditcard`) | `class-gf-field-creditcard.php` - *Experimental (Requires `WPGRAPHQL_GF_EXPERIMENTAL_FIELDS`)*
 - [x] **Donation** (`donation`) | `class-gf-field-donation.php` - *Deprecated in GF*
-- [ ] **Repeater** (`repeater`) | `class-gf-field-repeater.php` - *Beta/Ignored*
+- [x] **Repeater** (`repeater`) | `class-gf-field-repeater.php` - *Beta/Ignored*
 - [ ] **Submit Button** (`submit`) | `class-gf-field-submit.php` - *Not a data field*
 - [x] **Honeypot** (`honeypot`) | `class-gf-field-honeypot.php` - *Internal spam prevention*
 
