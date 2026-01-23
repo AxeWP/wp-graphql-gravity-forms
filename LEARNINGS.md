@@ -1,5 +1,17 @@
 # Learnings: WPGraphQL Gravity Forms Implementation
 
+## Donation Field Exclusion Verification (2026-01-23)
+
+**Issue**: Donation field was listed as open in PRD.md but documented as intentionally excluded.
+
+**Investigation**: Confirmed that 'donation' is properly included in the get_ignored_gf_field_types() array in Utils.php, preventing it from being registered in the GraphQL schema.
+
+**Root Cause**: Donation field was deprecated in Gravity Forms, and correctly excluded from WPGraphQL support to avoid supporting deprecated functionality.
+
+**Resolution**: Updated PRD.md and IMPLEMENTATION_PLAN.md to mark Donation field as [x] (complete/excluded). No GraphQL DonationField type exists in the schema.
+
+**Impact**: Ensures deprecated fields remain unsupported, maintaining alignment with Gravity Forms best practices. No tests needed as the field is intentionally excluded.
+
 ## Password Field Implementation (2026-01-23)
 
 **Issue**: Password field was marked as "CANNOT IMPLEMENT" due to GF 2.9 test environment incompatibility.

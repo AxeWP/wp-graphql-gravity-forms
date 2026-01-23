@@ -243,7 +243,7 @@ PRD uses simplified names, but GF 2.9 has multiple variants per field type. All 
 ## Appendix C: Fields Intentionally Excluded (Per PRD/GF 2.9)
 
 - ✅ `creditcard` - Experimental field (supported when WPGRAPHQL_GF_EXPERIMENTAL_FIELDS is true)
-- ❌ `donation` - Deprecated field in GF 2.9
+- ✅ `donation` - Deprecated field in GF 2.9 (verified excluded)
 - ❌ `repeater` - Beta feature (not stable)
 - ❌ `submit` - Not a data field (button only)
 - ❌ `honeypot` - Internal spam prevention (no user interaction)
