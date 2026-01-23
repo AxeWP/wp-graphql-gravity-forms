@@ -81,7 +81,7 @@ while true; do
     PROMPT_FILE_ABS="$CURRENT_DIR/$PROMPT_FILE"
     echo "Using prompt file: $PROMPT_FILE_ABS"
     opencode run "Execute the following ralph loop: $( cat $PROMPT_FILE_ABS ) " \
-        --model "opencode/glm-4.7-free" \
+        --model "opencode/grok-code" \
         --format json \
         --title "$SESSION_TITLE"
 

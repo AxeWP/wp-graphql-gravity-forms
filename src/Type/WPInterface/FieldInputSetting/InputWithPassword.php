@@ -15,7 +15,7 @@ use WPGraphQL\GF\Type\WPInterface\FieldInputSetting\AbstractFieldInputSetting;
 /**
  * Class - InputWithPassword
  */
-class InputWithPassword extends AbstractFieldInputSetting {
+class InputWithPassword extends AbstractFieldInputSetting implements \WPGraphQL\GF\Interfaces\TypeWithInterfaces {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
@@ -37,7 +37,7 @@ class InputWithPassword extends AbstractFieldInputSetting {
 		return [
 			'customLabel' => [
 				'type'        => 'String',
-				'description' => static fn () => __( 'The custom label for the input. When set, this is used in place of the label.', 'wp-graphql-gravity-forms' ),
+				'description' => static fn () => __( 'The custom label for input. When set, this is used in place of the label.', 'wp-graphql-gravity-forms' ),
 			],
 			'isHidden'    => [
 				'type'        => 'Boolean',
@@ -47,6 +47,15 @@ class InputWithPassword extends AbstractFieldInputSetting {
 				'type'        => 'String',
 				'description' => static fn () => __( 'Placeholder text to give the user a hint on how to fill out the field. This is not submitted with the form.', 'wp-graphql-gravity-forms' ),
 			],
+		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_interfaces(): array {
+		return [
+			\WPGraphQL\GF\Type\WPInterface\FieldInput::$type,
 		];
 	}
 }

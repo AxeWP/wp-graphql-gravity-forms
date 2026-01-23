@@ -460,7 +460,7 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
-	 * Get the default args for a MultiSelect field.
+	 * Get default args for a MultiSelect field.
 	 */
 	public function getMultiSelectFieldArgs(): array {
 		return [
@@ -501,7 +501,46 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
-	 * Get the default args for a name field.
+	 * Get default args for a Multiple Choice field.
+	 */
+	public function getMultipleChoiceFieldArgs(): array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'description',
+			'descriptionPlacement',
+			'enableChoiceValue',
+			'enableSelectAll',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			[ 'type' => 'multi_choice' ],
+			[
+				'choices' => [
+					[
+						'text'       => 'First Choice',
+						'value'      => 'first',
+						'isSelected' => true,
+					],
+					[
+						'text'       => 'Second Choice',
+						'value'      => 'second',
+						'isSelected' => false,
+					],
+					[
+						'text'       => 'Third Choice',
+						'value'      => 'third',
+						'isSelected' => false,
+					],
+				],
+			],
+		];
+	}
+
+	/**
+	 * Get default args for a name field.
 	 */
 	public function getNameFieldArgs(): array {
 		return [

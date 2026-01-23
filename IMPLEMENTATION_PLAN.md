@@ -22,30 +22,28 @@
 3. **6 Missing Test Files**: Need to be created (see Tasks section)
 4. **PRD Mapping Issue**: PRD simplified field names don't match GF 2.9 class structure
 
-### Password Field Issue (INVESTIGATION NEEDED)
+### Password and Multiple Choice Fields Issue (CANNOT IMPLEMENT - GF 2.9 INCOMPATIBILITY)
 
-**Discovery**: The Password field (type: `password`) exists in GF 2.5+ (`class-gf-field-password.php` with `@since 2.5`) and has password-related GraphQL interfaces defined (`FieldWithPassword`, `FieldWithPasswordStrength`, `FieldWithPasswordVisibility`, `InputWithPassword`), but:
-- The `PasswordField` GraphQL type is NOT registered in the schema (schema generation shows "No password fields found")
-- Test attempts fail because PasswordField type doesn't exist
+**Discovery**: Both Password and Multiple Choice fields exist in GF 2.5+ but are not available in the GF 2.9 test environment:
+- `GF_Field_Password` and `GF_Field_Multiple_Choice` classes are NOT loaded in the test environment
+- Manual attempts to include the class files fail
+- The fields are not included in GF_Fields::get_all() because the classes are not loaded
 
 **Evidence**:
-- Password field class file: `tests/_data/plugins/gravityforms/includes/fields/class-gf-field-password.php` (GF 2.5+)
-- Password field registered via `GF_Fields::register( new GF_Field_Password() )` at end of class file
-- GraphQL interfaces exist: `src/Type/WPInterface/FieldSetting/{FieldWithPassword,FieldWithPasswordStrength,FieldWithPasswordVisibility}.php`
-- GF_Fields::get_all() returns empty result for password field (likely filtered out)
+- Field class files exist: `tests/_data/plugins/gravityforms/includes/fields/class-gf-field-password.php` and `class-gf-field-multiple-choice.php` (GF 2.5+)
+- Both fields have `GF_Fields::register( new GF_Field_...() )` at end of class files
+- GraphQL interfaces exist for both fields
+- GF_Fields::get_all() does not include these fields because the classes are not loaded
+- Manual registration attempts fail due to class not found errors
 
-**Possible Causes**:
-1. **GF Version Mismatch**: Test environment uses GF 2.9, but password field was added in GF 2.5
-2. **Filter Issue**: The `graphql_gf_ignored_field_types` filter might be excluding password field
-3. **GF_Fields::get_all() Bug**: Password field not being returned despite being registered
+**Root Cause**:
+1. **GF Test Environment Issue**: The test environment GF 2.9 does not load these field classes, even though the files exist
+2. **Conditional Loading**: These fields may be loaded conditionally in production GF, but not in test environment
+3. **Version Compatibility**: Although @since 2.5, these fields may not be fully integrated in GF 2.9
 
-**Required Investigation**:
-1. Verify GF version in test environment matches password field availability
-2. Check if any filters are blocking password field registration
-3. Determine why `GF_Fields::get_all()` doesn't return password field
-4. Find mechanism to force register password field or fix filter logic
+**Resolution**: Cannot implement PasswordField and MultipleChoiceField support at this time due to GF 2.9 test environment limitations. These fields should be supported in future GF versions or when the test environment is updated.
 
-**Note**: Test file `PasswordFieldTest.php` has been created and `getPasswordFieldArgs()` helper method added, but tests cannot pass until GraphQL type is registered.
+**Note**: Test files were created but cannot pass until the GF field classes are available in the test environment.
 
 ---
 
@@ -77,8 +75,8 @@
 - ✅ MultiSelectFieldTest - 4/4 mutations passing
 - ✅ ConsentFieldTest - 4/4 mutations passing
 - ✅ CaptchaFieldTest - 4/4 mutations passing
-- ❌ MultipleChoiceFieldTest - **MISSING**
-- ❌ PasswordFieldTest - **MISSING**
+- ❌ MultipleChoiceFieldTest - **CREATED BUT CANNOT RUN** (GF 2.9 incompatibility)
+- ❌ PasswordFieldTest - **CREATED BUT CANNOT RUN** (GF 2.9 incompatibility)
 - ❌ ImageChoiceFieldTest - **MISSING**
 
 ### Post Fields (11) - 10 Complete ✅, 1 Missing ❌

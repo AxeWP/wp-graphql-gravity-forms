@@ -134,11 +134,11 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 - [ ] **File Upload** (`fileupload`) -> `FileUploadFieldTest.php` | `class-gf-field-fileupload.php` (Check: `map_input` logic)
 - [ ] **List** (`list`) -> `ListFieldTest.php` | `class-gf-field-list.php` (Check: Serialized data)
 - [ ] **MultiSelect** (`multiselect`) -> `MultiSelectFieldTest.php` | `class-gf-field-multiselect.php`
-- [ ] **Multiple Choice** (`multi_choice`) -> `MultipleChoiceFieldTest.php` | `class-gf-field-multiple-choice.php` - **MISSING FROM PRD** (Allows multiple selections)
+- [ ] **Multiple Choice** (`multi_choice`) -> `MultipleChoiceFieldTest.php` | `class-gf-field-multiple-choice.php` - **CANNOT IMPLEMENT** (GF 2.9 test environment incompatibility)
 - [ ] **Consent** (`consent`) -> `ConsentFieldTest.php` | `class-gf-field-consent.php`
 - [ ] **Captcha** (`captcha`) -> `CaptchaFieldTest.php` | `class-gf-field-captcha.php` (Check: Validation bypass in tests)
-- [ ] **Password** (`password`) -> `PasswordFieldTest.php` | `class-gf-field-password.php` - **MISSING TEST**
-- [ ] **Image Choice** (`image_choice`) -> `ImageChoiceFieldTest.php` | `class-gf-field-image-choice.php` - **MISSING TEST** (GF 2.5+)
+- [ ] **Password** (`password`) -> `PasswordFieldTest.php` - **CANNOT IMPLEMENT** (GF 2.9 test environment incompatibility)
+- [ ] **Image Choice** (`image_choice`) -> `ImageChoiceFieldTest.php` - **MISSING TEST** (GF 2.5+)
 - [ ] **Signature** (`signature`) -> `SignatureFieldTest.php` - *Add-on field (GFSignature extension)*
 
 ### 🔵 Post Fields (Integration: WP Core)

@@ -497,8 +497,28 @@ class FormFieldRegistry {
 
 		$has_inputs = array_intersect( $field_settings, $settings_with_inputs );
 
-		if ( ! empty( $has_inputs ) ) {
-			FieldInputRegistry::register( $field, $field_settings, $as_interface );
+		// Filter out password_field_setting since it's a field setting, not an input setting.
+		$filtered_settings = self::maybe_filter_password_field_setting( $has_inputs );
+
+		if ( ! empty( $filtered_settings ) ) {
+			FieldInputRegistry::register( $field, $filtered_settings, $as_interface );
 		}
+	}
+
+	/**
+	 * Filters out password_field_setting from settings array since it's a field setting, not an input setting.
+	 *
+	 * @param string[] $settings_with_inputs Array of settings that match inputs filter.
+	 * @return string[] Filtered settings array.
+	 */
+	private static function maybe_filter_password_field_setting( array $settings_with_inputs ): array {
+		$password_setting_key = array_search( FieldWithPassword::$field_setting, $settings_with_inputs, true );
+
+		if ( false !== $password_setting_key ) {
+			// Remove password_field_setting but keep any other input-related settings.
+			unset( $settings_with_inputs[ $password_setting_key ] );
+		}
+
+		return $settings_with_inputs;
 	}
 }

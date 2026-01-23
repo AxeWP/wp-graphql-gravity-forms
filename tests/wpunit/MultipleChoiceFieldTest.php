@@ -1,6 +1,6 @@
 <?php
 /**
- * Test PasswordField.
+ * Test MultipleChoiceField.
  *
  * @package Tests\WPGraphQL\GF
  */
@@ -9,9 +9,9 @@ use Tests\WPGraphQL\GF\TestCase\FormFieldTestCase;
 use Tests\WPGraphQL\GF\TestCase\FormFieldTestCaseInterface;
 
 /**
- * Class -PasswordFieldTest
+ * Class -MultipleChoiceFieldTest
  */
-class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
+class MultipleChoiceFieldTest extends FormFieldTestCase implements FormFieldTestCaseInterface {
 	/**
 	 * Tests the field properties and values.
 	 */
@@ -51,7 +51,7 @@ class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 * Sets the correct Field Helper.
 	 */
 	public function field_helper() {
-		return $this->tester->getPropertyHelper( 'PasswordField' );
+		return $this->tester->getPropertyHelper( 'MultipleChoiceField' );
 	}
 
 	/**
@@ -65,41 +65,40 @@ class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 * The value as expected in GraphQL.
 	 */
 	public function field_value() {
-		return $this->property_helper->dummy->words(1, 5);
+		return [
+			'first',
+			'third',
+		];
 	}
 
 	/**
 	 * The graphql field value input.
 	 */
 	public function field_value_input() {
-		$value = $this->field_value;
-		return [
-			'value' => $value,
-		];
+		return $this->field_value;
 	}
 
 	/**
 	 * The value as expected in GraphQL when updating from field_value().
 	 */
 	public function updated_field_value() {
-		return $this->property_helper->dummy->words(1, 5);
+		return [ 'first', 'second', 'third' ];
 	}
 
 	/**
 	 * The graphql field value input.
 	 */
 	public function updated_field_value_input() {
-		$value = $this->updated_field_value;
-		return [
-			'value' => $value,
-		];
+		return $this->updated_field_value;
 	}
 
 	/**
 	 * The value as expected by Gravity Forms.
 	 */
 	public function value() {
-		return [ $this->fields[0]['id'] => $this->field_value ];
+		return [
+			$this->fields[0]['id'] => json_encode( $this->field_value ),
+		];
 	}
 
 	/**
@@ -107,10 +106,14 @@ class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 */
 	public function field_query(): string {
 		return '
-			... on PasswordField {
+			... on MultipleChoiceField {
 				adminLabel
-				autocompleteAttribute
 				canPrepopulate
+				choices {
+					isSelected
+					text
+					value
+				}
 				conditionalLogic {
 					actionType
 					logicType
@@ -121,36 +124,20 @@ class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					}
 				}
 				cssClass
-				defaultValue
 				description
 				descriptionPlacement
+				enableChoiceValue
+				enableSelectAll
 				errorMessage
-				hasPasswordStrengthIndicator
-				hasPasswordVisibilityToggle
+				hasChoiceValue
+				hasSelectAll
 				inputName
-				inputs {
-					autocompleteAttribute
-					customLabel
-					defaultValue
-					id
-					label
-					name
-					placeholder
-				}
 				isRequired
 				label
 				labelPlacement
-				minPasswordStrength
-				personalData {
-					isIdentificationField
-					shouldErase
-					shouldExport
-				}
-				placeholder
-				shouldAllowDuplicates
-				size
-				subLabelPlacement
+				selectAllText
 				value
+				visibility
 			}
 		';
 	}
@@ -160,7 +147,7 @@ class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 */
 	public function submit_form_mutation(): string {
 		return '
-			mutation ($formId: ID!, $fieldId: Int!, $value: String!, $draft: Boolean) {
+			mutation ($formId: ID!, $fieldId: Int!, $value: [String]!, $draft: Boolean) {
 				submitGfForm( input: { id: $formId, saveAsDraft: $draft, fieldValues: {id: $fieldId, value: $value}}) {
 					errors {
 						id
@@ -173,7 +160,7 @@ class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					entry {
 						formFields {
 							nodes {
-								... on PasswordField {
+								... on MultipleChoiceField {
 									value
 								}
 							}
@@ -195,7 +182,7 @@ class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 */
 	public function update_entry_mutation(): string {
 		return '
-			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: String! ){
+			mutation updateGfEntry( $entryId: ID!, $fieldId: Int!, $value: [String]! ){
 				updateGfEntry( input: { id: $entryId, shouldValidate: true, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
@@ -208,7 +195,7 @@ class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					entry {
 						formFields {
 							nodes {
-								... on PasswordField {
+								... on MultipleChoiceField {
 									value
 								}
 							}
@@ -230,7 +217,7 @@ class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 */
 	public function update_draft_entry_mutation(): string {
 		return '
-			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: String! ){
+			mutation updateGfDraftEntry( $resumeToken: ID!, $fieldId: Int!, $value: [String]! ){
 				updateGfDraftEntry( input: {id: $resumeToken, idType: RESUME_TOKEN, shouldValidate: true, fieldValues: {id: $fieldId, value: $value} }) {
 					errors {
 						id
@@ -243,10 +230,13 @@ class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 					entry: draftEntry {
 						formFields {
 							nodes {
-								... on PasswordField {
+								... on MultipleChoiceField {
 									value
 								}
 							}
+						}
+						... on GfDraftEntry {
+							resumeToken
 						}
 					}
 				}
@@ -319,6 +309,6 @@ class PasswordFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 	 * @param array $form .
 	 */
 	public function check_saved_values( $actual_entry, $form ): void {
-		$this->assertEquals( $this->field_value, $actual_entry[ $form['fields'][0]->id ], 'Submit mutation entry value not equal' );
+		$this->assertEquals( json_encode( $this->field_value ), $actual_entry[ $form['fields'][0]->id ], 'Submit mutation entry value not equal' );
 	}
 }
