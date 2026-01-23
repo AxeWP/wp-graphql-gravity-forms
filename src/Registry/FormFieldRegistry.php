@@ -413,6 +413,9 @@ class FormFieldRegistry {
 			case 'time':
 				$fields += FieldValues::time_values();
 				break;
+			case 'creditcard':
+				$fields += FieldValues::credit_card_values();
+				break;
 			case 'multiselect':
 			case 'multi_choice':
 				$fields += FieldValues::values();

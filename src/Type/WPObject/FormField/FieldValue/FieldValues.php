@@ -428,6 +428,35 @@ class FieldValues {
 	}
 
 	/**
+	 * Get `creditCardValues` property.
+	 *
+	 * @return array{creditCardValues:array<string,mixed>}
+	 */
+	public static function credit_card_values(): array {
+		return [
+			'creditCardValues' => [
+				'type'        => ValueProperty\CreditCardFieldValue::$type,
+				'description' => static fn () => __( 'Credit card field value.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
+					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					if ( ! $source instanceof FormField || ! isset( $gf_entry ) ) {
+						return null;
+					}
+
+					return [
+						'cardNumber'      => $gf_entry->entry[ $source->inputs[0]['id'] ] ?: null,
+						'expirationMonth' => $gf_entry->entry[ $source->inputs[1]['id'] ] ?: null,
+						'expirationYear'  => $gf_entry->entry[ $source->inputs[2]['id'] ] ?: null,
+						'securityCode'    => $gf_entry->entry[ $source->inputs[3]['id'] ] ?: null,
+						'cardholderName'  => $gf_entry->entry[ $source->inputs[4]['id'] ] ?: null,
+						'cardType'        => $gf_entry->entry[ $source->inputs[5]['id'] ] ?: null,
+					];
+				},
+			],
+		];
+	}
+
+	/**
 	 * Get `values` property.
 	 *
 	 * @return array{values:array<string,mixed>}

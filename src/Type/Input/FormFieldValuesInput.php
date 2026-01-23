@@ -65,6 +65,10 @@ class FormFieldValuesInput extends AbstractInput {
 				'type'        => ProductFieldInput::$type,
 				'description' => static fn () => __( 'The form field values for Name fields.', 'wp-graphql-gravity-forms' ),
 			],
+			'creditCardValues' => [
+				'type'        => CreditCardFieldInput::$type,
+				'description' => static fn () => __( 'The form field values for Credit Card fields.', 'wp-graphql-gravity-forms' ),
+			],
 			'values'         => [
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => static fn () => __( 'The form field values for fields that accept multiple string values. Used by MultiSelect, Post Category, Post Custom, and Post Tags fields.', 'wp-graphql-gravity-forms' ),

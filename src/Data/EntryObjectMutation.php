@@ -48,6 +48,9 @@ class EntryObjectMutation {
 			case 'consent':
 				$field_value_input = FieldValueInput\ConsentValueInput::class;
 				break;
+			case 'creditcard':
+				$field_value_input = FieldValueInput\CreditCardValuesInput::class;
+				break;
 			case 'email':
 				$field_value_input = FieldValueInput\EmailValuesInput::class;
 				break;

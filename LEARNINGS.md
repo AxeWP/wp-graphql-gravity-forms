@@ -80,3 +80,17 @@
 **Impact**: Honeypot field is now properly excluded from GraphQL schema exposure. This ensures internal fields remain internal.
 
 **Testing**: All existing tests continue to pass. No new tests needed as the field should not be accessible.
+
+## Credit Card Field Implementation (2026-01-23)
+
+**Issue**: Credit Card field was marked as intentionally excluded due to experimental flag requirement.
+
+**Root Cause**: Credit Card field exists in GF but is only exposed when WPGRAPHQL_GF_EXPERIMENTAL_FIELDS constant is true.
+
+**Solution**: Implemented complete Credit Card field support including GraphQL schema, mutations, and comprehensive testing. The field is now available when the experimental flag is enabled.
+
+**Code Change**: Added full implementation with CreditCardField type, creditCardValues resolver, mutation support, and test coverage.
+
+**Impact**: Credit Card field is now fully functional with GraphQL support when experimental features are enabled. Provides secure handling of credit card data through GraphQL mutations.
+
+**Testing**: CreditCardFieldTest validates all field properties, queries, and mutation operations (submit, update, draft operations) when experimental flag is set.

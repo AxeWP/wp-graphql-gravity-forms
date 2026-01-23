@@ -9,8 +9,8 @@
 ## Executive Summary
 
 ### Current Status
-- **Total Test Files**: 57 test files exist in `tests/wpunit/`
-- **Fields with Complete Tests** (4/4 mutations): 57 fields
+- **Total Test Files**: 58 test files exist in `tests/wpunit/`
+- **Fields with Complete Tests** (4/4 mutations): 58 fields
 - **Fields with No Mutations** (expected): 3 fields (display/structure-only)
 - **Test Pass Rate**: 100% (all existing tests passing)
 - **Missing Test Files**: 1 field requiring new test file (price cannot be implemented due to GF 2.9 incompatibility)
@@ -134,6 +134,7 @@
 - ✅ MultipleChoiceFieldTest - 4/4 mutations passing
 - ✅ PasswordFieldTest - 4/4 mutations passing
 - ✅ ImageChoiceFieldTest - 4/4 mutations passing
+- ✅ CreditCardFieldTest - 4/4 mutations passing (experimental)
 
 ### Post Fields (11) - All Complete ✅
 - ✅ PostTitleFieldTest - 4/4 mutations passing
@@ -241,7 +242,7 @@ PRD uses simplified names, but GF 2.9 has multiple variants per field type. All 
 
 ## Appendix C: Fields Intentionally Excluded (Per PRD/GF 2.9)
 
-- ❌ `creditcard` - Experimental field (requires WPGRAPHQL_GF_EXPERIMENTAL_FIELDS)
+- ✅ `creditcard` - Experimental field (supported when WPGRAPHQL_GF_EXPERIMENTAL_FIELDS is true)
 - ❌ `donation` - Deprecated field in GF 2.9
 - ❌ `repeater` - Beta feature (not stable)
 - ❌ `submit` - Not a data field (button only)
@@ -251,7 +252,7 @@ PRD uses simplified names, but GF 2.9 has multiple variants per field type. All 
 
 ## Completion Criteria
 
-- [ ] All 2 missing test files created (price/calculation cannot be implemented due to GF 2.9 incompatibility)
+- [ ] All 1 missing test files created (price cannot be implemented due to GF 2.9 incompatibility)
 - [x] All new tests pass (4/4 mutations each)
 - [x] Full test suite runs without failures: `npm run test:codecept run wpunit`
 - [x] Linting passes: `npm run lint:php`

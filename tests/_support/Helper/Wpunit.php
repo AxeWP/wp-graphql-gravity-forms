@@ -1223,6 +1223,25 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a CreditCard field.
+	 */
+	public function getCreditCardFieldArgs(): array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'subLabelPlacement',
+			[ 'type' => 'creditcard' ],
+		];
+	}
+
+	/**
 	 * Get the default args for an ImageChoice field.
 	 */
 	public function getImageChoiceFieldArgs(): array {
