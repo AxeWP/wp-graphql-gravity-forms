@@ -1218,7 +1218,7 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
-	 * Get default args for website field.
+	 * Get the default args for a website field.
 	 */
 	public function getWebsiteFieldArgs(): array {
 		return [
@@ -1235,6 +1235,37 @@ class Wpunit extends \Codeception\Module {
 			'placeholder',
 			'size',
 			[ 'type' => 'website' ],
+		];
+	}
+
+	/**
+	 * Get the default args for a password field.
+	 */
+	public function getPasswordFieldArgs(): array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'autocompleteAttribute',
+			'defaultValue',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'noDuplicates',
+			'placeholder',
+			'size',
+			'subLabelPlacement',
+			[
+				'inputs' => [
+					'fieldId' => 1,
+					'count'   => 2,
+					'keys'    => [ 'customLabel', 'defaultValue', 'label', 'placeholder', 'autocompleteAttribute' ],
+				],
+			],
+			[ 'type' => 'password' ],
 		];
 	}
 

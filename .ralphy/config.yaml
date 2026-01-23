@@ -1,0 +1,38 @@
+# Ralphy Configuration
+# https://github.com/michaelshimeles/ralphy
+
+# Project info (auto-detected, edit if needed)
+project:
+  name: "wp-graphql-gravity-forms"
+  language: "PHP"
+  framework: "WPGraphQL"
+  description: "Adds Gravity Forms Support for WPGraphQL and WordPress"  # Add a brief description
+
+# Commands (auto-detected from package.json/pyproject.toml)
+commands:
+  test: "npm run test:codecept -- run wpunit"
+  lint: "npm run lint:php && npm run lint:php:stan"
+  build: ""
+
+# Rules - instructions the AI MUST follow
+# These are injected into every prompt
+rules:
+  # Examples:
+  # - "Always use TypeScript strict mode"
+  # - "Follow the error handling pattern in src/utils/errors.ts"
+  # - "All API endpoints must have input validation with Zod"
+  # - "Use server actions instead of API routes in Next.js"
+  #
+  # Skills/playbooks (optional):
+  # - "Before coding, read and follow any relevant skill/playbook docs under .opencode/skills or .claude/skills."
+  - "Always assume functionality exists and try to use it before suggesting new code or changes."
+  - "When suggesting code, ensure it aligns with existing project conventions and patterns."
+  - "Focus on a single Gravity Forms field type at a time when making changes."
+
+# Boundaries - files/folders the AI should not modify
+boundaries:
+  never_touch:
+    - tests/_data
+    - .github
+    - vendor
+    - node_nodules
