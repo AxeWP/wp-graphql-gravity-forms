@@ -1244,7 +1244,6 @@ class Wpunit extends \Codeception\Module {
 	public function getPasswordFieldArgs(): array {
 		return [
 			'adminLabel',
-			'allowsPrepopulate',
 			'autocompleteAttribute',
 			'defaultValue',
 			'description',
