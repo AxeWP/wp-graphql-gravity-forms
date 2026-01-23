@@ -10,7 +10,7 @@
 
 ### Current Status
 - **Total Test Files**: 57 test files exist in `tests/wpunit/` (Password test file created)
-- **Fields with Complete Tests** (4/4 mutations): 54 fields
+- **Fields with Complete Tests** (4/4 mutations): 55 fields
 - **Fields with No Mutations** (expected): 3 fields (display/structure-only)
 - **Test Pass Rate**: 100% (all existing tests passing)
 - **Missing Test Files**: 3 fields requiring new test files (price test file created, password and multiple choice cannot be implemented due to GF 2.9 incompatibility)
@@ -123,7 +123,7 @@
 - ❌ PasswordFieldTest - **CREATED BUT CANNOT RUN** (GF 2.9 incompatibility)
 - ✅ ImageChoiceFieldTest - 4/4 mutations passing
 
-### Post Fields (11) - 10 Complete ✅, 1 Missing ❌
+### Post Fields (11) - All Complete ✅
 - ✅ PostTitleFieldTest - 4/4 mutations passing
 - ✅ PostContentFieldTest - 4/4 mutations passing
 - ✅ PostExcerptFieldTest - 4/4 mutations passing
@@ -136,7 +136,7 @@
 - ✅ PostCategorySelectFieldTest - 4/4 mutations passing
 - ✅ PostCategoryMultiSelectFieldTest - 4/4 mutations passing
 - ✅ PostImageFieldTest - 4/4 mutations passing
-- ❌ PostCustomFieldTest - **CREATED BUT HAS EXPECTATION ISSUES**
+- ✅ PostCustomFieldTest - 4/4 mutations passing
 
 ### Pricing Fields (10) - 10 Complete ✅, 2 Missing ❌
 - ✅ ProductSelectFieldTest - 4/4 mutations passing
@@ -241,10 +241,10 @@ PRD uses simplified names, but GF 2.9 has multiple variants per field type. All 
 
 - [ ] All 4 missing test files created (price/calculation created but cannot run, password/multiple choice cannot be implemented)
 - [ ] All new tests pass (4/4 mutations each)
-- [ ] Full test suite runs without failures: `npm run test:codecept run wpunit`
-- [ ] Linting passes: `npm run lint:php`
-- [ ] Type checking passes: `npm run lint:phpstan`
-- [ ] Update PRD.md with [x] for verified fields
+- [x] Full test suite runs without failures: `npm run test:codecept run wpunit`
+- [x] Linting passes: `npm run lint:php`
+- [x] Type checking passes: `npm run lint:phpstan`
+- [x] Update PRD.md with [x] for verified fields
 
 ---
 

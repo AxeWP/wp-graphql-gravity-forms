@@ -112,58 +112,58 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 ---
 
 ### 🟢 Standard Fields (High Priority)
-- [ ] **Text** (`text`) -> `TextFieldTest.php` | `class-gf-field-text.php`
-- [ ] **Textarea** (`textarea`) -> `TextAreaFieldTest.php` | `class-gf-field-textarea.php`
-- [ ] **Select** (`select`) -> `SelectFieldTest.php` | `class-gf-field-select.php` - **MISSING FROM PRD** (Drop Down field)
-- [ ] **Number** (`number`) -> `NumberFieldTest.php` | `class-gf-field-number.php`
-- [ ] **Checkbox** (`checkbox`) -> `CheckboxFieldTest.php` | `class-gf-field-checkbox.php`
-- [ ] **Radio** (`radio`) -> `RadioFieldTest.php` | `class-gf-field-radio.php`
-- [ ] **Hidden** (`hidden`) -> `HiddenFieldTest.php` | `class-gf-field-hidden.php`
-- [ ] **HTML** (`html`) -> `HtmlFieldTest.php` | `class-gf-field-html.php` (Display only)
-- [ ] **Section** (`section`) -> `SectionFieldTest.php` | `class-gf-field-section.php` (Structure only)
-- [ ] **Page** (`page`) -> `PageFieldTest.php` | `class-gf-field-page.php` (Pagination logic)
+- [x] **Text** (`text`) -> `TextFieldTest.php` | `class-gf-field-text.php`
+- [x] **Textarea** (`textarea`) -> `TextAreaFieldTest.php` | `class-gf-field-textarea.php`
+- [x] **Select** (`select`) -> `SelectFieldTest.php` | `class-gf-field-select.php` - **MISSING FROM PRD** (Drop Down field)
+- [x] **Number** (`number`) -> `NumberFieldTest.php` | `class-gf-field-number.php`
+- [x] **Checkbox** (`checkbox`) -> `CheckboxFieldTest.php` | `class-gf-field-checkbox.php`
+- [x] **Radio** (`radio`) -> `RadioFieldTest.php` | `class-gf-field-radio.php`
+- [x] **Hidden** (`hidden`) -> `HiddenFieldTest.php` | `class-gf-field-hidden.php`
+- [x] **HTML** (`html`) -> `HtmlFieldTest.php` | `class-gf-field-html.php` (Display only)
+- [x] **Section** (`section`) -> `SectionFieldTest.php` | `class-gf-field-section.php` (Structure only)
+- [x] **Page** (`page`) -> `PageFieldTest.php` | `class-gf-field-page.php` (Pagination logic)
 
 ### 🟡 Advanced Fields (Complexity: High)
-- [ ] **Name** (`name`) -> `NameFieldTest.php` | `class-gf-field-name.php` (Check: First/Last/Middle/Suffix)
-- [ ] **Date** (`date`) -> `DateFieldTest.php` | `class-gf-field-date.php` (Check: Date formats)
-- [ ] **Time** (`time`) -> `TimeFieldTest.php` | `class-gf-field-time.php`
-- [ ] **Phone** (`phone`) -> `PhoneFieldTest.php` | `class-gf-field-phone.php` (Check: format validation)
-- [ ] **Address** (`address`) -> `AddressFieldTest.php` | `class-gf-field-address.php` (Check: Address types)
-- [ ] **Website** (`website`) -> `WebsiteFieldTest.php` | `class-gf-field-website.php`
-- [ ] **Email** (`email`) -> `EmailFieldTest.php` | `class-gf-field-email.php`
-- [ ] **File Upload** (`fileupload`) -> `FileUploadFieldTest.php` | `class-gf-field-fileupload.php` (Check: `map_input` logic)
-- [ ] **List** (`list`) -> `ListFieldTest.php` | `class-gf-field-list.php` (Check: Serialized data)
-- [ ] **MultiSelect** (`multiselect`) -> `MultiSelectFieldTest.php` | `class-gf-field-multiselect.php`
+- [x] **Name** (`name`) -> `NameFieldTest.php` | `class-gf-field-name.php` (Check: First/Last/Middle/Suffix)
+- [x] **Date** (`date`) -> `DateFieldTest.php` | `class-gf-field-date.php` (Check: Date formats)
+- [x] **Time** (`time`) -> `TimeFieldTest.php` | `class-gf-field-time.php`
+- [x] **Phone** (`phone`) -> `PhoneFieldTest.php` | `class-gf-field-phone.php` (Check: format validation)
+- [x] **Address** (`address`) -> `AddressFieldTest.php` | `class-gf-field-address.php` (Check: Address types)
+- [x] **Website** (`website`) -> `WebsiteFieldTest.php` | `class-gf-field-website.php`
+- [x] **Email** (`email`) -> `EmailFieldTest.php` | `class-gf-field-email.php`
+- [x] **File Upload** (`fileupload`) -> `FileUploadFieldTest.php` | `class-gf-field-fileupload.php` (Check: `map_input` logic)
+- [x] **List** (`list`) -> `ListFieldTest.php` | `class-gf-field-list.php` (Check: Serialized data)
+- [x] **MultiSelect** (`multiselect`) -> `MultiSelectFieldTest.php` | `class-gf-field-multiselect.php`
 - [ ] **Multiple Choice** (`multi_choice`) -> `MultipleChoiceFieldTest.php` | `class-gf-field-multiple-choice.php` - **CANNOT IMPLEMENT** (GF 2.9 test environment incompatibility)
-- [ ] **Consent** (`consent`) -> `ConsentFieldTest.php` | `class-gf-field-consent.php`
-- [ ] **Captcha** (`captcha`) -> `CaptchaFieldTest.php` | `class-gf-field-captcha.php` (Check: Validation bypass in tests)
+- [x] **Consent** (`consent`) -> `ConsentFieldTest.php` | `class-gf-field-consent.php`
+- [x] **Captcha** (`captcha`) -> `CaptchaFieldTest.php` | `class-gf-field-captcha.php` (Check: Validation bypass in tests)
 - [ ] **Password** (`password`) -> `PasswordFieldTest.php` - **CANNOT IMPLEMENT** (GF 2.9 test environment incompatibility)
 - [x] **Image Choice** (`image_choice`) -> `ImageChoiceFieldTest.php` (GF 2.5+)
-- [ ] **Signature** (`signature`) -> `SignatureFieldTest.php` - *Add-on field (GFSignature extension)*
+- [x] **Signature** (`signature`) -> `SignatureFieldTest.php` - *Add-on field (GFSignature extension)*
 
 ### 🔵 Post Fields (Integration: WP Core)
-- [ ] **Post Title** (`post_title`) -> `PostTitleFieldTest.php` | `class-gf-field-post-title.php`
-- [ ] **Post Content** (`post_content`) -> `PostContentFieldTest.php` | `class-gf-field-post-content.php`
-- [ ] **Post Excerpt** (`post_excerpt`) -> `PostExcerptFieldTest.php` | `class-gf-field-post-excerpt.php`
-- [ ] **Post Tags** (`post_tags`) -> `PostTagsFieldTest.php` | `class-gf-field-post-tags.php`
-- [ ] **Post Category** (`post_category`) -> `PostCategoryFieldTest.php` | `class-gf-field-post-category.php`
-- [ ] **Post Image** (`post_image`) -> `PostImageFieldTest.php` | `class-gf-field-post-image.php`
-- [ ] **Post Custom Field** (`post_custom_field`) -> `PostCustomFieldTest.php` | `class-gf-field-post-custom-field.php` - **CREATED BUT HAS ISSUES**
+- [x] **Post Title** (`post_title`) -> `PostTitleFieldTest.php` | `class-gf-field-post-title.php`
+- [x] **Post Content** (`post_content`) -> `PostContentFieldTest.php` | `class-gf-field-post-content.php`
+- [x] **Post Excerpt** (`post_excerpt`) -> `PostExcerptFieldTest.php` | `class-gf-field-post-excerpt.php`
+- [x] **Post Tags** (`post_tags`) -> `PostTagsFieldTest.php` | `class-gf-field-post-tags.php`
+- [x] **Post Category** (`post_category`) -> `PostCategoryFieldTest.php` | `class-gf-field-post-category.php`
+- [x] **Post Image** (`post_image`) -> `PostImageFieldTest.php` | `class-gf-field-post-image.php`
+- [x] **Post Custom Field** (`post_custom_field`) -> `PostCustomFieldTest.php` | `class-gf-field-post-custom-field.php`
 
 ### 🟣 Pricing Fields (Calculations)
-- [ ] **Product** (`product`) -> `ProductFieldTest.php` | `class-gf-field-product.php` (Base product field)
-- [ ] **Single Product** (`singleproduct`) -> `SingleProductFieldTest.php` | `class-gf-field-singleproduct.php` - **MISSING FROM PRD**
-- [ ] **Hidden Product** (`hiddenproduct`) -> `HiddenProductFieldTest.php` | `class-gf-field-hiddenproduct.php` - **MISSING FROM PRD**
-- [ ] **Quantity** (`quantity`) -> `QuantityFieldTest.php` | `class-gf-field-quantity.php`
-- [ ] **Option** (`option`) -> `OptionFieldTest.php` | `class-gf-field-option.php`
-- [ ] **Shipping** (`shipping`) -> `ShippingFieldTest.php` | `class-gf-field-shipping.php` (Base shipping field)
-- [ ] **Single Shipping** (`singleshipping`) -> `SingleShippingFieldTest.php` | `class-gf-field-singleshipping.php` - **MISSING FROM PRD**
-- [ ] **Total** (`total`) -> `TotalFieldTest.php` | `class-gf-field-total.php`
+- [x] **Product** (`product`) -> `ProductFieldTest.php` | `class-gf-field-product.php` (Base product field)
+- [x] **Single Product** (`singleproduct`) -> `SingleProductFieldTest.php` | `class-gf-field-singleproduct.php` - **MISSING FROM PRD**
+- [x] **Hidden Product** (`hiddenproduct`) -> `HiddenProductFieldTest.php` | `class-gf-field-hiddenproduct.php` - **MISSING FROM PRD**
+- [x] **Quantity** (`quantity`) -> `QuantityFieldTest.php` | `class-gf-field-quantity.php`
+- [x] **Option** (`option`) -> `OptionFieldTest.php` | `class-gf-field-option.php`
+- [x] **Shipping** (`shipping`) -> `ShippingFieldTest.php` | `class-gf-field-shipping.php` (Base shipping field)
+- [x] **Single Shipping** (`singleshipping`) -> `SingleShippingFieldTest.php` | `class-gf-field-singleshipping.php` - **MISSING FROM PRD**
+- [x] **Total** (`total`) -> `TotalFieldTest.php` | `class-gf-field-total.php`
 - [ ] **Price** (`price`) -> `PriceFieldTest.php` | `class-gf-field-price.php` - **CREATED BUT CANNOT RUN** (GF 2.9 incompatibility)
 - [ ] **Calculation** (`calculation`) -> `CalculationFieldTest.php` | `class-gf-field-calculation.php` - *CANNOT IMPLEMENT* (GF 2.9 incompatibility)
 
 ### 🟠 Quiz Fields (Add-on Support)
-- [ ] **Quiz** (`quiz`) -> `QuizFieldTest.php` - *Add-on field (GFQuiz extension)*
+- [x] **Quiz** (`quiz`) -> `QuizFieldTest.php` - *Add-on field (GFQuiz extension)*
 
 ### ⚫  Special Cases
 *Verified in `src/Utils/Utils.php` as ignored/unsupported. These field class files exist in GF core but are not always handled the same way if at all. We don't need to support deprecated fields, but we should confirm if/how we're supporting the functionality even if it isn't via the automagical field registration.*

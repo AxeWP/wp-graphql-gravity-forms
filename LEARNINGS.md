@@ -13,3 +13,15 @@
 **Impact**: Field now properly registered and all 4 mutation tests pass. This pattern may be needed for other fields not loaded in GF 2.9 (Password, MultipleChoice, Price, Calculation).
 
 **Testing**: All ImageChoiceFieldTest mutations now pass (submit, update, draft submit, draft update).
+
+## PostCustomFieldTest Resolution (2026-01-23)
+
+**Issue**: PostCustomFieldTest was marked as "HAS EXPECTATION ISSUES" in IMPLEMENTATION_PLAN.md.
+
+**Investigation**: Upon running the test, it passes all 4 mutations (submit, update, draft submit, draft update) successfully.
+
+**Root Cause**: The test expectations were correct and the implementation was working properly. The "expectation issues" note was outdated.
+
+**Resolution**: Confirmed that PostCustomFieldTest passes all requirements. Updated IMPLEMENTATION_PLAN.md and PRD.md to reflect completion.
+
+**Impact**: PostCustomField now fully verified with 4/4 mutations passing. All post fields are now complete.
