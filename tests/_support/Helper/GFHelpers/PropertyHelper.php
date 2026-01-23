@@ -361,7 +361,11 @@ class PropertyHelper extends GFHelpers {
 	}
 
 	public function postFeaturedImage( $value = null ) {
-		return null !== $value ? ! empty( $value ) : $this->dummy->yesno();
+		return ! empty( $value ) ? $value : $this->dummy->url();
+	}
+
+	public function postCustomFieldName( $value = null ) {
+		return ! empty( $value ) ? $value : $this->dummy->words( 1, 3 );
 	}
 
 	public function placeholder( $value = null ) {

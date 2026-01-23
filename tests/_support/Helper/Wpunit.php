@@ -896,6 +896,53 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
+	 * Get the default args for a PostCustom field.
+	 */
+	public function getPostCustomFieldArgs(): array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'defaultValue',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'noDuplicates',
+			'placeholder',
+			'postCustomFieldName',
+			'size',
+			[ 'type' => 'post_custom_field' ],
+		];
+	}
+
+	/**
+	 * Get the default args for a Price field.
+	 */
+	public function getPriceFieldArgs(): array {
+		return [
+			'adminLabel',
+			'allowsPrepopulate',
+			'autocompleteAttribute',
+			'basePrice',
+			'defaultValue',
+			'description',
+			'descriptionPlacement',
+			'errorMessage',
+			'inputName',
+			'isRequired',
+			'label',
+			'labelPlacement',
+			'noDuplicates',
+			'placeholder',
+			'size',
+			[ 'type' => 'price' ],
+		];
+	}
+
+	/**
 	 * Get the default args for a Product field
 	 */
 	public function getProductFieldArgs(): array {
@@ -1176,13 +1223,12 @@ class Wpunit extends \Codeception\Module {
 	}
 
 	/**
-	 * Get the default args for a textarea field.
+	 * Get the default args for an ImageChoice field.
 	 */
-	public function getTextAreaFieldArgs(): array {
+	public function getImageChoiceFieldArgs(): array {
 		return [
 			'adminLabel',
 			'allowsPrepopulate',
-			'defaultValue',
 			'description',
 			'descriptionPlacement',
 			'errorMessage',
@@ -1190,12 +1236,23 @@ class Wpunit extends \Codeception\Module {
 			'isRequired',
 			'label',
 			'labelPlacement',
-			'maxLength',
-			'noDuplicates',
-			'placeholder',
-			'size',
-			[ 'type' => 'textarea' ],
-			'useRichTextEditor',
+			[ 'type' => 'image_choice' ],
+			[
+				'choices' => [
+					[
+						'text'       => 'First Choice',
+						'value'      => 'first',
+						'isSelected' => true,
+						'image'      => 'image1.jpg',
+					],
+					[
+						'text'       => 'Second Choice',
+						'value'      => 'second',
+						'isSelected' => false,
+						'image'      => 'image2.jpg',
+					],
+				],
+			],
 		];
 	}
 
