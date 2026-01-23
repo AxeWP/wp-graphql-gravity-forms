@@ -5,3 +5,4 @@
 require_once __DIR__ . '/_data/plugins/gravityforms/includes/fields/class-gf-field-image-choice.php';
 require_once __DIR__ . '/_data/plugins/gravityforms/includes/fields/class-gf-field-multiple-choice.php';
 require_once __DIR__ . '/_data/plugins/gravityforms/includes/fields/class-gf-field-password.php';
+require_once __DIR__ . '/_data/plugins/gravityforms/includes/fields/class-gf-field-price.php';
