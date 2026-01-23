@@ -286,6 +286,7 @@ class Utils {
 	public static function get_ignored_gf_field_types(): array {
 		$ignored_fields = [
 			'donation', // These fields are no longer supported by GF.
+			'honeypot', // This is an internal spam prevention field.
 			'repeater', // This still in beta.
 			'submit', // This is not technically a form field.
 		];

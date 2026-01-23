@@ -171,7 +171,7 @@ This table maps all 46 GF field class files to their PRD inventory entries:
 - [ ] **Donation** (`donation`) | `class-gf-field-donation.php` - *Deprecated in GF*
 - [ ] **Repeater** (`repeater`) | `class-gf-field-repeater.php` - *Beta/Ignored*
 - [ ] **Submit Button** (`submit`) | `class-gf-field-submit.php` - *Not a data field*
-- [ ] **Honeypot** (`honeypot`) | `class-gf-field-honeypot.php` - *Internal spam prevention*
+- [x] **Honeypot** (`honeypot`) | `class-gf-field-honeypot.php` - *Internal spam prevention*
 
 ---
 

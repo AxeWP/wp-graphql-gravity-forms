@@ -66,3 +66,17 @@
 **Impact**: PRD.md now accurately reflects the current state. Price field remains in the codebase with a non-functional test file. Calculation field functionality is already supported via ProductCalculationField (product fields with inputType = 'calculation').
 
 **Testing**: No additional tests needed as functionality cannot be added in current GF 2.9 test environment.
+
+## Honeypot Field Exclusion (2026-01-23)
+
+**Issue**: Honeypot field was listed as intentionally excluded in PRD.md but was not included in the `get_ignored_gf_field_types()` function in `Utils.php`.
+
+**Root Cause**: The field class exists and registers itself with GF_Fields::register(), but was not explicitly ignored, potentially allowing it to be exposed in GraphQL schema.
+
+**Solution**: Added 'honeypot' to the ignored fields array in `Utils.php` since it's an internal spam prevention field that should not be exposed to GraphQL.
+
+**Code Change**: Added 'honeypot' to the $ignored_fields array in `get_ignored_gf_field_types()` method.
+
+**Impact**: Honeypot field is now properly excluded from GraphQL schema exposure. This ensures internal fields remain internal.
+
+**Testing**: All existing tests continue to pass. No new tests needed as the field should not be accessible.
