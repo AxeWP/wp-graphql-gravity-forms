@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- feat: Add `phoneFormatProperties` field to Phone fields returning detailed format information (label, mask, regex, instruction, type). Resolves #441.
+
 ## [v0.13.3]
 
 This _minor_ release improves compatibility with WPGraphQL v2.6.0, Gravity Forms v2.9.x, WordPress 6.9, and PHP 8.4. Additionally, we've migrated our development and testing environment to use `@wordpress/env` (`wp-env`), integrated Prettier and `@wordpress/scripts` for codebase management, and made some bug fixes and performance improvements.
