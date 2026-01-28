@@ -116,6 +116,13 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					shouldExport
 				}
 				phoneFormat
+				phoneFormatProperties {
+					label
+					mask
+					regex
+					instruction
+					type
+				}
 				placeholder
 				shouldAllowDuplicates
 				size

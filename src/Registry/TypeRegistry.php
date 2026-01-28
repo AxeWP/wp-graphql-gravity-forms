@@ -293,6 +293,8 @@ class TypeRegistry {
 			WPObject\FormField\FormFields::class,
 			// Field Error.
 			WPObject\FieldError::class,
+			// Phone Format Properties.
+			WPObject\PhoneFormatProperties::class,
 			// Submission Confirmation.
 			WPObject\SubmissionConfirmation::class,
 			// GF Settings.
