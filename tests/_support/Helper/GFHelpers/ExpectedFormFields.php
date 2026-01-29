@@ -437,13 +437,18 @@ trait ExpectedFormFields {
 	public function phone_format_setting( GF_Field $field, array &$properties ): void {
 		$properties[] = $this->expectedField( 'phoneFormat', ! empty( $field->phoneFormat ) ? GFHelpers::get_enum_for_value( Enum\PhoneFieldFormatEnum::$type, $field->phoneFormat ) : self::IS_NULL );
 		
-		// Add phoneFormatProperties field
+		// Add phoneFormatProperties field.
 		if ( ! empty( $field->phoneFormat ) ) {
 			$properties[] = $this->expectedField( 'phoneFormatProperties.label', self::NOT_NULL );
-			$properties[] = $this->expectedField( 'phoneFormatProperties.mask', self::NOT_NULL );
-			$properties[] = $this->expectedField( 'phoneFormatProperties.regex', self::NOT_NULL );
 			$properties[] = $this->expectedField( 'phoneFormatProperties.instruction', self::NOT_NULL );
 			$properties[] = $this->expectedField( 'phoneFormatProperties.type', self::NOT_NULL );
+			if ( 'international' === $field->phoneFormat ) {
+				$properties[] = $this->expectedField( 'phoneFormatProperties.mask', self::IS_NULL );
+				$properties[] = $this->expectedField( 'phoneFormatProperties.regex', self::IS_NULL );
+			} else {
+				$properties[] = $this->expectedField( 'phoneFormatProperties.mask', self::NOT_NULL );
+				$properties[] = $this->expectedField( 'phoneFormatProperties.regex', self::NOT_NULL );
+			}
 		} else {
 			$properties[] = $this->expectedField( 'phoneFormatProperties', self::IS_NULL );
 		}

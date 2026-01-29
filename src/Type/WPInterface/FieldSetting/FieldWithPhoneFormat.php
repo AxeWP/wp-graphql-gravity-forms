@@ -69,8 +69,32 @@ class FieldWithPhoneFormat extends AbstractFieldSetting {
 						]
 					);
 
-					// Return the properties for the selected format.
-					return $phone_formats[ $field->phoneFormat ] ?? null;
+					$format = $phone_formats[ $field->phoneFormat ] ?? null;
+					if ( ! is_array( $format ) ) {
+						return null;
+					}
+
+					$required_keys = [
+						'label'       => null,
+						'mask'        => null,
+						'regex'       => null,
+						'instruction' => null,
+						'type'        => null,
+					];
+
+					$normalized = [];
+					foreach ( $required_keys as $key => $default ) {
+						$value = $format[ $key ] ?? $default;
+						if ( false === $value ) {
+							$value = null;
+						}
+						if ( null !== $value && ! is_scalar( $value ) ) {
+							$value = $default;
+						}
+						$normalized[ $key ] = $value;
+					}
+
+					return $normalized;
 				},
 			],
 		];
