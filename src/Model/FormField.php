@@ -240,6 +240,14 @@ class FormField extends Model {
 
 						$inputs[ $input_index ]['key'] = $input_keys[ $input_index ];
 					}
+
+					// Apply dynamic labels for address fields based on addressType.
+					if ( 'address' === $data->type ) {
+						$address_labels = self::get_address_input_type_labels( $data->formId, $data->addressType ?? '' );
+
+						$inputs[3]['label'] = $address_labels['state_label'] ?? $inputs[3]['label'];
+						$inputs[4]['label'] = $address_labels['zip_label'] ?? $inputs[3]['label'];
+					}
 				} elseif ( 'email' === $data->type && empty( $data->emailConfirmEnabled ) ) {
 					// Prime inputs for email fields without confirmation.
 					$inputs = [
@@ -285,6 +293,25 @@ class FormField extends Model {
 			'zip',
 			'country',
 		];
+	}
+
+	/**
+	 * Returns dynamic labels for Address field based on addressType.
+	 *
+	 * Mirrors the logic from GF_Field_Address::get_address_types().
+	 *
+	 * @param int    $form_id The form ID to get the address type for.
+	 * @param string $address_type The address type (international, us, canadian).
+	 *
+	 * @return array{state_label:string, zip_label:string}
+	 */
+	private static function get_address_input_type_labels( int $form_id, string $address_type ): array {
+		/** @var \GF_Field_Address $field */
+		$field         = \GF_Fields::get( 'address' );
+		$address_types = $field->get_address_types( $form_id );
+		$address_type  = $address_type ?: $field->get_default_address_type( $form_id );
+
+		return $address_types[ $address_type ] ?? $address_types['international'];
 	}
 
 	/**
