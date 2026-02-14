@@ -115,7 +115,14 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					shouldErase
 					shouldExport
 				}
-				phoneFormat
+				phoneFormatType
+				_phoneFormatExperimental {
+					label
+					mask
+					regex
+					instruction
+					type
+				}
 				placeholder
 				shouldAllowDuplicates
 				size
