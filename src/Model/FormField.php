@@ -245,8 +245,13 @@ class FormField extends Model {
 					if ( 'address' === $data->type ) {
 						$address_labels = self::get_address_input_type_labels( $data->formId, $data->addressType ?? '' );
 
-						$inputs[3]['label'] = $address_labels['state_label'] ?? $inputs[3]['label'];
-						$inputs[4]['label'] = $address_labels['zip_label'] ?? $inputs[3]['label'];
+						// Only override label if no customLabel is set.
+						if ( empty( $inputs[3]['customLabel'] ) ) {
+							$inputs[3]['label'] = $address_labels['state_label'] ?? $inputs[3]['label'];
+						}
+						if ( empty( $inputs[4]['customLabel'] ) ) {
+							$inputs[4]['label'] = $address_labels['zip_label'] ?? $inputs[4]['label'];
+						}
 					}
 				} elseif ( 'email' === $data->type && empty( $data->emailConfirmEnabled ) ) {
 					// Prime inputs for email fields without confirmation.
