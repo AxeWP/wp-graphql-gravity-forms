@@ -1,9 +1,9 @@
 === WPGraphQL for Gravity Forms ===
 Contributors: justlevine, kellenmace, mtdbyanechko, tinytoolbox
 Tags: Forms, GraphQL, Gatsby, Headless, GF, Gravity, WPGraphQL, React
-Requires at least: 6.0
+Requires at least: 6.7
 Tested up to: 6.9.1
-Requires PHP: 7.4
+Requires PHP: 8.2
 Requires Gravity Forms: 2.7.0
 Requires WPGraphQL: 1.26.0
 Stable tag: 0.13.4

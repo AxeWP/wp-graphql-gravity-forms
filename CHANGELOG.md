@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- chore!: Bump minimum required PHP version to 8.2 and minimum WordPress version to 6.7.
+- chore: Test compatibility against PHP 8.5.
+
 ## [v0.13.4]
 
 This _minor_ release adds support for filtering entries by `isRead` and `isStarred` statuses, improves handling of `AddressField` default values, and deprecates the `PhoneField.phoneFormat` field in favor of `PhoneField.phoneFormatType` (with a new `GfPhoneFormat` type incoming).

@@ -10,9 +10,9 @@
  * Version: 0.13.4
  * Text Domain: wp-graphql-gravity-forms
  * Domain Path: /languages
- * Requires at least: 6.0
+ * Requires at least: 6.7
  * Tested up to: 6.9.1
- * Requires PHP: 7.4
+ * Requires PHP: 8.2
  * Requires Plugins: wp-graphql
  * Gravity Forms requires at least: 2.7.0
  * WPGraphQL requires at least: 1.26.0

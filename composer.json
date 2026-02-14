@@ -26,7 +26,7 @@
 			"phpstan/extension-installer": true
 		},
 		"platform": {
-			"php": "7.4"
+			"php": "8.2"
 		},
 		"optimize-autoloader": true,
 		"preferred-install": "dist",
@@ -46,19 +46,18 @@
 		}
 	},
 	"require": {
-		"php": ">=7.4",
+		"php": ">=8.2",
 		"yahnis-elsts/plugin-update-checker": "^5.2.0"
 	},
 	"require-dev": {
 		"axepress/wp-graphql-cs": "^2.0.0",
 		"axepress/wp-graphql-stubs": "^2.3.0",
-		"codeception/module-rest": "^2.0",
-		"lucatume/wp-browser": "^3.7.0",
+		"codeception/module-rest": "^3.4",
+		"lucatume/wp-browser": "^4.5",
 		"phpstan/extension-installer": "^1.1",
 		"phpstan/phpstan": "^2.0",
 		"phpstan/phpstan-deprecation-rules": "^2.0.1",
 		"szepeviktor/phpstan-wordpress": "^2.0",
-		"wp-cli/wp-cli-bundle": "^2.12.0",
 		"wp-graphql/wp-graphql-testcase": "~3.4.0"
 	},
 	"scripts": {
