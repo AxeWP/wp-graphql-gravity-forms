@@ -5,4 +5,4 @@
 
 define( 'CRGEARY_JAMSTACK_DEPLOYMENTS_OPTIONS_KEY', 'wp-jamstack-deployments' );
 define( 'WPGRAPHQL_GF_PLUGIN_FILE', 'wp-graphql-gravity-forms.php' );
-define( 'WPGRAPHQL_GF_VERSION', '0.13.3' );
+define( 'WPGRAPHQL_GF_VERSION', '0.13.4' );

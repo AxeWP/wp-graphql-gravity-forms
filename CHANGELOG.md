@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [v0.13.4]
+
+This _minor_ release adds support for filtering entries by `isRead` and `isStarred` statuses, improves handling of `AddressField` default values, and deprecates the `PhoneField.phoneFormat` field in favor of `PhoneField.phoneFormatType` (with a new `GfPhoneFormat` type incoming).
+
+> [!IMPORTANT]
+> `GfFieldWithAddressSetting.defaultState` and changed type from `AddressFieldProvinceEnum` to `AddressFieldStateEnum`.
+> While this is technically a breaking schema change, we're treating it as a bugfix, since trying to get US State values coerced into a Canadian Province would have caused users any users who had adopted this approach fatal errors.
+
 - feat: Deprecate `PhoneField.phoneFormat` in favor of `PhoneField.phoneFormatType`, and add new `GfPhoneFormat` type.  Props @chetanupare, @justlevine.
 - feat: Add support for filtering entries by `isRead` and `isStarred` statuses.
 - fix: Correctly resolve `AddressField.defaultState`, `AddressField.defaultProvince` based on the `addressType`. H/t @byanko-bot
