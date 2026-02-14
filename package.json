@@ -5,6 +5,10 @@
 		"type": "git",
 		"url": "git+https://github.com/axewp/wp-graphql-gravity-forms.git"
 	},
+	"engines": {
+		"node": ">=22.21.1",
+		"npm": ">=10.9.4"
+	},
 	"files": [
 		"src",
 		"vendor",
@@ -25,17 +29,13 @@
 		"wp-env": "wp-env"
 	},
 	"devDependencies": {
-		"@wordpress/env": "^10.38.0",
-		"@wordpress/prettier-config": "^4.38.0",
-		"@wordpress/scripts": "^31.3.0"
+		"@wordpress/env": "^10.39.0",
+		"@wordpress/prettier-config": "^4.39.0",
+		"@wordpress/scripts": "^31.4.0"
 	},
 	"overrides": {
 		"webpack-dev-server@<=5.2.0": ">=5.2.1",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1"
-	},
-	"engines": {
-		"node": ">=22.21.1",
-		"npm": ">=10.9.4"
 	}
 }

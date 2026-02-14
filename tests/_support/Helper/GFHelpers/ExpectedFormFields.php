@@ -23,8 +23,17 @@ trait ExpectedFormFields {
 		$properties[] = $this->expectedField( 'addressType', ! empty( $field->addressType ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldTypeEnum::$type, $field->addressType ) : self::IS_NULL );
 
 		$properties[] = $this->expectedField( 'defaultCountry', ! empty( $field->defaultCountry ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldCountryEnum::$type, $field->defaultCountry ) : self::IS_NULL );
-		$properties[] = $this->expectedField( 'defaultProvince', ! empty( $field->defaultProvince ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldProvinceEnum::$type, $field->defaultProvince ) : self::IS_NULL );
-		$properties[] = $this->expectedField( 'defaultState', ! empty( $field->defaultState ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldStateEnum::$type, $field->defaultState ) : self::IS_NULL );
+
+		// For Canadian addresses, defaultProvince should return defaultProvince or fallback to defaultState.
+		$default_province = null;
+		if ( 'canadian' === $field->addressType ) {
+			$default_province = ! empty( $field->defaultProvince ) ? $field->defaultProvince : ( $field->defaultState ?? null );
+		}
+		$properties[] = $this->expectedField( 'defaultProvince', ! empty( $default_province ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldProvinceEnum::$type, $default_province ) : self::IS_NULL );
+
+		// For US addresses, defaultState returns the value; for others it's null.
+		$default_state = 'us' === $field->addressType && ! empty( $field->defaultState ) ? $field->defaultState : null;
+		$properties[]  = $this->expectedField( 'defaultState', ! empty( $default_state ) ? GFHelpers::get_enum_for_value( Enum\AddressFieldStateEnum::$type, $default_state ) : self::IS_NULL );
 
 		$input_keys = [
 			'autocompleteAttribute' => 'autocompleteAttribute',
@@ -38,12 +47,50 @@ trait ExpectedFormFields {
 		];
 
 		$properties[] = $this->expected_inputs( $input_keys, ! empty( $field->inputs ) ? $field->inputs : [] );
+
+		// Override labels for state (input 3) and zip (input 4) with dynamic values based on addressType.
+		$dynamic_labels = $this->get_address_type_labels( $field->addressType ?? '' );
+		$inputs         = ! empty( $field->inputs ) ? $field->inputs : [];
+
+		// Only override if no customLabel is set.
+		if ( isset( $inputs[3] ) && empty( $inputs[3]['customLabel'] ) ) {
+			$properties[] = $this->expectedField( 'inputs.3.label', $dynamic_labels['state_label'] );
+		}
+		if ( isset( $inputs[4] ) && empty( $inputs[4]['customLabel'] ) ) {
+			$properties[] = $this->expectedField( 'inputs.4.label', $dynamic_labels['zip_label'] );
+		}
+
 		$properties[] = $this->expectedField( 'inputs.0.key', 'street' );
 		$properties[] = $this->expectedField( 'inputs.1.key', 'lineTwo' );
 		$properties[] = $this->expectedField( 'inputs.2.key', 'city' );
 		$properties[] = $this->expectedField( 'inputs.3.key', 'state' );
 		$properties[] = $this->expectedField( 'inputs.4.key', 'zip' );
 		$properties[] = $this->expectedField( 'inputs.5.key', 'country' );
+	}
+
+	/**
+	 * Get dynamic labels for address fields based on addressType.
+	 *
+	 * @param string $address_type The address type.
+	 * @return array{state_label:string, zip_label:string}
+	 */
+	private function get_address_type_labels( string $address_type ): array {
+		$labels = [
+			'international' => [
+				'state_label' => 'State / Province / Region',
+				'zip_label'   => 'ZIP / Postal Code',
+			],
+			'us'            => [
+				'state_label' => 'State',
+				'zip_label'   => 'ZIP Code',
+			],
+			'canadian'      => [
+				'state_label' => 'Province',
+				'zip_label'   => 'Postal Code',
+			],
+		];
+
+		return $labels[ $address_type ] ?? $labels['international'];
 	}
 
 	public function admin_label_setting( GF_Field $field, array &$properties ): void {
