@@ -1,25 +1,27 @@
 <?php
 /**
- * Object Type - PhoneFormatProperties
+ * Object Type - PhoneFormat
  *
  * @package WPGraphQL\GF\Type\WPObject
- * @since   @todo
+ * @since   0.13.4
  */
 
 declare( strict_types = 1 );
 
 namespace WPGraphQL\GF\Type\WPObject;
 
+use WPGraphQL\GF\Type\Enum\PhoneFieldFormatEnum;
+
 /**
- * Class - PhoneFormatProperties
+ * Class - PhoneFormat
  */
-class PhoneFormatProperties extends AbstractObject {
+class PhoneFormat extends AbstractObject {
 	/**
 	 * Type registered in WPGraphQL.
 	 *
 	 * @var string
 	 */
-	public static string $type = 'PhoneFormatProperties';
+	public static string $type = 'GfPhoneFormat';
 
 	/**
 	 * {@inheritDoc}
@@ -50,7 +52,7 @@ class PhoneFormatProperties extends AbstractObject {
 				'description' => static fn () => __( 'The instruction text displayed to users for this phone format.', 'wp-graphql-gravity-forms' ),
 			],
 			'type'        => [
-				'type'        => 'String',
+				'type'        => PhoneFieldFormatEnum::$type,
 				'description' => static fn () => __( 'The internal type identifier for the phone format.', 'wp-graphql-gravity-forms' ),
 			],
 		];

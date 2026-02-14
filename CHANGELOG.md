@@ -2,7 +2,8 @@
 
 ## [Unreleased]
 
-- feat: Add `phoneFormatProperties` field to Phone fields returning detailed format information (label, mask, regex, instruction, type). Resolves #441.
+- feat: Deprecate `PhoneField.phoneFormat` in favor of `PhoneField.phoneFormatType`, and add new `GfPhoneFormat` type.  Props @chetanupare, @justlevine.
+
 - fix: Correctly resolve `AddressField.defaultState`, `AddressField.defaultProvince` based on the `addressType`. H/t @byanko-bot
 - fix: Set the default `AddressField.inputs.label` for the State/Province and Zip/Postal inputs based on the `addressType`. H/t @byanko-bot
 - chore: Update Composer and NPM deps.

@@ -10,8 +10,10 @@ declare( strict_types = 1 );
 
 namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
+use GF_Field;
+use WPGraphQL\GF\Model\FormField;
 use WPGraphQL\GF\Type\Enum\PhoneFieldFormatEnum;
-use WPGraphQL\GF\Type\WPObject\PhoneFormatProperties;
+use WPGraphQL\GF\Type\WPObject\PhoneFormat;
 
 /**
  * Class - FieldWithPhoneFormat
@@ -36,65 +38,46 @@ class FieldWithPhoneFormat extends AbstractFieldSetting {
 	 */
 	public static function get_fields(): array {
 		return [
-			'phoneFormat'           => [
+			'phoneFormatType'          => [
 				'type'        => PhoneFieldFormatEnum::$type,
 				'description' => static fn () => __( 'Determines the allowed format for phones. If the phone value does not conform with the specified format, the field will fail validation.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static fn ( FormField $field ) => $field->gfField->phoneFormat,
 			],
-			'phoneFormatProperties' => [
-				'type'        => PhoneFormatProperties::$type,
-				'description' => static fn () => __( 'The properties of the selected phone format, including label, mask, regex, instruction and type.', 'wp-graphql-gravity-forms' ),
-				'resolve'     => static function ( $field ) {
+			'phoneFormat'              => [
+				'type'              => PhoneFieldFormatEnum::$type,
+				'deprecationReason' => static fn () => __( 'Use `phoneFormatType` instead. The GraphQL type for this field will change in the next breaking release.', 'wp-graphql-gravity-forms' ),
+				'description'       => static fn () => __( 'Determines the allowed format for phones. If the phone value does not conform with the specified format, the field will fail validation.', 'wp-graphql-gravity-forms' ),
+			],
+			'_phoneFormatExperimental' => [
+				'type'              => PhoneFormat::$type,
+				'description'       => static fn () => __( 'The phone format properties. Experimental', 'wp-graphql-gravity-forms' ),
+				'deprecationReason' => static fn () => __( 'The `phoneFormat` field has been renamed to `phoneFormatType`. The `_phoneFormatExperimental` field will be replaced in a future release.', 'wp-graphql-gravity-forms' ),
+				'resolve'           => static function ( $field ) {
 					if ( empty( $field->phoneFormat ) ) {
 						return null;
 					}
 
-					// Get all available phone formats, including custom ones from gform_phone_formats filter.
-					$phone_formats = apply_filters(
-						'gform_phone_formats', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-						[
-							'standard'      => [
-								'label'       => '(###) ###-####',
-								'mask'        => '(999) 999-9999',
-								'regex'       => '/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/',
-								'instruction' => '(###) ###-####',
-								'type'        => 'standard',
-							],
-							'international' => [
-								'label'       => 'International',
-								'mask'        => false,
-								'regex'       => false,
-								'instruction' => __( 'International phone numbers must start with a + followed by the country code and phone number.', 'wp-graphql-gravity-forms' ),
-								'type'        => 'international',
-							],
-						]
-					);
+					$gf_field = $field->gfField ?? null;
 
-					$format = $phone_formats[ $field->phoneFormat ] ?? null;
+					// Ensure the field has the get_phone_format() method.
+					if ( ! $gf_field instanceof GF_Field || ! method_exists( $gf_field, 'get_phone_format' ) ) {
+						return null;
+					}
+
+					$format = $gf_field->get_phone_format();
+
 					if ( ! is_array( $format ) ) {
 						return null;
 					}
 
-					$required_keys = [
-						'label'       => null,
-						'mask'        => null,
-						'regex'       => null,
-						'instruction' => null,
-						'type'        => null,
+					// Normalize values: convert false to null for nullable GraphQL fields.
+					return [
+						'label'       => isset( $format['label'] ) && false !== $format['label'] ? (string) $format['label'] : null,
+						'mask'        => isset( $format['mask'] ) && false !== $format['mask'] ? (string) $format['mask'] : null,
+						'regex'       => isset( $format['regex'] ) && false !== $format['regex'] ? (string) $format['regex'] : null,
+						'instruction' => isset( $format['instruction'] ) && false !== $format['instruction'] ? (string) $format['instruction'] : null,
+						'type'        => $field->phoneFormat,
 					];
-
-					$normalized = [];
-					foreach ( $required_keys as $key => $default ) {
-						$value = $format[ $key ] ?? $default;
-						if ( false === $value ) {
-							$value = null;
-						}
-						if ( null !== $value && ! is_scalar( $value ) ) {
-							$value = $default;
-						}
-						$normalized[ $key ] = $value;
-					}
-
-					return $normalized;
 				},
 			],
 		];

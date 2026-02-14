@@ -115,8 +115,8 @@ class PhoneFieldTest extends FormFieldTestCase implements FormFieldTestCaseInter
 					shouldErase
 					shouldExport
 				}
-				phoneFormat
-				phoneFormatProperties {
+				phoneFormatType
+				_phoneFormatExperimental {
 					label
 					mask
 					regex
