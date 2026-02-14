@@ -60,7 +60,7 @@ jobs:
       matrix:
         ## GF 2.9.x only supports from WP 6.5, and we have no way to access earlier versions.
         php: ['8.4', '8.3', '8.2', '8.1']
-        wordpress: ['6.9','6.8', '6.7', '6.6', '6.5']
+        wordpress: ['6.9', '6.8', '6.7', '6.6', '6.5']
         coverage: [0]
         include:
           - php: '8.4'
@@ -145,7 +145,6 @@ jobs:
           max_attempts: 3
           command: |
             ${{ matrix.coverage && 'PCOV_ENABLED=1 ' || '' }}npm run wp-env start -- ${{ secrets.ACTIONS_STEP_DEBUG && '--debug' || '' }}
-
 
       - name: Log versions
         run: |

@@ -13,6 +13,7 @@ namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\Enum\AddressFieldCountryEnum;
 use WPGraphQL\GF\Type\Enum\AddressFieldProvinceEnum;
+use WPGraphQL\GF\Type\Enum\AddressFieldStateEnum;
 use WPGraphQL\GF\Type\Enum\AddressFieldTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\FieldWithInputs;
 use WPGraphQL\Registry\TypeRegistry;
@@ -62,10 +63,19 @@ class FieldWithAddress extends AbstractFieldSetting implements TypeWithInterface
 			'defaultProvince' => [
 				'type'        => AddressFieldProvinceEnum::$type,
 				'description' => static fn () => __( 'Contains the province that will be selected by default. Only applicable when "addressType" is set to "CANADA".', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function ( $source ): ?string {
+					if ( 'canadian' !== ( $source->addressType ?? '' ) ) {
+						return null;
+					}
+
+					// Older versions of GF use defaultProvince.
+					return ! empty( $source->defaultProvince ) ? $source->defaultProvince : ( $source->defaultState ?? null );
+				},
 			],
 			'defaultState'    => [
-				'type'        => AddressFieldProvinceEnum::$type,
+				'type'        => AddressFieldStateEnum::$type,
 				'description' => static fn () => __( 'Contains the state that will be selected by default. Only applicable when "addressType" is set to "US".', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static fn ( $source ): ?string => 'us' === ( $source->addressType ?? '' ) ? ( $source->defaultState ?? null ) : null,
 			],
 		];
 	}
