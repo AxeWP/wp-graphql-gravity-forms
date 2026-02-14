@@ -2,7 +2,10 @@
 
 ## [Unreleased]
 
-- chore!: Bump minimum required PHP version to 8.2 and minimum WordPress version to 6.7.
+- chore!: Bump minimum required PHP version to 8.2
+- chore!: Bump minimum required WordPress version to 6.7
+- chore!: Bump minimum required Gravity Forms version to 2.9.0
+- chore!: Bump minimum required WPGraphQL version to 2.5.0
 - chore: Test compatibility against PHP 8.5.
 
 ## [v0.13.4]

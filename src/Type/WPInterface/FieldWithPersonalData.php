@@ -12,7 +12,6 @@ namespace WPGraphQL\GF\Type\WPInterface;
 
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Type\WPObject\FormField\FormFieldDataPolicy;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - FieldWithPersonalData
@@ -41,7 +40,7 @@ class FieldWithPersonalData extends AbstractInterface {
 				'type'        => FormFieldDataPolicy::$type,
 				'description' => static fn () => __( 'The form field-specifc policies for exporting and erasing personal data.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$form_model = Compat::get_app_context( $context, 'gfForm' );
+					$form_model = $context->get( 'gf', 'gfForm' );
 					if ( empty( $form_model->personalData['dataPolicies']['identificationFieldDatabaseId'] ) ) {
 						return null;
 					}
