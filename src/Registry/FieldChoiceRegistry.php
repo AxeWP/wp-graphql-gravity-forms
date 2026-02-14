@@ -58,44 +58,39 @@ class FieldChoiceRegistry {
 	 * @param bool      $as_interface Whether to register the choice as an interface. Default false.
 	 */
 	public static function register( GF_Field $field, array $settings, bool $as_interface = false ): void {
-		add_action(
-			get_graphql_register_action(),
-			static function () use ( $field, $settings, $as_interface ) {
-				$choice_name = self::get_type_name( $field );
+		$choice_name = self::get_type_name( $field );
 
-				// Skip if already registered.
-				if ( in_array( $choice_name, self::$registered_types, true ) ) {
-					return;
-				}
+		// Skip if already registered.
+		if ( in_array( $choice_name, self::$registered_types, true ) ) {
+			return;
+		}
 
-				$config = self::get_config_from_settings( $choice_name, $field, $settings );
+		$config = self::get_config_from_settings( $choice_name, $field, $settings );
 
-				if ( $as_interface ) {
-					$config['resolveType'] = static function () use ( $choice_name ) {
-						return $choice_name;
-					};
+		if ( $as_interface ) {
+			$config['resolveType'] = static function () use ( $choice_name ) {
+				return $choice_name;
+			};
 
-					$config['eagerlyLoadType'] = true;
+			$config['eagerlyLoadType'] = true;
 
-					register_graphql_interface_type( $choice_name, $config );
-				} else {
-					$parent_choice_name = Utils::get_safe_form_field_type_name( $field->type ) . 'FieldChoice';
+			register_graphql_interface_type( $choice_name, $config );
+		} else {
+			$parent_choice_name = Utils::get_safe_form_field_type_name( $field->type ) . 'FieldChoice';
 
-					// Check if we need to register a parent interface.
-					if ( $parent_choice_name !== $choice_name && in_array( $parent_choice_name, self::$registered_types, true ) ) {
-						$config['interfaces'] = array_merge( $config['interfaces'], [ $parent_choice_name ] );
-					}
-
-					register_graphql_object_type( $choice_name, $config );
-				}
-
-				// Overload the field type with the new choice type.
-				Utils::overload_graphql_field_type( $field->graphql_single_name, 'choices', [ 'list_of' => $choice_name ] );
-
-				// Store in static array to prevent duplicate registration.
-				self::$registered_types[] = $choice_name;
+			// Check if we need to register a parent interface.
+			if ( $parent_choice_name !== $choice_name && in_array( $parent_choice_name, self::$registered_types, true ) ) {
+				$config['interfaces'] = array_merge( $config['interfaces'], [ $parent_choice_name ] );
 			}
-		);
+
+			register_graphql_object_type( $choice_name, $config );
+		}
+
+		// Overload the field type with the new choice type.
+		Utils::overload_graphql_field_type( $field->graphql_single_name, 'choices', [ 'list_of' => $choice_name ] );
+
+		// Store in static array to prevent duplicate registration.
+		self::$registered_types[] = $choice_name;
 	}
 
 	/**

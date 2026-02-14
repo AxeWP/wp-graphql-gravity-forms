@@ -60,42 +60,37 @@ class FieldInputRegistry {
 	 * @param bool      $as_interface Whether to register the choice as an interface. Default false.
 	 */
 	public static function register( GF_Field $field, array $settings, bool $as_interface = false ): void {
-		add_action(
-			get_graphql_register_action(),
-			static function () use ( $field, $settings, $as_interface ) {
-				$input_name = self::get_type_name( $field );
+		$input_name = self::get_type_name( $field );
 
-				// Skip if already registered.
-				if ( in_array( $input_name, self::$registered_types, true ) ) {
-					return;
-				}
+		// Skip if already registered.
+		if ( in_array( $input_name, self::$registered_types, true ) ) {
+			return;
+		}
 
-				$config = self::get_config_from_settings( $input_name, $field, $settings );
+		$config = self::get_config_from_settings( $input_name, $field, $settings );
 
-				if ( $as_interface ) {
-					$config['resolveType'] = static function () use ( $input_name ) {
-						return $input_name;
-					};
+		if ( $as_interface ) {
+			$config['resolveType'] = static function () use ( $input_name ) {
+				return $input_name;
+			};
 
-					$config['eagerlyLoadType'] = true;
-					register_graphql_interface_type( $input_name, $config );
-				} else {
-					$parent_input_name = Utils::get_safe_form_field_type_name( $field->type . 'InputProperty' );
+			$config['eagerlyLoadType'] = true;
+			register_graphql_interface_type( $input_name, $config );
+		} else {
+			$parent_input_name = Utils::get_safe_form_field_type_name( $field->type . 'InputProperty' );
 
-					// Check if we need to register a parent interface.
-					if ( $parent_input_name !== $input_name && in_array( $parent_input_name, self::$registered_types, true ) ) {
-						$config['interfaces'] = array_merge( $config['interfaces'], [ $parent_input_name ] );
-					}
-
-					register_graphql_object_type( $input_name, $config );
-				}
-
-				Utils::overload_graphql_field_type( $field->graphql_single_name, 'inputs', [ 'list_of' => $input_name ] );
-
-				// Store in static array to prevent duplicate registration.
-				self::$registered_types[] = $input_name;
+			// Check if we need to register a parent interface.
+			if ( $parent_input_name !== $input_name && in_array( $parent_input_name, self::$registered_types, true ) ) {
+				$config['interfaces'] = array_merge( $config['interfaces'], [ $parent_input_name ] );
 			}
-		);
+
+			register_graphql_object_type( $input_name, $config );
+		}
+
+		Utils::overload_graphql_field_type( $field->graphql_single_name, 'inputs', [ 'list_of' => $input_name ] );
+
+		// Store in static array to prevent duplicate registration.
+		self::$registered_types[] = $input_name;
 	}
 
 	/**
