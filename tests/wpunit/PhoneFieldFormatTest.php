@@ -69,7 +69,7 @@ class PhoneFieldFormatTest extends GFGraphQLTestCase {
 						nodes {
 							... on PhoneField {
 								phoneFormatType
-								_phoneFormatExperimental {
+								phoneFormat {
 									label
 									mask
 									regex
@@ -89,7 +89,7 @@ class PhoneFieldFormatTest extends GFGraphQLTestCase {
 		$this->assertArrayNotHasKey( 'errors', $response );
 		$this->assertEquals( 'STANDARD', $response['data']['gfForm']['formFields']['nodes'][0]['phoneFormatType'] );
 
-		$properties = $response['data']['gfForm']['formFields']['nodes'][0]['_phoneFormatExperimental'];
+		$properties = $response['data']['gfForm']['formFields']['nodes'][0]['phoneFormat'];
 		$this->assertNotNull( $properties );
 		$this->assertNotNull( $properties['label'] );
 		$this->assertNotNull( $properties['mask'] );
@@ -111,7 +111,7 @@ class PhoneFieldFormatTest extends GFGraphQLTestCase {
 						nodes {
 							... on PhoneField {
 								phoneFormatType
-								_phoneFormatExperimental {
+								phoneFormat {
 									label
 									mask
 									regex
@@ -131,7 +131,7 @@ class PhoneFieldFormatTest extends GFGraphQLTestCase {
 		$this->assertArrayNotHasKey( 'errors', $response );
 		$this->assertEquals( 'INTERNATIONAL', $response['data']['gfForm']['formFields']['nodes'][0]['phoneFormatType'] );
 
-		$properties = $response['data']['gfForm']['formFields']['nodes'][0]['_phoneFormatExperimental'];
+		$properties = $response['data']['gfForm']['formFields']['nodes'][0]['phoneFormat'];
 		$this->assertNotNull( $properties );
 		$this->assertNotNull( $properties['label'] );
 		$this->assertNull( $properties['mask'] );
@@ -177,7 +177,7 @@ class PhoneFieldFormatTest extends GFGraphQLTestCase {
 					formFields {
 						nodes {
 							... on PhoneField {
-								_phoneFormatExperimental {
+								phoneFormat {
 									label
 									mask
 									regex
@@ -195,7 +195,7 @@ class PhoneFieldFormatTest extends GFGraphQLTestCase {
 
 		$this->assertArrayNotHasKey( 'errors', $response );
 
-		$properties = $response['data']['gfForm']['formFields']['nodes'][0]['_phoneFormatExperimental'];
+		$properties = $response['data']['gfForm']['formFields']['nodes'][0]['phoneFormat'];
 		$this->assertNotNull( $properties );
 		$this->assertEquals( $custom_format['label'], $properties['label'] );
 		$this->assertEquals( $custom_format['mask'], $properties['mask'] );

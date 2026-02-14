@@ -7,7 +7,7 @@
 - chore!: Bump minimum required Gravity Forms version to 2.9.0
 - chore!: Bump minimum required WPGraphQL version to 2.5.0
 - chore!: Remove the following deprecated fields: `FieldWithPhoneFormat._phoneFormatExperimental` field. `FieldWithProductField.productField` field.
-- chore!: Change the following field types: `FieldWithPhoneFormat.phoneFormat` from `PhoneFieldFormatEnum` to `GfPhoneFormat`.
+- chore!: change `FieldWithPhoneFormat.phoneFormat` from `PhoneFieldFormatEnum` to `GfPhoneFormat`.
 - chore!: Remove the following unused methods: `Utils::to_snake_case()`, `Utils::deprecate_property()`.
 - chore: Test compatibility against PHP 8.5.
 
