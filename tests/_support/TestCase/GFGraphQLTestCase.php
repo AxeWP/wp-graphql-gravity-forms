@@ -15,8 +15,25 @@ use WPGraphQL\GF\Type\Enum;
 
 /**
  * Class - GraphQLTestCase
+ *
+ * @property \stdClass{
+ *   draft_entry: \Tests\WPGraphQL\GF\Factory\DraftEntry,
+ *   entry: \Tests\WPGraphQL\GF\Factory\Entry,
+ *   field: \Tests\WPGraphQL\GF\Factory\Field,
+ *   form: \Tests\WPGraphQL\GF\Factory\Form,
+ * } factory
  */
 class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
+	/**
+	 * The available factories
+	 */
+	private const FACTORIES = [
+		'draft_entry' => \Tests\WPGraphQL\GF\Factory\DraftEntry::class,
+		'entry'       => \Tests\WPGraphQL\GF\Factory\Entry::class,
+		'field'       => \Tests\WPGraphQL\GF\Factory\Field::class,
+		'form'        => \Tests\WPGraphQL\GF\Factory\Form::class,
+	];
+
 	/**
 	 * @var \WpunitTester
 	 */
@@ -42,17 +59,11 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 	public function setUp(): void {
 		parent::setUp();
 
-		// Load factories.
-		$factories = [
-			'DraftEntry',
-			'Entry',
-			'Field',
-			'Form',
-		];
+		// Clean up any leftover GF data from previous test runs.
+		$this->cleanup_gf_data();
 
-		foreach ( $factories as $factory ) {
-			$factory_name                   = strtolower( preg_replace( '/\B([A-Z])/', '_$1', $factory ) );
-			$factory_class                  = '\\Tests\\WPGraphQL\\GF\\Factory\\' . $factory;
+		// Load factories.
+		foreach ( self::FACTORIES as $factory_name => $factory_class ) {
 			$this->factory->{$factory_name} = new $factory_class( $this->factory );
 		}
 
@@ -79,6 +90,30 @@ class GFGraphQLTestCase extends \Tests\WPGraphQL\TestCase\WPGraphQLTestCase {
 
 		// Then...
 		parent::tearDown();
+	}
+
+	/**
+	 * Clean up all Gravity Forms data from previous test runs.
+	 *
+	 * This ensures test isolation by removing any leftover entries and forms
+	 * that may have persisted from interrupted or failed tests.
+	 */
+	protected function cleanup_gf_data(): void {
+		// Delete all entries.
+		$entries = \GFAPI::get_entries( 0 );
+		if ( ! empty( $entries ) && ! is_wp_error( $entries ) ) {
+			$entry_ids = wp_list_pluck( $entries, 'id' );
+			foreach ( $entry_ids as $entry_id ) {
+				\GFAPI::delete_entry( $entry_id );
+			}
+		}
+
+		// Delete all forms.
+		$forms = \GFAPI::get_forms();
+		if ( ! empty( $forms ) && ! is_wp_error( $forms ) ) {
+			$form_ids = wp_list_pluck( $forms, 'id' );
+			\GFAPI::delete_forms( $form_ids );
+		}
 	}
 
 	/**

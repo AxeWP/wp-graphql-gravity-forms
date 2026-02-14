@@ -3,10 +3,10 @@
 ## [Unreleased]
 
 - feat: Deprecate `PhoneField.phoneFormat` in favor of `PhoneField.phoneFormatType`, and add new `GfPhoneFormat` type.  Props @chetanupare, @justlevine.
-
 - fix: Correctly resolve `AddressField.defaultState`, `AddressField.defaultProvince` based on the `addressType`. H/t @byanko-bot
 - fix: Set the default `AddressField.inputs.label` for the State/Province and Zip/Postal inputs based on the `addressType`. H/t @byanko-bot
 - chore: Update Composer and NPM deps.
+- tests: Improve cleanup and factory instantiation for better local isolation.
 
 ## [v0.13.3]
 
