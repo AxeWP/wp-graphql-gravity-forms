@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [v0.13.4]
+
+This _minor_ adds support for filtering entries by `isRead` and `isStarred` statuses, improves handling of `AddressField` default values, and deprecates the `PhoneField.phoneFormat` field in favor of `PhoneField.phoneFormatType` (with a new `GfPhoneFormat` type incoming).
+
 - feat: Deprecate `PhoneField.phoneFormat` in favor of `PhoneField.phoneFormatType`, and add new `GfPhoneFormat` type.  Props @chetanupare, @justlevine.
 - feat: Add support for filtering entries by `isRead` and `isStarred` statuses.
 - fix: Correctly resolve `AddressField.defaultState`, `AddressField.defaultProvince` based on the `addressType`. H/t @byanko-bot
