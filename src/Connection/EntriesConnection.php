@@ -60,7 +60,7 @@ class EntriesConnection extends AbstractConnection {
 					'fromType'       => 'RootQuery',
 					'toType'         => SubmittedEntry::$type,
 					'fromFieldName'  => 'gfSubmittedEntries',
-					'connectionArgs' => self::get_filtered_connection_args( [ 'formIds', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'orderby', 'status' ] ),
+					'connectionArgs' => self::get_filtered_connection_args( [ 'formIds', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'isRead', 'isStarred', 'orderby', 'status' ] ),
 					'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
 						return Factory::resolve_entries_connection( $root, $args, $context, $info );
 					},
@@ -82,10 +82,6 @@ class EntriesConnection extends AbstractConnection {
 				'type'        => EntryTypeEnum::$type,
 				'description' => static fn () => __( 'Entry status. Default is `SUBMITTED`. Currently no other types are supported.', 'wp-graphql-gravity-forms' ),
 			],
-			'formIds'          => [
-				'type'        => [ 'list_of' => 'ID' ],
-				'description' => static fn () => __( 'Array of form IDs to limit the entries to. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
-			],
 			'fieldFilters'     => [
 				'type'        => [ 'list_of' => EntriesFieldFiltersInput::$type ],
 				'description' => static fn () => __( 'Field-specific filters to apply.', 'wp-graphql-gravity-forms' ),
@@ -93,6 +89,18 @@ class EntriesConnection extends AbstractConnection {
 			'fieldFiltersMode' => [
 				'type'        => FieldFiltersModeEnum::$type,
 				'description' => static fn () => __( 'Whether to filter by ALL or ANY of the field filters. Default is ALL.', 'wp-graphql-gravity-forms' ),
+			],
+			'formIds'          => [
+				'type'        => [ 'list_of' => 'ID' ],
+				'description' => static fn () => __( 'Array of form IDs to limit the entries to. Exclude this argument to query all forms.', 'wp-graphql-gravity-forms' ),
+			],
+			'isRead'           => [
+				'type'        => 'Boolean',
+				'description' => static fn () => __( 'Whether to limit to read or unread entries. Default is to include both.', 'wp-graphql-gravity-forms' ),
+			],
+			'isStarred'        => [
+				'type'        => 'Boolean',
+				'description' => static fn () => __( 'Whether to limit to starred or unstarred entries. Default is to include both.', 'wp-graphql-gravity-forms' ),
 			],
 			'orderby'          => [
 				'type'        => EntriesConnectionOrderbyInput::$type,

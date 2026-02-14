@@ -294,6 +294,28 @@ class EntriesConnectionResolver extends AbstractConnectionResolver {
 			);
 		}
 
+		// Add isRead filter to field_filters.
+		if ( isset( $args['where']['isRead'] ) ) {
+			if ( ! isset( $search_criteria['field_filters'] ) ) {
+				$search_criteria['field_filters'] = [ 'mode' => FieldFiltersModeEnum::ALL ];
+			}
+			$search_criteria['field_filters'][] = [
+				'key'   => 'is_read',
+				'value' => (bool) $args['where']['isRead'],
+			];
+		}
+
+		// Add isStarred filter to field_filters.
+		if ( isset( $args['where']['isStarred'] ) ) {
+			if ( ! isset( $search_criteria['field_filters'] ) ) {
+				$search_criteria['field_filters'] = [ 'mode' => FieldFiltersModeEnum::ALL ];
+			}
+			$search_criteria['field_filters'][] = [
+				'key'   => 'is_starred',
+				'value' => (bool) $args['where']['isStarred'],
+			];
+		}
+
 		return $search_criteria;
 	}
 
