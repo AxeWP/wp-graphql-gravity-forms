@@ -18,7 +18,6 @@ use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 use WPGraphQL\GF\Data\Loader\FormFieldsLoader;
 use WPGraphQL\GF\Model\Form;
 use WPGraphQL\GF\Model\FormField;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - FormFieldsConnectionResolver
@@ -46,7 +45,7 @@ class FormFieldsConnectionResolver extends AbstractConnectionResolver {
 	 * @throws \Exception If the Form model is not set on the AppContext.
 	 */
 	public function __construct( $source, array $args, AppContext $context, ResolveInfo $info ) {
-		$form = Compat::get_app_context( $context, 'gfForm' );
+		$form = $context->get( 'gf', 'gfForm' );
 		if ( ! isset( $form ) ) {
 			throw new \Exception( 'The FormFieldsConnectionResolver requires a Form to be set on the AppContext.' );
 		}

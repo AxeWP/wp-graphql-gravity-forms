@@ -21,7 +21,6 @@ use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\Enum\DraftEntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - Draft
@@ -94,39 +93,37 @@ class DraftEntry extends AbstractObject implements TypeWithInterfaces, Field {
 		register_graphql_field(
 			'RootQuery',
 			self::$field_name,
-			Compat::resolve_graphql_config(
-				[
-					'description' => static fn () => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
-					'type'        => self::$type,
-					'args'        => [
-						'id'     => [
-							'type'        => [ 'non_null' => 'ID' ],
-							'description' => static fn () => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
-						],
-						'idType' => [
-							'type'        => DraftEntryIdTypeEnum::$type,
-							'description' => static fn () => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
-						],
+			[
+				'description' => static fn () => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
+				'type'        => self::$type,
+				'args'        => [
+					'id'     => [
+						'type'        => [ 'non_null' => 'ID' ],
+						'description' => static fn () => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
 					],
-					'resolve'     => static function ( $root, array $args, AppContext $context ) {
-						$idType = $args['idType'] ?? 'global_id';
+					'idType' => [
+						'type'        => DraftEntryIdTypeEnum::$type,
+						'description' => static fn () => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
+					],
+				],
+				'resolve'     => static function ( $root, array $args, AppContext $context ) {
+					$idType = $args['idType'] ?? 'global_id';
 
-						if ( 'global_id' === $idType ) {
-							$id_parts = Relay::fromGlobalId( $args['id'] );
+					if ( 'global_id' === $idType ) {
+						$id_parts = Relay::fromGlobalId( $args['id'] );
 
-							if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-								throw new UserError( esc_html__( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
-							}
-
-							$id = sanitize_text_field( $id_parts['id'] );
-						} else {
-							$id = sanitize_text_field( $args['id'] );
+						if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
+							throw new UserError( esc_html__( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
 						}
 
-						return Factory::resolve_draft_entry( $id, $context );
-					},
-				]
-			)
+						$id = sanitize_text_field( $id_parts['id'] );
+					} else {
+						$id = sanitize_text_field( $args['id'] );
+					}
+
+					return Factory::resolve_draft_entry( $id, $context );
+				},
+			]
 		);
 	}
 }

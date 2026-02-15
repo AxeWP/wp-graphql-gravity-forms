@@ -38,21 +38,15 @@ class FieldWithPhoneFormat extends AbstractFieldSetting {
 	 */
 	public static function get_fields(): array {
 		return [
-			'phoneFormatType'          => [
+			'phoneFormatType' => [
 				'type'        => PhoneFieldFormatEnum::$type,
 				'description' => static fn () => __( 'Determines the allowed format for phones. If the phone value does not conform with the specified format, the field will fail validation.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static fn ( FormField $field ) => $field->gfField->phoneFormat,
 			],
-			'phoneFormat'              => [
-				'type'              => PhoneFieldFormatEnum::$type,
-				'deprecationReason' => static fn () => __( 'Use `phoneFormatType` instead. The GraphQL type for this field will change in the next breaking release.', 'wp-graphql-gravity-forms' ),
-				'description'       => static fn () => __( 'Determines the allowed format for phones. If the phone value does not conform with the specified format, the field will fail validation.', 'wp-graphql-gravity-forms' ),
-			],
-			'_phoneFormatExperimental' => [
-				'type'              => PhoneFormat::$type,
-				'description'       => static fn () => __( 'The phone format properties. Experimental', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => static fn () => __( 'The `phoneFormat` field has been renamed to `phoneFormatType`. The `_phoneFormatExperimental` field will be replaced in a future release.', 'wp-graphql-gravity-forms' ),
-				'resolve'           => static function ( $field ) {
+			'phoneFormat'     => [
+				'type'        => PhoneFormat::$type,
+				'description' => static fn () => __( 'Determines the allowed format for phones. If the phone value does not conform with the specified format, the field will fail validation.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function ( $field ) {
 					if ( empty( $field->phoneFormat ) ) {
 						return null;
 					}
