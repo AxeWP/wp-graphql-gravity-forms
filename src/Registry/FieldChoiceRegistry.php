@@ -87,7 +87,18 @@ class FieldChoiceRegistry {
 		}
 
 		// Overload the field type with the new choice type.
-		Utils::overload_graphql_field_type( $field->graphql_single_name, 'choices', [ 'list_of' => $choice_name ] );
+		register_graphql_field(
+			$field->graphql_single_name,
+			'choices',
+			[
+				'type'        => [ 'list_of' => $choice_name ],
+				'description' => static fn () => sprintf(
+					// translators: GF field choices.
+					__( 'The choices for the %s field.', 'wp-graphql-gravity-forms' ),
+					ucfirst( $field->type )
+				),
+			]
+		);
 
 		// Store in static array to prevent duplicate registration.
 		self::$registered_types[] = $choice_name;

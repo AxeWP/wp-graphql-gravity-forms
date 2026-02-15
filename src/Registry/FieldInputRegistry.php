@@ -87,7 +87,18 @@ class FieldInputRegistry {
 			register_graphql_object_type( $input_name, $config );
 		}
 
-		Utils::overload_graphql_field_type( $field->graphql_single_name, 'inputs', [ 'list_of' => $input_name ] );
+		register_graphql_field(
+			$field->graphql_single_name,
+			'inputs',
+			[
+				'type'        => [ 'list_of' => $input_name ],
+				'description' => static fn () => sprintf(
+					// translators: GF field type.
+					__( 'The input properties for the %s field.', 'wp-graphql-gravity-forms' ),
+					$field->type
+				),
+			]
+		);
 
 		// Store in static array to prevent duplicate registration.
 		self::$registered_types[] = $input_name;
