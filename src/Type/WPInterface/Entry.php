@@ -27,7 +27,6 @@ use WPGraphQL\GF\Interfaces\TypeWithInterfaces;
 use WPGraphQL\GF\Type\Enum\EntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\AbstractInterface;
 use WPGraphQL\GF\Type\WPObject\Order\OrderSummary;
-use WPGraphQL\GF\Utils\Compat;
 use WPGraphQL\GF\Utils\Utils;
 use WPGraphQL\Registry\TypeRegistry;
 
@@ -86,10 +85,10 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 				'connectionArgs' => FormFieldsConnection::get_filtered_connection_args(),
 				'description'    => static fn () => __( 'The form fields associated with the entry.', 'wp-graphql-gravity-forms' ),
 				'resolve'        => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
-					Compat::set_app_context( $context, 'gfEntry', $source );
+					$context->set( 'gf', 'gfEntry', $source );
 
 					// If the form isn't stored in the context, we need to fetch it.
-					$form = Compat::get_app_context( $context, 'gfForm' );
+					$form = $context->get( 'gf', 'gfForm' );
 					if ( empty( $form ) ) {
 						/** @var ?\WPGraphQL\GF\Model\Form $form */
 						$form = $context->get_loader( FormsLoader::$name )->load( $source->formDatabaseId );
@@ -98,7 +97,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 							return null;
 						}
 
-						Compat::set_app_context( $context, 'gfForm', $form );
+						$context->set( 'gf', 'gfForm', $form );
 					}
 
 					if ( empty( $form->formFields ) ) {
@@ -182,7 +181,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 				'type'        => OrderSummary::$type,
 				'description' => static fn () => __( 'The entry order summary. Null if the entry has no pricing fields', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$form_model = Compat::get_app_context( $context, 'gfForm' );
+					$form_model = $context->get( 'gf', 'gfForm' );
 					if ( empty( $form_model ) ) {
 						/** @var ?\WPGraphQL\GF\Model\Form $form_model */
 						$form_model = $context->get_loader( FormsLoader::$name )->load( $source->formDatabaseId );
@@ -191,7 +190,7 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 							return null;
 						}
 
-						Compat::set_app_context( $context, 'gfForm', $form_model );
+						$context->set( 'gf', 'gfForm', $form_model );
 					}
 
 					$order = GF_Order_Factory::create_from_entry( $form_model->form, $source->entry );
@@ -276,41 +275,39 @@ class Entry extends AbstractInterface implements TypeWithConnections, TypeWithIn
 		register_graphql_field(
 			'RootQuery',
 			self::$field_name,
-			Compat::resolve_graphql_config(
-				[
-					'description' => static fn () => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
-					'type'        => self::$type,
-					'args'        => [
-						'id'     => [
-							'type'        => [ 'non_null' => 'ID' ],
-							'description' => static fn () => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
-						],
-						'idType' => [
-							'type'        => EntryIdTypeEnum::$type,
-							'description' => static fn () => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
-						],
+			[
+				'description' => static fn () => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
+				'type'        => self::$type,
+				'args'        => [
+					'id'     => [
+						'type'        => [ 'non_null' => 'ID' ],
+						'description' => static fn () => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
 					],
-					'resolve'     => static function ( $root, array $args, AppContext $context ) {
-						$id_type = $args['idType'] ?? 'global_id';
+					'idType' => [
+						'type'        => EntryIdTypeEnum::$type,
+						'description' => static fn () => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
+					],
+				],
+				'resolve'     => static function ( $root, array $args, AppContext $context ) {
+					$id_type = $args['idType'] ?? 'global_id';
 
-						if ( 'global_id' === $id_type ) {
-							$id_parts = Relay::fromGlobalId( $args['id'] );
+					if ( 'global_id' === $id_type ) {
+						$id_parts = Relay::fromGlobalId( $args['id'] );
 
-							if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
-								throw new UserError( esc_html__( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
-							}
-
-							$loader = $id_parts['type'];
-							$id     = sanitize_text_field( $id_parts['id'] );
-						} else {
-							$loader = 'database_id' === $id_type ? EntriesLoader::$name : DraftEntriesLoader::$name;
-							$id     = sanitize_text_field( $args['id'] );
+						if ( ! is_array( $id_parts ) || empty( $id_parts['id'] ) || empty( $id_parts['type'] ) ) {
+							throw new UserError( esc_html__( 'A valid global ID must be provided.', 'wp-graphql-gravity-forms' ) );
 						}
 
-						return $context->get_loader( $loader )->load_deferred( $id );
-					},
-				]
-			)
+						$loader = $id_parts['type'];
+						$id     = sanitize_text_field( $id_parts['id'] );
+					} else {
+						$loader = 'database_id' === $id_type ? EntriesLoader::$name : DraftEntriesLoader::$name;
+						$id     = sanitize_text_field( $args['id'] );
+					}
+
+					return $context->get_loader( $loader )->load_deferred( $id );
+				},
+			]
 		);
 	}
 }

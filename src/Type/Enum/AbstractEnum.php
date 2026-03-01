@@ -13,7 +13,6 @@ namespace WPGraphQL\GF\Type\Enum;
 use WPGraphQL\GF\Interfaces\Enum;
 use WPGraphQL\GF\Interfaces\TypeWithDescription;
 use WPGraphQL\GF\Type\AbstractType;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Abstract Class - Abstract Enum
@@ -41,13 +40,7 @@ abstract class AbstractEnum extends AbstractType implements Enum, TypeWithDescri
 	 * {@inheritDoc}
 	 */
 	public static function register(): void {
-		$config = static::get_type_config();
-
-		register_graphql_enum_type(
-			static::$type,
-			// @phpstan-ignore argument.type (Narrowing T doesnt work here for some reason)
-			Compat::resolve_graphql_config( $config )
-		);
+		register_graphql_enum_type( static::$type, static::get_type_config(), );
 	}
 
 	/**

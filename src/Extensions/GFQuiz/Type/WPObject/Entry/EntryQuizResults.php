@@ -13,7 +13,6 @@ namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPObject\Entry;
 use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - EntryQuizResults
@@ -92,15 +91,13 @@ class EntryQuizResults extends AbstractObject implements Field {
 		register_graphql_field(
 			SubmittedEntry::$type,
 			self::$field_name,
-			Compat::resolve_graphql_config(
-				[
-					'type'        => static::$type,
-					'description' => static fn () => __( 'The quiz results for the entry. Requires Gravity Forms Quiz to be enabled.', 'wp-graphql-gravity-forms' ),
-					'resolve'     => static function ( $source ) {
-						return ! empty( $source->entry ) ? $source->entry : null;
-					},
-				]
-			)
+			[
+				'type'        => static::$type,
+				'description' => static fn () => __( 'The quiz results for the entry. Requires Gravity Forms Quiz to be enabled.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function ( $source ) {
+					return ! empty( $source->entry ) ? $source->entry : null;
+				},
+			]
 		);
 	}
 }

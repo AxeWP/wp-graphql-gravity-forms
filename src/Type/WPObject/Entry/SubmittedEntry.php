@@ -20,7 +20,6 @@ use WPGraphQL\GF\Type\Enum\EntryStatusEnum;
 use WPGraphQL\GF\Type\Enum\SubmittedEntryIdTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
-use WPGraphQL\GF\Utils\Compat;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
@@ -111,27 +110,25 @@ class SubmittedEntry extends AbstractObject implements TypeWithInterfaces, Field
 		register_graphql_field(
 			'RootQuery',
 			self::$field_name,
-			Compat::resolve_graphql_config(
-				[
-					'description' => static fn () => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
-					'type'        => self::$type,
-					'args'        => [
-						'id'     => [
-							'type'        => [ 'non_null' => 'ID' ],
-							'description' => static fn () => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
-						],
-						'idType' => [
-							'type'        => SubmittedEntryIdTypeEnum::$type,
-							'description' => static fn () => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
-						],
+			[
+				'description' => static fn () => __( 'Get a Gravity Forms entry.', 'wp-graphql-gravity-forms' ),
+				'type'        => self::$type,
+				'args'        => [
+					'id'     => [
+						'type'        => [ 'non_null' => 'ID' ],
+						'description' => static fn () => __( 'Unique identifier for the object.', 'wp-graphql-gravity-forms' ),
 					],
-					'resolve'     => static function ( $source, array $args, AppContext $context ) {
-						$id = Utils::get_entry_id_from_id( $args['id'] );
+					'idType' => [
+						'type'        => SubmittedEntryIdTypeEnum::$type,
+						'description' => static fn () => __( 'Type of unique identifier to fetch a content node by. Default is Global ID.', 'wp-graphql-gravity-forms' ),
+					],
+				],
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
+					$id = Utils::get_entry_id_from_id( $args['id'] );
 
-						return Factory::resolve_entry( (int) $id, $context );
-					},
-				]
-			)
+					return Factory::resolve_entry( (int) $id, $context );
+				},
+			]
 		);
 	}
 }

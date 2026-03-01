@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+- chore!: Bump minimum required PHP version to 8.2
+- chore!: Bump minimum required WordPress version to 6.7
+- chore!: Bump minimum required Gravity Forms version to 2.9.0
+- chore!: Bump minimum required WPGraphQL version to 2.5.0
+- chore!: Remove the following deprecated fields: `FieldWithPhoneFormat._phoneFormatExperimental` field. `FieldWithProductField.productField` field.
+- chore!: change `FieldWithPhoneFormat.phoneFormat` from `PhoneFieldFormatEnum` to `GfPhoneFormat`.
+- chore!: Remove the following unused methods: `Utils::to_snake_case()`, `Utils::deprecate_property()`.
+- chore: Test compatibility against PHP 8.5.
+
 ## [v0.13.4]
 
 This _minor_ release adds support for filtering entries by `isRead` and `isStarred` statuses, improves handling of `AddressField` default values, and deprecates the `PhoneField.phoneFormat` field in favor of `PhoneField.phoneFormatType` (with a new `GfPhoneFormat` type incoming).

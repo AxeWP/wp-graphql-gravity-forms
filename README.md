@@ -21,10 +21,10 @@ WPGraphQL for Gravity Forms is an essential tool for those leveraging decoupled 
 
 ## System Requirements
 
-* PHP: 7.4-8.4+
-* WordPress: 6.0+
-* WPGraphQL: 1.26.0+
-* Gravity Forms: 2.7+
+* PHP: 8.2-8.5+
+* WordPress: 6.7+
+* WPGraphQL: 2.5.0+
+* Gravity Forms: 2.9+
 * **Recommended**: [WPGraphQL Upload](https://github.com/dre1080/wp-graphql-upload) - used for [File Upload and Post Image submissions](docs/submitting-forms.md).
 
 ## Quick Install

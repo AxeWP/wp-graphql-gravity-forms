@@ -19,7 +19,6 @@ use WPGraphQL\GF\Data\Loader\FormsLoader;
 use WPGraphQL\GF\Mutation\SubmitForm;
 use WPGraphQL\GF\Type\Enum\FormFieldTypeEnum;
 use WPGraphQL\GF\Type\WPInterface\FormField;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - FormFieldsConnection
@@ -31,42 +30,40 @@ class FormFieldsConnection extends AbstractConnection {
 	public static function register(): void {
 		// SubmitGfFormPayload to FormFields.
 		register_graphql_connection(
-			Compat::resolve_graphql_config(
-				[
-					'fromType'      => SubmitForm::$name . 'Payload',
-					'toType'        => FormField::$type,
-					'fromFieldName' => 'targetPageFormFields',
-					'resolve'       => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
-						// If the source doesn't have a targetPageNumber, we can't resolve the connection.
-						if ( empty( $source['targetPageNumber'] ) ) {
+			[
+				'fromType'      => SubmitForm::$name . 'Payload',
+				'toType'        => FormField::$type,
+				'fromFieldName' => 'targetPageFormFields',
+				'resolve'       => static function ( $source, array $args, AppContext $context, ResolveInfo $info ) {
+					// If the source doesn't have a targetPageNumber, we can't resolve the connection.
+					if ( empty( $source['targetPageNumber'] ) ) {
+						return null;
+					}
+
+					// If the form isn't stored in the context, we need to fetch it.
+					$form = $context->get( 'gf', 'gfForm' );
+					if ( empty( $form ) && ! empty( $source['form_id'] ) ) {
+						/** @var \WPGraphQL\GF\Model\Form $form */
+						$form = $context->get_loader( FormsLoader::$name )->load( (int) $source['form_id'] );
+
+						if ( null === $form ) {
 							return null;
 						}
 
-						// If the form isn't stored in the context, we need to fetch it.
-						$form = Compat::get_app_context( $context, 'gfForm' );
-						if ( empty( $form ) && ! empty( $source['form_id'] ) ) {
-							/** @var \WPGraphQL\GF\Model\Form $form */
-							$form = $context->get_loader( FormsLoader::$name )->load( (int) $source['form_id'] );
+						// Store it in the context for easy access.
+						$context->set( 'gf', 'gfForm', $form );
+					}
 
-							if ( null === $form ) {
-								return null;
-							}
+					if ( empty( $form->formFields ) ) {
+						return null;
+					}
 
-							// Store it in the context for easy access.
-							Compat::set_app_context( $context, 'gfForm', $form );
-						}
+					// Set the Args for the connection resolver.
+					$args['where']['pageNumber'] = $source['targetPageNumber'];
 
-						if ( empty( $form->formFields ) ) {
-							return null;
-						}
-
-						// Set the Args for the connection resolver.
-						$args['where']['pageNumber'] = $source['targetPageNumber'];
-
-						return Factory::resolve_form_fields_connection( $form, $args, $context, $info );
-					},
-				]
-			)
+					return Factory::resolve_form_fields_connection( $form, $args, $context, $info );
+				},
+			]
 		);
 	}
 
