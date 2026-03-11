@@ -10,7 +10,8 @@
 	],
 	"mappings": {
 		"/wp-content/plugins": "./tests/_data/plugins",
-		"/wp-content/mu-plugins": "./tests/_data/mu-plugins"
+		"/wp-content/mu-plugins": "./tests/_data/mu-plugins",
+		"/wp-content/debug.log": "./tests/_output/debug.log"
 	},
 	"env": {
 		"development": {
@@ -18,7 +19,8 @@
 				"WP_DEVELOPMENT_MODE": "plugin",
 				"WP_ENVIRONMENT_TYPE": "development",
 				"WP_DEBUG": true,
-				"WP_DEBUG_LOG": "/var/www/html/wp-content/plugins/wp-graphql-gravity-forms/tests/_output/debug.log"
+				"WP_DEBUG_LOG": true,
+				"GRAPHQL_DEBUG": true
 			}
 		},
 		"tests": {

@@ -24,7 +24,6 @@ use WPGraphQL\GF\Type\Input\EntriesDateFiltersInput;
 use WPGraphQL\GF\Type\Input\EntriesFieldFiltersInput;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - EntriesConnection
@@ -36,36 +35,32 @@ class EntriesConnection extends AbstractConnection {
 	public static function register(): void {
 		// RootQuery to Entry.
 		register_graphql_connection(
-			Compat::resolve_graphql_config(
-				[
-					'fromType'       => 'RootQuery',
-					'toType'         => Entry::$type,
-					'fromFieldName'  => 'gfEntries',
-					'connectionArgs' => self::get_filtered_connection_args(),
-					'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						if ( isset( $args['entryType'] ) && EntryTypeEnum::SUBMITTED !== $args['entryType'] ) {
-							throw new UserError( esc_html__( 'Only lists of `SUBMITTED` entries may currently be queried.', 'wp-graphql-gravity-forms' ) );
-						}
+			[
+				'fromType'       => 'RootQuery',
+				'toType'         => Entry::$type,
+				'fromFieldName'  => 'gfEntries',
+				'connectionArgs' => self::get_filtered_connection_args(),
+				'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
+					if ( isset( $args['entryType'] ) && EntryTypeEnum::SUBMITTED !== $args['entryType'] ) {
+						throw new UserError( esc_html__( 'Only lists of `SUBMITTED` entries may currently be queried.', 'wp-graphql-gravity-forms' ) );
+					}
 
-						return Factory::resolve_entries_connection( $root, $args, $context, $info );
-					},
-				]
-			)
+					return Factory::resolve_entries_connection( $root, $args, $context, $info );
+				},
+			]
 		);
 
 		// RootQuery to SubmittedEntry.
 		register_graphql_connection(
-			Compat::resolve_graphql_config(
-				[
-					'fromType'       => 'RootQuery',
-					'toType'         => SubmittedEntry::$type,
-					'fromFieldName'  => 'gfSubmittedEntries',
-					'connectionArgs' => self::get_filtered_connection_args( [ 'formIds', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'isRead', 'isStarred', 'orderby', 'status' ] ),
-					'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						return Factory::resolve_entries_connection( $root, $args, $context, $info );
-					},
-				]
-			)
+			[
+				'fromType'       => 'RootQuery',
+				'toType'         => SubmittedEntry::$type,
+				'fromFieldName'  => 'gfSubmittedEntries',
+				'connectionArgs' => self::get_filtered_connection_args( [ 'formIds', 'dateFilters', 'fieldFilters', 'fieldFiltersMode', 'isRead', 'isStarred', 'orderby', 'status' ] ),
+				'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
+					return Factory::resolve_entries_connection( $root, $args, $context, $info );
+				},
+			]
 		);
 	}
 

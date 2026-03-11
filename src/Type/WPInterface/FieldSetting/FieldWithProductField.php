@@ -12,7 +12,6 @@ namespace WPGraphQL\GF\Type\WPInterface\FieldSetting;
 
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Data\Loader\FormFieldsLoader;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - FieldWithProductField
@@ -37,16 +36,11 @@ class FieldWithProductField extends AbstractFieldSetting {
 	 */
 	public static function get_fields(): array {
 		return [
-			'productField'          => [
-				'type'              => 'Int',
-				'description'       => static fn () => __( 'The id of the product field to which the field is associated.', 'wp-graphql-gravity-forms' ),
-				'deprecationReason' => static fn () => __( 'Use `connectedProductField` field instead.', 'wp-graphql-gravity-forms' ),
-			],
 			'connectedProductField' => [
 				'type'        => 'ProductField',
 				'description' => static fn () => __( 'The product field to which the field is associated.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$form_model = Compat::get_app_context( $context, 'gfForm' );
+					$form_model = $context->get( 'gf', 'gfForm' );
 					if ( ! isset( $form_model ) || empty( $source->productField ) ) {
 						return null;
 					}
