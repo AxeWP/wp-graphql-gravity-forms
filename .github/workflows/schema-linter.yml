@@ -101,7 +101,7 @@ jobs:
         run: mkdir -p ~/.wp-env/downloads tests/_data/plugins tests/_data/mu-plugins
 
       - name: Cache WordPress downloads
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         with:
           path: ~/.wp-env/downloads
           key: ${{ runner.os }}-wp-env-downloads-${{ hashFiles('.wp-env.json') }}
@@ -109,7 +109,7 @@ jobs:
             ${{ runner.os }}-wp-env-downloads-
 
       - name: Cache WordPress Plugins
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         with:
           path: |
             tests/_data/plugins
@@ -124,7 +124,7 @@ jobs:
           echo GF_KEY=${{ secrets.GF_KEY }} >> .env
 
       - name: Start the Docker testing environment
-        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         with:
           timeout_minutes: 10
           max_attempts: 3
