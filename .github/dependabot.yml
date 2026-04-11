@@ -29,7 +29,6 @@ updates:
   - package-ecosystem: 'npm'
     directories:
       - '/'
-      # @todo add other plugin directories when their dependency trees are stabilized.
     schedule:
       interval: 'weekly'
     cooldown:

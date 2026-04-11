@@ -19,7 +19,6 @@ use WPGraphQL\GF\Interfaces\Field;
 use WPGraphQL\GF\Type\WPInterface\Entry;
 use WPGraphQL\GF\Type\WPObject\AbstractObject;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - QuizResults
@@ -110,25 +109,23 @@ class QuizResults extends AbstractObject implements Field {
 		register_graphql_field(
 			$from_type,
 			self::$field_name,
-			Compat::resolve_graphql_config(
-				[
-					'type'        => static::$type,
-					'description' => static fn () => __( 'The quiz results for the given form.', 'wp-graphql-gravity-forms' ),
-					'resolve'     => static function ( $source, array $args, AppContext $context ) {
-						$form_model = Compat::get_app_context( $context, 'gfForm' );
-						if ( ! isset( $form_model ) ) {
-							return null;
-						}
+			[
+				'type'        => static::$type,
+				'description' => static fn () => __( 'The quiz results for the given form.', 'wp-graphql-gravity-forms' ),
+				'resolve'     => static function ( $source, array $args, AppContext $context ) {
+					$form_model = $context->get( 'gf', 'gfForm' );
+					if ( ! isset( $form_model ) ) {
+						return null;
+					}
 
-						$quiz           = GFQuiz::get_instance();
-						$results_config = $quiz->get_results_page_config();
+					$quiz           = GFQuiz::get_instance();
+					$results_config = $quiz->get_results_page_config();
 
-						$results = self::get_quiz_results_data( $form_model->form, $results_config );
+					$results = self::get_quiz_results_data( $form_model->form, $results_config );
 
-						return self::prepare_results_data( $results, $form_model->form );
-					},
-				]
-			)
+					return self::prepare_results_data( $results, $form_model->form );
+				},
+			]
 		);
 	}
 

@@ -12,7 +12,6 @@ namespace WPGraphQL\GF\Extensions\GFQuiz\Type\WPInterface\FieldChoiceSetting;
 
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Type\WPInterface\FieldChoiceSetting\AbstractFieldChoiceSetting;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - ChoiceWithQuizChoices
@@ -46,7 +45,7 @@ class ChoiceWithQuizChoices extends AbstractFieldChoiceSetting {
 				'type'        => 'Float',
 				'description' => static fn () => __( 'The weighted score awarded for the choice.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$field = Compat::get_app_context( $context, 'gfField' );
+					$field = $context->get( 'gf', 'gfField' );
 					if ( ! isset( $field ) ) {
 						return null;
 					}

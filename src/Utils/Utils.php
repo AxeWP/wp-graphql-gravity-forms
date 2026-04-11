@@ -26,37 +26,6 @@ use WPGraphQL\GF\Type\WPObject\Entry\SubmittedEntry;
  */
 class Utils {
 	/**
-	 * Adds deprecation reason to GraphQL field property.
-	 *
-	 * @param array<string,mixed> $property The field property to deprecate.
-	 * @param string              $reason   The reason for the deprecation. Should be wrapped in __().
-	 *
-	 * @return array<string,mixed>
-	 * @since 0.2.0
-	 */
-	public static function deprecate_property( array $property, string $reason ): array {
-		$property_key = array_key_first( $property );
-
-		// Add deprecation reason to property.
-		if ( isset( $property_key ) ) {
-			$property[ $property_key ]['deprecationReason'] = $reason;
-		}
-
-		return $property;
-	}
-
-	/**
-	 * Converts a string to snake_case.
-	 *
-	 * @since 0.4.0
-	 *
-	 * @param string $s the original string.
-	 */
-	public static function to_snake_case( $s ): string {
-		return strtolower( (string) preg_replace( [ '/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/' ], '$1_$2', $s ) );
-	}
-
-	/**
 	 * Converts a string to PascalCase.
 	 *
 	 * @since 0.10.0

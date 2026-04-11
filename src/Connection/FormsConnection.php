@@ -17,7 +17,6 @@ use WPGraphQL\GF\Data\Factory;
 use WPGraphQL\GF\Type\Enum\FormStatusEnum;
 use WPGraphQL\GF\Type\Input\FormsConnectionOrderbyInput;
 use WPGraphQL\GF\Type\WPObject\Form\Form;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - FormsConnection
@@ -36,17 +35,15 @@ class FormsConnection extends AbstractConnection {
 	public static function register(): void {
 		// RootQuery to Form.
 		register_graphql_connection(
-			Compat::resolve_graphql_config(
-				[
-					'fromType'       => 'RootQuery',
-					'toType'         => Form::$type,
-					'fromFieldName'  => 'gfForms',
-					'connectionArgs' => self::get_connection_args(),
-					'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
-						return Factory::resolve_forms_connection( $root, $args, $context, $info );
-					},
-				]
-			)
+			[
+				'fromType'       => 'RootQuery',
+				'toType'         => Form::$type,
+				'fromFieldName'  => 'gfForms',
+				'connectionArgs' => self::get_connection_args(),
+				'resolve'        => static function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
+					return Factory::resolve_forms_connection( $root, $args, $context, $info );
+				},
+			]
 		);
 	}
 

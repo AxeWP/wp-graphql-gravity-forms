@@ -484,21 +484,21 @@ trait ExpectedFormFields {
 	public function phone_format_setting( GF_Field $field, array &$properties ): void {
 		$properties[] = $this->expectedField( 'phoneFormatType', ! empty( $field->phoneFormat ) ? GFHelpers::get_enum_for_value( Enum\PhoneFieldFormatEnum::$type, $field->phoneFormat ) : self::IS_NULL );
 
-		// Add _phoneFormatExperimental field.
+		// Add phoneFormat field.
 		if ( ! empty( $field->phoneFormat ) ) {
-			$properties[] = $this->expectedField( '_phoneFormatExperimental.label', self::NOT_NULL );
-			$properties[] = $this->expectedField( '_phoneFormatExperimental.type', self::NOT_NULL );
+			$properties[] = $this->expectedField( 'phoneFormat.label', self::NOT_NULL );
+			$properties[] = $this->expectedField( 'phoneFormat.type', self::NOT_NULL );
 			if ( 'international' === $field->phoneFormat ) {
-				$properties[] = $this->expectedField( '_phoneFormatExperimental.mask', self::IS_NULL );
-				$properties[] = $this->expectedField( '_phoneFormatExperimental.regex', self::IS_NULL );
-				$properties[] = $this->expectedField( '_phoneFormatExperimental.instruction', self::IS_NULL );
+				$properties[] = $this->expectedField( 'phoneFormat.mask', self::IS_NULL );
+				$properties[] = $this->expectedField( 'phoneFormat.regex', self::IS_NULL );
+				$properties[] = $this->expectedField( 'phoneFormat.instruction', self::IS_NULL );
 			} else {
-				$properties[] = $this->expectedField( '_phoneFormatExperimental.mask', self::NOT_NULL );
-				$properties[] = $this->expectedField( '_phoneFormatExperimental.regex', self::NOT_NULL );
-				$properties[] = $this->expectedField( '_phoneFormatExperimental.instruction', self::NOT_NULL );
+				$properties[] = $this->expectedField( 'phoneFormat.mask', self::NOT_NULL );
+				$properties[] = $this->expectedField( 'phoneFormat.regex', self::NOT_NULL );
+				$properties[] = $this->expectedField( 'phoneFormat.instruction', self::NOT_NULL );
 			}
 		} else {
-			$properties[] = $this->expectedField( '_phoneFormatExperimental', self::IS_NULL );
+			$properties[] = $this->expectedField( 'phoneFormat', self::IS_NULL );
 		}
 	}
 

@@ -19,7 +19,6 @@ use WPGraphQL\GF\Model\FormField;
 use WPGraphQL\GF\Registry\FieldChoiceRegistry;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\ValueProperty;
-use WPGraphQL\GF\Utils\Compat;
 use WPGraphQL\GF\Utils\Utils;
 
 /**
@@ -37,7 +36,7 @@ class FieldValues {
 				'type'        => 'String',
 				'description' => static fn () => __( 'The string-formatted entry value for the `formField`. For complex fields this might be a JSON-encoded or serialized array.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if ( ! $source instanceof FormField || ! isset( $gf_entry ) ) {
 						return null;
 					}
@@ -64,7 +63,7 @@ class FieldValues {
 				'type'        => ValueProperty\AddressFieldValue::$type,
 				'description' => static fn () => __( 'Address field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if ( ! $source instanceof FormField || ! isset( $gf_entry ) ) {
 						return null;
 					}
@@ -93,7 +92,7 @@ class FieldValues {
 				'type'        => [ 'list_of' => ValueProperty\CheckboxFieldValue::$type ],
 				'description' => static fn () => __( 'Checkbox field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if ( ! $source instanceof FormField || ! isset( $gf_entry ) ) {
 						return null;
 					}
@@ -138,7 +137,7 @@ class FieldValues {
 				'type'        => 'Boolean',
 				'description' => static fn () => __( 'Consent field value. This is `true` when consent is given, `false` when it is not.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if ( ! $source instanceof FormField || ! isset( $gf_entry ) ) {
 						return null;
 					}
@@ -161,8 +160,8 @@ class FieldValues {
 				'type'        => [ 'list_of' => ValueProperty\FileUploadFieldValue::$type ],
 				'description' => static fn () => __( 'File upload value', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$gf_form  = Compat::get_app_context( $context, 'gfForm' );
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_form  = $context->get( 'gf', 'gfForm' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if (
 						! $source instanceof FormField ||
 						! $source->gfField instanceof \GF_Field_FileUpload ||
@@ -189,8 +188,8 @@ class FieldValues {
 				'type'        => ValueProperty\ImageFieldValue::$type,
 				'description' => static fn () => __( 'Image field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$gf_form  = Compat::get_app_context( $context, 'gfForm' );
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_form  = $context->get( 'gf', 'gfForm' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if (
 						! $source instanceof FormField ||
 						! $source->gfField instanceof \GF_Field_FileUpload ||
@@ -243,7 +242,7 @@ class FieldValues {
 				'type'        => [ 'list_of' => ValueProperty\ListFieldValue::$type ],
 				'description' => static fn () => __( 'List field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if ( ! $source instanceof FormField || ! $source->gfField instanceof \GF_Field_List || ! isset( $gf_entry ) ) {
 						return null;
 					}
@@ -299,7 +298,7 @@ class FieldValues {
 				'type'        => ValueProperty\NameFieldValue::$type,
 				'description' => static fn () => __( 'Name field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if ( ! $source instanceof FormField || ! isset( $gf_entry ) ) {
 						return null;
 					}
@@ -327,8 +326,8 @@ class FieldValues {
 				'type'        => ValueProperty\ProductFieldValue::$type,
 				'description' => static fn () => __( 'Product field values.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$gf_form  = Compat::get_app_context( $context, 'gfForm' );
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_form  = $context->get( 'gf', 'gfForm' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if ( ! $source instanceof FormField || ! isset( $gf_entry ) || ! isset( $gf_form ) ) {
 						return null;
 					}
@@ -402,7 +401,7 @@ class FieldValues {
 				'type'        => ValueProperty\TimeFieldValue::$type,
 				'description' => static fn () => __( 'Time field value.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if ( ! $source instanceof FormField || ! isset( $gf_entry ) ) {
 						return null;
 					}
@@ -438,7 +437,7 @@ class FieldValues {
 				'type'        => [ 'list_of' => 'String' ],
 				'description' => static fn () => __( 'An array of field values.', 'wp-graphql-gravity-forms' ),
 				'resolve'     => static function ( $source, array $args, AppContext $context ) {
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if ( ! $source instanceof FormField || ! isset( $gf_entry ) ) {
 						return null;
 					}
@@ -566,7 +565,7 @@ class FieldValues {
 	 */
 	protected static function is_field_and_entry( $source, AppContext $context ): bool {
 		_deprecated_function( __METHOD__, '0.13.0' );
-		$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+		$gf_entry = $context->get( 'gf', 'gfEntry' );
 		return $source instanceof FormField
 			&& isset( $gf_entry )
 			&& isset( $gf_entry->entry );

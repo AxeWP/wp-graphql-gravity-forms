@@ -14,7 +14,6 @@ use GF_Field;
 use WPGraphQL\GF\Registry\FieldChoiceRegistry;
 use WPGraphQL\GF\Registry\FieldInputRegistry;
 use WPGraphQL\GF\Type\WPInterface\FieldChoiceSetting\AbstractFieldChoiceSetting;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - ChoiceWithName
@@ -71,15 +70,17 @@ class ChoiceWithName extends AbstractFieldChoiceSetting {
 		$choice_name = FieldChoiceRegistry::get_type_name( $field );
 		$input_name  = FieldInputRegistry::get_type_name( $field );
 
-		$config = [
-			'type'        => [ 'list_of' => $choice_name ],
-			'description' => static fn () => sprintf(
-				// translators: The choice object GraphQL name.
-				__( 'The nested %s choice.', 'wp-graphql-gravity-forms' ),
-				ucfirst( $choice_name ),
-			),
-		];
-
-		register_graphql_field( $input_name, 'choices', Compat::resolve_graphql_config( $config ) );
+		register_graphql_field(
+			$input_name,
+			'choices',
+			[
+				'type'        => [ 'list_of' => $choice_name ],
+				'description' => static fn () => sprintf(
+					// translators: The choice object GraphQL name.
+					__( 'The nested %s choice.', 'wp-graphql-gravity-forms' ),
+					ucfirst( $choice_name ),
+				),
+			]
+		);
 	}
 }

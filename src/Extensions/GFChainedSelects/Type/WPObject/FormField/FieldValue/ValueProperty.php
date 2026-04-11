@@ -13,7 +13,6 @@ namespace WPGraphQL\GF\Extensions\GFChainedSelects\Type\WPObject\FormField\Field
 use WPGraphQL\AppContext;
 use WPGraphQL\GF\Model\FormField;
 use WPGraphQL\GF\Type\WPObject\FormField\FieldValue\FieldValues;
-use WPGraphQL\GF\Utils\Compat;
 
 /**
  * Class - ValueProperty
@@ -34,7 +33,7 @@ class ValueProperty extends FieldValues {
 						return null;
 					}
 
-					$gf_entry = Compat::get_app_context( $context, 'gfEntry' );
+					$gf_entry = $context->get( 'gf', 'gfEntry' );
 					if ( ! $gf_entry ) {
 						return null;
 					}
