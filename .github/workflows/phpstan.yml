@@ -81,7 +81,7 @@ jobs:
         run: echo "date=$(/bin/date -u --date='last Mon' "+%F")" >> "$GITHUB_OUTPUT"
 
       - name: Cache PHP Static Analysis scan cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: tests/_output # This is defined in the base.neon file.
           key: 'phpstan-result-cache-${{ runner.os }}-date-${{ steps.get-date.outputs.date }}'
@@ -107,7 +107,7 @@ jobs:
         run: mkdir -p ~/.wp-env/downloads
 
       - name: Cache WordPress downloads
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: ~/.wp-env/downloads
           key: ${{ runner.os }}-wp-env-downloads-${{ hashFiles('.wp-env.json') }}
@@ -115,7 +115,7 @@ jobs:
             ${{ runner.os }}-wp-env-downloads-
 
       - name: Cache WordPress Plugins
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: |
             tests/_data/plugins
@@ -142,7 +142,7 @@ jobs:
         run: phpstan analyse -vvv --error-format=checkstyle | cs2pr
 
       - name: Save result cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         if: ${{ !cancelled() }}
         with:
           path: tests/_output
