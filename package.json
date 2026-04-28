@@ -29,7 +29,7 @@
 		"wp-env": "wp-env"
 	},
 	"devDependencies": {
-		"@wordpress/env": "^10.39.0",
+		"@wordpress/env": "^11.2.0",
 		"@wordpress/prettier-config": "^4.41.0",
 		"@wordpress/scripts": "^31.6.0"
 	},
