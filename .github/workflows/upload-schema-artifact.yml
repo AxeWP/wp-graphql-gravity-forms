@@ -47,7 +47,7 @@ jobs:
         run: npm ci
 
       - name: Cache Docker images
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.wp-env
           key: ${{ runner.os }}-wp-env-${{ hashFiles('.wp-env.json', 'package.json') }}
@@ -73,6 +73,6 @@ jobs:
           echo "Schema generated: $(wc -l < tests/_output/schema.graphql) lines"
 
       - name: Upload schema as release artifact
-        uses: softprops/action-gh-release@718ea10b132b3b2eba29c1007bb80653f286566b # v3.0.1
+        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3.0.2
         with:
           files: tests/_output/schema.graphql
