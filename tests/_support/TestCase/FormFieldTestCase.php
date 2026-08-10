@@ -284,7 +284,17 @@ class FormFieldTestCase extends GFGraphQLTestCase {
 		];
 
 		$response = $this->graphql( compact( 'query', 'variables' ) );
-		$this->assertArrayNotHasKey( 'errors', $response, 'field has errors' );
+		
+		// DEBUG: Show debug messages
+		if ( ! empty( $response['extensions']['debug'] ) ) {
+			foreach ( $response['extensions']['debug'] as $debug ) {
+				if ( isset( $debug['type'] ) && $debug['type'] === 'DEBUG_INPUTS' ) {
+					print_r( $debug );
+				}
+			}
+		}
+		
+		$this->assertArrayNotHasKey( 'errors', $response, 'field has errors: ' . json_encode( $response['errors'] ?? [] ) );
 
 		// Assert that their are no debug messages.
 		$this->assertEmpty( $response['extensions']['debug'], print_r( $response['extensions']['debug'], true ) );

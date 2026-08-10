@@ -64,6 +64,7 @@ class FieldChoiceRegistry {
 		if ( in_array( $choice_name, self::$registered_types, true ) ) {
 			return;
 		}
+		// error_log( 'Registering choice: ' . $choice_name );
 
 		$config = self::get_config_from_settings( $choice_name, $field, $settings );
 
@@ -102,6 +103,8 @@ class FieldChoiceRegistry {
 
 		// Store in static array to prevent duplicate registration.
 		self::$registered_types[] = $choice_name;
+
+		// error_log( print_r( debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 5 ), true ) );
 	}
 
 	/**
