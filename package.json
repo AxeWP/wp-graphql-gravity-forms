@@ -31,7 +31,7 @@
 	"devDependencies": {
 		"@wordpress/env": "^10.39.0",
 		"@wordpress/prettier-config": "^4.41.0",
-		"@wordpress/scripts": "^31.6.0"
+		"@wordpress/scripts": "^35.0.0"
 	},
 	"overrides": {
 		"webpack-dev-server@<=5.2.0": ">=5.2.1",
