@@ -1155,6 +1155,7 @@ class Wpunit extends \Codeception\Module {
 			'noDuplicates',
 			'placeholder',
 			'size',
+			'textareaHeight',
 			[ 'type' => 'textarea' ],
 			'useRichTextEditor',
 		];

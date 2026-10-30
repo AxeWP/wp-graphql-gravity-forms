@@ -118,6 +118,7 @@ class TextAreaFieldTest extends FormFieldTestCase implements FormFieldTestCaseIn
 				}
 				shouldAllowDuplicates
 				size
+				textareaHeight
 				value
 			}
 		';

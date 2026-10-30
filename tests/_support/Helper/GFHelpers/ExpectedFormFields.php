@@ -575,6 +575,13 @@ trait ExpectedFormFields {
 		$properties[] = $this->expectedField( 'size', ! empty( $field->size ) ? GFHelpers::get_enum_for_value( Enum\FormFieldSizeEnum::$type, $field->size ) : self::IS_NULL );
 	}
 
+	public function textarea_height_setting( GF_Field $field, array &$properties ): void {
+		$height = ! empty( $field->textareaHeight ) ? $field->textareaHeight : ( ! empty( $field->size ) ? $field->size : null );
+
+		$properties[] = $this->expectedField( 'textareaHeight', ! empty( $height ) ? GFHelpers::get_enum_for_value( Enum\FormFieldSizeEnum::$type, $height ) : self::IS_NULL );
+		$properties[] = $this->expectedField( 'size', ! empty( $height ) ? GFHelpers::get_enum_for_value( Enum\FormFieldSizeEnum::$type, $height ) : self::IS_NULL );
+	}
+
 	public function select_all_choices_setting( GF_Field $field, array &$properties ): void {
 		$properties[] = $this->expectedField( 'hasSelectAll', ! empty( $field->enableSelectAll ) );
 

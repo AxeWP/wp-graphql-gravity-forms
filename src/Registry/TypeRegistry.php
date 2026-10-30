@@ -388,6 +388,7 @@ class TypeRegistry {
 			'single_product_inputs'              => WPInterface\FieldSetting\FieldWithSingleProductInputs::class,
 			'size_setting'                       => WPInterface\FieldSetting\FieldWithSize::class,
 			'sub_label_placement_setting'        => WPInterface\FieldSetting\FieldWithSubLabelPlacement::class,
+			'textarea_height_setting'            => WPInterface\FieldSetting\FieldWithTextareaHeight::class,
 			'time_format_setting'                => WPInterface\FieldSetting\FieldWithTimeFormat::class,
 		];
 

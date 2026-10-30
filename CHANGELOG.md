@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- feat: Add `textareaHeight` to fields with Gravity Forms 3.0's `textarea_height_setting` (Paragraph, Post Body, Post Excerpt, Post Custom Field), and keep `size` on those fields as a deprecated alias. Gravity Forms 3.0 replaced `size_setting` with `textarea_height_setting`, which removed `TextAreaField.size` from the schema.
+
 ## [v0.13.4]
 
 This _minor_ release adds support for filtering entries by `isRead` and `isStarred` statuses, improves handling of `AddressField` default values, and deprecates the `PhoneField.phoneFormat` field in favor of `PhoneField.phoneFormatType` (with a new `GfPhoneFormat` type incoming).
