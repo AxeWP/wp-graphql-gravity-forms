@@ -412,6 +412,10 @@ class PropertyHelper extends GFHelpers {
 		return $value ?: 'medium';
 	}
 
+	public function textareaHeight( $value = null ): string {
+		return $this->size( $value );
+	}
+
 	public function storageType( $value = null ) {
 		return ! empty( $value ) ? $value : 'json';
 	}
